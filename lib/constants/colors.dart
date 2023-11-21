@@ -11,6 +11,7 @@ const errorColor = Color(0xffCF1E2F);
 //primary text colors
 const textColor = Color(0xff191919);
 const txtPrimary = Color(0xff1B438B);
+const txtColorLite = Color(0xff808080);
 
 //button colors
 const btnActiveBackground = Color(0xff1B438B);
@@ -18,3 +19,5 @@ const buttonActiveColor = Color(0xffffffff);
 
 const greyColor = Color(0xFFA4B4D1);
 const astrixColor = Color(0xff982F67);
+
+const splashScreenBlueShade = Color(0xCCACC9FF);

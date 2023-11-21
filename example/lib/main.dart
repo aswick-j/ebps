@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:ebps_example/Mock_Params.dart';
 import 'package:ebps_example/PluginScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -44,6 +47,50 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final String API_URL =
+      'https://digiservicesuat.equitasbank.com/api/auth/redirect';
+
+  String API_DATA = '';
+  bool isLoading = false;
+
+  Future<void> fetchData() async {
+    try {
+      isLoading = true;
+      final checkSUm = p8['redirectionRequest']!['checkSum'];
+      final response = await http.post(
+        Uri.parse(API_URL),
+        body: json.encode(p8['redirectionRequest']!['msgBdy']),
+        headers: {
+          'Content-Type': 'application/json',
+          'checkSum': checkSUm as String,
+        },
+      );
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        API_DATA = data["data"].toString();
+        isLoading = false;
+        if (API_DATA.isNotEmpty) {
+          await Future.delayed(Duration.zero);
+          // print(API_DATA);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PluginScreen(apiData: API_DATA),
+            ),
+          );
+        } else {
+          print('API_DATA is empty');
+        }
+      } else {
+        throw Exception('Failed ==== >');
+      }
+    } catch (e) {
+      isLoading = false;
+
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,12 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
         Center(
           child: GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const PluginScreen(),
-                ),
-              );
+              fetchData();
             },
             child: Container(
               height: MediaQuery.of(context).size.height * 1 / 14,
@@ -100,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
-        ),
+        )
       ],
     ));
   }
