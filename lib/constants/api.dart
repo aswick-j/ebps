@@ -2,7 +2,9 @@ const String BASE_URL = "https://digiservicesuat.equitasbank.com/api";
 const String LOGIN_URL = "/auth/login/";
 const String CATEGORIES_URL = "/categories/";
 const String BILLER_URL = "/billers/billers-by-category/";
-const String INPUT_SIGN = "/billers/input-signatures/";
+const String INPUT_SIGN_URL = "/billers/input-signatures/";
+const String FETCH_BILL_URL = "/payment/fetch-bill";
+const String ACCOUNT_INFO_URL = "/payment/account-info";
 
 const String redirectUrl = "/auth/redirect";
 const String historyUrl = "/transactions/";
@@ -25,8 +27,6 @@ const String searchBillersUrl = "/billers/search";
 const String statesDataUrl = "/billers/states-data/";
 
 const String amountByDateUrl = "/payment/amount-by-date/";
-const String fetchBillUrl = "/payment/fetch-bill";
-const String accountInfoUrl = "/payment/account-info";
 const String prepaidFetchPlansUrl = "/payment/prepaid-fetch-plans";
 const String validateBillUrl = "/payment/validate-bill";
 const String addUpdateUpcomingDueUrl = "/billers/add-update-upcoming-due";

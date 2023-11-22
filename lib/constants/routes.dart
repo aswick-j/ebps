@@ -6,6 +6,7 @@ import 'package:ebps/data/services/api_client.dart';
 import 'package:ebps/presentation/screens/BillFlow/BillParameters.dart';
 import 'package:ebps/presentation/screens/BillFlow/BillerDetails.dart';
 import 'package:ebps/presentation/screens/BillFlow/BillerList.dart';
+import 'package:ebps/presentation/screens/Payments/PaymentDetails.dart';
 import 'package:ebps/presentation/screens/home/AllBillCategories.dart';
 import 'package:ebps/presentation/screens/splashScreen.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +19,7 @@ const allCATROUTE = "/allCategory";
 const bILLERLISTROUTE = "/billerList";
 const bILLERPARAMROUTE = "/billerParameters";
 const fETCHBILLERDETAILSROUTE = "/fetchBillerDetails";
+const pAYMENTCONFIRMROUTE = "/paymentConfirmation";
 
 class MyRouter {
   ApiClient apiClient = ApiClient();
@@ -96,7 +98,28 @@ class MyRouter {
                     billID: args['billID'],
                     billerName: args['name'],
                     billName: args['billName'],
+                    categoryName: args['categoryName'],
                     isSavedBill: args["isSavedBill"],
+                    billerData: args['billerData'],
+                    inputParameters: args['inputParameters'],
+                  ),
+                ));
+
+      case pAYMENTCONFIRMROUTE:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return CupertinoPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => HomeCubit(repository: apiClient),
+                  child: PaymentDetails(
+                    billID: args['billID'],
+                    billerName: args['name'],
+                    billName: args['billName'],
+                    categoryName: args['categoryName'],
+                    isSavedBill: args["isSavedBill"],
+                    billerData: args['billerData'],
+                    inputParameters: args['inputParameters'],
+                    amount: args['amount'],
                   ),
                 ));
 

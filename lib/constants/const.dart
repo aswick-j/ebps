@@ -1,3 +1,5 @@
+import 'package:ebps/data/models/decoded_model.dart';
+import 'package:ebps/data/services/api.dart';
 import 'package:flutter/material.dart';
 
 /// the Navigator class.
@@ -13,7 +15,7 @@ goTo(context, routeName) => Navigator.of(context).pushNamed(routeName);
 goToReplace(context, routeName) =>
     Navigator.pushReplacementNamed(context, routeName);
 goToData(context, routeName, arg) =>
-    Navigator.pushNamed(context, routeName, arguments: arg);
+    Navigator.of(context).pushNamed(routeName, arguments: arg);
 goToReplaceData(context, routeName, arg) =>
     Navigator.pushReplacementNamed(context, routeName, arguments: arg);
 goToUntil(context, routeName) =>
@@ -82,3 +84,131 @@ dynamic getInputType(String? value) {
       TextInputType.text;
   }
 }
+
+Map<String, dynamic> getBillerType(
+    String? fetchRequirement,
+    String? blrAcceptsAdhoc,
+    String? supportBillValidation,
+    String? paymentExactness) {
+  bool fetchBill = false;
+  bool amountEditable = false;
+  bool validateBill = false;
+  String billerType = "";
+  bool isAdhoc = false;
+  bool quickPay = true;
+
+  switch (fetchRequirement) {
+    //   If the case is MANDATORY and OPTIONAL then check the adhoc parameter
+    case "MANDATORY":
+    case "OPTIONAL":
+      // If the biller accepts adhoc then mark fetch Bill and amount Editable as true
+      if (blrAcceptsAdhoc == "Y") {
+        fetchBill = true;
+        amountEditable = true;
+        billerType = "adhoc";
+        validateBill = false;
+        isAdhoc = true;
+        quickPay = true;
+      } else {
+        //   Checking the payment exactness field to make the field editable
+        if (paymentExactness == "Exact") {
+          amountEditable = false;
+        } else if (paymentExactness == "Exact and Above") {
+          amountEditable = true;
+        } else {
+          amountEditable = true;
+        }
+        billerType = "billFetch";
+        fetchBill = true;
+        validateBill = false;
+        isAdhoc = false;
+        quickPay = false;
+      }
+      break;
+    //   If the case is NOT_SUPPORTED then check for supportBillValidation
+    case "NOT_SUPPORTED":
+      // If the billvalidation is MANDATORY then mark validateBill , amountEditable and fetchBill
+      if (supportBillValidation == "MANDATORY") {
+        validateBill = true;
+        fetchBill = false;
+        amountEditable = true;
+        billerType = "validate";
+        isAdhoc = true;
+        quickPay = true;
+      }
+      //   Else mark all the fields as false
+      else {
+        validateBill = false;
+        amountEditable = true;
+        fetchBill = false;
+        billerType = "instant";
+        isAdhoc = true;
+        quickPay = true;
+      }
+      break;
+    default:
+      break;
+  }
+  //   Return the all the fields
+  return {
+    "fetchBill": fetchBill,
+    "amountEditable": amountEditable,
+    "validateBill": validateBill,
+    "billerType": billerType,
+    "isAdhoc": isAdhoc,
+    "quickPay": quickPay,
+  };
+}
+
+billerDetail(pARAMETERNAME, pARAMETERVALUE) {
+  return Container(
+      // margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+              padding: const EdgeInsets.fromLTRB(8, 10, 0, 0),
+              child: Text(
+                pARAMETERNAME,
+                // "Subscriber ID",
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xff808080),
+                ),
+                textAlign: TextAlign.center,
+              )),
+          Padding(
+              padding: const EdgeInsets.fromLTRB(8, 10, 0, 0),
+              child: Text(
+                pARAMETERVALUE,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xff1b438b),
+                ),
+                textAlign: TextAlign.left,
+              ))
+        ],
+      ));
+}
+
+Future<List<Accounts>> getDecodedAccounts() async {
+  List<Accounts> decodedAccounts = [];
+  try {
+    DecodedModel? decodedModel = await validateJWT();
+
+    if (decodedModel.toString() != 'restart') {
+      decodedAccounts = decodedModel!.accounts!;
+    }
+  } catch (e) {
+    print(e);
+  }
+
+  return decodedAccounts;
+}
+
+List<Accounts>? myAccounts = [];

@@ -40,6 +40,8 @@ class _splashScreenState extends State<splashScreen> {
         listener: (context, state) async {
           if (state is SplashLoading) {
           } else if (state is SplashSuccess) {
+            myAccounts = await getDecodedAccounts();
+
             WidgetsBinding.instance?.addPostFrameCallback((_) {
               // goToReplace(context, hOMEROUTE);
               Navigator.of(context).pushReplacement(

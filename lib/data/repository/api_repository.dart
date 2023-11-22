@@ -10,4 +10,9 @@ abstract class Repository {
   ) async {}
   //Biller Input Sign
   Future getInputSignature(id) async {}
+  //Fetch Bill
+  Future fetchBill(validateBill, billerID, billerParams, quickPay,
+      quickPayAmount, adHocBillValidationRefKey, billName) async {}
+  //Account-info
+  Future getAccountInfo(account) async {}
 }

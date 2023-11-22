@@ -1,10 +1,13 @@
+import 'package:ebps/data/models/account_info_model.dart';
 import 'package:ebps/data/models/billers_model.dart';
 import 'package:ebps/data/models/categories_model.dart';
+import 'package:ebps/data/models/fetch_bill_model.dart';
 import 'package:ebps/data/models/input_signatures_model.dart';
 import 'package:ebps/data/repository/api_repository.dart';
 import 'package:ebps/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -162,10 +165,91 @@ class HomeCubit extends Cubit<HomeState> {
           }
         } else {
           if (!isClosed) {
+            //     logger.e(
+            // error: "GET ALL BILLER API ERROR ===> lib/bloc/home/getAllBiller", e);
+
             emit(InputSignatureFailed(message: value['message']));
           }
         }
       });
     } catch (e) {}
+  }
+
+  //FETCH BILL
+  void fetchBill({
+    String? billerID,
+    bool? quickPay,
+    String? quickPayAmount,
+    String? adHocBillValidationRefKey,
+    bool? validateBill,
+    Map<String, dynamic>? billerParams,
+    String? billName,
+  }) async {
+    if (isClosed) return;
+
+    emit(FetchBillLoading());
+
+    try {
+      var value = await repository!.fetchBill(
+        validateBill,
+        billerID,
+        billerParams,
+        quickPay,
+        quickPayAmount,
+        adHocBillValidationRefKey,
+        billName,
+      );
+
+      logger.d(value,
+          error: "FETCH BILL API RESPONSE ===> lib/bloc/home/fetchBill");
+
+      if (value != null && !value.toString().contains("Invalid token")) {
+        if (value['status'] == 200) {
+          FetchBillModel? fetchBillModel = FetchBillModel.fromJson(value);
+          if (!isClosed)
+            emit(FetchBillSuccess(fetchBillResponse: fetchBillModel.data));
+        } else {
+          logger.e(
+              error: "FETCH BILL API ERROR ===> lib/bloc/home/fetchBill",
+              value);
+          if (!isClosed) emit(FetchBillFailed(message: value['message']));
+        }
+      } else {
+        logger.e(
+            error: "FETCH BILL API ERROR ===> lib/bloc/home/fetchBill", value);
+        if (!isClosed)
+          emit(FetchBillError(message: value?['message'] ?? 'Unknown error'));
+      }
+    } catch (e) {
+      logger.e(error: "FETCH BILL API ERROR ===> lib/bloc/home/fetchBill", e);
+    }
+  }
+
+  //ACCOUNT_INFO
+
+  Future<void> getAccountInfo(myAcc) async {
+    if (isClosed) return;
+
+    emit(AccountInfoLoading());
+
+    try {
+      var value = await repository!.getAccountInfo(myAcc);
+
+      logger.d(value,
+          error:
+              "GET ACCOUNT DETAILS API RESPONSE ===> lib/bloc/home/getAccountInfo");
+
+      if (value == null || value.toString().contains("Invalid token")) {
+        emit(AccountInfoError(
+            message: 'Invalid token or failed to get account info'));
+      } else if (value['status'] == 200) {
+        AccountInfoModel? accountInfoModel = AccountInfoModel.fromJson(value);
+        emit(AccountInfoSuccess(accountInfo: accountInfoModel.data));
+      } else {
+        emit(AccountInfoFailed(message: value['message']));
+      }
+    } catch (e) {
+      emit(AccountInfoError(message: 'An error occurred'));
+    }
   }
 }

@@ -100,7 +100,8 @@ class _BillParametersState extends State<BillParameters> {
       "billName": billNameController.text,
       "billerData": widget.billerData,
       "inputParameters": inputPayloadData,
-      "isSavedBill": false
+      "categoryName": widget.billerData!.cATEGORYNAME,
+      "isSavedBill": false,
     });
   }
 
@@ -324,9 +325,7 @@ class _BillParametersState extends State<BillParameters> {
               Expanded(
                 child: MyAppButton(
                     onPressed: () {
-                      if (isButtonActive && isValidBillName) {
-                        submitForm();
-                      }
+                      goBack(context);
                     },
                     buttonText: "Cancel",
                     buttonTextColor: primaryColor,

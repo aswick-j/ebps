@@ -47,7 +47,6 @@ class AllbillerListError extends HomeState {
 
 //INPUT_SIGN
 
-// InputSignature
 class InputSignatureLoading extends HomeState {}
 
 class InputSignatureSuccess extends HomeState {
@@ -63,4 +62,42 @@ class InputSignatureFailed extends HomeState {
 class InputSignatureError extends HomeState {
   final String? message;
   InputSignatureError({@required this.message});
+}
+
+//FETCH BILL
+
+class FetchBillLoading extends HomeState {}
+
+class FetchBillSuccess extends HomeState {
+  final billerResponseData? fetchBillResponse;
+  FetchBillSuccess({@required this.fetchBillResponse});
+}
+
+class FetchBillFailed extends HomeState {
+  final String? message;
+  FetchBillFailed({@required this.message});
+}
+
+class FetchBillError extends HomeState {
+  final String? message;
+  FetchBillError({@required this.message});
+}
+
+//ACCOUNT_INFO
+
+class AccountInfoLoading extends HomeState {}
+
+class AccountInfoSuccess extends HomeState {
+  final List<AccountsData>? accountInfo;
+  AccountInfoSuccess({@required this.accountInfo});
+}
+
+class AccountInfoFailed extends HomeState {
+  final String? message;
+  AccountInfoFailed({@required this.message});
+}
+
+class AccountInfoError extends HomeState {
+  final String? message;
+  AccountInfoError({@required this.message});
 }

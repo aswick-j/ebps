@@ -1,252 +1,322 @@
+import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/const.dart';
+import 'package:ebps/data/models/account_info_model.dart';
+import 'package:ebps/data/models/add_biller_model.dart';
+import 'package:ebps/data/models/billers_model.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/common/Container/Home/BillerDetailsContainer.dart';
 import 'package:ebps/presentation/screens/otp/OtpScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaymentDetails extends StatefulWidget {
-  const PaymentDetails({super.key});
+  int? billID;
+  String? billerName;
+  String? billName;
+  String? categoryName;
+  bool isSavedBill;
+  BillersData? billerData;
+  String? amount;
+  List<AddbillerpayloadModel>? inputParameters;
+
+  PaymentDetails(
+      {Key? key,
+      required this.billID,
+      required this.billerName,
+      required this.isSavedBill,
+      this.billName,
+      this.billerData,
+      this.inputParameters,
+      this.categoryName,
+      this.amount})
+      : super(key: key);
 
   @override
   State<PaymentDetails> createState() => _PaymentDetailsState();
 }
 
 class _PaymentDetailsState extends State<PaymentDetails> {
+  bool isAccLoading = true;
+  List<AccountsData>? accountInfo = [];
+
+  @override
+  void initState() {
+    BlocProvider.of<HomeCubit>(context).getAccountInfo(myAccounts);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar(
           context: context,
-          title: 'Biller Name',
+          title: widget.billerName.toString(),
           onLeadingTap: () => Navigator.pop(context),
           showActions: false,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                  clipBehavior: Clip.hardEdge,
-                  width: double.infinity,
-                  margin: EdgeInsets.only(
-                      left: 20.0, right: 20, top: 20, bottom: 0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.0 + 2),
-                    border: Border.all(
-                      color: Color(0xffD1D9E8),
-                      width: 1.0,
+        body: BlocConsumer<HomeCubit, HomeState>(listener: (context, state) {
+          if (state is AccountInfoLoading) {
+            isAccLoading = true;
+          } else if (state is AccountInfoSuccess) {
+            accountInfo = state.accountInfo;
+
+            isAccLoading = false;
+          } else if (state is AccountInfoFailed) {
+            isAccLoading = false;
+          } else if (state is AccountInfoError) {}
+        }, builder: (context, snapshot) {
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                    clipBehavior: Clip.hardEdge,
+                    width: double.infinity,
+                    margin: EdgeInsets.only(
+                        left: 20.0, right: 20, top: 20, bottom: 0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6.0 + 2),
+                      border: Border.all(
+                        color: Color(0xffD1D9E8),
+                        width: 1.0,
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        height: 40.0,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topRight,
-                            stops: [0.001, 19],
-                            colors: [
-                              Color(0xff768EB9).withOpacity(.7),
-                              Color(0xff463A8D).withOpacity(.7),
-                            ],
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Payment Details",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xffffffff),
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                      BillerDetailsContainer(
-                        icon: '',
-                        billerName: '',
-                        categoryName: '',
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 80,
-                        color: Colors.white,
-                        child: GridView.builder(
-                            shrinkWrap: true,
-                            itemCount: 2,
-                            physics: NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              // mainAxisSpacing: 10,
-                            ),
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  // margin: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(2),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              8, 10, 0, 0),
-                                          child: Text(
-                                            "Subscriber ID",
-                                            style: const TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0xff808080),
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          )),
-                                      Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              8, 10, 0, 0),
-                                          child: Text(
-                                            "1155552343",
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: Color(0xff1b438b),
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ))
-                                    ],
-                                  ));
-                            }),
-                      ),
-                      Divider(
-                        height: 10,
-                        thickness: 1,
-                        indent: 10,
-                        endIndent: 10,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Amount",
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xff808080),
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                            Text(
-                              "₹ 650.00",
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xff1b438b),
-                              ),
-                              textAlign: TextAlign.left,
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  )),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
-                child: Text(
-                  "Select Payment Account",
-                  style: const TextStyle(
-                    fontFamily: "Poppins",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xff1b438b),
-                    height: 23 / 14,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                color: Colors.white,
-                child: GridView.builder(
-                    shrinkWrap: true,
-                    itemCount: 2,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      // mainAxisSpacing: 10,
-                    ),
-                    itemBuilder: (context, index) {
-                      return Container(
-                          clipBehavior: Clip.hardEdge,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
                           width: double.infinity,
-                          margin: EdgeInsets.only(
-                              left: 20.0, right: 20, top: 20, bottom: 0),
+                          alignment: Alignment.center,
+                          height: 40.0,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6.0 + 2),
-                            border: Border.all(
-                              color: Color(0xffD1D9E8),
-                              width: 1.0,
+                            gradient: LinearGradient(
+                              begin: Alignment.topRight,
+                              stops: [0.001, 19],
+                              colors: [
+                                Color(0xff768EB9).withOpacity(.7),
+                                Color(0xff463A8D).withOpacity(.7),
+                              ],
                             ),
                           ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                                  child: Text(
-                                    "1006983669872341",
-                                    style: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color(0xff808080),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  )),
-                              Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                                  child: Text(
-                                    "Balance Amount",
-                                    style: const TextStyle(
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff808080),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  )),
-                              Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                                  child: Text(
-                                    "₹ 35000",
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color(0xff0e2146),
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ))
+                              Text(
+                                "Payment Details",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xffffffff),
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
                             ],
-                          ));
-                    }),
-              ),
-            ],
-          ),
-        ),
+                          ),
+                        ),
+                        BillerDetailsContainer(
+                          icon: 'packages/ebps/assets/icon/logo_bbps.svg',
+                          billerName: widget.billerName.toString(),
+                          categoryName: widget.categoryName.toString(),
+                        ),
+                        Container(
+                            width: double.infinity,
+                            height: 100,
+                            color: Colors.white,
+                            child: GridView.count(
+                              primary: false,
+                              physics: NeverScrollableScrollPhysics(),
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              crossAxisCount: 2,
+                              childAspectRatio: 4 / 2,
+                              children: [
+                                billerDetail(
+                                    widget.inputParameters![0].pARAMETERNAME,
+                                    widget.inputParameters![0].pARAMETERVALUE
+                                        .toString()),
+                                billerDetail(
+                                    "Bill Name", widget.billName.toString()),
+                              ],
+                            )),
+                        // Container(
+                        //   width: double.infinity,
+                        //   height: 80,
+                        //   color: Colors.white,
+                        //   child: GridView.builder(
+                        //       shrinkWrap: true,
+                        //       itemCount: 2,
+                        //       physics: NeverScrollableScrollPhysics(),
+                        //       gridDelegate:
+                        //           SliverGridDelegateWithFixedCrossAxisCount(
+                        //         crossAxisCount: 2,
+                        //         // mainAxisSpacing: 10,
+                        //       ),
+                        //       itemBuilder: (context, index) {
+                        //         return Container(
+                        //             // margin: EdgeInsets.all(10),
+                        //             decoration: BoxDecoration(
+                        //               borderRadius: BorderRadius.circular(2),
+                        //             ),
+                        //             child: Column(
+                        //               crossAxisAlignment:
+                        //                   CrossAxisAlignment.center,
+                        //               children: [
+                        //                 Padding(
+                        //                     padding: const EdgeInsets.fromLTRB(
+                        //                         8, 10, 0, 0),
+                        //                     child: Text(
+                        //                       "Subscriber ID",
+                        //                       style: const TextStyle(
+                        //                         fontSize: 13,
+                        //                         fontWeight: FontWeight.w400,
+                        //                         color: Color(0xff808080),
+                        //                       ),
+                        //                       textAlign: TextAlign.center,
+                        //                     )),
+                        //                 Padding(
+                        //                     padding: const EdgeInsets.fromLTRB(
+                        //                         8, 10, 0, 0),
+                        //                     child: Text(
+                        //                       "1155552343",
+                        //                       style: const TextStyle(
+                        //                         fontSize: 14,
+                        //                         fontWeight: FontWeight.w500,
+                        //                         color: Color(0xff1b438b),
+                        //                       ),
+                        //                       textAlign: TextAlign.left,
+                        //                     ))
+                        //               ],
+                        //             ));
+                        //       }),
+                        // ),
+                        Divider(
+                          height: 10,
+                          thickness: 1,
+                          indent: 10,
+                          endIndent: 10,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Amount",
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xff808080),
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              Text(
+                                "₹ ${widget.amount}",
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xff1b438b),
+                                ),
+                                textAlign: TextAlign.left,
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    )),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 24.0, vertical: 16),
+                  child: Text(
+                    "Select Payment Account",
+                    style: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff1b438b),
+                      height: 23 / 14,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                if (!isAccLoading && myAccounts!.length > 0)
+                  Container(
+                    width: double.infinity,
+                    color: Colors.white,
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        itemCount: 2,
+                        physics: NeverScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: accountInfo!.length,
+                          // mainAxisSpacing: 10,
+                        ),
+                        itemBuilder: (context, index) {
+                          return Container(
+                              clipBehavior: Clip.hardEdge,
+                              width: double.infinity,
+                              margin: EdgeInsets.only(
+                                  left: 20.0, right: 20, top: 20, bottom: 0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6.0 + 2),
+                                border: Border.all(
+                                  color: Color(0xffD1D9E8),
+                                  width: 1.0,
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          15, 10, 0, 0),
+                                      child: Text(
+                                        accountInfo![index]
+                                            .accountNumber
+                                            .toString(),
+                                        style: const TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xff808080),
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      )),
+                                  Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          15, 10, 0, 0),
+                                      child: Text(
+                                        "Balance Amount",
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff808080),
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      )),
+                                  Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          15, 10, 0, 0),
+                                      child: Text(
+                                        "₹ ${accountInfo![index].balance.toString()}",
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xff0e2146),
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ))
+                                ],
+                              ));
+                        }),
+                  ),
+              ],
+            ),
+          );
+        }),
         bottomSheet: Container(
           decoration: BoxDecoration(
               border:

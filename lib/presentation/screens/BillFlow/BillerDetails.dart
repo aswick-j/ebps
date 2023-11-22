@@ -1,135 +1,309 @@
+import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/const.dart';
+import 'package:ebps/constants/routes.dart';
+import 'package:ebps/data/models/add_biller_model.dart';
+import 'package:ebps/data/models/billers_model.dart';
+import 'package:ebps/data/models/fetch_bill_model.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/common/Container/Home/BillerDetailsContainer.dart';
 import 'package:ebps/presentation/screens/Payments/PaymentDetails.dart';
+import 'package:ebps/utils/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BillerDetails extends StatefulWidget {
   int? billID;
   String? billerName;
   String? billName;
+  String? categoryName;
   bool isSavedBill;
+  BillersData? billerData;
+  List<AddbillerpayloadModel>? inputParameters;
 
-  BillerDetails({
-    Key? key,
-    required this.billID,
-    required this.billerName,
-    required this.isSavedBill,
-    this.billName,
-  }) : super(key: key);
+  BillerDetails(
+      {Key? key,
+      required this.billID,
+      required this.billerName,
+      required this.isSavedBill,
+      this.billName,
+      this.billerData,
+      this.inputParameters,
+      this.categoryName})
+      : super(key: key);
   @override
   State<BillerDetails> createState() => _BillerDetailsState();
 }
 
 class _BillerDetailsState extends State<BillerDetails> {
+  BillerResponse? _billerResponseData;
+  int? _customerBIllID;
+  int billAmount = 0;
+  Map<String, dynamic>? validateBill;
+  AdditionalInfo? _additionalInfo;
+  Map<String, dynamic> billerInputSign = {};
+  final txtAmountController = TextEditingController();
+
+  bool isFetchbillLoading = true;
+
+  void initialFetch() {
+    txtAmountController.text = billAmount.toString();
+    setState(() {
+      validateBill = getBillerType(
+          widget.billerData!.fETCHREQUIREMENT,
+          widget.billerData!.bILLERACCEPTSADHOC,
+          widget.billerData!.sUPPORTBILLVALIDATION,
+          widget.billerData!.pAYMENTEXACTNESS);
+    });
+    for (var element in widget.inputParameters!) {
+      billerInputSign[element.pARAMETERNAME.toString()] =
+          element.pARAMETERVALUE.toString();
+    }
+    if (validateBill!["fetchBill"]) {
+      BlocProvider.of<HomeCubit>(context).fetchBill(
+          billerID: widget.billerData!.bILLERID,
+          quickPay: false,
+          quickPayAmount: "0",
+          adHocBillValidationRefKey: null,
+          validateBill: validateBill!["validateBill"],
+          billerParams: billerInputSign,
+          billName: widget.isSavedBill ? null : widget!.billName);
+    }
+  }
+
+  @override
+  void initState() {
+    initialFetch();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar(
           context: context,
-          title: 'Biller Name',
-          onLeadingTap: () => Navigator.pop(context),
+          title: widget.billerName,
+          onLeadingTap: () => goBack(context),
           showActions: false,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                  clipBehavior: Clip.hardEdge,
-                  width: double.infinity,
-                  margin: EdgeInsets.only(
-                      left: 20.0, right: 20, top: 20, bottom: 0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.0 + 2),
-                    border: Border.all(
-                      color: Color(0xffD1D9E8),
-                      width: 1.0,
+        body: BlocConsumer<HomeCubit, HomeState>(listener: (context, state) {
+          if (state is FetchBillLoading) {
+            isFetchbillLoading = true;
+          } else if (state is FetchBillSuccess) {
+            _billerResponseData =
+                state.fetchBillResponse!.data!.data!.billerResponse;
+            _customerBIllID = state.fetchBillResponse!.customerbillId;
+            _additionalInfo =
+                state.fetchBillResponse!.data!.data!.additionalInfo;
+            txtAmountController.text = _billerResponseData!.amount.toString();
+            isFetchbillLoading = false;
+          } else if (state is FetchBillFailed) {
+            isFetchbillLoading = false;
+          } else if (state is FetchBillError) {
+            isFetchbillLoading = false;
+          }
+        }, builder: (context, state) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                    clipBehavior: Clip.hardEdge,
+                    width: double.infinity,
+                    margin: EdgeInsets.only(
+                        left: 20.0, right: 20, top: 20, bottom: 100),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6.0 + 2),
+                      border: Border.all(
+                        color: Color(0xffD1D9E8),
+                        width: 1.0,
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      BillerDetailsContainer(
-                        icon: 'packages/ebps/assets/icon/logo_bbps.svg',
-                        billerName: widget.billName.toString(),
-                        categoryName: '',
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 80,
-                        color: Colors.white,
-                        child: GridView.builder(
-                            shrinkWrap: true,
-                            itemCount: 2,
-                            physics: NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              // mainAxisSpacing: 10,
-                            ),
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  // margin: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(2),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              8, 10, 0, 0),
-                                          child: Text(
-                                            "Subscriber ID",
-                                            style: const TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0xff808080),
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          )),
-                                      Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              8, 10, 0, 0),
-                                          child: Text(
-                                            "1155552343",
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: Color(0xff1b438b),
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ))
-                                    ],
-                                  ));
-                            }),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            fillColor: Color(0xffD1D9E8).withOpacity(0.2),
-                            filled: true,
-                            labelStyle: TextStyle(color: Color(0xff1b438b)),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xff1B438B)),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xff1B438B)),
-                            ),
-                            border: UnderlineInputBorder(),
-                            labelText: 'Amount',
-                          ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        BillerDetailsContainer(
+                          icon: 'packages/ebps/assets/icon/logo_bbps.svg',
+                          billerName: widget.billerName.toString(),
+                          categoryName: widget.categoryName.toString(),
                         ),
-                      ),
-                    ],
-                  )),
-            ],
-          ),
-        ),
+                        if (isFetchbillLoading) Text("Fetch Bill Loading..."),
+                        if (!isFetchbillLoading)
+                          Container(
+                              width: double.infinity,
+                              height: 300,
+                              color: Colors.white,
+                              child: GridView.count(
+                                primary: false,
+                                physics: NeverScrollableScrollPhysics(),
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                crossAxisCount: 2,
+                                childAspectRatio: 4 / 2,
+                                children: <Widget>[
+                                  if (_billerResponseData != null &&
+                                      _billerResponseData!.billDate != null)
+                                    billerDetail(
+                                        "Bill Date",
+                                        _billerResponseData!.billDate
+                                            .toString()),
+                                  if (_billerResponseData != null &&
+                                      _billerResponseData!.dueDate != null)
+                                    billerDetail(
+                                        "Due Date",
+                                        _billerResponseData!.dueDate
+                                            .toString()),
+                                  if (_billerResponseData != null &&
+                                      _billerResponseData!.billNumber != null)
+                                    billerDetail(
+                                        "Bill Number",
+                                        _billerResponseData!.billNumber
+                                            .toString()),
+                                  if (_billerResponseData != null &&
+                                      _billerResponseData!.billPeriod != null)
+                                    billerDetail(
+                                        "Bill Period",
+                                        _billerResponseData!.billPeriod
+                                            .toString()),
+                                  if (_billerResponseData != null &&
+                                      _billerResponseData!.customerName != null)
+                                    billerDetail(
+                                        "Customer Name",
+                                        _billerResponseData!.customerName
+                                            .toString()),
+                                  if (widget!.billName != null)
+                                    billerDetail("Bill Name",
+                                        widget!.billName.toString()),
+                                ],
+                              )),
+                        if (!isFetchbillLoading)
+                          Container(
+                            width: double.infinity,
+                            // height: 300,
+
+                            color: Colors.white,
+                            child: Column(
+                              children: [
+                                if (_additionalInfo!.tag!.length > 0)
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 24.0),
+                                    child: Text(
+                                      "Additional Info",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xff1b438b),
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                GridView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: _additionalInfo!.tag!.length,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 4 / 2,
+                                      mainAxisSpacing: 10,
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                          // margin: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(2),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          8, 10, 0, 0),
+                                                  child: Text(
+                                                    _additionalInfo!
+                                                        .tag![index].name
+                                                        .toString(),
+                                                    // "Subscriber ID",
+                                                    style: const TextStyle(
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Color(0xff808080),
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  )),
+                                              Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          8, 10, 0, 0),
+                                                  child: Text(
+                                                    _additionalInfo!
+                                                        .tag![index].value
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Color(0xff1b438b),
+                                                    ),
+                                                    textAlign: TextAlign.left,
+                                                  ))
+                                            ],
+                                          ));
+                                    }),
+                              ],
+                            ),
+                          ),
+                        if (!isFetchbillLoading)
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: 16, right: 16, top: 16, bottom: 16),
+                            child: TextFormField(
+                              controller: txtAmountController,
+                              enabled: validateBill!["amountEditable"],
+                              onFieldSubmitted: (_) {},
+                              inputFormatters: <TextInputFormatter>[
+                                LengthLimitingTextInputFormatter(10),
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d*\.?\d{0,2}')),
+                              ],
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                      decimal: true),
+                              autocorrect: false,
+                              enableSuggestions: false,
+                              decoration: InputDecoration(
+                                fillColor: validateBill!["amountEditable"]
+                                    ? Color(0xffD1D9E8).withOpacity(0.2)
+                                    : Color(0xffD1D9E8).withOpacity(0.5),
+                                filled: true,
+                                labelStyle: TextStyle(color: Color(0xff1b438b)),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xff1B438B)),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xff1B438B)),
+                                ),
+                                border: UnderlineInputBorder(),
+                                labelText: 'Amount',
+                                prefixText: '₹  ',
+                              ),
+                            ),
+                          ),
+                      ],
+                    )),
+              ],
+            ),
+          );
+        }),
         bottomSheet: Container(
           decoration: BoxDecoration(
               border:
@@ -141,7 +315,9 @@ class _BillerDetailsState extends State<BillerDetails> {
               children: [
                 Expanded(
                   child: MyAppButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        goBack(context);
+                      },
                       buttonText: "Cancel",
                       buttonTextColor: primaryColor,
                       buttonBorderColor: Colors.transparent,
@@ -157,8 +333,15 @@ class _BillerDetailsState extends State<BillerDetails> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => PaymentDetails()));
+                        goToData(context, pAYMENTCONFIRMROUTE, {
+                          "name": widget.billerData!.bILLERNAME,
+                          "billName": widget.billName,
+                          "billerData": widget.billerData,
+                          "inputParameters": widget.inputParameters,
+                          "categoryName": widget.billerData!.cATEGORYNAME,
+                          "isSavedBill": false,
+                          "amount": txtAmountController.text
+                        });
                       },
                       buttonText: "Pay Now",
                       buttonTextColor: buttonActiveColor,
