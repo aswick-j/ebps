@@ -1,3 +1,4 @@
+import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/presentation/common/Container/Home/UpcomingContainer.dart';
 import 'package:ebps/presentation/screens/home/AllUpcomingDues.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +24,7 @@ class _UpcomingDuesState extends State<UpcomingDues> {
               Text(
                 'Upcoming Dues',
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: TXT_SIZE_XL(context),
                   fontWeight: FontWeight.w600,
                   color: Color(0xff1b438b),
                   height: 25 / 15,
@@ -39,7 +40,7 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                     Text(
                       'View All',
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: TXT_SIZE_LARGE(context),
                         fontWeight: FontWeight.w500,
                         color: Color(0xff1b438b),
                       ),

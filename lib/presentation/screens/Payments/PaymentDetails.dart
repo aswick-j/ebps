@@ -1,6 +1,7 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/data/models/account_info_model.dart';
 import 'package:ebps/data/models/add_biller_model.dart';
 import 'package:ebps/data/models/billers_model.dart';
@@ -111,7 +112,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                               Text(
                                 "Payment Details",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: TXT_SIZE_LARGE(context),
                                   fontWeight: FontWeight.w600,
                                   color: Color(0xffffffff),
                                 ),
@@ -140,9 +141,10 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                 billerDetail(
                                     widget.inputParameters![0].pARAMETERNAME,
                                     widget.inputParameters![0].pARAMETERVALUE
-                                        .toString()),
-                                billerDetail(
-                                    "Bill Name", widget.billName.toString()),
+                                        .toString(),
+                                    context),
+                                billerDetail("Bill Name",
+                                    widget.billName.toString(), context),
                               ],
                             )),
                         // Container(
@@ -186,7 +188,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                         //                     child: Text(
                         //                       "1155552343",
                         //                       style: const TextStyle(
-                        //                         fontSize: 14,
+                        //                         fontSize : TXT_SIZE_LARGE(context),
                         //                         fontWeight: FontWeight.w500,
                         //                         color: Color(0xff1b438b),
                         //                       ),
@@ -210,8 +212,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                             children: [
                               Text(
                                 "Amount",
-                                style: const TextStyle(
-                                  fontSize: 16,
+                                style: TextStyle(
+                                  fontSize: TXT_SIZE_LARGE(context),
                                   fontWeight: FontWeight.w600,
                                   color: Color(0xff808080),
                                 ),
@@ -219,8 +221,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                               ),
                               Text(
                                 "₹ ${widget.amount}",
-                                style: const TextStyle(
-                                  fontSize: 18,
+                                style: TextStyle(
+                                  fontSize: TXT_SIZE_XL(context),
                                   fontWeight: FontWeight.w600,
                                   color: Color(0xff1b438b),
                                 ),
@@ -236,9 +238,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       horizontal: 24.0, vertical: 16),
                   child: Text(
                     "Select Payment Account",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: "Poppins",
-                      fontSize: 14,
+                      fontSize: TXT_SIZE_LARGE(context),
                       fontWeight: FontWeight.w600,
                       color: Color(0xff1b438b),
                       height: 23 / 14,
@@ -281,8 +283,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                         accountInfo![index]
                                             .accountNumber
                                             .toString(),
-                                        style: const TextStyle(
-                                          fontSize: 13,
+                                        style: TextStyle(
+                                          fontSize: TXT_SIZE_NORMAL(context),
                                           fontWeight: FontWeight.w600,
                                           color: Color(0xff808080),
                                         ),
@@ -293,8 +295,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                           15, 10, 0, 0),
                                       child: Text(
                                         "Balance Amount",
-                                        style: const TextStyle(
-                                          fontSize: 11,
+                                        style: TextStyle(
+                                          fontSize: TXT_SIZE_SMALL(context),
                                           fontWeight: FontWeight.w400,
                                           color: Color(0xff808080),
                                         ),
@@ -305,8 +307,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                           15, 0, 0, 0),
                                       child: Text(
                                         "₹ ${accountInfo![index].balance.toString()}",
-                                        style: const TextStyle(
-                                          fontSize: 18,
+                                        style: TextStyle(
+                                          fontSize: TXT_SIZE_XL(context),
                                           fontWeight: FontWeight.w600,
                                           color: Color(0xff0e2146),
                                         ),

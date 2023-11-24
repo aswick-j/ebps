@@ -1,3 +1,4 @@
+import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -56,8 +57,8 @@ class MainContainer extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 5),
               child: Text(
                 titleText,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: TextStyle(
+                  fontSize: TXT_SIZE_LARGE(context),
                   fontWeight: FontWeight.bold,
                   color: Color(0xff191919),
                 ),
@@ -69,8 +70,8 @@ class MainContainer extends StatelessWidget {
               children: [
                 Text(
                   subtitleText,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: TextStyle(
+                    fontSize: TXT_SIZE_LARGE(context),
                     fontWeight: FontWeight.w400,
                     color: Color(0xff808080),
                   ),
@@ -80,8 +81,8 @@ class MainContainer extends StatelessWidget {
                 ),
                 Text(
                   subtitleText2,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: TextStyle(
+                    fontSize: TXT_SIZE_LARGE(context),
                     fontWeight: FontWeight.w400,
                     color: Color(0xff808080),
                   ),
@@ -108,7 +109,7 @@ class MainContainer extends StatelessWidget {
                     Text(
                       amount,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: TXT_SIZE_LARGE(context),
                         fontWeight: FontWeight.bold,
                         color: Color(0xff1b438b),
                       ),
@@ -123,8 +124,8 @@ class MainContainer extends StatelessWidget {
                         ),
                         Text(
                           dateText,
-                          style: const TextStyle(
-                            fontSize: 12,
+                          style: TextStyle(
+                            fontSize: TXT_SIZE_NORMAL(context),
                             fontWeight: FontWeight.w400,
                             color: Color(0xff808080),
                             height: 20 / 12,

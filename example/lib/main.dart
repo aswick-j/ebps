@@ -125,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   const Text(
                     "Go to BBPS Screen",
                     style: TextStyle(
-                        fontSize: 15.0,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Colors.white),
                   ),

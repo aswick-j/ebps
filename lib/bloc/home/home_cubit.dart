@@ -98,10 +98,9 @@ class HomeCubit extends Cubit<HomeState> {
           if (value['status'] == 200) {
             BillerModel? all_biller = BillerModel.fromJson(value);
             pageNumber++;
-            final List<BillersData> billdata =
-                (state as AllbillerListLoading).prevData;
-            prevBillerData!
-                .addAll(all_biller.billData as Iterable<BillersData>);
+            // final List<BillersData> billdata =
+            //     (state as AllbillerListLoading).prevData;
+            prevBillerData.addAll(all_biller.billData as Iterable<BillersData>);
             if (!isClosed) {
               emit(AllbillerListSuccess(allbillerList: prevBillerData));
             }

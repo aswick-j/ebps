@@ -1,6 +1,7 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/routes.dart';
+import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/data/models/billers_model.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,7 @@ class _BillerListContainerState extends State<BillerListContainer> {
     return Container(
         clipBehavior: Clip.hardEdge,
         width: double.infinity,
+        // height: height(context) * 0.,
         margin: EdgeInsets.only(left: 20.0, right: 20, top: 20, bottom: 0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6.0 + 2),
@@ -100,7 +102,7 @@ class _BillerListContainerState extends State<BillerListContainer> {
                         Text(
                           "All Billers",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: TXT_SIZE_LARGE(context),
                             fontWeight: FontWeight.w600,
                             color: Color(0xffffffff),
                           ),
@@ -126,7 +128,7 @@ class _BillerListContainerState extends State<BillerListContainer> {
               if (isAllBiller) Text("Loading...."),
               if (!isAllBiller)
                 Container(
-                  height: 600,
+                  height: height(context) * 0.65,
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
@@ -156,8 +158,8 @@ class _BillerListContainerState extends State<BillerListContainer> {
                             title: Text(
                               Allbiller![index].bILLERNAME.toString(),
                               // "Airtel Digital TV",
-                              style: const TextStyle(
-                                fontSize: 14,
+                              style: TextStyle(
+                                fontSize: TXT_SIZE_LARGE(context),
                                 fontWeight: FontWeight.w400,
                                 color: Color(0xff4c4c4c),
                               ),
@@ -166,7 +168,7 @@ class _BillerListContainerState extends State<BillerListContainer> {
                       );
                     },
                   ),
-                )
+                ),
             ],
           );
         }));

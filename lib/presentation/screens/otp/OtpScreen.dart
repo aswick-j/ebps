@@ -1,4 +1,5 @@
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/screens/Payments/TransactionSuccess.dart';
@@ -64,7 +65,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             Text(
                               "MPIN Verification",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: TXT_SIZE_LARGE(context),
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xffffffff),
                               ),
@@ -76,8 +77,8 @@ class _OtpScreenState extends State<OtpScreen> {
                     ),
                     Text(
                       "Enter 4-Digit MPIN",
-                      style: const TextStyle(
-                        fontSize: 15,
+                      style: TextStyle(
+                        fontSize: TXT_SIZE_XL(context),
                         fontWeight: FontWeight.bold,
                         color: Color(0xff1b438b),
                       ),
@@ -85,8 +86,8 @@ class _OtpScreenState extends State<OtpScreen> {
                     ),
                     Text(
                       "MPIN will keep your account secure from unauthorized access. Do not share this PIN with anyone",
-                      style: const TextStyle(
-                        fontSize: 13,
+                      style: TextStyle(
+                        fontSize: TXT_SIZE_NORMAL(context),
                         fontWeight: FontWeight.w400,
                         color: Color(0xff808080),
                       ),

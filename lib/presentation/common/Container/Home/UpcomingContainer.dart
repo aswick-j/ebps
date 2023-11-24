@@ -1,4 +1,5 @@
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -60,8 +61,8 @@ class UpcomingDuesContainer extends StatelessWidget {
                 children: [
                   Text(
                     titleText,
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: TextStyle(
+                      fontSize: TXT_SIZE_LARGE(context),
                       fontWeight: FontWeight.bold,
                       color: Color(0xff191919),
                     ),
@@ -79,8 +80,8 @@ class UpcomingDuesContainer extends StatelessWidget {
                   children: [
                     Text(
                       subtitleText,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: TextStyle(
+                        fontSize: TXT_SIZE_LARGE(context),
                         fontWeight: FontWeight.w400,
                         color: Color(0xff808080),
                       ),
@@ -88,7 +89,7 @@ class UpcomingDuesContainer extends StatelessWidget {
                     Text(
                       amount,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: TXT_SIZE_LARGE(context),
                         fontWeight: FontWeight.bold,
                         color: Color(0xff1b438b),
                       ),
@@ -113,8 +114,8 @@ class UpcomingDuesContainer extends StatelessWidget {
                     ),
                     Text(
                       dateText,
-                      style: const TextStyle(
-                        fontSize: 12,
+                      style: TextStyle(
+                        fontSize: TXT_SIZE_NORMAL(context),
                         fontWeight: FontWeight.w400,
                         color: Color(0xff808080),
                         height: 20 / 12,

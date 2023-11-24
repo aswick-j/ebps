@@ -1,4 +1,5 @@
 import 'package:ebps/constants/routes.dart';
+import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/data/models/categories_model.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class CategoriesContainer extends StatelessWidget {
             child: Text(
               headerName,
               style: TextStyle(
-                fontSize: 15,
+                fontSize: TXT_SIZE_XL(context),
                 fontWeight: FontWeight.w600,
                 color: Color(0xff1b438b),
                 height: 25 / 15,
@@ -79,8 +80,8 @@ class CategoriesContainer extends StatelessWidget {
                                   )),
                               Text(
                                 "View All",
-                                style: const TextStyle(
-                                  fontSize: 12,
+                                style: TextStyle(
+                                  fontSize: TXT_SIZE_NORMAL(context),
                                   fontWeight: FontWeight.w400,
                                   color: Color(0xff4c4c4c),
                                 ),
@@ -119,8 +120,8 @@ class CategoriesContainer extends StatelessWidget {
                                   categoriesData![index]
                                       .cATEGORYNAME
                                       .toString(),
-                                  style: const TextStyle(
-                                    fontSize: 12,
+                                  style: TextStyle(
+                                    fontSize: TXT_SIZE_CUSTOM(context, 0.028),
                                     fontWeight: FontWeight.w400,
                                     color: Color(0xff4c4c4c),
                                   ),
@@ -148,7 +149,7 @@ class CategoriesContainer extends StatelessWidget {
                             //           .cATEGORYNAME
                             //           .toString(),
                             //       style: const TextStyle(
-                            //         fontSize: 12,
+                            //         fontSize : fontSize : TXT_SIZE_NORMAL(context),
                             //         fontWeight: FontWeight.w400,
                             //         color: Color(0xff4c4c4c),
                             //       ),

@@ -1,4 +1,5 @@
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -61,8 +62,8 @@ class MyBillersContainer extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 5),
               child: Text(
                 titleText,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: TextStyle(
+                  fontSize: TXT_SIZE_LARGE(context),
                   fontWeight: FontWeight.bold,
                   color: Color(0xff191919),
                 ),
@@ -74,8 +75,8 @@ class MyBillersContainer extends StatelessWidget {
               children: [
                 Text(
                   subtitleText,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: TextStyle(
+                    fontSize: TXT_SIZE_LARGE(context),
                     fontWeight: FontWeight.w400,
                     color: Color(0xff808080),
                   ),
@@ -110,8 +111,8 @@ class MyBillersContainer extends StatelessWidget {
                               padding: EdgeInsets.only(bottom: 5),
                               child: Text(
                                 titleText,
-                                style: const TextStyle(
-                                  fontSize: 14,
+                                style: TextStyle(
+                                  fontSize: TXT_SIZE_LARGE(context),
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xff191919),
                                 ),
@@ -123,8 +124,8 @@ class MyBillersContainer extends StatelessWidget {
                               children: [
                                 Text(
                                   subtitleText,
-                                  style: const TextStyle(
-                                    fontSize: 14,
+                                  style: TextStyle(
+                                    fontSize: TXT_SIZE_LARGE(context),
                                     fontWeight: FontWeight.w400,
                                     color: Color(0xff808080),
                                   ),
@@ -134,8 +135,8 @@ class MyBillersContainer extends StatelessWidget {
                                 ),
                                 Text(
                                   "Autopay Enabled",
-                                  style: const TextStyle(
-                                    fontSize: 14,
+                                  style: TextStyle(
+                                    fontSize: TXT_SIZE_LARGE(context),
                                     fontWeight: FontWeight.w500,
                                     color: Color(0xff00ab44),
                                   ),
@@ -226,8 +227,8 @@ class MyBillersContainer extends StatelessWidget {
                                         padding: EdgeInsets.only(bottom: 5),
                                         child: Text(
                                           titleText,
-                                          style: const TextStyle(
-                                            fontSize: 14,
+                                          style: TextStyle(
+                                            fontSize: TXT_SIZE_LARGE(context),
                                             fontWeight: FontWeight.bold,
                                             color: Color(0xff191919),
                                           ),
@@ -240,8 +241,8 @@ class MyBillersContainer extends StatelessWidget {
                                         children: [
                                           Text(
                                             subtitleText,
-                                            style: const TextStyle(
-                                              fontSize: 14,
+                                            style: TextStyle(
+                                              fontSize: TXT_SIZE_LARGE(context),
                                               fontWeight: FontWeight.w400,
                                               color: Color(0xff808080),
                                             ),
@@ -251,8 +252,8 @@ class MyBillersContainer extends StatelessWidget {
                                           ),
                                           Text(
                                             "Autopay Enabled",
-                                            style: const TextStyle(
-                                              fontSize: 14,
+                                            style: TextStyle(
+                                              fontSize: TXT_SIZE_LARGE(context),
                                               fontWeight: FontWeight.w500,
                                               color: Color(0xff00ab44),
                                             ),
@@ -283,22 +284,28 @@ class MyBillersContainer extends StatelessWidget {
                                     ),
                                     ModalText(
                                         title: "Last Bill Amount",
-                                        subTitle: "₹ 500.00"),
+                                        subTitle: "₹ 500.00",
+                                        context: context),
                                     ModalText(
                                         title: "Due Amount",
-                                        subTitle: "₹ 500.00"),
+                                        subTitle: "₹ 500.00",
+                                        context: context),
                                     ModalText(
                                         title: "Due Date",
-                                        subTitle: "20/09/2023"),
+                                        subTitle: "20/09/2023",
+                                        context: context),
                                     ModalText(
                                         title: "Autopay Date",
-                                        subTitle: "20/09/2023"),
+                                        subTitle: "20/09/2023",
+                                        context: context),
                                     ModalText(
                                         title: "Debit Account",
-                                        subTitle: "100766546787"),
+                                        subTitle: "100766546787",
+                                        context: context),
                                     ModalText(
                                         title: "Debit Limit",
-                                        subTitle: "₹ 500.00"),
+                                        subTitle: "₹ 500.00",
+                                        context: context),
                                     Padding(
                                       padding: EdgeInsets.only(
                                           top: 48.0, bottom: 16),
@@ -384,8 +391,8 @@ class MyBillersContainer extends StatelessWidget {
                         ),
                         Text(
                           dateText,
-                          style: const TextStyle(
-                            fontSize: 12,
+                          style: TextStyle(
+                            fontSize: TXT_SIZE_NORMAL(context),
                             fontWeight: FontWeight.w400,
                             color: Color(0xff808080),
                             height: 20 / 12,
@@ -400,7 +407,7 @@ class MyBillersContainer extends StatelessWidget {
                       Text(
                         upcomingText!,
                         style: TextStyle(
-                          fontSize: 10,
+                          fontSize: TXT_SIZE_VSMALL(context),
                           fontWeight: FontWeight.w600,
                           color: upcomingTXT_CLR_DEFAULT,
                         ),
@@ -410,8 +417,8 @@ class MyBillersContainer extends StatelessWidget {
                 ),
                 Text(
                   "₹ 589.00",
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: TextStyle(
+                    fontSize: TXT_SIZE_LARGE(context),
                     fontWeight: FontWeight.bold,
                     color: Color(0xff1b438b),
                     height: 26 / 16,
@@ -425,7 +432,8 @@ class MyBillersContainer extends StatelessWidget {
   }
 }
 
-Widget ModalText({String? title, String? subTitle}) {
+Widget ModalText(
+    {String? title, String? subTitle, required BuildContext context}) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
     child: Row(
@@ -434,7 +442,7 @@ Widget ModalText({String? title, String? subTitle}) {
         Text(
           title!,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: TXT_SIZE_LARGE(context),
             fontWeight: FontWeight.w400,
             color: Color(0xff808080),
           ),
@@ -443,7 +451,7 @@ Widget ModalText({String? title, String? subTitle}) {
         Text(
           subTitle!,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: TXT_SIZE_LARGE(context),
             fontWeight: FontWeight.bold,
             color: Color(0xff1b438b),
           ),

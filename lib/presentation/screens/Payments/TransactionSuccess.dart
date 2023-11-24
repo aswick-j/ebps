@@ -1,4 +1,5 @@
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +22,8 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
         children: [
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 14,
+            style: TextStyle(
+              fontSize: TXT_SIZE_LARGE(context),
               fontWeight: FontWeight.w400,
               color: Color(0xff808080),
               height: 23 / 14,
@@ -34,8 +35,8 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
             children: [
               Text(
                 subTitle,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: TextStyle(
+                  fontSize: TXT_SIZE_LARGE(context),
                   fontWeight: FontWeight.w500,
                   color: Color(0xff1b438b),
                 ),
@@ -101,7 +102,7 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
                             Text(
                               "Transaction Details",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: TXT_SIZE_LARGE(context),
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xffffffff),
                               ),
@@ -135,8 +136,8 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
                                   children: [
                                     Text(
                                       "₹ 650.00",
-                                      style: const TextStyle(
-                                        fontSize: 20,
+                                      style: TextStyle(
+                                        fontSize: TXT_SIZE_XXL(context),
                                         fontWeight: FontWeight.w600,
                                         color: Color(0xff1b438b),
                                         height: 33 / 20,
@@ -148,8 +149,8 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
                                     ),
                                     Text(
                                       "01/08/2023 | 12:48 PM",
-                                      style: const TextStyle(
-                                        fontSize: 14,
+                                      style: TextStyle(
+                                        fontSize: TXT_SIZE_LARGE(context),
                                         fontWeight: FontWeight.w400,
                                         color: Color(0xff808080),
                                       ),

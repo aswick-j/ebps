@@ -1,3 +1,4 @@
+import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/presentation/common/Text/MyAppText.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
@@ -139,7 +140,7 @@ class HistoryContainer extends StatelessWidget {
                         Text(
                           statusText!,
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: TXT_SIZE_NORMAL(context),
                             fontWeight: FontWeight.bold,
                             color: statusText == "PENDING"
                                 ? CLR_ASTRIX

@@ -1,6 +1,7 @@
+import 'package:ebps/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
-billerDetail(pARAMETERNAME, pARAMETERVALUE) {
+billerDetail(pARAMETERNAME, pARAMETERVALUE, context) {
   return Container(
       // margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -14,19 +15,19 @@ billerDetail(pARAMETERNAME, pARAMETERVALUE) {
               child: Text(
                 pARAMETERNAME,
                 // "Subscriber ID",
-                style: const TextStyle(
-                  fontSize: 13,
+                style: TextStyle(
+                  fontSize: TXT_SIZE_NORMAL(context),
                   fontWeight: FontWeight.w400,
                   color: Color(0xff808080),
                 ),
                 textAlign: TextAlign.center,
               )),
           Padding(
-              padding: const EdgeInsets.fromLTRB(8, 10, 0, 0),
+              padding: EdgeInsets.fromLTRB(8, 10, 0, 0),
               child: Text(
                 pARAMETERVALUE,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: TextStyle(
+                  fontSize: TXT_SIZE_LARGE(context),
                   fontWeight: FontWeight.w500,
                   color: Color(0xff1b438b),
                 ),

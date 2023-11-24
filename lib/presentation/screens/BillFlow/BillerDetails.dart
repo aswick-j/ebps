@@ -1,6 +1,7 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
+import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/data/models/add_biller_model.dart';
 import 'package:ebps/data/models/billers_model.dart';
 import 'package:ebps/data/models/fetch_bill_model.dart';
@@ -204,35 +205,40 @@ class _BillerDetailsState extends State<BillerDetails> {
                                       billerDetail(
                                           "Bill Date",
                                           _billerResponseData!.billDate
-                                              .toString()),
+                                              .toString(),
+                                          context),
                                     if (_billerResponseData != null &&
                                         _billerResponseData!.dueDate != null)
                                       billerDetail(
                                           "Due Date",
                                           _billerResponseData!.dueDate
-                                              .toString()),
+                                              .toString(),
+                                          context),
                                     if (_billerResponseData != null &&
                                         _billerResponseData!.billNumber != null)
                                       billerDetail(
                                           "Bill Number",
                                           _billerResponseData!.billNumber
-                                              .toString()),
+                                              .toString(),
+                                          context),
                                     if (_billerResponseData != null &&
                                         _billerResponseData!.billPeriod != null)
                                       billerDetail(
                                           "Bill Period",
                                           _billerResponseData!.billPeriod
-                                              .toString()),
+                                              .toString(),
+                                          context),
                                     if (_billerResponseData != null &&
                                         _billerResponseData!.customerName !=
                                             null)
                                       billerDetail(
                                           "Customer Name",
                                           _billerResponseData!.customerName
-                                              .toString()),
+                                              .toString(),
+                                          context),
                                     if (widget!.billName != null)
                                       billerDetail("Bill Name",
-                                          widget!.billName.toString()),
+                                          widget!.billName.toString(), context),
                                   ],
                                 )),
                         if (!isFetchbillLoading &&
@@ -253,7 +259,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                     child: Text(
                                       "Additional Info",
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: TXT_SIZE_XL(context),
                                         fontWeight: FontWeight.bold,
                                         color: Color(0xff1b438b),
                                       ),
@@ -289,8 +295,10 @@ class _BillerDetailsState extends State<BillerDetails> {
                                                           .tag![index].name
                                                           .toString(),
                                                       // "Subscriber ID",
-                                                      style: const TextStyle(
-                                                        fontSize: 13,
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            TXT_SIZE_NORMAL(
+                                                                context),
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         color:
@@ -306,8 +314,10 @@ class _BillerDetailsState extends State<BillerDetails> {
                                                       _additionalInfo!
                                                           .tag![index].value
                                                           .toString(),
-                                                      style: const TextStyle(
-                                                        fontSize: 14,
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            TXT_SIZE_LARGE(
+                                                                context),
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         color:
@@ -398,7 +408,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                     'Payment Amount has to be between ₹ ${paymentInform?.mINLIMIT.toString()} and ₹ ${paymentInform?.mAXLIMIT.toString()}',
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: TXT_SIZE_NORMAL(context),
                                       fontWeight: FontWeight.normal,
                                       color: isInsufficient
                                           ? CLR_ERROR

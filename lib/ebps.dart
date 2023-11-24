@@ -6,8 +6,6 @@
 //   }
 // }
 import 'package:ebps/constants/routes.dart';
-import 'package:ebps/presentation/common/BottomNavBar/BotttomNavBar.dart';
-import 'package:ebps/presentation/screens/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
