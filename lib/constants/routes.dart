@@ -20,6 +20,10 @@ const bILLERLISTROUTE = "/billerList";
 const bILLERPARAMROUTE = "/billerParameters";
 const fETCHBILLERDETAILSROUTE = "/fetchBillerDetails";
 const pAYMENTCONFIRMROUTE = "/paymentConfirmation";
+const sESSIONEXPIRED = '/SessionExpired';
+
+/// The `MyRouter` class is responsible for generating routes and corresponding page widgets based on
+/// the provided route settings.
 
 class MyRouter {
   ApiClient apiClient = ApiClient();

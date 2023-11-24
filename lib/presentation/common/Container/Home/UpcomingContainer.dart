@@ -1,3 +1,4 @@
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,7 +12,7 @@ class UpcomingDuesContainer extends StatelessWidget {
   final String iconPath;
   final Color containerBorderColor;
   final Color buttonColor;
-  final Color buttonTextColor;
+  final Color buttonTXT_CLR_DEFAULT;
   final FontWeight buttonTextWeight;
   final Color? buttonBorderColor;
 
@@ -24,7 +25,7 @@ class UpcomingDuesContainer extends StatelessWidget {
     required this.iconPath,
     required this.containerBorderColor,
     required this.buttonColor,
-    required this.buttonTextColor,
+    required this.buttonTXT_CLR_DEFAULT,
     required this.buttonBorderColor,
     required this.buttonTextWeight,
   });
@@ -66,8 +67,7 @@ class UpcomingDuesContainer extends StatelessWidget {
                     ),
                     textAlign: TextAlign.left,
                   ),
-                  SvgPicture.asset(
-                      "packages/ebps/assets/icon/icon_refresh.svg"),
+                  SvgPicture.asset(ICON_REFRESH),
                 ],
               ),
             ),
@@ -125,7 +125,7 @@ class UpcomingDuesContainer extends StatelessWidget {
                 MyAppButton(
                     onPressed: () {},
                     buttonText: buttonText,
-                    buttonTextColor: buttonTextColor,
+                    buttonTXT_CLR_DEFAULT: buttonTXT_CLR_DEFAULT,
                     buttonBorderColor: buttonBorderColor,
                     buttonColor: buttonColor,
                     buttonSizeX: 10,

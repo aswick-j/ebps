@@ -1,15 +1,15 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/constants/colors.dart';
-import 'package:ebps/constants/const.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/data/models/add_biller_model.dart';
 import 'package:ebps/data/models/billers_model.dart';
 import 'package:ebps/data/models/input_signatures_model.dart';
 import 'package:ebps/data/models/saved_biller_model.dart';
+import 'package:ebps/helpers/getInputType.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/common/Container/Home/BillerDetailsContainer.dart';
-import 'package:ebps/presentation/screens/BillFlow/BillerDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -328,9 +328,9 @@ class _BillParametersState extends State<BillParameters> {
                       goBack(context);
                     },
                     buttonText: "Cancel",
-                    buttonTextColor: primaryColor,
+                    buttonTXT_CLR_DEFAULT: CLR_PRIMARY,
                     buttonBorderColor: Colors.transparent,
-                    buttonColor: buttonActiveColor,
+                    buttonColor: BTN_CLR_ACTIVE,
                     buttonSizeX: 10,
                     buttonSizeY: 40,
                     buttonTextSize: 14,
@@ -349,10 +349,10 @@ class _BillParametersState extends State<BillParameters> {
                       //     builder: (context) => const BillerDetails()));
                     },
                     buttonText: "Confirm",
-                    buttonTextColor: buttonActiveColor,
+                    buttonTXT_CLR_DEFAULT: BTN_CLR_ACTIVE,
                     buttonBorderColor: Colors.transparent,
                     buttonColor: isButtonActive && isValidBillName
-                        ? primaryColor
+                        ? CLR_PRIMARY
                         : Colors.grey,
                     buttonSizeX: 10,
                     buttonSizeY: 40,

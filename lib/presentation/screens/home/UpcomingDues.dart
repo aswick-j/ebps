@@ -64,7 +64,7 @@ class _UpcomingDuesState extends State<UpcomingDues> {
           iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
           containerBorderColor: Color(0xffD1D9E8),
           buttonColor: Color(0xFF1B438B),
-          buttonTextColor: Color.fromARGB(255, 255, 255, 255),
+          buttonTXT_CLR_DEFAULT: Color.fromARGB(255, 255, 255, 255),
           buttonTextWeight: FontWeight.normal,
           buttonBorderColor: null,
         ),
@@ -77,7 +77,7 @@ class _UpcomingDuesState extends State<UpcomingDues> {
           iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
           containerBorderColor: Color(0xffD1D9E8),
           buttonColor: Color.fromARGB(255, 255, 255, 255),
-          buttonTextColor: Color(0xff00AB44),
+          buttonTXT_CLR_DEFAULT: Color(0xff00AB44),
           buttonTextWeight: FontWeight.bold,
           buttonBorderColor: Color(0xff00AB44),
         )

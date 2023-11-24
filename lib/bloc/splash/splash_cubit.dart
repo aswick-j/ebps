@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:ebps/data/models/login_model.dart';
 import 'package:ebps/data/repository/api_repository.dart';
 import 'package:ebps/data/services/api.dart';
-import 'package:ebps/utils/logger.dart';
+import 'package:ebps/helpers/logger.dart';
 import 'package:meta/meta.dart';
 
 part 'splash_state.dart';

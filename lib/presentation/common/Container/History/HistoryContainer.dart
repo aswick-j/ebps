@@ -53,13 +53,13 @@ class HistoryContainer extends StatelessWidget {
                   MyAppText(
                     data: titleText,
                     size: 14.0,
-                    color: txtColorLite,
+                    color: TXT_CLR_LITE,
                     weight: FontWeight.w500,
                   ),
                   MyAppText(
                     data: amount,
                     size: 14.0,
-                    color: primaryColor,
+                    color: CLR_PRIMARY,
                     weight: FontWeight.bold,
                   ),
                 ],
@@ -74,7 +74,7 @@ class HistoryContainer extends StatelessWidget {
                     MyAppText(
                       data: subtitleText,
                       size: 14.0,
-                      color: textColor,
+                      color: TXT_CLR_DEFAULT,
                       weight: FontWeight.w500,
                     ),
                   ],
@@ -95,14 +95,14 @@ class HistoryContainer extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.calendar_month, color: txtColorLite, size: 15),
+                    Icon(Icons.calendar_month, color: TXT_CLR_LITE, size: 15),
                     SizedBox(
                       width: 5,
                     ),
                     MyAppText(
                       data: dateText,
                       size: 12.0,
-                      color: txtColorLite,
+                      color: TXT_CLR_LITE,
                       weight: FontWeight.w400,
                     ),
                   ],
@@ -116,12 +116,12 @@ class HistoryContainer extends StatelessWidget {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: statusText == "PENDING"
-                                  ? astrixColor
-                                  : errorColor,
+                                  ? CLR_ASTRIX
+                                  : CLR_ERROR,
                               border: Border.all(
                                 color: statusText == "PENDING"
-                                    ? astrixColor
-                                    : errorColor,
+                                    ? CLR_ASTRIX
+                                    : CLR_ERROR,
                                 width: 2.0,
                               ),
                             ),
@@ -142,8 +142,8 @@ class HistoryContainer extends StatelessWidget {
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                             color: statusText == "PENDING"
-                                ? astrixColor
-                                : errorColor,
+                                ? CLR_ASTRIX
+                                : CLR_ERROR,
                             height: 20 / 12,
                           ),
                           textAlign: TextAlign.left,
@@ -151,7 +151,7 @@ class HistoryContainer extends StatelessWidget {
                       SizedBox(width: 10),
                       Icon(
                         Icons.arrow_forward,
-                        color: txtColorLite,
+                        color: TXT_CLR_LITE,
                       )
                     ]))
               ],

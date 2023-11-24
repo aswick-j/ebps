@@ -1,15 +1,18 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
-import 'package:ebps/constants/const.dart';
 import 'package:ebps/data/models/account_info_model.dart';
 import 'package:ebps/data/models/add_biller_model.dart';
 import 'package:ebps/data/models/billers_model.dart';
+import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/common/Container/Home/BillerDetailsContainer.dart';
 import 'package:ebps/presentation/screens/otp/OtpScreen.dart';
+import 'package:ebps/presentation/widget/getBillerDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 class PaymentDetails extends StatefulWidget {
   int? billID;
@@ -249,10 +252,10 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     color: Colors.white,
                     child: GridView.builder(
                         shrinkWrap: true,
-                        itemCount: 2,
+                        itemCount: accountInfo!.length,
                         physics: NeverScrollableScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: accountInfo!.length,
+                          crossAxisCount: 2,
                           // mainAxisSpacing: 10,
                         ),
                         itemBuilder: (context, index) {
@@ -299,7 +302,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                       )),
                                   Padding(
                                       padding: const EdgeInsets.fromLTRB(
-                                          15, 10, 0, 0),
+                                          15, 0, 0, 0),
                                       child: Text(
                                         "₹ ${accountInfo![index].balance.toString()}",
                                         style: const TextStyle(
@@ -313,6 +316,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                               ));
                         }),
                   ),
+                Container(
+                    height: 30, width: 30, child: SvgPicture.asset(LOGO_BBPS))
               ],
             ),
           );
@@ -333,9 +338,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                             builder: (context) => OtpScreen()));
                       },
                       buttonText: "Proceed to Pay",
-                      buttonTextColor: buttonActiveColor,
+                      buttonTXT_CLR_DEFAULT: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: primaryColor,
+                      buttonColor: CLR_PRIMARY,
                       buttonSizeX: 10,
                       buttonSizeY: 40,
                       buttonTextSize: 14,

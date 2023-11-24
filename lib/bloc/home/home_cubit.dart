@@ -3,8 +3,9 @@ import 'package:ebps/data/models/billers_model.dart';
 import 'package:ebps/data/models/categories_model.dart';
 import 'package:ebps/data/models/fetch_bill_model.dart';
 import 'package:ebps/data/models/input_signatures_model.dart';
+import 'package:ebps/data/models/paymentInformationModel.dart';
 import 'package:ebps/data/repository/api_repository.dart';
-import 'package:ebps/utils/logger.dart';
+import 'package:ebps/helpers/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -249,7 +250,43 @@ class HomeCubit extends Cubit<HomeState> {
         emit(AccountInfoFailed(message: value['message']));
       }
     } catch (e) {
+      logger.e(
+          error: "ACCOUNT INFO API ERROR ===> lib/bloc/home/getAccountInfo", e);
+
       emit(AccountInfoError(message: 'An error occurred'));
+    }
+  }
+
+  //PAYMENT_INFO
+  Future<void> getPaymentInformation(billerID) async {
+    if (isClosed) return;
+
+    emit(PaymentInfoLoading());
+
+    try {
+      final value = await repository!.getPaymentInformation(billerID);
+      logger.d(value,
+          error:
+              "FETCH BILL API ERROR ===> lib/bloc/home/getPaymentInformation");
+      if (value != null &&
+          !value.toString().contains("Invalid token") &&
+          value['status'] == 200) {
+        final paymentInfoDetails = PaymentInformationModel.fromJson(value);
+        if (!isClosed) {
+          emit(PaymentInfoSuccess(PaymentInfoDetail: paymentInfoDetails));
+        }
+      } else {
+        if (!isClosed) {
+          logger.e(value,
+              error:
+                  "FETCH BILL API ERROR ===> lib/bloc/home/getPaymentInformation");
+          emit(PaymentInfoFailed(message: value['message']));
+        }
+      }
+    } catch (e) {
+      logger.e(e,
+          error:
+              "FETCH BILL API ERROR ===> lib/bloc/home/getPaymentInformation");
     }
   }
 }

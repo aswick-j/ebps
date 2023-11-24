@@ -113,9 +113,9 @@ class _OtpScreenState extends State<OtpScreen> {
                           builder: (context) => TransactionSuccess()));
                     },
                     buttonText: "Verify",
-                    buttonTextColor: buttonActiveColor,
+                    buttonTXT_CLR_DEFAULT: BTN_CLR_ACTIVE,
                     buttonBorderColor: Colors.transparent,
-                    buttonColor: primaryColor,
+                    buttonColor: CLR_PRIMARY,
                     buttonSizeX: 10,
                     buttonSizeY: 40,
                     buttonTextSize: 14,

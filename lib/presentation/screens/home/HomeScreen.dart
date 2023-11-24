@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   margin: EdgeInsets.only(top: 20, bottom: 20, right: 15),
                   width: 40,
                   decoration: ShapeDecoration(
-                    color: secondaryColor,
+                    color: CLR_SECONDARY,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(100.0),
                     ),

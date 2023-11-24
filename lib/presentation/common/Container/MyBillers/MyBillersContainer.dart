@@ -11,10 +11,10 @@ class MyBillersContainer extends StatelessWidget {
   final String amount;
   final String iconPath;
   final String? upcomingText;
-  final Color? upcomingTextColor;
+  final Color? upcomingTXT_CLR_DEFAULT;
   final Color containerBorderColor;
   final Color? buttonColor;
-  final Color? buttonTextColor;
+  final Color? buttonTXT_CLR_DEFAULT;
   final FontWeight? buttonTextWeight;
   final Color? buttonBorderColor;
   final bool? warningBtn;
@@ -26,10 +26,10 @@ class MyBillersContainer extends StatelessWidget {
     required this.amount,
     required this.iconPath,
     this.upcomingText,
-    this.upcomingTextColor,
+    this.upcomingTXT_CLR_DEFAULT,
     required this.containerBorderColor,
     this.buttonColor,
-    this.buttonTextColor,
+    this.buttonTXT_CLR_DEFAULT,
     this.buttonBorderColor,
     this.buttonTextWeight,
     this.warningBtn,
@@ -171,7 +171,7 @@ class MyBillersContainer extends StatelessWidget {
                                 MyAppButton(
                                     onPressed: () {},
                                     buttonText: "Cancel",
-                                    buttonTextColor: primaryColor,
+                                    buttonTXT_CLR_DEFAULT: CLR_PRIMARY,
                                     buttonBorderColor: Color(0xff768EB9),
                                     buttonColor: buttonColor,
                                     buttonSizeX: 10,
@@ -310,7 +310,8 @@ class MyBillersContainer extends StatelessWidget {
                                               onPressed: () =>
                                                   Navigator.of(context).pop(),
                                               buttonText: "Cancel",
-                                              buttonTextColor: primaryColor,
+                                              buttonTXT_CLR_DEFAULT:
+                                                  CLR_PRIMARY,
                                               buttonBorderColor:
                                                   Color(0xff768EB9),
                                               buttonColor: buttonColor,
@@ -327,7 +328,7 @@ class MyBillersContainer extends StatelessWidget {
                               });
                         },
                         buttonText: buttonText,
-                        buttonTextColor: buttonTextColor,
+                        buttonTXT_CLR_DEFAULT: buttonTXT_CLR_DEFAULT,
                         buttonBorderColor: buttonBorderColor,
                         buttonColor: buttonColor,
                         buttonSizeX: 10,
@@ -401,7 +402,7 @@ class MyBillersContainer extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
-                          color: upcomingTextColor,
+                          color: upcomingTXT_CLR_DEFAULT,
                         ),
                         textAlign: TextAlign.center,
                       )

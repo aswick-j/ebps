@@ -158,4 +158,41 @@ class ApiClient implements Repository {
       };
     }
   }
+
+  //PAYMENT INFO
+
+  @override
+  Future getPaymentInformation(id) async {
+    try {
+      /**
+      {"status":200,"message":"Fetch Payment Modes and Channels","data":{"BILLER_ID":"OTO125007XXA63","PAYMENT_MODE":"Internet Banking","MODE_MIN_LIMIT":1,"MODE_MAX_LIMIT":9999999,"PAYMENT_CHANNEL":"INTB","MIN_LIMIT":"0.01","MAX_LIMIT":"99999.99"}}
+       */
+      var response = await api(
+          method: "get",
+          url: BASE_URL + PAYMENT_INFO_URL + id.toString(),
+          token: true,
+          checkSum: false);
+      // var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+
+      // debugLog(decodedResponse, "getPaymentInformation", response);
+      // return decodedResponse;
+      if (!response.body.toString().contains("<html>")) {
+        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+
+        return decodedResponse;
+      } else {
+        return {
+          "status": 500,
+          "message": "Something went wrong",
+          "data": "Error"
+        };
+      }
+    } catch (e) {
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
+  }
 }

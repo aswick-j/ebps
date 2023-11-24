@@ -1,3 +1,4 @@
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/presentation/screens/history/HistoryScreen.dart';
 import 'package:ebps/presentation/screens/home/HomeScreen.dart';
 import 'package:ebps/presentation/screens/myBillers/BillerScreen.dart';
@@ -65,18 +66,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 currentIndex: selectedIndex,
                 items: [
                   BottomNavigationBarItem(
-                    icon: SvgPicture.asset(
-                        'packages/ebps/assets/icon/icon_home_inactive.svg'),
+                    icon: SvgPicture.asset(ICON_HOME_INACTIVE),
                     label: "Home",
-                    activeIcon: SvgPicture.asset(
-                        'packages/ebps/assets/icon/icon_home.svg'),
+                    activeIcon: SvgPicture.asset(ICON_HOME),
                   ),
                   BottomNavigationBarItem(
-                    icon: SvgPicture.asset(
-                        'packages/ebps/assets/icon/icon_billers_inactive.svg'),
+                    icon: SvgPicture.asset(ICON_BILLERS_INACTIVE),
                     label: "Billers",
-                    activeIcon: SvgPicture.asset(
-                        'packages/ebps/assets/icon/icon_billers.svg'),
+                    activeIcon: SvgPicture.asset(ICON_BILLERS),
                   ),
                   BottomNavigationBarItem(
                     icon: SvgPicture.asset(

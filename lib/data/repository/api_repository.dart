@@ -15,4 +15,6 @@ abstract class Repository {
       quickPayAmount, adHocBillValidationRefKey, billName) async {}
   //Account-info
   Future getAccountInfo(account) async {}
+  //Payment-info
+  Future getPaymentInformation(id) async {}
 }

@@ -1,23 +1,24 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 //Ref from IBM- MB
 
-const primaryColor = Color(0xff1B438B);
-const primaryLiteColor = Color(0xff94AFD8);
-const secondaryColor = Color(0xff4969A2);
+const CLR_PRIMARY = Color(0xff1B438B);
+const CLR_PRIMARY_LITE = Color(0xff94AFD8);
+const CLR_SECONDARY = Color(0xff4969A2);
 
-const errorColor = Color(0xffCF1E2F);
+const CLR_GREY = Color(0xFFA4B4D1);
+const CLR_ASTRIX = Color(0xff982F67);
+
+const CLR_BLUESHADE = Color(0xCCACC9FF);
+const CLR_ERROR = Color(0xffCF1E2F);
 
 //primary text colors
-const textColor = Color(0xff191919);
-const txtPrimary = Color(0xff1B438B);
-const txtColorLite = Color(0xff808080);
+const TXT_CLR_DEFAULT = Color(0xff191919);
+const TXT_CLR_PRIMARY = Color(0xff1B438B);
+const TXT_CLR_LITE = Color(0xff808080);
 
 //button colors
-const btnActiveBackground = Color(0xff1B438B);
-const buttonActiveColor = Color(0xffffffff);
-
-const greyColor = Color(0xFFA4B4D1);
-const astrixColor = Color(0xff982F67);
-
-const splashScreenBlueShade = Color(0xCCACC9FF);
+const BTN_CLR_ACTIVE_BG = Color(0xff1B438B);
+const BTN_CLR_ACTIVE = Color(0xffffffff);

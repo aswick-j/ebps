@@ -15,7 +15,7 @@ MyAppBar({
     title: MyAppText(
       data: title,
       size: 23.0,
-      color: primaryColor,
+      color: CLR_PRIMARY,
       weight: FontWeight.bold,
     ),
     toolbarHeight: 80.0,
@@ -26,7 +26,7 @@ MyAppBar({
       icon: const Icon(
         Icons.arrow_back,
         size: 30.46,
-        color: greyColor,
+        color: CLR_GREY,
       ),
     ),
     actions: showActions ? actions : null,

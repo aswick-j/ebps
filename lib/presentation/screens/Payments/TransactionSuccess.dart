@@ -221,9 +221,9 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
                             builder: (context) => TransactionSuccess()));
                       },
                       buttonText: "Raise For Complaint",
-                      buttonTextColor: buttonActiveColor,
+                      buttonTXT_CLR_DEFAULT: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: primaryColor,
+                      buttonColor: CLR_PRIMARY,
                       buttonSizeX: 10,
                       buttonSizeY: 40,
                       buttonTextSize: 14,

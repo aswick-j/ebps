@@ -101,3 +101,22 @@ class AccountInfoError extends HomeState {
   final String? message;
   AccountInfoError({@required this.message});
 }
+
+//PAYMENT INFO
+
+class PaymentInfoLoading extends HomeState {}
+
+class PaymentInfoSuccess extends HomeState {
+  PaymentInformationModel? PaymentInfoDetail;
+  PaymentInfoSuccess({@required this.PaymentInfoDetail});
+}
+
+class PaymentInfoFailed extends HomeState {
+  final String? message;
+  PaymentInfoFailed({@required this.message});
+}
+
+class PaymentInfoError extends HomeState {
+  final String? message;
+  PaymentInfoError({@required this.message});
+}

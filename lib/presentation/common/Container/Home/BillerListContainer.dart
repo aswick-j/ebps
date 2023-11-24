@@ -1,8 +1,8 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
-import 'package:ebps/constants/const.dart';
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/data/models/billers_model.dart';
-import 'package:ebps/presentation/screens/BillFlow/BillParameters.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -75,6 +75,9 @@ class _BillerListContainerState extends State<BillerListContainer> {
           } else if (state is AllbillerListFailed) {
             isAllBiller = false;
           } else if (state is AllbillerListError) {
+            if (state.message!.contains('Invalid')) {
+              // goTo(context, sESSIONEXPIRED);
+            }
             isAllBiller = false;
           }
           return Column(
@@ -147,8 +150,7 @@ class _BillerListContainerState extends State<BillerListContainer> {
                               width: 50,
                               child: Padding(
                                 padding: const EdgeInsets.all(15),
-                                child: SvgPicture.asset(
-                                    "packages/ebps/assets/icon/logo_bbps.svg"),
+                                child: SvgPicture.asset(LOGO_BBPS),
                               ),
                             ),
                             title: Text(

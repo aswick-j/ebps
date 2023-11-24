@@ -1,11 +1,9 @@
 import 'package:ebps/bloc/splash/splash_cubit.dart';
 import 'package:ebps/constants/colors.dart';
-import 'package:ebps/constants/const.dart';
-import 'package:ebps/constants/routes.dart';
-import 'package:ebps/data/services/api_client.dart';
+import 'package:ebps/helpers/getDecodedAccount.dart';
+import 'package:ebps/helpers/logger.dart';
 import 'package:ebps/presentation/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/presentation/common/Text/MyAppText.dart';
-import 'package:ebps/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -67,7 +65,7 @@ class _splashScreenState extends State<splashScreen> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  splashScreenBlueShade,
+                  CLR_BLUESHADE,
                   Colors.white,
                 ],
                 stops: [
@@ -96,14 +94,14 @@ class _splashScreenState extends State<splashScreen> {
                       MyAppText(
                         data: 'Oh no!',
                         size: 14.0,
-                        color: primaryColor,
+                        color: CLR_PRIMARY,
                         weight: FontWeight.bold,
                       ),
                       SizedBox(height: 20),
                       MyAppText(
                         data: 'Something went wrong.',
                         size: 14.0,
-                        color: primaryColor,
+                        color: CLR_PRIMARY,
                         weight: FontWeight.bold,
                       ),
                     ],

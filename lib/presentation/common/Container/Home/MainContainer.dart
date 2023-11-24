@@ -12,7 +12,7 @@ class MainContainer extends StatelessWidget {
   final String iconPath;
   final Color containerBorderColor;
   final Color buttonColor;
-  final Color buttonTextColor;
+  final Color buttonTXT_CLR_DEFAULT;
   final FontWeight buttonTextWeight;
   final Color? buttonBorderColor;
   const MainContainer({
@@ -25,7 +25,7 @@ class MainContainer extends StatelessWidget {
     required this.iconPath,
     required this.containerBorderColor,
     required this.buttonColor,
-    required this.buttonTextColor,
+    required this.buttonTXT_CLR_DEFAULT,
     required this.buttonBorderColor,
     required this.buttonTextWeight,
   });
@@ -139,7 +139,7 @@ class MainContainer extends StatelessWidget {
                     MyAppButton(
                         onPressed: () {},
                         buttonText: buttonText,
-                        buttonTextColor: buttonTextColor,
+                        buttonTXT_CLR_DEFAULT: buttonTXT_CLR_DEFAULT,
                         buttonBorderColor: buttonBorderColor,
                         buttonColor: buttonColor,
                         buttonSizeX: 10,
