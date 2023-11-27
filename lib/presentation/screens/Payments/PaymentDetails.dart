@@ -1,11 +1,14 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/routes.dart';
 import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/data/models/account_info_model.dart';
 import 'package:ebps/data/models/add_biller_model.dart';
 import 'package:ebps/data/models/billers_model.dart';
+import 'package:ebps/data/models/confirm_fetch_bill_model.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/common/Container/Home/BillerDetailsContainer.dart';
@@ -24,6 +27,8 @@ class PaymentDetails extends StatefulWidget {
   BillersData? billerData;
   String? amount;
   List<AddbillerpayloadModel>? inputParameters;
+  Map<String, dynamic>? validateBill;
+  Map<String, dynamic>? billerInputSign;
 
   PaymentDetails(
       {Key? key,
@@ -34,7 +39,9 @@ class PaymentDetails extends StatefulWidget {
       this.billerData,
       this.inputParameters,
       this.categoryName,
-      this.amount})
+      this.amount,
+      this.validateBill,
+      this.billerInputSign})
       : super(key: key);
 
   @override
@@ -43,13 +50,71 @@ class PaymentDetails extends StatefulWidget {
 
 class _PaymentDetailsState extends State<PaymentDetails> {
   bool isAccLoading = true;
+  bool isValidateBillLoading = false;
+  bool isFetchbillLoading = false;
   List<AccountsData>? accountInfo = [];
+  ConfirmFetchBillData? confirmbillerResData;
+  bool _otherAmount = false;
 
   @override
   void initState() {
     BlocProvider.of<HomeCubit>(context).getAccountInfo(myAccounts);
 
     super.initState();
+  }
+
+  showLoader() {
+    if (isFetchbillLoading) {
+      showDialog(
+        barrierDismissible: false,
+        builder: (ctx) {
+          return Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+            ),
+          );
+        },
+        context: context,
+      );
+    } else {}
+  }
+
+  handleSubmit() {
+    if (widget.validateBill!["validateBill"]) {
+      var billDetail = {};
+      billDetail["validateBill"] = widget.validateBill!["validateBill"];
+      billDetail["billerID"] = widget.billerData!.bILLERID;
+      billDetail["billerParams"] = widget.billerInputSign;
+      billDetail["quickPay"] = widget.validateBill!["quickPay"];
+      billDetail["quickPayAmount"] = widget.amount.toString();
+      billDetail["billName"] = widget.billName;
+
+      Map<String, dynamic> payload = {
+        "validateBill": widget.validateBill!["validateBill"],
+        "billerID": widget.isSavedBill
+            ? widget.billerData!.bILLERID
+            : widget.billerData!.bILLERID,
+        "billerParams": widget.billerInputSign,
+        "quickPay": widget.validateBill!["quickPay"],
+        "quickPayAmount": widget.amount.toString(),
+        "billName": widget.billName,
+      };
+      BlocProvider.of<HomeCubit>(context).fetchValidateBill(payload);
+    } else if (widget.validateBill!["billerType"] == "instant" ||
+        widget.validateBill!["billerType"] == "adhoc" ||
+        widget.validateBill!["billerType"] == "billFetch") {
+      BlocProvider.of<HomeCubit>(context).confirmFetchBill(
+        billerID: widget.isSavedBill
+            ? widget.billerData!.bILLERID
+            : widget.billerData!.bILLERID,
+        quickPay: widget.validateBill!["quickPay"],
+        quickPayAmount: widget.amount.toString(),
+        adHocBillValidationRefKey: "",
+        validateBill: widget.validateBill!["validateBill"],
+        billerParams: widget.billerInputSign,
+        billName: widget.isSavedBill ? null : widget.billName,
+      );
+    }
   }
 
   @override
@@ -71,7 +136,52 @@ class _PaymentDetailsState extends State<PaymentDetails> {
           } else if (state is AccountInfoFailed) {
             isAccLoading = false;
           } else if (state is AccountInfoError) {}
-        }, builder: (context, snapshot) {
+
+          if (state is ConfirmFetchBillLoading) {
+            isFetchbillLoading = true;
+            showLoader();
+          } else if (state is ConfirmFetchBillSuccess) {
+            confirmbillerResData = state.ConfirmFetchBillResponse;
+            //  _otherAmount = !(!widget.billerData!.pAYMENTEXACTNESS!.isNotEmpty ||
+            //             widget.billerData!.pAYMENTEXACTNESS == "Exact" ||
+            //             userAmount == billAmount);
+            goToData(context, oTPPAGEROUTE, {
+              "from": "confirmPaymentRoute",
+              "templateName": "confirm-payment",
+              "data": {
+                "billerID": widget.billerData!.bILLERID,
+                "billerName": widget.billerData!.bILLERNAME,
+                "billName": widget.billName,
+                "acNo": accountInfo![0].accountNumber,
+                "billAmount": widget.amount.toString(),
+                "customerBillID": confirmbillerResData!.customerbillId,
+                "tnxRefKey": confirmbillerResData!.txnRefKey,
+                "quickPay": widget.validateBill!["quickPay"],
+                "inputSignature": widget.inputParameters,
+                "otherAmount": _otherAmount,
+                "autoPayStatus": '',
+                "billerData": widget.billerData
+              }
+            });
+            // Navigator.of(context)
+            //     .push(MaterialPageRoute(builder: (context) => OtpScreen()));
+            isFetchbillLoading = false;
+          } else if (state is ConfirmFetchBillFailed) {
+            isFetchbillLoading = false;
+          } else if (state is ConfirmFetchBillError) {
+            isFetchbillLoading = false;
+          }
+
+          if (state is ValidateBillLoading) {
+            isValidateBillLoading = true;
+          } else if (state is ValidateBillSuccess) {
+            isValidateBillLoading = false;
+          } else if (state is ValidateBillFailed) {
+            isValidateBillLoading = false;
+          } else if (state is ValidateBillError) {
+            isValidateBillLoading = false;
+          }
+        }, builder: (context, state) {
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,57 +257,6 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                     widget.billName.toString(), context),
                               ],
                             )),
-                        // Container(
-                        //   width: double.infinity,
-                        //   height: 80,
-                        //   color: Colors.white,
-                        //   child: GridView.builder(
-                        //       shrinkWrap: true,
-                        //       itemCount: 2,
-                        //       physics: NeverScrollableScrollPhysics(),
-                        //       gridDelegate:
-                        //           SliverGridDelegateWithFixedCrossAxisCount(
-                        //         crossAxisCount: 2,
-                        //         // mainAxisSpacing: 10,
-                        //       ),
-                        //       itemBuilder: (context, index) {
-                        //         return Container(
-                        //             // margin: EdgeInsets.all(10),
-                        //             decoration: BoxDecoration(
-                        //               borderRadius: BorderRadius.circular(2),
-                        //             ),
-                        //             child: Column(
-                        //               crossAxisAlignment:
-                        //                   CrossAxisAlignment.center,
-                        //               children: [
-                        //                 Padding(
-                        //                     padding: const EdgeInsets.fromLTRB(
-                        //                         8, 10, 0, 0),
-                        //                     child: Text(
-                        //                       "Subscriber ID",
-                        //                       style: const TextStyle(
-                        //                         fontSize: 13,
-                        //                         fontWeight: FontWeight.w400,
-                        //                         color: Color(0xff808080),
-                        //                       ),
-                        //                       textAlign: TextAlign.center,
-                        //                     )),
-                        //                 Padding(
-                        //                     padding: const EdgeInsets.fromLTRB(
-                        //                         8, 10, 0, 0),
-                        //                     child: Text(
-                        //                       "1155552343",
-                        //                       style: const TextStyle(
-                        //                         fontSize : TXT_SIZE_LARGE(context),
-                        //                         fontWeight: FontWeight.w500,
-                        //                         color: Color(0xff1b438b),
-                        //                       ),
-                        //                       textAlign: TextAlign.left,
-                        //                     ))
-                        //               ],
-                        //             ));
-                        //       }),
-                        // ),
                         Divider(
                           height: 10,
                           thickness: 1,
@@ -336,8 +395,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => OtpScreen()));
+                        handleSubmit();
                       },
                       buttonText: "Proceed to Pay",
                       buttonTXT_CLR_DEFAULT: BTN_CLR_ACTIVE,

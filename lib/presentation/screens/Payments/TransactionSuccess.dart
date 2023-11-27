@@ -6,7 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class TransactionSuccess extends StatefulWidget {
-  const TransactionSuccess({super.key});
+  bool isSavedBill;
+  Map<String, dynamic> billerData;
+  Map<String, dynamic> inputParameters;
+  TransactionSuccess(
+      {super.key,
+      required this.isSavedBill,
+      required this.billerData,
+      required this.inputParameters});
 
   @override
   State<TransactionSuccess> createState() => _TransactionSuccessState();
@@ -218,8 +225,8 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TransactionSuccess()));
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (context) => TransactionSuccess()));
                       },
                       buttonText: "Raise For Complaint",
                       buttonTXT_CLR_DEFAULT: BTN_CLR_ACTIVE,

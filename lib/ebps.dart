@@ -5,10 +5,10 @@
 //     return EbpsPlatform.instance.getPlatformVersion();
 //   }
 // }
+import 'package:ebps/constants/ebps_theme.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class EbpsScreen extends StatelessWidget {
   String apiData;
@@ -21,10 +21,11 @@ class EbpsScreen extends StatelessWidget {
 
     return MaterialApp(
       title: "Bill Payment",
-      theme: ThemeData(
-        fontFamily: GoogleFonts.poppins().fontFamily,
-        scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
-      ),
+      theme: ebpsTheme,
+      // theme: ThemeData(
+      //   fontFamily: GoogleFonts.poppins().fontFamily,
+      //   scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
+      // ),
       initialRoute: sPLASHROUTE,
       onGenerateInitialRoutes: (initialRoute) => [
         router.generateRoute(
@@ -33,6 +34,7 @@ class EbpsScreen extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       onGenerateRoute: router.generateRoute,
+
       // home: splashScreen(apiData: apiData)
     );
   }

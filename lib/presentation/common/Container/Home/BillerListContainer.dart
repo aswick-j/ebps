@@ -42,15 +42,6 @@ class _BillerListContainerState extends State<BillerListContainer> {
 
   @override
   Widget build(BuildContext context) {
-    // return BlocBuilder<HomeCubit, HomeState>(builder: (context, state)  {
-    //   if (state is AllbillerListLoading && state.isFirstFetch) {}
-    //   if (state is AllbillerListLoading) {
-    //     Allbiller = state.prevData;
-    //   } else if (state is AllbillerListSuccess) {
-    //     Allbiller = state.allbillerList;
-    //   } else if (state is AllbillerListFailed) {
-    //   } else if (state is AllbillerListError) {}
-    // }
     return Container(
         clipBehavior: Clip.hardEdge,
         width: double.infinity,
@@ -78,7 +69,7 @@ class _BillerListContainerState extends State<BillerListContainer> {
             isAllBiller = false;
           } else if (state is AllbillerListError) {
             if (state.message!.contains('Invalid')) {
-              // goTo(context, sESSIONEXPIRED);
+              goTo(context, sESSIONEXPIREDROUTE);
             }
             isAllBiller = false;
           }

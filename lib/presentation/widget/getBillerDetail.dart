@@ -31,7 +31,7 @@ billerDetail(pARAMETERNAME, pARAMETERVALUE, context) {
                   fontWeight: FontWeight.w500,
                   color: Color(0xff1b438b),
                 ),
-                textAlign: TextAlign.left,
+                textAlign: TextAlign.center,
               ))
         ],
       ));

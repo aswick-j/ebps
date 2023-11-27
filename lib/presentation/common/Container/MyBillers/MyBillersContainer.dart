@@ -1,3 +1,4 @@
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
@@ -384,8 +385,7 @@ class MyBillersContainer extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.calendar_month,
-                            color: Color(0xff808080), size: 15),
+                        SvgPicture.asset(ICON_CALENDAR),
                         SizedBox(
                           width: 5,
                         ),

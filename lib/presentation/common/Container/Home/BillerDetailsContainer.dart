@@ -1,4 +1,3 @@
-
 import 'package:ebps/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -36,7 +35,7 @@ class BillerDetailsContainer extends StatelessWidget {
             fontWeight: FontWeight.bold,
             color: Color(0xff1b438b),
           ),
-          textAlign: TextAlign.left,
+          textAlign: TextAlign.center,
         ),
         SizedBox(
           height: 10,
@@ -49,7 +48,7 @@ class BillerDetailsContainer extends StatelessWidget {
             color: Color(0xff808080),
             height: 26 / 16,
           ),
-          textAlign: TextAlign.left,
+          textAlign: TextAlign.center,
         )
       ]),
     );

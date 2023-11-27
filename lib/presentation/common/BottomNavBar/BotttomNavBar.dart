@@ -76,11 +76,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     activeIcon: SvgPicture.asset(ICON_BILLERS),
                   ),
                   BottomNavigationBarItem(
-                    icon: SvgPicture.asset(
-                        'packages/ebps/assets/icon/icon_history.svg'),
+                    icon: SvgPicture.asset(ICON_HISTORY_INACTIVE),
                     label: "History",
-                    activeIcon: SvgPicture.asset(
-                        'packages/ebps/assets/icon/icon_history.svg'),
+                    activeIcon: SvgPicture.asset(ICON_HISTORY),
                   ),
                 ],
               ),

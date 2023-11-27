@@ -107,8 +107,7 @@ class UpcomingDuesContainer extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.calendar_month,
-                        color: Color(0xff808080), size: 15),
+                    SvgPicture.asset(ICON_CALENDAR),
                     SizedBox(
                       width: 10,
                     ),

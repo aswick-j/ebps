@@ -10,10 +10,10 @@ class AppColorsNonElite {
   static const primaryLite = Color(0xff94AFD8);
   static const error = Color(0xffCF1E2F);
   static const splashColor = Color(0xffE8ECF3);
-  static const TXT_CLR_DEFAULT = Color(0xff191919);
+  static const textColor = Color(0xff191919);
   static const primaryBlur = Color(0xfff3f4f7);
   static const phoneGreen = Color(0xff008936);
-  static const CLR_BLUESHADE = Color(0xCCACC9FF);
+  static const splashScreenBlueShade = Color(0xCCACC9FF);
 
   //Background colors
   static const background = Color(0xffFAFAFA);
@@ -21,14 +21,14 @@ class AppColorsNonElite {
   static const disabledText = Color(0xffa0a0a1);
 
   //primary text colors
-  static const TXT_CLR_PRIMARY = Color(0xff1B438B);
+  static const txtPrimary = Color(0xff1B438B);
   static const buttonTxtColor = Color(0xff94AFD8);
   static const helperText = Color(0xff33BC69);
   static const containerGradientStart = Color(0xff31637D);
   static const containerGradientEnd = Color(0xff99DDB4);
 
   //button colors
-  static const BTN_CLR_ACTIVE_BG = Color(0xff1B438B);
+  static const btnActiveBackground = Color(0xff1B438B);
   static const btnActiveForeground = Color(0xffffffff);
   static const btnDisabledBackground = Color(0xffE5E5E5);
   static const btnDisabledForeground = Colors.black38;
@@ -46,14 +46,14 @@ class AppColorsNonElite {
   static const containerDisableColor = Color(0xfff1f1f1);
 
   static const txtColor = Color(0xff191919);
-  static const TXT_CLR_LITE = Color(0xff808080);
+  static const txtColorLite = Color(0xff808080);
   static const colorE8ECF3 = Color(0xffE8ECF3);
 
   // DEPOSIT GRAPH
   static const depositAmountGraph = Color(0xffD7E1F0);
   static const returnsGraph = Color(0xff0E2146);
 
-  static const swipeTXT_CLR_DEFAULT = Color(0xFFE8ECF3);
+  static const swipeTextColor = Color(0xFFE8ECF3);
   static const backArrowColor = Color(0xff050D1C);
 
   static const selectionBackground = Color(0xffE8ECF3);
@@ -62,17 +62,17 @@ class AppColorsNonElite {
   static const informationContainerBorderColor = Color(0xffe5eaf3);
 
   static const graphAxis = Color(0xFFA4B4D1);
-  static const CLR_ASTRIX = Color(0xff982F67);
+  static const astrixColor = Color(0xff982F67);
 
   static Color enabledDropdownBackGroundColor =
       const Color(0xffE8ECF3).withOpacity(0.4);
   static Color disabledDropdownBackGroundColor =
       const Color(0xff1C1B1F).withOpacity(0.04);
-  static Color enabledDropdownHeadTXT_CLR_DEFAULT = const Color(0xff1B438B);
-  static Color disabledDropdownHeadTXT_CLR_DEFAULT =
+  static Color enabledDropdownHeadTextColor = const Color(0xff1B438B);
+  static Color disabledDropdownHeadTextColor =
       const Color(0xff1C1B1F).withOpacity(0.4);
-  static Color enabledDropdownTXT_CLR_DEFAULT = const Color(0xff191919);
-  static Color disabledDropdownTXT_CLR_DEFAULT =
+  static Color enabledDropdownTextColor = const Color(0xff191919);
+  static Color disabledDropdownTextColor =
       const Color(0xff1C1B1F).withOpacity(0.4);
   static Color enabledDropdownBorderColor = const Color(0xff1B438B);
   static Color disabledDropdownBorderColor =
@@ -105,10 +105,10 @@ class AppColorsElite {
   static const background = Color(0xff0E2146);
 
   //primary text colors
-  static const TXT_CLR_PRIMARY = Color(0xffffffff);
+  static const txtPrimary = Color(0xffffffff);
 
   //button colors
-  static const BTN_CLR_ACTIVE_BG = Color(0xff94AFD8);
+  static const btnActiveBackground = Color(0xff94AFD8);
   static const btnActiveForeground = Color(0xff0E2146);
   static const btnDisabledBackground = Color(0x3394AFD8);
   static const btnDisabledForeground = Color(0x8094AFD8);
@@ -130,7 +130,7 @@ class AppColorsElite {
   // DEPOSIT GRAPH
   static const depositAmountGraph = Color(0xff99DDB4);
   static const returnsGraph = Color(0xffD1D9E8);
-  static const swipeTXT_CLR_DEFAULT = Color(0xFFE8ECF3);
+  static const swipeTextColor = Color(0xFFE8ECF3);
   static const backArrowColor = Color(0xffffffff);
 
   static const selectionBackground = Color(0xff243657);
@@ -143,17 +143,17 @@ class AppColorsElite {
   static const informationContainerBorderColor = Color(0xff34496f);
 
   static const graphAxis = Color(0xFFD1D9E8);
-  static const CLR_ASTRIX = Color(0xffE27882);
+  static const astrixColor = Color(0xffE27882);
 
   static Color enabledDropdownBackGroundColor =
       const Color(0xff0B1B38).withOpacity(0.6);
   static Color disabledDropdownBackGroundColor =
       const Color(0xffE5E5E5).withOpacity(0.04);
-  static Color enabledDropdownHeadTXT_CLR_DEFAULT = const Color(0xffFFFFFF);
-  static Color disabledDropdownHeadTXT_CLR_DEFAULT =
+  static Color enabledDropdownHeadTextColor = const Color(0xffFFFFFF);
+  static Color disabledDropdownHeadTextColor =
       const Color(0xffFFFFFF).withOpacity(0.5);
-  static Color enabledDropdownTXT_CLR_DEFAULT = const Color(0xffFFFFFF);
-  static Color disabledDropdownTXT_CLR_DEFAULT =
+  static Color enabledDropdownTextColor = const Color(0xffFFFFFF);
+  static Color disabledDropdownTextColor =
       const Color(0xffFFFFFF).withOpacity(0.5);
   static Color enabledDropdownBorderColor = const Color(0xff94AFD8);
   static Color disabledDropdownBorderColor =

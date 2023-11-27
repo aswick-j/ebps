@@ -1,3 +1,4 @@
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/data/models/categories_model.dart';
@@ -54,7 +55,7 @@ class CategoriesContainer extends StatelessWidget {
                 physics: NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
-                  mainAxisSpacing: 10,
+                  mainAxisSpacing: height(context) * 0.014,
                 ),
                 itemBuilder: (context, index) {
                   return viewall == true && index == 7
@@ -89,8 +90,7 @@ class CategoriesContainer extends StatelessWidget {
                               ),
                             ],
                           ))
-                      : Container(
-                          child: Column(
+                      : Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             InkWell(
@@ -103,19 +103,14 @@ class CategoriesContainer extends StatelessWidget {
                                 // Navigator.of(context).push(MaterialPageRoute(
                                 //     builder: (context) => BillerList()));
                               },
-                              child: Container(
-                                // width: 13,
-                                // height: 6,
-
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SvgPicture.asset(
-                                      'packages/ebps/assets/icon/icon_home.svg'),
-                                ),
+                              child: SvgPicture.asset(
+                                height: 57,
+                                CATEGORY_ICON(
+                                    categoriesData![index].cATEGORYNAME),
                               ),
                             ),
                             Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                                 child: Text(
                                   categoriesData![index]
                                       .cATEGORYNAME
@@ -127,36 +122,8 @@ class CategoriesContainer extends StatelessWidget {
                                   ),
                                   textAlign: TextAlign.center,
                                 )),
-                            // Flexible(
-                            //   child: InkWell(
-                            //     onTap: () {
-                            //       Navigator.of(context).push(
-                            //           MaterialPageRoute(
-                            //               builder: (context) =>
-                            //                   BillerList()));
-                            //     },
-                            //     child: Container(
-                            //       child: SvgPicture.asset(
-                            //           'packages/ebps/assets/icon/icon_home.svg'),
-                            //     ),
-                            //   ),
-                            // ),
-                            // Padding(
-                            //     padding:
-                            //         const EdgeInsets.fromLTRB(8, 10, 0, 0),
-                            //     child: Text(
-                            //       categoriesData![index]
-                            //           .cATEGORYNAME
-                            //           .toString(),
-                            //       style: const TextStyle(
-                            //         fontSize : fontSize : TXT_SIZE_NORMAL(context),
-                            //         fontWeight: FontWeight.w400,
-                            //         color: Color(0xff4c4c4c),
-                            //       ),
-                            //       textAlign: TextAlign.center,
-                            //     )),
                           ],
-                        ));
+                        );
                 }),
           ),
           SizedBox(

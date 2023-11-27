@@ -17,4 +17,19 @@ abstract class Repository {
   Future getAccountInfo(account) async {}
   //Payment-info
   Future getPaymentInformation(id) async {}
+  //Validate-bill
+  Future validateBill(payload) async {}
+  //OTP
+  Future validateOtp(otp) async {}
+  //pay-bill
+  Future payBill(
+      String billerID,
+      String acNo,
+      String billAmount,
+      int customerBillID,
+      String tnxRefKey,
+      bool quickPay,
+      dynamic inputSignature,
+      bool otherAmount,
+      String otp) async {}
 }

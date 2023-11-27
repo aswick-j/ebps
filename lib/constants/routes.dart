@@ -6,7 +6,11 @@ import 'package:ebps/presentation/screens/BillFlow/BillParameters.dart';
 import 'package:ebps/presentation/screens/BillFlow/BillerDetails.dart';
 import 'package:ebps/presentation/screens/BillFlow/BillerList.dart';
 import 'package:ebps/presentation/screens/Payments/PaymentDetails.dart';
+import 'package:ebps/presentation/screens/Payments/TransactionSuccess.dart';
 import 'package:ebps/presentation/screens/home/AllBillCategories.dart';
+import 'package:ebps/presentation/screens/mpin/mpinScreen.dart';
+import 'package:ebps/presentation/screens/otp/OtpScreen.dart';
+import 'package:ebps/presentation/screens/session_expired.dart';
 import 'package:ebps/presentation/screens/splashScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +23,10 @@ const bILLERLISTROUTE = "/billerList";
 const bILLERPARAMROUTE = "/billerParameters";
 const fETCHBILLERDETAILSROUTE = "/fetchBillerDetails";
 const pAYMENTCONFIRMROUTE = "/paymentConfirmation";
-const sESSIONEXPIRED = '/SessionExpired';
+const sESSIONEXPIREDROUTE = '/SessionExpired';
+const oTPPAGEROUTE = '/otp';
+const mPINROUTE = '/mpin';
+const tRANSROUTE = '/transSuccessful';
 
 /// The `MyRouter` class is responsible for generating routes and corresponding page widgets based on
 /// the provided route settings.
@@ -36,6 +43,7 @@ class MyRouter {
         final args = settings.arguments.toString();
 
         return CupertinoPageRoute(
+            fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => splashCubit,
                   child: splashScreen(
@@ -47,6 +55,7 @@ class MyRouter {
 
       case hOMEROUTE:
         return CupertinoPageRoute(
+            fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => HomeCubit(repository: apiClient),
                   child: BottomAppBar(),
@@ -58,6 +67,7 @@ class MyRouter {
         List<CategorieData>? catData = args["categoriesData"];
 
         return CupertinoPageRoute(
+            fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => HomeCubit(repository: apiClient),
                   child: AllBillCategories(categoriesData: catData),
@@ -71,6 +81,7 @@ class MyRouter {
         final cAT_NAME = args["cATEGORY_NAME"];
 
         return CupertinoPageRoute(
+            fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => HomeCubit(repository: apiClient),
                   child: BillerList(id: cAT_ID, name: cAT_NAME),
@@ -82,6 +93,7 @@ class MyRouter {
         final args = settings.arguments as Map<String, dynamic>;
 
         return CupertinoPageRoute(
+            fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => HomeCubit(repository: apiClient),
                   child: BillParameters(
@@ -95,6 +107,7 @@ class MyRouter {
         final args = settings.arguments as Map<String, dynamic>;
 
         return CupertinoPageRoute(
+            fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => HomeCubit(repository: apiClient),
                   child: BillerDetails(
@@ -112,22 +125,76 @@ class MyRouter {
         final args = settings.arguments as Map<String, dynamic>;
 
         return CupertinoPageRoute(
+            fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => HomeCubit(repository: apiClient),
                   child: PaymentDetails(
-                    billID: args['billID'],
-                    billerName: args['name'],
-                    billName: args['billName'],
-                    categoryName: args['categoryName'],
+                      billID: args['billID'],
+                      billerName: args['name'],
+                      billName: args['billName'],
+                      categoryName: args['categoryName'],
+                      isSavedBill: args["isSavedBill"],
+                      billerData: args['billerData'],
+                      inputParameters: args['inputParameters'],
+                      amount: args['amount'],
+                      validateBill: args['validateBill'],
+                      billerInputSign: args['billerInputSign']),
+                ));
+
+      //SESSION EXPIRED
+
+      case sESSIONEXPIREDROUTE:
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => BlocProvider(
+                  create: (context) => HomeCubit(repository: apiClient),
+                  child: SessionExpired(),
+                ));
+//MPIN
+      case mPINROUTE:
+        final args = settings.arguments as Map<String, dynamic>;
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => BlocProvider(
+                  create: (context) => HomeCubit(repository: apiClient),
+                  child: MpinScreen(data: args['data']),
+                ));
+
+      //OTP
+      case oTPPAGEROUTE:
+        // Widget otpScreen = OtpScreen(
+        //   from: '',
+        //   templateName: '',
+        // );
+        final args = settings.arguments as Map<String, dynamic>;
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => BlocProvider(
+                  create: (context) => HomeCubit(repository: apiClient),
+                  child: OtpScreen(
+                      from: args['from'],
+                      templateName: args['templateName'],
+                      data: args['data']),
+                ));
+
+      //TRANS_SUCCESS
+
+      case tRANSROUTE:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => BlocProvider(
+                  create: (context) => HomeCubit(repository: apiClient),
+                  child: TransactionSuccess(
                     isSavedBill: args["isSavedBill"],
                     billerData: args['billerData'],
                     inputParameters: args['inputParameters'],
-                    amount: args['amount'],
                   ),
                 ));
-
       default:
         return CupertinoPageRoute(
+            fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => HomeCubit(repository: apiClient),
                   child: BottomAppBar(),

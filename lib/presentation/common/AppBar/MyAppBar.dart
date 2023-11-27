@@ -13,11 +13,7 @@ MyAppBar({
 }) {
   return AppBar(
     title: MyAppText(
-      data: title,
-      size: 23.0,
-      color: CLR_PRIMARY,
-      weight: FontWeight.bold,
-    ),
+        data: title, color: CLR_PRIMARY, weight: FontWeight.bold, maxline: 1),
     toolbarHeight: 80.0,
     backgroundColor: Colors.white,
     elevation: 0.0,

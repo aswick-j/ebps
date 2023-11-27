@@ -195,4 +195,116 @@ class ApiClient implements Repository {
       };
     }
   }
+
+  //Validate-bill
+
+  @override
+  Future validateBill(payload) async {
+    try {
+      var response = await api(
+          method: "post",
+          url: BASE_URL + VALIDATE_BILL_URL,
+          token: true,
+          body: payload,
+          checkSum: false);
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+      return decodedResponse;
+    } catch (e) {
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
+  }
+  //OTP
+
+  @override
+  Future validateOtp(otp) async {
+    try {
+      Map<String, dynamic> body = {"otp": otp};
+      var response = await api(
+          method: 'post',
+          body: body,
+          url: BASE_URL + VALIDATE_OTP_URL,
+          token: true,
+          checkSum: false);
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+      return decodedResponse;
+    } catch (e) {}
+  }
+
+  //PAY-BILL
+
+  @override
+  Future payBill(
+      String billerID,
+      String acNo,
+      String billAmount,
+      int customerBillID,
+      String tnxRefKey,
+      bool quickPay,
+      dynamic inputSignature,
+      bool otherAmount,
+      String otp) async {
+    try {
+      Map<String, dynamic> body = {};
+      if (customerBillID == 0) {
+        body = {
+          "billerId": billerID,
+          "accountNumber": acNo,
+          "billAmount": billAmount,
+          "transactionReferenceKey": tnxRefKey,
+          "quickPay": quickPay,
+          "inputSignatures": inputSignature,
+          "otherAmount": otherAmount,
+          "otp": otp
+        };
+      } else {
+        body = {
+          "billerId": billerID,
+          "accountNumber": acNo,
+          "billAmount": billAmount,
+          "customerBillId": customerBillID,
+          "transactionReferenceKey": tnxRefKey,
+          "quickPay": quickPay,
+          "inputSignatures": inputSignature,
+          "otherAmount": otherAmount,
+          "otp": otp
+        };
+      }
+
+      var response = await api(
+          method: "post",
+          url: BASE_URL + PAY_BILL_URL,
+          body: body,
+          token: true,
+          checkSum: false);
+
+      if (!response.body.toString().contains("<html>")) {
+        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+        return decodedResponse;
+
+        // DONOT DELETE - paybill fail case response
+        // return {
+        //   "message": "Bill Payment failed for a transaction",
+        //   "status": 500
+        // };
+
+        //{"message":"Bill Payment failed for a transaction","data":{"paymentDetails":{"created":"2023-02-15T07:09:24.880Z","failed":true},"transactionSteps":[{"description":"Transaction Initiated","flag":true,"pending":false},{"description":"Fund Transfer Initiated by Bank","flag":false,"pending":false},{"description":"Bill processed by Biller","flag":false,"pending":false},{"description":"Bill Payment Completed","flag":false,"pending":false}],"reason":"fund transfer failure","equitasTransactionId":"-"},"status":500}
+      } else {
+        return {
+          "status": 500,
+          "message": "Something went wrong",
+          "data": "Error"
+        };
+      }
+    } catch (e) {
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
+  }
 }

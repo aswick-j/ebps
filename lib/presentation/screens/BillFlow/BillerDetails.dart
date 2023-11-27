@@ -182,7 +182,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                         if (!isFetchbillLoading &&
                             !isUnableToFetchBill &&
                             !isPaymentInfoLoading)
-                          if (((_billerResponseData != null ||
+                          if (((_billerResponseData == null ||
                               _billerResponseData!.tag!.isEmpty)))
                             Container(
                                 width: double.infinity,
@@ -463,7 +463,9 @@ class _BillerDetailsState extends State<BillerDetails> {
                                 "inputParameters": widget.inputParameters,
                                 "categoryName": widget.billerData!.cATEGORYNAME,
                                 "isSavedBill": false,
-                                "amount": txtAmountController.text
+                                "amount": txtAmountController.text,
+                                "validateBill": validateBill,
+                                "billerInputSign": billerInputSign
                               });
                             },
                             buttonText: "Pay Now",

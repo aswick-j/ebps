@@ -1,18 +1,63 @@
+import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/sizes.dart';
+import 'package:ebps/data/models/auto_schedule_pay_model.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/screens/Payments/TransactionSuccess.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+  AllConfigurationsData? autopayData;
+  String? id;
+  String? from;
+  String? templateName;
+  Map<String, dynamic>? data;
+  OtpScreen(
+      {super.key,
+      this.from,
+      this.templateName,
+      this.autopayData,
+      this.id,
+      this.data});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
 }
 
 class _OtpScreenState extends State<OtpScreen> {
+  TextEditingController? contrller1;
+  TextEditingController? contrller2;
+  TextEditingController? contrller3;
+  TextEditingController? contrller4;
+
+  @override
+  void initState() {
+    super.initState();
+    contrller1 = TextEditingController();
+    contrller2 = TextEditingController();
+    contrller3 = TextEditingController();
+    contrller4 = TextEditingController();
+  }
+
+  handleSubmit() {
+    BlocProvider.of<HomeCubit>(context).payBill(
+        widget.data!['billerID'],
+        widget.data!['billerName'],
+        widget.data!['billName'],
+        widget.data!['acNo'],
+        widget.data!['billAmount'],
+        widget.data!['customerBillID'],
+        widget.data!['tnxRefKey'],
+        widget.data!['quickPay'],
+        widget.data!['inputSignature'],
+        widget.data!['otherAmount'],
+        false,
+        widget.data!['billerData'],
+        "2222");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,6 +129,35 @@ class _OtpScreenState extends State<OtpScreen> {
                       ),
                       textAlign: TextAlign.center,
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 32.0, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _textFieldOTP(
+                              first: true,
+                              last: false,
+                              controllerr: contrller1,
+                              context: context),
+                          _textFieldOTP(
+                              first: false,
+                              last: false,
+                              controllerr: contrller2,
+                              context: context),
+                          _textFieldOTP(
+                              first: false,
+                              last: false,
+                              controllerr: contrller3,
+                              context: context),
+                          _textFieldOTP(
+                              first: false,
+                              last: true,
+                              controllerr: contrller4,
+                              context: context),
+                        ],
+                      ),
+                    ),
                     Text(
                       "MPIN will keep your account secure from unauthorized access. Do not share this PIN with anyone",
                       style: TextStyle(
@@ -92,6 +166,9 @@ class _OtpScreenState extends State<OtpScreen> {
                         color: Color(0xff808080),
                       ),
                       textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 20,
                     )
                   ],
                 ))
@@ -110,8 +187,10 @@ class _OtpScreenState extends State<OtpScreen> {
               Expanded(
                 child: MyAppButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => TransactionSuccess()));
+                      // BlocProvider.of<HomeCubit>(context).validateOTP(0000);
+                      handleSubmit();
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => TransactionSuccess()));
                     },
                     buttonText: "Verify",
                     buttonTXT_CLR_DEFAULT: BTN_CLR_ACTIVE,
@@ -128,4 +207,44 @@ class _OtpScreenState extends State<OtpScreen> {
       ),
     );
   }
+}
+
+Widget _textFieldOTP(
+    {bool? first,
+    last,
+    TextEditingController? controllerr,
+    required BuildContext context}) {
+  return SizedBox(
+    height: 70,
+    child: AspectRatio(
+      aspectRatio: 1,
+      child: TextField(
+        controller: controllerr,
+        autofocus: true,
+        onChanged: (value) {
+          if (value.length == 1 && last == false) {
+            FocusScope.of(context).nextFocus();
+          }
+          if (value.length == 0 && first == false) {
+            FocusScope.of(context).previousFocus();
+          }
+        },
+        showCursor: false,
+        readOnly: false,
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        keyboardType: TextInputType.number,
+        maxLength: 1,
+        decoration: InputDecoration(
+          counter: Offstage(),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 2, color: Colors.black54),
+              borderRadius: BorderRadius.circular(12)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 2, color: Colors.black54),
+              borderRadius: BorderRadius.circular(12)),
+        ),
+      ),
+    ),
+  );
 }

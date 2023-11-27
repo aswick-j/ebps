@@ -120,3 +120,83 @@ class PaymentInfoError extends HomeState {
   final String? message;
   PaymentInfoError({@required this.message});
 }
+
+//VALIDATE BILL
+
+class ValidateBillLoading extends HomeState {}
+
+class ValidateBillSuccess extends HomeState {
+  final ValidateBillResponseData? validateBillResponseData;
+  String? bbpsTranlogId;
+  ValidateBillSuccess(
+      {@required this.validateBillResponseData, this.bbpsTranlogId});
+}
+
+class ValidateBillFailed extends HomeState {
+  final String? message;
+  ValidateBillFailed({@required this.message});
+}
+
+class ValidateBillError extends HomeState {
+  final String? message;
+  ValidateBillError({@required this.message});
+}
+
+//CONFIRM FETCH BILL
+
+class ConfirmFetchBillLoading extends HomeState {}
+
+class ConfirmFetchBillSuccess extends HomeState {
+  final ConfirmFetchBillData? ConfirmFetchBillResponse;
+  ConfirmFetchBillSuccess({@required this.ConfirmFetchBillResponse});
+}
+
+class ConfirmFetchBillFailed extends HomeState {
+  final String? message;
+  ConfirmFetchBillFailed({@required this.message});
+}
+
+class ConfirmFetchBillError extends HomeState {
+  final String? message;
+  ConfirmFetchBillError({@required this.message});
+}
+
+//OTP
+class OtpValidateLoading extends HomeState {}
+
+class OtpValidateSuccess extends HomeState {}
+
+class OtpValidateFailed extends HomeState {
+  final String? message;
+  OtpValidateFailed({@required this.message});
+}
+
+class OtpValidateError extends HomeState {
+  final String? message;
+  OtpValidateError({@required this.message});
+}
+
+//PAY-BILL
+
+class PayBillLoading extends HomeState {}
+
+class PayBillSuccess extends HomeState {
+  final String? from;
+  Map<String, dynamic>? data;
+  final String? message;
+  PayBillSuccess(
+      {@required this.from, @required this.message, @required this.data});
+}
+
+class PayBillFailed extends HomeState {
+  final String? from;
+  final String? message;
+  Map<String, dynamic>? data;
+  PayBillFailed(
+      {@required this.from, @required this.message, @required this.data});
+}
+
+class PayBillError extends HomeState {
+  final String? message;
+  PayBillError({@required this.message});
+}

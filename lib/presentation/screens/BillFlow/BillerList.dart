@@ -1,4 +1,5 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Container/Home/BillerListContainer.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _BillerListState extends State<BillerList> {
         appBar: MyAppBar(
           context: context,
           title: widget.name,
-          onLeadingTap: () => Navigator.pop(context),
+          onLeadingTap: () => goBack(context),
           showActions: false,
         ),
         body: Column(children: [
