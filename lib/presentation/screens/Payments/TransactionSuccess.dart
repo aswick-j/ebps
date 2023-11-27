@@ -1,14 +1,17 @@
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/routes.dart';
 import 'package:ebps/constants/sizes.dart';
+import 'package:ebps/data/models/add_biller_model.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class TransactionSuccess extends StatefulWidget {
-  bool isSavedBill;
+  bool? isSavedBill;
   Map<String, dynamic> billerData;
-  Map<String, dynamic> inputParameters;
+  List<AddbillerpayloadModel> inputParameters;
   TransactionSuccess(
       {super.key,
       required this.isSavedBill,
@@ -65,7 +68,7 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
         appBar: MyAppBar(
           context: context,
           title: 'Go to Home',
-          onLeadingTap: () => Navigator.pop(context),
+          onLeadingTap: () => goToUntil(context, hOMEROUTE),
           showActions: false,
         ),
         body: SingleChildScrollView(
@@ -142,7 +145,7 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "₹ 650.00",
+                                      '₹ ${widget.billerData['billAmount']}',
                                       style: TextStyle(
                                         fontSize: TXT_SIZE_XXL(context),
                                         fontWeight: FontWeight.w600,
@@ -174,7 +177,8 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
                       ),
                       TxnDetails(
                           title: "Sent From",
-                          subTitle: "PWWECX(1000 2323 1956 67)",
+                          subTitle:
+                              'EQUITAS BANK - ${widget.billerData['acNo']}',
                           clipBoard: false),
                       TxnDetails(
                           title: "Sent To",

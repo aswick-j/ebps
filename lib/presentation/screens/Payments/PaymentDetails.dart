@@ -145,9 +145,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
             //  _otherAmount = !(!widget.billerData!.pAYMENTEXACTNESS!.isNotEmpty ||
             //             widget.billerData!.pAYMENTEXACTNESS == "Exact" ||
             //             userAmount == billAmount);
-            goToData(context, oTPPAGEROUTE, {
-              "from": "confirmPaymentRoute",
-              "templateName": "confirm-payment",
+            goToData(context, mPINROUTE, {
               "data": {
                 "billerID": widget.billerData!.bILLERID,
                 "billerName": widget.billerData!.bILLERNAME,

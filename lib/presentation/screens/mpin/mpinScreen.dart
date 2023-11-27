@@ -58,7 +58,7 @@ class _MpinScreenState extends State<MpinScreen> {
     return Scaffold(
       appBar: MyAppBar(
         context: context,
-        title: 'Biller Name',
+        title: widget.data!['billerName'],
         onLeadingTap: () => Navigator.pop(context),
         showActions: false,
       ),
