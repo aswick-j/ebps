@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 MyAppButton({
   required final VoidCallback onPressed,
   final String? buttonText,
-  final Color? buttonTXT_CLR_DEFAULT,
+  final Color? buttonTxtColor,
   final Color? buttonBorderColor,
   final Color? buttonColor,
   final double? buttonTextSize,
@@ -29,7 +29,7 @@ MyAppButton({
       style: TextStyle(
         fontSize: buttonTextSize ?? 10,
         fontWeight: buttonTextWeight ?? FontWeight.w500,
-        color: buttonTXT_CLR_DEFAULT,
+        color: buttonTxtColor,
       ),
       textAlign: TextAlign.center,
     ),

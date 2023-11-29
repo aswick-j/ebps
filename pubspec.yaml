@@ -20,6 +20,8 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
+  pinput: ^3.0.1
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

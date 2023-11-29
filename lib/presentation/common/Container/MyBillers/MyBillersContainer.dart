@@ -16,7 +16,7 @@ class MyBillersContainer extends StatelessWidget {
   final Color? upcomingTXT_CLR_DEFAULT;
   final Color containerBorderColor;
   final Color? buttonColor;
-  final Color? buttonTXT_CLR_DEFAULT;
+  final Color? buttonTxtColor;
   final FontWeight? buttonTextWeight;
   final Color? buttonBorderColor;
   final bool? warningBtn;
@@ -31,7 +31,7 @@ class MyBillersContainer extends StatelessWidget {
     this.upcomingTXT_CLR_DEFAULT,
     required this.containerBorderColor,
     this.buttonColor,
-    this.buttonTXT_CLR_DEFAULT,
+    this.buttonTxtColor,
     this.buttonBorderColor,
     this.buttonTextWeight,
     this.warningBtn,
@@ -173,7 +173,7 @@ class MyBillersContainer extends StatelessWidget {
                                 MyAppButton(
                                     onPressed: () {},
                                     buttonText: "Cancel",
-                                    buttonTXT_CLR_DEFAULT: CLR_PRIMARY,
+                                    buttonTxtColor: CLR_PRIMARY,
                                     buttonBorderColor: Color(0xff768EB9),
                                     buttonColor: buttonColor,
                                     buttonSizeX: 10,
@@ -318,8 +318,7 @@ class MyBillersContainer extends StatelessWidget {
                                               onPressed: () =>
                                                   Navigator.of(context).pop(),
                                               buttonText: "Cancel",
-                                              buttonTXT_CLR_DEFAULT:
-                                                  CLR_PRIMARY,
+                                              buttonTxtColor: CLR_PRIMARY,
                                               buttonBorderColor:
                                                   Color(0xff768EB9),
                                               buttonColor: buttonColor,
@@ -336,7 +335,7 @@ class MyBillersContainer extends StatelessWidget {
                               });
                         },
                         buttonText: buttonText,
-                        buttonTXT_CLR_DEFAULT: buttonTXT_CLR_DEFAULT,
+                        buttonTxtColor: buttonTxtColor,
                         buttonBorderColor: buttonBorderColor,
                         buttonColor: buttonColor,
                         buttonSizeX: 10,

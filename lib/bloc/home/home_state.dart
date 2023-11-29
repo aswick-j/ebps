@@ -161,7 +161,29 @@ class ConfirmFetchBillError extends HomeState {
   ConfirmFetchBillError({@required this.message});
 }
 
-//OTP
+//GEN - OTP
+
+class OtpInitial extends HomeState {}
+
+class OtpLoading extends HomeState {}
+
+class OtpSuccess extends HomeState {
+  final String? refrenceNumber;
+  final String? message;
+  OtpSuccess({@required this.refrenceNumber, @required this.message});
+}
+
+class OtpFailed extends HomeState {
+  final String? message;
+  OtpFailed({@required this.message});
+}
+
+class OtpError extends HomeState {
+  final String? message;
+  OtpError({@required this.message});
+}
+
+//VALIDATE -OTP
 class OtpValidateLoading extends HomeState {}
 
 class OtpValidateSuccess extends HomeState {}
@@ -199,4 +221,23 @@ class PayBillFailed extends HomeState {
 class PayBillError extends HomeState {
   final String? message;
   PayBillError({@required this.message});
+}
+
+//SEARCH
+
+class BillersSearchLoading extends HomeState {}
+
+class BillersSearchSuccess extends HomeState {
+  List<BillersData>? searchResultsData;
+  BillersSearchSuccess({@required this.searchResultsData});
+}
+
+class BillersSearchError extends HomeState {
+  String? message;
+  BillersSearchError({@required this.message});
+}
+
+class BillersSearchFailed extends HomeState {
+  String? message;
+  BillersSearchFailed({@required this.message});
 }

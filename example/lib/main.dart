@@ -56,10 +56,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> fetchData() async {
     try {
       isLoading = true;
-      final checkSUm = p8['redirectionRequest']!['checkSum'];
+      final checkSUm = p7['redirectionRequest']!['checkSum'];
       final response = await http.post(
         Uri.parse(API_URL),
-        body: json.encode(p8['redirectionRequest']!['msgBdy']),
+        body: json.encode(p7['redirectionRequest']!['msgBdy']),
         headers: {
           'Content-Type': 'application/json',
           'checkSum': checkSUm as String,

@@ -9,6 +9,9 @@ const String FETCH_BILL_URL = "/payment/fetch-bill";
 const String ACCOUNT_INFO_URL = "/payment/account-info";
 const String PAYMENT_INFO_URL = "/billers/payment-information/";
 const String VALIDATE_BILL_URL = "/payment/validate-bill";
+const String GEN_OTP_URL = "/user-services/generate-otp";
+const String SEARCH_URL = "/billers/search";
+
 const String VALIDATE_OTP_URL = "/user-services/validate-otp";
 const String PAY_BILL_URL = "/payment/bill";
 
@@ -22,13 +25,11 @@ const String upcomingDisableUrl = "/auto-pay/status/";
 const String removeAutoPayUrl = "/auto-pay/delete/";
 const String fetchAutoPayMaxAmountUrl = "/auto-pay/max-amount/";
 const String deletebillerUrl = "/billers/delete/";
-const String generateOtpUrl = "/user-services/generate-otp";
 
 const String savedBillersUrl = "/billers/saved/";
 const String allUpcomingDues = "/billers/all-upcoming-dues/";
 const String allLocation = "/billers/location";
 const String savedbilldetails = "/billers/get-saved-details/";
-const String searchBillersUrl = "/billers/search";
 const String statesDataUrl = "/billers/states-data/";
 
 const String amountByDateUrl = "/payment/amount-by-date/";

@@ -6,8 +6,9 @@ import 'package:ebps/presentation/screens/BillFlow/BillParameters.dart';
 import 'package:ebps/presentation/screens/BillFlow/BillerDetails.dart';
 import 'package:ebps/presentation/screens/BillFlow/BillerList.dart';
 import 'package:ebps/presentation/screens/Payments/PaymentDetails.dart';
-import 'package:ebps/presentation/screens/Payments/TransactionSuccess.dart';
+import 'package:ebps/presentation/screens/Payments/TransactionScreen.dart';
 import 'package:ebps/presentation/screens/home/AllBillCategories.dart';
+import 'package:ebps/presentation/screens/home/SearchScreen.dart';
 import 'package:ebps/presentation/screens/mpin/mpinScreen.dart';
 import 'package:ebps/presentation/screens/otp/OtpScreen.dart';
 import 'package:ebps/presentation/screens/session_expired.dart';
@@ -27,6 +28,7 @@ const sESSIONEXPIREDROUTE = '/SessionExpired';
 const oTPPAGEROUTE = '/otp';
 const mPINROUTE = '/mpin';
 const tRANSROUTE = '/transSuccessful';
+const sEARCHROUTE = '/search';
 
 /// The `MyRouter` class is responsible for generating routes and corresponding page widgets based on
 /// the provided route settings.
@@ -186,11 +188,23 @@ class MyRouter {
             fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => HomeCubit(repository: apiClient),
-                  child: TransactionSuccess(
+                  child: TransactionScreen(
+                    billName: args["billName"],
+                    billerName: args['billerName'],
+                    categoryName: args["categoryName"],
                     isSavedBill: args["isSavedBill"],
                     billerData: args['billerData'],
                     inputParameters: args['inputParameters'],
                   ),
+                ));
+      //SEARCH
+
+      case sEARCHROUTE:
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => BlocProvider(
+                  create: (context) => HomeCubit(repository: apiClient),
+                  child: SearchScreen(),
                 ));
       default:
         return CupertinoPageRoute(

@@ -13,7 +13,7 @@ class UpcomingDuesContainer extends StatelessWidget {
   final String iconPath;
   final Color containerBorderColor;
   final Color buttonColor;
-  final Color buttonTXT_CLR_DEFAULT;
+  final Color buttonTxtColor;
   final FontWeight buttonTextWeight;
   final Color? buttonBorderColor;
 
@@ -26,7 +26,7 @@ class UpcomingDuesContainer extends StatelessWidget {
     required this.iconPath,
     required this.containerBorderColor,
     required this.buttonColor,
-    required this.buttonTXT_CLR_DEFAULT,
+    required this.buttonTxtColor,
     required this.buttonBorderColor,
     required this.buttonTextWeight,
   });
@@ -125,7 +125,7 @@ class UpcomingDuesContainer extends StatelessWidget {
                 MyAppButton(
                     onPressed: () {},
                     buttonText: buttonText,
-                    buttonTXT_CLR_DEFAULT: buttonTXT_CLR_DEFAULT,
+                    buttonTxtColor: buttonTxtColor,
                     buttonBorderColor: buttonBorderColor,
                     buttonColor: buttonColor,
                     buttonSizeX: 10,

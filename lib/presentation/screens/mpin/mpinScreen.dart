@@ -6,7 +6,6 @@ import 'package:ebps/data/models/auto_schedule_pay_model.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
-import 'package:ebps/presentation/screens/Payments/TransactionSuccess.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -67,14 +66,22 @@ class _MpinScreenState extends State<MpinScreen> {
           if (state is PayBillLoading) {
           } else if (state is PayBillSuccess) {
             goToData(context, tRANSROUTE, {
-              // "name": state.data!['name'],
-              // "billName": state.data!['billName'],
+              "billName": widget.data!["billName"],
+              "billerName": widget.data!['billerName'],
+              "categoryName": widget.data!["categoryName"],
               "billerData": state.data,
               "inputParameters": widget.data!['inputSignature'],
               "isSavedBill": state.data!['isSavedBill'],
-              // "billID": state.data!['cUSTOMERBILLID']
             });
           } else if (state is PayBillFailed) {
+            goToData(context, tRANSROUTE, {
+              "billName": widget.data!["billName"],
+              "billerName": widget.data!['billerName'],
+              "categoryName": widget.data!["categoryName"],
+              "billerData": state.data,
+              "inputParameters": widget.data!['inputSignature'],
+              "isSavedBill": state.data!['isSavedBill'],
+            });
           } else if (state is PayBillError) {}
         },
         builder: (context, state) {
@@ -204,7 +211,7 @@ class _MpinScreenState extends State<MpinScreen> {
                       handleSubmit();
                     },
                     buttonText: "Verify",
-                    buttonTXT_CLR_DEFAULT: BTN_CLR_ACTIVE,
+                    buttonTxtColor: BTN_CLR_ACTIVE,
                     buttonBorderColor: Colors.transparent,
                     buttonColor: CLR_PRIMARY,
                     buttonSizeX: 10,

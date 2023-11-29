@@ -1,6 +1,9 @@
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/routes.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/screens/home/BillCategories.dart';
+import 'package:ebps/presentation/screens/home/SearchScreen.dart';
 import 'package:ebps/presentation/screens/home/UpcomingDues.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: 'Bill Payment',
         actions: [
           InkWell(
-              onTap: () => {},
+              onTap: () => {goTo(context, sEARCHROUTE)},
               child: Container(
                   margin: EdgeInsets.only(top: 20, bottom: 20, right: 15),
                   width: 40,

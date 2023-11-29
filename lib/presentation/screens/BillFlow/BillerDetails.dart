@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
@@ -6,6 +8,7 @@ import 'package:ebps/data/models/add_biller_model.dart';
 import 'package:ebps/data/models/billers_model.dart';
 import 'package:ebps/data/models/fetch_bill_model.dart';
 import 'package:ebps/data/models/paymentInformationModel.dart';
+import 'package:ebps/helpers/getAmountExact.dart';
 import 'package:ebps/helpers/getBillerType.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/logger.dart';
@@ -57,6 +60,8 @@ class _BillerDetailsState extends State<BillerDetails> {
   bool isPaymentInfoLoading = true;
 
   bool isUnableToFetchBill = true;
+
+  String PaymentExactErrMsg = "";
 
   void initialFetch() {
     txtAmountController.text = billAmount.toString();
@@ -344,6 +349,15 @@ class _BillerDetailsState extends State<BillerDetails> {
                                   enabled: validateBill!["amountEditable"],
                                   onFieldSubmitted: (_) {},
                                   onChanged: (val) {
+                                    setState(() {
+                                      PaymentExactErrMsg = checkIsExact(
+                                          double.parse(val.toString()),
+                                          double.parse(_billerResponseData!
+                                              .amount
+                                              .toString()),
+                                          widget.billerData!.pAYMENTEXACTNESS);
+                                    });
+
                                     if (txtAmountController.text.isNotEmpty) {
                                       if (double.parse(
                                                   txtAmountController.text) <
@@ -417,6 +431,23 @@ class _BillerDetailsState extends State<BillerDetails> {
                                   ),
                                 ),
                               ),
+                              if (PaymentExactErrMsg.length > 0)
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20, bottom: 20, right: 20),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      PaymentExactErrMsg,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: TXT_SIZE_NORMAL(context),
+                                        fontWeight: FontWeight.normal,
+                                        color: CLR_ERROR,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                             ],
                           ),
                       ],
@@ -442,7 +473,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                               goBack(context);
                             },
                             buttonText: "Cancel",
-                            buttonTXT_CLR_DEFAULT: CLR_PRIMARY,
+                            buttonTxtColor: CLR_PRIMARY,
                             buttonBorderColor: Colors.transparent,
                             buttonColor: BTN_CLR_ACTIVE,
                             buttonSizeX: 10,
@@ -456,23 +487,29 @@ class _BillerDetailsState extends State<BillerDetails> {
                       Expanded(
                         child: MyAppButton(
                             onPressed: () {
-                              goToData(context, pAYMENTCONFIRMROUTE, {
-                                "name": widget.billerData!.bILLERNAME,
-                                "billName": widget.billName,
-                                "billerData": widget.billerData,
-                                "inputParameters": widget.inputParameters,
-                                "categoryName": widget.billerData!.cATEGORYNAME,
-                                "isSavedBill": false,
-                                "amount": txtAmountController.text,
-                                "validateBill": validateBill,
-                                "billerInputSign": billerInputSign
-                              });
+                              if (!isInsufficient &&
+                                  PaymentExactErrMsg.isEmpty) {
+                                goToData(context, pAYMENTCONFIRMROUTE, {
+                                  "name": widget.billerData!.bILLERNAME,
+                                  "billName": widget.billName,
+                                  "billerData": widget.billerData,
+                                  "inputParameters": widget.inputParameters,
+                                  "categoryName":
+                                      widget.billerData!.cATEGORYNAME,
+                                  "isSavedBill": false,
+                                  "amount": txtAmountController.text,
+                                  "validateBill": validateBill,
+                                  "billerInputSign": billerInputSign
+                                });
+                              }
                             },
                             buttonText: "Pay Now",
-                            buttonTXT_CLR_DEFAULT: BTN_CLR_ACTIVE,
+                            buttonTxtColor: BTN_CLR_ACTIVE,
                             buttonBorderColor: Colors.transparent,
                             buttonColor:
-                                isInsufficient ? Colors.grey : CLR_PRIMARY,
+                                isInsufficient || PaymentExactErrMsg.isNotEmpty
+                                    ? Colors.grey
+                                    : CLR_PRIMARY,
                             buttonSizeX: 10,
                             buttonSizeY: 40,
                             buttonTextSize: 14,
@@ -498,7 +535,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                               goBack(context);
                             },
                             buttonText: "Go Back",
-                            buttonTXT_CLR_DEFAULT: BTN_CLR_ACTIVE,
+                            buttonTxtColor: BTN_CLR_ACTIVE,
                             buttonBorderColor: Colors.transparent,
                             buttonColor: CLR_PRIMARY,
                             buttonSizeX: 10,

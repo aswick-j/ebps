@@ -1,28 +1,63 @@
+import 'dart:convert';
+
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/data/models/add_biller_model.dart';
+import 'package:ebps/data/models/billers_model.dart';
+import 'package:ebps/data/models/confirm_done_model.dart';
+import 'package:ebps/helpers/getBillPaymentDetails.dart';
+import 'package:ebps/helpers/getBillerType.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
-class TransactionSuccess extends StatefulWidget {
+class TransactionScreen extends StatefulWidget {
   bool? isSavedBill;
   Map<String, dynamic> billerData;
+  String billName;
+  String categoryName;
+  String billerName;
   List<AddbillerpayloadModel> inputParameters;
-  TransactionSuccess(
+  TransactionScreen(
       {super.key,
+      required this.billName,
+      required this.billerName,
+      required this.categoryName,
       required this.isSavedBill,
       required this.billerData,
       required this.inputParameters});
 
   @override
-  State<TransactionSuccess> createState() => _TransactionSuccessState();
+  State<TransactionScreen> createState() => _TransactionScreenState();
 }
 
-class _TransactionSuccessState extends State<TransactionSuccess> {
+class _TransactionScreenState extends State<TransactionScreen> {
+  confirmDoneData? tnxResponse;
+  var billData;
+  BillersData? billerTypeData;
+
+  Map<String, dynamic>? paymentDetails;
+  Map<String, dynamic>? billerTypeResult;
+
+  @override
+  void initState() {
+    super.initState();
+    tnxResponse = confirmDoneData.fromJson(widget.billerData['res']);
+    billData = jsonDecode(tnxResponse!.paymentDetails!.tran!.bill.toString());
+    billerTypeData = widget.billerData['billerData'];
+    billerTypeResult = getBillerType(
+        billerTypeData!.fETCHREQUIREMENT,
+        billerTypeData!.bILLERACCEPTSADHOC,
+        billerTypeData!.sUPPORTBILLVALIDATION,
+        billerTypeData!.pAYMENTEXACTNESS);
+    paymentDetails = getBillPaymentDetails(tnxResponse!.paymentDetails,
+        billerTypeResult!['isAdhoc'], tnxResponse!.equitasTransactionId);
+  }
+
   Widget TxnDetails(
       {String title = "", String subTitle = "", bool? clipBoard}) {
     return Padding(
@@ -54,7 +89,15 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
               ),
               SizedBox(width: 10),
               if (clipBoard != false)
-                Icon(Icons.copy, color: Color(0xff1b438b), size: 20)
+                GestureDetector(
+                    onTap: () {
+                      Clipboard.setData(ClipboardData(text: subTitle))
+                          .then((_) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('${title} copied to clipboard')));
+                      });
+                    },
+                    child: Icon(Icons.copy, color: Color(0xff1b438b), size: 20))
             ],
           )
         ],
@@ -100,8 +143,16 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
                             begin: Alignment.topRight,
                             stops: [0.001, 19],
                             colors: [
-                              Color(0xff99DDB4).withOpacity(.7),
-                              Color(0xff31637D).withOpacity(.7),
+                              paymentDetails!['success']
+                                  ? Color(0xff99DDB4).withOpacity(.7)
+                                  : paymentDetails!['bbpsTimeout']
+                                      ? Color(0xff99DDB4).withOpacity(.7)
+                                      : Color(0xff982F67).withOpacity(.7),
+                              paymentDetails!['success']
+                                  ? Color(0xff31637D).withOpacity(.7)
+                                  : paymentDetails!['bbpsTimeout']
+                                      ? Color(0xff31637D).withOpacity(.7)
+                                      : Color(0xff463A8D).withOpacity(.7)
                             ],
                           ),
                         ),
@@ -110,7 +161,11 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              "Transaction Details",
+                              paymentDetails!['success']
+                                  ? "Transaction Details"
+                                  : paymentDetails!['bbpsTimeout']
+                                      ? "Transaction Pending"
+                                      : "Transaction Failure",
                               style: TextStyle(
                                 fontSize: TXT_SIZE_LARGE(context),
                                 fontWeight: FontWeight.w600,
@@ -158,7 +213,10 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
                                       height: 5,
                                     ),
                                     Text(
-                                      "01/08/2023 | 12:48 PM",
+                                      DateFormat("dd/MM/yy | hh:mm a")
+                                          .format(DateTime.now())
+                                          .toString(),
+                                      // "01/08/2023 | 12:48 PM",
                                       style: TextStyle(
                                         fontSize: TXT_SIZE_LARGE(context),
                                         fontWeight: FontWeight.w400,
@@ -182,11 +240,11 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
                           clipBoard: false),
                       TxnDetails(
                           title: "Sent To",
-                          subTitle: "HDFC BANK - 1065 8777 8765 98",
+                          subTitle: widget.billerName,
                           clipBoard: false),
                       TxnDetails(
                           title: "Payee Note",
-                          subTitle: "Loream Loream",
+                          subTitle: "Nil",
                           clipBoard: false),
                       Divider(
                         height: 10,
@@ -194,23 +252,34 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
                       ),
                       TxnDetails(
                           title: "From Account",
-                          subTitle: "1000 8787 13232",
+                          subTitle: widget.billerData['acNo'],
                           clipBoard: false),
                       TxnDetails(
                           title: "Bank Reference Number ",
-                          subTitle: "TRAN552045566",
+                          subTitle:
+                              tnxResponse!.paymentDetails?.toJson().length !=
+                                      null
+                                  ? paymentDetails!['txnReferenceId'].toString()
+                                  : "-",
                           clipBoard: true),
-                      TxnDetails(
-                          title: "Transaction ID",
-                          subTitle: "N285230146108657",
-                          clipBoard: true),
-                      TxnDetails(
-                          title: "Payee Note",
-                          subTitle: "Loream Loream",
-                          clipBoard: false),
+                      if (paymentDetails!['success'])
+                        TxnDetails(
+                            title: "Transaction ID",
+                            subTitle: tnxResponse!.paymentDetails
+                                        ?.toJson()
+                                        .length !=
+                                    null
+                                ? paymentDetails!['txnReferenceId'].toString()
+                                : "-",
+                            clipBoard: true),
+                      if (paymentDetails!['success'])
+                        TxnDetails(
+                            title: "Payee Note",
+                            subTitle: "Nil",
+                            clipBoard: false),
                       TxnDetails(
                           title: "Transfer Type",
-                          subTitle: "Equitas Mobile Banking",
+                          subTitle: "Equitas Digital Banking",
                           clipBoard: false),
                     ],
                   )),
@@ -230,10 +299,10 @@ class _TransactionSuccessState extends State<TransactionSuccess> {
                   child: MyAppButton(
                       onPressed: () {
                         // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (context) => TransactionSuccess()));
+                        //     builder: (context) => TransactionScreen()));
                       },
                       buttonText: "Raise For Complaint",
-                      buttonTXT_CLR_DEFAULT: BTN_CLR_ACTIVE,
+                      buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
                       buttonColor: CLR_PRIMARY,
                       buttonSizeX: 10,

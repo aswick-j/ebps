@@ -1,4 +1,5 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
+import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Container/Home/BillerListContainer.dart';
@@ -30,8 +31,8 @@ class _BillerListState extends State<BillerList> {
               maxWidth: 340,
             ),
             hintText: 'Search by Billers',
-            hintStyle: MaterialStateProperty.all(
-                const TextStyle(color: Color(0xff1b438b))),
+            hintStyle: MaterialStateProperty.all(TextStyle(
+                color: Color(0xff1b438b), fontSize: TXT_SIZE_SMALL(context))),
             trailing: [
               IconButton(
                 icon: const Icon(Icons.search,

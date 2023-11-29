@@ -4,6 +4,7 @@ import 'package:ebps/data/models/categories_model.dart';
 import 'package:ebps/data/models/confirm_fetch_bill_model.dart';
 import 'package:ebps/data/models/fetch_bill_model.dart';
 import 'package:ebps/data/models/input_signatures_model.dart';
+import 'package:ebps/data/models/otp_model.dart';
 import 'package:ebps/data/models/paymentInformationModel.dart';
 import 'package:ebps/data/models/validate_bill_model.dart';
 import 'package:ebps/data/repository/api_repository.dart';
@@ -19,59 +20,47 @@ class HomeCubit extends Cubit<HomeState> {
 
   HomeCubit({required this.repository}) : super(HomeInitial());
 
-  //CATEGORY CUBIT
+  // CATEGORY CUBIT
 
   void getAllCategories() async {
-    if (!isClosed) {
-      emit(CategoriesLoading());
-    }
+    if (isClosed) return;
+
+    emit(CategoriesLoading());
+
     try {
       final value = await repository!.getCategories();
 
-      // logger.d(value,
-      //     error:
-      //         "GET ALL CATEGORIES API RESPONSE ===> lib/bloc/home/getAllCategories");
+      if (value != null && !value.toString().contains("Invalid token")) {
+        final status = value['status'];
+        final message = value['message'];
 
-      if (value != null) {
-        if (!value.toString().contains("Invalid token")) {
-          if (value['status'] == 200) {
-            CategoriesModel? categoriesModel = CategoriesModel.fromJson(value);
-            if (!isClosed) {
-              emit(CategoriesSuccess(CategoriesList: categoriesModel.data));
-            }
-          } else {
-            if (!isClosed) {
-              emit(CategoriesFailed(message: value['message']));
-              logger.e(
-                  error:
-                      "GET ALL CATEGORY API ERROR ===> lib/bloc/home/getAllCategories",
-                  value);
-            }
-          }
+        if (status == 200) {
+          final categoriesModel = CategoriesModel.fromJson(value);
+          emit(CategoriesSuccess(CategoriesList: categoriesModel.data));
         } else {
-          if (!isClosed) {
-            logger.e(
-                error:
-                    "GET ALL CATEGORY API ERROR ===> lib/bloc/home/getAllCategories",
-                value);
-
-            emit(CategoriesError(message: value['message']));
-          }
+          emit(CategoriesFailed(message: message));
+          logger.e(
+            error:
+                "GET ALL CATEGORY API ERROR ===> lib/bloc/home/getAllCategories",
+            value,
+          );
         }
       } else {
-        if (!isClosed) {
-          emit(CategoriesFailed(message: value['message']));
-          logger.e(
-              error:
-                  "GET ALL CATEGORY API ERROR ===> lib/bloc/home/getAllCategories",
-              value);
-        }
+        emit(CategoriesError(
+            message: value != null
+                ? value['message']
+                : 'Failed to retrieve response'));
+        logger.e(
+          error:
+              "GET ALL CATEGORY API ERROR ===> lib/bloc/home/getAllCategories",
+          value,
+        );
       }
     } catch (e) {
       logger.e(
-          error:
-              "GET ALL CATEGORY API ERROR ===> lib/bloc/home/getAllCategories",
-          e);
+        error: "GET ALL CATEGORY API ERROR ===> lib/bloc/home/getAllCategories",
+        e,
+      );
     }
   }
 
@@ -295,148 +284,170 @@ class HomeCubit extends Cubit<HomeState> {
 
   void fetchValidateBill(dynamic payload) async {
     debugPrint("validateBill payload ===>");
-    if (!isClosed) {
-      emit(ValidateBillLoading());
-    }
+
+    if (isClosed) return;
+
+    emit(ValidateBillLoading());
+
     try {
-      await repository!.validateBill(payload).then((value) {
-        if (value != null) {
-          if (!value.toString().contains("Invalid token")) {
-            if (value['status'] == 200) {
-              ValidateBillModel? validateBillModel =
-                  ValidateBillModel.fromJson(value);
-              if (!isClosed) {
-                emit(ValidateBillSuccess(
-                  validateBillResponseData: validateBillModel.data,
-                  bbpsTranlogId: validateBillModel.data!.data!.bbpsTranlogId,
-                ));
-              }
-            } else {
-              if (!isClosed) {
-                emit(ValidateBillFailed(message: value['message']));
-              }
-            }
-          } else {
-            if (!isClosed) {
-              emit(ValidateBillError(message: value['message']));
-            }
-          }
+      final value = await repository!.validateBill(payload);
+
+      if (value != null && !value.toString().contains("Invalid token")) {
+        final status = value['status'];
+        final message = value['message'];
+
+        if (status == 200) {
+          final validateBillModel = ValidateBillModel.fromJson(value);
+          emit(
+            ValidateBillSuccess(
+              validateBillResponseData: validateBillModel.data,
+              bbpsTranlogId: validateBillModel.data?.data?.bbpsTranlogId,
+            ),
+          );
         } else {
-          if (!isClosed) {
-            emit(ValidateBillFailed(message: value['message']));
-          }
+          emit(ValidateBillFailed(message: message));
         }
-      });
-    } catch (e) {}
+      } else {
+        emit(ValidateBillError(
+            message: value != null
+                ? value['message']
+                : 'Failed to retrieve response'));
+      }
+    } catch (e) {
+      // Handle exceptions
+    }
   }
 
   //CONFIR FETCH BILL
-  void confirmFetchBill(
-      {String? billerID,
-      bool? quickPay,
-      String? quickPayAmount,
-      String? adHocBillValidationRefKey,
-      bool? validateBill,
-      Map<String, dynamic>? billerParams,
-      String? billName,
+  void confirmFetchBill({
+    String? billerID,
+    bool? quickPay,
+    String? quickPayAmount,
+    String? adHocBillValidationRefKey,
+    bool? validateBill,
+    Map<String, dynamic>? billerParams,
+    String? billName,
+    dynamic forChannel,
+    dynamic planId,
+    dynamic planType,
+    dynamic supportPlan,
+  }) async {
+    if (isClosed) return;
 
-      //prepaid
-      dynamic forChannel,
-      dynamic planId,
-      dynamic planType,
-      dynamic supportPlan}) async {
-    // String billerParams =
-    //     "{\"a\":\"10\",\"a b\":\"20\",\"a b c\":\"30\",\"a b c d\":\"40\",\"a b c d e\":\"50\"}";
+    emit(ConfirmFetchBillLoading());
 
-    if (!isClosed) {
-      emit(ConfirmFetchBillLoading());
-    }
     try {
       final value = await repository!.fetchBill(
-          validateBill,
-          billerID,
-          billerParams,
-          quickPay,
-          quickPayAmount,
-          adHocBillValidationRefKey,
-          billName);
-      logger.d(value,
-          error:
-              "GET CONFIRM FETCH API RESPONSE ===> lib/bloc/home/confirmFetchBill");
+        validateBill,
+        billerID,
+        billerParams,
+        quickPay,
+        quickPayAmount,
+        adHocBillValidationRefKey,
+        billName,
+      );
+
+      logger.d(
+        value,
+        error:
+            "GET CONFIRM FETCH API RESPONSE ===> lib/bloc/home/confirmFetchBill",
+      );
+
+      if (value != null && !value.toString().contains("Invalid token")) {
+        final status = value['status'];
+        final message = value['message'];
+
+        if (status == 200) {
+          final confirmFetchBillModel = ConfirmFetchBillModel.fromJson(value);
+          emit(ConfirmFetchBillSuccess(
+              ConfirmFetchBillResponse: confirmFetchBillModel.data));
+        } else {
+          emit(ConfirmFetchBillFailed(message: message));
+        }
+      } else {
+        emit(ConfirmFetchBillError(
+            message: value != null
+                ? value['message']
+                : 'Failed to retrieve response'));
+      }
+    } catch (e) {
+      // Handle exceptions
+    }
+  }
+
+  //GENERATE OTP
+
+  void generateOtp({templateName, billerName}) async {
+    try {
+      if (!isClosed) {
+        emit(OtpLoading());
+      }
+      final value = await repository!
+          .generateOtp(templateName: templateName, billerName: billerName);
+      logger.d(
+        value,
+        error: "GEN OTP API RESPONSE ===> lib/bloc/home/generateOTP",
+      );
 
       if (value != null) {
         if (!value.toString().contains("Invalid token")) {
           if (value['status'] == 200) {
-            ConfirmFetchBillModel? confirmfetchBillModel =
-                ConfirmFetchBillModel.fromJson(value);
+            OtpModel otpModel = OtpModel.fromJson(value);
             if (!isClosed) {
-              emit(ConfirmFetchBillSuccess(
-                ConfirmFetchBillResponse: confirmfetchBillModel.data,
-              ));
+              emit(OtpSuccess(
+                  refrenceNumber: otpModel.data, message: otpModel.message));
             }
           } else {
             if (!isClosed) {
-              emit(ConfirmFetchBillFailed(message: value['message']));
+              emit(OtpFailed(message: value['message']));
             }
           }
         } else {
           if (!isClosed) {
-            emit(ConfirmFetchBillError(message: value['message']));
+            emit(OtpError(message: value['message']));
           }
         }
       } else {
         if (!isClosed) {
-          emit(ConfirmFetchBillFailed(message: value['message']));
+          emit(OtpFailed(message: "Please try again later"));
         }
       }
     } catch (e) {}
   }
 
-  //OTP
+  //VALIDATE-OTP
 
-  void validateOTP(otp) async {
+  void validateOTP(String otp) async {
     try {
-      if (!isClosed) {
-        emit(OtpValidateLoading());
-      }
-      final value = await repository!.validateOtp('5555');
+      if (isClosed) return;
+
+      emit(OtpValidateLoading());
+
+      final value = await repository!.validateOtp(otp);
       logger.d(value,
           error: "VALIDATE OTP API RESPONSE ===> lib/bloc/home/validateOTP");
 
       if (value != null) {
-        if (!value.toString().contains("Invalid token")) {
-          if (value['status'] == 200) {
-            if (!isClosed) {
-              emit(OtpValidateSuccess());
-            }
-          } else if (value['status'] == 400) {
-            if (!isClosed) {
-              emit(OtpValidateFailed(message: value['message']));
-            }
-          } else if (value['status'] == 500) {
-            if (!isClosed) {
-              emit(OtpValidateFailed(message: value['message']));
-            }
-          } else if (value['message'].toString().contains("Invalid token")) {
-            if (!isClosed) {
-              emit(OtpValidateError(message: value['message']));
-            }
-          } else {
-            if (!isClosed) {
-              emit(OtpValidateFailed(message: value['message']));
-            }
-          }
+        if (value.toString().contains("Invalid token")) {
+          emit(OtpValidateError(message: value['message']));
         } else {
-          if (!isClosed) {
-            emit(OtpValidateError(message: value['message']));
+          final status = value['status'];
+          final message = value['message'];
+
+          if (status == 200) {
+            emit(OtpValidateSuccess());
+          } else if (status == 400 || status == 500) {
+            emit(OtpValidateFailed(message: message));
+          } else {
+            emit(OtpValidateFailed(message: message));
           }
         }
       } else {
-        if (!isClosed) {
-          emit(OtpValidateFailed(message: value['message']));
-        }
+        emit(OtpValidateFailed(message: "Failed to retrieve response"));
       }
-    } catch (e) {}
+    } catch (e) {
+      // Handle exceptions
+    }
   }
 
   //PAY-BILL
@@ -456,127 +467,190 @@ class HomeCubit extends Cubit<HomeState> {
     dynamic billerData,
     String otp,
   ) async {
-    if (!isClosed) {
-      emit(PayBillLoading());
-    }
+    if (isClosed) return;
+
+    emit(PayBillLoading());
+
     try {
       final value = await repository!.payBill(
-          billerID,
-          acNo,
-          billAmount,
-          customerBillID,
-          tnxRefKey,
-          quickPay,
-          inputSignature,
-          otherAmount,
-          otp);
+        billerID,
+        acNo,
+        billAmount,
+        customerBillID,
+        tnxRefKey,
+        quickPay,
+        inputSignature,
+        otherAmount,
+        otp,
+      );
 
       logger.d(value,
           error: "PAY BILL API RESPONSE ===> lib/bloc/home/payBIll");
 
       if (value != null) {
         if (!value.toString().contains("Invalid token")) {
-          if (value['status'] == 400) {
-            if (!isClosed) {
-              emit(PayBillFailed(
+          final status = value['status'];
+          final message = value['message'];
+          final data = value['data'];
+
+          if (status == 400) {
+            emit(PayBillFailed(
+              from: "fromConfirmPaymentOtp",
+              message: "Your Account needs to complete KYC",
+              data: {},
+            ));
+          } else if (status == 200) {
+            final paymentDetails = value['data']['paymentDetails'];
+
+            if (paymentDetails.containsKey('success') &&
+                paymentDetails['success']) {
+              emit(
+                PayBillSuccess(
                   from: "fromConfirmPaymentOtp",
-                  message: "Your Ac Need to complete KYC"));
-            }
-          } else if (value['status'] == 200) {
-            if (value['data']['paymentDetails'].containsKey('success')) {
-              if (value['data']['paymentDetails']['success']) {
-                if (!isClosed) {
-                  emit(
-                    PayBillSuccess(
-                      from: "fromConfirmPaymentOtp",
-                      message: value['message'],
-                      data: {
-                        "res": value['data'],
-                        "billerID": billerID,
-                        "billName": billName,
-                        "acNo": acNo,
-                        "billAmount": billAmount,
-                        "customerBillID": customerBillID,
-                        "tnxRefKey": tnxRefKey,
-                        "quickPay": quickPay,
-                        "inputSignature": inputSignature,
-                        "otherAmount": otherAmount,
-                        "autopayStatus": autopayStatus,
-                        "billerData": billerData,
-                      },
-                    ),
-                  );
-                }
-              } else {
-                if (!isClosed) {
-                  emit(
-                    PayBillFailed(
-                      from: "fromConfirmPaymentOtp",
-                      message: value['message'],
-                      data: {
-                        "errData": value['data'],
-                        "billerID": billerID,
-                        "acNo": acNo,
-                        "billerName": billerName,
-                        "billAmount": billAmount,
-                        "customerBillID": customerBillID,
-                        "inputSignature": inputSignature
-                      },
-                    ),
-                  );
-                }
-              }
-            }
-          } else if (value['status'] == 500 &&
-              !(value['message']
-                  .toString()
-                  .toLowerCase()
-                  .contains("timed out")) &&
-              (value['data'] == null)) {
-            if (!isClosed) {
-              emit(PayBillFailed(
-                  from: "fromConfirmPaymentOtp", message: "status_500"));
-            }
-          } else if (value['status'] == 500 &&
-              (value['message']
-                  .toString()
-                  .toLowerCase()
-                  .contains("timed out"))) {
-            if (!isClosed) {
-              emit(PayBillFailed(
-                  from: "fromConfirmPaymentOtp", message: "timeout"));
-            }
-          } else {
-            if (!isClosed) {
+                  message: message,
+                  data: {
+                    "res": value['data'],
+                    "billerID": billerID,
+                    "billName": billName,
+                    "acNo": acNo,
+                    "billAmount": billAmount,
+                    "customerBillID": customerBillID,
+                    "tnxRefKey": tnxRefKey,
+                    "quickPay": quickPay,
+                    "inputSignature": inputSignature,
+                    "otherAmount": otherAmount,
+                    "autopayStatus": autopayStatus,
+                    "billerData": billerData,
+                  },
+                ),
+              );
+            } else {
               emit(
                 PayBillFailed(
                   from: "fromConfirmPaymentOtp",
-                  message: value['message'],
+                  message: message,
                   data: {
-                    "errData": value['data'],
+                    "res": value['data'],
                     "billerID": billerID,
                     "acNo": acNo,
                     "billerName": billerName,
                     "billAmount": billAmount,
                     "customerBillID": customerBillID,
-                    "inputSignature": inputSignature
+                    "inputSignature": inputSignature,
+                    "billerData": billerData,
                   },
                 ),
               );
+            }
+          } else if (status == 500) {
+            if (message.toLowerCase().contains("timed out") && data == null) {
+              emit(PayBillFailed(
+                from: "fromConfirmPaymentOtp",
+                message: "timeout",
+              ));
+            } else if (!message.toLowerCase().contains("timed out")) {
+              emit(PayBillFailed(
+                from: "fromConfirmPaymentOtp",
+                message: "status_500",
+              ));
+            } else {
+              emit(
+                PayBillFailed(
+                  from: "fromConfirmPaymentOtp",
+                  message: message,
+                  data: {
+                    "errData": data,
+                    "billerID": billerID,
+                    "acNo": acNo,
+                    "billerName": billerName,
+                    "billAmount": billAmount,
+                    "customerBillID": customerBillID,
+                    "inputSignature": inputSignature,
+                  },
+                ),
+              );
+            }
+          } else {
+            emit(
+              PayBillFailed(
+                from: "fromConfirmPaymentOtp",
+                message: message,
+                data: {
+                  "errData": data,
+                  "billerID": billerID,
+                  "acNo": acNo,
+                  "billerName": billerName,
+                  "billAmount": billAmount,
+                  "customerBillID": customerBillID,
+                  "inputSignature": inputSignature,
+                },
+              ),
+            );
+          }
+        } else {
+          emit(PayBillError(message: value['message']));
+        }
+      } else {
+        emit(PayBillFailed(
+          from: "fromConfirmPaymentOtp",
+          message: "Failed to retrieve response",
+        ));
+      }
+    } catch (e) {
+      // Handle exceptions
+    }
+  }
+
+  //SEARCH
+
+  void searchBiller(queryString, Category, Loaction) async {
+    if (!isClosed) {
+      emit(BillersSearchLoading());
+    }
+
+    Map<String, dynamic> searchPayload = {
+      "searchString": "",
+      "category": "All",
+      "location": "All",
+      "pageNumber": 1
+    };
+    //{"searchString":"test","category":"All","location":"All","pageNumber":1}
+
+    try {
+      final value = await repository!.getSearchedBillers(
+          searchPayload['searchString'],
+          searchPayload['category'],
+          searchPayload['location'],
+          searchPayload['pageNumber']);
+
+      logger.d(value,
+          error: "SEARCH BILLER API RESPONSE ===> lib/bloc/home/searchBiller");
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            BillerModel? billersSearchModel = BillerModel.fromJson(value);
+            //  success emit
+            if (!isClosed) {
+              emit(BillersSearchSuccess(
+                  searchResultsData: billersSearchModel.billData));
+            }
+          } else {
+            //  failed emit
+            if (!isClosed) {
+              emit(BillersSearchFailed(message: value['message']));
             }
           }
         } else {
           //  error emit
           if (!isClosed) {
-            emit(PayBillError(message: value['message']));
+            emit(BillersSearchError(message: value['message']));
           }
         }
       } else {
         //  failed emit
 
         if (!isClosed) {
-          emit(PayBillFailed(
-              from: "fromConfirmPaymentOtp", message: value['message']));
+          emit(BillersSearchFailed(message: value['message']));
         }
       }
     } catch (e) {}

@@ -217,7 +217,32 @@ class ApiClient implements Repository {
       };
     }
   }
-  //OTP
+
+  //GEN-OTP
+
+  @override
+  Future generateOtp({templateName, billerName}) async {
+    try {
+      Map<String, dynamic> body = {
+        "template": templateName,
+        "templateVariables": {
+          templateName != "confirm-payment" ? "billerName" : "billAmount":
+              billerName
+        }
+      };
+      var response = await api(
+          method: "post",
+          url: BASE_URL + GEN_OTP_URL,
+          body: body,
+          token: true,
+          checkSum: false);
+
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+      return decodedResponse;
+    } on Exception catch (e) {}
+  }
+
+  //VAL-OTP
 
   @override
   Future validateOtp(otp) async {
@@ -305,6 +330,33 @@ class ApiClient implements Repository {
         "message": "Something went wrong",
         "data": "Error"
       };
+    }
+  }
+
+  //SEARCH
+
+  @override
+  Future getSearchedBillers(String searchString, String? category,
+      String? location, int? pageNumber) async {
+    try {
+      //{"searchString":"test","category":"All","location":"All","pageNumber":1}
+
+      Map<String, dynamic> requestPayload = {
+        "searchString": searchString,
+        "category": category ?? "All",
+        "location": location ?? "All",
+        "pageNumber": pageNumber ?? 1
+      };
+      var response = await api(
+          method: "post",
+          url: BASE_URL + SEARCH_URL,
+          body: requestPayload,
+          token: true,
+          checkSum: false);
+      var decodedResponse = await jsonDecode(utf8.decode(response.bodyBytes));
+      return decodedResponse;
+    } catch (e) {
+      return null;
     }
   }
 }

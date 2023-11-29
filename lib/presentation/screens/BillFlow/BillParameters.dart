@@ -328,7 +328,7 @@ class _BillParametersState extends State<BillParameters> {
                       goBack(context);
                     },
                     buttonText: "Cancel",
-                    buttonTXT_CLR_DEFAULT: CLR_PRIMARY,
+                    buttonTxtColor: CLR_PRIMARY,
                     buttonBorderColor: Colors.transparent,
                     buttonColor: BTN_CLR_ACTIVE,
                     buttonSizeX: 10,
@@ -349,7 +349,7 @@ class _BillParametersState extends State<BillParameters> {
                       //     builder: (context) => const BillerDetails()));
                     },
                     buttonText: "Confirm",
-                    buttonTXT_CLR_DEFAULT: BTN_CLR_ACTIVE,
+                    buttonTxtColor: BTN_CLR_ACTIVE,
                     buttonBorderColor: Colors.transparent,
                     buttonColor: isButtonActive && isValidBillName
                         ? CLR_PRIMARY

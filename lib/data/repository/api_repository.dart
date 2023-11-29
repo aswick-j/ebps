@@ -19,7 +19,11 @@ abstract class Repository {
   Future getPaymentInformation(id) async {}
   //Validate-bill
   Future validateBill(payload) async {}
-  //OTP
+
+  //GEN-OTP
+  Future generateOtp({templateName, billerName}) async {}
+
+  //Validate - OTP
   Future validateOtp(otp) async {}
   //pay-bill
   Future payBill(
@@ -32,4 +36,8 @@ abstract class Repository {
       dynamic inputSignature,
       bool otherAmount,
       String otp) async {}
+
+  //SEARCH
+  Future getSearchedBillers(String searchString, String category,
+      String location, int pageNumber) async {}
 }

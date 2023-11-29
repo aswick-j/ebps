@@ -55,6 +55,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   List<AccountsData>? accountInfo = [];
   ConfirmFetchBillData? confirmbillerResData;
   bool _otherAmount = false;
+  dynamic selectedAcc = null;
 
   @override
   void initState() {
@@ -139,18 +140,21 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
           if (state is ConfirmFetchBillLoading) {
             isFetchbillLoading = true;
-            showLoader();
+            // showLoader();
           } else if (state is ConfirmFetchBillSuccess) {
             confirmbillerResData = state.ConfirmFetchBillResponse;
             //  _otherAmount = !(!widget.billerData!.pAYMENTEXACTNESS!.isNotEmpty ||
             //             widget.billerData!.pAYMENTEXACTNESS == "Exact" ||
             //             userAmount == billAmount);
-            goToData(context, mPINROUTE, {
+            goToData(context, oTPPAGEROUTE, {
+              "from": pAYMENTCONFIRMROUTE,
+              "templateName": "confirm-payment",
               "data": {
                 "billerID": widget.billerData!.bILLERID,
                 "billerName": widget.billerData!.bILLERNAME,
                 "billName": widget.billName,
-                "acNo": accountInfo![0].accountNumber,
+                "categoryName": widget.categoryName,
+                "acNo": accountInfo![selectedAcc].accountNumber,
                 "billAmount": widget.amount.toString(),
                 "customerBillID": confirmbillerResData!.customerbillId,
                 "tnxRefKey": confirmbillerResData!.txnRefKey,
@@ -160,6 +164,22 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 "autoPayStatus": '',
                 "billerData": widget.billerData
               }
+              // goToData(context, mPINROUTE, {
+              //   "data": {
+              //     "billerID": widget.billerData!.bILLERID,
+              //     "billerName": widget.billerData!.bILLERNAME,
+              //     "billName": widget.billName,
+              //     "categoryName": widget.categoryName,
+              //     "acNo": accountInfo![selectedAcc].accountNumber,
+              //     "billAmount": widget.amount.toString(),
+              //     "customerBillID": confirmbillerResData!.customerbillId,
+              //     "tnxRefKey": confirmbillerResData!.txnRefKey,
+              //     "quickPay": widget.validateBill!["quickPay"],
+              //     "inputSignature": widget.inputParameters,
+              //     "otherAmount": _otherAmount,
+              //     "autoPayStatus": '',
+              //     "billerData": widget.billerData
+              //   }
             });
             // Navigator.of(context)
             //     .push(MaterialPageRoute(builder: (context) => OtpScreen()));
@@ -305,6 +325,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     textAlign: TextAlign.left,
                   ),
                 ),
+                if (isAccLoading) Text("Account Details Loading"),
                 if (!isAccLoading && myAccounts!.length > 0)
                   Container(
                     width: double.infinity,
@@ -318,61 +339,70 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                           // mainAxisSpacing: 10,
                         ),
                         itemBuilder: (context, index) {
-                          return Container(
-                              clipBehavior: Clip.hardEdge,
-                              width: double.infinity,
-                              margin: EdgeInsets.only(
-                                  left: 20.0, right: 20, top: 20, bottom: 0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6.0 + 2),
-                                border: Border.all(
-                                  color: Color(0xffD1D9E8),
-                                  width: 1.0,
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedAcc = index;
+                              });
+                            },
+                            child: Container(
+                                clipBehavior: Clip.hardEdge,
+                                width: double.infinity,
+                                margin: EdgeInsets.only(
+                                    left: 20.0, right: 20, top: 20, bottom: 0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.0 + 2),
+                                  border: Border.all(
+                                    color: selectedAcc == index
+                                        ? CLR_GREEN
+                                        : Color(0xffD1D9E8),
+                                    width: 1.0,
+                                  ),
                                 ),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          15, 10, 0, 0),
-                                      child: Text(
-                                        accountInfo![index]
-                                            .accountNumber
-                                            .toString(),
-                                        style: TextStyle(
-                                          fontSize: TXT_SIZE_NORMAL(context),
-                                          fontWeight: FontWeight.w600,
-                                          color: Color(0xff808080),
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      )),
-                                  Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          15, 10, 0, 0),
-                                      child: Text(
-                                        "Balance Amount",
-                                        style: TextStyle(
-                                          fontSize: TXT_SIZE_SMALL(context),
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0xff808080),
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      )),
-                                  Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          15, 0, 0, 0),
-                                      child: Text(
-                                        "₹ ${accountInfo![index].balance.toString()}",
-                                        style: TextStyle(
-                                          fontSize: TXT_SIZE_XL(context),
-                                          fontWeight: FontWeight.w600,
-                                          color: Color(0xff0e2146),
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ))
-                                ],
-                              ));
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            15, 10, 0, 0),
+                                        child: Text(
+                                          accountInfo![index]
+                                              .accountNumber
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontSize: TXT_SIZE_NORMAL(context),
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xff808080),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        )),
+                                    Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            15, 10, 0, 0),
+                                        child: Text(
+                                          "Balance Amount",
+                                          style: TextStyle(
+                                            fontSize: TXT_SIZE_SMALL(context),
+                                            fontWeight: FontWeight.w400,
+                                            color: Color(0xff808080),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        )),
+                                    Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            15, 0, 0, 0),
+                                        child: Text(
+                                          "₹ ${accountInfo![index].balance.toString()}",
+                                          style: TextStyle(
+                                            fontSize: TXT_SIZE_XL(context),
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xff0e2146),
+                                          ),
+                                          textAlign: TextAlign.left,
+                                        ))
+                                  ],
+                                )),
+                          );
                         }),
                   ),
                 Container(
@@ -393,12 +423,15 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () {
-                        handleSubmit();
+                        if (selectedAcc != null) {
+                          handleSubmit();
+                        }
                       },
                       buttonText: "Proceed to Pay",
-                      buttonTXT_CLR_DEFAULT: BTN_CLR_ACTIVE,
+                      buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
+                      buttonColor:
+                          selectedAcc != null ? CLR_PRIMARY : Colors.grey,
                       buttonSizeX: 10,
                       buttonSizeY: 40,
                       buttonTextSize: 14,
