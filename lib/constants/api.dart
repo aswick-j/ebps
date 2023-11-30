@@ -11,12 +11,12 @@ const String PAYMENT_INFO_URL = "/billers/payment-information/";
 const String VALIDATE_BILL_URL = "/payment/validate-bill";
 const String GEN_OTP_URL = "/user-services/generate-otp";
 const String SEARCH_URL = "/billers/search";
+const String HISTORY_URL = "/transactions/";
 
 const String VALIDATE_OTP_URL = "/user-services/validate-otp";
 const String PAY_BILL_URL = "/payment/bill";
 
 const String redirectUrl = "/auth/redirect";
-const String historyUrl = "/transactions/";
 const String complaintUrl = "/complaints/";
 const String transactionUrl = "/transactions/";
 

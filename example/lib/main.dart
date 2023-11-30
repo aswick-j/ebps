@@ -61,7 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
         Uri.parse(API_URL),
         body: json.encode(val['redirectionRequest']!['msgBdy']),
         headers: {
+          "Access-Control-Allow-Origin": "*",
           'Content-Type': 'application/json',
+          'Accept': '*/*',
           'checkSum': checkSUm as String,
         },
       );

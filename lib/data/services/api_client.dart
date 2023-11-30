@@ -359,4 +359,35 @@ class ApiClient implements Repository {
       return null;
     }
   }
+
+  //HISTORY
+
+  Future<dynamic> getHistory(payload) async {
+    Map<String, dynamic> body = payload;
+
+    try {
+      var response = await api(
+          method: "post",
+          url: BASE_URL + HISTORY_URL,
+          body: body,
+          token: true,
+          checkSum: false);
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+      return decodedResponse;
+    } catch (e) {}
+  }
+
+  @override
+  Future getComplaints() async {
+    try {
+      var response = await api(
+          method: "get",
+          url: BASE_URL + complaintUrl,
+          token: true,
+          checkSum: false);
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+
+      return decodedResponse;
+    } catch (e) {}
+  }
 }

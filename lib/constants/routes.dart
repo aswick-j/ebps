@@ -1,3 +1,4 @@
+import 'package:ebps/bloc/history/history_cubit.dart';
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/bloc/splash/splash_cubit.dart';
 import 'package:ebps/data/models/categories_model.dart';
@@ -7,6 +8,8 @@ import 'package:ebps/presentation/screens/BillFlow/BillerDetails.dart';
 import 'package:ebps/presentation/screens/BillFlow/BillerList.dart';
 import 'package:ebps/presentation/screens/Payments/PaymentDetails.dart';
 import 'package:ebps/presentation/screens/Payments/TransactionScreen.dart';
+import 'package:ebps/presentation/screens/history/HistoryDetails.dart';
+import 'package:ebps/presentation/screens/history/HistoryScreen.dart';
 import 'package:ebps/presentation/screens/home/AllBillCategories.dart';
 import 'package:ebps/presentation/screens/home/SearchScreen.dart';
 import 'package:ebps/presentation/screens/mpin/mpinScreen.dart';
@@ -29,6 +32,8 @@ const oTPPAGEROUTE = '/otp';
 const mPINROUTE = '/mpin';
 const tRANSROUTE = '/transSuccessful';
 const sEARCHROUTE = '/search';
+const hISTORYROUTE = '/history';
+const hISTORYDETAILSROUTE = '/historyDetails';
 
 /// The `MyRouter` class is responsible for generating routes and corresponding page widgets based on
 /// the provided route settings.
@@ -205,6 +210,30 @@ class MyRouter {
             builder: (_) => BlocProvider(
                   create: (context) => HomeCubit(repository: apiClient),
                   child: SearchScreen(),
+                ));
+
+      //HISTORY ROUTE
+
+      case hISTORYROUTE:
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => BlocProvider(
+                  create: (context) => HistoryCubit(repository: apiClient),
+                  child: HistoryScreen(),
+                ));
+      case hISTORYDETAILSROUTE:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => BlocProvider(
+                  create: (context) => HistoryCubit(repository: apiClient),
+                  child: HistoryDetails(
+                      billName: args["billName"],
+                      billerName: args['billerName'],
+                      categoryName: args["categoryName"],
+                      isSavedBill: args["isSavedBill"],
+                      historyData: args["historyData"]),
                 ));
       default:
         return CupertinoPageRoute(

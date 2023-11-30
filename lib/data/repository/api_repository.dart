@@ -40,4 +40,8 @@ abstract class Repository {
   //SEARCH
   Future getSearchedBillers(String searchString, String category,
       String location, int pageNumber) async {}
+
+  //HISTORY
+
+  Future getHistory(day) async {}
 }
