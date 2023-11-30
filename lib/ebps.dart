@@ -9,6 +9,7 @@ import 'package:ebps/constants/ebps_theme.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EbpsScreen extends StatelessWidget {
   String apiData;
@@ -19,23 +20,28 @@ class EbpsScreen extends StatelessWidget {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     final router = MyRouter();
 
-    return MaterialApp(
-      title: "Bill Payment",
-      theme: ebpsTheme,
-      // theme: ThemeData(
-      //   fontFamily: GoogleFonts.poppins().fontFamily,
-      //   scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
-      // ),
-      initialRoute: sPLASHROUTE,
-      onGenerateInitialRoutes: (initialRoute) => [
-        router.generateRoute(
-          RouteSettings(name: sPLASHROUTE, arguments: apiData),
-        )!
-      ],
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: router.generateRoute,
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: MaterialApp(
+        title: "Bill Payment",
+        theme: ebpsTheme,
+        // theme: ThemeData(
+        //   fontFamily: GoogleFonts.poppins().fontFamily,
+        //   scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
+        // ),
+        initialRoute: sPLASHROUTE,
+        onGenerateInitialRoutes: (initialRoute) => [
+          router.generateRoute(
+            RouteSettings(name: sPLASHROUTE, arguments: apiData),
+          )!
+        ],
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: router.generateRoute,
 
-      // home: splashScreen(apiData: apiData)
+        // home: splashScreen(apiData: apiData)
+      ),
     );
   }
 }

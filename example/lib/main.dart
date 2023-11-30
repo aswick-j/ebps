@@ -53,13 +53,13 @@ class _MyHomePageState extends State<MyHomePage> {
   String API_DATA = '';
   bool isLoading = false;
 
-  Future<void> fetchData() async {
+  Future<void> fetchData(val) async {
     try {
       isLoading = true;
-      final checkSUm = p7['redirectionRequest']!['checkSum'];
+      final checkSUm = val['redirectionRequest']!['checkSum'];
       final response = await http.post(
         Uri.parse(API_URL),
-        body: json.encode(p7['redirectionRequest']!['msgBdy']),
+        body: json.encode(val['redirectionRequest']!['msgBdy']),
         headers: {
           'Content-Type': 'application/json',
           'checkSum': checkSUm as String,
@@ -101,46 +101,140 @@ class _MyHomePageState extends State<MyHomePage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Center(
-          child: GestureDetector(
-            onTap: () {
-              fetchData();
-            },
-            child: Container(
-              height: MediaQuery.of(context).size.height * 1 / 14,
-              width: MediaQuery.of(context).size.width * 3 / 4,
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Colors.blue,
-                      Colors.purple,
-                    ]),
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  const Text(""),
-                  const Text(
-                    "Go to BBPS Screen",
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  fetchData(p6);
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 1 / 14,
+                  width: MediaQuery.of(context).size.width * 3 / 4,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Colors.blue,
+                          Colors.purple,
+                        ]),
+                    borderRadius: BorderRadius.circular(16.0),
                   ),
-                  Container(
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.white),
-                      child: const Icon(
-                        Icons.arrow_right_alt_outlined,
-                        size: 25.0,
-                        color: Colors.red,
-                      ))
-                ],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Text(""),
+                      const Text(
+                        "Go to BBPS Screen [ THANGA ]",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                      ),
+                      Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.white),
+                          child: const Icon(
+                            Icons.arrow_right_alt_outlined,
+                            size: 25.0,
+                            color: Colors.red,
+                          ))
+                    ],
+                  ),
+                ),
               ),
-            ),
+              SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
+                onTap: () {
+                  fetchData(p7);
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 1 / 14,
+                  width: MediaQuery.of(context).size.width * 3 / 4,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Colors.blue,
+                          Colors.purple,
+                        ]),
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Text(""),
+                      const Text(
+                        "Go to BBPS Screen [ ASWICK ]",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                      ),
+                      Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.white),
+                          child: const Icon(
+                            Icons.arrow_right_alt_outlined,
+                            size: 25.0,
+                            color: Colors.red,
+                          ))
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
+                onTap: () {
+                  fetchData(p8);
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 1 / 14,
+                  width: MediaQuery.of(context).size.width * 3 / 4,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Colors.blue,
+                          Colors.purple,
+                        ]),
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Text(""),
+                      const Text(
+                        "Go to BBPS Screen [ BALAJI ]",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                      ),
+                      Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.white),
+                          child: const Icon(
+                            Icons.arrow_right_alt_outlined,
+                            size: 25.0,
+                            color: Colors.red,
+                          ))
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         )
       ],

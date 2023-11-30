@@ -15,11 +15,14 @@ import 'package:ebps/helpers/logger.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/common/Container/Home/BillerDetailsContainer.dart';
+import 'package:ebps/presentation/widget/flickrLoader.dart';
 import 'package:ebps/presentation/widget/getBillerDetail.dart';
 import 'package:ebps/presentation/widget/noResult.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class BillerDetails extends StatefulWidget {
   int? billID;
@@ -162,9 +165,9 @@ class _BillerDetailsState extends State<BillerDetails> {
                     clipBehavior: Clip.hardEdge,
                     width: double.infinity,
                     margin: EdgeInsets.only(
-                        left: 20.0, right: 20, top: 20, bottom: 100),
+                        left: 18.0.w, right: 18.w, top: 10.h, bottom: 80.h),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0 + 2),
+                      borderRadius: BorderRadius.circular(6.0.r + 2.r),
                       border: Border.all(
                         color: Color(0xffD1D9E8),
                         width: 1.0,
@@ -178,7 +181,12 @@ class _BillerDetailsState extends State<BillerDetails> {
                           billerName: widget.billerName.toString(),
                           categoryName: widget.categoryName.toString(),
                         ),
-                        if (isFetchbillLoading) Text("Fetch Bill Loading..."),
+                        if (isFetchbillLoading)
+                          Container(
+                            height: 200,
+                            width: 200,
+                            child: FlickrLoader(),
+                          ),
                         if (!isFetchbillLoading && isUnableToFetchBill)
                           Container(
                               width: double.infinity,
@@ -192,15 +200,15 @@ class _BillerDetailsState extends State<BillerDetails> {
                             Container(
                                 width: double.infinity,
                                 constraints: BoxConstraints(
-                                  minHeight: 100,
-                                  maxHeight: 300,
+                                  minHeight: 100.h,
+                                  maxHeight: 300.h,
                                 ),
                                 color: const Color.fromRGBO(255, 255, 255, 1),
                                 child: GridView.count(
                                   shrinkWrap: true,
                                   primary: false,
                                   physics: NeverScrollableScrollPhysics(),
-                                  crossAxisSpacing: 10,
+                                  crossAxisSpacing: 10.w,
                                   mainAxisSpacing: 0,
                                   crossAxisCount: 2,
                                   childAspectRatio: 4 / 2,
@@ -260,11 +268,11 @@ class _BillerDetailsState extends State<BillerDetails> {
                                 children: [
                                   Padding(
                                     padding:
-                                        EdgeInsets.symmetric(vertical: 24.0),
+                                        EdgeInsets.symmetric(vertical: 20.0.h),
                                     child: Text(
                                       "Additional Info",
                                       style: TextStyle(
-                                        fontSize: TXT_SIZE_XL(context),
+                                        fontSize: 14.sp,
                                         fontWeight: FontWeight.bold,
                                         color: Color(0xff1b438b),
                                       ),
@@ -279,31 +287,30 @@ class _BillerDetailsState extends State<BillerDetails> {
                                           SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
                                         childAspectRatio: 4 / 2,
-                                        mainAxisSpacing: 10,
+                                        mainAxisSpacing: 10.h,
                                       ),
                                       itemBuilder: (context, index) {
                                         return Container(
                                             // margin: EdgeInsets.all(10),
                                             decoration: BoxDecoration(
                                               borderRadius:
-                                                  BorderRadius.circular(2),
+                                                  BorderRadius.circular(2.r),
                                             ),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
                                                 Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(8, 10, 0, 0),
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            8.w, 10.h, 0, 0),
                                                     child: Text(
                                                       _additionalInfo!
                                                           .tag![index].name
                                                           .toString(),
                                                       // "Subscriber ID",
                                                       style: TextStyle(
-                                                        fontSize:
-                                                            TXT_SIZE_NORMAL(
-                                                                context),
+                                                        fontSize: 12.sp,
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         color:
@@ -313,16 +320,15 @@ class _BillerDetailsState extends State<BillerDetails> {
                                                           TextAlign.center,
                                                     )),
                                                 Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(8, 10, 0, 0),
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            8.w, 10.h, 0, 0),
                                                     child: Text(
                                                       _additionalInfo!
                                                           .tag![index].value
                                                           .toString(),
                                                       style: TextStyle(
-                                                        fontSize:
-                                                            TXT_SIZE_LARGE(
-                                                                context),
+                                                        fontSize: 13.sp,
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         color:
@@ -343,7 +349,10 @@ class _BillerDetailsState extends State<BillerDetails> {
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(
-                                    left: 16, right: 16, top: 16, bottom: 16),
+                                    left: 16.w,
+                                    right: 16.w,
+                                    top: 16.h,
+                                    bottom: 16.h),
                                 child: TextFormField(
                                   controller: txtAmountController,
                                   enabled: validateBill!["amountEditable"],
@@ -393,6 +402,9 @@ class _BillerDetailsState extends State<BillerDetails> {
                                   autocorrect: false,
                                   enableSuggestions: false,
                                   decoration: InputDecoration(
+                                    hintStyle: TextStyle(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.bold),
                                     fillColor: validateBill!["amountEditable"]
                                         ? Color(0xffD1D9E8).withOpacity(0.2)
                                         : Color(0xffD1D9E8).withOpacity(0.5),
@@ -415,14 +427,14 @@ class _BillerDetailsState extends State<BillerDetails> {
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
-                                    left: 20, bottom: 20, right: 20),
+                                    left: 20.w, bottom: 20.h, right: 20.w),
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
                                     'Payment Amount has to be between ₹ ${paymentInform?.mINLIMIT.toString()} and ₹ ${paymentInform?.mAXLIMIT.toString()}',
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
-                                      fontSize: TXT_SIZE_NORMAL(context),
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.normal,
                                       color: isInsufficient
                                           ? CLR_ERROR
@@ -434,14 +446,14 @@ class _BillerDetailsState extends State<BillerDetails> {
                               if (PaymentExactErrMsg.length > 0)
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      left: 20, bottom: 20, right: 20),
+                                      left: 20.w, bottom: 20.h, right: 20.w),
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
                                       PaymentExactErrMsg,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontSize: TXT_SIZE_NORMAL(context),
+                                        fontSize: 14.sp,
                                         fontWeight: FontWeight.normal,
                                         color: CLR_ERROR,
                                       ),
@@ -463,7 +475,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                         top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                      EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -476,13 +488,13 @@ class _BillerDetailsState extends State<BillerDetails> {
                             buttonTxtColor: CLR_PRIMARY,
                             buttonBorderColor: Colors.transparent,
                             buttonColor: BTN_CLR_ACTIVE,
-                            buttonSizeX: 10,
-                            buttonSizeY: 40,
-                            buttonTextSize: 14,
+                            buttonSizeX: 10.h,
+                            buttonSizeY: 40.w,
+                            buttonTextSize: 14.sp,
                             buttonTextWeight: FontWeight.w500),
                       ),
                       SizedBox(
-                        width: 40,
+                        width: 40.w,
                       ),
                       Expanded(
                         child: MyAppButton(
@@ -510,9 +522,9 @@ class _BillerDetailsState extends State<BillerDetails> {
                                 isInsufficient || PaymentExactErrMsg.isNotEmpty
                                     ? Colors.grey
                                     : CLR_PRIMARY,
-                            buttonSizeX: 10,
-                            buttonSizeY: 40,
-                            buttonTextSize: 14,
+                            buttonSizeX: 10.h,
+                            buttonSizeY: 40.w,
+                            buttonTextSize: 14.sp,
                             buttonTextWeight: FontWeight.w500),
                       ),
                     ],

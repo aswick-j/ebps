@@ -1,5 +1,6 @@
 import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 MyAppText(
     {@required data,
@@ -20,7 +21,7 @@ MyAppText(
     maxLines: maxline ?? 2,
     style: TextStyle(
       color: color ?? CLR_PRIMARY,
-      fontSize: size,
+      fontSize: size ?? 23.sp,
       height: lineHeight ?? 0,
       fontWeight: weight ?? FontWeight.normal,
       decoration: decorate ?? TextDecoration.none,

@@ -2,6 +2,7 @@ import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/data/models/categories_model.dart';
 import 'package:ebps/data/services/api_client.dart';
 import 'package:ebps/presentation/common/Container/Home/CategoriesContainer.dart';
+import 'package:ebps/presentation/widget/flickrLoader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -78,9 +79,11 @@ class _BillerCategoriesUIState extends State<BillerCategoriesUI> {
                   ),
                 ],
               )
-            : Text("Loading");
+            : Center(
+                child:
+                    Container(height: 200, width: 200, child: FlickrLoader()),
+              );
       },
     );
-    ;
   }
 }

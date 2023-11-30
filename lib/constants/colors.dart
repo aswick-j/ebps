@@ -15,6 +15,7 @@ const CLR_BLUESHADE = Color(0xCCACC9FF);
 const CLR_ERROR = Color(0xffCF1E2F);
 const CLR_GREEN = Color(0xff008936);
 const CLR_ORANGE = Color(0xFFCE7D1E);
+const CLR_BLUE_LITE = Color(0xFF768EB9);
 
 //primary text colors
 const TXT_CLR_DEFAULT = Color(0xff191919);

@@ -2,6 +2,7 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class UpcomingDuesContainer extends StatelessWidget {
@@ -35,9 +36,10 @@ class UpcomingDuesContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(left: 20.0, right: 20, top: 10, bottom: 0),
+      margin:
+          EdgeInsets.only(left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(8.0.r),
         border: Border.all(
           color: containerBorderColor,
           width: 2.0,
@@ -46,23 +48,23 @@ class UpcomingDuesContainer extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            contentPadding: EdgeInsets.only(left: 6, right: 6, top: 6),
+            contentPadding: EdgeInsets.only(left: 6.w, right: 6.w, top: 6.h),
             leading: Container(
-              width: 50,
+              width: 45.w,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.w),
                 child: SvgPicture.asset(iconPath),
               ),
             ),
             title: Padding(
-              padding: EdgeInsets.only(bottom: 15),
+              padding: EdgeInsets.only(bottom: 5.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     titleText,
                     style: TextStyle(
-                      fontSize: TXT_SIZE_LARGE(context),
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
                       color: Color(0xff191919),
                     ),
@@ -81,7 +83,7 @@ class UpcomingDuesContainer extends StatelessWidget {
                     Text(
                       subtitleText,
                       style: TextStyle(
-                        fontSize: TXT_SIZE_LARGE(context),
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                         color: Color(0xff808080),
                       ),
@@ -89,7 +91,7 @@ class UpcomingDuesContainer extends StatelessWidget {
                     Text(
                       amount,
                       style: TextStyle(
-                        fontSize: TXT_SIZE_LARGE(context),
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
                         color: Color(0xff1b438b),
                       ),
@@ -101,7 +103,7 @@ class UpcomingDuesContainer extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -109,12 +111,12 @@ class UpcomingDuesContainer extends StatelessWidget {
                   children: [
                     SvgPicture.asset(ICON_CALENDAR),
                     SizedBox(
-                      width: 10,
+                      width: 10.w,
                     ),
                     Text(
                       dateText,
                       style: TextStyle(
-                        fontSize: TXT_SIZE_NORMAL(context),
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
                         color: Color(0xff808080),
                         height: 20 / 12,
@@ -128,9 +130,9 @@ class UpcomingDuesContainer extends StatelessWidget {
                     buttonTxtColor: buttonTxtColor,
                     buttonBorderColor: buttonBorderColor,
                     buttonColor: buttonColor,
-                    buttonSizeX: 10,
-                    buttonSizeY: 27,
-                    buttonTextSize: 10,
+                    buttonSizeX: 10.h,
+                    buttonSizeY: 25.w,
+                    buttonTextSize: 10.sp,
                     buttonTextWeight: FontWeight.w500),
               ],
             ),

@@ -13,6 +13,7 @@ import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class TransactionScreen extends StatefulWidget {
@@ -61,33 +62,33 @@ class _TransactionScreenState extends State<TransactionScreen> {
   Widget TxnDetails(
       {String title = "", String subTitle = "", bool? clipBoard}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
             style: TextStyle(
-              fontSize: TXT_SIZE_LARGE(context),
+              fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               color: Color(0xff808080),
               height: 23 / 14,
             ),
             textAlign: TextAlign.left,
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 5.h),
           Row(
             children: [
               Text(
                 subTitle,
                 style: TextStyle(
-                  fontSize: TXT_SIZE_LARGE(context),
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xff1b438b),
                 ),
                 textAlign: TextAlign.left,
               ),
-              SizedBox(width: 10),
+              SizedBox(width: 10.w),
               if (clipBoard != false)
                 GestureDetector(
                     onTap: () {
@@ -111,7 +112,14 @@ class _TransactionScreenState extends State<TransactionScreen> {
         appBar: MyAppBar(
           context: context,
           title: 'Go to Home',
-          onLeadingTap: () => goToUntil(context, hOMEROUTE),
+          onLeadingTap: () => {
+            goBack(context),
+            goBack(context),
+            goBack(context),
+            goBack(context),
+            goBack(context),
+            goBack(context),
+          },
           showActions: false,
         ),
         body: SingleChildScrollView(
@@ -123,9 +131,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   clipBehavior: Clip.hardEdge,
                   width: double.infinity,
                   margin: EdgeInsets.only(
-                      left: 20.0, right: 20, top: 20, bottom: 0),
+                      left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.0 + 2),
+                    borderRadius: BorderRadius.circular(6.0.r + 2.r),
                     border: Border.all(
                       color: Color(0xffD1D9E8),
                       width: 1.0,
@@ -137,7 +145,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       Container(
                         width: double.infinity,
                         alignment: Alignment.center,
-                        height: 40.0,
+                        height: 33.0.h,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topRight,
@@ -167,7 +175,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                       ? "Transaction Pending"
                                       : "Transaction Failure",
                               style: TextStyle(
-                                fontSize: TXT_SIZE_LARGE(context),
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xffffffff),
                               ),
@@ -178,7 +186,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       ),
                       ListTile(
                         contentPadding:
-                            EdgeInsets.only(left: 30, right: 6, top: 6),
+                            EdgeInsets.only(left: 30.w, right: 6.w, top: 6.h),
                         // leading: Container(
                         //   width: 50,
                         //   child: Padding(
@@ -188,49 +196,48 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         //   ),
                         // ),
                         title: Padding(
-                            padding: EdgeInsets.only(bottom: 5),
-                            child: Row(
+                            padding: EdgeInsets.only(bottom: 5.h),
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(
-                                  Icons.arrow_upward,
-                                  color: Colors.red,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
+                                    Icon(
+                                      Icons.arrow_upward,
+                                      color: Colors.red,
+                                    ),
                                     Text(
                                       '₹ ${widget.billerData['billAmount']}',
                                       style: TextStyle(
-                                        fontSize: TXT_SIZE_XXL(context),
+                                        fontSize: 20.sp,
                                         fontWeight: FontWeight.w600,
                                         color: Color(0xff1b438b),
                                         height: 33 / 20,
                                       ),
                                       textAlign: TextAlign.left,
                                     ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      DateFormat("dd/MM/yy | hh:mm a")
-                                          .format(DateTime.now())
-                                          .toString(),
-                                      // "01/08/2023 | 12:48 PM",
-                                      style: TextStyle(
-                                        fontSize: TXT_SIZE_LARGE(context),
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff808080),
-                                      ),
-                                      textAlign: TextAlign.left,
-                                    )
                                   ],
                                 ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Text(
+                                  DateFormat("dd/MM/yy | hh:mm a")
+                                      .format(DateTime.now())
+                                      .toString(),
+                                  // "01/08/2023 | 12:48 PM",
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xff808080),
+                                  ),
+                                  textAlign: TextAlign.left,
+                                )
                               ],
                             )),
                       ),
                       Divider(
-                        height: 10,
+                        height: 10.h,
                         thickness: 1,
                       ),
                       TxnDetails(
@@ -283,6 +290,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           clipBoard: false),
                     ],
                   )),
+              SizedBox(
+                height: 70.h,
+              )
             ],
           ),
         ),
@@ -291,7 +301,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
               border:
                   Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+            padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -305,9 +315,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
                       buttonColor: CLR_PRIMARY,
-                      buttonSizeX: 10,
-                      buttonSizeY: 40,
-                      buttonTextSize: 14,
+                      buttonSizeX: 10.h,
+                      buttonSizeY: 40.w,
+                      buttonTextSize: 14.sp,
                       buttonTextWeight: FontWeight.w500),
                 ),
               ],

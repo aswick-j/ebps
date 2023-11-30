@@ -1,5 +1,6 @@
 import 'package:ebps/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class BillerDetailsContainer extends StatelessWidget {
@@ -15,35 +16,35 @@ class BillerDetailsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 24.0),
+      padding: EdgeInsets.symmetric(vertical: 20.0.h),
       child: Column(children: [
         Container(
-          width: 50,
-          height: 50,
+          width: 40.w,
+          height: 40.h,
           child: Padding(
             padding: EdgeInsets.all(0),
             child: SvgPicture.asset(icon),
           ),
         ),
         SizedBox(
-          height: 10,
+          height: 10.h,
         ),
         Text(
           billerName,
           style: TextStyle(
-            fontSize: TXT_SIZE_XL(context),
+            fontSize: 18.sp,
             fontWeight: FontWeight.bold,
             color: Color(0xff1b438b),
           ),
           textAlign: TextAlign.center,
         ),
         SizedBox(
-          height: 10,
+          height: 10.h,
         ),
         Text(
           categoryName,
           style: TextStyle(
-            fontSize: TXT_SIZE_LARGE(context),
+            fontSize: 16.sp,
             fontWeight: FontWeight.bold,
             color: Color(0xff808080),
             height: 26 / 16,

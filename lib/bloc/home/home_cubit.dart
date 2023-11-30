@@ -603,14 +603,14 @@ class HomeCubit extends Cubit<HomeState> {
 
   //SEARCH
 
-  void searchBiller(queryString, Category, Loaction) async {
+  void searchBiller(queryString, Category) async {
     if (!isClosed) {
       emit(BillersSearchLoading());
     }
 
     Map<String, dynamic> searchPayload = {
-      "searchString": "",
-      "category": "All",
+      "searchString": queryString,
+      "category": Category,
       "location": "All",
       "pageNumber": 1
     };

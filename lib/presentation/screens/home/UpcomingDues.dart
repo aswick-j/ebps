@@ -3,6 +3,7 @@ import 'package:ebps/presentation/common/Container/Home/UpcomingContainer.dart';
 import 'package:ebps/presentation/screens/home/AllUpcomingDues.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UpcomingDues extends StatefulWidget {
   const UpcomingDues({super.key});
@@ -24,10 +25,9 @@ class _UpcomingDuesState extends State<UpcomingDues> {
               Text(
                 'Upcoming Dues',
                 style: TextStyle(
-                  fontSize: TXT_SIZE_XL(context),
+                  fontSize: 15.sp,
                   fontWeight: FontWeight.w600,
                   color: Color(0xff1b438b),
-                  height: 25 / 15,
                 ),
               ),
               InkWell(
@@ -40,7 +40,7 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                     Text(
                       'View All',
                       style: TextStyle(
-                        fontSize: TXT_SIZE_LARGE(context),
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         color: Color(0xff1b438b),
                       ),

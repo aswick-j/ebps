@@ -6,6 +6,7 @@ import 'package:ebps/presentation/screens/home/BillCategories.dart';
 import 'package:ebps/presentation/screens/home/SearchScreen.dart';
 import 'package:ebps/presentation/screens/home/UpcomingDues.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -52,7 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
-          children: [UpcomingDues(), BillCategories()],
+          children: [
+            UpcomingDues(),
+            BillCategories(),
+            SizedBox(
+              height: 10.h,
+            )
+          ],
         ),
       ),
     );

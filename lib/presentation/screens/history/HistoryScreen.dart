@@ -1,6 +1,7 @@
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Container/History/HistoryContainer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -22,8 +23,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
             InkWell(
                 onTap: () => {},
                 child: Container(
-                    margin: EdgeInsets.only(top: 20, bottom: 20, right: 15),
-                    width: 40,
+                    margin:
+                        EdgeInsets.only(top: 20.h, bottom: 20.h, right: 15.w),
+                    width: 30.w,
                     decoration: ShapeDecoration(
                       color: Color(0xff4969A2),
                       shape: RoundedRectangleBorder(
@@ -31,10 +33,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       ),
                     ),
                     child: Container(
-                      width: 20,
-                      height: 40,
+                      width: 20.w,
+                      height: 40.h,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0.r),
                         child: Icon(
                           Icons.comment,
                           color: Colors.white,

@@ -8,9 +8,12 @@ import 'package:ebps/data/models/auto_schedule_pay_model.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
+import 'package:ebps/presentation/widget/LoaderOverlay.dart';
+import 'package:ebps/presentation/widget/animatedDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -47,6 +50,7 @@ class _OtpScreenState extends State<OtpScreen> {
   bool showGenerateOtpSuccessMsg = true;
   bool enableReadOnly = false;
   bool showOTPverify = false;
+  bool enableRedirect = false;
 
   handleIntial() {
     if (widget.from == pAYMENTCONFIRMROUTE) {
@@ -152,388 +156,469 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
-      width: width(context) * 0.13,
-      height: height(context) * 0.07,
+      width: 50.w,
+      height: 50.h,
       textStyle: TextStyle(
-        fontSize: width(context) * 0.045,
+        fontSize: 14.sp,
         letterSpacing: 16.0,
         fontWeight: FontWeight.bold,
         color: TXT_CLR_PRIMARY,
       ),
       decoration: BoxDecoration(
         color: BTN_CLR_ACTIVE,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
         border: Border.all(color: Colors.grey),
       ),
     );
 
-    return Scaffold(
-      appBar: MyAppBar(
-        context: context,
-        title: widget.data!['billerName'],
-        onLeadingTap: () => Navigator.pop(context),
-        showActions: false,
-      ),
-      body: BlocConsumer<HomeCubit, HomeState>(
-        listener: (context, state) {
-          if (state is OtpLoading) {
-            setState(() {
-              isLoading = true;
-              REF_NO = '';
-              OTP_MSG = '';
-            });
-          } else if (state is OtpSuccess) {
-            triggerTimer(1);
-
-            isLoading = false;
-            REF_NO = state.refrenceNumber;
-            OTP_MSG = state.message;
-
-            txtOtpController.clear();
-          } else if (state is OtpFailed) {
-            txtOtpController.clear();
-            setState(() {
-              isLoading = false;
-              OTP_ERR_MSG = state.message;
-            });
-          } else if (state is OtpError) {
-            setState(() {
-              isLoading = false;
-              OTP_ERR_MSG = state.message;
-            });
-            // goToUntil(context, hOMEROUTE);
-          }
-
-          if (state is OtpValidateLoading) {
-          } else if (state is OtpValidateSuccess) {
-            handleOTPSuccess();
-          } else if (state is OtpValidateFailed) {
-            txtOtpController.clear();
-            setState(() {
-              isLoading = false;
-              OTP_ERR_MSG = state.message;
-            });
-            if (state.message!.contains('OTP validation exceeded')) {
-              triggerTimer(0);
+    return LoaderOverlay(
+      child: Scaffold(
+        appBar: MyAppBar(
+          context: context,
+          title: widget.data!['billerName'],
+          onLeadingTap: () => Navigator.pop(context),
+          showActions: false,
+        ),
+        body: BlocConsumer<HomeCubit, HomeState>(
+          listener: (context, state) {
+            if (state is OtpLoading) {
               setState(() {
-                showTimer = false;
-                enableResend = false;
-                showResend = false;
-                showGenerateOtpSuccessMsg = false;
-                secondsRemaining = 20;
+                isLoading = true;
+                REF_NO = '';
+                OTP_MSG = '';
               });
-            }
-          } else if (state is OtpValidateError) {}
+            } else if (state is OtpSuccess) {
+              triggerTimer(1);
 
-          if (state is PayBillLoading) {
-          } else if (state is PayBillSuccess) {
-            goToData(context, tRANSROUTE, {
-              "billName": widget.data!["billName"],
-              "billerName": widget.data!['billerName'],
-              "categoryName": widget.data!["categoryName"],
-              "billerData": state.data,
-              "inputParameters": widget.data!['inputSignature'],
-              "isSavedBill": state.data!['isSavedBill'],
-            });
-          } else if (state is PayBillFailed) {
-            goToData(context, tRANSROUTE, {
-              "billName": widget.data!["billName"],
-              "billerName": widget.data!['billerName'],
-              "categoryName": widget.data!["categoryName"],
-              "billerData": state.data,
-              "inputParameters": widget.data!['inputSignature'],
-              "isSavedBill": true,
-            });
-          } else if (state is PayBillError) {}
-        },
-        builder: (context, state) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                    clipBehavior: Clip.hardEdge,
-                    width: double.infinity,
-                    margin: EdgeInsets.only(
-                        left: 20.0, right: 20, top: 20, bottom: 0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0 + 2),
-                      border: Border.all(
-                        color: Color(0xffD1D9E8),
-                        width: 1.0,
+              isLoading = false;
+              REF_NO = state.refrenceNumber;
+              OTP_MSG = state.message;
+
+              txtOtpController.clear();
+            } else if (state is OtpFailed) {
+              txtOtpController.clear();
+              setState(() {
+                isLoading = false;
+                OTP_ERR_MSG = state.message;
+              });
+            } else if (state is OtpError) {
+              setState(() {
+                isLoading = false;
+                OTP_ERR_MSG = state.message;
+              });
+              // goToUntil(context, hOMEROUTE);
+            }
+
+            if (state is OtpValidateLoading) {
+            } else if (state is OtpValidateSuccess) {
+              handleOTPSuccess();
+            } else if (state is OtpValidateFailed) {
+              txtOtpController.clear();
+              setState(() {
+                isLoading = false;
+                OTP_ERR_MSG = state.message;
+              });
+              if (state.message!.contains('OTP validation exceeded')) {
+                triggerTimer(0);
+                setState(() {
+                  showTimer = false;
+                  enableResend = false;
+                  showResend = false;
+                  showGenerateOtpSuccessMsg = false;
+                  secondsRemaining = 20;
+                });
+              }
+            } else if (state is OtpValidateError) {}
+
+            if (state is PayBillLoading) {
+              LoaderOverlay.of(context).show();
+            } else if (state is PayBillSuccess) {
+              LoaderOverlay.of(context).hide();
+
+              handleRedirect() {
+                goToData(context, tRANSROUTE, {
+                  "billName": widget.data!["billName"],
+                  "billerName": widget.data!['billerName'],
+                  "categoryName": widget.data!["categoryName"],
+                  "billerData": state.data,
+                  "inputParameters": widget.data!['inputSignature'],
+                  "isSavedBill": state.data!['isSavedBill'],
+                });
+              }
+
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: AnimatedDialog(
+                      title: "Your Payment Has Been Successful.",
+                      subTitle: "",
+                      child: Icon(
+                        Icons.check,
+                        color: Colors.white,
                       ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(6.0),
-                              topLeft: Radius.circular(6.0)),
-                          child: Container(
-                            width: double.infinity,
-                            alignment: Alignment.center,
-                            height: 40.0,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topRight,
-                                stops: [0.001, 19],
-                                colors: [
-                                  Color(0xff768EB9).withOpacity(.7),
-                                  Color(0xff463A8D).withOpacity(.7),
+                    actions: <Widget>[
+                      Align(
+                        alignment: Alignment.center,
+                        child: MyAppButton(
+                            onPressed: () {
+                              goBack(context);
+
+                              handleRedirect();
+                            },
+                            buttonText: "Okay",
+                            buttonTxtColor: BTN_CLR_ACTIVE,
+                            buttonBorderColor: Colors.transparent,
+                            buttonColor: CLR_PRIMARY,
+                            buttonSizeX: 10,
+                            buttonSizeY: 40,
+                            buttonTextSize: 14,
+                            buttonTextWeight: FontWeight.w500),
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else if (state is PayBillFailed) {
+              handleRedirect() {
+                goToData(context, tRANSROUTE, {
+                  "billName": widget.data!["billName"],
+                  "billerName": widget.data!['billerName'],
+                  "categoryName": widget.data!["categoryName"],
+                  "billerData": state.data,
+                  "inputParameters": widget.data!['inputSignature'],
+                  "isSavedBill": state.data!['isSavedBill'],
+                });
+              }
+
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return Expanded(
+                    child: AlertDialog(
+                      content: AnimatedDialog(
+                        title: "Your Payment Has Been Failed.",
+                        subTitle: "",
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                        ),
+                      ),
+                      actions: <Widget>[
+                        Align(
+                          alignment: Alignment.center,
+                          child: MyAppButton(
+                              onPressed: () {
+                                goBack(context);
+
+                                handleRedirect();
+                              },
+                              buttonText: "Okay",
+                              buttonTxtColor: BTN_CLR_ACTIVE,
+                              buttonBorderColor: Colors.transparent,
+                              buttonColor: CLR_PRIMARY,
+                              buttonSizeX: 10,
+                              buttonSizeY: 40,
+                              buttonTextSize: 14,
+                              buttonTextWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            } else if (state is PayBillError) {}
+          },
+          builder: (context, state) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                      clipBehavior: Clip.hardEdge,
+                      width: double.infinity,
+                      margin: EdgeInsets.only(
+                          left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6.0.r + 2.r),
+                        border: Border.all(
+                          color: Color(0xffD1D9E8),
+                          width: 1.0,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(6.0.r),
+                                topLeft: Radius.circular(6.0.r)),
+                            child: Container(
+                              width: double.infinity,
+                              alignment: Alignment.center,
+                              height: 33.0.h,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topRight,
+                                  stops: [0.001, 19],
+                                  colors: [
+                                    Color(0xff768EB9).withOpacity(.7),
+                                    Color(0xff463A8D).withOpacity(.7),
+                                  ],
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "OTP Verification",
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xffffffff),
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ],
                               ),
                             ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 32.0.h),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  "OTP Verification",
+                                  "Enter the OTP we sent to your preferd channel \n by Equitas Bank",
                                   style: TextStyle(
-                                    fontSize: TXT_SIZE_LARGE(context),
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xffffffff),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 32.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Enter the OTP we sent to your preferd channel \n by Equitas Bank",
-                                style: TextStyle(
-                                  fontSize: TXT_SIZE_NORMAL(context),
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xff808080),
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Reference No :  ",
-                                    style: TextStyle(
-                                      fontSize: TXT_SIZE_NORMAL(context),
-                                      fontWeight: FontWeight.w600,
-                                      color: TXT_CLR_PRIMARY,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Text(
-                                    REF_NO.toString(),
-                                    style: TextStyle(
-                                      fontSize: TXT_SIZE_NORMAL(context),
-                                      fontWeight: FontWeight.w600,
-                                      color: CLR_ERROR,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 20),
-                          child: SizedBox(
-                            height: 48,
-                            child: Pinput(
-                              length: 6,
-                              controller: txtOtpController,
-                              readOnly: enableReadOnly,
-                              focusNode: focusNode,
-                              // androidSmsAutofillMethod:
-                              //     AndroidSmsAutofillMethod.smsUserConsentApi,
-                              listenForMultipleSmsOnAndroid: true,
-                              defaultPinTheme: defaultPinTheme,
-                              onChanged: (s) {
-                                // widget.resetErr();
-                                if (s.isEmpty) {
-                                  setState(
-                                    () => isBtnDisable = true,
-                                  );
-                                } else {
-                                  if (s.length < 6) {
-                                    setState(
-                                      () => isBtnDisable = true,
-                                    );
-                                  } else {
-                                    setState(
-                                      () => isBtnDisable = false,
-                                    );
-                                  }
-                                }
-                              },
-                              focusedPinTheme: defaultPinTheme.copyWith(
-                                width: width(context) * 0.23,
-                                height: height(context) * 0.09,
-                                decoration:
-                                    defaultPinTheme.decoration!.copyWith(
-                                  border: Border.all(color: CLR_PRIMARY),
-                                ),
-                              ),
-                              keyboardType: TextInputType.number,
-                              enabled: true,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.allow(
-                                    RegExp(r'[0-9]')),
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              errorPinTheme: defaultPinTheme.copyWith(
-                                decoration: BoxDecoration(
-                                  color: CLR_ERROR,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Visibility(
-                          visible: showOTPverify,
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: Text(
-                              "OTP verified Successfully",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: CLR_GREEN,
-                                fontSize: TXT_SIZE_NORMAL(context),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Visibility(
-                          visible: OTP_ERR_MSG != null,
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: Text(
-                              OTP_ERR_MSG.toString(),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: CLR_ERROR,
-                                fontSize: TXT_SIZE_NORMAL(context),
-                              ),
-                            ),
-                          ),
-                        ),
-                        if (showTimer)
-                          Padding(
-                            padding: EdgeInsets.only(top: 24.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  REF_NO!.isNotEmpty ? "OTP valid for" : '',
-                                  style: TextStyle(
-                                    fontSize: TXT_SIZE_NORMAL(context),
+                                    fontSize: 11.sp,
                                     fontWeight: FontWeight.w400,
                                     color: Color(0xff808080),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
-                                SizedBox(height: 10),
-                                Text(
-                                  REF_NO!.isNotEmpty
-                                      ? " ${secondsRemaining.toString()} seconds"
-                                      : '',
-                                  style: TextStyle(
-                                    fontSize: TXT_SIZE_NORMAL(context),
-                                    fontWeight: FontWeight.w600,
-                                    color: TXT_CLR_PRIMARY,
-                                  ),
-                                  textAlign: TextAlign.center,
+                                SizedBox(
+                                  height: 15.h,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Reference No :  ",
+                                      style: TextStyle(
+                                        fontSize: 11.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: TXT_CLR_PRIMARY,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      REF_NO.toString(),
+                                      style: TextStyle(
+                                        fontSize: 11.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: CLR_ERROR,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Didn't recieve the OTP?",
-                                style: TextStyle(
-                                  fontSize: TXT_SIZE_NORMAL(context),
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xff808080),
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(height: 10),
-                              GestureDetector(
-                                onTap: () {
-                                  if (enableResend) {
-                                    resendCode();
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 5.h, horizontal: 20.w),
+                            child: SizedBox(
+                              height: 38.h,
+                              child: Pinput(
+                                length: 6,
+                                controller: txtOtpController,
+                                readOnly: enableReadOnly,
+                                focusNode: focusNode,
+                                androidSmsAutofillMethod:
+                                    AndroidSmsAutofillMethod.smsUserConsentApi,
+                                listenForMultipleSmsOnAndroid: true,
+                                defaultPinTheme: defaultPinTheme,
+                                onChanged: (s) {
+                                  // widget.resetErr();
+                                  if (s.isEmpty) {
+                                    setState(
+                                      () => isBtnDisable = true,
+                                    );
+                                  } else {
+                                    if (s.length < 6) {
+                                      setState(
+                                        () => isBtnDisable = true,
+                                      );
+                                    } else {
+                                      setState(
+                                        () => isBtnDisable = false,
+                                      );
+                                    }
                                   }
                                 },
-                                child: Text(
-                                  "Resend OTP",
+                                focusedPinTheme: defaultPinTheme.copyWith(
+                                  width: 52.w,
+                                  height: 52.h,
+                                  decoration:
+                                      defaultPinTheme.decoration!.copyWith(
+                                    border: Border.all(color: CLR_PRIMARY),
+                                  ),
+                                ),
+                                keyboardType: TextInputType.number,
+                                enabled: true,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp(r'[0-9]')),
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                errorPinTheme: defaultPinTheme.copyWith(
+                                  decoration: BoxDecoration(
+                                    color: CLR_ERROR,
+                                    borderRadius: BorderRadius.circular(8.r),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: showOTPverify,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 8.0.h),
+                              child: Text(
+                                "OTP verified Successfully",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: CLR_GREEN,
+                                  fontSize: 11.sp,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: OTP_ERR_MSG != null,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 8.0.h),
+                              child: Text(
+                                OTP_ERR_MSG.toString(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: CLR_ERROR,
+                                  fontSize: 11.sp,
+                                ),
+                              ),
+                            ),
+                          ),
+                          if (showTimer)
+                            Padding(
+                              padding: EdgeInsets.only(top: 24.0.h),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    REF_NO!.isNotEmpty ? "OTP valid for" : '',
+                                    style: TextStyle(
+                                      fontSize: 11.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff808080),
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(height: 10.h),
+                                  Text(
+                                    REF_NO!.isNotEmpty
+                                        ? " ${secondsRemaining.toString()} seconds"
+                                        : '',
+                                    style: TextStyle(
+                                      fontSize: 11.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: TXT_CLR_PRIMARY,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 14.0.h),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Didn't recieve the OTP?",
                                   style: TextStyle(
-                                    fontSize: TXT_SIZE_NORMAL(context),
-                                    fontWeight: FontWeight.w600,
-                                    color: enableResend
-                                        ? TXT_CLR_PRIMARY
-                                        : Colors.grey,
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xff808080),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: 10.h),
+                                GestureDetector(
+                                  onTap: () {
+                                    if (enableResend) {
+                                      resendCode();
+                                    }
+                                  },
+                                  child: Text(
+                                    "Resend OTP",
+                                    style: TextStyle(
+                                      fontSize: 11.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: enableResend
+                                          ? TXT_CLR_PRIMARY
+                                          : Colors.grey,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        )
-                      ],
-                    ))
+                          SizedBox(
+                            height: 20.h,
+                          )
+                        ],
+                      ))
+                ],
+              ),
+            );
+          },
+        ),
+        bottomSheet: Container(
+          decoration: BoxDecoration(
+              border:
+                  Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Expanded(
+                  child: MyAppButton(
+                      onPressed: () {
+                        // BlocProvider.of<HomeCubit>(context).validateOTP(0000);
+                        if (!isBtnDisable) {
+                          handleSubmit();
+                        }
+                      },
+                      buttonText: "Verify",
+                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonBorderColor: Colors.transparent,
+                      buttonColor: isBtnDisable ? Colors.grey : CLR_PRIMARY,
+                      buttonSizeX: 10.h,
+                      buttonSizeY: 40.w,
+                      buttonTextSize: 14.sp,
+                      buttonTextWeight: FontWeight.w500),
+                ),
               ],
             ),
-          );
-        },
-      ),
-      bottomSheet: Container(
-        decoration: BoxDecoration(
-            border:
-                Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Expanded(
-                child: MyAppButton(
-                    onPressed: () {
-                      // BlocProvider.of<HomeCubit>(context).validateOTP(0000);
-                      if (!isBtnDisable) {
-                        handleSubmit();
-                      }
-                    },
-                    buttonText: "Verify",
-                    buttonTxtColor: BTN_CLR_ACTIVE,
-                    buttonBorderColor: Colors.transparent,
-                    buttonColor: isBtnDisable ? Colors.grey : CLR_PRIMARY,
-                    buttonSizeX: 10,
-                    buttonSizeY: 40,
-                    buttonTextSize: 14,
-                    buttonTextWeight: FontWeight.w500),
-              ),
-            ],
           ),
         ),
       ),

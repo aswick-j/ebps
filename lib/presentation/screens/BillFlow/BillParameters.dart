@@ -10,9 +10,11 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/common/Container/Home/BillerDetailsContainer.dart';
+import 'package:ebps/presentation/widget/flickrLoader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BillParameters extends StatefulWidget {
   BillersData? billerData;
@@ -51,6 +53,7 @@ class _BillParametersState extends State<BillParameters> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormFieldState> _billnameKey = GlobalKey<FormFieldState>();
   dynamic billNameController = TextEditingController();
+  bool isInpuSignLoading = false;
 
   @override
   void initState() {
@@ -116,6 +119,7 @@ class _BillParametersState extends State<BillParameters> {
       ),
       body: BlocConsumer<HomeCubit, HomeState>(listener: (context, state) {
         if (state is InputSignatureLoading) {
+          isInpuSignLoading = true;
         } else if (state is InputSignatureSuccess) {
           inputSignatureItems = state.InputSignatureList;
           for (int i = 0; i < inputSignatureItems!.length; i++) {
@@ -123,8 +127,12 @@ class _BillParametersState extends State<BillParameters> {
             var textEditingController = TextEditingController(text: "");
             inputSignatureControllers.add(textEditingController);
           }
+          isInpuSignLoading = false;
         } else if (state is InputSignatureFailed) {
-        } else if (state is InputSignatureError) {}
+          isInpuSignLoading = false;
+        } else if (state is InputSignatureError) {
+          isInpuSignLoading = false;
+        }
       }, builder: (context, state) {
         return SingleChildScrollView(
           child: Column(
@@ -132,10 +140,10 @@ class _BillParametersState extends State<BillParameters> {
               Container(
                   clipBehavior: Clip.hardEdge,
                   width: double.infinity,
-                  margin: const EdgeInsets.only(
-                      left: 20.0, right: 20, top: 20, bottom: 100),
+                  margin: EdgeInsets.only(
+                      left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.0 + 2),
+                    borderRadius: BorderRadius.circular(6.0.r + 2.r),
                     border: Border.all(
                       color: const Color(0xffD1D9E8),
                       width: 1.0,
@@ -150,12 +158,20 @@ class _BillParametersState extends State<BillParameters> {
                         categoryName:
                             widget.billerData!.cATEGORYNAME.toString(),
                       ),
+                      if (isInpuSignLoading)
+                        Center(
+                          child: Container(
+                            height: 200,
+                            width: 200,
+                            child: FlickrLoader(),
+                          ),
+                        ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 16),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 16.h),
                         child: Form(
                             key: _formKey,
-                            child: Expanded(
+                            child: Container(
                               child: ListView.builder(
                                 scrollDirection: Axis.vertical,
                                 shrinkWrap: true,
@@ -163,7 +179,7 @@ class _BillParametersState extends State<BillParameters> {
                                 itemCount: inputSignatureItems!.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return Padding(
-                                    padding: const EdgeInsets.only(top: 18.0),
+                                    padding: EdgeInsets.only(top: 8.0.h),
                                     child: TextFormField(
                                       autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
@@ -260,8 +276,8 @@ class _BillParametersState extends State<BillParameters> {
                       //   ),
                       // ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 16),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 16.h),
                         child: TextFormField(
                           maxLength: 20,
                           controller: billNameController,
@@ -318,7 +334,7 @@ class _BillParametersState extends State<BillParameters> {
             border:
                 Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+          padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -331,13 +347,13 @@ class _BillParametersState extends State<BillParameters> {
                     buttonTxtColor: CLR_PRIMARY,
                     buttonBorderColor: Colors.transparent,
                     buttonColor: BTN_CLR_ACTIVE,
-                    buttonSizeX: 10,
-                    buttonSizeY: 40,
-                    buttonTextSize: 14,
+                    buttonSizeX: 10.h,
+                    buttonSizeY: 40.w,
+                    buttonTextSize: 14.sp,
                     buttonTextWeight: FontWeight.w500),
               ),
-              const SizedBox(
-                width: 40,
+              SizedBox(
+                width: 40.w,
               ),
               Expanded(
                 child: MyAppButton(
@@ -354,9 +370,9 @@ class _BillParametersState extends State<BillParameters> {
                     buttonColor: isButtonActive && isValidBillName
                         ? CLR_PRIMARY
                         : Colors.grey,
-                    buttonSizeX: 10,
-                    buttonSizeY: 40,
-                    buttonTextSize: 14,
+                    buttonSizeX: 10.h,
+                    buttonSizeY: 40.w,
+                    buttonTextSize: 14.sp,
                     buttonTextWeight: FontWeight.w500),
               ),
             ],

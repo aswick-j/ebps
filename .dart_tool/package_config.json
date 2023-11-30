@@ -86,6 +86,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "flutter_screenutil",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_screenutil-5.9.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "flutter_svg",
       "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_svg-2.0.9",
       "packageUri": "lib/",
@@ -138,6 +144,12 @@
       "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/lints-2.1.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "loading_animation_widget",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/loading_animation_widget-1.2.0+4",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
     },
     {
       "name": "logger",
@@ -404,7 +416,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-11-28T11:01:41.222283Z",
+  "generated": "2023-11-30T03:46:54.161210Z",
   "generator": "pub",
   "generatorVersion": "3.1.5"
 }
