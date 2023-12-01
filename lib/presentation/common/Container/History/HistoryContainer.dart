@@ -1,6 +1,5 @@
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/routes.dart';
-import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/data/models/history_model.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/Text/MyAppText.dart';

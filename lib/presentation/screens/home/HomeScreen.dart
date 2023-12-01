@@ -55,8 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
-            // UpcomingDues(),
-            HomeBanners(),
+            UpcomingDues(),
+            // HomeBanners(),
             HomeBanners(),
             BillCategories(),
             SizedBox(

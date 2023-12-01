@@ -1,5 +1,4 @@
 import 'package:ebps/constants/assets.dart';
-import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,13 +33,23 @@ class UpcomingDuesContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
+    return Card(
+      // width: double.infinity,
+      elevation: 0.0,
+
       margin:
           EdgeInsets.only(left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-      decoration: BoxDecoration(
+      // decoration: BoxDecoration(
+      //   borderRadius: BorderRadius.circular(8.0.r),
+
+      //   border: Border.all(
+      //     color: containerBorderColor,
+      //     width: 2.0,
+      //   ),
+      // ),
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0.r),
-        border: Border.all(
+        side: BorderSide(
           color: containerBorderColor,
           width: 2.0,
         ),
@@ -48,7 +57,7 @@ class UpcomingDuesContainer extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            contentPadding: EdgeInsets.only(left: 6.w, right: 6.w, top: 6.h),
+            contentPadding: EdgeInsets.only(left: 8.w, right: 15.w, top: 4.h),
             leading: Container(
               width: 45.w,
               child: Padding(
@@ -80,13 +89,17 @@ class UpcomingDuesContainer extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      subtitleText,
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xff808080),
-                      ),
+                    Column(
+                      children: [
+                        Text(
+                          subtitleText,
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xff808080),
+                          ),
+                        ),
+                      ],
                     ),
                     Text(
                       amount,
@@ -102,14 +115,22 @@ class UpcomingDuesContainer extends StatelessWidget {
               ],
             ),
           ),
+          Divider(
+            height: 10.h,
+            thickness: 1,
+            indent: 10.w,
+            endIndent: 10.w,
+          ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            padding: EdgeInsets.only(left: 15.w, right: 15.w, bottom: 5.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset(ICON_CALENDAR),
+                    SvgPicture.asset(
+                      ICON_CALENDAR,
+                    ),
                     SizedBox(
                       width: 10.w,
                     ),
@@ -119,7 +140,6 @@ class UpcomingDuesContainer extends StatelessWidget {
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
                         color: Color(0xff808080),
-                        height: 20 / 12,
                       ),
                     ),
                   ],

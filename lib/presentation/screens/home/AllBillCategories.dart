@@ -6,6 +6,7 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Container/Home/CategoriesContainer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AllBillCategories extends StatefulWidget {
   List<CategorieData>? categoriesData;
@@ -79,6 +80,9 @@ class _AllBillCategoriesState extends State<AllBillCategories> {
               categoriesCount: MoreCategories.length,
               categoriesData: MoreCategories,
             ),
+            SizedBox(
+              height: 10.h,
+            )
           ],
         ),
       ),

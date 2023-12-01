@@ -158,14 +158,14 @@ class MyRouter {
                   child: SessionExpired(),
                 ));
 //MPIN
-      case mPINROUTE:
-        final args = settings.arguments as Map<String, dynamic>;
-        return CupertinoPageRoute(
-            fullscreenDialog: true,
-            builder: (_) => BlocProvider(
-                  create: (context) => HomeCubit(repository: apiClient),
-                  child: MpinScreen(data: args['data']),
-                ));
+      // case mPINROUTE:
+      //   final args = settings.arguments as Map<String, dynamic>;
+      //   return CupertinoPageRoute(
+      //       fullscreenDialog: true,
+      //       builder: (_) => BlocProvider(
+      //             create: (context) => HomeCubit(repository: apiClient),
+      //             child: MpinScreen(data: args['data']),
+      //           ));
 
       //OTP
       case oTPPAGEROUTE:

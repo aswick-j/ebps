@@ -1,8 +1,8 @@
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
-import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class MyBillersContainer extends StatelessWidget {
@@ -41,9 +41,10 @@ class MyBillersContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
-        margin: EdgeInsets.only(left: 20.0, right: 20, top: 10, bottom: 10),
+        margin:
+            EdgeInsets.only(left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(8.0.r),
           border: Border.all(
             color: Color(0xFFD1D9E8),
             width: 2.0,
@@ -51,20 +52,20 @@ class MyBillersContainer extends StatelessWidget {
         ),
         child: Column(children: [
           ListTile(
-            contentPadding: EdgeInsets.only(left: 6, right: 6, top: 6),
+            contentPadding: EdgeInsets.only(left: 8.w, right: 15.w, top: 4.h),
             leading: Container(
-              width: 50,
+              width: 45.w,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.r),
                 child: SvgPicture.asset(iconPath),
               ),
             ),
             title: Padding(
-              padding: EdgeInsets.only(bottom: 5),
+              padding: EdgeInsets.only(bottom: 5.h),
               child: Text(
                 titleText,
                 style: TextStyle(
-                  fontSize: TXT_SIZE_LARGE(context),
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.bold,
                   color: Color(0xff191919),
                 ),
@@ -77,7 +78,7 @@ class MyBillersContainer extends StatelessWidget {
                 Text(
                   subtitleText,
                   style: TextStyle(
-                    fontSize: TXT_SIZE_LARGE(context),
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
                     color: Color(0xff808080),
                   ),
@@ -88,9 +89,9 @@ class MyBillersContainer extends StatelessWidget {
               onPressed: () {
                 showModalBottomSheet(
                     context: context,
-                    shape: const RoundedRectangleBorder(
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(16.0),
+                        top: Radius.circular(16.0.r),
                       ),
                     ),
                     builder: (context) {
@@ -100,20 +101,20 @@ class MyBillersContainer extends StatelessWidget {
                         children: <Widget>[
                           ListTile(
                             contentPadding: EdgeInsets.only(
-                                left: 16, right: 16, top: 16, bottom: 16),
+                                left: 8.w, right: 15.w, top: 4.h),
                             leading: Container(
-                              width: 50,
+                              width: 45.w,
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(8.r),
                                 child: SvgPicture.asset(iconPath),
                               ),
                             ),
                             title: Padding(
-                              padding: EdgeInsets.only(bottom: 5),
+                              padding: EdgeInsets.only(bottom: 5.h),
                               child: Text(
                                 titleText,
                                 style: TextStyle(
-                                  fontSize: TXT_SIZE_LARGE(context),
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xff191919),
                                 ),
@@ -126,7 +127,7 @@ class MyBillersContainer extends StatelessWidget {
                                 Text(
                                   subtitleText,
                                   style: TextStyle(
-                                    fontSize: TXT_SIZE_LARGE(context),
+                                    fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
                                     color: Color(0xff808080),
                                   ),
@@ -137,7 +138,7 @@ class MyBillersContainer extends StatelessWidget {
                                 Text(
                                   "Autopay Enabled",
                                   style: TextStyle(
-                                    fontSize: TXT_SIZE_LARGE(context),
+                                    fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,
                                     color: Color(0xff00ab44),
                                   ),
@@ -157,16 +158,16 @@ class MyBillersContainer extends StatelessWidget {
                               ],
                             ),
                             child: Divider(
-                              height: 1,
+                              height: 1.h,
                               thickness: 1,
                               color: Colors.grey.withOpacity(0.1),
                             ),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 10.h,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 48.0, bottom: 16),
+                            padding: EdgeInsets.only(top: 48.0.h, bottom: 16.h),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -176,9 +177,9 @@ class MyBillersContainer extends StatelessWidget {
                                     buttonTxtColor: CLR_PRIMARY,
                                     buttonBorderColor: Color(0xff768EB9),
                                     buttonColor: buttonColor,
-                                    buttonSizeX: 10,
-                                    buttonSizeY: 37,
-                                    buttonTextSize: 14,
+                                    buttonSizeX: 10.h,
+                                    buttonSizeY: 37.w,
+                                    buttonTextSize: 14.sp,
                                     buttonTextWeight: FontWeight.w500),
                               ],
                             ),
@@ -192,7 +193,7 @@ class MyBillersContainer extends StatelessWidget {
           ),
           if (buttonText != null)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 70.0),
+              padding: EdgeInsets.symmetric(horizontal: 70.0.w),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Row(
@@ -201,9 +202,9 @@ class MyBillersContainer extends StatelessWidget {
                         onPressed: () {
                           showModalBottomSheet(
                               context: context,
-                              shape: const RoundedRectangleBorder(
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(16.0),
+                                  top: Radius.circular(16.0.r),
                                 ),
                               ),
                               builder: (context) {
@@ -213,23 +214,20 @@ class MyBillersContainer extends StatelessWidget {
                                   children: <Widget>[
                                     ListTile(
                                       contentPadding: EdgeInsets.only(
-                                          left: 16,
-                                          right: 16,
-                                          top: 16,
-                                          bottom: 16),
+                                          left: 8.w, right: 15.w, top: 4.h),
                                       leading: Container(
-                                        width: 50,
+                                        width: 45.w,
                                         child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: EdgeInsets.all(8.r),
                                           child: SvgPicture.asset(iconPath),
                                         ),
                                       ),
                                       title: Padding(
-                                        padding: EdgeInsets.only(bottom: 5),
+                                        padding: EdgeInsets.only(bottom: 5.h),
                                         child: Text(
                                           titleText,
                                           style: TextStyle(
-                                            fontSize: TXT_SIZE_LARGE(context),
+                                            fontSize: 16.sp,
                                             fontWeight: FontWeight.bold,
                                             color: Color(0xff191919),
                                           ),
@@ -243,18 +241,18 @@ class MyBillersContainer extends StatelessWidget {
                                           Text(
                                             subtitleText,
                                             style: TextStyle(
-                                              fontSize: TXT_SIZE_LARGE(context),
+                                              fontSize: 14.sp,
                                               fontWeight: FontWeight.w400,
                                               color: Color(0xff808080),
                                             ),
                                           ),
                                           SizedBox(
-                                            height: 10,
+                                            height: 10.h,
                                           ),
                                           Text(
                                             "Autopay Enabled",
                                             style: TextStyle(
-                                              fontSize: TXT_SIZE_LARGE(context),
+                                              fontSize: 14.sp,
                                               fontWeight: FontWeight.w500,
                                               color: Color(0xff00ab44),
                                             ),
@@ -275,13 +273,13 @@ class MyBillersContainer extends StatelessWidget {
                                         ],
                                       ),
                                       child: Divider(
-                                        height: 1,
+                                        height: 1.h,
                                         thickness: 1,
                                         color: Colors.grey.withOpacity(0.1),
                                       ),
                                     ),
                                     SizedBox(
-                                      height: 10,
+                                      height: 10.h,
                                     ),
                                     ModalText(
                                         title: "Last Bill Amount",
@@ -309,7 +307,7 @@ class MyBillersContainer extends StatelessWidget {
                                         context: context),
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          top: 48.0, bottom: 16),
+                                          top: 48.0.h, bottom: 16.h),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -322,9 +320,9 @@ class MyBillersContainer extends StatelessWidget {
                                               buttonBorderColor:
                                                   Color(0xff768EB9),
                                               buttonColor: buttonColor,
-                                              buttonSizeX: 10,
-                                              buttonSizeY: 37,
-                                              buttonTextSize: 14,
+                                              buttonSizeX: 10.h,
+                                              buttonSizeY: 37.w,
+                                              buttonTextSize: 14.sp,
                                               buttonTextWeight:
                                                   FontWeight.w500),
                                         ],
@@ -338,9 +336,9 @@ class MyBillersContainer extends StatelessWidget {
                         buttonTxtColor: buttonTxtColor,
                         buttonBorderColor: buttonBorderColor,
                         buttonColor: buttonColor,
-                        buttonSizeX: 10,
-                        buttonSizeY: 27,
-                        buttonTextSize: 10,
+                        buttonSizeX: 10.h,
+                        buttonSizeY: 27.w,
+                        buttonTextSize: 10.sp,
                         buttonTextWeight: FontWeight.w500),
 
                     // InkWell(
@@ -368,14 +366,13 @@ class MyBillersContainer extends StatelessWidget {
               ),
             ),
           Divider(
-            height: 10,
+            height: 10.h,
             thickness: 1,
-            indent: 10,
+            indent: 10.h,
             endIndent: 10,
           ),
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 6.0.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -386,12 +383,12 @@ class MyBillersContainer extends StatelessWidget {
                       children: [
                         SvgPicture.asset(ICON_CALENDAR),
                         SizedBox(
-                          width: 5,
+                          width: 5.w,
                         ),
                         Text(
                           dateText,
                           style: TextStyle(
-                            fontSize: TXT_SIZE_NORMAL(context),
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
                             color: Color(0xff808080),
                             height: 20 / 12,
@@ -400,13 +397,13 @@ class MyBillersContainer extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 3,
+                      height: 3.h,
                     ),
                     if (upcomingText != null)
                       Text(
                         upcomingText!,
                         style: TextStyle(
-                          fontSize: TXT_SIZE_VSMALL(context),
+                          fontSize: 10.sp,
                           fontWeight: FontWeight.w600,
                           color: upcomingTXT_CLR_DEFAULT,
                         ),
@@ -417,7 +414,7 @@ class MyBillersContainer extends StatelessWidget {
                 Text(
                   "₹ 589.00",
                   style: TextStyle(
-                    fontSize: TXT_SIZE_LARGE(context),
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.bold,
                     color: Color(0xff1b438b),
                     height: 26 / 16,
@@ -434,14 +431,14 @@ class MyBillersContainer extends StatelessWidget {
 Widget ModalText(
     {String? title, String? subTitle, required BuildContext context}) {
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
+    padding: EdgeInsets.symmetric(horizontal: 24.0.w, vertical: 8.h),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           title!,
           style: TextStyle(
-            fontSize: TXT_SIZE_LARGE(context),
+            fontSize: 14.sp,
             fontWeight: FontWeight.w400,
             color: Color(0xff808080),
           ),
@@ -450,7 +447,7 @@ Widget ModalText(
         Text(
           subTitle!,
           style: TextStyle(
-            fontSize: TXT_SIZE_LARGE(context),
+            fontSize: 14.sp,
             fontWeight: FontWeight.bold,
             color: Color(0xff1b438b),
           ),

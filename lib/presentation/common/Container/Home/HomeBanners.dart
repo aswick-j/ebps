@@ -80,7 +80,6 @@ class _HomeBannersState extends State<HomeBanners>
               width: 130.w,
               child: Lottie.asset(
                 JSON_BILLPAY,
-                controller: _controller,
                 repeat: true,
                 onLoaded: (composition) {
                   _controller

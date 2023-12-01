@@ -1,7 +1,7 @@
 import 'package:ebps/constants/assets.dart';
-import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class MainContainer extends StatelessWidget {
@@ -36,9 +36,10 @@ class MainContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
-        margin: EdgeInsets.only(left: 20.0, right: 20, top: 10, bottom: 10),
+        margin:
+            EdgeInsets.only(left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(8.0.r),
           border: Border.all(
             color: Color(0xFFD1D9E8),
             width: 2.0,
@@ -46,20 +47,20 @@ class MainContainer extends StatelessWidget {
         ),
         child: Column(children: [
           ListTile(
-            contentPadding: EdgeInsets.only(left: 6, right: 6, top: 6),
+            contentPadding: EdgeInsets.only(left: 8.w, right: 15.w, top: 4.h),
             leading: Container(
-              width: 50,
+              width: 45.w,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.w),
                 child: SvgPicture.asset(iconPath),
               ),
             ),
             title: Padding(
-              padding: EdgeInsets.only(bottom: 5),
+              padding: EdgeInsets.only(bottom: 5.h),
               child: Text(
                 titleText,
                 style: TextStyle(
-                  fontSize: TXT_SIZE_LARGE(context),
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.bold,
                   color: Color(0xff191919),
                 ),
@@ -72,18 +73,18 @@ class MainContainer extends StatelessWidget {
                 Text(
                   subtitleText,
                   style: TextStyle(
-                    fontSize: TXT_SIZE_LARGE(context),
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
                     color: Color(0xff808080),
                   ),
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 5.h,
                 ),
                 Text(
                   subtitleText2,
                   style: TextStyle(
-                    fontSize: TXT_SIZE_LARGE(context),
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
                     color: Color(0xff808080),
                   ),
@@ -93,14 +94,13 @@ class MainContainer extends StatelessWidget {
             trailing: Icon(Icons.delete),
           ),
           Divider(
-            height: 10,
+            height: 10.h,
             thickness: 1,
             indent: 10,
             endIndent: 10,
           ),
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 6.0.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -110,7 +110,7 @@ class MainContainer extends StatelessWidget {
                     Text(
                       amount,
                       style: TextStyle(
-                        fontSize: TXT_SIZE_LARGE(context),
+                        fontSize: 13.sp,
                         fontWeight: FontWeight.bold,
                         color: Color(0xff1b438b),
                       ),
@@ -125,7 +125,7 @@ class MainContainer extends StatelessWidget {
                         Text(
                           dateText,
                           style: TextStyle(
-                            fontSize: TXT_SIZE_NORMAL(context),
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                             color: Color(0xff808080),
                             height: 20 / 12,
@@ -143,9 +143,9 @@ class MainContainer extends StatelessWidget {
                         buttonTxtColor: buttonTxtColor,
                         buttonBorderColor: buttonBorderColor,
                         buttonColor: buttonColor,
-                        buttonSizeX: 10,
-                        buttonSizeY: 27,
-                        buttonTextSize: 10,
+                        buttonSizeX: 10.h,
+                        buttonSizeY: 27.w,
+                        buttonTextSize: 10.sp,
                         buttonTextWeight: FontWeight.w500),
                   ],
                 ),

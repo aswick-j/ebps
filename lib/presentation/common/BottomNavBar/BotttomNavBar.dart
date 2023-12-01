@@ -3,6 +3,7 @@ import 'package:ebps/presentation/screens/history/HistoryScreen.dart';
 import 'package:ebps/presentation/screens/home/HomeScreen.dart';
 import 'package:ebps/presentation/screens/myBillers/BillerScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -40,14 +41,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
         resizeToAvoidBottomInset: false,
         body: _onItemTapped(selectedIndex),
         bottomNavigationBar: BottomAppBar(
-          height: 70,
+          height: 60.h,
           elevation: 0,
           notchMargin: 4,
           shape: const CircularNotchedRectangle(),
           child: Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+                  topRight: Radius.circular(30.r),
+                  topLeft: Radius.circular(30.r)),
               boxShadow: [
                 BoxShadow(
                     color: Colors.black38, spreadRadius: 0, blurRadius: 0),

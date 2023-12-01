@@ -1,7 +1,5 @@
-import 'package:ebps/constants/sizes.dart';
 import 'package:ebps/presentation/common/Container/Home/UpcomingContainer.dart';
 import 'package:ebps/presentation/screens/home/AllUpcomingDues.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,7 +16,8 @@ class _UpcomingDuesState extends State<UpcomingDues> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.only(left: 20.0, right: 16, top: 10, bottom: 5),
+          padding: EdgeInsets.only(
+              left: 18.0.w, right: 18.w, top: 10.h, bottom: 5.h),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -56,19 +55,19 @@ class _UpcomingDuesState extends State<UpcomingDues> {
             ],
           ),
         ),
-        UpcomingDuesContainer(
-          titleText: 'SSPL airtel Johnny',
-          subtitleText: '+044 4789 7893',
-          dateText: '01/09/2023',
-          buttonText: 'Pay Now',
-          amount: "₹ 589.00",
-          iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
-          containerBorderColor: Color(0xffD1D9E8),
-          buttonColor: Color(0xFF1B438B),
-          buttonTxtColor: Color.fromARGB(255, 255, 255, 255),
-          buttonTextWeight: FontWeight.normal,
-          buttonBorderColor: null,
-        ),
+        // UpcomingDuesContainer(
+        //   titleText: 'SSPL airtel Johnny',
+        //   subtitleText: '+044 4789 7893',
+        //   dateText: '01/09/2023',
+        //   buttonText: 'Pay Now',
+        //   amount: "₹ 589.00",
+        //   iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
+        //   containerBorderColor: Color(0xffD1D9E8),
+        //   buttonColor: Color(0xFF1B438B),
+        //   buttonTxtColor: Color.fromARGB(255, 255, 255, 255),
+        //   buttonTextWeight: FontWeight.normal,
+        //   buttonBorderColor: null,
+        // ),
         UpcomingDuesContainer(
           titleText: 'Johnny Depp - Jio Post',
           subtitleText: '+044 4789 7893',

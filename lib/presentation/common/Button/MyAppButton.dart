@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 MyAppButton({
   required final VoidCallback onPressed,
@@ -22,12 +23,12 @@ MyAppButton({
         ),
       ),
       backgroundColor: buttonColor,
-      minimumSize: Size(buttonSizeX ?? 10, buttonSizeY ?? 27),
+      minimumSize: Size(buttonSizeX ?? 10.h, buttonSizeY ?? 27.w),
     ),
     child: Text(
       buttonText!,
       style: TextStyle(
-        fontSize: buttonTextSize ?? 10,
+        fontSize: buttonTextSize ?? 10.sp,
         fontWeight: buttonTextWeight ?? FontWeight.w500,
         color: buttonTxtColor,
       ),
