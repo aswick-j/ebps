@@ -24,6 +24,7 @@ dependencies:
   intl: ^0.18.1
   loading_animation_widget: ^1.2.0+4
   flutter_screenutil: ^5.9.0
+  lottie: ^2.7.0
 
 dev_dependencies:
   flutter_test:
@@ -40,6 +41,7 @@ flutter:
     - assets/images/
     - assets/icon/
     - assets/logo/
+    # - assets/lottie
 
   # This section identifies this Flutter project as a plugin project.
   # The 'pluginClass' specifies the class (in Java, Kotlin, Swift, Objective-C, etc.)

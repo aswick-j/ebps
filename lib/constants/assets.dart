@@ -4,6 +4,10 @@
 
 const LOGO_BBPS = "packages/ebps/assets/icon/logo_bbps.svg";
 
+//JSON
+
+const JSON_BILLPAY = "packages/ebps/assets/icon/billPay.json";
+
 //ICON
 
 const ICON_HOME_INACTIVE = "packages/ebps/assets/icon/icon_home_inactive.svg";

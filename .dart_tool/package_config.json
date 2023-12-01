@@ -2,6 +2,12 @@
   "configVersion": 2,
   "packages": [
     {
+      "name": "archive",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.4.9",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "args",
       "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/args-2.4.2",
       "packageUri": "lib/",
@@ -40,6 +46,12 @@
     {
       "name": "collection",
       "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "convert",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/convert-3.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -134,6 +146,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "js",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "jwt_io",
       "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/jwt_io-1.1.6",
       "packageUri": "lib/",
@@ -156,6 +174,12 @@
       "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/logger-2.0.2+1",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "lottie",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/lottie-2.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
     },
     {
       "name": "matcher",
@@ -252,6 +276,12 @@
       "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.6",
       "packageUri": "lib/",
       "languageVersion": "2.19"
+    },
+    {
+      "name": "pointycastle",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/pointycastle-3.7.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
     },
     {
       "name": "provider",
@@ -416,7 +446,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-11-30T03:46:54.161210Z",
+  "generated": "2023-12-01T05:00:22.421265Z",
   "generator": "pub",
   "generatorVersion": "3.1.5"
 }

@@ -2,6 +2,7 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
+import 'package:ebps/presentation/common/Container/Home/HomeBanners.dart';
 import 'package:ebps/presentation/screens/home/BillCategories.dart';
 import 'package:ebps/presentation/screens/home/SearchScreen.dart';
 import 'package:ebps/presentation/screens/home/UpcomingDues.dart';
@@ -54,7 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
-            UpcomingDues(),
+            // UpcomingDues(),
+            HomeBanners(),
+            HomeBanners(),
             BillCategories(),
             SizedBox(
               height: 10.h,
