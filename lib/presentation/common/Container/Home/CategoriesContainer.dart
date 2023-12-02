@@ -70,7 +70,7 @@ class CategoriesContainer extends StatelessWidget {
                           child: Column(
                             children: [
                               Container(
-                                  margin: EdgeInsets.all(6.r),
+                                  margin: EdgeInsets.all(3.r),
                                   decoration: const BoxDecoration(
                                     color: Color(0xffE8ECF3),
                                     shape: BoxShape.circle,
@@ -105,7 +105,7 @@ class CategoriesContainer extends StatelessWidget {
                                 //     builder: (context) => BillerList()));
                               },
                               child: SvgPicture.asset(
-                                height: 38.h,
+                                height: 33.h,
                                 CATEGORY_ICON(
                                     categoriesData![index].cATEGORYNAME),
                               ),

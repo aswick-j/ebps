@@ -10,39 +10,61 @@ const JSON_BILLPAY = "packages/ebps/assets/icon/billPay.json";
 
 //ICON
 
-const ICON_HOME_INACTIVE = "packages/ebps/assets/icon/icon_home_inactive.svg";
-const ICON_HOME = 'packages/ebps/assets/icon/icon_home.svg';
+//NAVBAR-ICONS
+const ICON_BILLERS = 'packages/ebps/assets/icon/icon_billers.svg';
 const ICON_BILLERS_INACTIVE =
     'packages/ebps/assets/icon/icon_billers_inactive.svg';
-const ICON_BILLERS = 'packages/ebps/assets/icon/icon_billers.svg';
+
+const ICON_CALENDAR = 'packages/ebps/assets/icon/icon_calendar.svg';
+const ICON_HISTORY = 'packages/ebps/assets/icon/icon_history.svg';
 const ICON_HISTORY_INACTIVE =
     'packages/ebps/assets/icon/icon_history_inactive.svg';
-const ICON_HISTORY = 'packages/ebps/assets/icon/icon_history.svg';
-const ICON_CALENDAR = 'packages/ebps/assets/icon/icon_calendar.svg';
+
+const ICON_HOME = 'packages/ebps/assets/icon/icon_home.svg';
+const ICON_HOME_INACTIVE = "packages/ebps/assets/icon/icon_home_inactive.svg";
+
+//CATEGORY-ICONS
+
+const ICON_B2B = "packages/ebps/assets/icon/icon_b2b.svg";
+const ICON_BROADBAND = "packages/ebps/assets/icon/icon_broadband-postpaid.svg";
+const ICON_CABLE = "packages/ebps/assets/icon/icon_cable-tv.svg";
+const ICON_CLUBS = "packages/ebps/assets/icon/icon_clubs-associations.svg";
+const ICON_CREDIT_CARD = "packages/ebps/assets/icon/icon_credit-card.svg";
+const ICON_DTH = "packages/ebps/assets/icon/icon_dth.svg";
+const ICON_EDUCATION = "packages/ebps/assets/icon/icon_education-fees.svg";
+const ICON_ELECTRICITY = "packages/ebps/assets/icon/icon_electricity.svg";
+const ICON_ELECTRICITYV2 = "packages/ebps/assets/icon/icon_electricity-v2.svg";
+const ICON_FASTTAG = "packages/ebps/assets/icon/icon_fastag.svg";
+const ICON_GAS = "packages/ebps/assets/icon/icon_gas.svg";
+const ICON_HEALTH_INSURANCE =
+    "packages/ebps/assets/icon/icon_health-insurance.svg";
+const ICON_HOSPITAL = "packages/ebps/assets/icon/icon_hospital-pathology.svg";
+const ICON_HOUSING = "packages/ebps/assets/icon/icon_housing-society.svg";
+const ICON_INSURANCE = "packages/ebps/assets/icon/icon_insurance.svg";
+const ICON_LANDLINE_POSTPAID =
+    "packages/ebps/assets/icon/icon_landline-postpaid.svg";
+
+const ICON_LIFE_INSURANCE = "packages/ebps/assets/icon/icon_life-insurance.svg";
+const ICON_LOAN = "packages/ebps/assets/icon/icon_loan-repayment.svg";
+const ICON_LPG_GAS = "packages/ebps/assets/icon/icon_lpg-gas.svg";
+const ICON_METRO = "packages/ebps/assets/icon/icon_metro-recharge.svg";
+const ICON_MOBILE_POSTPAID =
+    "packages/ebps/assets/icon/icon_mobile-postpaid.svg";
+
+const ICON_MOBILE_PREPAID = "packages/ebps/assets/icon/icon_mobile-prepaid.svg";
+const ICON_MUNICIPAL_SERVICES =
+    "packages/ebps/assets/icon/icon_municipal-services.svg";
+
+const ICON_MUNICIPAL_TAXES =
+    "packages/ebps/assets/icon/icon_municipal-taxes.svg";
+const ICON_RECDEBOSIT = "packages/ebps/assets/icon/icon_recurring-deposit.svg";
+
+const ICON_SUBSCRIPTION = "packages/ebps/assets/icon/icon_subscription.svg";
+const ICON_WATER = "packages/ebps/assets/icon/icon_water.svg";
+
+//APP-ICONS
 
 const ICON_REFRESH = "packages/ebps/assets/icon/icon_refresh.svg";
-
-const ICON_MOBILE_PREPAID = "packages/ebps/assets/icon/icon_mobile_prepaid.svg";
-const ICON_DTH = "packages/ebps/assets/icon/icon_dth.svg";
-const ICON_CABLE = "packages/ebps/assets/icon/icon_cable.svg";
-const ICON_BROADBAND = "packages/ebps/assets/icon/icon_broadband.svg";
-const ICON_LPG_GAS = "packages/ebps/assets/icon/icon_lpg.svg";
-const ICON_GAS = "packages/ebps/assets/icon/icon_gas.svg";
-const ICON_WATER = "packages/ebps/assets/icon/icon_water.svg";
-const ICON_MOBILE_POSTPAID = "packages/ebps/assets/icon/icon_refresh.svg";
-const ICON_LANDLINE_POSTPAID = "packages/ebps/assets/icon/icon_landline.svg";
-const ICON_EDUCATION = "packages/ebps/assets/icon/icon_education.svg";
-const ICON_SUBSCRIPTION = "packages/ebps/assets/icon/icon_sub.svg";
-const ICON_ELECTRICITY = "packages/ebps/assets/icon/icon_electricity.svg";
-const ICON_CREDIT_CARD = "packages/ebps/assets/icon/icon_credit.svg";
-const ICON_LOAN = "packages/ebps/assets/icon/icon_loan.svg";
-const ICON_HEALTH_INSURANCE =
-    "packages/ebps/assets/icon/icon_health_insurance.svg";
-const ICON_LIFE_INSURANCE = "packages/ebps/assets/icon/icon_life_insurance.svg";
-const ICON_MUNICIPAL_TAXES = "packages/ebps/assets/icon/icon_municipal.svg";
-const ICON_HOUSING = "packages/ebps/assets/icon/icon_refresh.svg";
-const ICON_MUNICIPAL_SERVICES = "packages/ebps/assets/icon/icon_municipal.svg";
-const ICON_CLUBS = "packages/ebps/assets/icon/icon_refresh.svg";
 
 //IMAGE
 
@@ -50,54 +72,77 @@ const IMG_NOTFOUND = "packages/ebps/assets/icon/icon_notFound.svg";
 
 String CATEGORY_ICON(String? CATEGORY_NAME) {
   switch (CATEGORY_NAME!.toLowerCase()) {
-    case "mobile postpaid":
-      return ICON_MOBILE_PREPAID;
-    case "mobile prepaid":
-      return ICON_MOBILE_PREPAID;
-    case "education fees":
-      return ICON_EDUCATION;
-    case "landline postpaid":
-      return ICON_LANDLINE_POSTPAID;
-    case "dth":
-      return ICON_DTH;
-    case "electricity":
-      return ICON_ELECTRICITY;
+    case "b2b":
+      return ICON_B2B;
     case "broadband postpaid":
       return ICON_BROADBAND;
-    case "water":
-      return ICON_WATER;
-    case "gas":
-      return ICON_GAS;
-    case "lpg gas":
-      return ICON_LPG_GAS;
-    case "life insurance":
-      return ICON_LIFE_INSURANCE;
-    case "loan repayment":
-      return ICON_LOAN;
-    case "Fastag":
-      return ICON_MOBILE_POSTPAID;
+
     case "Cable TV":
       return ICON_CABLE;
-    case "municipal services":
-      return ICON_MUNICIPAL_SERVICES;
+
     case "clubs & associations":
     case "clubs and associations":
-      return ICON_WATER;
+      return ICON_CLUBS;
     case "credit card":
       return ICON_CREDIT_CARD;
+
+    case "dth":
+      return ICON_DTH;
+
+    case "education fees":
+      return ICON_EDUCATION;
+
+    case "electricity":
+      return ICON_ELECTRICITY;
+
+    case "fastag":
+      return ICON_FASTTAG;
+    case "gas":
+      return ICON_GAS;
+
+    case "health insurance":
+      return ICON_HEALTH_INSURANCE;
+
     case "hospital":
-      return ICON_WATER;
+    case "hospital and pathology":
+      return ICON_HOSPITAL;
     case "housing society":
-      return ICON_WATER;
+      return ICON_HOUSING;
+    case "insurance":
+      return ICON_INSURANCE;
+    case "landline postpaid":
+      return ICON_LANDLINE_POSTPAID;
+
+    case "life insurance":
+      return ICON_LIFE_INSURANCE;
+
+    case "loan repayment":
+      return ICON_LOAN;
+
+    case "lpg gas":
+      return ICON_LPG_GAS;
+
+    case "mobile postpaid":
+      return ICON_MOBILE_POSTPAID;
+
+    case "mobile prepaid":
+      return ICON_MOBILE_PREPAID;
+
+    case "municipal services":
+      return ICON_MUNICIPAL_SERVICES;
+
+    case "municipal taxes":
+      return ICON_MUNICIPAL_TAXES;
+    case "recurring deposit":
+      return ICON_RECDEBOSIT;
+
     case "subscription fees":
     case "subscription":
       return ICON_SUBSCRIPTION;
-    case "municipal taxes":
-      return ICON_MUNICIPAL_TAXES;
-    case "health insurance":
-      return ICON_HEALTH_INSURANCE;
-    case "insurance":
-      return ICON_HEALTH_INSURANCE;
+
+    case "water":
+      return ICON_WATER;
+
     default:
       return ICON_CABLE;
   }
