@@ -11,6 +11,7 @@ import 'package:ebps/presentation/screens/Payments/payment_details.dart';
 import 'package:ebps/presentation/screens/Payments/transaction_screen.dart';
 import 'package:ebps/presentation/screens/complaints/complaint_details.dart';
 import 'package:ebps/presentation/screens/complaints/complaint_screen.dart';
+import 'package:ebps/presentation/screens/complaints/register_complaint.dart';
 import 'package:ebps/presentation/screens/history/history_details.dart';
 import 'package:ebps/presentation/screens/history/history_screen.dart';
 import 'package:ebps/presentation/screens/home/all_bill_categories.dart';
@@ -40,6 +41,7 @@ const hISTORYDETAILSROUTE = '/historyDetails';
 const rEGISTERCOMPLAINTROUTE = '/regsiterComplaintRoute';
 const cOMPLAINTLISTROUTE = '/complaintListRoute';
 const cOMPLAINTDETAILSROUTE = '/complaintDetail';
+const cOMPLAINTREGISTERROUTE = '/complaintRegisterRoute';
 
 /// The `MyRouter` class is responsible for generating routes and corresponding page widgets based on
 /// the provided route settings.
@@ -266,6 +268,16 @@ class MyRouter {
             child: ComplaintDetails(complaintData: args["complaintData"]),
           ),
         );
+
+//COMPLAINT REGISTER
+
+      case cOMPLAINTREGISTERROUTE:
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => BlocProvider(
+                  create: (context) => ComplaintCubit(repository: apiClient),
+                  child: RegisterComplaint(),
+                ));
 
       default:
         return CupertinoPageRoute(

@@ -377,6 +377,8 @@ class ApiClient implements Repository {
     } catch (e) {}
   }
 
+  //COMPLAINT LIST
+
   @override
   Future getComplaints() async {
     try {
@@ -389,5 +391,35 @@ class ApiClient implements Repository {
 
       return decodedResponse;
     } catch (e) {}
+  }
+
+  //COMPLAINT CONFIG
+
+  @override
+  Future getComplaintConfig() async {
+    try {
+      var response = await api(
+          method: "get",
+          url: BASE_URL + COMLPAINT_CONFIG_URL,
+          token: true,
+          checkSum: false);
+
+      if (!response.body.toString().contains("<html>")) {
+        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+        return decodedResponse;
+      } else {
+        return {
+          "status": 500,
+          "message": "Something went wrong",
+          "data": "Error"
+        };
+      }
+    } catch (e) {
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
   }
 }

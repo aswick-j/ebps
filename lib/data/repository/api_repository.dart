@@ -47,4 +47,7 @@ abstract class Repository {
 
   //COMPLAINT_LIST
   Future getComplaints() async {}
+
+  //COMPLAINT CONFIG
+  Future getComplaintConfig() async {}
 }

@@ -16,6 +16,7 @@ const String HISTORY_URL = "/transactions/";
 const String VALIDATE_OTP_URL = "/user-services/validate-otp";
 const String PAY_BILL_URL = "/payment/bill";
 const String COMLPAINT_URL = "/complaints/";
+const String COMLPAINT_CONFIG_URL = '/complaints/config';
 
 const String redirectUrl = "/auth/redirect";
 const String transactionUrl = "/transactions/";
@@ -38,7 +39,6 @@ const String addUpdateUpcomingDueUrl = "/billers/add-update-upcoming-due";
 const String updateUpcomingDueUrl = "/billers/update-upcoming-dues";
 
 const String chartUrl = '/charts';
-const String complaintsConfigUrl = '/complaints/config';
 const String addNewBillerUrl = "/billers/add-biller";
 const String updateBill = "/billers/update";
 const String bbpsSettings = "/user-services/bbps-settings";

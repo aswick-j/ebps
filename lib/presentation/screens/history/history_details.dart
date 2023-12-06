@@ -1,4 +1,5 @@
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/routes.dart';
 import 'package:ebps/data/models/billers_model.dart';
 import 'package:ebps/data/models/confirm_done_model.dart';
 import 'package:ebps/data/models/history_model.dart';
@@ -281,8 +282,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (context) => HistoryDetails()));
+                        goTo(context, cOMPLAINTREGISTERROUTE);
                       },
                       buttonText: "Raise For Complaint",
                       buttonTxtColor: BTN_CLR_ACTIVE,
