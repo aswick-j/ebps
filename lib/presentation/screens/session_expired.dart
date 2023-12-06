@@ -1,4 +1,4 @@
-import 'package:ebps/presentation/widget/noResult.dart';
+import 'package:ebps/presentation/widget/no_result.dart';
 import 'package:flutter/material.dart';
 
 class SessionExpired extends StatefulWidget {

@@ -1,11 +1,13 @@
 import 'package:ebps/bloc/history/history_cubit.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/routes.dart';
 import 'package:ebps/data/models/history_model.dart';
 import 'package:ebps/data/services/api_client.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getTransactionStatus.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
-import 'package:ebps/presentation/common/Container/History/HistoryContainer.dart';
-import 'package:ebps/presentation/widget/flickrLoader.dart';
+import 'package:ebps/presentation/common/Container/History/history_container.dart';
+import 'package:ebps/presentation/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,7 +33,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         showActions: true,
         actions: [
           InkWell(
-              onTap: () => {},
+              onTap: () => {goTo(context, cOMPLAINTLISTROUTE)},
               child: Container(
                   margin: EdgeInsets.only(top: 20.h, bottom: 20.h, right: 15.w),
                   width: 30.w,

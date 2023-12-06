@@ -1,7 +1,7 @@
 import 'package:ebps/constants/assets.dart';
-import 'package:ebps/presentation/screens/history/HistoryScreen.dart';
-import 'package:ebps/presentation/screens/home/HomeScreen.dart';
-import 'package:ebps/presentation/screens/myBillers/BillerScreen.dart';
+import 'package:ebps/presentation/screens/history/history_screen.dart';
+import 'package:ebps/presentation/screens/home/home_screen.dart';
+import 'package:ebps/presentation/screens/myBillers/biller_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';

@@ -18,7 +18,7 @@ class MyBillersContainer extends StatelessWidget {
   final Color? buttonColor;
   final Color? buttonTxtColor;
   final FontWeight? buttonTextWeight;
-  final Color? buttonBorderColor;
+  final Color buttonBorderColor;
   final bool? warningBtn;
   const MyBillersContainer({
     required this.titleText,
@@ -32,7 +32,7 @@ class MyBillersContainer extends StatelessWidget {
     required this.containerBorderColor,
     this.buttonColor,
     this.buttonTxtColor,
-    this.buttonBorderColor,
+    required this.buttonBorderColor,
     this.buttonTextWeight,
     this.warningBtn,
   });
@@ -198,148 +198,163 @@ class MyBillersContainer extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Row(
                   children: [
-                    MyAppButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                              context: context,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(16.0.r),
-                                ),
-                              ),
-                              builder: (context) {
-                                return Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    ListTile(
-                                      contentPadding: EdgeInsets.only(
-                                          left: 8.w, right: 15.w, top: 4.h),
-                                      leading: Container(
-                                        width: 45.w,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.r),
-                                          child: SvgPicture.asset(iconPath),
-                                        ),
-                                      ),
-                                      title: Padding(
-                                        padding: EdgeInsets.only(bottom: 5.h),
-                                        child: Text(
-                                          titleText,
-                                          style: TextStyle(
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xff191919),
-                                          ),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ),
-                                      subtitle: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            subtitleText,
-                                            style: TextStyle(
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0xff808080),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 10.h,
-                                          ),
-                                          Text(
-                                            "Autopay Enabled",
-                                            style: TextStyle(
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: Color(0xff00ab44),
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.5),
-                                              spreadRadius: 0.6,
-                                              blurRadius: 4,
-                                              offset: Offset(0, 2)),
-                                        ],
-                                      ),
-                                      child: Divider(
-                                        height: 1.h,
-                                        thickness: 1,
-                                        color: Colors.grey.withOpacity(0.1),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    ModalText(
-                                        title: "Last Bill Amount",
-                                        subTitle: "₹ 500.00",
-                                        context: context),
-                                    ModalText(
-                                        title: "Due Amount",
-                                        subTitle: "₹ 500.00",
-                                        context: context),
-                                    ModalText(
-                                        title: "Due Date",
-                                        subTitle: "20/09/2023",
-                                        context: context),
-                                    ModalText(
-                                        title: "Autopay Date",
-                                        subTitle: "20/09/2023",
-                                        context: context),
-                                    ModalText(
-                                        title: "Debit Account",
-                                        subTitle: "100766546787",
-                                        context: context),
-                                    ModalText(
-                                        title: "Debit Limit",
-                                        subTitle: "₹ 500.00",
-                                        context: context),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 48.0.h, bottom: 16.h),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          MyAppButton(
-                                              onPressed: () =>
-                                                  Navigator.of(context).pop(),
-                                              buttonText: "Cancel",
-                                              buttonTxtColor: CLR_PRIMARY,
-                                              buttonBorderColor:
-                                                  Color(0xff768EB9),
-                                              buttonColor: buttonColor,
-                                              buttonSizeX: 10.h,
-                                              buttonSizeY: 37.w,
-                                              buttonTextSize: 14.sp,
-                                              buttonTextWeight:
-                                                  FontWeight.w500),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              });
-                        },
-                        buttonText: buttonText,
-                        buttonTxtColor: buttonTxtColor,
-                        buttonBorderColor: buttonBorderColor,
-                        buttonColor: buttonColor,
-                        buttonSizeX: 10.h,
-                        buttonSizeY: 27.w,
-                        buttonTextSize: 10.sp,
-                        buttonTextWeight: FontWeight.w500),
+                    // MyAppButton(
+                    //     onPressed: () {
+                    //       showModalBottomSheet(
+                    //           context: context,
+                    //           shape: RoundedRectangleBorder(
+                    //             borderRadius: BorderRadius.vertical(
+                    //               top: Radius.circular(16.0.r),
+                    //             ),
+                    //           ),
+                    //           builder: (context) {
+                    //             return Column(
+                    //               mainAxisSize: MainAxisSize.min,
+                    //               crossAxisAlignment: CrossAxisAlignment.start,
+                    //               children: <Widget>[
+                    //                 ListTile(
+                    //                   contentPadding: EdgeInsets.only(
+                    //                       left: 8.w, right: 15.w, top: 4.h),
+                    //                   leading: Container(
+                    //                     width: 45.w,
+                    //                     child: Padding(
+                    //                       padding: EdgeInsets.all(8.r),
+                    //                       child: SvgPicture.asset(iconPath),
+                    //                     ),
+                    //                   ),
+                    //                   title: Padding(
+                    //                     padding: EdgeInsets.only(bottom: 5.h),
+                    //                     child: Text(
+                    //                       titleText,
+                    //                       style: TextStyle(
+                    //                         fontSize: 16.sp,
+                    //                         fontWeight: FontWeight.bold,
+                    //                         color: Color(0xff191919),
+                    //                       ),
+                    //                       textAlign: TextAlign.left,
+                    //                     ),
+                    //                   ),
+                    //                   subtitle: Column(
+                    //                     crossAxisAlignment:
+                    //                         CrossAxisAlignment.start,
+                    //                     children: [
+                    //                       Text(
+                    //                         subtitleText,
+                    //                         style: TextStyle(
+                    //                           fontSize: 14.sp,
+                    //                           fontWeight: FontWeight.w400,
+                    //                           color: Color(0xff808080),
+                    //                         ),
+                    //                       ),
+                    //                       SizedBox(
+                    //                         height: 10.h,
+                    //                       ),
+                    //                       Text(
+                    //                         "Autopay Enabled",
+                    //                         style: TextStyle(
+                    //                           fontSize: 14.sp,
+                    //                           fontWeight: FontWeight.w500,
+                    //                           color: Color(0xff00ab44),
+                    //                         ),
+                    //                         textAlign: TextAlign.center,
+                    //                       )
+                    //                     ],
+                    //                   ),
+                    //                 ),
+                    //                 Container(
+                    //                   decoration: BoxDecoration(
+                    //                     boxShadow: [
+                    //                       BoxShadow(
+                    //                           color:
+                    //                               Colors.grey.withOpacity(0.5),
+                    //                           spreadRadius: 0.6,
+                    //                           blurRadius: 4,
+                    //                           offset: Offset(0, 2)),
+                    //                     ],
+                    //                   ),
+                    //                   child: Divider(
+                    //                     height: 1.h,
+                    //                     thickness: 1,
+                    //                     color: Colors.grey.withOpacity(0.1),
+                    //                   ),
+                    //                 ),
+                    //                 SizedBox(
+                    //                   height: 10.h,
+                    //                 ),
+                    //                 ModalText(
+                    //                     title: "Last Bill Amount",
+                    //                     subTitle: "₹ 500.00",
+                    //                     context: context),
+                    //                 ModalText(
+                    //                     title: "Due Amount",
+                    //                     subTitle: "₹ 500.00",
+                    //                     context: context),
+                    //                 ModalText(
+                    //                     title: "Due Date",
+                    //                     subTitle: "20/09/2023",
+                    //                     context: context),
+                    //                 ModalText(
+                    //                     title: "Autopay Date",
+                    //                     subTitle: "20/09/2023",
+                    //                     context: context),
+                    //                 ModalText(
+                    //                     title: "Debit Account",
+                    //                     subTitle: "100766546787",
+                    //                     context: context),
+                    //                 ModalText(
+                    //                     title: "Debit Limit",
+                    //                     subTitle: "₹ 500.00",
+                    //                     context: context),
+                    //                 Padding(
+                    //                   padding: EdgeInsets.only(
+                    //                       top: 48.0.h, bottom: 16.h),
+                    //                   child: Row(
+                    //                     mainAxisAlignment:
+                    //                         MainAxisAlignment.center,
+                    //                     children: [
+                    //                       MyAppButton(
+                    //                           onPressed: () =>
+                    //                               Navigator.of(context).pop(),
+                    //                           buttonText: "Cancel",
+                    //                           buttonTxtColor: CLR_PRIMARY,
+                    //                           buttonBorderColor:
+                    //                               Color(0xff768EB9),
+                    //                           buttonColor: buttonColor,
+                    //                           buttonSizeX: 10.h,
+                    //                           buttonSizeY: 37.w,
+                    //                           buttonTextSize: 14.sp,
+                    //                           buttonTextWeight:
+                    //                               FontWeight.w500),
+                    //                     ],
+                    //                   ),
+                    //                 ),
+                    //               ],
+                    //             );
+                    //           });
+                    //     },
+                    //     buttonText: buttonText,
+                    //     buttonTxtColor: buttonTxtColor,
+                    //     buttonBorderColor: buttonBorderColor,
+                    //     buttonColor: buttonColor,
+                    //     buttonSizeX: 10.h,
+                    //     buttonSizeY: 27.w,
+                    //     buttonTextSize: 10.sp,
+                    //     buttonTextWeight: FontWeight.w500),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 8.0.w, vertical: 4.w),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: buttonBorderColor),
+                        borderRadius: BorderRadius.circular(12.0.r),
+                      ),
+                      child: Text(
+                        buttonText.toString(),
+                        style: TextStyle(
+                          color: buttonTxtColor,
+                          fontSize: 10.0.sp,
+                        ),
+                      ),
+                    ),
 
                     // InkWell(
                     //     onTap: () => {},

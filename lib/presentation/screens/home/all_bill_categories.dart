@@ -4,7 +4,7 @@ import 'package:ebps/data/models/categories_model.dart';
 import 'package:ebps/helpers/getBillerCategory.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
-import 'package:ebps/presentation/common/Container/Home/CategoriesContainer.dart';
+import 'package:ebps/presentation/common/Container/Home/categories_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

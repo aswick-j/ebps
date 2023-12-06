@@ -1,5 +1,5 @@
-import 'package:ebps/presentation/common/Container/Home/UpcomingContainer.dart';
-import 'package:ebps/presentation/screens/home/AllUpcomingDues.dart';
+import 'package:ebps/presentation/common/Container/Home/upcoming_container.dart';
+import 'package:ebps/presentation/screens/home/all_upcoming_dues.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

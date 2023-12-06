@@ -1,5 +1,5 @@
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
-import 'package:ebps/presentation/common/Container/Home/MainContainer.dart';
+import 'package:ebps/presentation/common/Container/Home/main_container.dart';
 import 'package:flutter/material.dart';
 
 class AllUpcomingDues extends StatefulWidget {

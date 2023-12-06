@@ -1,8 +1,8 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/data/models/categories_model.dart';
 import 'package:ebps/data/services/api_client.dart';
-import 'package:ebps/presentation/common/Container/Home/CategoriesContainer.dart';
-import 'package:ebps/presentation/widget/flickrLoader.dart';
+import 'package:ebps/presentation/common/Container/Home/categories_container.dart';
+import 'package:ebps/presentation/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -44,4 +44,7 @@ abstract class Repository {
   //HISTORY
 
   Future getHistory(day) async {}
+
+  //COMPLAINT_LIST
+  Future getComplaints() async {}
 }

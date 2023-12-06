@@ -1,5 +1,5 @@
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
-import 'package:ebps/presentation/common/Container/MyBillers/MyBillersContainer.dart';
+import 'package:ebps/presentation/common/Container/MyBillers/mybiller_container.dart';
 import 'package:flutter/material.dart';
 
 class BillerScreen extends StatefulWidget {
@@ -21,7 +21,7 @@ class _BillerScreenState extends State<BillerScreen> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
+          children: const [
             MyBillersContainer(
               titleText: 'Johnny Depp - Jio Post',
               subtitleText: '+044 4789 7893',
@@ -72,6 +72,7 @@ class _BillerScreenState extends State<BillerScreen> {
               amount: "₹ 630.00",
               iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
               containerBorderColor: Color(0xffD1D9E8),
+              buttonBorderColor: Color(0xff00AB44),
             ),
           ],
         ),

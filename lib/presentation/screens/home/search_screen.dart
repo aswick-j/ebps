@@ -7,7 +7,7 @@ import 'package:ebps/constants/routes.dart';
 import 'package:ebps/data/models/billers_model.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
-import 'package:ebps/presentation/widget/noResult.dart';
+import 'package:ebps/presentation/widget/no_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -15,9 +15,9 @@ const String HISTORY_URL = "/transactions/";
 
 const String VALIDATE_OTP_URL = "/user-services/validate-otp";
 const String PAY_BILL_URL = "/payment/bill";
+const String COMLPAINT_URL = "/complaints/";
 
 const String redirectUrl = "/auth/redirect";
-const String complaintUrl = "/complaints/";
 const String transactionUrl = "/transactions/";
 
 const String autoPayUrl = "/auto-pay/";

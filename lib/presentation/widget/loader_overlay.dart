@@ -1,4 +1,4 @@
-import 'package:ebps/presentation/widget/flickrLoader.dart';
+import 'package:ebps/presentation/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 
 class LoaderOverlay extends StatefulWidget {

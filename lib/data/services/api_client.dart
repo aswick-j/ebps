@@ -382,7 +382,7 @@ class ApiClient implements Repository {
     try {
       var response = await api(
           method: "get",
-          url: BASE_URL + complaintUrl,
+          url: BASE_URL + COMLPAINT_URL,
           token: true,
           checkSum: false);
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));

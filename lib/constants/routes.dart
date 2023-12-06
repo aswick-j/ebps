@@ -1,21 +1,24 @@
+import 'package:ebps/bloc/complaint/complaint_cubit.dart';
 import 'package:ebps/bloc/history/history_cubit.dart';
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/bloc/splash/splash_cubit.dart';
 import 'package:ebps/data/models/categories_model.dart';
 import 'package:ebps/data/services/api_client.dart';
-import 'package:ebps/presentation/screens/BillFlow/BillParameters.dart';
-import 'package:ebps/presentation/screens/BillFlow/BillerDetails.dart';
-import 'package:ebps/presentation/screens/BillFlow/BillerList.dart';
-import 'package:ebps/presentation/screens/Payments/PaymentDetails.dart';
-import 'package:ebps/presentation/screens/Payments/TransactionScreen.dart';
-import 'package:ebps/presentation/screens/history/HistoryDetails.dart';
-import 'package:ebps/presentation/screens/history/HistoryScreen.dart';
-import 'package:ebps/presentation/screens/home/AllBillCategories.dart';
-import 'package:ebps/presentation/screens/home/SearchScreen.dart';
-import 'package:ebps/presentation/screens/mpin/mpinScreen.dart';
-import 'package:ebps/presentation/screens/otp/OtpScreen.dart';
+import 'package:ebps/presentation/screens/BillFlow/bill_parameters.dart';
+import 'package:ebps/presentation/screens/BillFlow/biller_details.dart';
+import 'package:ebps/presentation/screens/BillFlow/biller_list.dart';
+import 'package:ebps/presentation/screens/Payments/payment_details.dart';
+import 'package:ebps/presentation/screens/Payments/transaction_screen.dart';
+import 'package:ebps/presentation/screens/complaints/complaint_details.dart';
+import 'package:ebps/presentation/screens/complaints/complaint_screen.dart';
+import 'package:ebps/presentation/screens/history/history_details.dart';
+import 'package:ebps/presentation/screens/history/history_screen.dart';
+import 'package:ebps/presentation/screens/home/all_bill_categories.dart';
+import 'package:ebps/presentation/screens/home/search_screen.dart';
+// import 'package:ebps/presentation/screens/mpin/mpinScreen.dart';
+import 'package:ebps/presentation/screens/otp/otp_screen.dart';
 import 'package:ebps/presentation/screens/session_expired.dart';
-import 'package:ebps/presentation/screens/splashScreen.dart';
+import 'package:ebps/presentation/screens/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,6 +37,9 @@ const tRANSROUTE = '/transSuccessful';
 const sEARCHROUTE = '/search';
 const hISTORYROUTE = '/history';
 const hISTORYDETAILSROUTE = '/historyDetails';
+const rEGISTERCOMPLAINTROUTE = '/regsiterComplaintRoute';
+const cOMPLAINTLISTROUTE = '/complaintListRoute';
+const cOMPLAINTDETAILSROUTE = '/complaintDetail';
 
 /// The `MyRouter` class is responsible for generating routes and corresponding page widgets based on
 /// the provided route settings.
@@ -221,6 +227,9 @@ class MyRouter {
                   create: (context) => HistoryCubit(repository: apiClient),
                   child: HistoryScreen(),
                 ));
+
+      //HISTORY DETAILS
+
       case hISTORYDETAILSROUTE:
         final args = settings.arguments as Map<String, dynamic>;
 
@@ -235,6 +244,29 @@ class MyRouter {
                       isSavedBill: args["isSavedBill"],
                       historyData: args["historyData"]),
                 ));
+
+      //COMPAINT LIST
+
+      case cOMPLAINTLISTROUTE:
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => BlocProvider(
+                  create: (context) => ComplaintCubit(repository: apiClient),
+                  child: ComplaintScreen(),
+                ));
+
+      //COMPLAINT DETAILS
+      case cOMPLAINTDETAILSROUTE:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return CupertinoPageRoute(
+          fullscreenDialog: true,
+          builder: (_) => BlocProvider(
+            create: (context) => ComplaintCubit(repository: apiClient),
+            child: ComplaintDetails(complaintData: args["complaintData"]),
+          ),
+        );
+
       default:
         return CupertinoPageRoute(
             fullscreenDialog: true,
