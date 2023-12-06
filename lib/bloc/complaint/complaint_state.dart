@@ -42,3 +42,24 @@ class ComplaintConfigError extends ComplaintState {
   final String? message;
   ComplaintConfigError({@required this.message});
 }
+
+//COMPLAINT SUBMIT
+
+class ComplaintSubmitLoading extends ComplaintState {}
+
+class ComplaintSubmitSuccess extends ComplaintState {
+  final String? message;
+  final String? data;
+
+  ComplaintSubmitSuccess({@required this.message, @required this.data});
+}
+
+class ComplaintSubmitFailed extends ComplaintState {
+  final String? message;
+  ComplaintSubmitFailed({@required this.message});
+}
+
+class ComplaintSubmitError extends ComplaintState {
+  final String? message;
+  ComplaintSubmitError({@required this.message});
+}

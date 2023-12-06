@@ -2,7 +2,7 @@ import 'package:ebps/bloc/complaint/complaint_cubit.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/data/models/complaints_config_model.dart';
-import 'package:ebps/data/services/api_client.dart';
+import 'package:ebps/data/models/history_model.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/common/Container/Home/biller_details_container.dart';
@@ -13,7 +13,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RegisterComplaint extends StatefulWidget {
-  const RegisterComplaint({super.key});
+  HistoryData historyData;
+  RegisterComplaint({
+    super.key,
+    required this.historyData,
+  });
 
   @override
   State<RegisterComplaint> createState() => _RegisterComplaintState();
@@ -35,6 +39,17 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
     super.initState();
   }
 
+  handleSubmit() {
+    Map<String, dynamic> data = {
+      "description": txtDescController.text.toString(),
+      "reason": cmp_reason,
+      "complaintReasonsID": cmp_reasonID,
+      "type": "transaction",
+      "transactionID": widget.historyData.tRANSACTIONREFERENCEID.toString()
+    };
+    BlocProvider.of<ComplaintCubit>(context).submitComplaint(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ComplaintCubit, ComplaintState>(
@@ -52,6 +67,11 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
       } else if (state is ComplaintConfigError) {
         isComplaintConfigLoading = false;
       }
+
+      if (state is ComplaintSubmitLoading) {
+      } else if (state is ComplaintSubmitSuccess) {
+      } else if (state is ComplaintSubmitFailed) {
+      } else if (state is ComplaintSubmitError) {}
     }, builder: (context, state) {
       return Scaffold(
         appBar: MyAppBar(
@@ -190,7 +210,9 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
               children: [
                 Expanded(
                   child: MyAppButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        handleSubmit();
+                      },
                       buttonText: "Submit",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,

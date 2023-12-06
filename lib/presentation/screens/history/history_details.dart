@@ -282,7 +282,8 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () {
-                        goTo(context, cOMPLAINTREGISTERROUTE);
+                        goToData(context, cOMPLAINTREGISTERROUTE,
+                            {"historyData": widget.historyData});
                       },
                       buttonText: "Raise For Complaint",
                       buttonTxtColor: BTN_CLR_ACTIVE,

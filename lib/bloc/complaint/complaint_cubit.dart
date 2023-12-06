@@ -90,4 +90,42 @@ class ComplaintCubit extends Cubit<ComplaintState> {
       }
     } catch (e) {}
   }
+
+  //COMPLAINT SUBMIT
+
+  void submitComplaint(Map<String, dynamic> data) async {
+    if (!isClosed) {
+      emit(ComplaintSubmitLoading());
+    }
+    try {
+      final value = await repository!.submitComplaint(data);
+
+      logger.d(value,
+          error:
+              "COMPLAINT SUBMIT API RESPONSE ===> lib/bloc/complaint/submitComplaint");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            if (!isClosed) {
+              emit(ComplaintSubmitSuccess(
+                  message: value['message'], data: value['data']));
+            }
+          } else {
+            if (!isClosed) {
+              emit(ComplaintSubmitFailed(message: value['message']));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(ComplaintSubmitError(message: value['message']));
+          }
+        }
+      } else {
+        if (!isClosed) {
+          emit(ComplaintSubmitFailed(message: value['message']));
+        }
+      }
+    } catch (e) {}
+  }
 }

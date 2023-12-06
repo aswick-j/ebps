@@ -92,7 +92,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
   @override
   void initState() {
     BlocProvider.of<HistoryCubit>(context)
-        .getHistoryDetails('This Week', false);
+        .getHistoryDetails('Last Week', false);
     super.initState();
   }
 

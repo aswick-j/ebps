@@ -1,22 +1,29 @@
 abstract class Repository {
   //Login
   Future login(id, hash) async {}
+
   //Category
   Future getCategories() async {}
+
   //All Billers
   Future getBillers(
     categoryId,
     pageNumber,
   ) async {}
+
   //Biller Input Sign
   Future getInputSignature(id) async {}
+
   //Fetch Bill
   Future fetchBill(validateBill, billerID, billerParams, quickPay,
       quickPayAmount, adHocBillValidationRefKey, billName) async {}
+
   //Account-info
   Future getAccountInfo(account) async {}
+
   //Payment-info
   Future getPaymentInformation(id) async {}
+
   //Validate-bill
   Future validateBill(payload) async {}
 
@@ -25,6 +32,7 @@ abstract class Repository {
 
   //Validate - OTP
   Future validateOtp(otp) async {}
+
   //pay-bill
   Future payBill(
       String billerID,
@@ -50,4 +58,7 @@ abstract class Repository {
 
   //COMPLAINT CONFIG
   Future getComplaintConfig() async {}
+
+  //COMPLAINT SUBMIT
+  Future submitComplaint(complaint) async {}
 }

@@ -272,11 +272,13 @@ class MyRouter {
 //COMPLAINT REGISTER
 
       case cOMPLAINTREGISTERROUTE:
+        final args = settings.arguments as Map<String, dynamic>;
+
         return CupertinoPageRoute(
             fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => ComplaintCubit(repository: apiClient),
-                  child: RegisterComplaint(),
+                  child: RegisterComplaint(historyData: args["historyData"]),
                 ));
 
       default:

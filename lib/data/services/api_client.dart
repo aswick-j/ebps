@@ -239,7 +239,7 @@ class ApiClient implements Repository {
 
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
-    } on Exception catch (e) {}
+    } catch (e) {}
   }
 
   //VAL-OTP
@@ -401,6 +401,37 @@ class ApiClient implements Repository {
       var response = await api(
           method: "get",
           url: BASE_URL + COMLPAINT_CONFIG_URL,
+          token: true,
+          checkSum: false);
+
+      if (!response.body.toString().contains("<html>")) {
+        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+        return decodedResponse;
+      } else {
+        return {
+          "status": 500,
+          "message": "Something went wrong",
+          "data": "Error"
+        };
+      }
+    } catch (e) {
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
+  }
+
+  //COMPLAINT SUBMIT
+
+  @override
+  Future submitComplaint(complaint) async {
+    try {
+      var response = await api(
+          method: "post",
+          url: BASE_URL + COMLPAINT_URL,
+          body: complaint,
           token: true,
           checkSum: false);
 
