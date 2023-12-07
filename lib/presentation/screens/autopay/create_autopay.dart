@@ -25,7 +25,7 @@ class createAutopay extends StatefulWidget {
 }
 
 class _createAutopayState extends State<createAutopay> {
-  int? limitGroupRadio = 1;
+  int? limitGroupRadio = 0;
   int? billPayGroupRadio = 0;
   bool isAccLoading = true;
   String? maximumAmount = "0";
@@ -128,6 +128,7 @@ class _createAutopayState extends State<createAutopay> {
                     setState(() {
                       maximumAmount =
                           state.fetchAutoPayMaxAmountModel!.data.toString();
+                      maxAmountController.text = maximumAmount;
                     });
                   } else if (state is FetchAutoPayMaxAmountFailed) {
                   } else if (state is FetchAutoPayMaxAmountError) {}
@@ -220,28 +221,6 @@ class _createAutopayState extends State<createAutopay> {
                         children: [
                           Flexible(
                             child: RadioListTile(
-                              value: 1,
-                              groupValue: limitGroupRadio,
-                              activeColor: TXT_CLR_PRIMARY,
-                              onChanged: (val) {
-                                setState(() {
-                                  limitGroupRadio = 1;
-                                });
-                              },
-                              controlAffinity: ListTileControlAffinity.trailing,
-                              title: Text(
-                                "Set Bill Limit",
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xff313131),
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            child: RadioListTile(
                               value: 0,
                               groupValue: limitGroupRadio,
                               onChanged: (val) {
@@ -253,6 +232,28 @@ class _createAutopayState extends State<createAutopay> {
                               controlAffinity: ListTileControlAffinity.trailing,
                               title: Text(
                                 "Default Limit",
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xff313131),
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          Flexible(
+                            child: RadioListTile(
+                              value: 1,
+                              groupValue: limitGroupRadio,
+                              activeColor: TXT_CLR_PRIMARY,
+                              onChanged: (val) {
+                                setState(() {
+                                  limitGroupRadio = 1;
+                                });
+                              },
+                              controlAffinity: ListTileControlAffinity.trailing,
+                              title: Text(
+                                "Set Bill Limit",
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w500,
@@ -275,6 +276,7 @@ class _createAutopayState extends State<createAutopay> {
                           enableSuggestions: false,
                           keyboardType: TextInputType.text,
                           inputFormatters: [
+                            // getInputAmountFormatter(),
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'^[a-z0-9A-Z ]*'))
                           ],
@@ -300,6 +302,7 @@ class _createAutopayState extends State<createAutopay> {
                               ),
                               border: const UnderlineInputBorder(),
                               labelText: 'Maximum Amount',
+                              prefixText: '₹  ',
                               hintText: "Enter maximum amount"),
                         ),
                       ),
@@ -708,10 +711,10 @@ class _createAutopayState extends State<createAutopay> {
                                               padding: EdgeInsets.fromLTRB(
                                                   15.w, 0, 0, 0),
                                               child: Text(
-                                                accountInfo![index].balance ==
+                                                accountInfo![index].balance !=
                                                         "Unable to fetch balance"
                                                     ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(accountInfo![index].balance.toString()))}"
-                                                    : "Unable to fetch balance",
+                                                    : "-",
 
                                                 // "₹ ${accountInfo![index].balance.toString()}",
                                                 style: TextStyle(
