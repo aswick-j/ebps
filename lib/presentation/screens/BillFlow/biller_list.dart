@@ -66,7 +66,7 @@ class _BillerListState extends State<BillerList> {
         ),
         body: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
           if (state is AllbillerListLoading && state.isFirstFetch) {}
-          bool isLoading = false;
+          // bool isLoading = false;
           // isAllBiller = true;
           if (state is AllbillerListLoading) {
             Allbiller = state.prevData;
@@ -74,7 +74,7 @@ class _BillerListState extends State<BillerList> {
             isAllBiller = false;
           } else if (state is AllbillerListSuccess) {
             Allbiller = state.allbillerList;
-            isLoading = false;
+            // isLoading = false;
           } else if (state is AllbillerListFailed) {
             isAllBiller = false;
           } else if (state is AllbillerListError) {

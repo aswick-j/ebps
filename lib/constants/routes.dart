@@ -1,3 +1,4 @@
+import 'package:ebps/bloc/MyBillers/mybillers_cubit.dart';
 import 'package:ebps/bloc/complaint/complaint_cubit.dart';
 import 'package:ebps/bloc/history/history_cubit.dart';
 import 'package:ebps/bloc/home/home_cubit.dart';
@@ -9,6 +10,8 @@ import 'package:ebps/presentation/screens/BillFlow/biller_details.dart';
 import 'package:ebps/presentation/screens/BillFlow/biller_list.dart';
 import 'package:ebps/presentation/screens/Payments/payment_details.dart';
 import 'package:ebps/presentation/screens/Payments/transaction_screen.dart';
+import 'package:ebps/presentation/screens/autopay/create_autopay.dart';
+import 'package:ebps/presentation/screens/autopay/edit_autopay.dart';
 import 'package:ebps/presentation/screens/complaints/complaint_details.dart';
 import 'package:ebps/presentation/screens/complaints/complaint_screen.dart';
 import 'package:ebps/presentation/screens/complaints/register_complaint.dart';
@@ -42,6 +45,8 @@ const rEGISTERCOMPLAINTROUTE = '/regsiterComplaintRoute';
 const cOMPLAINTLISTROUTE = '/complaintListRoute';
 const cOMPLAINTDETAILSROUTE = '/complaintDetail';
 const cOMPLAINTREGISTERROUTE = '/complaintRegisterRoute';
+const cREATEAUTOPAYROUTE = '/createAutopayRoute';
+const eDITAUTOPAYROUTE = '/editAutopayRoute';
 
 /// The `MyRouter` class is responsible for generating routes and corresponding page widgets based on
 /// the provided route settings.
@@ -278,7 +283,40 @@ class MyRouter {
             fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => ComplaintCubit(repository: apiClient),
-                  child: RegisterComplaint(historyData: args["historyData"]),
+                  child: RegisterComplaint(txnRefID: args["txnRefID"]),
+                ));
+
+//CREATE AUTOPAY
+      case cREATEAUTOPAYROUTE:
+        // final args = settings.arguments as Map<String, dynamic>;
+
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                        create: (_) => MybillersCubit(repository: apiClient)),
+                    BlocProvider(
+                        create: (_) => HomeCubit(repository: apiClient)),
+                  ],
+                  child: createAutopay(),
+                ));
+
+//EDIT AUTOPAY
+      case eDITAUTOPAYROUTE:
+        // final args = settings.arguments as Map<String, dynamic>;
+
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                        create: (_) => MybillersCubit(repository: apiClient)),
+                    BlocProvider(
+                        create: (_) => HomeCubit(repository: apiClient)),
+                  ],
+                  // create: (context) => MybillersCubit(repository: apiClient),
+                  child: editAutopay(),
                 ));
 
       default:

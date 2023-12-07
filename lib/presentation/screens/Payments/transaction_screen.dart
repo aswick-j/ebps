@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/data/models/add_biller_model.dart';
@@ -10,9 +9,11 @@ import 'package:ebps/helpers/getBillerType.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
+import 'package:ebps/presentation/widget/bbps_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class TransactionScreen extends StatefulWidget {
@@ -37,7 +38,7 @@ class TransactionScreen extends StatefulWidget {
 
 class _TransactionScreenState extends State<TransactionScreen> {
   confirmDoneData? tnxResponse;
-  var billData;
+  // var billData;
   BillersData? billerTypeData;
 
   Map<String, dynamic>? paymentDetails;
@@ -47,7 +48,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   void initState() {
     super.initState();
     tnxResponse = confirmDoneData.fromJson(widget.billerData['res']);
-    billData = jsonDecode(tnxResponse!.paymentDetails!.tran!.bill.toString());
+    // billData = jsonDecode(tnxResponse!.paymentDetails!.tran!.bill.toString());
     billerTypeData = widget.billerData['billerData'];
     billerTypeResult = getBillerType(
         billerTypeData!.fETCHREQUIREMENT,
@@ -94,7 +95,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       Clipboard.setData(ClipboardData(text: subTitle))
                           .then((_) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('${title} copied to clipboard')));
+                            content: Text('$title copied to clipboard')));
                       });
                     },
                     child: Icon(Icons.copy, color: Color(0xff1b438b), size: 20))
@@ -148,7 +149,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topRight,
-                            stops: [0.001, 19],
+                            stops: const [0.001, 19],
                             colors: [
                               paymentDetails!['success']
                                   ? Color(0xff99DDB4).withOpacity(.7)
@@ -186,14 +187,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       ListTile(
                         contentPadding:
                             EdgeInsets.only(left: 30.w, right: 6.w, top: 6.h),
-                        // leading: Container(
-                        //   width: 50,
-                        //   child: Padding(
-                        //     padding: const EdgeInsets.all(8.0),
-                        //     child: SvgPicture.asset(
-                        //         "packages/ebps/assets/icon/icon_jio.svg"),
-                        //   ),
-                        // ),
                         title: Padding(
                             padding: EdgeInsets.only(bottom: 5.h),
                             child: Column(
@@ -201,12 +194,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(
-                                      Icons.arrow_upward,
-                                      color: Colors.red,
-                                    ),
+                                    SvgPicture.asset(ICON_ARROW_UP,
+                                        height: 20.h),
                                     Text(
-                                      '₹ ${widget.billerData['billAmount']}',
+                                      "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData['billAmount']))}",
                                       style: TextStyle(
                                         fontSize: 20.sp,
                                         fontWeight: FontWeight.w600,
@@ -220,17 +211,20 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                 SizedBox(
                                   height: 5.h,
                                 ),
-                                Text(
-                                  DateFormat("dd/MM/yy | hh:mm a")
-                                      .format(DateTime.now())
-                                      .toString(),
-                                  // "01/08/2023 | 12:48 PM",
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff808080),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 20.0.w),
+                                  child: Text(
+                                    DateFormat("dd/MM/yy | hh:mm a")
+                                        .format(DateTime.now())
+                                        .toString(),
+                                    // "01/08/2023 | 12:48 PM",
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff808080),
+                                    ),
+                                    textAlign: TextAlign.left,
                                   ),
-                                  textAlign: TextAlign.left,
                                 )
                               ],
                             )),
@@ -289,6 +283,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           clipBoard: false),
                     ],
                   )),
+              if (!paymentDetails!['success'])
+                BbpsLogoContainer(showEquitasLogo: true),
               SizedBox(
                 height: 70.h,
               )
@@ -307,8 +303,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (context) => TransactionScreen()));
+                        goToData(context, cOMPLAINTREGISTERROUTE, {
+                          "txnRefID":
+                              paymentDetails!['txnReferenceId'].toString()
+                        });
                       },
                       buttonText: "Raise For Complaint",
                       buttonTxtColor: BTN_CLR_ACTIVE,

@@ -453,4 +453,20 @@ class ApiClient implements Repository {
       };
     }
   }
+
+  //AUTOPAY MAX AMOUNY
+
+  @override
+  Future getAutoPayMaxAmount() async {
+    try {
+      var response = await api(
+          method: "get",
+          url: BASE_URL + GET_AUTOPAY_MAXAMOUNT_URL,
+          token: true,
+          checkSum: false);
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+
+      return decodedResponse;
+    } catch (e) {}
+  }
 }

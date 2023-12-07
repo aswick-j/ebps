@@ -2,7 +2,10 @@
 
 // ignore_for_file: constant_identifier_names
 
+const LOGO_EQUITAS = "packages/ebps/assets/logo/logo_equitas_normal.png";
 const LOGO_BBPS = "packages/ebps/assets/icon/logo_bbps.svg";
+const LOGO_BBPS_FULL = "packages/ebps/assets/logo/logo_bbps_full.svg";
+const LOGO_BBPS_FULL_PNG = "packages/ebps/assets/logo/logo_bbps_full_png.png";
 
 //JSON
 
@@ -22,6 +25,9 @@ const ICON_HISTORY_INACTIVE =
 
 const ICON_HOME = 'packages/ebps/assets/icon/icon_home.svg';
 const ICON_HOME_INACTIVE = "packages/ebps/assets/icon/icon_home_inactive.svg";
+
+const ICON_SUCCESS = "packages/ebps/assets/icon/icon_success.svg";
+const ICON_ARROW_UP = "packages/ebps/assets/icon/icon_arrow_up.svg";
 
 //CATEGORY-ICONS
 

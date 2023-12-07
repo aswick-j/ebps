@@ -1,5 +1,7 @@
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/routes.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -166,6 +168,13 @@ class MyBillersContainer extends StatelessWidget {
                           SizedBox(
                             height: 10.h,
                           ),
+                          GestureDetector(
+                              onTap: () {
+                                goTo(context, eDITAUTOPAYROUTE);
+                              },
+                              child: Row(
+                                children: [Text("Edit Autopay")],
+                              )),
                           Padding(
                             padding: EdgeInsets.only(top: 48.0.h, bottom: 16.h),
                             child: Row(

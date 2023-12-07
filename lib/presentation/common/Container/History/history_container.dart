@@ -30,15 +30,19 @@ class HistoryContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    handleClick() {
+      goToData(context, hISTORYDETAILSROUTE, {
+        "billName": historyData.bILLNAME ?? "-",
+        "billerName": historyData.bILLERNAME,
+        "categoryName": historyData.cATEGORYNAME,
+        "isSavedBill": false,
+        "historyData": historyData
+      });
+    }
+
     return GestureDetector(
       onTap: () {
-        goToData(context, hISTORYDETAILSROUTE, {
-          "billName": historyData.bILLNAME ?? "-",
-          "billerName": historyData.bILLERNAME,
-          "categoryName": historyData.cATEGORYNAME,
-          "isSavedBill": false,
-          "historyData": historyData
-        });
+        handleClick();
       },
       child: Container(
         width: double.infinity,

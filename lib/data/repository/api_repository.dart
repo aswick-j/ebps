@@ -61,4 +61,8 @@ abstract class Repository {
 
   //COMPLAINT SUBMIT
   Future submitComplaint(complaint) async {}
+
+  //AUTOPAY MAX AMOUNT
+
+  Future getAutoPayMaxAmount() async {}
 }

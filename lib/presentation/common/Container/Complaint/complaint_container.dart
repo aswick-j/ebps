@@ -35,10 +35,17 @@ class ComplaintContainer extends StatefulWidget {
 }
 
 class _ComplaintContainerState extends State<ComplaintContainer> {
+  handleClick() {
+    goToData(context, cOMPLAINTDETAILSROUTE,
+        {"complaintData": widget.complaintData});
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        handleClick();
+      },
       child: Container(
         width: double.infinity,
         margin:
@@ -67,7 +74,8 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MyAppText(
-                      data: widget.titleText,
+                      data: "Jio Telecom Services",
+                      // data: widget.titleText,
                       size: 14.0.sp,
                       color: TXT_CLR_LITE,
                       weight: FontWeight.w500,
@@ -87,8 +95,8 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                   MyAppText(
                     data: "Complaint ID",
                     size: 12.sp,
-                    color: TXT_CLR_DEFAULT,
-                    weight: FontWeight.w500,
+                    color: Color(0xff7d7d7d),
+                    weight: FontWeight.w400,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,7 +104,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                       MyAppText(
                         data: widget.subtitleText,
                         size: 14.0.sp,
-                        color: TXT_CLR_DEFAULT,
+                        color: TXT_CLR_PRIMARY,
                         weight: FontWeight.w500,
                       ),
                     ],
@@ -123,7 +131,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                       ),
                       MyAppText(
                         data: widget.dateText,
-                        size: 12.0.sp,
+                        size: 14.0.sp,
                         color: TXT_CLR_LITE,
                         weight: FontWeight.w400,
                       ),
@@ -131,8 +139,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                   ),
                   InkWell(
                       onTap: () {
-                        goToData(context, cOMPLAINTDETAILSROUTE,
-                            {"complaintData": widget.complaintData});
+                        handleClick();
                       },
                       child: Row(children: [
                         if (widget.statusText != null)

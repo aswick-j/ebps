@@ -1,5 +1,4 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
-import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/data/models/account_info_model.dart';
@@ -11,14 +10,14 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/common/Container/Home/biller_details_container.dart';
-import 'package:ebps/presentation/screens/otp/otp_screen.dart';
+import 'package:ebps/presentation/widget/bbps_logo.dart';
 import 'package:ebps/presentation/widget/loader_overlay.dart';
 import 'package:ebps/presentation/widget/flickr_loader.dart';
 import 'package:ebps/presentation/widget/get_biller_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 class PaymentDetails extends StatefulWidget {
   int? billID;
@@ -251,10 +250,10 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                               child: GridView.count(
                                 primary: false,
                                 physics: NeverScrollableScrollPhysics(),
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10.h,
                                 crossAxisCount: 2,
                                 childAspectRatio: 4 / 2,
+                                mainAxisSpacing: 10.h,
                                 children: [
                                   billerDetail(
                                       widget.inputParameters![0].pARAMETERNAME,
@@ -287,7 +286,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                   textAlign: TextAlign.left,
                                 ),
                                 Text(
-                                  "₹ ${widget.amount}",
+                                  "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.amount.toString()))}",
+                                  // "₹ ${widget.amount}",
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w600,
@@ -333,6 +333,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
+                            childAspectRatio: 4 / 2,
+                            mainAxisSpacing: 10.h,
                             // mainAxisSpacing: 10,
                           ),
                           itemBuilder: (context, index) {
@@ -396,9 +398,11 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                           padding: EdgeInsets.fromLTRB(
                                               15.w, 0, 0, 0),
                                           child: Text(
-                                            "₹ ${accountInfo![index].balance.toString()}",
+                                            "₹ ${NumberFormat('#,##,##0.00').format(double.parse(accountInfo![index].balance.toString()))}",
+
+                                            // "₹ ${accountInfo![index].balance.toString()}",
                                             style: TextStyle(
-                                              fontSize: 18.sp,
+                                              fontSize: 16.sp,
                                               fontWeight: FontWeight.w600,
                                               color: Color(0xff0e2146),
                                             ),
@@ -409,8 +413,15 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                             );
                           }),
                     ),
-                  Container(
-                      height: 30, width: 30, child: SvgPicture.asset(LOGO_BBPS))
+                  // SizedBox(
+                  //   height: 50.h,
+                  // ),
+                  BbpsLogoContainer(
+                    showEquitasLogo: false,
+                  ),
+                  // SizedBox(
+                  //   height: 70.h,
+                  // )
                 ],
               ),
             );

@@ -7,6 +7,7 @@ import 'package:ebps/data/models/auto_schedule_pay_model.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
+import 'package:ebps/presentation/widget/bbps_logo.dart';
 import 'package:ebps/presentation/widget/loader_overlay.dart';
 import 'package:ebps/presentation/widget/animated_dialog.dart';
 import 'package:flutter/material.dart';
@@ -584,7 +585,16 @@ class _OtpScreenState extends State<OtpScreen> {
                             height: 20.h,
                           )
                         ],
-                      ))
+                      )),
+                  SizedBox(
+                    height: 100.h,
+                  ),
+                  BbpsLogoContainer(
+                    showEquitasLogo: false,
+                  ),
+                  // SizedBox(
+                  //   height: 70.h,
+                  // )
                 ],
               ),
             );

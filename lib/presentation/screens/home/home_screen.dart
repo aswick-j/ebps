@@ -4,7 +4,6 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Container/Home/home_banners.dart';
 import 'package:ebps/presentation/screens/home/bill_categories.dart';
-import 'package:ebps/presentation/screens/home/search_screen.dart';
 import 'package:ebps/presentation/screens/home/upcoming_dues.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

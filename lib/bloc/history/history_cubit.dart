@@ -17,14 +17,11 @@ class HistoryCubit extends Cubit<HistoryState> {
       var newEndDate = DateTime.parse(dateValues['endDate']);
       var finalEndDate = DateTime(
           newEndDate.year, newEndDate.month, newEndDate.day, 23, 59, 59);
-      debugPrint("finalEndDate ::::");
 
       payload = {
         "startDate": dateValues['startDate'],
         "endDate": finalEndDate.toString()
       };
-      // payload = dateValues;
-      // }
     } else {
       Map<String, dynamic> dateData =
           await getTransactionHistoryDate(dateValues);

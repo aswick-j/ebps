@@ -1,3 +1,4 @@
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/data/models/billers_model.dart';
@@ -6,9 +7,12 @@ import 'package:ebps/data/models/history_model.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
+import 'package:ebps/presentation/widget/bbps_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 class HistoryDetails extends StatefulWidget {
   bool? isSavedBill;
@@ -182,13 +186,13 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Icon(
-                                      Icons.arrow_upward,
-                                      color: Colors.red,
-                                    ),
+                                    SvgPicture.asset(ICON_ARROW_UP,
+                                        height: 20.h),
                                     Text(
-                                      '₹ ${widget.historyData.bILLAMOUNT}',
+                                      "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
                                       style: TextStyle(
                                         fontSize: 20.sp,
                                         fontWeight: FontWeight.w600,
@@ -197,23 +201,50 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                       ),
                                       textAlign: TextAlign.left,
                                     ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        goTo(context, cREATEAUTOPAYROUTE);
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8.0.w, vertical: 4.w),
+                                        decoration: BoxDecoration(
+                                          color: TXT_CLR_PRIMARY,
+                                          border: Border.all(
+                                              color: TXT_CLR_PRIMARY),
+                                          borderRadius:
+                                              BorderRadius.circular(12.0.r),
+                                        ),
+                                        child: Text(
+                                          "Setup Autopay",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 10.0.sp,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 SizedBox(
                                   height: 5.h,
                                 ),
-                                Text(
-                                  // DateFormat("dd/MM/yy | hh:mm a")
-                                  //     .format(widget.historyData.cOMPLETIONDATE)
-                                  //     .toString(),
-                                  widget.historyData.cOMPLETIONDATE.toString(),
-                                  // "01/08/2023 | 12:48 PM",
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff808080),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 20.0.w),
+                                  child: Text(
+                                    // DateFormat("dd/MM/yy | hh:mm a")
+                                    //     .format(widget.historyData.cOMPLETIONDATE)
+                                    //     .toString(),
+                                    widget.historyData.cOMPLETIONDATE
+                                        .toString(),
+                                    // "01/08/2023 | 12:48 PM",
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff808080),
+                                    ),
+                                    textAlign: TextAlign.left,
                                   ),
-                                  textAlign: TextAlign.left,
                                 )
                               ],
                             )),
@@ -264,6 +295,8 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                           clipBoard: false),
                     ],
                   )),
+              if (widget.historyData.tRANSACTIONSTATUS != 'success')
+                BbpsLogoContainer(showEquitasLogo: true),
               SizedBox(
                 height: 70.h,
               )
@@ -282,8 +315,10 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () {
-                        goToData(context, cOMPLAINTREGISTERROUTE,
-                            {"historyData": widget.historyData});
+                        goToData(context, cOMPLAINTREGISTERROUTE, {
+                          "txnRefID": widget.historyData.tRANSACTIONREFERENCEID
+                              .toString()
+                        });
                       },
                       buttonText: "Raise For Complaint",
                       buttonTxtColor: BTN_CLR_ACTIVE,

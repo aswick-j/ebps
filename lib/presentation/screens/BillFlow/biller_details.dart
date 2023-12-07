@@ -19,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class BillerDetails extends StatefulWidget {
   int? billID;
@@ -85,7 +84,7 @@ class _BillerDetailsState extends State<BillerDetails> {
           adHocBillValidationRefKey: null,
           validateBill: validateBill!["validateBill"],
           billerParams: billerInputSign,
-          billName: widget.isSavedBill ? null : widget!.billName);
+          billName: widget.isSavedBill ? null : widget.billName);
     } else {
       isFetchbillLoading = false;
       isUnableToFetchBill = false;
@@ -246,9 +245,9 @@ class _BillerDetailsState extends State<BillerDetails> {
                                           _billerResponseData!.customerName
                                               .toString(),
                                           context),
-                                    if (widget!.billName != null)
+                                    if (widget.billName != null)
                                       billerDetail("Bill Name",
-                                          widget!.billName.toString(), context),
+                                          widget.billName.toString(), context),
                                   ],
                                 )),
                         if (!isFetchbillLoading &&

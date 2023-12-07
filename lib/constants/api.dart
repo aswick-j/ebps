@@ -17,6 +17,7 @@ const String VALIDATE_OTP_URL = "/user-services/validate-otp";
 const String PAY_BILL_URL = "/payment/bill";
 const String COMLPAINT_URL = "/complaints/";
 const String COMLPAINT_CONFIG_URL = '/complaints/config';
+const String GET_AUTOPAY_MAXAMOUNT_URL = "/auto-pay/max-amount/";
 
 const String redirectUrl = "/auth/redirect";
 const String transactionUrl = "/transactions/";
@@ -24,7 +25,6 @@ const String transactionUrl = "/transactions/";
 const String autoPayUrl = "/auto-pay/";
 const String upcomingDisableUrl = "/auto-pay/status/";
 const String removeAutoPayUrl = "/auto-pay/delete/";
-const String fetchAutoPayMaxAmountUrl = "/auto-pay/max-amount/";
 const String deletebillerUrl = "/billers/delete/";
 
 const String savedBillersUrl = "/billers/saved/";
