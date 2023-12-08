@@ -281,6 +281,8 @@ class _OtpScreenState extends State<OtpScreen> {
                 },
               );
             } else if (state is PayBillFailed) {
+              LoaderOverlay.of(context).hide();
+
               handleRedirect() {
                 goToData(context, tRANSROUTE, {
                   "billName": widget.data!["billName"],
@@ -288,7 +290,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   "categoryName": widget.data!["categoryName"],
                   "billerData": state.data,
                   "inputParameters": widget.data!['inputSignature'],
-                  "isSavedBill": state.data!['isSavedBill'],
+                  "isSavedBill": false,
                 });
               }
 

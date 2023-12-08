@@ -11,6 +11,7 @@ import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/common/Container/Home/biller_details_container.dart';
 import 'package:ebps/presentation/widget/bbps_logo.dart';
+import 'package:ebps/presentation/widget/getAccountInfoCard.dart';
 import 'package:ebps/presentation/widget/loader_overlay.dart';
 import 'package:ebps/presentation/widget/flickr_loader.dart';
 import 'package:ebps/presentation/widget/get_biller_detail.dart';
@@ -301,17 +302,28 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                         ],
                       )),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 24.0.w, vertical: 16.h),
-                    child: Text(
-                      "Select Payment Account",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xff1b438b),
-                        height: 23 / 14,
-                      ),
-                      textAlign: TextAlign.left,
+                    padding: EdgeInsets.only(
+                        left: 18.0.w, right: 18.w, top: 18.w, bottom: 18.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Select Payment Account",
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff1b438b),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.refresh),
+                          onPressed: () {
+                            BlocProvider.of<HomeCubit>(context)
+                                .getAccountInfo(myAccounts);
+                          },
+                        ),
+                      ],
                     ),
                   ),
                   if (isAccLoading)
@@ -338,90 +350,23 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                             // mainAxisSpacing: 10,
                           ),
                           itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
+                            return AccountInfoCard(
+                              accountNumber:
+                                  accountInfo![index].accountNumber.toString(),
+                              balance: accountInfo![index].balance.toString(),
+                              onAccSelected: (Date) {
                                 setState(() {
                                   selectedAcc = index;
                                 });
                               },
-                              child: Container(
-                                  clipBehavior: Clip.hardEdge,
-                                  width: double.infinity,
-                                  margin: EdgeInsets.only(
-                                      left: 20.0.w,
-                                      right: 20.w,
-                                      top: 0.h,
-                                      bottom: 0),
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(6.0.r + 2.r),
-                                    border: Border.all(
-                                      color: selectedAcc == index
-                                          ? CLR_GREEN
-                                          : Color(0xffD1D9E8),
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              15.w, 10.h, 0, 0),
-                                          child: Text(
-                                            accountInfo![index]
-                                                .accountNumber
-                                                .toString(),
-                                            style: TextStyle(
-                                              fontSize: 13.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: selectedAcc == index
-                                                  ? CLR_GREEN
-                                                  : Color(0xff808080),
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              15.w, 5.h, 0, 0),
-                                          child: Text(
-                                            "Balance Amount",
-                                            style: TextStyle(
-                                              fontSize: 11.sp,
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0xff808080),
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              15.w, 0, 0, 0),
-                                          child: Text(
-                                            "₹ ${NumberFormat('#,##,##0.00').format(double.parse(accountInfo![index].balance.toString()))}",
-
-                                            // "₹ ${accountInfo![index].balance.toString()}",
-                                            style: TextStyle(
-                                              fontSize: 16.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: Color(0xff0e2146),
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ))
-                                    ],
-                                  )),
+                              index: index,
+                              isSelected: selectedAcc,
                             );
                           }),
                     ),
-                  // SizedBox(
-                  //   height: 50.h,
-                  // ),
                   BbpsLogoContainer(
                     showEquitasLogo: false,
                   ),
-                  // SizedBox(
-                  //   height: 70.h,
-                  // )
                 ],
               ),
             );

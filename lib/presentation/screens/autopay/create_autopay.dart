@@ -2,13 +2,16 @@ import 'package:ebps/bloc/MyBillers/mybillers_cubit.dart';
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/data/models/account_info_model.dart';
+import 'package:ebps/helpers/getDaySuffix.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/getMonthName.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/widget/bbps_logo.dart';
+import 'package:ebps/presentation/widget/date_picker_dialog.dart';
 import 'package:ebps/presentation/widget/flickr_loader.dart';
+import 'package:ebps/presentation/widget/getAccountInfoCard.dart';
 import 'package:ebps/presentation/widget/loader_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +39,7 @@ class _createAutopayState extends State<createAutopay> {
   dynamic maxAmountController = TextEditingController();
   dynamic dateController = TextEditingController();
 
-  String? selectedDate;
+  String? selectedDate = "1";
   dynamic selectedAcc = null;
 
   List<String> EffectiveFrom = <String>[
@@ -47,9 +50,10 @@ class _createAutopayState extends State<createAutopay> {
 
   @override
   void initState() {
+    dateController.text = '1${getDaySuffix("1")}';
+
     BlocProvider.of<HomeCubit>(context).getAccountInfo(myAccounts);
     BlocProvider.of<MybillersCubit>(context).getAutoPayMaxAmount();
-
     super.initState();
   }
 
@@ -312,155 +316,35 @@ class _createAutopayState extends State<createAutopay> {
                         child: TextFormField(
                           // maxLength: 20,
                           controller: dateController,
+                          readOnly: true,
                           // key: _billnameKey,
                           autocorrect: false,
                           enableSuggestions: false,
                           keyboardType: TextInputType.text,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'^[a-z0-9A-Z ]*'))
-                          ],
+                          // inputFormatters: [
+                          //   FilteringTextInputFormatter.allow(
+                          //       RegExp(r'^[a-z0-9A-Z ]*'))
+                          // ],
                           onChanged: (val) {},
                           onTap: () {
                             showDialog(
                               barrierDismissible: false,
                               context: context,
                               builder: (BuildContext context) {
-                                return StatefulBuilder(
-                                  builder: (BuildContext context,
-                                      StateSetter setState) {
-                                    return Dialog(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Container(
-                                            color: TXT_CLR_PRIMARY,
-                                            padding: EdgeInsets.all(16.0),
-                                            child: Center(
-                                              child: Text(
-                                                'Select Date',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.all(16.0),
-                                            child: GridView.builder(
-                                              shrinkWrap: true,
-                                              gridDelegate:
-                                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 6,
-                                                crossAxisSpacing: 8.0,
-                                                mainAxisSpacing: 8.0,
-                                              ),
-                                              itemCount: 30,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                return InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      selectedDate =
-                                                          '${index + 1}';
-                                                      print(selectedDate);
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: selectedDate ==
-                                                              '${index + 1}'
-                                                          ? TXT_CLR_PRIMARY
-                                                          : Color(0xffD1D9E8)
-                                                              .withOpacity(0.5),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              200.0),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${index + 1}',
-                                                        style: TextStyle(
-                                                          color: selectedDate ==
-                                                                  '${index + 1}'
-                                                              ? Colors.white
-                                                              : TXT_CLR_PRIMARY,
-                                                          fontSize: 16.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                          Divider(
-                                            height: 10.0,
-                                            thickness: 1,
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 24.0,
-                                                vertical: 8.0),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context)
-                                                        .pop(); // Close the dialog
-                                                  },
-                                                  child: Text(
-                                                    "Cancel",
-                                                    style: TextStyle(
-                                                      fontSize: 12.0,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Color(0xff1b438b),
-                                                    ),
-                                                    textAlign: TextAlign.left,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 20.0,
-                                                ),
-                                                TextButton(
-                                                  onPressed: () {
-                                                    goBack(context);
-                                                    dateController.text =
-                                                        selectedDate.toString();
-                                                  },
-                                                  child: Text(
-                                                    "Ok",
-                                                    style: TextStyle(
-                                                      fontSize: 12.0,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Color(0xff1b438b),
-                                                    ),
-                                                    textAlign: TextAlign.left,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    );
+                                return DateDialog(
+                                  defaultDate: selectedDate,
+                                  onDateSelected: (Date) {
+                                    setState(() {
+                                      selectedDate = Date;
+                                      dateController.text =
+                                          '$selectedDate${getDaySuffix(Date)}';
+                                    });
                                   },
                                 );
                               },
                             );
                           },
-                          validator: (inputValue) {
-                            // if (inputValue!.isEmpty) {
-                            //   return "Bill Name Should Not be Empty";
-                            // }
-                          },
+                          validator: (inputValue) {},
                           decoration: InputDecoration(
                               fillColor:
                                   const Color(0xffD1D9E8).withOpacity(0.2),
@@ -608,23 +492,28 @@ class _createAutopayState extends State<createAutopay> {
                   ),
                   child: Column(
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              left: 18.0.w,
-                              right: 18.w,
-                              top: 18.w,
-                              bottom: 18.w),
-                          child: Text(
-                            "Select Payment Account",
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xff1b438b),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 18.0.w, right: 18.w, top: 18.w, bottom: 18.w),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Select Payment Account",
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xff1b438b),
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
-                          ),
+                            IconButton(
+                              icon: const Icon(Icons.refresh),
+                              onPressed: () {
+                                BlocProvider.of<HomeCubit>(context)
+                                    .getAccountInfo(myAccounts);
+                              },
+                            ),
+                          ],
                         ),
                       ),
                       if (isAccLoading)
@@ -640,94 +529,31 @@ class _createAutopayState extends State<createAutopay> {
                           width: double.infinity,
                           color: Colors.white,
                           child: GridView.builder(
-                              shrinkWrap: true,
-                              itemCount: accountInfo!.length,
-                              physics: NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 4 / 2,
-                                mainAxisSpacing: 10.h,
-                                // mainAxisSpacing: 10,
-                              ),
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedAcc = index;
-                                    });
-                                  },
-                                  child: Container(
-                                      clipBehavior: Clip.hardEdge,
-                                      width: double.infinity,
-                                      margin: EdgeInsets.only(
-                                          left: 20.0.w,
-                                          right: 20.w,
-                                          top: 0.h,
-                                          bottom: 0),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(6.0.r + 2.r),
-                                        border: Border.all(
-                                          color: selectedAcc == index
-                                              ? CLR_GREEN
-                                              : Color(0xffD1D9E8),
-                                          width: 1.0,
-                                        ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  15.w, 10.h, 0, 0),
-                                              child: Text(
-                                                accountInfo![index]
-                                                    .accountNumber
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  fontSize: 13.sp,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: selectedAcc == index
-                                                      ? CLR_GREEN
-                                                      : Color(0xff808080),
-                                                ),
-                                                textAlign: TextAlign.center,
-                                              )),
-                                          Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  15.w, 5.h, 0, 0),
-                                              child: Text(
-                                                "Balance Amount",
-                                                style: TextStyle(
-                                                  fontSize: 11.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color(0xff808080),
-                                                ),
-                                                textAlign: TextAlign.center,
-                                              )),
-                                          Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  15.w, 0, 0, 0),
-                                              child: Text(
-                                                accountInfo![index].balance !=
-                                                        "Unable to fetch balance"
-                                                    ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(accountInfo![index].balance.toString()))}"
-                                                    : "-",
-
-                                                // "₹ ${accountInfo![index].balance.toString()}",
-                                                style: TextStyle(
-                                                  fontSize: 13.sp,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Color(0xff0e2146),
-                                                ),
-                                                textAlign: TextAlign.left,
-                                              ))
-                                        ],
-                                      )),
-                                );
-                              }),
+                            shrinkWrap: true,
+                            itemCount: accountInfo!.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 4 / 2,
+                              mainAxisSpacing: 10.0,
+                            ),
+                            itemBuilder: (context, index) {
+                              return AccountInfoCard(
+                                accountNumber: accountInfo![index]
+                                    .accountNumber
+                                    .toString(),
+                                balance: accountInfo![index].balance.toString(),
+                                onAccSelected: (Date) {
+                                  setState(() {
+                                    selectedAcc = index;
+                                  });
+                                },
+                                index: index,
+                                isSelected: selectedAcc,
+                              );
+                            },
+                          ),
                         ),
                       SizedBox(
                         height: 10.h,
