@@ -5,6 +5,7 @@ import 'package:ebps/data/models/add_biller_model.dart';
 import 'package:ebps/data/models/billers_model.dart';
 import 'package:ebps/data/models/fetch_bill_model.dart';
 import 'package:ebps/data/models/paymentInformationModel.dart';
+import 'package:ebps/data/models/saved_biller_model.dart';
 import 'package:ebps/helpers/getAmountExact.dart';
 import 'package:ebps/helpers/getBillerType.dart';
 import 'package:ebps/helpers/getNavigators.dart';
@@ -27,6 +28,8 @@ class BillerDetails extends StatefulWidget {
   String? categoryName;
   bool isSavedBill;
   BillersData? billerData;
+  SavedBillersData? savedBillersData;
+  List<PARAMETERS>? SavedinputParameters;
   List<AddbillerpayloadModel>? inputParameters;
 
   BillerDetails(
@@ -36,7 +39,9 @@ class BillerDetails extends StatefulWidget {
       required this.isSavedBill,
       this.billName,
       this.billerData,
+      this.savedBillersData,
       this.inputParameters,
+      this.SavedinputParameters,
       this.categoryName})
       : super(key: key);
   @override
@@ -64,27 +69,52 @@ class _BillerDetailsState extends State<BillerDetails> {
 
   void initialFetch() {
     txtAmountController.text = billAmount.toString();
-    setState(() {
-      validateBill = getBillerType(
-          widget.billerData!.fETCHREQUIREMENT,
-          widget.billerData!.bILLERACCEPTSADHOC,
-          widget.billerData!.sUPPORTBILLVALIDATION,
-          widget.billerData!.pAYMENTEXACTNESS);
-    });
-    for (var element in widget.inputParameters!) {
-      billerInputSign[element.pARAMETERNAME.toString()] =
-          element.pARAMETERVALUE.toString();
+    if (widget.isSavedBill) {
+      setState(() {
+        validateBill = getBillerType(
+            widget.savedBillersData!.fETCHREQUIREMENT,
+            widget.savedBillersData!.bILLERACCEPTSADHOC,
+            widget.savedBillersData!.sUPPORTBILLVALIDATION,
+            widget.savedBillersData!.pAYMENTEXACTNESS);
+      });
+    } else {
+      setState(() {
+        validateBill = getBillerType(
+            widget.billerData!.fETCHREQUIREMENT,
+            widget.billerData!.bILLERACCEPTSADHOC,
+            widget.billerData!.sUPPORTBILLVALIDATION,
+            widget.billerData!.pAYMENTEXACTNESS);
+      });
     }
+
+    if (widget.isSavedBill) {
+      if (widget.SavedinputParameters != null) {
+        for (var element in widget.SavedinputParameters!) {
+          billerInputSign[element.pARAMETERNAME.toString()] =
+              element.pARAMETERVALUE.toString();
+        }
+      }
+    } else {
+      if (widget.inputParameters != null) {
+        for (var element in widget.inputParameters!) {
+          billerInputSign[element.pARAMETERNAME.toString()] =
+              element.pARAMETERVALUE.toString();
+        }
+      }
+    }
+
     if (validateBill!["fetchBill"]) {
       logger.i("FETCH BILL API CALLING ==== >");
+
       BlocProvider.of<HomeCubit>(context).fetchBill(
-          billerID: widget.billerData!.bILLERID,
+          billerID:
+              widget.billerData?.bILLERID ?? widget.savedBillersData?.bILLERID,
           quickPay: false,
           quickPayAmount: "0",
           adHocBillValidationRefKey: null,
           validateBill: validateBill!["validateBill"],
           billerParams: billerInputSign,
-          billName: widget.isSavedBill ? null : widget.billName);
+          billName: widget.billName);
     } else {
       isFetchbillLoading = false;
       isUnableToFetchBill = false;
@@ -95,8 +125,8 @@ class _BillerDetailsState extends State<BillerDetails> {
   void initState() {
     initialFetch();
 
-    BlocProvider.of<HomeCubit>(context)
-        .getPaymentInformation(widget.billerData!.bILLERID);
+    BlocProvider.of<HomeCubit>(context).getPaymentInformation(
+        widget.billerData?.bILLERID ?? widget.savedBillersData?.bILLERID);
 
     super.initState();
   }
@@ -498,13 +528,16 @@ class _BillerDetailsState extends State<BillerDetails> {
                               if (!isInsufficient &&
                                   PaymentExactErrMsg.isEmpty) {
                                 goToData(context, pAYMENTCONFIRMROUTE, {
-                                  "name": widget.billerData!.bILLERNAME,
+                                  "name": widget.isSavedBill
+                                      ? widget.savedBillersData!.bILLERNAME
+                                      : widget.billerData!.bILLERNAME,
                                   "billName": widget.billName,
                                   "billerData": widget.billerData,
                                   "inputParameters": widget.inputParameters,
-                                  "categoryName":
-                                      widget.billerData!.cATEGORYNAME,
-                                  "isSavedBill": false,
+                                  "categoryName": widget.isSavedBill
+                                      ? widget.savedBillersData!.cATEGORYNAME
+                                      : widget.billerData!.cATEGORYNAME,
+                                  "isSavedBill": widget.isSavedBill,
                                   "amount": txtAmountController.text,
                                   "validateBill": validateBill,
                                   "billerInputSign": billerInputSign

@@ -2,7 +2,7 @@ import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-Future<DateTime?> DatePicker(BuildContext context) async {
+Future<DateTime?> DatePicker(BuildContext context, String? fromDate) async {
   DateTime? pickedDate = await showDatePicker(
     context: context,
     initialDate: DateTime.now(),

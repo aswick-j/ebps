@@ -65,4 +65,16 @@ abstract class Repository {
   //AUTOPAY MAX AMOUNT
 
   Future getAutoPayMaxAmount() async {}
+
+  //GET ALL UPCOMING DUES
+
+  Future getAllUpcomingDues() async {}
+
+  //GET ALL AUTOPAY
+
+  Future getAutoPay() async {}
+
+  //GET ALL SAVED BILLERS
+
+  Future getSavedBillers() async {}
 }

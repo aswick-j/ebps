@@ -19,16 +19,17 @@ const String COMLPAINT_URL = "/complaints/";
 const String COMLPAINT_CONFIG_URL = '/complaints/config';
 const String GET_AUTOPAY_MAXAMOUNT_URL = "/auto-pay/max-amount/";
 
+const String GET_ALL_UPCOMING_URL = "/billers/all-upcoming-dues/";
+const String GET_AUTOPAY_URL = "/auto-pay/";
+const String GET_SAVED_BILLERS_URL = "/billers/saved/";
+
 const String redirectUrl = "/auth/redirect";
 const String transactionUrl = "/transactions/";
 
-const String autoPayUrl = "/auto-pay/";
 const String upcomingDisableUrl = "/auto-pay/status/";
 const String removeAutoPayUrl = "/auto-pay/delete/";
 const String deletebillerUrl = "/billers/delete/";
 
-const String savedBillersUrl = "/billers/saved/";
-const String allUpcomingDues = "/billers/all-upcoming-dues/";
 const String allLocation = "/billers/location";
 const String savedbilldetails = "/billers/get-saved-details/";
 const String statesDataUrl = "/billers/states-data/";

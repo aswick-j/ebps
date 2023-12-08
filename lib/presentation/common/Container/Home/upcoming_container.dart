@@ -16,20 +16,21 @@ class UpcomingDuesContainer extends StatelessWidget {
   final Color buttonTxtColor;
   final FontWeight buttonTextWeight;
   final Color? buttonBorderColor;
+  final VoidCallback onPressed;
 
-  UpcomingDuesContainer({
-    required this.titleText,
-    required this.subtitleText,
-    required this.dateText,
-    required this.buttonText,
-    required this.amount,
-    required this.iconPath,
-    required this.containerBorderColor,
-    required this.buttonColor,
-    required this.buttonTxtColor,
-    required this.buttonBorderColor,
-    required this.buttonTextWeight,
-  });
+  UpcomingDuesContainer(
+      {required this.titleText,
+      required this.subtitleText,
+      required this.dateText,
+      required this.buttonText,
+      required this.amount,
+      required this.iconPath,
+      required this.containerBorderColor,
+      required this.buttonColor,
+      required this.buttonTxtColor,
+      required this.buttonBorderColor,
+      required this.buttonTextWeight,
+      required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +146,9 @@ class UpcomingDuesContainer extends StatelessWidget {
                   ],
                 ),
                 MyAppButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      onPressed();
+                    },
                     buttonText: buttonText,
                     buttonTxtColor: buttonTxtColor,
                     buttonBorderColor: buttonBorderColor,

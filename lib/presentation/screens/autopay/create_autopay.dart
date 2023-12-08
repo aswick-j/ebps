@@ -496,6 +496,7 @@ class _createAutopayState extends State<createAutopay> {
                         padding: EdgeInsets.only(
                             left: 18.0.w, right: 18.w, top: 18.w, bottom: 18.w),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               "Select Payment Account",
@@ -507,7 +508,8 @@ class _createAutopayState extends State<createAutopay> {
                               textAlign: TextAlign.center,
                             ),
                             IconButton(
-                              icon: const Icon(Icons.refresh),
+                              icon:
+                                  const Icon(Icons.refresh, color: Colors.grey),
                               onPressed: () {
                                 BlocProvider.of<HomeCubit>(context)
                                     .getAccountInfo(myAccounts);
@@ -519,8 +521,8 @@ class _createAutopayState extends State<createAutopay> {
                       if (isAccLoading)
                         Center(
                           child: Container(
-                            height: 200,
-                            width: 200,
+                            height: 200.h,
+                            width: 200.w,
                             child: FlickrLoader(),
                           ),
                         ),

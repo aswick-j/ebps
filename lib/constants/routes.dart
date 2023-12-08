@@ -18,6 +18,7 @@ import 'package:ebps/presentation/screens/complaints/register_complaint.dart';
 import 'package:ebps/presentation/screens/history/history_details.dart';
 import 'package:ebps/presentation/screens/history/history_screen.dart';
 import 'package:ebps/presentation/screens/home/all_bill_categories.dart';
+import 'package:ebps/presentation/screens/home/all_upcoming_dues.dart';
 import 'package:ebps/presentation/screens/home/search_screen.dart';
 // import 'package:ebps/presentation/screens/mpin/mpinScreen.dart';
 import 'package:ebps/presentation/screens/otp/otp_screen.dart';
@@ -47,6 +48,7 @@ const cOMPLAINTDETAILSROUTE = '/complaintDetail';
 const cOMPLAINTREGISTERROUTE = '/complaintRegisterRoute';
 const cREATEAUTOPAYROUTE = '/createAutopayRoute';
 const eDITAUTOPAYROUTE = '/editAutopayRoute';
+const uPCOMINGDUESROUTE = '/upcomingDuesRoute';
 
 /// The `MyRouter` class is responsible for generating routes and corresponding page widgets based on
 /// the provided route settings.
@@ -76,9 +78,32 @@ class MyRouter {
       case hOMEROUTE:
         return CupertinoPageRoute(
             fullscreenDialog: true,
-            builder: (_) => BlocProvider(
-                  create: (context) => HomeCubit(repository: apiClient),
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                        create: (_) => MybillersCubit(repository: apiClient)),
+                    BlocProvider(
+                        create: (_) => HomeCubit(repository: apiClient)),
+                  ],
                   child: BottomAppBar(),
+                ));
+
+      //UPCOMING DUES
+      case uPCOMINGDUESROUTE:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                        create: (_) => MybillersCubit(repository: apiClient)),
+                    BlocProvider(
+                        create: (_) => HomeCubit(repository: apiClient)),
+                  ],
+                  child: AllUpcomingDues(
+                      allUpcomingDues: args["allUpcomingDues"],
+                      SavedBiller: args["savedBiller"]),
                 ));
       //ALL CATEGORIES PAGE ROUTE
 
@@ -137,7 +162,9 @@ class MyRouter {
                     categoryName: args['categoryName'],
                     isSavedBill: args["isSavedBill"],
                     billerData: args['billerData'],
+                    savedBillersData: args['savedBillersData'],
                     inputParameters: args['inputParameters'],
+                    SavedinputParameters: args['SavedinputParameters'],
                   ),
                 ));
 

@@ -225,7 +225,8 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                         keyboardType: TextInputType.text,
                         onChanged: (val) {},
                         onTap: () async {
-                          DateTime? pickedDate = await DatePicker(context);
+                          DateTime? pickedDate = await DatePicker(
+                              context, fromdateController.text);
                           if (pickedDate != null) {
                             String formattedDate =
                                 DateFormat('dd-MM-yyyy').format(pickedDate);
@@ -264,7 +265,8 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                         onChanged: (val) {},
                         onTap: () async {
                           if (fromdateController.text.isNotEmpty) {
-                            DateTime? pickedDate = await DatePicker(context);
+                            DateTime? pickedDate = await DatePicker(
+                                context, fromdateController.text);
                             if (pickedDate != null) {
                               String formattedDate =
                                   DateFormat('dd-MM-yyyy').format(pickedDate);
@@ -310,7 +312,119 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                         enableSuggestions: false,
                         keyboardType: TextInputType.text,
                         onChanged: (val) {},
-                        onTap: () {},
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(16.0.r),
+                                ),
+                              ),
+                              builder: (context) {
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 15.h,
+                                          bottom: 15.h,
+                                          left: 15.w,
+                                          right: 15.w),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.menu_outlined,
+                                            color: Color(0xff1b438b),
+                                          ),
+                                          SizedBox(width: 20.w),
+                                          Text(
+                                            "Selcet Categories",
+                                            style: TextStyle(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xff1b438b),
+                                            ),
+                                            textAlign: TextAlign.left,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.5),
+                                              spreadRadius: 0.6,
+                                              blurRadius: 4,
+                                              offset: Offset(0, 2)),
+                                        ],
+                                      ),
+                                      child: Divider(
+                                        height: 1.h,
+                                        thickness: 1,
+                                        color: Colors.grey.withOpacity(0.1),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Container(
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        shrinkWrap: true,
+                                        itemCount: 8,
+                                        physics: const BouncingScrollPhysics(),
+                                        // controller: infiniteScrollController,
+                                        itemBuilder: (context, index) {
+                                          return GestureDetector(
+                                              onTap: () {},
+                                              child: Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 16.w,
+                                                    vertical: 2.h),
+                                                child: Text("Mobile Postpaid"),
+                                              ));
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 0.h,
+                                          bottom: 16.h,
+                                          left: 16.w,
+                                          right: 16.w),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Expanded(
+                                            child: MyAppButton(
+                                                onPressed: () {
+                                                  goBack(context);
+                                                },
+                                                buttonText: "Cancel",
+                                                buttonTxtColor: CLR_PRIMARY,
+                                                buttonBorderColor:
+                                                    Colors.transparent,
+                                                buttonColor: BTN_CLR_ACTIVE,
+                                                buttonSizeX: 10.h,
+                                                buttonSizeY: 40.w,
+                                                buttonTextSize: 14.sp,
+                                                buttonTextWeight:
+                                                    FontWeight.w500),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                  ],
+                                );
+                              });
+                        },
                         validator: (inputValue) {},
                         decoration: InputDecoration(
                             fillColor: const Color(0xffD1D9E8).withOpacity(0.2),

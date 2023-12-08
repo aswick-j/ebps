@@ -317,7 +317,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                           textAlign: TextAlign.center,
                         ),
                         IconButton(
-                          icon: const Icon(Icons.refresh),
+                          icon: const Icon(Icons.refresh, color: Colors.grey),
                           onPressed: () {
                             BlocProvider.of<HomeCubit>(context)
                                 .getAccountInfo(myAccounts);

@@ -17,6 +17,8 @@ class MainContainer extends StatelessWidget {
   final Color buttonTxtColor;
   final FontWeight buttonTextWeight;
   final Color? buttonBorderColor;
+  final VoidCallback onPressed;
+
   const MainContainer({
     required this.titleText,
     required this.subtitleText,
@@ -30,6 +32,7 @@ class MainContainer extends StatelessWidget {
     required this.buttonTxtColor,
     required this.buttonBorderColor,
     required this.buttonTextWeight,
+    required this.onPressed,
   });
 
   @override
@@ -138,7 +141,9 @@ class MainContainer extends StatelessWidget {
                 Row(
                   children: [
                     MyAppButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          onPressed();
+                        },
                         buttonText: buttonText,
                         buttonTxtColor: buttonTxtColor,
                         buttonBorderColor: buttonBorderColor,

@@ -469,4 +469,56 @@ class ApiClient implements Repository {
       return decodedResponse;
     } catch (e) {}
   }
+
+  //GET ALL UPCOMING DUES
+
+  @override
+  Future getAllUpcomingDues() async {
+    try {
+      var response = await api(
+          method: "get",
+          url: BASE_URL + GET_ALL_UPCOMING_URL,
+          token: true,
+          checkSum: false);
+      var decodedResponse = await jsonDecode(utf8.decode(response.bodyBytes));
+
+      return decodedResponse;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  //GET ALL AUTOPAY
+
+  @override
+  Future getAutoPay() async {
+    try {
+      var response = await api(
+          method: "get",
+          url: BASE_URL + GET_AUTOPAY_URL,
+          token: true,
+          checkSum: false);
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+
+      return decodedResponse;
+    } catch (e) {}
+  }
+
+  //GET ALL SAVED BILLERS
+
+  @override
+  Future getSavedBillers() async {
+    try {
+      var response = await api(
+        method: "get",
+        url: BASE_URL + GET_SAVED_BILLERS_URL,
+        token: true,
+        checkSum: false,
+      );
+      var decodedResponse = await jsonDecode(utf8.decode(response.bodyBytes));
+      return decodedResponse;
+    } catch (e) {
+      return {"status": 500, "message": "Request Timed Out", "data": "Error"};
+    }
+  }
 }
