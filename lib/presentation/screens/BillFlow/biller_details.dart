@@ -533,7 +533,10 @@ class _BillerDetailsState extends State<BillerDetails> {
                                       : widget.billerData!.bILLERNAME,
                                   "billName": widget.billName,
                                   "billerData": widget.billerData,
+                                  "savedBillersData": widget.savedBillersData,
                                   "inputParameters": widget.inputParameters,
+                                  "SavedinputParameters":
+                                      widget.SavedinputParameters,
                                   "categoryName": widget.isSavedBill
                                       ? widget.savedBillersData!.cATEGORYNAME
                                       : widget.billerData!.cATEGORYNAME,

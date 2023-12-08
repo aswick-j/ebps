@@ -5,6 +5,7 @@ import 'package:ebps/data/models/account_info_model.dart';
 import 'package:ebps/data/models/add_biller_model.dart';
 import 'package:ebps/data/models/billers_model.dart';
 import 'package:ebps/data/models/confirm_fetch_bill_model.dart';
+import 'package:ebps/data/models/saved_biller_model.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
@@ -27,8 +28,10 @@ class PaymentDetails extends StatefulWidget {
   String? categoryName;
   bool isSavedBill;
   BillersData? billerData;
+  SavedBillersData? savedBillersData;
   String? amount;
   List<AddbillerpayloadModel>? inputParameters;
+  List<PARAMETERS>? SavedinputParameters;
   Map<String, dynamic>? validateBill;
   Map<String, dynamic>? billerInputSign;
 
@@ -39,7 +42,9 @@ class PaymentDetails extends StatefulWidget {
       required this.isSavedBill,
       this.billName,
       this.billerData,
+      this.savedBillersData,
       this.inputParameters,
+      required this.SavedinputParameters,
       this.categoryName,
       this.amount,
       this.validateBill,
@@ -92,14 +97,14 @@ class _PaymentDetailsState extends State<PaymentDetails> {
         widget.validateBill!["billerType"] == "billFetch") {
       BlocProvider.of<HomeCubit>(context).confirmFetchBill(
         billerID: widget.isSavedBill
-            ? widget.billerData!.bILLERID
+            ? widget.savedBillersData!.bILLERID
             : widget.billerData!.bILLERID,
         quickPay: widget.validateBill!["quickPay"],
         quickPayAmount: widget.amount.toString(),
         adHocBillValidationRefKey: "",
         validateBill: widget.validateBill!["validateBill"],
         billerParams: widget.billerInputSign,
-        billName: widget.isSavedBill ? null : widget.billName,
+        billName: widget.billName,
       );
     }
   }
@@ -140,8 +145,10 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 "from": pAYMENTCONFIRMROUTE,
                 "templateName": "confirm-payment",
                 "data": {
-                  "billerID": widget.billerData!.bILLERID,
-                  "billerName": widget.billerData!.bILLERNAME,
+                  "billerID": widget.isSavedBill
+                      ? widget.savedBillersData!.bILLERID
+                      : widget.billerData!.bILLERID,
+                  "billerName": widget.billerName,
                   "billName": widget.billName,
                   "categoryName": widget.categoryName,
                   "acNo": accountInfo![selectedAcc].accountNumber,
@@ -150,9 +157,11 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                   "tnxRefKey": confirmbillerResData!.txnRefKey,
                   "quickPay": widget.validateBill!["quickPay"],
                   "inputSignature": widget.inputParameters,
+                  "SavedinputParameters": widget.SavedinputParameters,
                   "otherAmount": _otherAmount,
                   "autoPayStatus": '',
-                  "billerData": widget.billerData
+                  "billerData": widget.billerData,
+                  "savedBillersData": widget.savedBillersData
                 }
                 // goToData(context, mPINROUTE, {
                 //   "data": {
@@ -257,9 +266,17 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                 mainAxisSpacing: 10.h,
                                 children: [
                                   billerDetail(
-                                      widget.inputParameters![0].pARAMETERNAME,
-                                      widget.inputParameters![0].pARAMETERVALUE
-                                          .toString(),
+                                      widget.isSavedBill
+                                          ? widget.SavedinputParameters![0]
+                                              .pARAMETERNAME
+                                          : widget.inputParameters![0]
+                                              .pARAMETERNAME,
+                                      widget.isSavedBill
+                                          ? widget.SavedinputParameters![0]
+                                              .pARAMETERVALUE
+                                          : widget.inputParameters![0]
+                                              .pARAMETERVALUE
+                                              .toString(),
                                       context),
                                   billerDetail("Bill Name",
                                       widget.billName.toString(), context),
