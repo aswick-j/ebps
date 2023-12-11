@@ -73,12 +73,15 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    MyAppText(
-                      data: "Jio Telecom Services",
-                      // data: widget.titleText,
-                      size: 14.0.sp,
-                      color: TXT_CLR_LITE,
-                      weight: FontWeight.w500,
+                    SizedBox(
+                      width: 150.w,
+                      child: MyAppText(
+                        // data: "Jio Telecom Services",
+                        data: widget.titleText,
+                        size: 14.0.sp,
+                        color: TXT_CLR_LITE,
+                        weight: FontWeight.w500,
+                      ),
                     ),
                     MyAppText(
                       data: widget.amount,

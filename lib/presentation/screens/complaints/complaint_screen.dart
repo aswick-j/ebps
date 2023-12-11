@@ -81,7 +81,7 @@ class _ComplaintListState extends State<ComplaintList> {
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       return ComplaintContainer(
-                        titleText: ComplaintList[index].cOMPLAINTID.toString(),
+                        titleText: ComplaintList[index].bILLERNAME.toString(),
                         subtitleText:
                             ComplaintList[index].cOMPLAINTID.toString(),
                         dateText: DateFormat('dd/MM/yyyy').format(
@@ -89,7 +89,7 @@ class _ComplaintListState extends State<ComplaintList> {
                                     ComplaintList[index].cREATEDON.toString())
                                 .toLocal()),
                         amount:
-                            "₹ ${NumberFormat('#,##,##0.00').format(double.parse(ComplaintList[index].iD.toString()))}",
+                            "₹ ${NumberFormat('#,##,##0.00').format(double.parse(ComplaintList[index].bILLAMOUNT.toString()))}",
                         statusText: ComplaintList[index].sTATUS,
                         complaintData: ComplaintList[index],
                         iconPath: 'packages/ebps/assets/icon/icon_jio.svg',

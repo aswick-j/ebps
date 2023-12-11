@@ -7,8 +7,10 @@ import 'package:ebps/data/services/api_client.dart';
 import 'package:ebps/helpers/capitalizeByWord.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Container/MyBillers/mybiller_container.dart';
+import 'package:ebps/presentation/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class BillerScreen extends StatefulWidget {
@@ -91,7 +93,6 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
             billerData.insert(0, tempBillerData[j]);
           }
         }
-        print(upcomingReversed);
 
         return billerData;
       } catch (e) {}
@@ -123,18 +124,28 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
             .where((items) => items.customerBillID == customerBILLID)
             .toList();
         return (find.isNotEmpty ? find[0].dueAmount : "");
-      } catch (e) {
-        print(e);
-      }
+      } catch (e) {}
     }
 
-    showAutopayButton(SavedBillersData savedBiller, dueAmount) {
+    showAutopayButtonContent(SavedBillersData savedBiller, dueAmount) {
       if (savedBiller.aUTOPAYID == null &&
           (savedBiller.lASTPAIDDATE != null) &&
           savedBiller.bILLERACCEPTSADHOC == "N") {
         return false;
       } else {
         return true;
+      }
+    }
+
+    showAutopayBtn(SavedBillersData savedBiller) {
+      if (((savedBiller.aUTOPAYID != null) ||
+          (savedBiller.aUTOPAYID == null &&
+              savedBiller.cUSTOMERBILLID != null &&
+              (savedBiller.lASTPAIDDATE != null) &&
+              savedBiller.bILLERACCEPTSADHOC == "N"))) {
+        return true;
+      } else {
+        return false;
       }
     }
 
@@ -225,56 +236,56 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                     // controller: infiniteScrollController,
                     itemBuilder: (context, index) {
                       return MyBillersContainer(
-                        titleText:
-                            savedBillerData![index].bILLERNAME.toString(),
-                        subtitleText: savedBillerData![index]
-                            .pARAMETERVALUE
-                            .toString()
-                            .capitalizeByWord(),
-                        dateText: savedBillerData![index].cOMPLETIONDATE != null
-                            ? DateFormat('dd/MM/yyyy').format(DateTime.parse(
-                                    savedBillerData![index]
-                                        .cOMPLETIONDATE!
-                                        .toString()
-                                        .substring(0, 10))
-                                .toLocal()
-                                .add(const Duration(days: 1)))
-                            : "-",
-                        buttonText: showAutopayButton(
-                                savedBillerData![index],
-                                getDueAmount(
-                                    savedBillerData![index].cUSTOMERBILLID))
-                            ? 'Autopay Enabled'
-                            : "",
-                        amount: savedBillerData![index].bILLAMOUNT != null
-                            ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(savedBillerData![index].bILLAMOUNT!.toString()))}"
-                            : "-",
-                        iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
-                        upcomingText: getupcomingAutoPaymentList(
-                                    savedBillerData![index].cUSTOMERBILLID) !=
-                                ''
-                            ? 'Upcoming Autopay'
-                            : getUpcmoingDueData(savedBillerData![index]
-                                        .cUSTOMERBILLID) !=
-                                    ""
-                                ? "Upcoming Due"
-                                : "",
-                        upcomingTXT_CLR_DEFAULT: getupcomingAutoPaymentList(
-                                    savedBillerData![index].cUSTOMERBILLID) !=
-                                ''
-                            ? Color(0xff00AB44)
-                            : getUpcmoingDueData(savedBillerData![index]
-                                        .cUSTOMERBILLID) !=
-                                    ""
-                                ? CLR_ASTRIX
-                                : Colors.black,
-                        containerBorderColor: Color(0xffD1D9E8),
-                        buttonColor: Color.fromARGB(255, 255, 255, 255),
-                        buttonTxtColor: Color(0xff00AB44),
-                        buttonTextWeight: FontWeight.bold,
-                        buttonBorderColor: Color(0xff00AB44),
-                      );
+                          buttonText: showAutopayButtonContent(
+                                  savedBillerData![index],
+                                  getDueAmount(
+                                      savedBillerData![index].cUSTOMERBILLID))
+                              ? 'Autopay Enabled'
+                              : "Enable Autopay",
+                          iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
+                          upcomingText:
+                              getupcomingAutoPaymentList(savedBillerData![index].cUSTOMERBILLID) !=
+                                      ''
+                                  ? 'Upcoming Autopay'
+                                  : getUpcmoingDueData(savedBillerData![index].cUSTOMERBILLID) !=
+                                          ""
+                                      ? "Upcoming Due"
+                                      : "",
+                          upcomingTXT_CLR_DEFAULT:
+                              getupcomingAutoPaymentList(savedBillerData![index].cUSTOMERBILLID) !=
+                                      ''
+                                  ? Color(0xff00AB44)
+                                  : getUpcmoingDueData(savedBillerData![index].cUSTOMERBILLID) !=
+                                          ""
+                                      ? CLR_ASTRIX
+                                      : Colors.black,
+                          showButton: showAutopayBtn(savedBillerData![index]),
+                          containerBorderColor: Color(0xffD1D9E8),
+                          buttonColor: Color.fromARGB(255, 255, 255, 255),
+                          buttonTxtColor:
+                              showAutopayButtonContent(savedBillerData![index], getDueAmount(savedBillerData![index].cUSTOMERBILLID))
+                                  ? Color(0xff00AB44)
+                                  : Color(0xff768eb9),
+                          buttonTextWeight: FontWeight.bold,
+                          buttonBorderColor: showAutopayButtonContent(
+                                  savedBillerData![index],
+                                  getDueAmount(savedBillerData![index].cUSTOMERBILLID))
+                              ? Color(0xff00AB44)
+                              : Color(0xff768eb9),
+                          SavedinputParameters: savedBillerData![index].pARAMETERS,
+                          savedBillersData: savedBillerData![index],
+                          allautoPaymentList: allautoPaymentList);
                     },
+                  ),
+                if (isUpcomingDuesLoading ||
+                    isUpcomingAutopaymentLoading ||
+                    isSavedBillerLoading)
+                  Center(
+                    child: Container(
+                      height: 200.h,
+                      width: 200.w,
+                      child: FlickrLoader(),
+                    ),
                   ),
                 // MyBillersContainer(
                 //   titleText: 'Johnny Depp - Jio Post',

@@ -99,8 +99,9 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                   children: [
                     BillerDetailsContainer(
                         icon: LOGO_BBPS,
-                        billerName: "biller Name",
-                        categoryName: "categoryName"),
+                        billerName: widget.complaintData.bILLERNAME.toString(),
+                        categoryName:
+                            widget.complaintData.cATEGORYNAME.toString()),
                     CmpDetails(
                         title: "Status",
                         subTitle: widget.complaintData.sTATUS.toString(),

@@ -35,15 +35,26 @@ class ComplaintsData {
   String? tRANSACTIONID;
   String? sTATUS;
   String? cOMPLAINTREASON;
+  dynamic bILLAMOUNT;
+  String? bILLERNAME;
+  String? cATEGORYNAME;
+  String? bILLNAME;
+  String? rEMARKS;
 
-  ComplaintsData(
-      {this.iD,
-      this.cOMPLAINTID,
-      this.dESCRIPTION,
-      this.cREATEDON,
-      this.tRANSACTIONID,
-      this.sTATUS,
-      this.cOMPLAINTREASON});
+  ComplaintsData({
+    this.iD,
+    this.cOMPLAINTID,
+    this.dESCRIPTION,
+    this.cREATEDON,
+    this.tRANSACTIONID,
+    this.sTATUS,
+    this.cOMPLAINTREASON,
+    this.bILLAMOUNT,
+    this.bILLERNAME,
+    this.cATEGORYNAME,
+    this.bILLNAME,
+    this.rEMARKS,
+  });
 
   ComplaintsData.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
@@ -52,6 +63,12 @@ class ComplaintsData {
     cREATEDON = json['CREATED_ON'];
     tRANSACTIONID = json['TRANSACTION_ID'];
     sTATUS = json['STATUS'];
+    bILLAMOUNT = json['BILL_AMOUNT'];
+    bILLERNAME = json['BILLER_NAME'];
+    cATEGORYNAME = json['CATEGORY_NAME'];
+    bILLNAME = json['BILL_NAME'];
+    rEMARKS = json['REMARKS'];
+
     cOMPLAINTREASON = json['COMPLAINT_REASON'];
   }
 
@@ -63,6 +80,12 @@ class ComplaintsData {
     data['CREATED_ON'] = this.cREATEDON;
     data['TRANSACTION_ID'] = this.tRANSACTIONID;
     data['STATUS'] = this.sTATUS;
+    data['BILL_AMOUNT'] = bILLAMOUNT;
+    data['CATEGORY_NAME'] = cATEGORYNAME;
+    data['BILL_NAME'] = bILLNAME;
+    data['REMARKS'] = rEMARKS;
+    data['BILLER_NAME'] = bILLERNAME;
+
     data['COMPLAINT_REASON'] = this.cOMPLAINTREASON;
     return data;
   }
