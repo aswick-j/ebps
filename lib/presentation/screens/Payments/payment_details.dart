@@ -8,6 +8,7 @@ import 'package:ebps/data/models/confirm_fetch_bill_model.dart';
 import 'package:ebps/data/models/saved_biller_model.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/helpers/logger.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/common/Container/Home/biller_details_container.dart';
@@ -161,7 +162,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                   "otherAmount": _otherAmount,
                   "autoPayStatus": '',
                   "billerData": widget.billerData,
-                  "savedBillersData": widget.savedBillersData
+                  "savedBillersData": widget.savedBillersData,
+                  "isSavedBill": widget.isSavedBill
                 }
                 // goToData(context, mPINROUTE, {
                 //   "data": {
@@ -191,12 +193,18 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
             if (state is ValidateBillLoading) {
               isValidateBillLoading = true;
+              LoaderOverlay.of(context).show();
             } else if (state is ValidateBillSuccess) {
+              logger.d("VALIDATE  API CALLING ===>");
+
               isValidateBillLoading = false;
+              LoaderOverlay.of(context).hide();
             } else if (state is ValidateBillFailed) {
               isValidateBillLoading = false;
+              LoaderOverlay.of(context).hide();
             } else if (state is ValidateBillError) {
               isValidateBillLoading = false;
+              LoaderOverlay.of(context).hide();
             }
           }, builder: (context, state) {
             return SingleChildScrollView(

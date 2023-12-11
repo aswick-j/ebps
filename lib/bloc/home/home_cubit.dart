@@ -283,14 +283,16 @@ class HomeCubit extends Cubit<HomeState> {
   //FETCH VAIDATE BIL
 
   void fetchValidateBill(dynamic payload) async {
-    debugPrint("validateBill payload ===>");
-
     if (isClosed) return;
 
     emit(ValidateBillLoading());
 
     try {
       final value = await repository!.validateBill(payload);
+
+      logger.d(value,
+          error:
+              "VALIDATE BILL API ERROR ===> lib/bloc/home/fetchValidateBill");
 
       if (value != null && !value.toString().contains("Invalid token")) {
         final status = value['status'];

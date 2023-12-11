@@ -145,10 +145,14 @@ class _OtpScreenState extends State<OtpScreen> {
           widget.data!['customerBillID'],
           widget.data!['tnxRefKey'],
           widget.data!['quickPay'],
-          widget.data!['inputSignature'],
+          widget.data!['isSavedBill']
+              ? widget.data!["SavedinputParameters"]
+              : widget.data!['inputSignature'],
           widget.data!['otherAmount'],
           false,
-          widget.data!['billerData'],
+          widget.data!['isSavedBill']
+              ? widget.data!['savedBillersData']
+              : widget.data!['billerData'],
           txtOtpController.text.toString());
     }
   }
@@ -240,9 +244,10 @@ class _OtpScreenState extends State<OtpScreen> {
                   "billName": widget.data!["billName"],
                   "billerName": widget.data!['billerName'],
                   "categoryName": widget.data!["categoryName"],
-                  "billerData": state.data,
+                  "billerData": state.data ?? widget.data!["billerData"],
                   "inputParameters": widget.data!['inputSignature'],
-                  "isSavedBill": state.data!['isSavedBill'],
+                  "SavedinputParameters": widget.data!["SavedinputParameters"],
+                  "isSavedBill": widget.data!['isSavedBill'],
                 });
               }
 
@@ -288,9 +293,10 @@ class _OtpScreenState extends State<OtpScreen> {
                   "billName": widget.data!["billName"],
                   "billerName": widget.data!['billerName'],
                   "categoryName": widget.data!["categoryName"],
-                  "billerData": state.data,
+                  "billerData": state.data ?? widget.data!["billerData"],
                   "inputParameters": widget.data!['inputSignature'],
-                  "isSavedBill": false,
+                  "SavedinputParameters": widget.data!["SavedinputParameters"],
+                  "isSavedBill": widget.data!['isSavedBill'],
                 });
               }
 

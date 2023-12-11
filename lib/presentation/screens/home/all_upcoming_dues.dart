@@ -33,6 +33,7 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             ListView.builder(
@@ -75,7 +76,7 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                           "billName": widget.allUpcomingDues[index]["billName"],
                           "savedBillersData": savedBillersData,
                           "SavedinputParameters": savedBillersData.pARAMETERS,
-                          "categoryName": "999",
+                          "categoryName": savedBillersData.cATEGORYNAME,
                           "isSavedBill": true,
                         });
                       }

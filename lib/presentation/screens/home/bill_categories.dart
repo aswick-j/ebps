@@ -1,6 +1,7 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/data/models/categories_model.dart';
 import 'package:ebps/data/services/api_client.dart';
+import 'package:ebps/helpers/getBillerCategory.dart';
 import 'package:ebps/presentation/common/Container/Home/categories_container.dart';
 import 'package:ebps/presentation/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class BillerCategoriesUI extends StatefulWidget {
 class _BillerCategoriesUIState extends State<BillerCategoriesUI> {
   //Storing the categories Data
   List<CategorieData>? categoriesData = [];
+  List<CategorieData> MoreCategories = [];
 
   //Category Loading
 
@@ -54,7 +56,12 @@ class _BillerCategoriesUIState extends State<BillerCategoriesUI> {
           isCategoryLoading = true;
         } else if (state is CategoriesSuccess) {
           categoriesData = state.CategoriesList;
-
+          if (categoriesData != null) {
+            MoreCategories = categoriesData!
+                .where((item) => ExcludedCategories.every(
+                    (value) => !item.cATEGORYNAME!.contains(value)))
+                .toList();
+          }
           isCategoryLoading = false;
         } else if (state is CategoriesFailed) {
           isCategoryLoading = false;
@@ -74,8 +81,8 @@ class _BillerCategoriesUIState extends State<BillerCategoriesUI> {
                   ),
                   CategoriesContainer(
                     headerName: "More Services",
-                    categoriesCount: 4,
-                    categoriesData: categoriesData,
+                    categoriesCount: MoreCategories.length,
+                    categoriesData: MoreCategories,
                   ),
                 ],
               )

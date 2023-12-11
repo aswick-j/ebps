@@ -22,9 +22,9 @@ class MybillersCubit extends Cubit<MybillersState> {
     try {
       final value = await repository!.getAutoPayMaxAmount();
 
-      logger.d(value,
-          error:
-              "AUTOPAY MAX AMOUNT API RESPONSE ===> lib/bloc/mybillers/getAutoPayMaxAmount");
+      // logger.d(value,
+      //     error:
+      //         "AUTOPAY MAX AMOUNT API RESPONSE ===> lib/bloc/mybillers/getAutoPayMaxAmount");
       if (value != null) {
         if (!value.toString().contains("Invalid token")) {
           if (value['status'] == 200) {

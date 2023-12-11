@@ -79,24 +79,15 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
           InkWell(
               onTap: () => {goTo(context, cOMPLAINTLISTROUTE)},
               child: Container(
-                  margin: EdgeInsets.only(top: 20.h, bottom: 20.h, right: 15.w),
-                  width: 30.w,
+                  margin: EdgeInsets.only(right: 15.w),
                   decoration: ShapeDecoration(
                     color: Color(0xff4969A2),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100.0),
-                    ),
+                    shape: CircleBorder(),
                   ),
                   child: Container(
-                    width: 20.w,
-                    height: 40.h,
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0.r),
-                      child: Icon(
-                        Icons.comment,
-                        color: Colors.white,
-                      ),
-                    ),
+                    width: 30.w,
+                    height: 30.h,
+                    child: Icon(Icons.comment, color: Colors.white, size: 15.r),
                   )))
         ],
       ),
@@ -116,42 +107,45 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
               child: Column(
             children: [
               !isHistoryLoading
-                  ? Container(
-                      height: 550.h,
-                      child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: historyData!.length,
-                        physics: const BouncingScrollPhysics(),
-                        // controller: infiniteScrollController,
-                        itemBuilder: (context, index) {
-                          return HistoryContainer(
-                            historyData: historyData![index],
-                            titleText: 'Paid to',
-                            subtitleText:
-                                historyData![index].bILLERNAME.toString(),
-                            dateText: DateFormat('dd/MM/yyyy').format(
-                                DateTime.parse(historyData![index]
-                                        .cOMPLETIONDATE
-                                        .toString())
-                                    .toLocal()),
-                            amount:
-                                "₹ ${NumberFormat('#,##,##0.00').format(double.parse(historyData![index].bILLAMOUNT.toString()))}",
-                            // '₹ ${historyData![index].bILLAMOUNT.toString()}',
-                            statusText: historyData![index]
+                  ? historyData!.isNotEmpty
+                      ? Container(
+                          height: 550.h,
+                          child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: historyData!.length,
+                            physics: const BouncingScrollPhysics(),
+                            // controller: infiniteScrollController,
+                            itemBuilder: (context, index) {
+                              return HistoryContainer(
+                                historyData: historyData![index],
+                                titleText: 'Paid to',
+                                subtitleText:
+                                    historyData![index].bILLERNAME.toString(),
+                                dateText: DateFormat('dd/MM/yyyy').format(
+                                    DateTime.parse(historyData![index]
+                                            .cOMPLETIONDATE
+                                            .toString())
+                                        .toLocal()),
+                                amount:
+                                    "₹ ${NumberFormat('#,##,##0.00').format(double.parse(historyData![index].bILLAMOUNT.toString()))}",
+                                // '₹ ${historyData![index].bILLAMOUNT.toString()}',
+                                statusText: historyData![index]
+                                            .tRANSACTIONSTATUS
+                                            .toString() ==
+                                        'success'
+                                    ? null
+                                    : getTransactionStatus(historyData![index]
                                         .tRANSACTIONSTATUS
-                                        .toString() ==
-                                    'success'
-                                ? null
-                                : getTransactionStatus(historyData![index]
-                                    .tRANSACTIONSTATUS
-                                    .toString()),
-                            iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
-                            containerBorderColor: Color(0xffD1D9E8),
-                          );
-                        },
-                      ),
-                    )
+                                        .toString()),
+                                iconPath:
+                                    'packages/ebps/assets/icon/icon_jio.svg',
+                                containerBorderColor: Color(0xffD1D9E8),
+                              );
+                            },
+                          ),
+                        )
+                      : Center(child: Text("No Transactions Found"))
                   : Container(
                       height: 500,
                       width: double.infinity,

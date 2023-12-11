@@ -436,7 +436,7 @@ class MyBillersContainer extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  "₹ 589.00",
+                  amount,
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.bold,

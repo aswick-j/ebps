@@ -236,13 +236,13 @@ class MyRouter {
             builder: (_) => BlocProvider(
                   create: (context) => HomeCubit(repository: apiClient),
                   child: TransactionScreen(
-                    billName: args["billName"],
-                    billerName: args['billerName'],
-                    categoryName: args["categoryName"],
-                    isSavedBill: args["isSavedBill"],
-                    billerData: args['billerData'],
-                    inputParameters: args['inputParameters'],
-                  ),
+                      billName: args["billName"],
+                      billerName: args['billerName'],
+                      categoryName: args["categoryName"],
+                      isSavedBill: args["isSavedBill"],
+                      billerData: args['billerData'],
+                      inputParameters: args['inputParameters'],
+                      SavedinputParameters: args['SavedinputParameters']),
                 ));
       //SEARCH
 

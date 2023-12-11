@@ -1,4 +1,5 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
+import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/data/models/add_biller_model.dart';
@@ -127,7 +128,10 @@ class _BillerDetailsState extends State<BillerDetails> {
 
     BlocProvider.of<HomeCubit>(context).getPaymentInformation(
         widget.billerData?.bILLERID ?? widget.savedBillersData?.bILLERID);
-
+    // BlocProvider.of<MybillersCubit>(context).getAddUpdateUpcomingDue(
+    //     customerBillID: widget.isSavedBill
+    //         ? widget.savedBillersData!.cUSTOMERBILLID
+    //         : _customerBIllID);
     super.initState();
   }
 
@@ -385,12 +389,15 @@ class _BillerDetailsState extends State<BillerDetails> {
                                   onFieldSubmitted: (_) {},
                                   onChanged: (val) {
                                     setState(() {
-                                      PaymentExactErrMsg = checkIsExact(
-                                          double.parse(val.toString()),
-                                          double.parse(_billerResponseData!
-                                              .amount
-                                              .toString()),
-                                          widget.billerData!.pAYMENTEXACTNESS);
+                                      if (validateBill!["fetchBill"]) {
+                                        PaymentExactErrMsg = checkIsExact(
+                                            double.parse(val.toString()),
+                                            double.parse(_billerResponseData!
+                                                .amount
+                                                .toString()),
+                                            widget
+                                                .billerData!.pAYMENTEXACTNESS);
+                                      }
                                     });
 
                                     if (txtAmountController.text.isNotEmpty) {

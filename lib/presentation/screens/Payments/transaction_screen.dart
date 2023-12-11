@@ -15,14 +15,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:ebps/data/models/saved_biller_model.dart';
 
 class TransactionScreen extends StatefulWidget {
-  bool? isSavedBill;
-  Map<String, dynamic> billerData;
+  bool isSavedBill;
+  Map<String, dynamic>? billerData;
   String billName;
   String categoryName;
   String billerName;
-  List<AddbillerpayloadModel> inputParameters;
+  List<AddbillerpayloadModel>? inputParameters;
+  List<PARAMETERS>? SavedinputParameters;
   TransactionScreen(
       {super.key,
       required this.billName,
@@ -30,7 +32,8 @@ class TransactionScreen extends StatefulWidget {
       required this.categoryName,
       required this.isSavedBill,
       required this.billerData,
-      required this.inputParameters});
+      required this.inputParameters,
+      required this.SavedinputParameters});
 
   @override
   State<TransactionScreen> createState() => _TransactionScreenState();
@@ -40,6 +43,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   confirmDoneData? tnxResponse;
   // var billData;
   BillersData? billerTypeData;
+  SavedBillersData? savedBillerTypeData;
 
   Map<String, dynamic>? paymentDetails;
   Map<String, dynamic>? billerTypeResult;
@@ -47,14 +51,25 @@ class _TransactionScreenState extends State<TransactionScreen> {
   @override
   void initState() {
     super.initState();
-    tnxResponse = confirmDoneData.fromJson(widget.billerData['res']);
+    tnxResponse = confirmDoneData.fromJson(widget.billerData!['res']);
     // billData = jsonDecode(tnxResponse!.paymentDetails!.tran!.bill.toString());
-    billerTypeData = widget.billerData['billerData'];
-    billerTypeResult = getBillerType(
-        billerTypeData!.fETCHREQUIREMENT,
-        billerTypeData!.bILLERACCEPTSADHOC,
-        billerTypeData!.sUPPORTBILLVALIDATION,
-        billerTypeData!.pAYMENTEXACTNESS);
+
+    if (widget.isSavedBill) {
+      savedBillerTypeData = widget.billerData!['billerData'];
+      billerTypeResult = getBillerType(
+          savedBillerTypeData!.fETCHREQUIREMENT,
+          savedBillerTypeData!.bILLERACCEPTSADHOC,
+          savedBillerTypeData!.sUPPORTBILLVALIDATION,
+          savedBillerTypeData!.pAYMENTEXACTNESS);
+    } else {
+      billerTypeData = widget.billerData!['billerData'];
+      billerTypeResult = getBillerType(
+          billerTypeData!.fETCHREQUIREMENT,
+          billerTypeData!.bILLERACCEPTSADHOC,
+          billerTypeData!.sUPPORTBILLVALIDATION,
+          billerTypeData!.pAYMENTEXACTNESS);
+    }
+
     paymentDetails = getBillPaymentDetails(tnxResponse!.paymentDetails,
         billerTypeResult!['isAdhoc'], tnxResponse!.equitasTransactionId);
   }
@@ -113,7 +128,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
           context: context,
           title: 'Go to Home',
           onLeadingTap: () => {
-            goBack(context),
             goBack(context),
             goBack(context),
             goBack(context),
@@ -197,7 +211,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                     SvgPicture.asset(ICON_ARROW_UP,
                                         height: 20.h),
                                     Text(
-                                      "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData['billAmount']))}",
+                                      "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount']))}",
                                       style: TextStyle(
                                         fontSize: 20.sp,
                                         fontWeight: FontWeight.w600,
@@ -236,7 +250,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       TxnDetails(
                           title: "Sent From",
                           subTitle:
-                              'EQUITAS BANK - ${widget.billerData['acNo']}',
+                              'EQUITAS BANK - ${widget.billerData!['acNo']}',
                           clipBoard: false),
                       TxnDetails(
                           title: "Sent To",
@@ -252,7 +266,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       ),
                       TxnDetails(
                           title: "From Account",
-                          subTitle: widget.billerData['acNo'],
+                          subTitle: widget.billerData!['acNo'],
                           clipBoard: false),
                       TxnDetails(
                           title: "Bank Reference Number ",

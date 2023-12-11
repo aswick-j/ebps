@@ -23,26 +23,29 @@ class _HomeScreenState extends State<HomeScreen> {
         context: context,
         title: 'Bill Payment',
         actions: [
+          Icon(
+            Icons.notification_important_outlined,
+            color: CLR_SECONDARY,
+          ),
+          SizedBox(
+            width: 5.w,
+          ),
           InkWell(
               onTap: () => {goTo(context, sEARCHROUTE)},
               child: Container(
-                  margin: EdgeInsets.only(top: 20, bottom: 20, right: 15),
-                  width: 40,
+                  margin: EdgeInsets.only(right: 15.w),
+                  // width: 40.w,
+                  // height: 40.h,
                   decoration: ShapeDecoration(
                     color: CLR_SECONDARY,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100.0),
-                    ),
+                    shape: CircleBorder(),
                   ),
                   child: Container(
-                    width: 20,
-                    height: 40,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.search,
-                        color: Colors.white,
-                      ),
+                    width: 30.w,
+                    height: 30.h,
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.white,
                     ),
                   )))
         ],

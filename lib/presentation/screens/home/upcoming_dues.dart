@@ -199,54 +199,54 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
       ],
       child: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.only(
-                left: 18.0.w, right: 18.w, top: 10.h, bottom: 5.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Upcoming Dues',
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xff1b438b),
-                  ),
-                ),
-                if (!isUpcomingAutopaymentLoading ||
-                    !isUpcomingDuesLoading ||
-                    allUpcomingDues.length < 2)
-                  InkWell(
-                    onTap: () {
-                      goToData(context, uPCOMINGDUESROUTE, {
-                        "allUpcomingDues": allUpcomingDues,
-                        "savedBiller": SavedBiller
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        Text(
-                          'View All',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xff1b438b),
-                          ),
-                          textHeightBehavior: TextHeightBehavior(
-                              applyHeightToFirstAscent: false),
-                          textAlign: TextAlign.center,
-                          softWrap: false,
-                        ),
-                        Icon(Icons.arrow_forward, color: Color(0xff1b438b)),
-                      ],
+          if (!isUpcomingAutopaymentLoading || !isUpcomingDuesLoading)
+            if (allUpcomingDues.length > 1)
+              Padding(
+                padding: EdgeInsets.only(
+                    left: 18.0.w, right: 18.w, top: 10.h, bottom: 5.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Upcoming Dues',
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xff1b438b),
+                      ),
                     ),
-                  ),
-              ],
-            ),
-          ),
-          if (!isUpcomingAutopaymentLoading ||
-              !isUpcomingDuesLoading ||
-              allUpcomingDues.length > 0)
+                    if (!isUpcomingAutopaymentLoading || !isUpcomingDuesLoading)
+                      if (allUpcomingDues.length > 1)
+                        InkWell(
+                          onTap: () {
+                            goToData(context, uPCOMINGDUESROUTE, {
+                              "allUpcomingDues": allUpcomingDues,
+                              "savedBiller": SavedBiller
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                'View All',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xff1b438b),
+                                ),
+                                textHeightBehavior: TextHeightBehavior(
+                                    applyHeightToFirstAscent: false),
+                                textAlign: TextAlign.center,
+                                softWrap: false,
+                              ),
+                              Icon(Icons.arrow_forward,
+                                  color: Color(0xff1b438b)),
+                            ],
+                          ),
+                        ),
+                  ],
+                ),
+              ),
+          if (allUpcomingDues.isNotEmpty)
             ListView.builder(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
@@ -288,8 +288,8 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                           "name": allUpcomingDues[index]["billerName"],
                           "billName": allUpcomingDues[index]["billName"],
                           "savedBillersData": savedBillersData,
-                          "inputParameters": null,
-                          "categoryName": "999",
+                          "SavedinputParameters": savedBillersData.pARAMETERS,
+                          "categoryName": savedBillersData.cATEGORYNAME,
                           "isSavedBill": true,
                         });
                       }
@@ -312,8 +312,8 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                             ? null
                             : Color(0xff00AB44),
                   );
-                })
-          else
+                }),
+          if (isUpcomingAutopaymentLoading || isUpcomingDuesLoading)
             Center(
               child: Container(
                 height: 200.h,
