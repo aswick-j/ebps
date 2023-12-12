@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:ebps/bloc/home/home_cubit.dart';
+import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/data/models/auto_schedule_pay_model.dart';
+import 'package:ebps/data/services/api.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
@@ -38,6 +40,7 @@ class _OtpScreenState extends State<OtpScreen> {
   final txtOtpController = TextEditingController();
   final focusNode = FocusNode();
   String? OTP_ERR_MSG;
+  String? customerID;
   bool isLoading = true;
   String? REF_NO = '';
   String? OTP_MSG = '';
@@ -57,12 +60,17 @@ class _OtpScreenState extends State<OtpScreen> {
       BlocProvider.of<HomeCubit>(context).generateOtp(
           templateName: widget.templateName,
           billerName: widget.data!['billAmount']);
+    } else if (widget.from == "delete-biller") {
+      BlocProvider.of<HomeCubit>(context).generateOtp(
+          templateName: widget.templateName,
+          billerName: widget.data!['billerName']);
     }
   }
 
   @override
   void initState() {
     handleIntial();
+    getCustomerID();
     super.initState();
   }
 
@@ -117,8 +125,11 @@ class _OtpScreenState extends State<OtpScreen> {
         BlocProvider.of<HomeCubit>(context).generateOtp(
             templateName: widget.templateName,
             billerName: widget.data!['billAmount']);
+      } else if (widget.from == "delete-biller") {
+        BlocProvider.of<HomeCubit>(context).generateOtp(
+            templateName: widget.templateName,
+            billerName: widget.data!['billerName']);
       }
-      //other code here
 
       if (mounted) {
         setState(() {
@@ -128,6 +139,13 @@ class _OtpScreenState extends State<OtpScreen> {
         });
       }
     } catch (e) {}
+  }
+
+  getCustomerID() async {
+    Map<String, dynamic> decodedToken = await getDecodedToken();
+    setState(() {
+      customerID = decodedToken['customerID'];
+    });
   }
 
   handleOTPSuccess() {
@@ -153,6 +171,11 @@ class _OtpScreenState extends State<OtpScreen> {
           widget.data!['isSavedBill']
               ? widget.data!['savedBillersData']
               : widget.data!['billerData'],
+          txtOtpController.text.toString());
+    } else if (widget.from == "delete-biller") {
+      BlocProvider.of<HomeCubit>(context).deleteBiller(
+          widget.data!['cUSTOMERBILLID'],
+          customerID!,
           txtOtpController.text.toString());
     }
   }
@@ -337,6 +360,82 @@ class _OtpScreenState extends State<OtpScreen> {
                 },
               );
             } else if (state is PayBillError) {}
+
+            if (state is deleteBillerLoading) {
+              LoaderOverlay.of(context).show();
+            } else if (state is deleteBillerSuccess) {
+              LoaderOverlay.of(context).hide();
+
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: AnimatedDialog(
+                      title: "Your Biller Has Been Deleted Successfully.",
+                      subTitle: "",
+                      child: Icon(
+                        Icons.check,
+                        color: Colors.white,
+                      ),
+                    ),
+                    actions: <Widget>[
+                      Align(
+                        alignment: Alignment.center,
+                        child: MyAppButton(
+                            onPressed: () {
+                              goBack(context);
+                            },
+                            buttonText: "Okay",
+                            buttonTxtColor: BTN_CLR_ACTIVE,
+                            buttonBorderColor: Colors.transparent,
+                            buttonColor: CLR_PRIMARY,
+                            buttonSizeX: 10,
+                            buttonSizeY: 40,
+                            buttonTextSize: 14,
+                            buttonTextWeight: FontWeight.w500),
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else if (state is deleteBillerFailed) {
+              LoaderOverlay.of(context).hide();
+
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: AnimatedDialog(
+                      title: "Your Biller Has Been Deleted Successfully.",
+                      subTitle: "",
+                      child: Icon(
+                        Icons.check,
+                        color: Colors.white,
+                      ),
+                    ),
+                    actions: <Widget>[
+                      Align(
+                        alignment: Alignment.center,
+                        child: MyAppButton(
+                            onPressed: () {
+                              goBack(context);
+                            },
+                            buttonText: "Okay",
+                            buttonTxtColor: BTN_CLR_ACTIVE,
+                            buttonBorderColor: Colors.transparent,
+                            buttonColor: CLR_PRIMARY,
+                            buttonSizeX: 10,
+                            buttonSizeY: 40,
+                            buttonTextSize: 14,
+                            buttonTextWeight: FontWeight.w500),
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else if (state is deleteBillerError) {
+              LoaderOverlay.of(context).hide();
+            }
           },
           builder: (context, state) {
             return SingleChildScrollView(

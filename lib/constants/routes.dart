@@ -20,6 +20,7 @@ import 'package:ebps/presentation/screens/history/history_screen.dart';
 import 'package:ebps/presentation/screens/home/all_bill_categories.dart';
 import 'package:ebps/presentation/screens/home/all_upcoming_dues.dart';
 import 'package:ebps/presentation/screens/home/search_screen.dart';
+import 'package:ebps/presentation/screens/myBillers/edit_biller.dart';
 // import 'package:ebps/presentation/screens/mpin/mpinScreen.dart';
 import 'package:ebps/presentation/screens/otp/otp_screen.dart';
 import 'package:ebps/presentation/screens/session_expired.dart';
@@ -48,6 +49,7 @@ const cOMPLAINTDETAILSROUTE = '/complaintDetail';
 const cOMPLAINTREGISTERROUTE = '/complaintRegisterRoute';
 const cREATEAUTOPAYROUTE = '/createAutopayRoute';
 const eDITAUTOPAYROUTE = '/editAutopayRoute';
+const eDITBILLERROUTE = '/editBillerRoute';
 const uPCOMINGDUESROUTE = '/upcomingDuesRoute';
 
 /// The `MyRouter` class is responsible for generating routes and corresponding page widgets based on
@@ -317,7 +319,7 @@ class MyRouter {
 
 //CREATE AUTOPAY
       case cREATEAUTOPAYROUTE:
-        // final args = settings.arguments as Map<String, dynamic>;
+        final args = settings.arguments as Map<String, dynamic>;
 
         return CupertinoPageRoute(
             fullscreenDialog: true,
@@ -328,7 +330,12 @@ class MyRouter {
                     BlocProvider(
                         create: (_) => HomeCubit(repository: apiClient)),
                   ],
-                  child: createAutopay(),
+                  child: createAutopay(
+                    billerName: args["billerName"],
+                    categoryName: args["categoryName"],
+                    billName: args["billName"],
+                    savedInputSignatures: args["savedInputSignatures"],
+                  ),
                 ));
 
 //EDIT AUTOPAY
@@ -348,6 +355,17 @@ class MyRouter {
                   child: editAutopay(),
                 ));
 
+      //EDIT BILLER
+
+      case eDITBILLERROUTE:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => BlocProvider(
+                  create: (context) => ComplaintCubit(repository: apiClient),
+                  child: EditBiller(savedbillersData: args["SavedBillersData"]),
+                ));
       default:
         return CupertinoPageRoute(
             fullscreenDialog: true,

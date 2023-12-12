@@ -1,13 +1,16 @@
 import 'package:ebps/bloc/MyBillers/mybillers_cubit.dart';
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/routes.dart';
 import 'package:ebps/data/models/account_info_model.dart';
+import 'package:ebps/data/models/saved_biller_model.dart';
 import 'package:ebps/helpers/getDaySuffix.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/getMonthName.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
+import 'package:ebps/presentation/common/Container/MyBillers/bill_details_container.dart';
 import 'package:ebps/presentation/widget/bbps_logo.dart';
 import 'package:ebps/presentation/widget/date_picker_dialog.dart';
 import 'package:ebps/presentation/widget/flickr_loader.dart';
@@ -21,7 +24,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class createAutopay extends StatefulWidget {
-  const createAutopay({super.key});
+  String billerName;
+  String categoryName;
+  String billName;
+  List<PARAMETERS>? savedInputSignatures;
+
+  createAutopay(
+      {super.key,
+      required this.billerName,
+      required this.categoryName,
+      required this.billName,
+      required this.savedInputSignatures});
 
   @override
   State<createAutopay> createState() => _createAutopayState();
@@ -55,42 +68,6 @@ class _createAutopayState extends State<createAutopay> {
     BlocProvider.of<HomeCubit>(context).getAccountInfo(myAccounts);
     BlocProvider.of<MybillersCubit>(context).getAutoPayMaxAmount();
     super.initState();
-  }
-
-  Widget billDetails({String title = "", String subTitle = ""}) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w400,
-              color: Color(0xff808080),
-              height: 23 / 14,
-            ),
-            textAlign: TextAlign.left,
-          ),
-          SizedBox(height: 5.h),
-          Row(
-            children: [
-              Text(
-                subTitle,
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xff1b438b),
-                ),
-                textAlign: TextAlign.left,
-              ),
-              SizedBox(width: 10.w),
-            ],
-          )
-        ],
-      ),
-    );
   }
 
   @override
@@ -188,8 +165,10 @@ class _createAutopayState extends State<createAutopay> {
                         indent: 10.w,
                         endIndent: 10.w,
                       ),
-                      billDetails(title: "Customer No", subTitle: "3445556666"),
-                      billDetails(title: "Biller Name", subTitle: "3445556666")
+                      billDetailsContainer(
+                          title: "Customer No", subTitle: "3445556666"),
+                      billDetailsContainer(
+                          title: "Biller Name", subTitle: "3445556666")
                     ],
                   )),
               Align(
@@ -599,7 +578,26 @@ class _createAutopayState extends State<createAutopay> {
                 ),
                 Expanded(
                   child: MyAppButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        goToData(context, oTPPAGEROUTE, {
+                          "from": "create-auto-pay",
+                          "templateName": "create-auto-pay",
+                          // "id": widget.billerName,
+                          // "data": {
+                          //   "accountNumber": accountIndex,
+                          //   "maximumAmount": txtMaxAmountController.text,
+                          //   "paymentDate": txtDateofPaymentController.text,
+                          //   "isBimonthly": isBimonthly,
+                          //   "activatesFrom": activatesFrom == "Immediately"
+                          //       ? null
+                          //       : activatesFrom.toLowerCase(),
+                          //   "isActive": activatesFrom == "Immediately" ? 1 : 0,
+                          //   "billID": widget.billID,
+                          //   "billerName": widget.billerName,
+                          //   "amountLimit": amountLimit
+                          // }
+                        });
+                      },
                       buttonText: "Create",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,

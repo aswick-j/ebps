@@ -1,16 +1,20 @@
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/data/models/auto_schedule_pay_model.dart';
 import 'package:ebps/data/models/saved_biller_model.dart';
 import 'package:ebps/data/models/upcoming_dues_model.dart';
 import 'package:ebps/data/services/api_client.dart';
 import 'package:ebps/helpers/capitalizeByWord.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
+import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/common/Container/MyBillers/mybiller_container.dart';
 import 'package:ebps/presentation/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class BillerScreen extends StatefulWidget {
@@ -127,9 +131,9 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
       } catch (e) {}
     }
 
-    showAutopayButtonContent(SavedBillersData savedBiller, dueAmount) {
+    showAutopayButtonContent(SavedBillersData savedBiller) {
       if (savedBiller.aUTOPAYID == null &&
-          (savedBiller.lASTPAIDDATE != null) &&
+          (savedBiller.tRANSACTIONSTATUS == "success") &&
           savedBiller.bILLERACCEPTSADHOC == "N") {
         return false;
       } else {
@@ -141,8 +145,11 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
       if (((savedBiller.aUTOPAYID != null) ||
           (savedBiller.aUTOPAYID == null &&
               savedBiller.cUSTOMERBILLID != null &&
-              (savedBiller.lASTPAIDDATE != null) &&
+              (savedBiller.tRANSACTIONSTATUS == "success") &&
               savedBiller.bILLERACCEPTSADHOC == "N"))) {
+        print("====");
+        print(savedBiller.bILLERNAME);
+
         return true;
       } else {
         return false;
@@ -237,42 +244,45 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                     itemBuilder: (context, index) {
                       return MyBillersContainer(
                           buttonText: showAutopayButtonContent(
-                                  savedBillerData![index],
-                                  getDueAmount(
-                                      savedBillerData![index].cUSTOMERBILLID))
+                            savedBillerData![index],
+                          )
                               ? 'Autopay Enabled'
                               : "Enable Autopay",
                           iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
-                          upcomingText:
-                              getupcomingAutoPaymentList(savedBillerData![index].cUSTOMERBILLID) !=
-                                      ''
-                                  ? 'Upcoming Autopay'
-                                  : getUpcmoingDueData(savedBillerData![index].cUSTOMERBILLID) !=
-                                          ""
-                                      ? "Upcoming Due"
-                                      : "",
-                          upcomingTXT_CLR_DEFAULT:
-                              getupcomingAutoPaymentList(savedBillerData![index].cUSTOMERBILLID) !=
-                                      ''
-                                  ? Color(0xff00AB44)
-                                  : getUpcmoingDueData(savedBillerData![index].cUSTOMERBILLID) !=
-                                          ""
-                                      ? CLR_ASTRIX
-                                      : Colors.black,
+                          upcomingText: getupcomingAutoPaymentList(
+                                      savedBillerData![index].cUSTOMERBILLID) !=
+                                  ''
+                              ? 'Upcoming Autopay'
+                              : getUpcmoingDueData(savedBillerData![index]
+                                          .cUSTOMERBILLID) !=
+                                      ""
+                                  ? "Upcoming Due"
+                                  : "",
+                          upcomingTXT_CLR_DEFAULT: getupcomingAutoPaymentList(
+                                      savedBillerData![index].cUSTOMERBILLID) !=
+                                  ''
+                              ? Color(0xff00AB44)
+                              : getUpcmoingDueData(savedBillerData![index]
+                                          .cUSTOMERBILLID) !=
+                                      ""
+                                  ? CLR_ASTRIX
+                                  : Colors.black,
                           showButton: showAutopayBtn(savedBillerData![index]),
                           containerBorderColor: Color(0xffD1D9E8),
                           buttonColor: Color.fromARGB(255, 255, 255, 255),
-                          buttonTxtColor:
-                              showAutopayButtonContent(savedBillerData![index], getDueAmount(savedBillerData![index].cUSTOMERBILLID))
-                                  ? Color(0xff00AB44)
-                                  : Color(0xff768eb9),
-                          buttonTextWeight: FontWeight.bold,
-                          buttonBorderColor: showAutopayButtonContent(
-                                  savedBillerData![index],
-                                  getDueAmount(savedBillerData![index].cUSTOMERBILLID))
+                          buttonTxtColor: showAutopayButtonContent(
+                            savedBillerData![index],
+                          )
                               ? Color(0xff00AB44)
                               : Color(0xff768eb9),
-                          SavedinputParameters: savedBillerData![index].pARAMETERS,
+                          buttonTextWeight: FontWeight.bold,
+                          buttonBorderColor: showAutopayButtonContent(
+                            savedBillerData![index],
+                          )
+                              ? Color(0xff00AB44)
+                              : Color(0xff768eb9),
+                          SavedinputParameters:
+                              savedBillerData![index].pARAMETERS,
                           savedBillersData: savedBillerData![index],
                           allautoPaymentList: allautoPaymentList);
                     },

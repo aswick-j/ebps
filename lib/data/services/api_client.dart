@@ -521,4 +521,87 @@ class ApiClient implements Repository {
       return {"status": 500, "message": "Request Timed Out", "data": "Error"};
     }
   }
+
+  //GET EDIT SAVED BILLER
+
+  @override
+  Future getEditSavedBillDetails(id) async {
+    try {
+      var response = await api(
+          method: "get",
+          url: BASE_URL + GET_EDIT_SAVED_URL + id.toString(),
+          token: true,
+          checkSum: false);
+
+      if (!response.body.toString().contains("<html>")) {
+        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+        return decodedResponse;
+      } else {
+        return {
+          "status": 500,
+          "message": "Something went wrong",
+          "data": "Error"
+        };
+      }
+    } catch (e) {
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
+  }
+
+  //UPDATE EDIT  BILLER
+
+  @override
+  Future updateBillDetails(dynamic updateBillPayload) async {
+    try {
+      Map<String, dynamic> body = updateBillPayload;
+
+      var response = await api(
+          method: "put",
+          url: BASE_URL + UPDATE_BILL_URL,
+          body: body,
+          token: true,
+          checkSum: false);
+
+      if (!response.body.toString().contains("<html>")) {
+        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+        return decodedResponse;
+      } else {
+        return {
+          "status": 500,
+          "message": "Something went wrong",
+          "data": "Error"
+        };
+      }
+    } catch (e) {
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
+  }
+
+  @override
+  Future deleteBiller(cid, cusId, otp) async {
+    try {
+      Map<String, dynamic> body = {
+        "customerBillId": cid,
+        "customerId": cusId,
+        "otp": otp
+      };
+      var response = await api(
+          method: "post",
+          url: BASE_URL + DELETE_BILLER_URL,
+          body: body,
+          token: true,
+          checkSum: false);
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+
+      return decodedResponse;
+    } catch (e) {}
+  }
 }

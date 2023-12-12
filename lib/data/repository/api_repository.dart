@@ -77,4 +77,15 @@ abstract class Repository {
   //GET ALL SAVED BILLERS
 
   Future getSavedBillers() async {}
+
+  //GET EDIT SAVED BILLER
+
+  Future getEditSavedBillDetails(id) async {}
+
+  //UPDATE EDIT BILLER
+
+  Future updateBillDetails(payload) async {}
+
+  //DELETE BILLER
+  Future deleteBiller(customerBillID, customerID, otp) async {}
 }

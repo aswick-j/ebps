@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:ebps/data/models/auto_schedule_pay_model.dart';
+import 'package:ebps/data/models/edit_bill_modal.dart';
 import 'package:ebps/data/models/fetch_auto_pay_max_amount_model.dart';
 import 'package:ebps/data/models/saved_biller_model.dart';
 import 'package:ebps/data/models/upcoming_dues_model.dart';
+import 'package:ebps/data/models/update_bill_model.dart';
 import 'package:ebps/data/repository/api_repository.dart';
 import 'package:ebps/helpers/logger.dart';
 import 'package:meta/meta.dart';
@@ -61,9 +63,9 @@ class MybillersCubit extends Cubit<MybillersState> {
     try {
       final value = await repository!.getAllUpcomingDues();
 
-      logger.d(value,
-          error:
-              "GET ALL UPCOMING DUES API RESPONSE ===> lib/bloc/mybillers/getAllUpcomingDues");
+      // logger.d(value,
+      //     error:
+      //         "GET ALL UPCOMING DUES API RESPONSE ===> lib/bloc/mybillers/getAllUpcomingDues");
 
       if (value != null) {
         if (!value.toString().contains("Invalid token")) {
@@ -104,9 +106,9 @@ class MybillersCubit extends Cubit<MybillersState> {
     try {
       final value = await repository!.getAutoPay();
 
-      logger.d(value,
-          error:
-              "GET ALL AUTOPAY API RESPONSE ===> lib/bloc/mybillers/getAutopay");
+      // logger.d(value,
+      //     error:
+      //         "GET ALL AUTOPAY API RESPONSE ===> lib/bloc/mybillers/getAutopay");
 
       if (value != null) {
         if (!value.toString().contains("Invalid token")) {
@@ -142,9 +144,9 @@ class MybillersCubit extends Cubit<MybillersState> {
     }
     try {
       final value = await repository!.getSavedBillers();
-      logger.d(value,
-          error:
-              "GET ALL SAVED BILLER API RESPONSE ===> lib/bloc/mybillers/getSavedBillers");
+      // logger.d(value,
+      //     error:
+      //         "GET ALL SAVED BILLER API RESPONSE ===> lib/bloc/mybillers/getSavedBillers");
 
       if (value != null) {
         if (!value.toString().contains("Invalid token")) {
@@ -173,6 +175,79 @@ class MybillersCubit extends Cubit<MybillersState> {
 
         if (!isClosed) {
           emit(SavedBillersFailed(message: value['message']));
+        }
+      }
+    } catch (e) {}
+  }
+
+  //GET EDIT  BILLER INPUT ITEMS
+  void getEditBillItems(billID) async {
+    if (!isClosed) {
+      emit(EditBillLoading());
+    }
+    try {
+      final value = await repository!.getEditSavedBillDetails(billID);
+      logger.d(value,
+          error:
+              "GET EDIT SAVED BILLER API RESPONSE ===> lib/bloc/mybillers/getEditBillItems");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            EditbillModel InputDetails = EditbillModel.fromJson(value);
+            if (!isClosed) {
+              emit(EditBillSuccess(EditBillList: InputDetails.data));
+            }
+          } else {
+            if (!isClosed) {
+              emit(EditBillFailed(message: value['message']));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(EditBillError(message: value['message']));
+          }
+        }
+      } else {
+        if (!isClosed) {
+          emit(EditBillFailed(message: value['message']));
+        }
+      }
+    } catch (e) {}
+  }
+
+  //UPDATE EDIT BILLER
+
+  void updateBill(payload) async {
+    if (!isClosed) {
+      emit(UpdateBillLoading());
+    }
+    try {
+      final value = await repository!.updateBillDetails(payload);
+      logger.d(value,
+          error:
+              "UPDATE EDIT  BILLER API RESPONSE ===> lib/bloc/mybillers/updateBill");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            UpdateBillModel UpdateBillDetails = UpdateBillModel.fromJson(value);
+            if (!isClosed) {
+              emit(UpdateBillSuccess(UpdateBillDetails: UpdateBillDetails));
+            }
+          } else {
+            if (!isClosed) {
+              emit(UpdateBillFailed(message: value['message']));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(UpdateBillError(message: value['message']));
+          }
+        }
+      } else {
+        if (!isClosed) {
+          emit(UpdateBillFailed(message: value['message']));
         }
       }
     } catch (e) {}

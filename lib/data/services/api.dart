@@ -57,6 +57,15 @@ validateJWT() async {
   }
 }
 
+dynamic getDecodedToken() async {
+  var token = await getSharedValue(TOKEN);
+  final encodedPayload = token?.split('.')[1];
+  dynamic decodedToken =
+      utf8.fuse(base64).decode(base64.normalize(encodedPayload));
+
+  return jsonDecode(decodedToken);
+}
+
 api(
     {@required String? method,
     @required String? url,

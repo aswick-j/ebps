@@ -452,6 +452,40 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  //DELETE BILLER
+  void deleteBiller(String cusbillID, String customerId, String otp) async {
+    if (!isClosed) {
+      emit(deleteBillerLoading());
+    }
+    try {
+      final value = await repository!.deleteBiller(cusbillID, customerId, otp);
+      logger.d(value,
+          error: "DELETE BILLER API RESPONSE ===> lib/bloc/home/deleteBiller");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            if (!isClosed) {
+              emit(deleteBillerSuccess());
+            }
+          } else {
+            if (!isClosed) {
+              emit(deleteBillerFailed(message: value['message']));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(deleteBillerError(message: value['message']));
+          }
+        }
+      } else {
+        if (!isClosed) {
+          emit(deleteBillerFailed(message: value['message']));
+        }
+      }
+    } catch (e) {}
+  }
+
   //PAY-BILL
 
   void payBill(

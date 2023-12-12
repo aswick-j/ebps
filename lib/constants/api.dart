@@ -23,15 +23,17 @@ const String GET_ALL_UPCOMING_URL = "/billers/all-upcoming-dues/";
 const String GET_AUTOPAY_URL = "/auto-pay/";
 const String GET_SAVED_BILLERS_URL = "/billers/saved/";
 
+const String GET_EDIT_SAVED_URL = "/billers/get-saved-details/";
+const String UPDATE_BILL_URL = "/billers/update";
+const String DELETE_BILLER_URL = "/billers/delete/";
+
 const String redirectUrl = "/auth/redirect";
 const String transactionUrl = "/transactions/";
 
 const String upcomingDisableUrl = "/auto-pay/status/";
 const String removeAutoPayUrl = "/auto-pay/delete/";
-const String deletebillerUrl = "/billers/delete/";
 
 const String allLocation = "/billers/location";
-const String savedbilldetails = "/billers/get-saved-details/";
 const String statesDataUrl = "/billers/states-data/";
 
 const String amountByDateUrl = "/payment/amount-by-date/";
@@ -41,6 +43,5 @@ const String updateUpcomingDueUrl = "/billers/update-upcoming-dues";
 
 const String chartUrl = '/charts';
 const String addNewBillerUrl = "/billers/add-biller";
-const String updateBill = "/billers/update";
 const String bbpsSettings = "/user-services/bbps-settings";
 const String deleteUpcomingDueUrl = "/billers/upcoming-due/";

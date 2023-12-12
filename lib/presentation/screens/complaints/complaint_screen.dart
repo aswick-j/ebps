@@ -74,29 +74,33 @@ class _ComplaintListState extends State<ComplaintList> {
         child: Column(
           children: [
             !isComplaintDetailsLoading
-                ? ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: ComplaintList.length,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return ComplaintContainer(
-                        titleText: ComplaintList[index].bILLERNAME.toString(),
-                        subtitleText:
-                            ComplaintList[index].cOMPLAINTID.toString(),
-                        dateText: DateFormat('dd/MM/yyyy').format(
-                            DateTime.parse(
-                                    ComplaintList[index].cREATEDON.toString())
-                                .toLocal()),
-                        amount:
-                            "₹ ${NumberFormat('#,##,##0.00').format(double.parse(ComplaintList[index].bILLAMOUNT.toString()))}",
-                        statusText: ComplaintList[index].sTATUS,
-                        complaintData: ComplaintList[index],
-                        iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
-                        containerBorderColor: Color(0xffD1D9E8),
-                      );
-                    },
-                  )
+                ? ComplaintList.isNotEmpty
+                    ? ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: ComplaintList.length,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return ComplaintContainer(
+                            titleText:
+                                ComplaintList[index].bILLERNAME.toString(),
+                            subtitleText:
+                                ComplaintList[index].cOMPLAINTID.toString(),
+                            dateText: DateFormat('dd/MM/yyyy').format(
+                                DateTime.parse(ComplaintList[index]
+                                        .cREATEDON
+                                        .toString())
+                                    .toLocal()),
+                            amount:
+                                "₹ ${NumberFormat('#,##,##0.00').format(double.parse(ComplaintList[index].bILLAMOUNT.toString()))}",
+                            statusText: ComplaintList[index].sTATUS,
+                            complaintData: ComplaintList[index],
+                            iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
+                            containerBorderColor: Color(0xffD1D9E8),
+                          );
+                        },
+                      )
+                    : Center(child: Text("No Complaints Raised"))
                 : Container(
                     height: 500,
                     width: double.infinity,

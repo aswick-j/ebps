@@ -83,3 +83,41 @@ class SavedBillersError extends MybillersState {
   final String? message;
   SavedBillersError({@required this.message});
 }
+
+//GET EDIT BILLER SAVED
+
+class EditBillLoading extends MybillersState {}
+
+class EditBillSuccess extends MybillersState {
+  EditbillData? EditBillList;
+  EditBillSuccess({@required this.EditBillList});
+}
+
+class EditBillFailed extends MybillersState {
+  final String? message;
+  EditBillFailed({@required this.message});
+}
+
+class EditBillError extends MybillersState {
+  final String? message;
+  EditBillError({@required this.message});
+}
+
+//UPDATE EDIT  BILLER
+
+class UpdateBillLoading extends MybillersState {}
+
+class UpdateBillSuccess extends MybillersState {
+  UpdateBillModel? UpdateBillDetails;
+  UpdateBillSuccess({@required this.UpdateBillDetails});
+}
+
+class UpdateBillFailed extends MybillersState {
+  final String? message;
+  UpdateBillFailed({@required this.message});
+}
+
+class UpdateBillError extends MybillersState {
+  final String? message;
+  UpdateBillError({@required this.message});
+}

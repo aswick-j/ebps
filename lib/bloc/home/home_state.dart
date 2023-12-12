@@ -198,6 +198,30 @@ class OtpValidateError extends HomeState {
   OtpValidateError({@required this.message});
 }
 
+//DELETE-BILLER
+class deleteBillerLoading extends HomeState {}
+
+class deleteBillerSuccess extends HomeState {
+  final String? from;
+  Map<String, dynamic>? data;
+  final String? message;
+  deleteBillerSuccess(
+      {@required this.from, @required this.message, @required this.data});
+}
+
+class deleteBillerFailed extends HomeState {
+  final String? from;
+  final String? message;
+  Map<String, dynamic>? data;
+  deleteBillerFailed(
+      {@required this.from, @required this.message, @required this.data});
+}
+
+class deleteBillerError extends HomeState {
+  final String? message;
+  deleteBillerError({@required this.message});
+}
+
 //PAY-BILL
 
 class PayBillLoading extends HomeState {}
