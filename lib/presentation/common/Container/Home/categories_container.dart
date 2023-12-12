@@ -91,39 +91,38 @@ class CategoriesContainer extends StatelessWidget {
                               ),
                             ],
                           ))
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                goToData(context, bILLERLISTROUTE, {
-                                  "cATEGORY_ID": categoriesData![index].iD,
-                                  "cATEGORY_NAME":
-                                      categoriesData![index].cATEGORYNAME,
-                                });
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => BillerList()));
-                              },
-                              child: SvgPicture.asset(
+                      : InkWell(
+                          onTap: () {
+                            goToData(context, bILLERLISTROUTE, {
+                              "cATEGORY_ID": categoriesData![index].iD,
+                              "cATEGORY_NAME":
+                                  categoriesData![index].cATEGORYNAME,
+                            });
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
                                 height: 33.h,
                                 CATEGORY_ICON(
                                     categoriesData![index].cATEGORYNAME),
                               ),
-                            ),
-                            Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: Text(
-                                  categoriesData![index]
-                                      .cATEGORYNAME
-                                      .toString(),
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff4c4c4c),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                )),
-                          ],
+                              Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                  child: Text(
+                                    categoriesData![index]
+                                        .cATEGORYNAME
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff4c4c4c),
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  )),
+                            ],
+                          ),
                         );
                 }),
           ),
