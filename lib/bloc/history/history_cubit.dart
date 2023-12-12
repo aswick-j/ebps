@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:ebps/data/models/category_biller_filter_history._model.dart';
 import 'package:ebps/data/models/history_model.dart';
 import 'package:ebps/data/repository/api_repository.dart';
 import 'package:ebps/helpers/getDateValues.dart';
@@ -37,9 +38,9 @@ class HistoryCubit extends Cubit<HistoryState> {
     }
     try {
       final value = await repository!.getHistory(payload);
-      logger.d(value,
-          error:
-              "HISTORY API RESPONSE ===> lib/bloc/history/getHistoryDetails");
+      // logger.d(value,
+      //     error:
+      //         "HISTORY API RESPONSE ===> lib/bloc/history/getHistoryDetails");
       if (value != null) {
         if (!value.toString().contains("Invalid token")) {
           if (value['status'] == 200) {
@@ -60,6 +61,43 @@ class HistoryCubit extends Cubit<HistoryState> {
       } else {
         if (!isClosed) {
           emit(HistoryFailed(message: value['message']));
+        }
+      }
+    } catch (e) {}
+  }
+
+  void billerFilter(
+    String categoryID,
+  ) async {
+    if (!isClosed) {
+      emit(billerFilterLoading());
+    }
+    try {
+      final value = await repository!.getBillerHistoryFilter(categoryID);
+      logger.d(value,
+          error: " BILLER FILTER API RESPONSE ===> lib/bloc/home/billerFilter");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            CategoryBillerHistoryFilter? BilerFilter =
+                CategoryBillerHistoryFilter.fromJson(value);
+            if (!isClosed) {
+              emit(billerFilterSuccess(billerFilterData: BilerFilter.data));
+            }
+          } else {
+            if (!isClosed) {
+              emit(billerFilterFailed(message: value['message']));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(billerFilterError(message: value['message']));
+          }
+        }
+      } else {
+        if (!isClosed) {
+          emit(billerFilterFailed(message: value['message']));
         }
       }
     } catch (e) {}

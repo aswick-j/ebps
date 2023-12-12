@@ -1,4 +1,5 @@
 import 'package:ebps/bloc/splash/splash_cubit.dart';
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/logger.dart';
@@ -60,6 +61,10 @@ class _splashScreenState extends State<splashScreen> {
             height: double.infinity,
             width: double.infinity,
             decoration: BoxDecoration(
+              image: const DecorationImage(
+                image: AssetImage(SPLASH_BAG),
+                fit: BoxFit.fill,
+              ),
               borderRadius: BorderRadius.circular(2.0),
               gradient: LinearGradient(
                 begin: Alignment.topCenter,

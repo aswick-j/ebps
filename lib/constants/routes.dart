@@ -261,8 +261,13 @@ class MyRouter {
       case hISTORYROUTE:
         return CupertinoPageRoute(
             fullscreenDialog: true,
-            builder: (_) => BlocProvider(
-                  create: (context) => HistoryCubit(repository: apiClient),
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                        create: (_) => HistoryCubit(repository: apiClient)),
+                    BlocProvider(
+                        create: (_) => HomeCubit(repository: apiClient)),
+                  ],
                   child: HistoryScreen(),
                 ));
 

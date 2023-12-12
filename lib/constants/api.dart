@@ -26,6 +26,8 @@ const String GET_SAVED_BILLERS_URL = "/billers/saved/";
 const String GET_EDIT_SAVED_URL = "/billers/get-saved-details/";
 const String UPDATE_BILL_URL = "/billers/update";
 const String DELETE_BILLER_URL = "/billers/delete/";
+const String CATEGORY_BILLER_HISTORY_FILTER_URL =
+    "/transactions/getcategorybiller";
 
 const String redirectUrl = "/auth/redirect";
 const String transactionUrl = "/transactions/";

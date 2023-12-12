@@ -21,3 +21,20 @@ class HistoryError extends HistoryState {
   final String? message;
   HistoryError({@required this.message});
 }
+
+class billerFilterLoading extends HistoryState {}
+
+class billerFilterSuccess extends HistoryState {
+  List<Data>? billerFilterData;
+  billerFilterSuccess({@required this.billerFilterData});
+}
+
+class billerFilterFailed extends HistoryState {
+  final String? message;
+  billerFilterFailed({@required this.message});
+}
+
+class billerFilterError extends HistoryState {
+  final String? message;
+  billerFilterError({@required this.message});
+}

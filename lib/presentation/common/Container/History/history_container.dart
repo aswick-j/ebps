@@ -1,5 +1,7 @@
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/routes.dart';
+import 'package:ebps/data/models/categories_model.dart';
+import 'package:ebps/data/models/category_biller_filter_history._model.dart';
 import 'package:ebps/data/models/history_model.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/Text/MyAppText.dart';
@@ -18,15 +20,16 @@ class HistoryContainer extends StatelessWidget {
   final Color containerBorderColor;
   HistoryData historyData;
 
-  HistoryContainer(
-      {required this.titleText,
-      required this.subtitleText,
-      required this.dateText,
-      this.statusText,
-      required this.amount,
-      required this.iconPath,
-      required this.containerBorderColor,
-      required this.historyData});
+  HistoryContainer({
+    required this.titleText,
+    required this.subtitleText,
+    required this.dateText,
+    this.statusText,
+    required this.amount,
+    required this.iconPath,
+    required this.containerBorderColor,
+    required this.historyData,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -92,12 +95,15 @@ class HistoryContainer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      MyAppText(
-                        data: subtitleText,
-                        size: 14.0.sp,
-                        color: TXT_CLR_DEFAULT,
-                        weight: FontWeight.w500,
-                      ),
+                      SizedBox(
+                        width: 220.w,
+                        child: MyAppText(
+                          data: subtitleText,
+                          size: 14.0.sp,
+                          color: TXT_CLR_DEFAULT,
+                          weight: FontWeight.w500,
+                        ),
+                      )
                     ],
                   ),
                 ],

@@ -88,4 +88,8 @@ abstract class Repository {
 
   //DELETE BILLER
   Future deleteBiller(customerBillID, customerID, otp) async {}
+
+  //CATEGORY BILLER HISTORY FILTER
+
+  Future getBillerHistoryFilter(categoryID) async {}
 }

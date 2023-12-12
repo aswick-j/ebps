@@ -604,4 +604,20 @@ class ApiClient implements Repository {
       return decodedResponse;
     } catch (e) {}
   }
+
+  @override
+  Future getBillerHistoryFilter(categoryID) async {
+    try {
+      Map<String, dynamic> body = {"categoryID": categoryID};
+      var response = await api(
+          method: "post",
+          url: BASE_URL + CATEGORY_BILLER_HISTORY_FILTER_URL,
+          body: body,
+          token: true,
+          checkSum: false);
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+      print(decodedResponse);
+      return decodedResponse;
+    } catch (e) {}
+  }
 }

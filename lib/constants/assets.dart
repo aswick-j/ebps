@@ -75,6 +75,7 @@ const ICON_REFRESH = "packages/ebps/assets/icon/icon_refresh.svg";
 //IMAGE
 
 const IMG_NOTFOUND = "packages/ebps/assets/icon/icon_notFound.svg";
+const SPLASH_BAG = "packages/ebps/assets/images/splash_background.png";
 
 String CATEGORY_ICON(String? CATEGORY_NAME) {
   switch (CATEGORY_NAME!.toLowerCase()) {
