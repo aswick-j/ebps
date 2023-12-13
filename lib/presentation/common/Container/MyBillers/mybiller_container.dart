@@ -270,7 +270,7 @@ class MyBillersContainer extends StatelessWidget {
                               children: [
                                 ModalMenu(
                                     context: context,
-                                    icon: Icons.history,
+                                    icon: Icons.history_outlined,
                                     title: "View Payment History",
                                     onPressed: () {
                                       goToData(context, bILLERHISTORYROUTE, {
@@ -298,7 +298,7 @@ class MyBillersContainer extends StatelessWidget {
                                             1)
                                       ModalMenu(
                                           context: context,
-                                          icon: Icons.edit,
+                                          icon: Icons.edit_note_sharp,
                                           title: "Edit Autopay",
                                           onPressed: () {
                                             goToData(
@@ -321,7 +321,183 @@ class MyBillersContainer extends StatelessWidget {
                                       context: context,
                                       icon: Icons.delete_forever_outlined,
                                       title: "Delete Autopay",
-                                      onPressed: () {}),
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                            context: context,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(16.0.r),
+                                              ),
+                                            ),
+                                            builder: (context) {
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 15.h,
+                                                        bottom: 15.h,
+                                                        left: 15.w,
+                                                        right: 15.w),
+                                                    child: Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons
+                                                              .delete_sweep_outlined,
+                                                          color:
+                                                              Color(0xff1b438b),
+                                                        ),
+                                                        SizedBox(width: 20.w),
+                                                        Text(
+                                                          "Delete Autopay",
+                                                          style: TextStyle(
+                                                            fontSize: 16.sp,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: Color(
+                                                                0xff1b438b),
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                            color: Colors.grey
+                                                                .withOpacity(
+                                                                    0.5),
+                                                            spreadRadius: 0.6,
+                                                            blurRadius: 4,
+                                                            offset:
+                                                                Offset(0, 2)),
+                                                      ],
+                                                    ),
+                                                    child: Divider(
+                                                      height: 1.h,
+                                                      thickness: 1,
+                                                      color: Colors.grey
+                                                          .withOpacity(0.1),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10.h,
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 0.h,
+                                                        bottom: 16.h,
+                                                        left: 16.w,
+                                                        right: 16.w),
+                                                    child: Center(
+                                                      child: Text(
+                                                        "Are You Sure You Want To Delete",
+                                                        style: TextStyle(
+                                                          fontSize: 14.sp,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color:
+                                                              Color(0xff000000),
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 0.h,
+                                                        bottom: 16.h,
+                                                        left: 16.w,
+                                                        right: 16.w),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Expanded(
+                                                          child: MyAppButton(
+                                                              onPressed: () {
+                                                                goBack(context);
+                                                              },
+                                                              buttonText:
+                                                                  "Cancel",
+                                                              buttonTxtColor:
+                                                                  CLR_PRIMARY,
+                                                              buttonBorderColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              buttonColor:
+                                                                  BTN_CLR_ACTIVE,
+                                                              buttonSizeX: 10.h,
+                                                              buttonSizeY: 40.w,
+                                                              buttonTextSize:
+                                                                  14.sp,
+                                                              buttonTextWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 40.w,
+                                                        ),
+                                                        Expanded(
+                                                          child: MyAppButton(
+                                                              onPressed: () {
+                                                                //                             goToData(context, otpRoute, {
+
+                                                                goToData(
+                                                                    context,
+                                                                    oTPPAGEROUTE,
+                                                                    {
+                                                                      "from":
+                                                                          'delete-auto-pay',
+                                                                      "templateName":
+                                                                          "delete-auto-pay",
+                                                                      "autopayData":
+                                                                          getAllAutopayList(
+                                                                              savedBillersData.cUSTOMERBILLID),
+                                                                      "data": {
+                                                                        "billerName":
+                                                                            savedBillersData.bILLERNAME,
+                                                                        "cUSTOMERBILLID": savedBillersData
+                                                                            .cUSTOMERBILLID
+                                                                            .toString(),
+                                                                      }
+                                                                    });
+                                                              },
+                                                              buttonText:
+                                                                  "Delete",
+                                                              buttonTxtColor:
+                                                                  BTN_CLR_ACTIVE,
+                                                              buttonBorderColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              buttonColor:
+                                                                  CLR_PRIMARY,
+                                                              buttonSizeX: 10.h,
+                                                              buttonSizeY: 40.w,
+                                                              buttonTextSize:
+                                                                  14.sp,
+                                                              buttonTextWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10.h,
+                                                  ),
+                                                ],
+                                              );
+                                            });
+                                      }),
                                 if (savedBillersData.aUTOPAYID == null)
                                   ModalMenu(
                                       context: context,
@@ -883,7 +1059,7 @@ Widget ModalMenu(
         },
         child: Row(
           children: [
-            Icon(icon),
+            Icon(icon, color: TXT_CLR_PRIMARY),
             SizedBox(
               width: 15.w,
             ),

@@ -8,6 +8,7 @@ import 'package:ebps/data/models/auto_schedule_pay_model.dart';
 import 'package:ebps/data/services/api.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
+import 'package:ebps/presentation/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/widget/bbps_logo.dart';
 import 'package:ebps/presentation/widget/loader_overlay.dart';
@@ -68,13 +69,17 @@ class _OtpScreenState extends State<OtpScreen> {
       BlocProvider.of<HomeCubit>(context).generateOtp(
           templateName: widget.templateName,
           billerName: widget.data!['billerName']);
+    } else if (widget.from == "delete-auto-pay") {
+      BlocProvider.of<HomeCubit>(context).generateOtp(
+          templateName: widget.templateName,
+          billerName: widget.autopayData!.bILLERNAME.toString());
     }
   }
 
   @override
   void initState() {
     handleIntial();
-    getCustomerID();
+    getAccountDetails();
     super.initState();
   }
 
@@ -137,6 +142,10 @@ class _OtpScreenState extends State<OtpScreen> {
         BlocProvider.of<HomeCubit>(context).generateOtp(
             templateName: widget.templateName,
             billerName: widget.data!['billerName']);
+      } else if (widget.from == "delete-auto-pay") {
+        BlocProvider.of<HomeCubit>(context).generateOtp(
+            templateName: widget.templateName,
+            billerName: widget.autopayData!.bILLERNAME.toString());
       }
 
       if (mounted) {
@@ -149,7 +158,7 @@ class _OtpScreenState extends State<OtpScreen> {
     } catch (e) {}
   }
 
-  getCustomerID() async {
+  getAccountDetails() async {
     Map<String, dynamic> decodedToken = await getDecodedToken();
     setState(() {
       customerID = decodedToken['customerID'];
@@ -189,11 +198,56 @@ class _OtpScreenState extends State<OtpScreen> {
       dynamic payload = widget.data;
       payload['otp'] = txtOtpController.text.toString();
       BlocProvider.of<HomeCubit>(context).createAutopay(payload);
+    } else if (widget.from == "delete-auto-pay") {
+      BlocProvider.of<HomeCubit>(context).deleteAutoPay(
+          widget.autopayData!.iD, txtOtpController.text.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    showModalDialog({required String title}) {
+      return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: AnimatedDialog(
+              title: title,
+              subTitle: "",
+              child: Icon(
+                Icons.check,
+                color: Colors.white,
+              ),
+            ),
+            actions: <Widget>[
+              Align(
+                alignment: Alignment.center,
+                child: MyAppButton(
+                    onPressed: () {
+                      WidgetsBinding.instance?.addPostFrameCallback((_) {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                              builder: (context) => BottomNavBar(
+                                    SelectedIndex: 0,
+                                  )),
+                        );
+                      });
+                    },
+                    buttonText: "Okay",
+                    buttonTxtColor: BTN_CLR_ACTIVE,
+                    buttonBorderColor: Colors.transparent,
+                    buttonColor: CLR_PRIMARY,
+                    buttonSizeX: 10,
+                    buttonSizeY: 40,
+                    buttonTextSize: 14,
+                    buttonTextWeight: FontWeight.w500),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     final defaultPinTheme = PinTheme(
       width: 50.w,
       height: 50.h,
@@ -377,39 +431,8 @@ class _OtpScreenState extends State<OtpScreen> {
               LoaderOverlay.of(context).show();
             } else if (state is deleteBillerSuccess) {
               LoaderOverlay.of(context).hide();
-
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    content: AnimatedDialog(
-                      title: "Your Biller Has Been Deleted Successfully.",
-                      subTitle: "",
-                      child: Icon(
-                        Icons.check,
-                        color: Colors.white,
-                      ),
-                    ),
-                    actions: <Widget>[
-                      Align(
-                        alignment: Alignment.center,
-                        child: MyAppButton(
-                            onPressed: () {
-                              goBack(context);
-                            },
-                            buttonText: "Okay",
-                            buttonTxtColor: BTN_CLR_ACTIVE,
-                            buttonBorderColor: Colors.transparent,
-                            buttonColor: CLR_PRIMARY,
-                            buttonSizeX: 10,
-                            buttonSizeY: 40,
-                            buttonTextSize: 14,
-                            buttonTextWeight: FontWeight.w500),
-                      ),
-                    ],
-                  );
-                },
-              );
+              showModalDialog(
+                  title: "Your Biller Has Been Deleted Successfully");
             } else if (state is deleteBillerFailed) {
               LoaderOverlay.of(context).hide();
 
@@ -446,6 +469,29 @@ class _OtpScreenState extends State<OtpScreen> {
                 },
               );
             } else if (state is deleteBillerError) {
+              LoaderOverlay.of(context).hide();
+            }
+
+            if (state is createAutopayLoading) {
+              LoaderOverlay.of(context).show();
+            } else if (state is createAutopaySuccess) {
+              LoaderOverlay.of(context).hide();
+
+              showModalDialog(title: "Autopay Created Successfully");
+            } else if (state is createAutopayFailed) {
+              LoaderOverlay.of(context).hide();
+            } else if (state is createAutopayError) {
+              LoaderOverlay.of(context).hide();
+            }
+            if (state is deleteAutopayLoading) {
+              LoaderOverlay.of(context).show();
+            } else if (state is deleteAutopaySuccess) {
+              LoaderOverlay.of(context).hide();
+
+              showModalDialog(title: "Autopay Deleted Successfully");
+            } else if (state is deleteAutopayFailed) {
+              LoaderOverlay.of(context).hide();
+            } else if (state is deleteAutopayError) {
               LoaderOverlay.of(context).hide();
             }
           },

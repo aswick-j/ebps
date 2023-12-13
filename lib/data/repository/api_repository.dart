@@ -96,4 +96,8 @@ abstract class Repository {
   //CREATE AUTOPAY
 
   Future createAutopayData(playload) async {}
+
+  //DELETE AUTOPAY
+
+  Future removeAutoPay(id, otp) async {}
 }

@@ -234,7 +234,8 @@ class MyRouter {
                   child: OtpScreen(
                       from: args['from'],
                       templateName: args['templateName'],
-                      data: args['data']),
+                      data: args['data'],
+                      autopayData: args["autopayData"]),
                 ));
 
       //TRANS_SUCCESS

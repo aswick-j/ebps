@@ -5,6 +5,7 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/data/models/account_info_model.dart';
 import 'package:ebps/data/models/saved_biller_model.dart';
+import 'package:ebps/data/services/api.dart';
 import 'package:ebps/helpers/getDaySuffix.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/getMonthName.dart';
@@ -592,13 +593,27 @@ class _createAutopayState extends State<createAutopay> {
                 ),
                 Expanded(
                   child: MyAppButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        Map<String, dynamic> decodedToken =
+                            await getDecodedToken();
+                        List decodedToken2 = decodedToken["accounts"].toList();
+                        print(decodedToken2);
+                        var accID;
+                        for (var i = 0; i < decodedToken2.length; i++) {
+                          if (decodedToken2[i]["accountID"] ==
+                              accountInfo![selectedAcc].accountNumber) {
+                            setState(() {
+                              accID = decodedToken2[i]["id"];
+                            });
+                          }
+                        }
+                        print("====ACCID=====");
+                        print(accID);
                         goToData(context, oTPPAGEROUTE, {
                           "from": "create-auto-pay",
                           "templateName": "create-auto-pay",
                           "data": {
-                            "accountNumber":
-                                accountInfo![selectedAcc].accountNumber,
+                            "accountNumber": accID,
                             "maximumAmount": maxAmountController.text,
                             "paymentDate": selectedDate,
                             "isBimonthly": billPayGroupRadio,

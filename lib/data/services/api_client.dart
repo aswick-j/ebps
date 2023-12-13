@@ -636,4 +636,22 @@ class ApiClient implements Repository {
       return decodedResponse;
     } catch (e) {}
   }
+
+  //DELETE AUTOPAY
+
+  @override
+  Future removeAutoPay(id, otp) async {
+    try {
+      Map<String, dynamic> body = {"otp": otp};
+      var response = await api(
+          method: "post",
+          url: BASE_URL + AUTOPAY_DELETE_URL + id.toString(),
+          body: body,
+          token: true,
+          checkSum: false);
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+
+      return decodedResponse;
+    } catch (e) {}
+  }
 }

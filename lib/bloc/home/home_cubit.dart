@@ -528,6 +528,39 @@ class HomeCubit extends Cubit<HomeState> {
     } catch (e) {}
   }
 
+  //DELETE AUTOPAY
+
+  void deleteAutoPay(id, otp) async {
+    if (!isClosed) {
+      emit(deleteAutopayLoading());
+    }
+    try {
+      await repository!.removeAutoPay(id, otp).then((value) {
+        if (value != null) {
+          if (!value.toString().contains("Invalid token")) {
+            if (value['status'] == 200) {
+              if (!isClosed) {
+                emit(deleteAutopaySuccess(message: value['message']));
+              }
+            } else {
+              if (!isClosed) {
+                emit(deleteAutopayFailed(message: value['message']));
+              }
+            }
+          } else {
+            if (!isClosed) {
+              emit(deleteAutopayError(message: value['message']));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(deleteAutopayFailed(message: value['message']));
+          }
+        }
+      });
+    } catch (e) {}
+  }
+
   //PAY-BILL
 
   void payBill(

@@ -31,11 +31,12 @@ const String DELETE_BILLER_URL = "/billers/delete/";
 const String CATEGORY_BILLER_HISTORY_FILTER_URL =
     "/transactions/getcategorybiller";
 
+const String AUTOPAY_DELETE_URL = "/auto-pay/delete/";
+
 const String redirectUrl = "/auth/redirect";
 const String transactionUrl = "/transactions/";
 
 const String upcomingDisableUrl = "/auto-pay/status/";
-const String removeAutoPayUrl = "/auto-pay/delete/";
 
 const String allLocation = "/billers/location";
 const String statesDataUrl = "/billers/states-data/";
