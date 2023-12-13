@@ -30,7 +30,6 @@ class HistoryCubit extends Cubit<HistoryState> {
     } else {
       Map<String, dynamic> dateData =
           await getTransactionHistoryDate(dateValues);
-      print(dateData);
       payload = {
         "startDate": dateData['startDate'],
         "endDate": dateData['endDate'],

@@ -271,7 +271,6 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                             ? "Pay Now"
                             : 'Upcoming Auto Payment',
                     onPressed: () {
-                      print("PRESSED");
                       SavedBillersData savedBillersData;
                       List<SavedBillersData> billerDataTemp = [];
 

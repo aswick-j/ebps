@@ -64,6 +64,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   ConfirmFetchBillData? confirmbillerResData;
   bool _otherAmount = false;
   dynamic selectedAcc = null;
+  bool accError = false;
 
   @override
   void initState() {
@@ -344,6 +345,10 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                         IconButton(
                           icon: const Icon(Icons.refresh, color: Colors.grey),
                           onPressed: () {
+                            setState(() {
+                              selectedAcc = null;
+                              accError = false;
+                            });
                             BlocProvider.of<HomeCubit>(context)
                                 .getAccountInfo(myAccounts);
                           },
@@ -363,35 +368,74 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     Container(
                       width: double.infinity,
                       color: Colors.white,
-                      child: GridView.builder(
-                          shrinkWrap: true,
-                          itemCount: accountInfo!.length,
-                          physics: NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 4 / 2,
-                            mainAxisSpacing: 10.h,
-                            // mainAxisSpacing: 10,
-                          ),
-                          itemBuilder: (context, index) {
-                            return AccountInfoCard(
-                              accountNumber:
-                                  accountInfo![index].accountNumber.toString(),
-                              balance: accountInfo![index].balance.toString(),
-                              onAccSelected: (Date) {
-                                setState(() {
-                                  selectedAcc = index;
-                                });
-                              },
-                              index: index,
-                              isSelected: selectedAcc,
-                            );
-                          }),
+                      child: Column(
+                        children: [
+                          GridView.builder(
+                              shrinkWrap: true,
+                              itemCount: accountInfo!.length,
+                              physics: NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 4 / 2,
+                                mainAxisSpacing: 10.h,
+                                // mainAxisSpacing: 10,
+                              ),
+                              itemBuilder: (context, index) {
+                                return AccountInfoCard(
+                                  accountNumber: accountInfo![index]
+                                      .accountNumber
+                                      .toString(),
+                                  balance:
+                                      accountInfo![index].balance.toString(),
+                                  onAccSelected: (Date) {
+                                    setState(() {
+                                      selectedAcc = index;
+                                    });
+                                    if (double.parse(accountInfo![index]
+                                            .balance
+                                            .toString()) <
+                                        double.parse(
+                                            widget.amount.toString())) {
+                                      setState(() {
+                                        accError = true;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        accError = false;
+                                      });
+                                    }
+                                  },
+                                  AccErr: accError,
+                                  index: index,
+                                  isSelected: selectedAcc,
+                                );
+                              }),
+                          if (accError)
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 20.w, top: 10.h, right: 20.w),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Insufficient balance in the account',
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: CLR_ERROR,
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   BbpsLogoContainer(
                     showEquitasLogo: false,
                   ),
+                  SizedBox(
+                    height: 80.h,
+                  )
                 ],
               ),
             );
@@ -408,15 +452,16 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                   Expanded(
                     child: MyAppButton(
                         onPressed: () {
-                          if (selectedAcc != null) {
+                          if (selectedAcc != null && !accError) {
                             handleSubmit();
                           }
                         },
                         buttonText: "Proceed to Pay",
                         buttonTxtColor: BTN_CLR_ACTIVE,
                         buttonBorderColor: Colors.transparent,
-                        buttonColor:
-                            selectedAcc != null ? CLR_PRIMARY : Colors.grey,
+                        buttonColor: selectedAcc != null && !accError
+                            ? CLR_PRIMARY
+                            : Colors.grey,
                         buttonSizeX: 10.h,
                         buttonSizeY: 40.w,
                         buttonTextSize: 14.sp,

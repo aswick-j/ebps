@@ -49,7 +49,6 @@ String getDaySuffix(String day) {
 }
 
 void main() {
-  String txtDate = "15"; // replace with your text
+  String txtDate = "15";
   String calDate = getDaySuffix(txtDate);
-  print(calDate); // Output: "th of every month"
 }

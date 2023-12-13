@@ -616,7 +616,6 @@ class ApiClient implements Repository {
           token: true,
           checkSum: false);
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
-      print(decodedResponse);
       return decodedResponse;
     } catch (e) {}
   }

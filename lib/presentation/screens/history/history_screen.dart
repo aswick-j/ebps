@@ -10,6 +10,7 @@ import 'package:ebps/data/services/api_client.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getTransactionStatus.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
+import 'package:ebps/presentation/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/common/Container/History/history_container.dart';
 import 'package:ebps/presentation/widget/date_picker.dart';
@@ -74,7 +75,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
   var dragController = DraggableScrollableController();
 
   List<HistoryData>? historyData = [];
-  List<Data>? billerFilterData;
+  List<Data>? billerFilterData = [];
   List<CategorieData>? categoriesData = [];
 
   bool isCategoryLoading = false;
@@ -83,7 +84,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
   @override
   void initState() {
     BlocProvider.of<HistoryCubit>(context)
-        .getHistoryDetails('Today', "", "", "0", false);
+        .getHistoryDetails('Today', "", "", "-1", false);
     BlocProvider.of<HomeCubit>(context).getAllCategories();
 
     super.initState();
@@ -115,7 +116,14 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
       appBar: MyAppBar(
         context: context,
         title: 'History',
-        onLeadingTap: () => Navigator.pop(context),
+        onLeadingTap: () => WidgetsBinding.instance?.addPostFrameCallback((_) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+                builder: (context) => BottomNavBar(
+                      SelectedIndex: 1,
+                    )),
+          );
+        }),
         showActions: true,
         actions: [
           InkWell(
@@ -246,106 +254,66 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                     ),
                   ),
                   builder: (context) {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 15.h, bottom: 15.h, left: 15.w, right: 15.w),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.filter_alt_outlined,
-                                color: Color(0xff1b438b),
-                              ),
-                              Text(
-                                "Filters",
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600,
+                    return StatefulBuilder(
+                        builder: (context, StateSetter setState) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: 15.h,
+                                bottom: 15.h,
+                                left: 15.w,
+                                right: 15.w),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.filter_alt_outlined,
                                   color: Color(0xff1b438b),
                                 ),
-                                textAlign: TextAlign.left,
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 0.6,
-                                  blurRadius: 4,
-                                  offset: Offset(0, 2)),
-                            ],
-                          ),
-                          child: Divider(
-                            height: 1.h,
-                            thickness: 1,
-                            color: Colors.grey.withOpacity(0.1),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16.w, vertical: 16.h),
-                          child: TextFormField(
-                            controller: fromdateController,
-                            readOnly: true,
-                            autocorrect: false,
-                            enableSuggestions: false,
-                            keyboardType: TextInputType.text,
-                            onChanged: (val) {},
-                            onTap: () async {
-                              DateTime? pickedDate = await DatePicker(
-                                  context, fromdateController.text);
-                              if (pickedDate != null) {
-                                String formattedDate =
-                                    DateFormat('dd-MM-yyyy').format(pickedDate);
-                                setState(() {
-                                  fromdateController.text = formattedDate;
-                                  todateController.clear();
-                                  fromDate = pickedDate;
-                                });
-                              }
-                            },
-                            // validator: (inputValue) {},
-                            decoration: InputDecoration(
-                              fillColor:
-                                  const Color(0xffD1D9E8).withOpacity(0.2),
-                              filled: true,
-                              labelStyle:
-                                  const TextStyle(color: Color(0xff1b438b)),
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xff1B438B)),
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xff1B438B)),
-                              ),
-                              border: const UnderlineInputBorder(),
-                              labelText: 'From Date',
-                              hintText: "From Date",
+                                Text(
+                                  "Filters",
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xff1b438b),
+                                  ),
+                                  textAlign: TextAlign.left,
+                                )
+                              ],
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16.w, vertical: 16.h),
-                          child: TextFormField(
-                            controller: todateController,
-                            readOnly: true,
-                            autocorrect: false,
-                            enableSuggestions: false,
-                            keyboardType: TextInputType.text,
-                            onChanged: (val) {},
-                            onTap: () async {
-                              if (fromdateController.text.isNotEmpty) {
+                          Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 0.6,
+                                    blurRadius: 4,
+                                    offset: Offset(0, 2)),
+                              ],
+                            ),
+                            child: Divider(
+                              height: 1.h,
+                              thickness: 1,
+                              color: Colors.grey.withOpacity(0.1),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.w, vertical: 16.h),
+                            child: TextFormField(
+                              controller: fromdateController,
+                              readOnly: true,
+                              autocorrect: false,
+                              enableSuggestions: false,
+                              keyboardType: TextInputType.text,
+                              onChanged: (val) {},
+                              onTap: () async {
                                 DateTime? pickedDate = await DatePicker(
                                     context, fromdateController.text);
                                 if (pickedDate != null) {
@@ -353,261 +321,14 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                       DateFormat('dd-MM-yyyy')
                                           .format(pickedDate);
                                   setState(() {
-                                    todateController.text = formattedDate;
-                                    toDate = pickedDate;
+                                    fromdateController.text = formattedDate;
+                                    todateController.clear();
+                                    fromDate = pickedDate;
                                   });
                                 }
-                              } else {
-                                print("Please select 'From Date' first.");
-                              }
-                            },
-                            validator: (inputValue) {
-                              if (fromdateController.text.isEmpty) {
-                                return "Please select 'From Date' first.";
-                              }
-                            },
-                            decoration: InputDecoration(
-                              fillColor:
-                                  const Color(0xffD1D9E8).withOpacity(0.2),
-                              filled: true,
-                              // errorText: fromdateController.text.isEmpty
-                              //     ? "Please select 'From Date' first."
-                              //     : null,
-                              labelStyle:
-                                  const TextStyle(color: Color(0xff1b438b)),
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xff1B438B)),
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xff1B438B)),
-                              ),
-                              border: const UnderlineInputBorder(),
-                              labelText: 'To Date',
-                              hintText: "To Date",
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16.w, vertical: 16.h),
-                          child: TextFormField(
-                            controller: catController,
-                            readOnly: true,
-                            autocorrect: false,
-                            enableSuggestions: false,
-                            keyboardType: TextInputType.text,
-                            onChanged: (val) {},
-                            onTap: () {
-                              showModalBottomSheet(
-                                  elevation: 10,
-                                  useRootNavigator: true,
-                                  isScrollControlled: true,
-                                  context: context,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(16.0.r),
-                                    ),
-                                  ),
-                                  builder: (context) {
-                                    return DraggableScrollableSheet(
-                                        initialChildSize: 0.50,
-                                        minChildSize: 0.25,
-                                        maxChildSize: 0.95,
-                                        expand: false,
-                                        controller: dragController,
-                                        builder:
-                                            (context, scrollController) =>
-                                                SingleChildScrollView(
-                                                  controller: scrollController,
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: <Widget>[
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 15.h,
-                                                                bottom: 15.h,
-                                                                left: 15.w,
-                                                                right: 15.w),
-                                                        child: Row(
-                                                          children: [
-                                                            Icon(
-                                                              Icons
-                                                                  .menu_outlined,
-                                                              color: Color(
-                                                                  0xff1b438b),
-                                                            ),
-                                                            SizedBox(
-                                                                width: 20.w),
-                                                            Text(
-                                                              "Selcet Categories",
-                                                              style: TextStyle(
-                                                                fontSize: 16.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color: Color(
-                                                                    0xff1b438b),
-                                                              ),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .left,
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .withOpacity(
-                                                                        0.5),
-                                                                spreadRadius:
-                                                                    0.6,
-                                                                blurRadius: 4,
-                                                                offset: Offset(
-                                                                    0, 2)),
-                                                          ],
-                                                        ),
-                                                        child: Divider(
-                                                          height: 1.h,
-                                                          thickness: 1,
-                                                          color: Colors.grey
-                                                              .withOpacity(0.1),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10.h,
-                                                      ),
-                                                      Container(
-                                                        child: ListView.builder(
-                                                          scrollDirection:
-                                                              Axis.vertical,
-                                                          shrinkWrap: true,
-                                                          itemCount:
-                                                              categoriesData!
-                                                                  .length,
-                                                          physics:
-                                                              const BouncingScrollPhysics(),
-                                                          // controller: infiniteScrollController,
-                                                          itemBuilder:
-                                                              (context, index) {
-                                                            return GestureDetector(
-                                                                onTap: () {
-                                                                  handleBiller(
-                                                                      categoriesData![
-                                                                              index]
-                                                                          .cATEGORYNAME
-                                                                          .toString(),
-                                                                      categoriesData![
-                                                                              index]
-                                                                          .iD
-                                                                          .toString());
-                                                                  goBack(
-                                                                      context);
-                                                                },
-                                                                child: Padding(
-                                                                  padding: EdgeInsets.symmetric(
-                                                                      horizontal:
-                                                                          16.w,
-                                                                      vertical:
-                                                                          2.h),
-                                                                  child: ListTile(
-                                                                      contentPadding: EdgeInsets.only(left: 6.w, right: 6.w, top: 0),
-                                                                      leading: Container(
-                                                                        width:
-                                                                            45.w,
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              EdgeInsets.all(13.r),
-                                                                          child:
-                                                                              SvgPicture.asset(LOGO_BBPS),
-                                                                        ),
-                                                                      ),
-                                                                      title: Text(
-                                                                        categoriesData![index]
-                                                                            .cATEGORYNAME
-                                                                            .toString(),
-                                                                        style:
-                                                                            TextStyle(
-                                                                          fontSize:
-                                                                              14.sp,
-                                                                          fontWeight:
-                                                                              FontWeight.w400,
-                                                                          color:
-                                                                              Color(0xff000000),
-                                                                          height:
-                                                                              23 / 14,
-                                                                        ),
-                                                                        textAlign:
-                                                                            TextAlign.left,
-                                                                      )),
-                                                                ));
-                                                          },
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 0.h,
-                                                                bottom: 16.h,
-                                                                left: 16.w,
-                                                                right: 16.w),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Expanded(
-                                                              child:
-                                                                  MyAppButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        goBack(
-                                                                            context);
-                                                                      },
-                                                                      buttonText:
-                                                                          "Cancel",
-                                                                      buttonTxtColor:
-                                                                          CLR_PRIMARY,
-                                                                      buttonBorderColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      buttonColor:
-                                                                          BTN_CLR_ACTIVE,
-                                                                      buttonSizeX:
-                                                                          10.h,
-                                                                      buttonSizeY:
-                                                                          40.w,
-                                                                      buttonTextSize:
-                                                                          14.sp,
-                                                                      buttonTextWeight:
-                                                                          FontWeight
-                                                                              .w500),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10.h,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ));
-                                  });
-                            },
-                            validator: (inputValue) {},
-                            decoration: InputDecoration(
+                              },
+                              // validator: (inputValue) {},
+                              decoration: InputDecoration(
                                 fillColor:
                                     const Color(0xffD1D9E8).withOpacity(0.2),
                                 filled: true,
@@ -622,17 +343,71 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                       BorderSide(color: Color(0xff1B438B)),
                                 ),
                                 border: const UnderlineInputBorder(),
-                                labelText: 'Select Categories',
-                                hintText: "Select Categories"),
+                                labelText: 'From Date',
+                                hintText: "From Date",
+                              ),
+                            ),
                           ),
-                        ),
-                        if (catController.text.length > 0 &&
-                            billerFilterData!.isNotEmpty)
                           Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 16.w, vertical: 16.h),
                             child: TextFormField(
-                              controller: billerController,
+                              controller: todateController,
+                              readOnly: true,
+                              autocorrect: false,
+                              enableSuggestions: false,
+                              keyboardType: TextInputType.text,
+                              onChanged: (val) {},
+                              onTap: () async {
+                                if (fromdateController.text.isNotEmpty) {
+                                  DateTime? pickedDate = await DatePicker(
+                                      context, fromdateController.text);
+                                  if (pickedDate != null) {
+                                    String formattedDate =
+                                        DateFormat('dd-MM-yyyy')
+                                            .format(pickedDate);
+                                    setState(() {
+                                      todateController.text = formattedDate;
+                                      toDate = pickedDate;
+                                    });
+                                  }
+                                } else {
+                                  print("Please select 'From Date' first.");
+                                }
+                              },
+                              validator: (inputValue) {
+                                if (fromdateController.text.isEmpty) {
+                                  return "Please select 'From Date' first.";
+                                }
+                              },
+                              decoration: InputDecoration(
+                                fillColor:
+                                    const Color(0xffD1D9E8).withOpacity(0.2),
+                                filled: true,
+                                // errorText: fromdateController.text.isEmpty
+                                //     ? "Please select 'From Date' first."
+                                //     : null,
+                                labelStyle:
+                                    const TextStyle(color: Color(0xff1b438b)),
+                                enabledBorder: const UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xff1B438B)),
+                                ),
+                                focusedBorder: const UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xff1B438B)),
+                                ),
+                                border: const UnderlineInputBorder(),
+                                labelText: 'To Date',
+                                hintText: "To Date",
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.w, vertical: 16.h),
+                            child: TextFormField(
+                              controller: catController,
                               readOnly: true,
                               autocorrect: false,
                               enableSuggestions: false,
@@ -656,194 +431,191 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                           maxChildSize: 0.95,
                                           expand: false,
                                           controller: dragController,
-                                          builder: (context,
-                                                  scrollController) =>
-                                              SingleChildScrollView(
-                                                controller: scrollController,
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: 15.h,
-                                                          bottom: 15.h,
-                                                          left: 15.w,
-                                                          right: 15.w),
-                                                      child: Row(
-                                                        children: [
-                                                          Icon(
-                                                            Icons.menu_outlined,
-                                                            color: Color(
-                                                                0xff1b438b),
-                                                          ),
-                                                          SizedBox(width: 20.w),
-                                                          Text(
-                                                            "Selcet Billers",
-                                                            style: TextStyle(
-                                                              fontSize: 16.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color: Color(
-                                                                  0xff1b438b),
+                                          builder:
+                                              (context, scrollController) =>
+                                                  StatefulBuilder(builder:
+                                                      (context,
+                                                          StateSetter
+                                                              setState) {
+                                                    return SingleChildScrollView(
+                                                      controller:
+                                                          scrollController,
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: <Widget>[
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    top: 15.h,
+                                                                    bottom:
+                                                                        15.h,
+                                                                    left: 15.w,
+                                                                    right:
+                                                                        15.w),
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(
+                                                                  Icons
+                                                                      .menu_outlined,
+                                                                  color: Color(
+                                                                      0xff1b438b),
+                                                                ),
+                                                                SizedBox(
+                                                                    width:
+                                                                        20.w),
+                                                                Text(
+                                                                  "Selcet Categories",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        16.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    color: Color(
+                                                                        0xff1b438b),
+                                                                  ),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                )
+                                                              ],
                                                             ),
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        boxShadow: [
-                                                          BoxShadow(
+                                                          ),
+                                                          Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    spreadRadius:
+                                                                        0.6,
+                                                                    blurRadius:
+                                                                        4,
+                                                                    offset:
+                                                                        Offset(
+                                                                            0,
+                                                                            2)),
+                                                              ],
+                                                            ),
+                                                            child: Divider(
+                                                              height: 1.h,
+                                                              thickness: 1,
                                                               color: Colors.grey
                                                                   .withOpacity(
-                                                                      0.5),
-                                                              spreadRadius: 0.6,
-                                                              blurRadius: 4,
-                                                              offset:
-                                                                  Offset(0, 2)),
-                                                        ],
-                                                      ),
-                                                      child: Divider(
-                                                        height: 1.h,
-                                                        thickness: 1,
-                                                        color: Colors.grey
-                                                            .withOpacity(0.1),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 10.h,
-                                                    ),
-                                                    Container(
-                                                      child: ListView.builder(
-                                                        scrollDirection:
-                                                            Axis.vertical,
-                                                        shrinkWrap: true,
-                                                        itemCount:
-                                                            billerFilterData!
-                                                                .length,
-                                                        physics:
-                                                            const BouncingScrollPhysics(),
-                                                        // controller: infiniteScrollController,
-                                                        itemBuilder:
-                                                            (context, index) {
-                                                          return GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  billerController
-                                                                      .text = billerFilterData![
-                                                                          index]
-                                                                      .bILLERNAME
-                                                                      .toString();
-                                                                  billerID = billerFilterData![
-                                                                          index]
-                                                                      .bILLERID
-                                                                      .toString();
-                                                                });
-
-                                                                goBack(context);
+                                                                      0.1),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height: 10.h,
+                                                          ),
+                                                          Container(
+                                                            child: ListView
+                                                                .builder(
+                                                              scrollDirection:
+                                                                  Axis.vertical,
+                                                              shrinkWrap: true,
+                                                              itemCount:
+                                                                  categoriesData!
+                                                                      .length,
+                                                              physics:
+                                                                  const BouncingScrollPhysics(),
+                                                              // controller: infiniteScrollController,
+                                                              itemBuilder:
+                                                                  (context,
+                                                                      index) {
+                                                                return GestureDetector(
+                                                                    onTap: () {
+                                                                      handleBiller(
+                                                                          categoriesData![index]
+                                                                              .cATEGORYNAME
+                                                                              .toString(),
+                                                                          categoriesData![index]
+                                                                              .iD
+                                                                              .toString());
+                                                                      goBack(
+                                                                          context);
+                                                                    },
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: EdgeInsets.symmetric(
+                                                                          horizontal: 16
+                                                                              .w,
+                                                                          vertical:
+                                                                              2.h),
+                                                                      child: ListTile(
+                                                                          contentPadding: EdgeInsets.only(left: 6.w, right: 6.w, top: 0),
+                                                                          leading: Container(
+                                                                            width:
+                                                                                45.w,
+                                                                            child:
+                                                                                Padding(
+                                                                              padding: EdgeInsets.all(13.r),
+                                                                              child: SvgPicture.asset(LOGO_BBPS),
+                                                                            ),
+                                                                          ),
+                                                                          title: Text(
+                                                                            categoriesData![index].cATEGORYNAME.toString(),
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 14.sp,
+                                                                              fontWeight: FontWeight.w400,
+                                                                              color: Color(0xff000000),
+                                                                              height: 23 / 14,
+                                                                            ),
+                                                                            textAlign:
+                                                                                TextAlign.left,
+                                                                          )),
+                                                                    ));
                                                               },
-                                                              child: Padding(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        horizontal: 16
-                                                                            .w,
-                                                                        vertical:
-                                                                            2.h),
-                                                                child: ListTile(
-                                                                    contentPadding: EdgeInsets.only(
-                                                                        left:
-                                                                            6.w,
-                                                                        right:
-                                                                            6.w,
-                                                                        top: 0),
-                                                                    leading:
-                                                                        Container(
-                                                                      width:
-                                                                          45.w,
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            EdgeInsets.all(13.r),
-                                                                        child: SvgPicture.asset(
-                                                                            LOGO_BBPS),
-                                                                      ),
-                                                                    ),
-                                                                    title: Text(
-                                                                      billerFilterData![
-                                                                              index]
-                                                                          .bILLERNAME
-                                                                          .toString(),
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontSize:
-                                                                            14.sp,
-                                                                        fontWeight:
-                                                                            FontWeight.w400,
-                                                                        color: Color(
-                                                                            0xff000000),
-                                                                        height:
-                                                                            23 /
-                                                                                14,
-                                                                      ),
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .left,
-                                                                    )),
-                                                              ));
-                                                        },
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: 0.h,
-                                                          bottom: 16.h,
-                                                          left: 16.w,
-                                                          right: 16.w),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Expanded(
-                                                            child: MyAppButton(
-                                                                onPressed: () {
-                                                                  goBack(
-                                                                      context);
-                                                                },
-                                                                buttonText:
-                                                                    "Cancel",
-                                                                buttonTxtColor:
-                                                                    CLR_PRIMARY,
-                                                                buttonBorderColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                buttonColor:
-                                                                    BTN_CLR_ACTIVE,
-                                                                buttonSizeX:
-                                                                    10.h,
-                                                                buttonSizeY:
-                                                                    40.w,
-                                                                buttonTextSize:
-                                                                    14.sp,
-                                                                buttonTextWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    top: 0.h,
+                                                                    bottom:
+                                                                        16.h,
+                                                                    left: 16.w,
+                                                                    right:
+                                                                        16.w),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: MyAppButton(
+                                                                      onPressed: () {
+                                                                        goBack(
+                                                                            context);
+                                                                      },
+                                                                      buttonText: "Cancel",
+                                                                      buttonTxtColor: CLR_PRIMARY,
+                                                                      buttonBorderColor: Colors.transparent,
+                                                                      buttonColor: BTN_CLR_ACTIVE,
+                                                                      buttonSizeX: 10.h,
+                                                                      buttonSizeY: 40.w,
+                                                                      buttonTextSize: 14.sp,
+                                                                      buttonTextWeight: FontWeight.w500),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height: 10.h,
                                                           ),
                                                         ],
                                                       ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 10.h,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ));
+                                                    );
+                                                  }));
                                     });
                               },
                               validator: (inputValue) {},
@@ -862,55 +634,298 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                         BorderSide(color: Color(0xff1B438B)),
                                   ),
                                   border: const UnderlineInputBorder(),
-                                  labelText: 'Selcet Billers',
-                                  hintText: "Selcet Billers"),
+                                  labelText: 'Select Categories',
+                                  hintText: "Select Categories"),
                             ),
                           ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 0.h, bottom: 16.h, left: 16.w, right: 16.w),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: MyAppButton(
-                                    onPressed: () {
-                                      goBack(context);
-                                    },
-                                    buttonText: "Cancel",
-                                    buttonTxtColor: CLR_PRIMARY,
-                                    buttonBorderColor: Colors.transparent,
-                                    buttonColor: BTN_CLR_ACTIVE,
-                                    buttonSizeX: 10.h,
-                                    buttonSizeY: 40.w,
-                                    buttonTextSize: 14.sp,
-                                    buttonTextWeight: FontWeight.w500),
+                          if (billerFilterData!.isNotEmpty)
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 16.w, vertical: 16.h),
+                              child: TextFormField(
+                                controller: billerController,
+                                readOnly: true,
+                                autocorrect: false,
+                                enableSuggestions: false,
+                                keyboardType: TextInputType.text,
+                                onChanged: (val) {},
+                                onTap: () {
+                                  showModalBottomSheet(
+                                      elevation: 10,
+                                      useRootNavigator: true,
+                                      isScrollControlled: true,
+                                      context: context,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(16.0.r),
+                                        ),
+                                      ),
+                                      builder: (context) {
+                                        return DraggableScrollableSheet(
+                                            initialChildSize: 0.50,
+                                            minChildSize: 0.25,
+                                            maxChildSize: 0.95,
+                                            expand: false,
+                                            controller: dragController,
+                                            builder:
+                                                (context, scrollController) =>
+                                                    StatefulBuilder(builder:
+                                                        (context,
+                                                            StateSetter
+                                                                setState) {
+                                                      return SingleChildScrollView(
+                                                        controller:
+                                                            scrollController,
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: <Widget>[
+                                                            Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      top: 15.h,
+                                                                      bottom:
+                                                                          15.h,
+                                                                      left:
+                                                                          15.w,
+                                                                      right:
+                                                                          15.w),
+                                                              child: Row(
+                                                                children: [
+                                                                  Icon(
+                                                                    Icons
+                                                                        .menu_outlined,
+                                                                    color: Color(
+                                                                        0xff1b438b),
+                                                                  ),
+                                                                  SizedBox(
+                                                                      width:
+                                                                          20.w),
+                                                                  Text(
+                                                                    "Select Billers",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          16.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      color: Color(
+                                                                          0xff1b438b),
+                                                                    ),
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                      color: Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              0.5),
+                                                                      spreadRadius:
+                                                                          0.6,
+                                                                      blurRadius:
+                                                                          4,
+                                                                      offset:
+                                                                          Offset(
+                                                                              0,
+                                                                              2)),
+                                                                ],
+                                                              ),
+                                                              child: Divider(
+                                                                height: 1.h,
+                                                                thickness: 1,
+                                                                color: Colors
+                                                                    .grey
+                                                                    .withOpacity(
+                                                                        0.1),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 10.h,
+                                                            ),
+                                                            Container(
+                                                              child: ListView
+                                                                  .builder(
+                                                                scrollDirection:
+                                                                    Axis.vertical,
+                                                                shrinkWrap:
+                                                                    true,
+                                                                itemCount:
+                                                                    billerFilterData!
+                                                                        .length,
+                                                                physics:
+                                                                    const BouncingScrollPhysics(),
+                                                                // controller: infiniteScrollController,
+                                                                itemBuilder:
+                                                                    (context,
+                                                                        index) {
+                                                                  return GestureDetector(
+                                                                      onTap:
+                                                                          () {
+                                                                        setState(
+                                                                            () {
+                                                                          billerController.text = billerFilterData![index]
+                                                                              .bILLERNAME
+                                                                              .toString();
+                                                                          billerID = billerFilterData![index]
+                                                                              .bILLERID
+                                                                              .toString();
+                                                                        });
+
+                                                                        goBack(
+                                                                            context);
+                                                                      },
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: EdgeInsets.symmetric(
+                                                                            horizontal:
+                                                                                16.w,
+                                                                            vertical: 2.h),
+                                                                        child: ListTile(
+                                                                            contentPadding: EdgeInsets.only(left: 6.w, right: 6.w, top: 0),
+                                                                            leading: Container(
+                                                                              width: 45.w,
+                                                                              child: Padding(
+                                                                                padding: EdgeInsets.all(13.r),
+                                                                                child: SvgPicture.asset(LOGO_BBPS),
+                                                                              ),
+                                                                            ),
+                                                                            title: Text(
+                                                                              billerFilterData![index].bILLERNAME.toString(),
+                                                                              style: TextStyle(
+                                                                                fontSize: 14.sp,
+                                                                                fontWeight: FontWeight.w400,
+                                                                                color: Color(0xff000000),
+                                                                                height: 23 / 14,
+                                                                              ),
+                                                                              textAlign: TextAlign.left,
+                                                                            )),
+                                                                      ));
+                                                                },
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      top: 0.h,
+                                                                      bottom:
+                                                                          16.h,
+                                                                      left:
+                                                                          16.w,
+                                                                      right:
+                                                                          16.w),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: MyAppButton(
+                                                                        onPressed: () {
+                                                                          goBack(
+                                                                              context);
+                                                                        },
+                                                                        buttonText: "Cancel",
+                                                                        buttonTxtColor: CLR_PRIMARY,
+                                                                        buttonBorderColor: Colors.transparent,
+                                                                        buttonColor: BTN_CLR_ACTIVE,
+                                                                        buttonSizeX: 10.h,
+                                                                        buttonSizeY: 40.w,
+                                                                        buttonTextSize: 14.sp,
+                                                                        buttonTextWeight: FontWeight.w500),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 10.h,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      );
+                                                    }));
+                                      });
+                                },
+                                validator: (inputValue) {},
+                                decoration: InputDecoration(
+                                    fillColor: const Color(0xffD1D9E8)
+                                        .withOpacity(0.2),
+                                    filled: true,
+                                    labelStyle: const TextStyle(
+                                        color: Color(0xff1b438b)),
+                                    enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0xff1B438B)),
+                                    ),
+                                    focusedBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0xff1B438B)),
+                                    ),
+                                    border: const UnderlineInputBorder(),
+                                    labelText: 'Select Billers',
+                                    hintText: "Select Billers"),
                               ),
-                              SizedBox(
-                                width: 40.w,
-                              ),
-                              Expanded(
-                                child: MyAppButton(
-                                    onPressed: () {
-                                      handleFilter();
-                                    },
-                                    buttonText: "Apply",
-                                    buttonTxtColor: BTN_CLR_ACTIVE,
-                                    buttonBorderColor: Colors.transparent,
-                                    buttonColor: CLR_PRIMARY,
-                                    buttonSizeX: 10.h,
-                                    buttonSizeY: 40.w,
-                                    buttonTextSize: 14.sp,
-                                    buttonTextWeight: FontWeight.w500),
-                              ),
-                            ],
+                            ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: 0.h,
+                                bottom: 16.h,
+                                left: 16.w,
+                                right: 16.w),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: MyAppButton(
+                                      onPressed: () {
+                                        goBack(context);
+                                      },
+                                      buttonText: "Cancel",
+                                      buttonTxtColor: CLR_PRIMARY,
+                                      buttonBorderColor: Colors.transparent,
+                                      buttonColor: BTN_CLR_ACTIVE,
+                                      buttonSizeX: 10.h,
+                                      buttonSizeY: 40.w,
+                                      buttonTextSize: 14.sp,
+                                      buttonTextWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  width: 40.w,
+                                ),
+                                Expanded(
+                                  child: MyAppButton(
+                                      onPressed: () {
+                                        handleFilter();
+                                      },
+                                      buttonText: "Apply",
+                                      buttonTxtColor: BTN_CLR_ACTIVE,
+                                      buttonBorderColor: Colors.transparent,
+                                      buttonColor: CLR_PRIMARY,
+                                      buttonSizeX: 10.h,
+                                      buttonSizeY: 40.w,
+                                      buttonTextSize: 14.sp,
+                                      buttonTextWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                      ],
-                    );
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                        ],
+                      );
+                    });
                   });
             },
             backgroundColor: CLR_PRIMARY,

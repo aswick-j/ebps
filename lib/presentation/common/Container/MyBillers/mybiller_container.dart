@@ -46,7 +46,7 @@ class MyBillersContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     handleDialog() {
       showDialog(
-          barrierDismissible: false,
+          barrierDismissible: true,
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -272,7 +272,13 @@ class MyBillersContainer extends StatelessWidget {
                                     context: context,
                                     icon: Icons.history,
                                     title: "View Payment History",
-                                    onPressed: () {}),
+                                    onPressed: () {
+                                      goToData(context, bILLERHISTORYROUTE, {
+                                        "categoryID":
+                                            savedBillersData.cATEGORYNAME,
+                                        "billerID": savedBillersData.bILLERID
+                                      });
+                                    }),
                                 if (savedBillersData.aUTOPAYID != null)
                                   if (getAllAutopayList(
                                           savedBillersData.cUSTOMERBILLID) !=
@@ -497,7 +503,9 @@ class MyBillersContainer extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   MyAppButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        goBack(context);
+                                      },
                                       buttonText: "Cancel",
                                       buttonTxtColor: CLR_PRIMARY,
                                       buttonBorderColor: Color(0xff768EB9),

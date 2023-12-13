@@ -44,7 +44,10 @@ class _splashScreenState extends State<splashScreen> {
             WidgetsBinding.instance?.addPostFrameCallback((_) {
               // goToReplace(context, hOMEROUTE);
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => BottomNavBar()),
+                MaterialPageRoute(
+                    builder: (context) => BottomNavBar(
+                          SelectedIndex: 0,
+                        )),
               );
             });
           } else if (state is SplashError) {

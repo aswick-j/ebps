@@ -1,4 +1,5 @@
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/constants/colors.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -94,7 +95,10 @@ class MainContainer extends StatelessWidget {
                 ),
               ],
             ),
-            trailing: Icon(Icons.delete),
+            trailing: Icon(
+              Icons.delete_outlined,
+              color: TXT_CLR_PRIMARY,
+            ),
           ),
           Divider(
             height: 10.h,

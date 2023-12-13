@@ -659,8 +659,8 @@ class HomeCubit extends Cubit<HomeState> {
           searchPayload['location'],
           searchPayload['pageNumber']);
 
-      logger.d(value,
-          error: "SEARCH BILLER API RESPONSE ===> lib/bloc/home/searchBiller");
+      // logger.d(value,
+      //     error: "SEARCH BILLER API RESPONSE ===> lib/bloc/home/searchBiller");
       if (value != null) {
         if (!value.toString().contains("Invalid token")) {
           if (value['status'] == 200) {

@@ -20,6 +20,7 @@ import 'package:ebps/presentation/screens/history/history_screen.dart';
 import 'package:ebps/presentation/screens/home/all_bill_categories.dart';
 import 'package:ebps/presentation/screens/home/all_upcoming_dues.dart';
 import 'package:ebps/presentation/screens/home/search_screen.dart';
+import 'package:ebps/presentation/screens/myBillers/bill_history.dart';
 import 'package:ebps/presentation/screens/myBillers/edit_biller.dart';
 // import 'package:ebps/presentation/screens/mpin/mpinScreen.dart';
 import 'package:ebps/presentation/screens/otp/otp_screen.dart';
@@ -41,6 +42,7 @@ const oTPPAGEROUTE = '/otp';
 const mPINROUTE = '/mpin';
 const tRANSROUTE = '/transSuccessful';
 const sEARCHROUTE = '/search';
+const bILLERHISTORYROUTE = '/billerHistory';
 const hISTORYROUTE = '/history';
 const hISTORYDETAILSROUTE = '/historyDetails';
 const rEGISTERCOMPLAINTROUTE = '/regsiterComplaintRoute';
@@ -269,6 +271,25 @@ class MyRouter {
                         create: (_) => HomeCubit(repository: apiClient)),
                   ],
                   child: HistoryScreen(),
+                ));
+
+//BILL HISTORY
+
+      case bILLERHISTORYROUTE:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                        create: (_) => HistoryCubit(repository: apiClient)),
+                    BlocProvider(
+                        create: (_) => MybillersCubit(repository: apiClient)),
+                  ],
+                  child: BillHistory(
+                      categoryID: args["categoryID"],
+                      billerID: args["billerID"]),
                 ));
 
       //HISTORY DETAILS

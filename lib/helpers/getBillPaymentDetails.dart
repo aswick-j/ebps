@@ -118,7 +118,6 @@ getBillPaymentDetails(
   //   failed,
   //   bbpsTimeout,
   // } as Map<String, dynamic>;
-  // debugPrint(result);
   return {
     "totalAmount": totalAmount,
     "paymentDate": paymentDate,

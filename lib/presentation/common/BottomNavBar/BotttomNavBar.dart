@@ -7,7 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({Key? key}) : super(key: key);
+  int SelectedIndex;
+
+  BottomNavBar({Key? key, required this.SelectedIndex}) : super(key: key);
 
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
@@ -15,6 +17,12 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int selectedIndex = 0;
+
+  @override
+  void initState() {
+    selectedIndex = widget.SelectedIndex;
+    super.initState();
+  }
 
   _onItemTapped(int index) {
     setState(() {

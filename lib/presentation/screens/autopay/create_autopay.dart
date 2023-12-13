@@ -490,6 +490,9 @@ class _createAutopayState extends State<createAutopay> {
                               icon:
                                   const Icon(Icons.refresh, color: Colors.grey),
                               onPressed: () {
+                                setState(() {
+                                  selectedAcc = null;
+                                });
                                 BlocProvider.of<HomeCubit>(context)
                                     .getAccountInfo(myAccounts);
                               },

@@ -484,9 +484,9 @@ class _BillerDetailsState extends State<BillerDetails> {
                                     alignment: Alignment.center,
                                     child: Text(
                                       PaymentExactErrMsg,
-                                      textAlign: TextAlign.center,
+                                      textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        fontSize: 14.sp,
+                                        fontSize: 12.sp,
                                         fontWeight: FontWeight.normal,
                                         color: CLR_ERROR,
                                       ),

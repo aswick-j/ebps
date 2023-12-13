@@ -8,6 +8,7 @@ import 'package:ebps/helpers/getBillPaymentDetails.dart';
 import 'package:ebps/helpers/getBillerType.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
+import 'package:ebps/presentation/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/presentation/common/Button/MyAppButton.dart';
 import 'package:ebps/presentation/widget/bbps_logo.dart';
 import 'package:flutter/material.dart';
@@ -128,11 +129,14 @@ class _TransactionScreenState extends State<TransactionScreen> {
           context: context,
           title: 'Go to Home',
           onLeadingTap: () => {
-            goBack(context),
-            goBack(context),
-            goBack(context),
-            goBack(context),
-            goBack(context),
+            WidgetsBinding.instance?.addPostFrameCallback((_) {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                    builder: (context) => BottomNavBar(
+                          SelectedIndex: 0,
+                        )),
+              );
+            }),
           },
           showActions: false,
         ),

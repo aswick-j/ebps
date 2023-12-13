@@ -1,21 +1,17 @@
+import 'package:ebps/bloc/history/history_cubit.dart';
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
-import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/data/models/auto_schedule_pay_model.dart';
 import 'package:ebps/data/models/saved_biller_model.dart';
 import 'package:ebps/data/models/upcoming_dues_model.dart';
 import 'package:ebps/data/services/api_client.dart';
-import 'package:ebps/helpers/capitalizeByWord.dart';
-import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/presentation/common/AppBar/MyAppBar.dart';
-import 'package:ebps/presentation/common/Button/MyAppButton.dart';
+import 'package:ebps/presentation/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/presentation/common/Container/MyBillers/mybiller_container.dart';
 import 'package:ebps/presentation/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 
 class BillerScreen extends StatefulWidget {
   const BillerScreen({super.key});
@@ -29,8 +25,11 @@ class _BillerScreenState extends State<BillerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MybillersCubit(repository: apiClient),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => MybillersCubit(repository: apiClient)),
+        BlocProvider(create: (_) => HistoryCubit(repository: apiClient)),
+      ],
       child: const BillerScreenUI(),
     );
   }
@@ -147,9 +146,6 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
               savedBiller.cUSTOMERBILLID != null &&
               (savedBiller.tRANSACTIONSTATUS == "success") &&
               savedBiller.bILLERACCEPTSADHOC == "N"))) {
-        print("====");
-        print(savedBiller.bILLERNAME);
-
         return true;
       } else {
         return false;
@@ -160,7 +156,15 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
       appBar: MyAppBar(
         context: context,
         title: 'Billers',
-        onLeadingTap: () => Navigator.pop(context),
+        onLeadingTap: () => WidgetsBinding.instance?.addPostFrameCallback((_) {
+          // goToReplace(context, hOMEROUTE);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+                builder: (context) => BottomNavBar(
+                      SelectedIndex: 0,
+                    )),
+          );
+        }),
         showActions: false,
       ),
       body: SingleChildScrollView(

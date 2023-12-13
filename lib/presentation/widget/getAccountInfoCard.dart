@@ -1,3 +1,4 @@
+import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -6,21 +7,21 @@ class AccountInfoCard extends StatelessWidget {
   String balance;
   int? isSelected;
   int index;
+  bool? AccErr;
   Function onAccSelected;
 
-  AccountInfoCard({
-    required this.accountNumber,
-    required this.onAccSelected,
-    required this.balance,
-    required this.isSelected,
-    required this.index,
-  });
+  AccountInfoCard(
+      {required this.accountNumber,
+      required this.onAccSelected,
+      required this.balance,
+      required this.isSelected,
+      required this.index,
+      this.AccErr});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("======");
         onAccSelected(index);
       },
       child: Container(
@@ -30,7 +31,11 @@ class AccountInfoCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6.0),
           border: Border.all(
-            color: isSelected == index ? Colors.green : Color(0xffD1D9E8),
+            color: isSelected == index && AccErr == true
+                ? CLR_ERROR
+                : isSelected == index
+                    ? Colors.green
+                    : Color(0xffD1D9E8),
             width: 1.0,
           ),
         ),
@@ -44,7 +49,11 @@ class AccountInfoCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13.0,
                   fontWeight: FontWeight.w600,
-                  color: isSelected == index ? Colors.green : Color(0xff808080),
+                  color: isSelected == index && AccErr == true
+                      ? CLR_ERROR
+                      : isSelected == index
+                          ? Colors.green
+                          : Color(0xff808080),
                 ),
                 textAlign: TextAlign.center,
               ),

@@ -50,11 +50,26 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar(
-          context: context,
-          title: "Search",
-          onLeadingTap: () => goBack(context),
-          showActions: false,
-        ),
+            context: context,
+            title: "Search",
+            onLeadingTap: () => goBack(context),
+            showActions: true,
+            actions: [
+              InkWell(
+                  onTap: () => {goTo(context, cOMPLAINTLISTROUTE)},
+                  child: Container(
+                      margin: EdgeInsets.only(right: 15.w),
+                      decoration: ShapeDecoration(
+                        color: Color(0xff4969A2),
+                        shape: CircleBorder(),
+                      ),
+                      child: Container(
+                        width: 30.w,
+                        height: 30.h,
+                        child: Icon(Icons.comment,
+                            color: Colors.white, size: 15.r),
+                      )))
+            ]),
         body: BlocConsumer<HomeCubit, HomeState>(listener: (context, state) {
           if (state is BillersSearchLoading) {
           } else if (state is BillersSearchSuccess) {

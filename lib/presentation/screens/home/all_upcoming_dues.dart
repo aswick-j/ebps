@@ -42,7 +42,6 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                 physics: const BouncingScrollPhysics(),
                 itemCount: widget.allUpcomingDues.length,
                 itemBuilder: (BuildContext context, int index) {
-                  print(widget.allUpcomingDues[index]["dueAmount"]);
                   return MainContainer(
                     titleText: widget.allUpcomingDues[index]["billName"],
                     subtitleText: widget.allUpcomingDues[index]["billerName"],
