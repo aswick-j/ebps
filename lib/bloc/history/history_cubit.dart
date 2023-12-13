@@ -12,7 +12,8 @@ class HistoryCubit extends Cubit<HistoryState> {
   Repository? repository;
   HistoryCubit({@required this.repository}) : super(HistoryInitial());
 
-  Future<void> getHistoryDetails(dateValues, custom) async {
+  Future<void> getHistoryDetails(
+      dateValues, categoryId, billerId, pageNumber, custom) async {
     Map<String, dynamic> payload = {};
     if (custom) {
       var newEndDate = DateTime.parse(dateValues['endDate']);
@@ -21,15 +22,21 @@ class HistoryCubit extends Cubit<HistoryState> {
 
       payload = {
         "startDate": dateValues['startDate'],
-        "endDate": finalEndDate.toString()
+        "endDate": finalEndDate.toString(),
+        "categoryId": categoryId,
+        "billerId": billerId,
+        "pageNumber": pageNumber
       };
     } else {
       Map<String, dynamic> dateData =
           await getTransactionHistoryDate(dateValues);
-
+      print(dateData);
       payload = {
         "startDate": dateData['startDate'],
         "endDate": dateData['endDate'],
+        "categoryId": categoryId,
+        "billerId": billerId,
+        "pageNumber": pageNumber
       };
     }
 

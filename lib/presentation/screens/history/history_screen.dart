@@ -55,6 +55,12 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
   dynamic catController = TextEditingController();
   dynamic billerController = TextEditingController();
 
+  DateTime? fromDate;
+  DateTime? toDate;
+
+  String? categoryID;
+  String? billerID;
+
   List<String> Periods = [
     "Today",
     'Yesterday',
@@ -72,12 +78,12 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
   List<CategorieData>? categoriesData = [];
 
   bool isCategoryLoading = false;
-  bool isHistoryLoading = false;
-  bool isHistoryFilterLoading = false;
+  bool isHistoryLoading = true;
+  bool isHistoryFilterLoading = true;
   @override
   void initState() {
     BlocProvider.of<HistoryCubit>(context)
-        .getHistoryDetails('This Week', false);
+        .getHistoryDetails('Today', "", "", "0", false);
     BlocProvider.of<HomeCubit>(context).getAllCategories();
 
     super.initState();
@@ -85,13 +91,24 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
 
   @override
   Widget build(BuildContext context) {
-    handleBiller(categoryName, categoryID) {
+    handleBiller(categoryName, category_ID) {
       setState(() {
         catController.text = categoryName;
+        categoryID = category_ID;
       });
 
       billerController.clear();
-      BlocProvider.of<HistoryCubit>(context).billerFilter(categoryID);
+      BlocProvider.of<HistoryCubit>(context).billerFilter(category_ID);
+    }
+
+    handleFilter() {
+      BlocProvider.of<HistoryCubit>(context).getHistoryDetails({
+        "startDate": fromDate!.toLocal().toIso8601String(),
+        "endDate": toDate != null
+            ? toDate!.toLocal().toIso8601String()
+            : DateTime.now().toLocal().toIso8601String(),
+      }, categoryID, billerID, "1", true);
+      goBack(context);
     }
 
     return Scaffold(
@@ -130,7 +147,9 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                 isHistoryLoading = false;
               } else if (state is HistoryFailed) {
                 isHistoryLoading = false;
-              } else if (state is HistoryError) {}
+              } else if (state is HistoryError) {
+                isHistoryLoading = false;
+              }
               if (state is billerFilterLoading) {
                 isHistoryFilterLoading = true;
               } else if (state is billerFilterSuccess) {
@@ -140,7 +159,9 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                 });
               } else if (state is billerFilterFailed) {
                 isHistoryFilterLoading = false;
-              } else if (state is billerFilterError) {}
+              } else if (state is billerFilterError) {
+                isHistoryFilterLoading = false;
+              }
             }),
             BlocListener<HomeCubit, HomeState>(
               listener: (context, state) {
@@ -160,53 +181,52 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
           ],
               child: Column(
                 children: [
-                  !(isHistoryLoading && isHistoryFilterLoading)
-                      ? historyData!.isNotEmpty
-                          ? Container(
-                              height: 550.h,
-                              child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemCount: historyData!.length,
-                                physics: const BouncingScrollPhysics(),
-                                // controller: infiniteScrollController,
-                                itemBuilder: (context, index) {
-                                  return HistoryContainer(
-                                    historyData: historyData![index],
-                                    // billerFilterData: billerFilterData,
-                                    titleText: 'Paid to',
-                                    subtitleText: historyData![index]
-                                        .bILLERNAME
-                                        .toString(),
-                                    dateText: DateFormat('dd/MM/yyyy').format(
-                                        DateTime.parse(historyData![index]
-                                                .cOMPLETIONDATE
-                                                .toString())
-                                            .toLocal()),
-                                    amount:
-                                        "₹ ${NumberFormat('#,##,##0.00').format(double.parse(historyData![index].bILLAMOUNT.toString()))}",
-                                    // '₹ ${historyData![index].bILLAMOUNT.toString()}',
-                                    statusText: historyData![index]
-                                                .tRANSACTIONSTATUS
-                                                .toString() ==
-                                            'success'
-                                        ? null
-                                        : getTransactionStatus(
-                                            historyData![index]
-                                                .tRANSACTIONSTATUS
-                                                .toString()),
-                                    iconPath:
-                                        'packages/ebps/assets/icon/icon_jio.svg',
-                                    containerBorderColor: Color(0xffD1D9E8),
-                                  );
-                                },
-                              ),
-                            )
-                          : Center(child: Text("No Transactions Found"))
-                      : Container(
-                          height: 500,
-                          width: double.infinity,
-                          child: Center(child: FlickrLoader())),
+                  if (!isHistoryLoading)
+                    historyData!.isNotEmpty
+                        ? Container(
+                            height: 550.h,
+                            child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: historyData!.length,
+                              physics: const BouncingScrollPhysics(),
+                              // controller: infiniteScrollController,
+                              itemBuilder: (context, index) {
+                                return HistoryContainer(
+                                  historyData: historyData![index],
+                                  // billerFilterData: billerFilterData,
+                                  titleText: 'Paid to',
+                                  subtitleText:
+                                      historyData![index].bILLERNAME.toString(),
+                                  dateText: DateFormat('dd/MM/yyyy').format(
+                                      DateTime.parse(historyData![index]
+                                              .cOMPLETIONDATE
+                                              .toString())
+                                          .toLocal()),
+                                  amount:
+                                      "₹ ${NumberFormat('#,##,##0.00').format(double.parse(historyData![index].bILLAMOUNT.toString()))}",
+                                  // '₹ ${historyData![index].bILLAMOUNT.toString()}',
+                                  statusText: historyData![index]
+                                              .tRANSACTIONSTATUS
+                                              .toString() ==
+                                          'success'
+                                      ? null
+                                      : getTransactionStatus(historyData![index]
+                                          .tRANSACTIONSTATUS
+                                          .toString()),
+                                  iconPath:
+                                      'packages/ebps/assets/icon/icon_jio.svg',
+                                  containerBorderColor: Color(0xffD1D9E8),
+                                );
+                              },
+                            ),
+                          )
+                        : Center(child: Text("No Transactions Found")),
+                  if (isHistoryLoading)
+                    Container(
+                        height: 500,
+                        width: double.infinity,
+                        child: Center(child: FlickrLoader())),
                 ],
               ))),
       floatingActionButton: BlocConsumer<HistoryCubit, HistoryState>(
@@ -289,10 +309,11 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                 setState(() {
                                   fromdateController.text = formattedDate;
                                   todateController.clear();
+                                  fromDate = pickedDate;
                                 });
                               }
                             },
-                            validator: (inputValue) {},
+                            // validator: (inputValue) {},
                             decoration: InputDecoration(
                               fillColor:
                                   const Color(0xffD1D9E8).withOpacity(0.2),
@@ -333,6 +354,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                           .format(pickedDate);
                                   setState(() {
                                     todateController.text = formattedDate;
+                                    toDate = pickedDate;
                                   });
                                 }
                               } else {
@@ -712,11 +734,18 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                                             (context, index) {
                                                           return GestureDetector(
                                                               onTap: () {
-                                                                billerController
-                                                                    .text = billerFilterData![
-                                                                        index]
-                                                                    .bILLERNAME
-                                                                    .toString();
+                                                                setState(() {
+                                                                  billerController
+                                                                      .text = billerFilterData![
+                                                                          index]
+                                                                      .bILLERNAME
+                                                                      .toString();
+                                                                  billerID = billerFilterData![
+                                                                          index]
+                                                                      .bILLERID
+                                                                      .toString();
+                                                                });
+
                                                                 goBack(context);
                                                               },
                                                               child: Padding(
@@ -862,7 +891,9 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                               ),
                               Expanded(
                                 child: MyAppButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      handleFilter();
+                                    },
                                     buttonText: "Apply",
                                     buttonTxtColor: BTN_CLR_ACTIVE,
                                     buttonBorderColor: Colors.transparent,
