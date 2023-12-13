@@ -300,7 +300,22 @@ class MyBillersContainer extends StatelessWidget {
                                           context: context,
                                           icon: Icons.edit,
                                           title: "Edit Autopay",
-                                          onPressed: () {}),
+                                          onPressed: () {
+                                            goToData(
+                                                context, cREATEAUTOPAYROUTE, {
+                                              "billerName":
+                                                  savedBillersData.bILLERNAME,
+                                              "categoryName":
+                                                  savedBillersData.cATEGORYNAME,
+                                              "billName":
+                                                  savedBillersData.bILLNAME,
+                                              "customerBillID": savedBillersData
+                                                  .cUSTOMERBILLID
+                                                  .toString(),
+                                              "savedInputSignatures":
+                                                  savedBillersData.pARAMETERS,
+                                            });
+                                          }),
                                 if (savedBillersData.aUTOPAYID != null)
                                   ModalMenu(
                                       context: context,
@@ -697,6 +712,8 @@ class MyBillersContainer extends StatelessWidget {
                               "billerName": savedBillersData.bILLERNAME,
                               "categoryName": savedBillersData.cATEGORYNAME,
                               "billName": savedBillersData.bILLNAME,
+                              "customerBillID":
+                                  savedBillersData.cUSTOMERBILLID.toString(),
                               "savedInputSignatures":
                                   savedBillersData.pARAMETERS,
                             });

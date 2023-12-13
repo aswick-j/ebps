@@ -1,6 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
 const String BASE_URL = "https://digiservicesuat.equitasbank.com/api";
+// const String BASE_URL = "http://192.168.192.186:5000/api";
+
 const String LOGIN_URL = "/auth/login/";
 const String CATEGORIES_URL = "/categories/";
 const String BILLER_URL = "/billers/billers-by-category/";

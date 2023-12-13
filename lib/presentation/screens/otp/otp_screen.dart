@@ -64,6 +64,10 @@ class _OtpScreenState extends State<OtpScreen> {
       BlocProvider.of<HomeCubit>(context).generateOtp(
           templateName: widget.templateName,
           billerName: widget.data!['billerName']);
+    } else if (widget.from == "create-auto-pay") {
+      BlocProvider.of<HomeCubit>(context).generateOtp(
+          templateName: widget.templateName,
+          billerName: widget.data!['billerName']);
     }
   }
 
@@ -129,6 +133,10 @@ class _OtpScreenState extends State<OtpScreen> {
         BlocProvider.of<HomeCubit>(context).generateOtp(
             templateName: widget.templateName,
             billerName: widget.data!['billerName']);
+      } else if (widget.from == "create-auto-pay") {
+        BlocProvider.of<HomeCubit>(context).generateOtp(
+            templateName: widget.templateName,
+            billerName: widget.data!['billerName']);
       }
 
       if (mounted) {
@@ -177,6 +185,10 @@ class _OtpScreenState extends State<OtpScreen> {
           widget.data!['cUSTOMERBILLID'],
           customerID!,
           txtOtpController.text.toString());
+    } else if (widget.from == "create-auto-pay") {
+      dynamic payload = widget.data;
+      payload['otp'] = txtOtpController.text.toString();
+      BlocProvider.of<HomeCubit>(context).createAutopay(payload);
     }
   }
 

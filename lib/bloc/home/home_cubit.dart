@@ -486,6 +486,48 @@ class HomeCubit extends Cubit<HomeState> {
     } catch (e) {}
   }
 
+  //CREATE AUTOPAY
+
+  void createAutopay(data) async {
+    if (!isClosed) {
+      emit(createAutopayLoading());
+    }
+    try {
+      final value = await repository!.createAutopayData(data);
+
+      logger.d(value,
+          error:
+              "CREATE AUTOPAY API RESPONSE ===> lib/bloc/home/createAutopay");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 400) {
+            if (!isClosed) {
+              emit(createAutopayFailed(
+                  message: "Auto pay already enabled for this biller."));
+            }
+          } else if (value['status'] == 200) {
+            if (!isClosed) {
+              emit(createAutopaySuccess(message: data['billerName']));
+            }
+          } else {
+            if (!isClosed) {
+              emit(createAutopayFailed(message: "Unable to Create Auto Pay."));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(createAutopayError(message: value['message']));
+          }
+        }
+      } else {
+        if (!isClosed) {
+          emit(createAutopayFailed(message: value['message']));
+        }
+      }
+    } catch (e) {}
+  }
+
   //PAY-BILL
 
   void payBill(

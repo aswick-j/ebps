@@ -92,4 +92,8 @@ abstract class Repository {
   //CATEGORY BILLER HISTORY FILTER
 
   Future getBillerHistoryFilter(categoryID) async {}
+
+  //CREATE AUTOPAY
+
+  Future createAutopayData(playload) async {}
 }

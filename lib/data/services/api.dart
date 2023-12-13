@@ -62,7 +62,7 @@ dynamic getDecodedToken() async {
   final encodedPayload = token?.split('.')[1];
   dynamic decodedToken =
       utf8.fuse(base64).decode(base64.normalize(encodedPayload));
-
+  print(decodedToken);
   return jsonDecode(decodedToken);
 }
 

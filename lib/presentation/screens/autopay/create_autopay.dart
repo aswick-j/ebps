@@ -1,5 +1,6 @@
 import 'package:ebps/bloc/MyBillers/mybillers_cubit.dart';
 import 'package:ebps/bloc/home/home_cubit.dart';
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/data/models/account_info_model.dart';
@@ -27,6 +28,8 @@ class createAutopay extends StatefulWidget {
   String billerName;
   String categoryName;
   String billName;
+  String customerBillID;
+
   List<PARAMETERS>? savedInputSignatures;
 
   createAutopay(
@@ -34,6 +37,7 @@ class createAutopay extends StatefulWidget {
       required this.billerName,
       required this.categoryName,
       required this.billName,
+      required this.customerBillID,
       required this.savedInputSignatures});
 
   @override
@@ -43,6 +47,8 @@ class createAutopay extends StatefulWidget {
 class _createAutopayState extends State<createAutopay> {
   int? limitGroupRadio = 0;
   int? billPayGroupRadio = 0;
+  String activatesFrom = "Immediately";
+
   bool isAccLoading = true;
   String? maximumAmount = "0";
 
@@ -136,12 +142,11 @@ class _createAutopayState extends State<createAutopay> {
                           width: 50.w,
                           child: Padding(
                             padding: EdgeInsets.all(8.0.r),
-                            child: SvgPicture.asset(
-                                "packages/ebps/assets/icon/icon_jio.svg"),
+                            child: SvgPicture.asset(LOGO_BBPS),
                           ),
                         ),
                         title: Text(
-                          "Airtel Telecom Services",
+                          widget.billerName,
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
@@ -150,7 +155,7 @@ class _createAutopayState extends State<createAutopay> {
                           textAlign: TextAlign.left,
                         ),
                         subtitle: Text(
-                          "Chennai",
+                          widget.billName,
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
@@ -168,7 +173,7 @@ class _createAutopayState extends State<createAutopay> {
                       billDetailsContainer(
                           title: "Customer No", subTitle: "3445556666"),
                       billDetailsContainer(
-                          title: "Biller Name", subTitle: "3445556666")
+                          title: "Bill Name", subTitle: widget.billName)
                     ],
                   )),
               Align(
@@ -256,6 +261,7 @@ class _createAutopayState extends State<createAutopay> {
                           controller: maxAmountController,
                           // key: _billnameKey,
                           autocorrect: false,
+                          readOnly: limitGroupRadio == 0 ? true : false,
                           enableSuggestions: false,
                           keyboardType: TextInputType.text,
                           inputFormatters: [
@@ -349,6 +355,7 @@ class _createAutopayState extends State<createAutopay> {
                         child: DropdownButtonFormField<String>(
                           isExpanded: true,
                           isDense: true,
+                          value: activatesFrom,
                           decoration: InputDecoration(
                             border: const UnderlineInputBorder(),
                             filled: true,
@@ -383,7 +390,9 @@ class _createAutopayState extends State<createAutopay> {
                                 value,
                               ),
                               onTap: () {
-                                setState(() {});
+                                setState(() {
+                                  activatesFrom = value;
+                                });
                               },
                             );
                           }).toList(),
@@ -414,6 +423,7 @@ class _createAutopayState extends State<createAutopay> {
                               onChanged: (val) {
                                 setState(() {
                                   billPayGroupRadio = 0;
+                                  activatesFrom = "Immediately";
                                 });
                               },
                               controlAffinity: ListTileControlAffinity.trailing,
@@ -435,6 +445,7 @@ class _createAutopayState extends State<createAutopay> {
                               onChanged: (val) {
                                 setState(() {
                                   billPayGroupRadio = 1;
+                                  activatesFrom = "Immediately";
                                 });
                               },
                               activeColor: TXT_CLR_PRIMARY,
@@ -585,20 +596,20 @@ class _createAutopayState extends State<createAutopay> {
                         goToData(context, oTPPAGEROUTE, {
                           "from": "create-auto-pay",
                           "templateName": "create-auto-pay",
-                          // "id": widget.billerName,
-                          // "data": {
-                          //   "accountNumber": accountIndex,
-                          //   "maximumAmount": txtMaxAmountController.text,
-                          //   "paymentDate": txtDateofPaymentController.text,
-                          //   "isBimonthly": isBimonthly,
-                          //   "activatesFrom": activatesFrom == "Immediately"
-                          //       ? null
-                          //       : activatesFrom.toLowerCase(),
-                          //   "isActive": activatesFrom == "Immediately" ? 1 : 0,
-                          //   "billID": widget.billID,
-                          //   "billerName": widget.billerName,
-                          //   "amountLimit": amountLimit
-                          // }
+                          "data": {
+                            "accountNumber":
+                                accountInfo![selectedAcc].accountNumber,
+                            "maximumAmount": maxAmountController.text,
+                            "paymentDate": selectedDate,
+                            "isBimonthly": billPayGroupRadio,
+                            "activatesFrom": activatesFrom == "Immediately"
+                                ? null
+                                : activatesFrom.toLowerCase(),
+                            "isActive": activatesFrom == "Immediately" ? 1 : 0,
+                            "billID": widget.customerBillID,
+                            "billerName": widget.billerName,
+                            "amountLimit": limitGroupRadio
+                          }
                         });
                       },
                       buttonText: "Create",

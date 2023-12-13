@@ -25,8 +25,8 @@ class _BillHistoryState extends State<BillHistory> {
   bool isHistoryLoading = true;
   @override
   void initState() {
-    BlocProvider.of<HistoryCubit>(context).getHistoryDetails(
-        'This Month', widget.categoryID, widget.billerID, "1", false);
+    BlocProvider.of<HistoryCubit>(context)
+        .getHistoryDetails('This Month', "", widget.billerID, "1", false);
     super.initState();
   }
 

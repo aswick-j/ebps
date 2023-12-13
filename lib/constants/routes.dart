@@ -222,8 +222,15 @@ class MyRouter {
         final args = settings.arguments as Map<String, dynamic>;
         return CupertinoPageRoute(
             fullscreenDialog: true,
-            builder: (_) => BlocProvider(
-                  create: (context) => HomeCubit(repository: apiClient),
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                        create: (_) => HistoryCubit(repository: apiClient)),
+                    BlocProvider(
+                        create: (_) => HomeCubit(repository: apiClient)),
+                    BlocProvider(
+                        create: (_) => MybillersCubit(repository: apiClient)),
+                  ],
                   child: OtpScreen(
                       from: args['from'],
                       templateName: args['templateName'],
@@ -360,13 +367,14 @@ class MyRouter {
                     billerName: args["billerName"],
                     categoryName: args["categoryName"],
                     billName: args["billName"],
+                    customerBillID: args["customerBillID"],
                     savedInputSignatures: args["savedInputSignatures"],
                   ),
                 ));
 
 //EDIT AUTOPAY
       case eDITAUTOPAYROUTE:
-        // final args = settings.arguments as Map<String, dynamic>;
+        final args = settings.arguments as Map<String, dynamic>;
 
         return CupertinoPageRoute(
             fullscreenDialog: true,
@@ -378,7 +386,13 @@ class MyRouter {
                         create: (_) => HomeCubit(repository: apiClient)),
                   ],
                   // create: (context) => MybillersCubit(repository: apiClient),
-                  child: editAutopay(),
+                  child: editAutopay(
+                    billerName: args["billerName"],
+                    categoryName: args["categoryName"],
+                    billName: args["billName"],
+                    customerBillID: args["customerBillID"],
+                    savedInputSignatures: args["savedInputSignatures"],
+                  ),
                 ));
 
       //EDIT BILLER

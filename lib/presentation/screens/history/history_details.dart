@@ -203,7 +203,18 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        goTo(context, cREATEAUTOPAYROUTE);
+                                        goToData(context, cREATEAUTOPAYROUTE, {
+                                          "billerName":
+                                              widget.historyData.bILLERNAME,
+                                          "categoryName":
+                                              widget.historyData.cATEGORYNAME,
+                                          "billName":
+                                              widget.historyData.bILLNAME,
+                                          "customerBillID":
+                                              widget.historyData.cUSTOMERBILLID,
+                                          "savedInputSignatures":
+                                              widget.historyData.pARAMETERS,
+                                        });
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
