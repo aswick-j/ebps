@@ -10,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class UpcomingDuesContainer extends StatefulWidget {
-  SavedBillersData savedBillersData;
+  SavedBillersData? savedBillersData;
 
   final String dateText;
   final String buttonText;
@@ -22,11 +22,13 @@ class UpcomingDuesContainer extends StatefulWidget {
   final FontWeight buttonTextWeight;
   final Color? buttonBorderColor;
   final VoidCallback onPressed;
+  BuildContext ctx;
 
   UpcomingDuesContainer(
       {required this.dateText,
       required this.buttonText,
       required this.amount,
+      required this.ctx,
       required this.iconPath,
       required this.containerBorderColor,
       required this.buttonColor,
@@ -45,7 +47,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
   Widget build(BuildContext context) {
     handleRefresh(billerID, quickPay, quickPayAmount, adHocBillValidationRefKey,
         validateBill, billerParams, billName) {
-      BlocProvider.of<HomeCubit>(context).fetchBill(
+      BlocProvider.of<HomeCubit>(widget.ctx).fetchBill(
           billerID: billerID,
           quickPay: quickPay,
           quickPayAmount: quickPayAmount,
@@ -86,7 +88,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.savedBillersData.bILLNAME.toString(),
+                    widget.savedBillersData!.bILLNAME.toString(),
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
@@ -98,9 +100,9 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                       onTap: () {
                         Map<String, dynamic> billerInputSign = {};
 
-                        if (widget.savedBillersData.pARAMETERS != null) {
+                        if (widget.savedBillersData!.pARAMETERS != null) {
                           for (var element
-                              in widget.savedBillersData.pARAMETERS!) {
+                              in widget.savedBillersData!.pARAMETERS!) {
                             billerInputSign[element.pARAMETERNAME.toString()] =
                                 element.pARAMETERVALUE.toString();
                           }
@@ -109,20 +111,20 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
 
                         setState(() {
                           validateBill = getBillerType(
-                              widget.savedBillersData.fETCHREQUIREMENT,
-                              widget.savedBillersData.bILLERACCEPTSADHOC,
-                              widget.savedBillersData.sUPPORTBILLVALIDATION,
-                              widget.savedBillersData.pAYMENTEXACTNESS);
+                              widget.savedBillersData!.fETCHREQUIREMENT,
+                              widget.savedBillersData!.bILLERACCEPTSADHOC,
+                              widget.savedBillersData!.sUPPORTBILLVALIDATION,
+                              widget.savedBillersData!.pAYMENTEXACTNESS);
                         });
 
                         handleRefresh(
-                            widget.savedBillersData.bILLERID,
+                            widget.savedBillersData!.bILLERID,
                             false,
                             "0",
                             null,
                             validateBill!["validateBill"],
                             billerInputSign,
-                            widget.savedBillersData.bILLNAME);
+                            widget.savedBillersData!.bILLNAME);
 
                         // BlocProvider.of<HomeCubit>(context).fetchBill(
                         //     billerID: widget.savedBillersData.bILLERID,
@@ -176,7 +178,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                         title: Padding(
                                           padding: EdgeInsets.only(bottom: 5.h),
                                           child: Text(
-                                            widget.savedBillersData.bILLNAME
+                                            widget.savedBillersData!.bILLNAME
                                                 .toString(),
                                             style: TextStyle(
                                               fontSize: 16.sp,
@@ -191,7 +193,8 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              widget.savedBillersData.bILLERNAME
+                                              widget
+                                                  .savedBillersData!.bILLERNAME
                                                   .toString(),
                                               style: TextStyle(
                                                 fontSize: 14.sp,
@@ -203,7 +206,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                               height: 10.h,
                                             ),
                                             Text(
-                                              widget.savedBillersData
+                                              widget.savedBillersData!
                                                   .pARAMETERVALUE
                                                   .toString(),
                                               style: TextStyle(
@@ -255,7 +258,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                     Column(
                       children: [
                         Text(
-                          widget.savedBillersData.pARAMETERVALUE.toString(),
+                          widget.savedBillersData!.pARAMETERVALUE.toString(),
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
