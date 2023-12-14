@@ -97,10 +97,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   late Timer _timer;
   final List<Color> _colors = [
-    Color.fromARGB(255, 255, 161, 242).withOpacity(0.2),
-    Color.fromARGB(255, 161, 255, 162).withOpacity(0.2),
     Color.fromARGB(255, 161, 173, 255).withOpacity(0.2),
-    Color.fromARGB(255, 255, 213, 171).withOpacity(0.2),
+    Color.fromARGB(255, 161, 249, 255).withOpacity(0.2),
+    Color.fromARGB(255, 161, 173, 255).withOpacity(0.2),
+    Color.fromARGB(255, 202, 255, 171).withOpacity(0.2),
     Color.fromARGB(255, 255, 253, 155).withOpacity(0.2),
     Color.fromARGB(255, 153, 255, 153).withOpacity(0.2),
     Color.fromARGB(255, 150, 150, 255).withOpacity(0.2),
