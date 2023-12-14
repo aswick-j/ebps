@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:ebps_example/Mock_Params.dart';
 import 'package:ebps_example/PluginScreen.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +48,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   final String API_URL =
       'https://digiservicesuat.equitasbank.com/api/auth/redirect';
 
@@ -93,153 +95,113 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  late Timer _timer;
+  final List<Color> _colors = [
+    Color.fromARGB(255, 255, 161, 242).withOpacity(0.2),
+    Color.fromARGB(255, 161, 255, 162).withOpacity(0.2),
+    Color.fromARGB(255, 161, 173, 255).withOpacity(0.2),
+    Color.fromARGB(255, 255, 213, 171).withOpacity(0.2),
+    Color.fromARGB(255, 255, 253, 155).withOpacity(0.2),
+    Color.fromARGB(255, 153, 255, 153).withOpacity(0.2),
+    Color.fromARGB(255, 150, 150, 255).withOpacity(0.2),
+    Color.fromARGB(255, 212, 151, 255).withOpacity(0.2),
+    Color.fromARGB(255, 223, 147, 255).withOpacity(0.5),
+  ];
+  double _animationValue = 0.0;
+
+  List value = [p8, p6, p7, p6];
+  List Name = ["Balaji", "Thangavel", "Aswick", "Swetha"];
+  List Img = [
+    "https://cdn.iconscout.com/icon/free/png-512/free-avatar-366-456318.png?f=webp&w=512",
+    "https://cdn.iconscout.com/icon/free/png-512/free-avatar-371-456323.png?f=webp&w=512",
+    "https://cdn.iconscout.com/icon/free/png-512/free-avatar-370-456322.png?f=webp&w=512",
+    "https://cdn.iconscout.com/icon/free/png-512/free-avatar-378-456330.png?f=webp&w=512"
+  ];
+
+  @override
+  void initState() {
+    _timer = Timer.periodic(const Duration(milliseconds: 40), (timer) {
+      setState(() {
+        _animationValue = (sin(timer.tick / 60) + 1) / 2;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   title: Text(widget.title),
-        // ),
-        body: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  fetchData(p6);
-                },
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 1 / 14,
-                  width: MediaQuery.of(context).size.width * 3 / 4,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.blue,
-                          Colors.purple,
-                        ]),
-                    borderRadius: BorderRadius.circular(16.0),
+        body: Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            _interpolateColor(_animationValue),
+            _interpolateColor((_animationValue + 0.1) % 1.0),
+          ],
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GridView.builder(
+                  shrinkWrap: true,
+                  itemCount: value.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 0,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text(""),
-                      const Text(
-                        "Go to BBPS Screen [ THANGA ]",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                        fetchData(value[index]);
+                      },
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                              radius: 40,
+                              backgroundColor: Colors.transparent,
+                              child: Image.network(Img[index])),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              Name[index],
+                              style: const TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 0, 0, 0)),
+                            ),
+                          ),
+                        ],
                       ),
-                      Container(
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.white),
-                          child: const Icon(
-                            Icons.arrow_right_alt_outlined,
-                            size: 25.0,
-                            color: Colors.red,
-                          ))
-                    ],
-                  ),
+                    );
+                  },
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: () {
-                  fetchData(p7);
-                },
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 1 / 14,
-                  width: MediaQuery.of(context).size.width * 3 / 4,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.blue,
-                          Colors.purple,
-                        ]),
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text(""),
-                      const Text(
-                        "Go to BBPS Screen [ ASWICK ]",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
-                      ),
-                      Container(
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.white),
-                          child: const Icon(
-                            Icons.arrow_right_alt_outlined,
-                            size: 25.0,
-                            color: Colors.red,
-                          ))
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: () {
-                  fetchData(p8);
-                },
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 1 / 14,
-                  width: MediaQuery.of(context).size.width * 3 / 4,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.blue,
-                          Colors.purple,
-                        ]),
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text(""),
-                      const Text(
-                        "Go to BBPS Screen [ BALAJI ]",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
-                      ),
-                      Container(
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.white),
-                          child: const Icon(
-                            Icons.arrow_right_alt_outlined,
-                            size: 25.0,
-                            color: Colors.red,
-                          ))
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )
-      ],
+              ],
+            ),
+          )
+        ],
+      ),
     ));
+  }
+
+  Color _interpolateColor(double t) {
+    final index1 = (t * (_colors.length - 1)).floor();
+    final index2 = (index1 + 1) % _colors.length;
+    final color1 = _colors[index1];
+    final color2 = _colors[index2];
+    final factor = t * (_colors.length - 1) - index1;
+    return Color.lerp(color1, color2, factor)!;
   }
 }

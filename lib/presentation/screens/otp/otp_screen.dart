@@ -224,14 +224,16 @@ class _OtpScreenState extends State<OtpScreen> {
                 alignment: Alignment.center,
                 child: MyAppButton(
                     onPressed: () {
-                      WidgetsBinding.instance?.addPostFrameCallback((_) {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                              builder: (context) => BottomNavBar(
-                                    SelectedIndex: 0,
-                                  )),
-                        );
-                      });
+                      goBack(context);
+
+                      // WidgetsBinding.instance?.addPostFrameCallback((_) {
+                      //   Navigator.of(context).pushReplacement(
+                      //     MaterialPageRoute(
+                      //         builder: (context) => BottomNavBar(
+                      //               SelectedIndex: 0,
+                      //             )),
+                      //   );
+                      // });
                     },
                     buttonText: "Okay",
                     buttonTxtColor: BTN_CLR_ACTIVE,

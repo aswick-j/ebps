@@ -535,29 +535,33 @@ class HomeCubit extends Cubit<HomeState> {
       emit(deleteAutopayLoading());
     }
     try {
-      await repository!.removeAutoPay(id, otp).then((value) {
-        if (value != null) {
-          if (!value.toString().contains("Invalid token")) {
-            if (value['status'] == 200) {
-              if (!isClosed) {
-                emit(deleteAutopaySuccess(message: value['message']));
-              }
-            } else {
-              if (!isClosed) {
-                emit(deleteAutopayFailed(message: value['message']));
-              }
+      final value = await repository!.removeAutoPay(id, otp);
+
+      logger.d(value,
+          error:
+              "DELETE AUTOPAY API RESPONSE ===> lib/bloc/home/deleteAutoPay");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            if (!isClosed) {
+              emit(deleteAutopaySuccess(message: value['message']));
             }
           } else {
             if (!isClosed) {
-              emit(deleteAutopayError(message: value['message']));
+              emit(deleteAutopayFailed(message: value['message']));
             }
           }
         } else {
           if (!isClosed) {
-            emit(deleteAutopayFailed(message: value['message']));
+            emit(deleteAutopayError(message: value['message']));
           }
         }
-      });
+      } else {
+        if (!isClosed) {
+          emit(deleteAutopayFailed(message: value['message']));
+        }
+      }
     } catch (e) {}
   }
 
