@@ -100,4 +100,8 @@ abstract class Repository {
   //DELETE AUTOPAY
 
   Future removeAutoPay(id, otp) async {}
+
+  //EDIT AUTOPAY
+
+  Future editAutopayData(id, data) async {}
 }

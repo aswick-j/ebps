@@ -565,6 +565,42 @@ class HomeCubit extends Cubit<HomeState> {
     } catch (e) {}
   }
 
+  //EDIT AUTOPAY
+
+  void editAutoPay(id, data) async {
+    if (!isClosed) {
+      emit(editAutopayLoading());
+    }
+    try {
+      final value = await repository!.editAutopayData(id, data);
+
+      logger.d(value,
+          error: "EDIT AUTOPAY API RESPONSE ===> lib/bloc/home/editAutoPay");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            if (!isClosed) {
+              emit(editAutopaySuccess(message: data['billerName']));
+            }
+          } else {
+            if (!isClosed) {
+              emit(editAutopayFailed(message: value['message']));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(editAutopayError(message: value['message']));
+          }
+        }
+      } else {
+        if (!isClosed) {
+          emit(editAutopayFailed(message: value['message']));
+        }
+      }
+    } catch (e) {}
+  }
+
   //PAY-BILL
 
   void payBill(

@@ -4,6 +4,7 @@ import 'package:ebps/domain/models/auto_schedule_pay_model.dart';
 import 'package:ebps/domain/models/saved_biller_model.dart';
 import 'package:ebps/domain/models/upcoming_dues_model.dart';
 import 'package:ebps/domain/services/api_client.dart';
+import 'package:ebps/shared/common/Container/Home/home_banners.dart';
 import 'package:ebps/shared/constants/assets.dart';
 import 'package:ebps/shared/constants/routes.dart';
 
@@ -215,8 +216,8 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                         color: Color(0xff1b438b),
                       ),
                     ),
-                    if (!isUpcomingAutopaymentLoading || !isUpcomingDuesLoading)
-                      if (allUpcomingDues.length > 1)
+                    if (!isUpcomingAutopaymentLoading && !isUpcomingDuesLoading)
+                      if (allUpcomingDues.length > 2)
                         InkWell(
                           onTap: () {
                             goToData(context, uPCOMINGDUESROUTE, {
@@ -246,18 +247,31 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                   ],
                 ),
               ),
-          if (allUpcomingDues.isNotEmpty)
+          if (!isUpcomingAutopaymentLoading &&
+              !isUpcomingDuesLoading &&
+              allUpcomingDues.isEmpty)
+            HomeBanners(),
+          if (!isUpcomingAutopaymentLoading &&
+              !isUpcomingDuesLoading &&
+              allUpcomingDues.isNotEmpty)
             ListView.builder(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
-                itemCount: 1,
+                itemCount: allUpcomingDues!.length == 0
+                    ? 0
+                    : allUpcomingDues.length == 1
+                        ? 1
+                        : 2,
                 itemBuilder: (BuildContext context, int index) {
                   return UpcomingDuesContainer(
-                    titleText: allUpcomingDues[index]["billName"],
-                    subtitleText: allUpcomingDues[index]["billerParams"] != ""
-                        ? "-"
-                        : "-",
+                    savedBillersData: SavedBiller!
+                        .where((element) =>
+                            element.cUSTOMERBILLID.toString().toLowerCase() ==
+                            allUpcomingDues[index]["customerBillId"]
+                                .toString()
+                                .toLowerCase())
+                        .toList()[0],
                     dateText: allUpcomingDues[index]["dueDate"] != ""
                         ? DateFormat('dd/MM/yyyy').format(DateTime.parse(
                                 allUpcomingDues[index]["dueDate"]!

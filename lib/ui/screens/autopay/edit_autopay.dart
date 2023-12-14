@@ -1,6 +1,7 @@
 import 'package:ebps/domain/models/account_info_model.dart';
 import 'package:ebps/domain/models/auto_schedule_pay_model.dart';
 import 'package:ebps/domain/models/saved_biller_model.dart';
+import 'package:ebps/domain/services/api.dart';
 import 'package:ebps/shared/constants/assets.dart';
 import 'package:ebps/shared/constants/colors.dart';
 import 'package:ebps/shared/constants/routes.dart';
@@ -625,13 +626,27 @@ class _editAutopayState extends State<editAutopay> {
                 ),
                 Expanded(
                   child: MyAppButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        Map<String, dynamic> decodedToken =
+                            await getDecodedToken();
+                        List decodedToken2 = decodedToken["accounts"].toList();
+                        print(decodedToken2);
+                        var accID;
+                        for (var i = 0; i < decodedToken2.length; i++) {
+                          if (decodedToken2[i]["accountID"] ==
+                              accountInfo![selectedAcc].accountNumber) {
+                            setState(() {
+                              accID = decodedToken2[i]["id"];
+                            });
+                          }
+                        }
+
                         goToData(context, oTPPAGEROUTE, {
                           "from": "edit-auto-pay",
                           "templateName": "edit-auto-pay",
+                          "autopayData": widget.autopayData,
                           "data": {
-                            "accountNumber":
-                                accountInfo![selectedAcc].accountNumber,
+                            "accountNumber": accID,
                             "maximumAmount": maxAmountController.text,
                             "paymentDate": selectedDate,
                             "isBimonthly": billPayGroupRadio,
@@ -641,7 +656,7 @@ class _editAutopayState extends State<editAutopay> {
                             "isActive": isActive,
                             "billID": widget.customerBillID,
                             "billerName": widget.billerName,
-                            "amountLimit": limitGroupRadio
+                            "amountLimit": limitGroupRadio,
                           }
                         });
                       },

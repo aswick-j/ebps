@@ -21,6 +21,22 @@ class AllUpcomingDues extends StatefulWidget {
 }
 
 class _AllUpcomingDuesState extends State<AllUpcomingDues> {
+  handleInputParams(int index) {
+    SavedBillersData savedBillersData;
+    List<SavedBillersData> billerDataTemp = [];
+
+    billerDataTemp = widget.SavedBiller.where((element) =>
+        element.cUSTOMERBILLID.toString().toLowerCase() ==
+        widget.allUpcomingDues[index]["customerBillId"]
+            .toString()
+            .toLowerCase()).toList();
+
+    if (billerDataTemp.isNotEmpty) {
+      savedBillersData = billerDataTemp[0];
+      return savedBillersData.pARAMETERVALUE.toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +60,7 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                   return MainContainer(
                     titleText: widget.allUpcomingDues[index]["billName"],
                     subtitleText: widget.allUpcomingDues[index]["billerName"],
-                    subtitleText2: '+044 4789 7893',
+                    subtitleText2: handleInputParams(index),
                     dateText: widget.allUpcomingDues[index]["dueDate"] != ""
                         ? DateFormat('dd/MM/yyyy').format(DateTime.parse(widget
                                 .allUpcomingDues[index]["dueDate"]!

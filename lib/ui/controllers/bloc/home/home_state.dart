@@ -262,6 +262,27 @@ class deleteAutopayError extends HomeState {
   deleteAutopayError({@required this.message});
 }
 
+//EDIT AUTOPAY
+
+class editAutopayLoading extends HomeState {}
+
+class editAutopaySuccess extends HomeState {
+  Map<String, dynamic>? data;
+  final String? message;
+  editAutopaySuccess({@required this.message, @required this.data});
+}
+
+class editAutopayFailed extends HomeState {
+  final String? message;
+  Map<String, dynamic>? data;
+  editAutopayFailed({@required this.message, @required this.data});
+}
+
+class editAutopayError extends HomeState {
+  final String? message;
+  editAutopayError({@required this.message});
+}
+
 //PAY-BILL
 
 class PayBillLoading extends HomeState {}

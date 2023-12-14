@@ -654,4 +654,21 @@ class ApiClient implements Repository {
       return decodedResponse;
     } catch (e) {}
   }
+
+  //EDIT AUTOPAY
+
+  @override
+  Future editAutopayData(id, data) async {
+    try {
+      Map<String, dynamic> body = data;
+      var response = await api(
+          method: "put",
+          url: BASE_URL + GET_AUTOPAY_URL + id.toString(),
+          token: true,
+          body: body,
+          checkSum: false);
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+      return decodedResponse;
+    } catch (e) {}
+  }
 }

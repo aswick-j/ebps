@@ -2,7 +2,6 @@ import 'package:ebps/shared/constants/colors.dart';
 import 'package:ebps/shared/constants/routes.dart';
 import 'package:ebps/shared/helpers/getNavigators.dart';
 import 'package:ebps/shared/common/AppBar/MyAppBar.dart';
-import 'package:ebps/shared/common/Container/Home/home_banners.dart';
 import 'package:ebps/ui/screens/home/bill_categories.dart';
 import 'package:ebps/ui/screens/home/upcoming_dues.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             UpcomingDues(),
             // HomeBanners(),
-            HomeBanners(),
+
             BillCategories(),
             SizedBox(
               height: 10.h,
