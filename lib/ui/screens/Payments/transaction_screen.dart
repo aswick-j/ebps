@@ -79,6 +79,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
     if (paymentDetails!['success']) {
       BlocProvider.of<MybillersCubit>(context)
           .deleteUpcomingDue(widget.billerData!["customerBillID"]);
+      BlocProvider.of<MybillersCubit>(context).getAddUpdateUpcomingDue();
     }
   }
 

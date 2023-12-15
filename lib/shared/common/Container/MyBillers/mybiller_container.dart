@@ -6,12 +6,14 @@ import 'package:ebps/shared/constants/routes.dart';
 
 import 'package:ebps/shared/helpers/getNavigators.dart';
 import 'package:ebps/shared/common/Button/MyAppButton.dart';
+import 'package:ebps/shared/widget/custom_switch.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
-class MyBillersContainer extends StatelessWidget {
+class MyBillersContainer extends StatefulWidget {
   final String? buttonText;
   final String iconPath;
   final String? upcomingText;
@@ -42,6 +44,13 @@ class MyBillersContainer extends StatelessWidget {
     required this.SavedinputParameters,
     required this.allautoPaymentList,
   });
+
+  @override
+  State<MyBillersContainer> createState() => _MyBillersContainerState();
+}
+
+class _MyBillersContainerState extends State<MyBillersContainer> {
+  bool switchButton = true;
 
   @override
   Widget build(BuildContext context) {
@@ -115,9 +124,9 @@ class MyBillersContainer extends StatelessWidget {
     getAllAutopayList(customerBILLID) {
       try {
         List<AllConfigurationsData>? autopayData = [];
-        for (int i = 0; i < allautoPaymentList!.length; i++) {
-          for (int j = 0; j < allautoPaymentList![i].data!.length; j++) {
-            autopayData.add(allautoPaymentList![i].data![j]);
+        for (int i = 0; i < widget.allautoPaymentList!.length; i++) {
+          for (int j = 0; j < widget.allautoPaymentList![i].data!.length; j++) {
+            autopayData.add(widget.allautoPaymentList![i].data![j]);
           }
         }
 
@@ -132,11 +141,11 @@ class MyBillersContainer extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         goToData(context, fETCHBILLERDETAILSROUTE, {
-          "name": savedBillersData.bILLERNAME,
-          "billName": savedBillersData.bILLNAME,
-          "savedBillersData": savedBillersData,
-          "SavedinputParameters": SavedinputParameters,
-          "categoryName": savedBillersData.cATEGORYNAME,
+          "name": widget.savedBillersData.bILLERNAME,
+          "billName": widget.savedBillersData.bILLNAME,
+          "savedBillersData": widget.savedBillersData,
+          "SavedinputParameters": widget.SavedinputParameters,
+          "categoryName": widget.savedBillersData.cATEGORYNAME,
           "isSavedBill": true,
         });
       },
@@ -158,13 +167,13 @@ class MyBillersContainer extends StatelessWidget {
                 width: 45.w,
                 child: Padding(
                   padding: EdgeInsets.all(8.r),
-                  child: SvgPicture.asset(iconPath),
+                  child: SvgPicture.asset(widget.iconPath),
                 ),
               ),
               title: Padding(
                 padding: EdgeInsets.only(bottom: 5.h),
                 child: Text(
-                  savedBillersData.bILLERNAME.toString(),
+                  widget.savedBillersData.bILLERNAME.toString(),
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.bold,
@@ -177,7 +186,7 @@ class MyBillersContainer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    savedBillersData.pARAMETERVALUE.toString(),
+                    widget.savedBillersData.pARAMETERVALUE.toString(),
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
@@ -186,8 +195,8 @@ class MyBillersContainer extends StatelessWidget {
                   ),
                 ],
               ),
-              trailing: IconButton(
-                onPressed: () {
+              trailing: GestureDetector(
+                onTap: () {
                   showModalBottomSheet(
                       context: context,
                       shape: RoundedRectangleBorder(
@@ -207,13 +216,13 @@ class MyBillersContainer extends StatelessWidget {
                                 width: 45.w,
                                 child: Padding(
                                   padding: EdgeInsets.all(8.r),
-                                  child: SvgPicture.asset(iconPath),
+                                  child: SvgPicture.asset(widget.iconPath),
                                 ),
                               ),
                               title: Padding(
                                 padding: EdgeInsets.only(bottom: 5.h),
                                 child: Text(
-                                  savedBillersData.bILLERNAME.toString(),
+                                  widget.savedBillersData.bILLERNAME.toString(),
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.bold,
@@ -226,12 +235,22 @@ class MyBillersContainer extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    savedBillersData.pARAMETERVALUE.toString(),
+                                    widget.savedBillersData.pARAMETERVALUE
+                                        .toString(),
                                     style: TextStyle(
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w400,
                                       color: Color(0xff808080),
                                     ),
+                                  ),
+                                  CupertinoSwitch(
+                                    value: switchButton,
+                                    activeColor: CLR_PRIMARY,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        switchButton = val;
+                                      });
+                                    },
                                   ),
                                   // SizedBox(
                                   //   height: 10,
@@ -275,25 +294,28 @@ class MyBillersContainer extends StatelessWidget {
                                     title: "View Payment History",
                                     onPressed: () {
                                       goToData(context, bILLERHISTORYROUTE, {
-                                        "categoryID":
-                                            savedBillersData.cATEGORYNAME,
-                                        "billerID": savedBillersData.bILLERID
+                                        "categoryID": widget
+                                            .savedBillersData.cATEGORYNAME,
+                                        "billerID":
+                                            widget.savedBillersData.bILLERID
                                       });
                                     }),
-                                if (savedBillersData.aUTOPAYID != null)
-                                  if (getAllAutopayList(
-                                          savedBillersData.cUSTOMERBILLID) !=
+                                if (widget.savedBillersData.aUTOPAYID != null)
+                                  if (getAllAutopayList(widget
+                                          .savedBillersData.cUSTOMERBILLID) !=
                                       null)
-                                    if ((getAllAutopayList(savedBillersData
+                                    if ((getAllAutopayList(widget
+                                                        .savedBillersData
                                                         .cUSTOMERBILLID) !=
                                                     null
-                                                ? getAllAutopayList(
-                                                        savedBillersData
-                                                            .cUSTOMERBILLID)!
+                                                ? getAllAutopayList(widget
+                                                        .savedBillersData
+                                                        .cUSTOMERBILLID)!
                                                     .pAYMENTDATE
                                                 : "") !=
                                             DateTime.now().day.toString() &&
-                                        getAllAutopayList(savedBillersData
+                                        getAllAutopayList(widget
+                                                    .savedBillersData
                                                     .cUSTOMERBILLID)!
                                                 .iSACTIVE ==
                                             1)
@@ -304,26 +326,28 @@ class MyBillersContainer extends StatelessWidget {
                                           onPressed: () {
                                             goToData(
                                                 context, eDITAUTOPAYROUTE, {
-                                              "billerName":
-                                                  savedBillersData.bILLERNAME,
-                                              "categoryName":
-                                                  savedBillersData.cATEGORYNAME,
-                                              "billName":
-                                                  savedBillersData.bILLNAME,
-                                              "customerBillID": savedBillersData
+                                              "billerName": widget
+                                                  .savedBillersData.bILLERNAME,
+                                              "categoryName": widget
+                                                  .savedBillersData
+                                                  .cATEGORYNAME,
+                                              "billName": widget
+                                                  .savedBillersData.bILLNAME,
+                                              "customerBillID": widget
+                                                  .savedBillersData
                                                   .cUSTOMERBILLID
                                                   .toString(),
                                               "autopayData": getAllAutopayList(
-                                                  savedBillersData
+                                                  widget.savedBillersData
                                                       .cUSTOMERBILLID),
-                                              "savedInputSignatures":
-                                                  savedBillersData.pARAMETERS,
+                                              "savedInputSignatures": widget
+                                                  .savedBillersData.pARAMETERS,
                                             });
                                           }),
-                                if (savedBillersData.aUTOPAYID != null)
+                                if (widget.savedBillersData.aUTOPAYID != null)
                                   ModalMenu(
                                       context: context,
-                                      iconPath: ICON_EDIT,
+                                      iconPath: ICON_DELETE,
                                       title: "Delete Autopay",
                                       onPressed: () {
                                         showModalBottomSheet(
@@ -463,13 +487,15 @@ class MyBillersContainer extends StatelessWidget {
                                                                           'delete-auto-pay',
                                                                       "templateName":
                                                                           "delete-auto-pay",
-                                                                      "autopayData":
-                                                                          getAllAutopayList(
-                                                                              savedBillersData.cUSTOMERBILLID),
+                                                                      "autopayData": getAllAutopayList(widget
+                                                                          .savedBillersData
+                                                                          .cUSTOMERBILLID),
                                                                       "data": {
-                                                                        "billerName":
-                                                                            savedBillersData.bILLERNAME,
-                                                                        "cUSTOMERBILLID": savedBillersData
+                                                                        "billerName": widget
+                                                                            .savedBillersData
+                                                                            .bILLERNAME,
+                                                                        "cUSTOMERBILLID": widget
+                                                                            .savedBillersData
                                                                             .cUSTOMERBILLID
                                                                             .toString(),
                                                                       }
@@ -502,17 +528,18 @@ class MyBillersContainer extends StatelessWidget {
                                               );
                                             });
                                       }),
-                                if (savedBillersData.aUTOPAYID == null)
+                                if (widget.savedBillersData.aUTOPAYID == null)
                                   ModalMenu(
                                       context: context,
                                       iconPath: ICON_EDIT,
                                       title: "Edit",
                                       onPressed: () {
                                         goToData(context, eDITBILLERROUTE, {
-                                          "SavedBillersData": savedBillersData
+                                          "SavedBillersData":
+                                              widget.savedBillersData
                                         });
                                       }),
-                                if (savedBillersData.aUTOPAYID == null)
+                                if (widget.savedBillersData.aUTOPAYID == null)
                                   ModalMenu(
                                       context: context,
                                       iconPath: ICON_DELETE,
@@ -654,9 +681,11 @@ class MyBillersContainer extends StatelessWidget {
                                                                       "templateName":
                                                                           "delete-biller-otp",
                                                                       "data": {
-                                                                        "billerName":
-                                                                            savedBillersData.bILLERNAME,
-                                                                        "cUSTOMERBILLID": savedBillersData
+                                                                        "billerName": widget
+                                                                            .savedBillersData
+                                                                            .bILLERNAME,
+                                                                        "cUSTOMERBILLID": widget
+                                                                            .savedBillersData
                                                                             .cUSTOMERBILLID
                                                                             .toString()
                                                                       }
@@ -704,7 +733,7 @@ class MyBillersContainer extends StatelessWidget {
                                       buttonText: "Cancel",
                                       buttonTxtColor: CLR_PRIMARY,
                                       buttonBorderColor: Color(0xff768EB9),
-                                      buttonColor: buttonColor,
+                                      buttonColor: widget.buttonColor,
                                       buttonSizeX: 10.h,
                                       buttonSizeY: 37.w,
                                       buttonTextSize: 14.sp,
@@ -716,10 +745,10 @@ class MyBillersContainer extends StatelessWidget {
                         );
                       });
                 },
-                icon: Icon(Icons.more_vert),
+                child: SvgPicture.asset(ICON_THREEMENU),
               ),
             ),
-            if (showButton)
+            if (widget.showButton)
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 70.0.w),
                 child: Align(
@@ -740,7 +769,8 @@ class MyBillersContainer extends StatelessWidget {
                       //     buttonTextWeight: FontWeight.w500),
                       GestureDetector(
                         onTap: () {
-                          if (buttonText.toString() == "Autopay Enabled") {
+                          if (widget.buttonText.toString() ==
+                              "Autopay Enabled") {
                             showModalBottomSheet(
                                 context: context,
                                 shape: RoundedRectangleBorder(
@@ -761,13 +791,14 @@ class MyBillersContainer extends StatelessWidget {
                                           width: 45.w,
                                           child: Padding(
                                             padding: EdgeInsets.all(8.r),
-                                            child: SvgPicture.asset(iconPath),
+                                            child: SvgPicture.asset(
+                                                widget.iconPath),
                                           ),
                                         ),
                                         title: Padding(
                                           padding: EdgeInsets.only(bottom: 5.h),
                                           child: Text(
-                                            savedBillersData.bILLERNAME
+                                            widget.savedBillersData.bILLERNAME
                                                 .toString(),
                                             style: TextStyle(
                                               fontSize: 16.sp,
@@ -782,7 +813,8 @@ class MyBillersContainer extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              savedBillersData.pARAMETERVALUE
+                                              widget.savedBillersData
+                                                  .pARAMETERVALUE
                                                   .toString(),
                                               style: TextStyle(
                                                 fontSize: 14.sp,
@@ -827,10 +859,10 @@ class MyBillersContainer extends StatelessWidget {
                                       ),
                                       ModalText(
                                           title: "Last Bill Amount",
-                                          subTitle: savedBillersData
+                                          subTitle: widget.savedBillersData
                                                       .bILLAMOUNT !=
                                                   null
-                                              ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(savedBillersData.bILLAMOUNT!.toString()))}"
+                                              ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.savedBillersData.bILLAMOUNT!.toString()))}"
                                               : "-",
                                           context: context),
                                       ModalText(
@@ -843,23 +875,23 @@ class MyBillersContainer extends StatelessWidget {
                                           context: context),
                                       ModalText(
                                           title: "Autopay Date",
-                                          subTitle: getAllAutopayList(
-                                                  savedBillersData
-                                                      .cUSTOMERBILLID)!
+                                          subTitle: getAllAutopayList(widget
+                                                  .savedBillersData
+                                                  .cUSTOMERBILLID)!
                                               .pAYMENTDATE,
                                           context: context),
                                       ModalText(
                                           title: "Debit Account",
-                                          subTitle: getAllAutopayList(
-                                                  savedBillersData
-                                                      .cUSTOMERBILLID)!
+                                          subTitle: getAllAutopayList(widget
+                                                  .savedBillersData
+                                                  .cUSTOMERBILLID)!
                                               .aCCOUNTNUMBER
                                               .toString(),
                                           context: context),
                                       ModalText(
                                           title: "Debit Limit",
                                           subTitle:
-                                              "₹ ${NumberFormat('#,##,##0.00').format(double.parse(getAllAutopayList(savedBillersData.cUSTOMERBILLID)!.mAXIMUMAMOUNT.toString()))}",
+                                              "₹ ${NumberFormat('#,##,##0.00').format(double.parse(getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.mAXIMUMAMOUNT.toString()))}",
                                           context: context),
                                       Padding(
                                         padding: EdgeInsets.only(
@@ -875,7 +907,7 @@ class MyBillersContainer extends StatelessWidget {
                                                 buttonTxtColor: CLR_PRIMARY,
                                                 buttonBorderColor:
                                                     Color(0xff768EB9),
-                                                buttonColor: buttonColor,
+                                                buttonColor: widget.buttonColor,
                                                 buttonSizeX: 10.h,
                                                 buttonSizeY: 37.w,
                                                 buttonTextSize: 14.sp,
@@ -889,13 +921,15 @@ class MyBillersContainer extends StatelessWidget {
                                 });
                           } else {
                             goToData(context, cREATEAUTOPAYROUTE, {
-                              "billerName": savedBillersData.bILLERNAME,
-                              "categoryName": savedBillersData.cATEGORYNAME,
-                              "billName": savedBillersData.bILLNAME,
-                              "customerBillID":
-                                  savedBillersData.cUSTOMERBILLID.toString(),
+                              "billerName": widget.savedBillersData.bILLERNAME,
+                              "categoryName":
+                                  widget.savedBillersData.cATEGORYNAME,
+                              "billName": widget.savedBillersData.bILLNAME,
+                              "customerBillID": widget
+                                  .savedBillersData.cUSTOMERBILLID
+                                  .toString(),
                               "savedInputSignatures":
-                                  savedBillersData.pARAMETERS,
+                                  widget.savedBillersData.pARAMETERS,
                             });
                           }
                         },
@@ -903,13 +937,13 @@ class MyBillersContainer extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               horizontal: 8.0.w, vertical: 4.w),
                           decoration: BoxDecoration(
-                            border: Border.all(color: buttonBorderColor),
+                            border: Border.all(color: widget.buttonBorderColor),
                             borderRadius: BorderRadius.circular(12.0.r),
                           ),
                           child: Text(
-                            buttonText.toString(),
+                            widget.buttonText.toString(),
                             style: TextStyle(
-                              color: buttonTxtColor,
+                              color: widget.buttonTxtColor,
                               fontSize: 10.0.sp,
                             ),
                           ),
@@ -940,16 +974,16 @@ class MyBillersContainer extends StatelessWidget {
                   ),
                 ),
               ),
-            if (!(savedBillersData.cOMPLETIONDATE == null &&
-                savedBillersData.bILLAMOUNT == null))
+            if (!(widget.savedBillersData.cOMPLETIONDATE == null &&
+                widget.savedBillersData.bILLAMOUNT == null))
               Divider(
                 height: 10.h,
                 thickness: 1,
                 indent: 10.h,
                 endIndent: 10,
               ),
-            if (!(savedBillersData.cOMPLETIONDATE == null &&
-                savedBillersData.bILLAMOUNT == null))
+            if (!(widget.savedBillersData.cOMPLETIONDATE == null &&
+                widget.savedBillersData.bILLAMOUNT == null))
               Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 6.0.h),
@@ -966,10 +1000,10 @@ class MyBillersContainer extends StatelessWidget {
                               width: 5.w,
                             ),
                             Text(
-                              savedBillersData.cOMPLETIONDATE != null
+                              widget.savedBillersData.cOMPLETIONDATE != null
                                   ? DateFormat('dd/MM/yyyy').format(
-                                      DateTime.parse(savedBillersData
-                                              .cOMPLETIONDATE!
+                                      DateTime.parse(widget
+                                              .savedBillersData.cOMPLETIONDATE!
                                               .toString()
                                               .substring(0, 10))
                                           .toLocal()
@@ -984,25 +1018,25 @@ class MyBillersContainer extends StatelessWidget {
                             ),
                           ],
                         ),
-                        if (upcomingText != "")
+                        if (widget.upcomingText != "")
                           SizedBox(
                             height: 3.h,
                           ),
-                        if (upcomingText != "")
+                        if (widget.upcomingText != "")
                           Text(
-                            upcomingText!,
+                            widget.upcomingText!,
                             style: TextStyle(
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w600,
-                              color: upcomingTXT_CLR_DEFAULT,
+                              color: widget.upcomingTXT_CLR_DEFAULT,
                             ),
                             textAlign: TextAlign.center,
                           )
                       ],
                     ),
                     Text(
-                      savedBillersData.bILLAMOUNT != null
-                          ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(savedBillersData.bILLAMOUNT!.toString()))}"
+                      widget.savedBillersData.bILLAMOUNT != null
+                          ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.savedBillersData.bILLAMOUNT!.toString()))}"
                           : "-",
                       style: TextStyle(
                         fontSize: 14.sp,

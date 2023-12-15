@@ -138,3 +138,22 @@ class DeleteUpcomingDueFailed extends MybillersState {
   String? message;
   DeleteUpcomingDueFailed({@required this.message});
 }
+
+//ADD OR UPDATE UPCOMING DUE
+
+class AddUpdateUpcomingDueLoading extends MybillersState {}
+
+class AddUpdateUpcomingDueSuccess extends MybillersState {
+  final AddUpdateUpcomingData? addUpdateUpcomingDueData;
+  AddUpdateUpcomingDueSuccess({@required this.addUpdateUpcomingDueData});
+}
+
+class AddUpdateUpcomingDueFailed extends MybillersState {
+  final String? message;
+  AddUpdateUpcomingDueFailed({@required this.message});
+}
+
+class AddUpdateUpcomingDueError extends MybillersState {
+  final String? message;
+  AddUpdateUpcomingDueError({@required this.message});
+}

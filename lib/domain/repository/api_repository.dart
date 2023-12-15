@@ -108,4 +108,9 @@ abstract class Repository {
   //DELETE UPCOMING DUE
 
   Future deleteUpcomingDue(customerBillID);
+
+  //ADD OR UPDATE UPCOMING DUE
+
+  Future getAddUpdateUpcomingDue(
+      customerBillID, dueAmount, dueDate, billDate, billPeriod) async {}
 }

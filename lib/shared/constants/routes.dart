@@ -157,8 +157,13 @@ class MyRouter {
 
         return CupertinoPageRoute(
             fullscreenDialog: true,
-            builder: (_) => BlocProvider(
-                  create: (context) => HomeCubit(repository: apiClient),
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                        create: (_) => HomeCubit(repository: apiClient)),
+                    BlocProvider(
+                        create: (_) => MybillersCubit(repository: apiClient)),
+                  ],
                   child: BillerDetails(
                     billID: args['billID'],
                     billerName: args['name'],

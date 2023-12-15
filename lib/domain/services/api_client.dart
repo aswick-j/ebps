@@ -703,4 +703,57 @@ class ApiClient implements Repository {
       };
     }
   }
+
+  //ADD OR UPDATE UPCOMING DUE
+
+  @override
+  Future getAddUpdateUpcomingDue(
+      customerBillID, dueAmount, dueDate, billDate, billPeriod) async {
+    /**
+     {"data":{"billName":"Aishu","billerAcceptsAdhoc":"Y","billerCoverage":"IND","billerID":"OTO125007XXA63","billerIcon":"OTO12","billerName":"OTO12","billerParams":{"a":"26","a b":"70","a b c":"688","a b c d":"572","a b c d e":"582"},"categoryID":5,"customerBillID":2395,"fetchRequirement":"OPTIONAL","paymentExactness":"Exact","supportBillValidation":"NOT_SUPPORTED","validateBillAllowed":"N","dueAmount":"1000.00","dueDate":"2015-06-20"},"message":"Successfully added upcoming due","status":200}
+     */
+    try {
+      var response;
+
+      Map<String, dynamic> body = {
+        "customerBillID": customerBillID,
+        "dueAmount": dueAmount,
+        "dueDate": dueDate,
+        "billDate": billDate,
+        "billPeriod": billPeriod
+      };
+
+      if (customerBillID != null && dueAmount != null && dueDate != null) {
+        response = await api(
+            method: "post",
+            url: BASE_URL + ADDUPDATE_UPCOMING_URL,
+            body: body,
+            token: true,
+            checkSum: false);
+      } else {
+        response = await api(
+            method: "get",
+            url: BASE_URL + UPDATE_UPCOMING_URL,
+            token: true,
+            checkSum: false);
+      }
+
+      if (!response.body.toString().contains("<html>")) {
+        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+        return decodedResponse;
+      } else {
+        return {
+          "status": 500,
+          "message": "Something went wrong",
+          "data": "Error"
+        };
+      }
+    } catch (e) {
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
+  }
 }

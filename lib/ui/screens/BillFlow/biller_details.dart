@@ -3,6 +3,7 @@ import 'package:ebps/domain/models/billers_model.dart';
 import 'package:ebps/domain/models/fetch_bill_model.dart';
 import 'package:ebps/domain/models/paymentInformationModel.dart';
 import 'package:ebps/domain/models/saved_biller_model.dart';
+import 'package:ebps/shared/constants/assets.dart';
 import 'package:ebps/shared/constants/colors.dart';
 import 'package:ebps/shared/constants/routes.dart';
 
@@ -17,6 +18,7 @@ import 'package:ebps/shared/widget/flickr_loader.dart';
 import 'package:ebps/shared/widget/get_biller_detail.dart';
 import 'package:ebps/shared/widget/no_result.dart';
 import 'package:ebps/ui/controllers/bloc/home/home_cubit.dart';
+import 'package:ebps/ui/controllers/bloc/myBillers/mybillers_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -178,7 +180,16 @@ class _BillerDetailsState extends State<BillerDetails> {
               isFetchbillLoading = false;
               isUnableToFetchBill = false;
             });
+            BlocProvider.of<MybillersCubit>(context).getAddUpdateUpcomingDue(
+                customerBillID: widget.isSavedBill
+                    ? widget.savedBillersData!.cUSTOMERBILLID
+                    : _customerBIllID,
+                dueAmount: _billerResponseData!.amount,
+                dueDate: _billerResponseData!.dueDate,
+                billDate: _billerResponseData!.billDate,
+                billPeriod: _billerResponseData!.billPeriod);
           } else if (state is FetchBillFailed) {
+            BlocProvider.of<MybillersCubit>(context).getAddUpdateUpcomingDue();
             if (state.message.toString().contains("Unable to fetch")) {
               isUnableToFetchBill = true;
             }
@@ -207,7 +218,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         BillerDetailsContainer(
-                          icon: 'packages/ebps/assets/icon/logo_bbps.svg',
+                          icon: LOGO_BBPS,
                           billerName: widget.billerName.toString(),
                           categoryName: widget.categoryName.toString(),
                         ),

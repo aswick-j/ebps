@@ -1,4 +1,5 @@
 import 'package:ebps/shared/constants/assets.dart';
+import 'package:ebps/shared/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -19,6 +20,9 @@ class FlickrLoader extends StatelessWidget {
     //     height: 50.h,
     //     width: 50.w,
     //   ),
+    // );
+    // return Center(
+    //   child: CircularProgressIndicator(color: CLR_PRIMARY),
     // );
   }
 }

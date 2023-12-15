@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:ebps/domain/models/add_update_upcoming_due_model.dart';
 import 'package:ebps/domain/models/auto_schedule_pay_model.dart';
 import 'package:ebps/domain/models/delete_upcoming_due_model.dart';
 import 'package:ebps/domain/models/edit_bill_modal.dart';
@@ -141,6 +142,52 @@ class MybillersCubit extends Cubit<MybillersState> {
 
         if (!isClosed) {
           emit(DeleteUpcomingDueFailed(message: value['message']));
+        }
+      }
+    } catch (e) {}
+  }
+
+  //ADD OR UPDATE UPCOMING DUE
+
+  void getAddUpdateUpcomingDue(
+      {int? customerBillID,
+      String? dueAmount,
+      String? dueDate,
+      String? billDate,
+      String? billPeriod}) async {
+    if (!isClosed) {
+      emit(AddUpdateUpcomingDueLoading());
+    }
+    try {
+      final value = await repository!.getAddUpdateUpcomingDue(
+          customerBillID, dueAmount, dueDate, billDate, billPeriod);
+
+      logger.d(value,
+          error:
+              "ADD OR UPDATE UPCOMING DUES API RESPONSE ===> lib/bloc/mybillers/getAddUpdateUpcomingDue");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            AddUpdateUpcomingModel? addUpdateUpcomingModel =
+                AddUpdateUpcomingModel.fromJson(value);
+            if (!isClosed) {
+              emit(AddUpdateUpcomingDueSuccess(
+                  addUpdateUpcomingDueData: addUpdateUpcomingModel.data));
+            }
+          } else {
+            if (!isClosed) {
+              emit(AddUpdateUpcomingDueFailed(message: value['message']));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(AddUpdateUpcomingDueError(message: value['message']));
+          }
+        }
+      } else {
+        if (!isClosed) {
+          emit(AddUpdateUpcomingDueFailed(message: value['message']));
         }
       }
     } catch (e) {}
