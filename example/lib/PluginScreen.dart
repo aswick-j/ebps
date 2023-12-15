@@ -14,7 +14,9 @@ class _PluginScreenState extends State<PluginScreen> {
   Widget build(BuildContext context) {
     String? apiData = widget.apiData;
     return Scaffold(
-      body: Center(child: EbpsScreen(apiData: apiData)),
+      body: WillPopScope(
+          onWillPop: () async => false,
+          child: Center(child: EbpsScreen(apiData: apiData))),
     );
   }
 }
