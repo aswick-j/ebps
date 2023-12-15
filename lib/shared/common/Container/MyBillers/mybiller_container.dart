@@ -176,14 +176,20 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
               ),
               title: Padding(
                 padding: EdgeInsets.only(bottom: 5.h),
-                child: Text(
-                  widget.savedBillersData.bILLERNAME.toString(),
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xff191919),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text(
+                    widget.savedBillersData.bILLERNAME.toString(),
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff191919),
+                      overflow: TextOverflow.fade,
+                    ),
+                    textAlign: TextAlign.left,
+                    maxLines: 1,
+                    softWrap: false,
                   ),
-                  textAlign: TextAlign.left,
                 ),
               ),
               subtitle: Column(
@@ -225,14 +231,20 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                               ),
                               title: Padding(
                                 padding: EdgeInsets.only(bottom: 5.h),
-                                child: Text(
-                                  widget.savedBillersData.bILLERNAME.toString(),
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xff191919),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Text(
+                                    widget.savedBillersData.bILLERNAME
+                                        .toString(),
+                                    style: TextStyle(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xff191919),
+                                        overflow: TextOverflow.fade),
+                                    textAlign: TextAlign.left,
+                                    maxLines: 1,
+                                    softWrap: false,
                                   ),
-                                  textAlign: TextAlign.left,
                                 ),
                               ),
                               subtitle: Column(
@@ -419,12 +431,13 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                             context,
                                                                             oTPPAGEROUTE,
                                                                             {
-                                                                              "from": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "disable-auto-pay" : "enable-auto-pay",
+                                                                              "from": "modify-auto-pay",
                                                                               "templateName": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "disable-auto-pay" : "enable-auto-pay",
                                                                               "autopayData": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID),
                                                                               "data": {
                                                                                 "billerName": widget.savedBillersData.bILLERNAME,
                                                                                 "cUSTOMERBILLID": widget.savedBillersData.cUSTOMERBILLID.toString(),
+                                                                                "status": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "0" : "1",
                                                                               }
                                                                             });
                                                                       },
@@ -1030,8 +1043,10 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                               fontSize: 16.sp,
                                               fontWeight: FontWeight.bold,
                                               color: Color(0xff191919),
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                             textAlign: TextAlign.left,
+                                            maxLines: 1,
                                           ),
                                         ),
                                         subtitle: Column(

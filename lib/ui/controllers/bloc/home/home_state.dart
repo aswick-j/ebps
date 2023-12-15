@@ -283,6 +283,27 @@ class editAutopayError extends HomeState {
   editAutopayError({@required this.message});
 }
 
+//MODIFY Autopay
+
+class modifyAutopayLoading extends HomeState {}
+
+class modifyAutopaySuccess extends HomeState {
+  Map<String, dynamic>? data;
+  final String? message;
+  modifyAutopaySuccess({@required this.message, @required this.data});
+}
+
+class modifyAutopayFailed extends HomeState {
+  final String? message;
+  Map<String, dynamic>? data;
+  modifyAutopayFailed({@required this.message, @required this.data});
+}
+
+class modifyAutopayError extends HomeState {
+  final String? message;
+  modifyAutopayError({@required this.message});
+}
+
 //PAY-BILL
 
 class PayBillLoading extends HomeState {}

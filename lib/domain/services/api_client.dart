@@ -756,4 +756,21 @@ class ApiClient implements Repository {
       };
     }
   }
+
+  //MODIFY AUTOPAY
+
+  @override
+  Future modifyAutopay(id, status, otp) async {
+    try {
+      Map<String, dynamic> body = {"status": int.parse(status), "otp": otp};
+      var response = await api(
+          method: "put",
+          url: BASE_URL + AUTOPAY_MODIFY_URL + id.toString(),
+          body: body,
+          token: true,
+          checkSum: false);
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+      return decodedResponse;
+    } catch (e) {}
+  }
 }

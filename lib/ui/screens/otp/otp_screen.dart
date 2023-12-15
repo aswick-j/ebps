@@ -76,6 +76,10 @@ class _OtpScreenState extends State<OtpScreen> {
       BlocProvider.of<HomeCubit>(context).generateOtp(
           templateName: widget.templateName,
           billerName: widget.autopayData!.bILLERNAME.toString());
+    } else if (widget.from == "modify-auto-pay") {
+      BlocProvider.of<HomeCubit>(context).generateOtp(
+          templateName: widget.templateName,
+          billerName: widget.autopayData!.bILLERNAME.toString());
     }
   }
 
@@ -153,6 +157,10 @@ class _OtpScreenState extends State<OtpScreen> {
         BlocProvider.of<HomeCubit>(context).generateOtp(
             templateName: widget.templateName,
             billerName: widget.autopayData!.bILLERNAME.toString());
+      } else if (widget.from == "modify-auto-pay") {
+        BlocProvider.of<HomeCubit>(context).generateOtp(
+            templateName: widget.templateName,
+            billerName: widget.autopayData!.bILLERNAME.toString());
       }
 
       if (mounted) {
@@ -213,6 +221,9 @@ class _OtpScreenState extends State<OtpScreen> {
       payload['otp'] = txtOtpController.text.toString();
       BlocProvider.of<HomeCubit>(context)
           .editAutoPay(widget.autopayData!.iD, payload);
+    } else if (widget.from == "modify-auto-pay") {
+      BlocProvider.of<HomeCubit>(context).modifyAutopay(widget.autopayData!.iD,
+          widget.data!['status'], txtOtpController.text.toString());
     }
   }
 
@@ -506,6 +517,19 @@ class _OtpScreenState extends State<OtpScreen> {
             } else if (state is deleteAutopayFailed) {
               LoaderOverlay.of(context).hide();
             } else if (state is deleteAutopayError) {
+              LoaderOverlay.of(context).hide();
+            }
+            if (state is modifyAutopayLoading) {
+              LoaderOverlay.of(context).show();
+            } else if (state is modifyAutopaySuccess) {
+              LoaderOverlay.of(context).hide();
+
+              showModalDialog(
+                  title:
+                      "Autopay ${widget.templateName == "disable-auto-pay" ? "Paused" : "Resume"} Successfully");
+            } else if (state is modifyAutopayFailed) {
+              LoaderOverlay.of(context).hide();
+            } else if (state is modifyAutopayError) {
               LoaderOverlay.of(context).hide();
             }
           },

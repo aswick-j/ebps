@@ -113,4 +113,8 @@ abstract class Repository {
 
   Future getAddUpdateUpcomingDue(
       customerBillID, dueAmount, dueDate, billDate, billPeriod) async {}
+
+//MODIFY AUTOPAY
+
+  Future modifyAutopay(id, status, otp) async {}
 }
