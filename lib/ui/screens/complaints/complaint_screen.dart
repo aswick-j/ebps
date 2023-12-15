@@ -2,6 +2,7 @@ import 'package:ebps/domain/models/complaints_model.dart';
 import 'package:ebps/domain/services/api_client.dart';
 import 'package:ebps/shared/common/AppBar/MyAppBar.dart';
 import 'package:ebps/shared/common/Container/Complaint/complaint_container.dart';
+import 'package:ebps/shared/constants/assets.dart';
 import 'package:ebps/shared/widget/flickr_loader.dart';
 import 'package:ebps/ui/controllers/bloc/complaint/complaint_cubit.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +96,7 @@ class _ComplaintListState extends State<ComplaintList> {
                                 "₹ ${NumberFormat('#,##,##0.00').format(double.parse(ComplaintList[index].bILLAMOUNT.toString()))}",
                             statusText: ComplaintList[index].sTATUS,
                             complaintData: ComplaintList[index],
-                            iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
+                            iconPath: LOGO_BBPS,
                             containerBorderColor: Color(0xffD1D9E8),
                           );
                         },

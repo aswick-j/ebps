@@ -139,29 +139,22 @@ class HistoryContainer extends StatelessWidget {
                         if (statusText != null)
                           Container(
                               margin: EdgeInsets.all(5.r),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: statusText == "PENDING"
-                                    ? CLR_ASTRIX
-                                    : CLR_ERROR,
-                                border: Border.all(
-                                  color: statusText == "PENDING"
-                                      ? CLR_ASTRIX
-                                      : CLR_ERROR,
-                                  width: 2.0,
-                                ),
-                              ),
+                              // decoration: BoxDecoration(
+                              //   shape: BoxShape.circle,
+                              //   color: statusText == "PENDING"
+                              //       ? CLR_ASTRIX
+                              //       : CLR_ERROR,
+                              //   border: Border.all(
+                              //     color: statusText == "PENDING"
+                              //         ? CLR_ASTRIX
+                              //         : CLR_ERROR,
+                              //     width: 2.0,
+                              //   ),
+                              // ),
                               child: Container(
-                                child: statusText == "PENDING"
-                                    ? Icon(Icons.hourglass_bottom_rounded,
-                                        size: 10.r,
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255))
-                                    : Icon(Icons.warning_sharp,
-                                        size: 10.r,
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255)),
-                              )),
+                                  child: statusText == "PENDING"
+                                      ? SvgPicture.asset(ICON_PENDING)
+                                      : SvgPicture.asset(ICON_FAILED))),
                         if (statusText != null)
                           Text(
                             statusText!,

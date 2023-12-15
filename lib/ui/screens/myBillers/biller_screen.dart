@@ -2,6 +2,7 @@ import 'package:ebps/domain/models/auto_schedule_pay_model.dart';
 import 'package:ebps/domain/models/saved_biller_model.dart';
 import 'package:ebps/domain/models/upcoming_dues_model.dart';
 import 'package:ebps/domain/services/api_client.dart';
+import 'package:ebps/shared/constants/assets.dart';
 import 'package:ebps/shared/constants/colors.dart';
 
 import 'package:ebps/shared/common/AppBar/MyAppBar.dart';
@@ -253,7 +254,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                           )
                               ? 'Autopay Enabled'
                               : "Enable Autopay",
-                          iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
+                          iconPath: LOGO_BBPS,
                           upcomingText: getupcomingAutoPaymentList(
                                       savedBillerData![index].cUSTOMERBILLID) !=
                                   ''
@@ -302,58 +303,6 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                       child: FlickrLoader(),
                     ),
                   ),
-                // MyBillersContainer(
-                //   titleText: 'Johnny Depp - Jio Post',
-                //   subtitleText: '+044 4789 7893',
-                //   dateText: '01/09/2023',
-                //   buttonText: 'Autopay Enabled',
-                //   amount: "₹ 630.00",
-                //   iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
-                //   upcomingText: 'Upcoming Autopay',
-                //   upcomingTXT_CLR_DEFAULT: Color(0xff00AB44),
-                //   containerBorderColor: Color(0xffD1D9E8),
-                //   buttonColor: Color.fromARGB(255, 255, 255, 255),
-                //   buttonTxtColor: Color(0xff00AB44),
-                //   buttonTextWeight: FontWeight.bold,
-                //   buttonBorderColor: Color(0xff00AB44),
-                // ),
-                // MyBillersContainer(
-                //   titleText: 'Johnny Depp - Jio Post',
-                //   subtitleText: '+044 4789 7893',
-                //   dateText: '01/09/2023',
-                //   buttonText: 'Enable Autopay',
-                //   amount: "₹ 630.00",
-                //   iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
-                //   upcomingText: 'Upcoming Due',
-                //   upcomingTXT_CLR_DEFAULT: Color(0xff982f67),
-                //   containerBorderColor: Color(0xffD1D9E8),
-                //   buttonColor: Color.fromARGB(255, 255, 255, 255),
-                //   buttonTxtColor: Color(0xff768eb9),
-                //   buttonTextWeight: FontWeight.bold,
-                //   buttonBorderColor: Color(0xff768EB9),
-                // ),
-                // MyBillersContainer(
-                //   titleText: 'Johnny Depp - Jio Post',
-                //   subtitleText: '+044 4789 7893',
-                //   dateText: '01/09/2023',
-                //   buttonText: 'Autopay Enabled',
-                //   amount: "₹ 630.00",
-                //   iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
-                //   containerBorderColor: Color(0xffD1D9E8),
-                //   buttonColor: Color.fromARGB(255, 255, 255, 255),
-                //   buttonTxtColor: Color(0xff00AB44),
-                //   buttonTextWeight: FontWeight.bold,
-                //   buttonBorderColor: Color(0xff00AB44),
-                // ),
-                // MyBillersContainer(
-                //   titleText: 'Johnny Depp - Jio Post',
-                //   subtitleText: '+044 4789 7893',
-                //   dateText: '01/09/2023',
-                //   amount: "₹ 630.00",
-                //   iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
-                //   containerBorderColor: Color(0xffD1D9E8),
-                //   buttonBorderColor: Color(0xff00AB44),
-                // ),
               ],
             );
           },

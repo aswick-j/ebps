@@ -173,14 +173,6 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                       ListTile(
                         contentPadding:
                             EdgeInsets.only(left: 30.w, right: 6.w, top: 6.h),
-                        // leading: Container(
-                        //   width: 50,
-                        //   child: Padding(
-                        //     padding: const EdgeInsets.all(8.0),
-                        //     child: SvgPicture.asset(
-                        //         "packages/ebps/assets/icon/icon_jio.svg"),
-                        //   ),
-                        // ),
                         title: Padding(
                             padding: EdgeInsets.only(bottom: 5.h),
                             child: Column(

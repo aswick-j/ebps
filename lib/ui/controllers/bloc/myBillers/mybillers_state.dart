@@ -121,3 +121,20 @@ class UpdateBillError extends MybillersState {
   final String? message;
   UpdateBillError({@required this.message});
 }
+
+class DeleteUpcomingDueLoading extends MybillersState {}
+
+class DeleteUpcomingDueSuccess extends MybillersState {
+  String? message;
+  DeleteUpcomingDueSuccess({@required this.message});
+}
+
+class DeleteUpcomingDueError extends MybillersState {
+  String? message;
+  DeleteUpcomingDueError({@required this.message});
+}
+
+class DeleteUpcomingDueFailed extends MybillersState {
+  String? message;
+  DeleteUpcomingDueFailed({@required this.message});
+}

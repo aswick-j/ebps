@@ -66,8 +66,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: Container(
                         width: 30.w,
                         height: 30.h,
-                        child: Icon(Icons.comment,
-                            color: Colors.white, size: 15.r),
+                        child: SvgPicture.asset(ICON_COMPLAINTS),
                       )))
             ]),
         body: BlocConsumer<HomeCubit, HomeState>(listener: (context, state) {

@@ -21,6 +21,22 @@ class AllUpcomingDues extends StatefulWidget {
 }
 
 class _AllUpcomingDuesState extends State<AllUpcomingDues> {
+  handleCustomerBillID(int index) {
+    SavedBillersData savedBillersData;
+    List<SavedBillersData> billerDataTemp = [];
+
+    billerDataTemp = widget.SavedBiller.where((element) =>
+        element.cUSTOMERBILLID.toString().toLowerCase() ==
+        widget.allUpcomingDues[index]["customerBillId"]
+            .toString()
+            .toLowerCase()).toList();
+
+    if (billerDataTemp.isNotEmpty) {
+      savedBillersData = billerDataTemp[0];
+      return savedBillersData.cUSTOMERBILLID.toString();
+    }
+  }
+
   handleInputParams(int index) {
     SavedBillersData savedBillersData;
     List<SavedBillersData> billerDataTemp = [];
@@ -61,6 +77,7 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                     titleText: widget.allUpcomingDues[index]["billName"],
                     subtitleText: widget.allUpcomingDues[index]["billerName"],
                     subtitleText2: handleInputParams(index),
+                    customerBillID: handleCustomerBillID(index),
                     dateText: widget.allUpcomingDues[index]["dueDate"] != ""
                         ? DateFormat('dd/MM/yyyy').format(DateTime.parse(widget
                                 .allUpcomingDues[index]["dueDate"]!
@@ -115,69 +132,6 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                         ? null
                         : Color(0xff00AB44),
                   );
-                  //         MainContainer(
-                  //   titleText: 'Johnny Depp - Jio Post',
-                  //   subtitleText: 'Airtel Telecom Services',
-                  //   subtitleText2: '+044 4789 7893',
-                  //   dateText: '01/09/2023',
-                  //   buttonText: 'Pay Now',
-                  //   amount: "₹ 630.00",
-                  //   iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
-                  //   containerBorderColor: Color(0xffD1D9E8),
-                  //   buttonColor: Color(0xFF1B438B),
-                  //   buttonTxtColor: Color.fromARGB(255, 255, 255, 255),
-                  //   buttonTextWeight: FontWeight.normal,
-                  //   buttonBorderColor: null,
-                  // ),
-                  // MainContainer(
-                  //   titleText: 'Johnny Depp - Jio Post',
-                  //   subtitleText: 'Airtel Telecom Services',
-                  //   subtitleText2: '+044 4789 7893',
-                  //   dateText: '01/09/2023',
-                  //   buttonText: 'Upcoming Auto Payment',
-                  //   amount: "₹ 630.00",
-                  //   iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
-                  //   containerBorderColor: Color(0xffD1D9E8),
-                  //   buttonColor: Color.fromARGB(255, 255, 255, 255),
-                  //   buttonTxtColor: Color(0xff00AB44),
-                  //   buttonTextWeight: FontWeight.bold,
-                  //   buttonBorderColor: Color(0xff00AB44),
-                  // ),
-                  // MainContainer(
-                  //   titleText: 'Johnny Depp - Jio Post',
-                  //   subtitleText: 'Airtel Telecom Services',
-                  //   subtitleText2: '+044 4789 7893',
-                  //   dateText: '01/09/2023',
-                  //   buttonText: 'Pay Now',
-                  //   amount: "₹ 630.00",
-                  //   iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
-                  //   containerBorderColor: Color(0xffD1D9E8),
-                  //   buttonColor: Color(0xFF1B438B),
-                  //   buttonTxtColor: Color.fromARGB(255, 255, 255, 255),
-                  //   buttonTextWeight: FontWeight.normal,
-                  //   buttonBorderColor: null,
-                  // ),
-                  // UpcomingDuesContainer(
-                  //   titleText: allUpcomingDues[index]["billName"],
-                  //   subtitleText: '+044 4789 7893',
-                  //   dateText: allUpcomingDues[index]["dueDate"] != ""
-                  //       ? DateFormat('dd/MM/yyyy').format(DateTime.parse(
-                  //               allUpcomingDues[index]["dueDate"]!
-                  //                   .toString()
-                  //                   .substring(0, 10))
-                  //           .toLocal()
-                  //           .add(const Duration(days: 1)))
-                  //       : "-",
-                  //   buttonText: 'Upcoming Auto Payment',
-                  //   amount:
-                  //       "₹ ${NumberFormat('#,##,##0.00').format(double.parse(allUpcomingDues[index]["dueAmount"]!.toString()))}",
-                  //   iconPath: 'packages/ebps/assets/icon/icon_jio.svg',
-                  //   containerBorderColor: Color(0xffD1D9E8),
-                  //   buttonColor: Color.fromARGB(255, 255, 255, 255),
-                  //   buttonTxtColor: Color(0xff00AB44),
-                  //   buttonTextWeight: FontWeight.bold,
-                  //   buttonBorderColor: Color(0xff00AB44),
-                  // );
                 }),
             SizedBox(
               height: 20.h,

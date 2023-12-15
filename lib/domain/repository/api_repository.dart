@@ -104,4 +104,8 @@ abstract class Repository {
   //EDIT AUTOPAY
 
   Future editAutopayData(id, data) async {}
+
+  //DELETE UPCOMING DUE
+
+  Future deleteUpcomingDue(customerBillID);
 }

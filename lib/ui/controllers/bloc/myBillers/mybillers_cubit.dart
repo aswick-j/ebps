@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:ebps/domain/models/auto_schedule_pay_model.dart';
+import 'package:ebps/domain/models/delete_upcoming_due_model.dart';
 import 'package:ebps/domain/models/edit_bill_modal.dart';
 import 'package:ebps/domain/models/fetch_auto_pay_max_amount_model.dart';
 import 'package:ebps/domain/models/saved_biller_model.dart';
@@ -94,6 +95,52 @@ class MybillersCubit extends Cubit<MybillersState> {
         //  failed emit
         if (!isClosed) {
           emit(UpcomingDuesFailed(message: value['message']));
+        }
+      }
+    } catch (e) {}
+  }
+
+  //DELETE UPCOMING DUE
+
+  void deleteUpcomingDue(dynamic customerBillID) async {
+    if (!isClosed) {
+      emit(DeleteUpcomingDueLoading());
+    }
+
+    try {
+      final value = await repository!.deleteUpcomingDue(customerBillID);
+
+      logger.d(value,
+          error:
+              "DELETE UPCOMING DUES API RESPONSE ===> lib/bloc/mybillers/deleteUpcomingDue");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            DeleteUpcomingDueModel? deleteUpcomingDueModel =
+                DeleteUpcomingDueModel.fromJson(value);
+            //  success emit
+            if (!isClosed) {
+              emit(DeleteUpcomingDueSuccess(
+                  message: deleteUpcomingDueModel.message));
+            }
+          } else {
+            //  failed emit
+            if (!isClosed) {
+              emit(DeleteUpcomingDueFailed(message: value['message']));
+            }
+          }
+        } else {
+          //  error emit
+          if (!isClosed) {
+            emit(DeleteUpcomingDueError(message: value['message']));
+          }
+        }
+      } else {
+        //  failed emit
+
+        if (!isClosed) {
+          emit(DeleteUpcomingDueFailed(message: value['message']));
         }
       }
     } catch (e) {}

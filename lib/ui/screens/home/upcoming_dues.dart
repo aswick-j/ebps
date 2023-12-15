@@ -276,7 +276,6 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                                 .toString()
                                 .toLowerCase())
                         .toList()[0],
-                    ctx: context,
                     dateText: allUpcomingDues[index]["dueDate"] != ""
                         ? DateFormat('dd/MM/yyyy').format(DateTime.parse(
                                 allUpcomingDues[index]["dueDate"]!
@@ -331,16 +330,16 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                             : Color(0xff00AB44),
                   );
                 }),
-          if (isUpcomingAutopaymentLoading ||
-              isUpcomingDuesLoading ||
-              isSavedBillerLoading)
-            Center(
-              child: Container(
-                height: 200.h,
-                width: 200.w,
-                child: FlickrLoader(),
-              ),
-            ),
+          // if (isUpcomingAutopaymentLoading ||
+          //     isUpcomingDuesLoading ||
+          //     isSavedBillerLoading)
+          //   Center(
+          //     child: Container(
+          //       height: 200.h,
+          //       width: 200.w,
+          //       child: FlickrLoader(),
+          //     ),
+          //   ),
         ],
       ),
     );

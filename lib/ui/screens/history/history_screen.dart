@@ -12,6 +12,7 @@ import 'package:ebps/shared/common/AppBar/MyAppBar.dart';
 import 'package:ebps/shared/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/shared/common/Button/MyAppButton.dart';
 import 'package:ebps/shared/common/Container/History/history_container.dart';
+import 'package:ebps/shared/helpers/redirectJWT.dart';
 import 'package:ebps/shared/widget/date_picker.dart';
 import 'package:ebps/shared/widget/flickr_loader.dart';
 import 'package:ebps/ui/controllers/bloc/history/history_cubit.dart';
@@ -81,7 +82,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
 
   bool isCategoryLoading = false;
   bool isHistoryLoading = true;
-  bool isHistoryFilterLoading = true;
+  bool isHistoryFilterLoading = false;
   @override
   void initState() {
     BlocProvider.of<HistoryCubit>(context)
@@ -138,7 +139,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                   child: Container(
                     width: 30.w,
                     height: 30.h,
-                    child: Icon(Icons.comment, color: Colors.white, size: 15.r),
+                    child: SvgPicture.asset(ICON_COMPLAINTS),
                   )))
         ],
       ),
@@ -149,6 +150,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                 listener: (context, state) {
               if (state is HistoryLoading) {
                 isHistoryLoading = true;
+                validateJWT(context);
               } else if (state is HistorySuccess) {
                 setState(() {
                   historyData = state.historyData;
@@ -223,8 +225,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                       : getTransactionStatus(historyData![index]
                                           .tRANSACTIONSTATUS
                                           .toString()),
-                                  iconPath:
-                                      'packages/ebps/assets/icon/icon_jio.svg',
+                                  iconPath: LOGO_BBPS,
                                   containerBorderColor: Color(0xffD1D9E8),
                                 );
                               },
@@ -639,6 +640,9 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                   hintText: "Select Categories"),
                             ),
                           ),
+                          if (isHistoryFilterLoading)
+                            Container(
+                                height: 200, width: 200, child: FlickrLoader()),
                           if (billerFilterData!.isNotEmpty)
                             Padding(
                               padding: EdgeInsets.symmetric(
@@ -930,7 +934,12 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                   });
             },
             backgroundColor: CLR_PRIMARY,
-            child: Icon(Icons.filter_alt_outlined),
+            child: Padding(
+              padding: EdgeInsets.only(top: 5.0.h),
+              child: SvgPicture.asset(
+                ICON_FILTER,
+              ),
+            ),
           );
         },
       ),

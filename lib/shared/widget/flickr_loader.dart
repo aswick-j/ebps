@@ -1,4 +1,6 @@
+import 'package:ebps/shared/constants/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class FlickrLoader extends StatelessWidget {
@@ -11,5 +13,12 @@ class FlickrLoader extends StatelessWidget {
       rightDotColor: const Color(0xFFFF0084),
       size: 50,
     );
+    // return Center(
+    //   child: Image.asset(
+    //     LOADER,
+    //     height: 50.h,
+    //     width: 50.w,
+    //   ),
+    // );
   }
 }

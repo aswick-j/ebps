@@ -1,4 +1,5 @@
 import 'package:ebps/domain/models/history_model.dart';
+import 'package:ebps/shared/constants/assets.dart';
 import 'package:ebps/shared/helpers/getNavigators.dart';
 import 'package:ebps/shared/helpers/getTransactionStatus.dart';
 import 'package:ebps/shared/common/AppBar/MyAppBar.dart';
@@ -94,8 +95,7 @@ class _BillHistoryState extends State<BillHistory> {
                                   : getTransactionStatus(historyData![index]
                                       .tRANSACTIONSTATUS
                                       .toString()),
-                              iconPath:
-                                  'packages/ebps/assets/icon/icon_jio.svg',
+                              iconPath: LOGO_BBPS,
                               containerBorderColor: Color(0xffD1D9E8),
                             );
                           },

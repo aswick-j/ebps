@@ -1,4 +1,3 @@
-
 import 'package:ebps/domain/models/add_biller_model.dart';
 import 'package:ebps/domain/models/billers_model.dart';
 import 'package:ebps/domain/models/fetch_bill_model.dart';
@@ -396,8 +395,11 @@ class _BillerDetailsState extends State<BillerDetails> {
                                             double.parse(_billerResponseData!
                                                 .amount
                                                 .toString()),
-                                            widget
-                                                .billerData!.pAYMENTEXACTNESS);
+                                            widget.isSavedBill
+                                                ? widget.savedBillersData!
+                                                    .pAYMENTEXACTNESS
+                                                : widget.billerData!
+                                                    .pAYMENTEXACTNESS);
                                       }
                                     });
 

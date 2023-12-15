@@ -245,8 +245,15 @@ class MyRouter {
 
         return CupertinoPageRoute(
             fullscreenDialog: true,
-            builder: (_) => BlocProvider(
-                  create: (context) => HomeCubit(repository: apiClient),
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                        create: (_) => HistoryCubit(repository: apiClient)),
+                    BlocProvider(
+                        create: (_) => HomeCubit(repository: apiClient)),
+                    BlocProvider(
+                        create: (_) => MybillersCubit(repository: apiClient)),
+                  ],
                   child: TransactionScreen(
                       billName: args["billName"],
                       billerName: args['billerName'],

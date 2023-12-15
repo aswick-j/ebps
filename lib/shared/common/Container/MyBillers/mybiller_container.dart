@@ -271,7 +271,7 @@ class MyBillersContainer extends StatelessWidget {
                               children: [
                                 ModalMenu(
                                     context: context,
-                                    icon: Icons.history_outlined,
+                                    iconPath: ICON_BILLHISTORY,
                                     title: "View Payment History",
                                     onPressed: () {
                                       goToData(context, bILLERHISTORYROUTE, {
@@ -299,7 +299,7 @@ class MyBillersContainer extends StatelessWidget {
                                             1)
                                       ModalMenu(
                                           context: context,
-                                          icon: Icons.edit_note_sharp,
+                                          iconPath: ICON_EDIT,
                                           title: "Edit Autopay",
                                           onPressed: () {
                                             goToData(
@@ -323,7 +323,7 @@ class MyBillersContainer extends StatelessWidget {
                                 if (savedBillersData.aUTOPAYID != null)
                                   ModalMenu(
                                       context: context,
-                                      icon: Icons.delete_forever_outlined,
+                                      iconPath: ICON_EDIT,
                                       title: "Delete Autopay",
                                       onPressed: () {
                                         showModalBottomSheet(
@@ -505,7 +505,7 @@ class MyBillersContainer extends StatelessWidget {
                                 if (savedBillersData.aUTOPAYID == null)
                                   ModalMenu(
                                       context: context,
-                                      icon: Icons.edit,
+                                      iconPath: ICON_EDIT,
                                       title: "Edit",
                                       onPressed: () {
                                         goToData(context, eDITBILLERROUTE, {
@@ -515,7 +515,7 @@ class MyBillersContainer extends StatelessWidget {
                                 if (savedBillersData.aUTOPAYID == null)
                                   ModalMenu(
                                       context: context,
-                                      icon: Icons.delete_forever_outlined,
+                                      iconPath: ICON_DELETE,
                                       title: "Delete",
                                       onPressed: () {
                                         showModalBottomSheet(
@@ -1052,7 +1052,7 @@ Widget ModalText(
 
 Widget ModalMenu(
     {String? title,
-    IconData? icon,
+    String? iconPath,
     required BuildContext context,
     required Function onPressed}) {
   return Padding(
@@ -1063,7 +1063,7 @@ Widget ModalMenu(
         },
         child: Row(
           children: [
-            Icon(icon, color: TXT_CLR_PRIMARY),
+            SvgPicture.asset(iconPath!),
             SizedBox(
               width: 15.w,
             ),

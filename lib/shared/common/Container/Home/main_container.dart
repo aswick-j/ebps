@@ -1,7 +1,10 @@
 import 'package:ebps/shared/constants/assets.dart';
 import 'package:ebps/shared/constants/colors.dart';
 import 'package:ebps/shared/common/Button/MyAppButton.dart';
+import 'package:ebps/ui/controllers/bloc/home/home_cubit.dart';
+import 'package:ebps/ui/controllers/bloc/myBillers/mybillers_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -19,6 +22,7 @@ class MainContainer extends StatelessWidget {
   final FontWeight buttonTextWeight;
   final Color? buttonBorderColor;
   final VoidCallback onPressed;
+  final String customerBillID;
 
   const MainContainer({
     required this.titleText,
@@ -27,6 +31,7 @@ class MainContainer extends StatelessWidget {
     required this.dateText,
     required this.buttonText,
     required this.amount,
+    required this.customerBillID,
     required this.iconPath,
     required this.containerBorderColor,
     required this.buttonColor,
@@ -95,9 +100,13 @@ class MainContainer extends StatelessWidget {
                 ),
               ],
             ),
-            trailing: Icon(
-              Icons.delete_outlined,
-              color: TXT_CLR_PRIMARY,
+            trailing: GestureDetector(
+              onTap: () {
+                // final state = context.<MybillersCubit>().state;
+                // BlocProvider.of<MybillersCubit>(context)
+                //     .deleteUpcomingDue(customerBillID);
+              },
+              child: SvgPicture.asset(ICON_DELETE),
             ),
           ),
           Divider(

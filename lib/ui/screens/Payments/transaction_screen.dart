@@ -2,19 +2,20 @@ import 'package:ebps/domain/models/add_biller_model.dart';
 import 'package:ebps/domain/models/billers_model.dart';
 import 'package:ebps/domain/models/confirm_done_model.dart';
 import 'package:ebps/domain/models/saved_biller_model.dart';
-import 'package:ebps/shared/constants/assets.dart';
-import 'package:ebps/shared/constants/colors.dart';
-import 'package:ebps/shared/constants/routes.dart';
-
-import 'package:ebps/shared/helpers/getBillPaymentDetails.dart';
-import 'package:ebps/shared/helpers/getBillerType.dart';
-import 'package:ebps/shared/helpers/getNavigators.dart';
 import 'package:ebps/shared/common/AppBar/MyAppBar.dart';
 import 'package:ebps/shared/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/shared/common/Button/MyAppButton.dart';
+import 'package:ebps/shared/constants/assets.dart';
+import 'package:ebps/shared/constants/colors.dart';
+import 'package:ebps/shared/constants/routes.dart';
+import 'package:ebps/shared/helpers/getBillPaymentDetails.dart';
+import 'package:ebps/shared/helpers/getBillerType.dart';
+import 'package:ebps/shared/helpers/getNavigators.dart';
 import 'package:ebps/shared/widget/bbps_logo.dart';
+import 'package:ebps/ui/controllers/bloc/myBillers/mybillers_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -74,6 +75,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
     paymentDetails = getBillPaymentDetails(tnxResponse!.paymentDetails,
         billerTypeResult!['isAdhoc'], tnxResponse!.equitasTransactionId);
+
+    if (paymentDetails!['success']) {
+      BlocProvider.of<MybillersCubit>(context)
+          .deleteUpcomingDue(widget.billerData!["customerBillID"]);
+    }
   }
 
   Widget TxnDetails(
