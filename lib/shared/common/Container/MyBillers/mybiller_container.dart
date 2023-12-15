@@ -51,6 +51,27 @@ class MyBillersContainer extends StatefulWidget {
 
 class _MyBillersContainerState extends State<MyBillersContainer> {
   bool switchButton = true;
+  getAllAutopayList(customerBILLID) {
+    try {
+      List<AllConfigurationsData>? autopayData = [];
+      for (int i = 0; i < widget.allautoPaymentList!.length; i++) {
+        for (int j = 0; j < widget.allautoPaymentList![i].data!.length; j++) {
+          autopayData.add(widget.allautoPaymentList![i].data![j]);
+        }
+      }
+
+      List<AllConfigurationsData>? find = autopayData
+          .where((item) => item.cUSTOMERBILLID == customerBILLID)
+          .toList();
+
+      return (find.isNotEmpty ? find[0] : null);
+    } catch (e) {}
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,23 +140,6 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                   ),
                 ));
           });
-    }
-
-    getAllAutopayList(customerBILLID) {
-      try {
-        List<AllConfigurationsData>? autopayData = [];
-        for (int i = 0; i < widget.allautoPaymentList!.length; i++) {
-          for (int j = 0; j < widget.allautoPaymentList![i].data!.length; j++) {
-            autopayData.add(widget.allautoPaymentList![i].data![j]);
-          }
-        }
-
-        List<AllConfigurationsData>? find = autopayData
-            .where((item) => item.cUSTOMERBILLID == customerBILLID)
-            .toList();
-
-        return (find.isNotEmpty ? find[0] : null);
-      } catch (e) {}
     }
 
     return GestureDetector(
@@ -234,27 +238,48 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    widget.savedBillersData.pARAMETERVALUE
-                                        .toString(),
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff808080),
-                                    ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        widget.savedBillersData.pARAMETERVALUE
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff808080),
+                                        ),
+                                      ),
+                                      if (widget.showButton &&
+                                          widget.buttonText.toString() ==
+                                              "Autopay Enabled" &&
+                                          getAllAutopayList(widget
+                                                      .savedBillersData
+                                                      .cUSTOMERBILLID)
+                                                  .pAYMENTDATE !=
+                                              DateTime.now().day.toString())
+                                        CustomSwitch(
+                                          value: switchButton =
+                                              getAllAutopayList(widget
+                                                              .savedBillersData
+                                                              .cUSTOMERBILLID)
+                                                          .iSACTIVE ==
+                                                      1
+                                                  ? false
+                                                  : true,
+                                          onChanged: (val) {
+                                            // setState(() {
+                                            //   switchButton = val;
+                                            // });
+                                          },
+                                        ),
+                                    ],
                                   ),
-                                  CupertinoSwitch(
-                                    value: switchButton,
-                                    activeColor: CLR_PRIMARY,
-                                    onChanged: (val) {
-                                      setState(() {
-                                        switchButton = val;
-                                      });
-                                    },
+
+                                  SizedBox(
+                                    height: 10,
                                   ),
-                                  // SizedBox(
-                                  //   height: 10,
-                                  // ),
                                   // Text(
                                   //   buttonText.toString(),
                                   //   style: TextStyle(
