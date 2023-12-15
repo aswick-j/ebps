@@ -259,20 +259,221 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                       .cUSTOMERBILLID)
                                                   .pAYMENTDATE !=
                                               DateTime.now().day.toString())
-                                        CustomSwitch(
-                                          value: switchButton =
-                                              getAllAutopayList(widget
-                                                              .savedBillersData
-                                                              .cUSTOMERBILLID)
-                                                          .iSACTIVE ==
-                                                      1
-                                                  ? false
-                                                  : true,
-                                          onChanged: (val) {
-                                            // setState(() {
-                                            //   switchButton = val;
-                                            // });
+                                        GestureDetector(
+                                          onTap: () {
+                                            print("======");
+                                            showModalBottomSheet(
+                                                context: context,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.vertical(
+                                                    top:
+                                                        Radius.circular(16.0.r),
+                                                  ),
+                                                ),
+                                                builder: (context) {
+                                                  return Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: <Widget>[
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 15.h,
+                                                                bottom: 15.h,
+                                                                left: 15.w,
+                                                                right: 15.w),
+                                                        child: Row(
+                                                          children: [
+                                                            Icon(
+                                                              Icons
+                                                                  .delete_sweep_outlined,
+                                                              color: Color(
+                                                                  0xff1b438b),
+                                                            ),
+                                                            SizedBox(
+                                                                width: 20.w),
+                                                            Text(
+                                                              getAllAutopayList(widget
+                                                                              .savedBillersData
+                                                                              .cUSTOMERBILLID)
+                                                                          .iSACTIVE ==
+                                                                      1
+                                                                  ? "Pause Autopay"
+                                                                  : "Resume Autopay",
+                                                              style: TextStyle(
+                                                                fontSize: 16.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                color: Color(
+                                                                    0xff1b438b),
+                                                              ),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .withOpacity(
+                                                                        0.5),
+                                                                spreadRadius:
+                                                                    0.6,
+                                                                blurRadius: 4,
+                                                                offset: Offset(
+                                                                    0, 2)),
+                                                          ],
+                                                        ),
+                                                        child: Divider(
+                                                          height: 1.h,
+                                                          thickness: 1,
+                                                          color: Colors.grey
+                                                              .withOpacity(0.1),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10.h,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 0.h,
+                                                                bottom: 16.h,
+                                                                left: 16.w,
+                                                                right: 16.w),
+                                                        child: Center(
+                                                          child: Text(
+                                                            'Are You Sure You Want To ${getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "Pause Autopay" : "Resume Autopay"}',
+                                                            style: TextStyle(
+                                                              fontSize: 14.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: Color(
+                                                                  0xff000000),
+                                                            ),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 0.h,
+                                                                bottom: 16.h,
+                                                                left: 16.w,
+                                                                right: 16.w),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Expanded(
+                                                              child:
+                                                                  MyAppButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        goBack(
+                                                                            context);
+                                                                      },
+                                                                      buttonText:
+                                                                          "Cancel",
+                                                                      buttonTxtColor:
+                                                                          CLR_PRIMARY,
+                                                                      buttonBorderColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      buttonColor:
+                                                                          BTN_CLR_ACTIVE,
+                                                                      buttonSizeX:
+                                                                          10.h,
+                                                                      buttonSizeY:
+                                                                          40.w,
+                                                                      buttonTextSize:
+                                                                          14.sp,
+                                                                      buttonTextWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                            ),
+                                                            SizedBox(
+                                                              width: 40.w,
+                                                            ),
+                                                            Expanded(
+                                                              child:
+                                                                  MyAppButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        goToData(
+                                                                            context,
+                                                                            oTPPAGEROUTE,
+                                                                            {
+                                                                              "from": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "disable-auto-pay" : "enable-auto-pay",
+                                                                              "templateName": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "disable-auto-pay" : "enable-auto-pay",
+                                                                              "autopayData": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID),
+                                                                              "data": {
+                                                                                "billerName": widget.savedBillersData.bILLERNAME,
+                                                                                "cUSTOMERBILLID": widget.savedBillersData.cUSTOMERBILLID.toString(),
+                                                                              }
+                                                                            });
+                                                                      },
+                                                                      buttonText: getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE ==
+                                                                              1
+                                                                          ? "Pause"
+                                                                          : "Resume",
+                                                                      buttonTxtColor:
+                                                                          BTN_CLR_ACTIVE,
+                                                                      buttonBorderColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      buttonColor:
+                                                                          CLR_PRIMARY,
+                                                                      buttonSizeX:
+                                                                          10.h,
+                                                                      buttonSizeY:
+                                                                          40.w,
+                                                                      buttonTextSize:
+                                                                          14.sp,
+                                                                      buttonTextWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10.h,
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
                                           },
+                                          child: CustomSwitch(
+                                            value: switchButton =
+                                                getAllAutopayList(widget
+                                                                .savedBillersData
+                                                                .cUSTOMERBILLID)
+                                                            .iSACTIVE ==
+                                                        1
+                                                    ? false
+                                                    : true,
+                                            onChanged: (val) {
+                                              // setState(() {
+                                              //   switchButton = val;
+                                              // });
+                                            },
+                                          ),
                                         ),
                                     ],
                                   ),
