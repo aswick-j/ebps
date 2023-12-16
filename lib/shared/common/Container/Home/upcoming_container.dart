@@ -3,7 +3,6 @@ import 'package:ebps/shared/common/Container/Home/refresh_dues.dart';
 import 'package:ebps/shared/constants/assets.dart';
 import 'package:ebps/shared/common/Button/MyAppButton.dart';
 import 'package:ebps/shared/helpers/getBillerType.dart';
-import 'package:ebps/shared/widget/loader_overlay.dart';
 import 'package:ebps/ui/controllers/bloc/home/home_cubit.dart';
 
 import 'package:flutter/material.dart';
@@ -26,7 +25,7 @@ class UpcomingDuesContainer extends StatefulWidget {
   final VoidCallback onPressed;
 
   UpcomingDuesContainer(
-      {required this.dateText,
+      {super.key, required this.dateText,
       required this.buttonText,
       required this.amount,
       required this.iconPath,

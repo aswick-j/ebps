@@ -118,7 +118,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
       appBar: MyAppBar(
         context: context,
         title: 'History',
-        onLeadingTap: () => WidgetsBinding.instance?.addPostFrameCallback((_) {
+        onLeadingTap: () => WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
                 builder: (context) => BottomNavBar(
@@ -381,6 +381,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                 if (fromdateController.text.isEmpty) {
                                   return "Please select 'From Date' first.";
                                 }
+                                return null;
                               },
                               decoration: InputDecoration(
                                 fillColor:
@@ -620,7 +621,9 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                                   }));
                                     });
                               },
-                              validator: (inputValue) {},
+                              validator: (inputValue) {
+                                return null;
+                              },
                               decoration: InputDecoration(
                                   fillColor:
                                       const Color(0xffD1D9E8).withOpacity(0.2),
@@ -862,7 +865,9 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                                     }));
                                       });
                                 },
-                                validator: (inputValue) {},
+                                validator: (inputValue) {
+                                  return null;
+                                },
                                 decoration: InputDecoration(
                                     fillColor: const Color(0xffD1D9E8)
                                         .withOpacity(0.2),

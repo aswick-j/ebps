@@ -19,7 +19,7 @@ class HistoryContainer extends StatelessWidget {
   final Color containerBorderColor;
   HistoryData historyData;
 
-  HistoryContainer({
+  HistoryContainer({super.key, 
     required this.titleText,
     required this.subtitleText,
     required this.dateText,

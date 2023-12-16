@@ -3,7 +3,6 @@ import 'package:ebps/shared/constants/assets.dart';
 import 'package:ebps/shared/constants/colors.dart';
 import 'package:ebps/shared/constants/routes.dart';
 import 'package:ebps/shared/helpers/getNavigators.dart';
-import 'package:ebps/shared/common/Button/MyAppButton.dart';
 import 'package:ebps/shared/common/Text/MyAppText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

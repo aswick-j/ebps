@@ -644,6 +644,7 @@ class _editAutopayState extends State<editAutopay> {
                         goToData(context, oTPPAGEROUTE, {
                           "from": "edit-auto-pay",
                           "templateName": "edit-auto-pay",
+                          "context": context,
                           "autopayData": widget.autopayData,
                           "data": {
                             "accountNumber": accID,

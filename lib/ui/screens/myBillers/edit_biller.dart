@@ -338,6 +338,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
                               if (inputValue!.isEmpty) {
                                 return "Bill Name Should Not be Empty";
                               }
+                              return null;
                             },
                             decoration: InputDecoration(
                               fillColor:

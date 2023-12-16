@@ -53,7 +53,7 @@ class HistoryCubit extends Cubit<HistoryState> {
           if (value['status'] == 200) {
             HistoryModel? historyModel = HistoryModel.fromJson(value);
             if (!isClosed) {
-              emit(HistorySuccess(historyData: historyModel!.data));
+              emit(HistorySuccess(historyData: historyModel.data));
             }
           } else {
             if (!isClosed) {

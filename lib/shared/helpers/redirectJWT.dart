@@ -9,7 +9,7 @@ Future<void> validateJWT(BuildContext context) async {
     bool hasExpired = JwtToken.isExpired(token);
     if (!hasExpired) {
     } else {
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => SessionExpired()),
         );

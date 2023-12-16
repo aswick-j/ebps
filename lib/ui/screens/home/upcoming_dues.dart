@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:ebps/domain/models/auto_schedule_pay_model.dart';
 import 'package:ebps/domain/models/saved_biller_model.dart';
@@ -12,8 +11,6 @@ import 'package:ebps/shared/helpers/getNavigators.dart';
 import 'package:ebps/shared/common/Container/Home/upcoming_container.dart';
 import 'package:ebps/ui/controllers/bloc/home/home_cubit.dart';
 import 'package:ebps/ui/controllers/bloc/myBillers/mybillers_cubit.dart';
-import 'package:ebps/ui/screens/home/all_upcoming_dues.dart';
-import 'package:ebps/shared/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -69,7 +66,7 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
 
   bool isDataExist(List list, int? value) {
     var data = list.where((row) => (row["customerBillId"] == value));
-    if (data.length >= 1) {
+    if (data.isNotEmpty) {
       return true;
     } else {
       return false;
@@ -262,7 +259,7 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
-                itemCount: allUpcomingDues!.length == 0
+                itemCount: allUpcomingDues.isEmpty
                     ? 0
                     : allUpcomingDues.length == 1
                         ? 1

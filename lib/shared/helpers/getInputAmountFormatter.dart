@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class getInputAmountFormatter extends TextInputFormatter {
@@ -8,7 +7,7 @@ class getInputAmountFormatter extends TextInputFormatter {
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
     // Short-circuit if the new value is empty
-    if (newValue.text.length == 0) {
+    if (newValue.text.isEmpty) {
       return newValue.copyWith(text: '');
     }
 
@@ -33,13 +32,14 @@ class getInputAmountFormatter extends TextInputFormatter {
 
       String newString = '';
       for (int i = chars.length - 1; i >= 0; i--) {
-        if ((chars.length - 1 - i) % 3 == 0 && i != chars.length - 1)
+        if ((chars.length - 1 - i) % 3 == 0 && i != chars.length - 1) {
           newString = separator + newString;
+        }
         newString = chars[i] + newString;
       }
 
       return TextEditingValue(
-        text: newString.toString() + (parts.length > 1 ? '.' + parts[1] : ''),
+        text: newString.toString() + (parts.length > 1 ? '.${parts[1]}' : ''),
         selection: TextSelection.collapsed(
           offset: newString.length -
               selectionIndex +

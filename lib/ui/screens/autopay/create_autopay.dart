@@ -613,6 +613,7 @@ class _createAutopayState extends State<createAutopay> {
                         goToData(context, oTPPAGEROUTE, {
                           "from": "create-auto-pay",
                           "templateName": "create-auto-pay",
+                          "context": context,
                           "data": {
                             "accountNumber": accID,
                             "maximumAmount": maxAmountController.text,

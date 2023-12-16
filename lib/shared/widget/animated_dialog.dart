@@ -1,5 +1,3 @@
-import 'package:ebps/shared/constants/colors.dart';
-import 'package:ebps/shared/common/Button/MyAppButton.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedDialog extends StatefulWidget {
@@ -7,7 +5,7 @@ class AnimatedDialog extends StatefulWidget {
   final String subTitle;
   final Widget child;
 
-  AnimatedDialog({
+  const AnimatedDialog({
     super.key,
     required this.title,
     required this.subTitle,

@@ -97,15 +97,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   late Timer _timer;
   final List<Color> _colors = [
-    Color.fromARGB(255, 161, 173, 255).withOpacity(0.2),
-    Color.fromARGB(255, 161, 249, 255).withOpacity(0.2),
-    Color.fromARGB(255, 161, 173, 255).withOpacity(0.2),
-    Color.fromARGB(255, 202, 255, 171).withOpacity(0.2),
-    Color.fromARGB(255, 255, 253, 155).withOpacity(0.2),
-    Color.fromARGB(255, 153, 255, 153).withOpacity(0.2),
-    Color.fromARGB(255, 150, 150, 255).withOpacity(0.2),
-    Color.fromARGB(255, 212, 151, 255).withOpacity(0.2),
-    Color.fromARGB(255, 223, 147, 255).withOpacity(0.5),
+    const Color.fromARGB(255, 161, 173, 255).withOpacity(0.2),
+    const Color.fromARGB(255, 161, 249, 255).withOpacity(0.2),
+    const Color.fromARGB(255, 161, 173, 255).withOpacity(0.2),
+    const Color.fromARGB(255, 202, 255, 171).withOpacity(0.2),
+    const Color.fromARGB(255, 255, 253, 155).withOpacity(0.2),
+    const Color.fromARGB(255, 153, 255, 153).withOpacity(0.2),
+    const Color.fromARGB(255, 150, 150, 255).withOpacity(0.2),
+    const Color.fromARGB(255, 212, 151, 255).withOpacity(0.2),
+    const Color.fromARGB(255, 223, 147, 255).withOpacity(0.5),
   ];
   double _animationValue = 0.0;
 
@@ -157,8 +157,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 GridView.builder(
                   shrinkWrap: true,
                   itemCount: value.length,
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 0,
                   ),

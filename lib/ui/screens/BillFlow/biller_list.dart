@@ -151,7 +151,7 @@ class _BillerListState extends State<BillerList> {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topRight,
-                            stops: [0.001, 19],
+                            stops: const [0.001, 19],
                             colors: [
                               Color(0xff768EB9).withOpacity(.7),
                               Color(0xff463A8D).withOpacity(.7),

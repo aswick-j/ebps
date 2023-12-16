@@ -19,7 +19,7 @@ Future<DateTime?> DatePicker(BuildContext context, String? fromDate) async {
           ),
           textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(
-              primary: TXT_CLR_PRIMARY,
+              foregroundColor: TXT_CLR_PRIMARY,
             ),
           ),
           dialogBackgroundColor: Colors.white,

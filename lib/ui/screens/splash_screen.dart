@@ -41,7 +41,7 @@ class _splashScreenState extends State<splashScreen> {
           } else if (state is SplashSuccess) {
             myAccounts = await getDecodedAccounts();
 
-            WidgetsBinding.instance?.addPostFrameCallback((_) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
               // goToReplace(context, hOMEROUTE);
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
@@ -72,11 +72,11 @@ class _splashScreenState extends State<splashScreen> {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
+                colors: const [
                   CLR_BLUESHADE,
                   Colors.white,
                 ],
-                stops: [
+                stops: const [
                   0,
                   0.2,
                 ],

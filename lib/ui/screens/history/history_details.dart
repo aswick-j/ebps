@@ -83,7 +83,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                       Clipboard.setData(ClipboardData(text: subTitle))
                           .then((_) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('${title} copied to clipboard')));
+                            content: Text('$title copied to clipboard')));
                       });
                     },
                     child: Icon(Icons.copy, color: Color(0xff1b438b), size: 20))
@@ -132,7 +132,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topRight,
-                            stops: [0.001, 19],
+                            stops: const [0.001, 19],
                             colors: [
                               widget.historyData.tRANSACTIONSTATUS == 'success'
                                   ? Color(0xff99DDB4).withOpacity(.7)

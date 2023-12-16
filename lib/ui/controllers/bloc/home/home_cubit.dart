@@ -197,8 +197,9 @@ class HomeCubit extends Cubit<HomeState> {
       if (value != null && !value.toString().contains("Invalid token")) {
         if (value['status'] == 200) {
           FetchBillModel? fetchBillModel = FetchBillModel.fromJson(value);
-          if (!isClosed)
+          if (!isClosed) {
             emit(FetchBillSuccess(fetchBillResponse: fetchBillModel.data));
+          }
         } else {
           logger.e(
               error: "FETCH BILL API ERROR ===> lib/bloc/home/fetchBill",
@@ -208,8 +209,9 @@ class HomeCubit extends Cubit<HomeState> {
       } else {
         logger.e(
             error: "FETCH BILL API ERROR ===> lib/bloc/home/fetchBill", value);
-        if (!isClosed)
+        if (!isClosed) {
           emit(FetchBillError(message: value?['message'] ?? 'Unknown error'));
+        }
       }
     } catch (e) {
       logger.e(error: "FETCH BILL API ERROR ===> lib/bloc/home/fetchBill", e);
@@ -684,7 +686,7 @@ class HomeCubit extends Cubit<HomeState> {
             emit(PayBillFailed(
               from: "fromConfirmPaymentOtp",
               message: "Your Account needs to complete KYC",
-              data: {},
+              data: const {},
             ));
           } else if (status == 200) {
             final paymentDetails = value['data']['paymentDetails'];

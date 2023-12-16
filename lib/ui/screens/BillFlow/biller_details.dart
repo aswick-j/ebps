@@ -490,7 +490,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                   ),
                                 ),
                               ),
-                              if (PaymentExactErrMsg.length > 0)
+                              if (PaymentExactErrMsg.isNotEmpty)
                                 Padding(
                                   padding: EdgeInsets.only(
                                       left: 20.w, bottom: 20.h, right: 20.w),

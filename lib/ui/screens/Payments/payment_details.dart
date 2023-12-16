@@ -63,8 +63,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   bool isFetchbillLoading = false;
   List<AccountsData>? accountInfo = [];
   ConfirmFetchBillData? confirmbillerResData;
-  bool _otherAmount = false;
-  dynamic selectedAcc = null;
+  final bool _otherAmount = false;
+  dynamic selectedAcc;
   bool accError = false;
 
   @override
@@ -147,6 +147,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               goToData(context, oTPPAGEROUTE, {
                 "from": pAYMENTCONFIRMROUTE,
                 "templateName": "confirm-payment",
+                "context": context,
                 "data": {
                   "billerID": widget.isSavedBill
                       ? widget.savedBillersData!.bILLERID
@@ -235,7 +236,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topRight,
-                                stops: [0.001, 19],
+                                stops: const [0.001, 19],
                                 colors: [
                                   Color(0xff768EB9).withOpacity(.7),
                                   Color(0xff463A8D).withOpacity(.7),
@@ -365,7 +366,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                         child: FlickrLoader(),
                       ),
                     ),
-                  if (!isAccLoading && myAccounts!.length > 0)
+                  if (!isAccLoading && myAccounts!.isNotEmpty)
                     Container(
                       width: double.infinity,
                       color: Colors.white,

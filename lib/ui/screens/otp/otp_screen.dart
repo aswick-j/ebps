@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:ebps/domain/models/auto_schedule_pay_model.dart';
 import 'package:ebps/domain/services/api.dart';
+import 'package:ebps/shared/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/shared/constants/colors.dart';
 import 'package:ebps/shared/constants/routes.dart';
 
@@ -24,10 +25,12 @@ class OtpScreen extends StatefulWidget {
   String? from;
   String? templateName;
   Map<String, dynamic>? data;
+  BuildContext ctx;
   OtpScreen(
       {super.key,
       this.autopayData,
       this.from,
+      required this.ctx,
       this.templateName,
       this.id,
       this.data});
@@ -249,14 +252,14 @@ class _OtpScreenState extends State<OtpScreen> {
                     onPressed: () {
                       goBack(context);
 
-                      // WidgetsBinding.instance?.addPostFrameCallback((_) {
-                      //   Navigator.of(context).pushReplacement(
-                      //     MaterialPageRoute(
-                      //         builder: (context) => BottomNavBar(
-                      //               SelectedIndex: 0,
-                      //             )),
-                      //   );
-                      // });
+                      WidgetsBinding.instance?.addPostFrameCallback((_) {
+                        Navigator.of(widget.ctx).pushReplacement(
+                          MaterialPageRoute(
+                              builder: (context) => BottomNavBar(
+                                    SelectedIndex: 1,
+                                  )),
+                        );
+                      });
                     },
                     buttonText: "Okay",
                     buttonTxtColor: BTN_CLR_ACTIVE,
@@ -506,6 +509,17 @@ class _OtpScreenState extends State<OtpScreen> {
             } else if (state is createAutopayFailed) {
               LoaderOverlay.of(context).hide();
             } else if (state is createAutopayError) {
+              LoaderOverlay.of(context).hide();
+            }
+            if (state is editAutopayLoading) {
+              LoaderOverlay.of(context).show();
+            } else if (state is editAutopaySuccess) {
+              LoaderOverlay.of(context).hide();
+
+              showModalDialog(title: "Autopay Updated Successfully");
+            } else if (state is editAutopayFailed) {
+              LoaderOverlay.of(context).hide();
+            } else if (state is editAutopayError) {
               LoaderOverlay.of(context).hide();
             }
             if (state is deleteAutopayLoading) {

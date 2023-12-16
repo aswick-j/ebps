@@ -2,7 +2,6 @@ import 'package:ebps/shared/common/Button/MyAppButton.dart';
 import 'package:ebps/shared/common/Text/MyAppText.dart';
 import 'package:ebps/shared/constants/assets.dart';
 import 'package:ebps/shared/constants/colors.dart';
-import 'package:ebps/shared/widget/no_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -30,11 +29,11 @@ class _SessionExpiredState extends State<SessionExpired> {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
+          colors: const [
             CLR_BLUESHADE,
             Colors.white,
           ],
-          stops: [
+          stops: const [
             0,
             0.2,
           ],

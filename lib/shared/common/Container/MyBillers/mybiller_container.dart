@@ -7,7 +7,6 @@ import 'package:ebps/shared/constants/routes.dart';
 import 'package:ebps/shared/helpers/getNavigators.dart';
 import 'package:ebps/shared/common/Button/MyAppButton.dart';
 import 'package:ebps/shared/widget/custom_switch.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -29,6 +28,7 @@ class MyBillersContainer extends StatefulWidget {
   bool showButton;
   List<AllConfigurations>? allautoPaymentList;
   MyBillersContainer({
+    super.key,
     this.buttonText,
     required this.iconPath,
     this.upcomingText,
@@ -432,6 +432,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                             oTPPAGEROUTE,
                                                                             {
                                                                               "from": "modify-auto-pay",
+                                                                              "context": context,
                                                                               "templateName": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "disable-auto-pay" : "enable-auto-pay",
                                                                               "autopayData": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID),
                                                                               "data": {
@@ -729,6 +730,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                       "autopayData": getAllAutopayList(widget
                                                                           .savedBillersData
                                                                           .cUSTOMERBILLID),
+                                                                      "context":
+                                                                          context,
                                                                       "data": {
                                                                         "billerName": widget
                                                                             .savedBillersData
@@ -919,6 +922,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                           'delete-biller',
                                                                       "templateName":
                                                                           "delete-biller-otp",
+                                                                      "context":
+                                                                          context,
                                                                       "data": {
                                                                         "billerName": widget
                                                                             .savedBillersData
@@ -926,7 +931,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                         "cUSTOMERBILLID": widget
                                                                             .savedBillersData
                                                                             .cUSTOMERBILLID
-                                                                            .toString()
+                                                                            .toString(),
                                                                       }
                                                                     });
                                                               },

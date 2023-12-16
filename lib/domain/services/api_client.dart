@@ -362,6 +362,7 @@ class ApiClient implements Repository {
 
   //HISTORY
 
+  @override
   Future<dynamic> getHistory(payload) async {
     Map<String, dynamic> body = payload;
 

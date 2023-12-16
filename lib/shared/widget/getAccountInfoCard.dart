@@ -11,7 +11,7 @@ class AccountInfoCard extends StatelessWidget {
   Function onAccSelected;
 
   AccountInfoCard(
-      {required this.accountNumber,
+      {super.key, required this.accountNumber,
       required this.onAccSelected,
       required this.balance,
       required this.isSelected,

@@ -158,7 +158,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
       appBar: MyAppBar(
         context: context,
         title: 'Billers',
-        onLeadingTap: () => WidgetsBinding.instance?.addPostFrameCallback((_) {
+        onLeadingTap: () => WidgetsBinding.instance.addPostFrameCallback((_) {
           // goToReplace(context, hOMEROUTE);
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(

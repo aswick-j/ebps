@@ -58,7 +58,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30.r),
                   topLeft: Radius.circular(30.r)),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                     color: Colors.black38, spreadRadius: 0, blurRadius: 0),
               ],

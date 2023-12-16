@@ -42,7 +42,7 @@ class _BillParametersState extends State<BillParameters> {
   /// keys for form fields in the UI. Each form field in the UI can be associated with a unique key from
   /// this list. These keys can be used to access and manipulate the state of the form fields, such as
   /// getting the current value or validating the input.
-  List<GlobalKey<FormFieldState>> _fieldKey = [];
+  final List<GlobalKey<FormFieldState>> _fieldKey = [];
 
   /// The line `List<TextEditingController> inputSignatureControllers = [];` declares a list variable
   /// named `inputSignatureControllers` that can hold objects of type `TextEditingController`. This list
@@ -64,13 +64,13 @@ class _BillParametersState extends State<BillParameters> {
     super.initState();
   }
 
-  FormValidation(int index, bool _static) {
+  FormValidation(int index, bool static) {
     setState(() {
       isButtonActive =
           _fieldKey.every((element) => element.currentState!.isValid);
     });
 
-    if (!_static) {
+    if (!static) {
       _fieldKey[index].currentState!.validate();
     } else {
       setState(() {
@@ -197,7 +197,7 @@ class _BillParametersState extends State<BillParameters> {
                                       },
                                       key: _fieldKey[index],
                                       validator: (inputValue) {
-                                        final _regex =
+                                        final regex =
                                             "${inputSignatureItems![index].rEGEX}";
                                         final fieldRegExp = RegExp(
                                             "${inputSignatureItems![index].rEGEX}");
@@ -307,6 +307,7 @@ class _BillParametersState extends State<BillParameters> {
                             if (inputValue!.isEmpty) {
                               return "Bill Name Should Not be Empty";
                             }
+                            return null;
                           },
                           decoration: InputDecoration(
                             fillColor: const Color(0xffD1D9E8).withOpacity(0.2),
