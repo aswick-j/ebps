@@ -25,6 +25,8 @@ class EbpsScreen extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
+        // showPerformanceOverlay: true,
+
         title: "Bill Payment",
         theme: ebpsTheme,
         // theme: ThemeData(

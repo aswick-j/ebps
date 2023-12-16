@@ -25,6 +25,7 @@ class SplashCubit extends Cubit<SplashState> {
           value is Map<String, dynamic> &&
           value['status'] == 200) {
         final loginModel = LoginModel.fromJson(value);
+        await setSharedNotificationValue("NOTIFICATION", true);
         await setSharedValue(TOKEN, loginModel.data!.token);
         await setSharedValue(ENCRYPTION_KEY, loginModel.data!.encryptionKey);
 

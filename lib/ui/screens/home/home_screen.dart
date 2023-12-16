@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ebps/domain/models/auto_schedule_pay_model.dart';
+import 'package:ebps/domain/services/api.dart';
 import 'package:ebps/domain/services/api_client.dart';
 import 'package:ebps/shared/constants/colors.dart';
 import 'package:ebps/shared/constants/routes.dart';
@@ -54,11 +55,13 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
 
   @override
   Widget build(BuildContext context) {
+    BuildContext dialogContext = context;
     handleDialog() {
       showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return MismatchNotification(allautoPayData: allautoPayData);
+        context: dialogContext,
+        builder: (BuildContext ctx) {
+          return MismatchNotification(
+              allautoPayData: allautoPayData, context: dialogContext);
         },
       );
     }
@@ -104,7 +107,7 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: BlocConsumer<MybillersCubit, MybillersState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             if (state is AutoPayLoading) {
             } else if (state is AutopaySuccess) {
               setState(() {
@@ -156,8 +159,12 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
 
                 print("====================================================");
                 print(jsonEncode(allautoPayData));
-                handleDialog();
               });
+              var notifiValue =
+                  await getSharedNotificationValue("NOTIFICATION");
+              if (notifiValue) {
+                handleDialog();
+              }
             } else if (state is AutopayFailed) {
             } else if (state is AutopayError) {}
           },

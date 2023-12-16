@@ -25,12 +25,23 @@ setSharedBoolValue(key, value) async {
   return true;
 }
 
+setSharedNotificationValue(key, value) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool(key, value);
+  return true;
+}
+
 getSharedValue(key) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getString(key);
 }
 
 getSharedBoolValue(key) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getBool(key);
+}
+
+getSharedNotificationValue(key) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getBool(key);
 }

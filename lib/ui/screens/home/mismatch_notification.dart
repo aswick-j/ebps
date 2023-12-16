@@ -1,7 +1,10 @@
 import 'package:ebps/domain/models/auto_schedule_pay_model.dart';
+import 'package:ebps/domain/models/saved_biller_model.dart';
+import 'package:ebps/domain/services/api.dart';
 import 'package:ebps/shared/common/Button/MyAppButton.dart';
 import 'package:ebps/shared/constants/assets.dart';
 import 'package:ebps/shared/constants/colors.dart';
+import 'package:ebps/shared/constants/routes.dart';
 import 'package:ebps/shared/helpers/getNavigators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +13,9 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class MismatchNotification extends StatefulWidget {
   List<AllConfigurationsData>? allautoPayData;
-  MismatchNotification({super.key, this.allautoPayData});
+  List<PARAMETERS> savedinput = [];
+  BuildContext context;
+  MismatchNotification({super.key, this.allautoPayData, required this.context});
 
   @override
   State<MismatchNotification> createState() => _MismatchNotificationState();
@@ -197,7 +202,10 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                             children: [
                               Expanded(
                                 child: MyAppButton(
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      await setSharedNotificationValue(
+                                          "NOTIFICATION", false);
+
                                       goBack(context);
                                     },
                                     buttonText: "Later",
@@ -215,23 +223,26 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                               Expanded(
                                 child: MyAppButton(
                                     onPressed: () async {
-                                      //  goToData(
-                                      //   context, eDITAUTOPAYROUTE, {
-                                      // "billerName": widget
-                                      //     .savedBillersData.bILLERNAME,
-                                      // "categoryName": widget
-                                      //     .savedBillersData
-                                      //     .cATEGORYNAME,
-                                      // "billName": widget
-                                      //     .savedBillersData.bILLNAME,
-                                      // "customerBillID": widget
-                                      //     .savedBillersData
-                                      //     .cUSTOMERBILLID
-                                      //     .toString(),
-                                      // "autopayData": allau,
-                                      // "savedInputSignatures": widget
-                                      //     .savedBillersData.pARAMETERS,
-                                      // });
+                                      await setSharedNotificationValue(
+                                          "NOTIFICATION", false);
+
+                                      goBack(context);
+                                      goToData(
+                                          widget.context, eDITAUTOPAYROUTE, {
+                                        "billerName": widget
+                                            .allautoPayData![index].bILLERNAME,
+                                        "categoryName": "sss",
+                                        "billName": widget
+                                            .allautoPayData![index].bILLNAME,
+                                        "customerBillID": widget
+                                            .allautoPayData![index]
+                                            .cUSTOMERBILLID
+                                            .toString(),
+                                        "autopayData":
+                                            widget.allautoPayData![index],
+                                        "savedInputSignatures":
+                                            widget.savedinput,
+                                      });
                                     },
                                     buttonText: "Proceed",
                                     buttonTxtColor: BTN_CLR_ACTIVE,

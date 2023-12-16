@@ -96,7 +96,7 @@ class _editAutopayState extends State<editAutopay> {
       child: Scaffold(
         appBar: MyAppBar(
           context: context,
-          title: "Setup Autopay",
+          title: "Edit Autopay",
           onLeadingTap: () => goBack(context),
           showActions: false,
         ),
