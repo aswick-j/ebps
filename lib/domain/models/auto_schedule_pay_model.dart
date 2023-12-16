@@ -114,6 +114,10 @@ class AllConfigurationsData {
   String? bILLERNAME;
   int? pAID;
   int? aMOUNTLIMIT;
+  String? dUEAMOUNT;
+  String? dUEDATE;
+  int? rESETDATE;
+  int? rESETLIMIT;
 
   AllConfigurationsData(
       {this.iD,
@@ -130,7 +134,11 @@ class AllConfigurationsData {
       this.bILLERICON,
       this.bILLERNAME,
       this.pAID,
-      this.aMOUNTLIMIT});
+      this.aMOUNTLIMIT,
+      this.dUEAMOUNT,
+      this.dUEDATE,
+      this.rESETDATE,
+      this.rESETLIMIT});
 
   AllConfigurationsData.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
@@ -148,6 +156,10 @@ class AllConfigurationsData {
     bILLERNAME = json['BILLER_NAME'];
     pAID = json['PAID'];
     aMOUNTLIMIT = json['AMOUNT_LIMIT'];
+    dUEAMOUNT = json['DUE_AMOUNT'];
+    dUEDATE = json['DUE_DATE'];
+    rESETDATE = json['RESETDATE'];
+    rESETLIMIT = json['RESETLIMIT'];
   }
 
   Map<String, dynamic> toJson() {
@@ -167,6 +179,10 @@ class AllConfigurationsData {
     data['BILLER_NAME'] = this.bILLERNAME;
     data['PAID'] = this.pAID;
     data['AMOUNT_LIMIT'] = this.aMOUNTLIMIT;
+    data['DUE_AMOUNT'] = this.dUEAMOUNT;
+    data['DUE_DATE'] = this.dUEDATE;
+    data['RESETDATE'] = this.rESETDATE;
+    data['RESETLIMIT'] = this.rESETLIMIT;
     return data;
   }
 }

@@ -201,9 +201,9 @@ class MybillersCubit extends Cubit<MybillersState> {
     try {
       final value = await repository!.getAutoPay();
 
-      // logger.d(value,
-      //     error:
-      //         "GET ALL AUTOPAY API RESPONSE ===> lib/bloc/mybillers/getAutopay");
+      logger.d(value,
+          error:
+              "GET ALL AUTOPAY API RESPONSE ===> lib/bloc/mybillers/getAutopay");
 
       if (value != null) {
         if (!value.toString().contains("Invalid token")) {
