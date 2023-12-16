@@ -10,6 +10,7 @@ const LOGO_BBPS_FULL_PNG = "packages/ebps/assets/logo/logo_bbps_full_png.png";
 //JSON
 
 const JSON_BILLPAY = "packages/ebps/assets/icon/billPay.json";
+const JSON_NOTI = "packages/ebps/assets/icon/billNoti.json";
 
 //ICON
 
@@ -79,6 +80,7 @@ const ICON_BILLHISTORY = "packages/ebps/assets/icon/icon_billhistory.svg";
 const ICON_REFRESH = "packages/ebps/assets/icon/icon_refresh.svg";
 const ICON_COMPLAINTS = "packages/ebps/assets/icon/icon_complaint.svg";
 const ICON_FILTER = "packages/ebps/assets/icon/icon_filter.svg";
+const ICON_ERROR = "packages/ebps/assets/icon/icon_error.svg";
 
 //IMAGE
 

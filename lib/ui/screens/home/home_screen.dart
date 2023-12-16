@@ -3,6 +3,7 @@ import 'package:ebps/shared/constants/routes.dart';
 import 'package:ebps/shared/helpers/getNavigators.dart';
 import 'package:ebps/shared/common/AppBar/MyAppBar.dart';
 import 'package:ebps/ui/screens/home/bill_categories.dart';
+import 'package:ebps/ui/screens/home/mismatch_notification.dart';
 import 'package:ebps/ui/screens/home/upcoming_dues.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,9 +23,17 @@ class _HomeScreenState extends State<HomeScreen> {
         context: context,
         title: 'Bill Payment',
         actions: [
-          Icon(
-            Icons.notification_important_outlined,
-            color: CLR_SECONDARY,
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return MismatchNotification();
+                },
+              );
+            },
+            icon:
+                Icon(Icons.notification_important_outlined, color: CLR_PRIMARY),
           ),
           SizedBox(
             width: 5.w,

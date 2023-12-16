@@ -297,7 +297,7 @@ class _OtpScreenState extends State<OtpScreen> {
         appBar: MyAppBar(
           context: context,
           title: widget.data!['billerName'],
-          onLeadingTap: () => Navigator.pop(context),
+          onLeadingTap: () => goBack(context),
           showActions: false,
         ),
         body: BlocConsumer<HomeCubit, HomeState>(
