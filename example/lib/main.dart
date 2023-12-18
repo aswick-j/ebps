@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'package:ebps/shared/widget/centralized_grid_view.dart';
+import 'package:ebps/widget/centralized_grid_view.dart';
 import 'package:ebps_example/Mock_Params.dart';
 import 'package:ebps_example/PluginScreen.dart';
 import 'package:flutter/material.dart';

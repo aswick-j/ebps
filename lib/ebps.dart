@@ -5,8 +5,9 @@
 //     return EbpsPlatform.instance.getPlatformVersion();
 //   }
 // }
-import 'package:ebps/shared/constants/ebps_theme.dart';
-import 'package:ebps/shared/constants/routes.dart';
+
+import 'package:ebps/constants/ebps_theme.dart';
+import 'package:ebps/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
