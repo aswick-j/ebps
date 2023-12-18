@@ -13,6 +13,7 @@ import 'package:ebps/shared/common/AppBar/MyAppBar.dart';
 import 'package:ebps/shared/common/Button/MyAppButton.dart';
 import 'package:ebps/shared/common/Container/MyBillers/bill_details_container.dart';
 import 'package:ebps/shared/widget/bbps_logo.dart';
+import 'package:ebps/shared/widget/centralized_grid_view.dart';
 import 'package:ebps/shared/widget/date_picker_dialog.dart';
 import 'package:ebps/shared/widget/flickr_loader.dart';
 import 'package:ebps/shared/widget/getAccountInfoCard.dart';
@@ -530,8 +531,9 @@ class _createAutopayState extends State<createAutopay> {
                             itemCount: accountInfo!.length,
                             physics: NeverScrollableScrollPhysics(),
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                                SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement(
                               crossAxisCount: 2,
+                              itemCount: accountInfo!.length,
                               childAspectRatio: 4 / 2,
                               mainAxisSpacing: 10.0,
                             ),

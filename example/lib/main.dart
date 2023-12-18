@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:ebps/shared/widget/centralized_grid_view.dart';
 import 'package:ebps_example/Mock_Params.dart';
 import 'package:ebps_example/PluginScreen.dart';
 import 'package:flutter/material.dart';
@@ -109,13 +110,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   ];
   double _animationValue = 0.0;
 
-  List value = [p8, p6, p7, p6];
-  List Name = ["Balaji", "Thangavel", "Aswick", "Swetha"];
+  List value = [p8, p6, p7];
+  List Name = ["Balaji", "Thangavel", "Aswick"];
   List Img = [
     "https://cdn.iconscout.com/icon/free/png-512/free-avatar-366-456318.png?f=webp&w=512",
     "https://cdn.iconscout.com/icon/free/png-512/free-avatar-371-456323.png?f=webp&w=512",
     "https://cdn.iconscout.com/icon/free/png-512/free-avatar-370-456322.png?f=webp&w=512",
-    "https://cdn.iconscout.com/icon/free/png-512/free-avatar-378-456330.png?f=webp&w=512"
   ];
 
   @override
@@ -158,9 +158,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   shrinkWrap: true,
                   itemCount: value.length,
                   physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate:
+                      SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement(
                     crossAxisCount: 2,
                     mainAxisSpacing: 0,
+                    itemCount: value.length,
                   ),
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(

@@ -194,6 +194,9 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                       ),
                                       textAlign: TextAlign.left,
                                     ),
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(Icons.share)),
                                     GestureDetector(
                                       onTap: () {
                                         goToData(context, cREATEAUTOPAYROUTE, {

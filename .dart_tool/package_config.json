@@ -56,6 +56,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "cross_file",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/cross_file-0.3.3+7",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "crypto",
       "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.3",
       "packageUri": "lib/",
@@ -200,6 +206,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "mime",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/mime-1.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "nested",
       "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/nested-1.0.0",
       "packageUri": "lib/",
@@ -290,6 +302,18 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "share_plus",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/share_plus-7.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "share_plus_platform_interface",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/share_plus_platform_interface-3.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "shared_preferences",
       "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences-2.2.2",
       "packageUri": "lib/",
@@ -356,6 +380,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "sprintf",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/sprintf-7.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "stack_trace",
       "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/stack_trace-1.11.0",
       "packageUri": "lib/",
@@ -396,6 +426,36 @@
       "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/universal_platform-1.0.0+1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "url_launcher_linux",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_linux-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "url_launcher_platform_interface",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_platform_interface-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "url_launcher_web",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_web-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "url_launcher_windows",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_windows-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "uuid",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-4.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
     },
     {
       "name": "vector_graphics",
@@ -452,7 +512,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-12-16T06:01:01.326439Z",
+  "generated": "2023-12-18T06:20:42.495159Z",
   "generator": "pub",
   "generatorVersion": "3.1.5"
 }

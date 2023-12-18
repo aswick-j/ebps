@@ -14,6 +14,7 @@ import 'package:ebps/shared/helpers/logger.dart';
 import 'package:ebps/shared/common/AppBar/MyAppBar.dart';
 import 'package:ebps/shared/common/Button/MyAppButton.dart';
 import 'package:ebps/shared/common/Container/Home/biller_details_container.dart';
+import 'package:ebps/shared/widget/centralized_grid_view.dart';
 import 'package:ebps/shared/widget/flickr_loader.dart';
 import 'package:ebps/shared/widget/get_biller_detail.dart';
 import 'package:ebps/shared/widget/no_result.dart';
@@ -325,10 +326,11 @@ class _BillerDetailsState extends State<BillerDetails> {
                                       itemCount: _additionalInfo!.tag!.length,
                                       physics: NeverScrollableScrollPhysics(),
                                       gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                          SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement(
                                         crossAxisCount: 2,
                                         childAspectRatio: 4 / 2,
                                         mainAxisSpacing: 10.h,
+                                        itemCount: _additionalInfo!.tag!.length,
                                       ),
                                       itemBuilder: (context, index) {
                                         return Container(

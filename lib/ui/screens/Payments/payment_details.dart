@@ -13,6 +13,7 @@ import 'package:ebps/shared/common/AppBar/MyAppBar.dart';
 import 'package:ebps/shared/common/Button/MyAppButton.dart';
 import 'package:ebps/shared/common/Container/Home/biller_details_container.dart';
 import 'package:ebps/shared/widget/bbps_logo.dart';
+import 'package:ebps/shared/widget/centralized_grid_view.dart';
 import 'package:ebps/shared/widget/getAccountInfoCard.dart';
 import 'package:ebps/shared/widget/loader_overlay.dart';
 import 'package:ebps/shared/widget/flickr_loader.dart';
@@ -377,8 +378,10 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                               itemCount: accountInfo!.length,
                               physics: NeverScrollableScrollPhysics(),
                               gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                  SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement(
                                 crossAxisCount: 2,
+                                itemCount: accountInfo!.length,
+
                                 childAspectRatio: 4 / 2,
                                 mainAxisSpacing: 10.h,
                                 // mainAxisSpacing: 10,
