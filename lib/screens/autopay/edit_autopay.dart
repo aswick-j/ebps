@@ -33,7 +33,7 @@ class editAutopay extends StatefulWidget {
   String billName;
   String customerBillID;
   AllConfigurationsData? autopayData;
-
+  String? lastPaidAmount;
   List<PARAMETERS>? savedInputSignatures;
 
   editAutopay(
@@ -43,6 +43,7 @@ class editAutopay extends StatefulWidget {
       required this.billName,
       required this.customerBillID,
       this.autopayData,
+      required this.lastPaidAmount,
       required this.savedInputSignatures});
 
   @override
@@ -65,6 +66,8 @@ class _editAutopayState extends State<editAutopay> {
 
   String? selectedDate = "1";
   dynamic selectedAcc = null;
+  bool accError = false;
+  bool maxAmountError = false;
 
   List<String> EffectiveFrom = <String>[
     'Immediately',
@@ -256,6 +259,7 @@ class _editAutopayState extends State<editAutopay> {
                                 setState(() {
                                   maxAmountController.text = maximumAmount;
                                   limitGroupRadio = 1;
+                                  maxAmountError = false;
                                 });
                               },
                               activeColor: TXT_CLR_PRIMARY,
@@ -314,7 +318,21 @@ class _editAutopayState extends State<editAutopay> {
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'^[a-z0-9A-Z ]*'))
                           ],
-                          onChanged: (val) {},
+                          onChanged: (val) {
+                            if (double.parse(val.toString()) >
+                                    double.parse(maximumAmount.toString()) ||
+                                double.parse(val.toString()) <
+                                    double.parse(
+                                        widget.lastPaidAmount.toString())) {
+                              setState(() {
+                                maxAmountError = true;
+                              });
+                            } else {
+                              setState(() {
+                                maxAmountError = false;
+                              });
+                            }
+                          },
                           validator: (inputValue) {
                             if (inputValue!.isEmpty) {
                               return "Bill Name Should Not be Empty";
@@ -340,6 +358,22 @@ class _editAutopayState extends State<editAutopay> {
                               hintText: "Enter maximum amount"),
                         ),
                       ),
+                      if (maxAmountError)
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 20.w, top: 0.h, right: 20.w),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Amount Should be Between  ₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.lastPaidAmount.toString()))} to ₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}',
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w600,
+                                color: CLR_ERROR,
+                              ),
+                            ),
+                          ),
+                        ),
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 16.w, vertical: 16.h),
@@ -558,6 +592,7 @@ class _editAutopayState extends State<editAutopay> {
                               onPressed: () {
                                 setState(() {
                                   selectedAcc = null;
+                                  accError = false;
                                 });
                                 BlocProvider.of<HomeCubit>(context)
                                     .getAccountInfo(myAccounts);
@@ -599,11 +634,38 @@ class _editAutopayState extends State<editAutopay> {
                                   setState(() {
                                     selectedAcc = index;
                                   });
+                                  if (accountInfo![index].balance ==
+                                      "Unable to fetch balance") {
+                                    setState(() {
+                                      accError = true;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      accError = false;
+                                    });
+                                  }
                                 },
                                 index: index,
+                                AccErr: accError,
                                 isSelected: selectedAcc,
                               );
                             },
+                          ),
+                        ),
+                      if (accError)
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 20.w, top: 10.h, right: 20.w),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Insufficient balance in the account',
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w600,
+                                color: CLR_ERROR,
+                              ),
+                            ),
                           ),
                         ),
                       SizedBox(
@@ -649,44 +711,62 @@ class _editAutopayState extends State<editAutopay> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () async {
-                        Map<String, dynamic> decodedToken =
-                            await getDecodedToken();
-                        List decodedToken2 = decodedToken["accounts"].toList();
-                        print(decodedToken2);
-                        var accID;
-                        for (var i = 0; i < decodedToken2.length; i++) {
-                          if (decodedToken2[i]["accountID"] ==
-                              accountInfo![selectedAcc].accountNumber) {
-                            setState(() {
-                              accID = decodedToken2[i]["id"];
-                            });
+                        if (selectedAcc != null &&
+                            !accError &&
+                            !maxAmountError &&
+                            (maxAmountController.text.isNotEmpty &&
+                                double.parse(widget.autopayData!.mAXIMUMAMOUNT
+                                        .toString()) !=
+                                    double.parse(
+                                        maxAmountController.text.toString()))) {
+                          Map<String, dynamic> decodedToken =
+                              await getDecodedToken();
+                          List decodedToken2 =
+                              decodedToken["accounts"].toList();
+                          print(decodedToken2);
+                          var accID;
+                          for (var i = 0; i < decodedToken2.length; i++) {
+                            if (decodedToken2[i]["accountID"] ==
+                                accountInfo![selectedAcc].accountNumber) {
+                              setState(() {
+                                accID = decodedToken2[i]["id"];
+                              });
+                            }
                           }
+                          goToData(context, oTPPAGEROUTE, {
+                            "from": "edit-auto-pay",
+                            "templateName": "edit-auto-pay",
+                            "context": context,
+                            "autopayData": widget.autopayData,
+                            "data": {
+                              "accountNumber": accID,
+                              "maximumAmount": maxAmountController.text,
+                              "paymentDate": selectedDate,
+                              "isBimonthly": billPayGroupRadio,
+                              "activatesFrom": activatesFrom == "Immediately"
+                                  ? null
+                                  : activatesFrom.toLowerCase(),
+                              "isActive": isActive,
+                              "billID": widget.customerBillID,
+                              "billerName": widget.billerName,
+                              "amountLimit": limitGroupRadio,
+                            }
+                          });
                         }
-
-                        goToData(context, oTPPAGEROUTE, {
-                          "from": "edit-auto-pay",
-                          "templateName": "edit-auto-pay",
-                          "context": context,
-                          "autopayData": widget.autopayData,
-                          "data": {
-                            "accountNumber": accID,
-                            "maximumAmount": maxAmountController.text,
-                            "paymentDate": selectedDate,
-                            "isBimonthly": billPayGroupRadio,
-                            "activatesFrom": activatesFrom == "Immediately"
-                                ? null
-                                : activatesFrom.toLowerCase(),
-                            "isActive": isActive,
-                            "billID": widget.customerBillID,
-                            "billerName": widget.billerName,
-                            "amountLimit": limitGroupRadio,
-                          }
-                        });
                       },
                       buttonText: "Update",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
+                      buttonColor: selectedAcc != null &&
+                              !accError &&
+                              !maxAmountError &&
+                              (maxAmountController.text.isNotEmpty &&
+                                  double.parse(widget.autopayData!.mAXIMUMAMOUNT
+                                          .toString()) !=
+                                      double.parse(
+                                          maxAmountController.text.toString()))
+                          ? CLR_PRIMARY
+                          : Colors.grey,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,
                       buttonTextSize: 14.sp,

@@ -381,6 +381,7 @@ class MyRouter {
                     billerName: args["billerName"],
                     categoryName: args["categoryName"],
                     billName: args["billName"],
+                    lastPaidAmount: args["lastPaidAmount"],
                     customerBillID: args["customerBillID"],
                     savedInputSignatures: args["savedInputSignatures"],
                   ),
@@ -405,6 +406,7 @@ class MyRouter {
                       categoryName: args["categoryName"],
                       billName: args["billName"],
                       customerBillID: args["customerBillID"],
+                      lastPaidAmount: args["lastPaidAmount"],
                       savedInputSignatures: args["savedInputSignatures"],
                       autopayData: args["autopayData"]),
                 ));

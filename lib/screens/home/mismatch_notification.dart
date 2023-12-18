@@ -232,13 +232,16 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                         "billerName": widget
                                             .allautoPayData![index].bILLERNAME,
                                         "categoryName": "sss",
+                                        "lastPaidAmount": widget
+                                            .allautoPayData![index].dUEAMOUNT,
                                         "billName": widget
                                             .allautoPayData![index].bILLNAME,
                                         "customerBillID": widget
                                             .allautoPayData![index]
                                             .cUSTOMERBILLID
                                             .toString(),
-                                        "autopayData":
+                                        ""
+                                                "autopayData":
                                             widget.allautoPayData![index],
                                         "savedInputSignatures":
                                             widget.savedinput,

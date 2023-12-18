@@ -579,6 +579,9 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                   .savedBillersData
                                                   .cUSTOMERBILLID
                                                   .toString(),
+                                              "lastPaidAmount": widget
+                                                  .savedBillersData.bILLAMOUNT
+                                                  .toString(),
                                               "autopayData": getAllAutopayList(
                                                   widget.savedBillersData
                                                       .cUSTOMERBILLID),
@@ -1192,6 +1195,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                               "billerName": widget.savedBillersData.bILLERNAME,
                               "categoryName":
                                   widget.savedBillersData.cATEGORYNAME,
+                              "lastPaidAmount":
+                                  widget.savedBillersData.bILLAMOUNT.toString(),
                               "billName": widget.savedBillersData.bILLNAME,
                               "customerBillID": widget
                                   .savedBillersData.cUSTOMERBILLID
