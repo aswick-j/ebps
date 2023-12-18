@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ebps/domain/models/auto_schedule_pay_model.dart';
 import 'package:ebps/domain/services/api.dart';
 import 'package:ebps/domain/services/api_client.dart';
+import 'package:ebps/shared/constants/assets.dart';
 import 'package:ebps/shared/constants/colors.dart';
 import 'package:ebps/shared/constants/routes.dart';
 import 'package:ebps/shared/helpers/getNavigators.dart';
@@ -14,6 +15,7 @@ import 'package:ebps/ui/screens/home/upcoming_dues.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -71,13 +73,12 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
         context: context,
         title: 'Bill Payment',
         actions: [
-          IconButton(
-            onPressed: () {
-              handleDialog();
-            },
-            icon:
-                Icon(Icons.notification_important_outlined, color: CLR_PRIMARY),
-          ),
+          if (allautoPayData!.isNotEmpty)
+            GestureDetector(
+                onTap: () {
+                  handleDialog();
+                },
+                child: SvgPicture.asset(ICON_BELL)),
           SizedBox(
             width: 5.w,
           ),
@@ -156,9 +157,6 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
                     .toList();
 
                 allautoPayData = [...newData, ...modifiedData];
-
-                print("====================================================");
-                print(jsonEncode(allautoPayData));
               });
               var notifiValue =
                   await getSharedNotificationValue("NOTIFICATION");

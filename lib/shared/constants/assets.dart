@@ -81,6 +81,7 @@ const ICON_REFRESH = "packages/ebps/assets/icon/icon_refresh.svg";
 const ICON_COMPLAINTS = "packages/ebps/assets/icon/icon_complaint.svg";
 const ICON_FILTER = "packages/ebps/assets/icon/icon_filter.svg";
 const ICON_ERROR = "packages/ebps/assets/icon/icon_error.svg";
+const ICON_BELL = "packages/ebps/assets/icon/icon_bell.svg";
 
 //IMAGE
 
