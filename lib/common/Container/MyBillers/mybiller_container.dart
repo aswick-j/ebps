@@ -5,6 +5,7 @@ import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
+import 'package:ebps/models/upcoming_dues_model.dart';
 import 'package:ebps/widget/custom_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +27,7 @@ class MyBillersContainer extends StatefulWidget {
   List<PARAMETERS>? SavedinputParameters;
   bool showButton;
   List<AllConfigurations>? allautoPaymentList;
+  List<UpcomingDuesData>? upcomingDueData;
   MyBillersContainer({
     super.key,
     this.buttonText,
@@ -42,6 +44,7 @@ class MyBillersContainer extends StatefulWidget {
     required this.savedBillersData,
     required this.SavedinputParameters,
     required this.allautoPaymentList,
+    required this.upcomingDueData,
   });
 
   @override
@@ -1112,11 +1115,31 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                           context: context),
                                       ModalText(
                                           title: "Due Amount",
-                                          subTitle: "₹ 500.00",
+                                          subTitle: widget.upcomingDueData!
+                                                      .isNotEmpty &&
+                                                  widget.upcomingDueData![0]
+                                                          .dueAmount !=
+                                                      null
+                                              ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.upcomingDueData![0].dueAmount.toString()))}"
+                                              : "-",
                                           context: context),
                                       ModalText(
                                           title: "Due Date",
-                                          subTitle: "20/09/2023",
+                                          subTitle: (widget.upcomingDueData!
+                                                      .isNotEmpty &&
+                                                  widget.upcomingDueData![0]
+                                                          .dueDate !=
+                                                      null)
+                                              ? DateFormat('dd/MM/yyyy').format(
+                                                  DateTime.parse(widget
+                                                          .upcomingDueData![0]
+                                                          .dueDate!
+                                                          .toString()
+                                                          .substring(0, 10))
+                                                      .toLocal()
+                                                      .add(const Duration(
+                                                          days: 1)))
+                                              : "-",
                                           context: context),
                                       ModalText(
                                           title: "Autopay Date",
@@ -1219,81 +1242,83 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                   ),
                 ),
               ),
-            if (!(widget.savedBillersData.cOMPLETIONDATE == null &&
-                widget.savedBillersData.bILLAMOUNT == null))
-              Divider(
-                height: 10.h,
-                thickness: 1,
-                indent: 10.h,
-                endIndent: 10,
-              ),
-            if (!(widget.savedBillersData.cOMPLETIONDATE == null &&
-                widget.savedBillersData.bILLAMOUNT == null))
-              Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 6.0.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            SvgPicture.asset(ICON_CALENDAR),
-                            SizedBox(
-                              width: 5.w,
-                            ),
-                            Text(
-                              widget.savedBillersData.cOMPLETIONDATE != null
-                                  ? DateFormat('dd/MM/yyyy').format(
-                                      DateTime.parse(widget
-                                              .savedBillersData.cOMPLETIONDATE!
-                                              .toString()
-                                              .substring(0, 10))
-                                          .toLocal()
-                                          .add(const Duration(days: 1)))
-                                  : "-",
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xff808080),
-                                height: 20 / 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                        if (widget.upcomingText != "")
-                          SizedBox(
-                            height: 3.h,
-                          ),
-                        if (widget.upcomingText != "")
-                          Text(
-                            widget.upcomingText!,
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w600,
-                              color: widget.upcomingTXT_CLR_DEFAULT,
-                            ),
-                            textAlign: TextAlign.center,
-                          )
-                      ],
-                    ),
-                    Text(
-                      widget.savedBillersData.bILLAMOUNT != null
-                          ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.savedBillersData.bILLAMOUNT!.toString()))}"
-                          : "-",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff1b438b),
-                        height: 26 / 16,
-                      ),
-                      textAlign: TextAlign.left,
-                    )
-                  ],
+            if (widget.upcomingDueData!.isNotEmpty)
+              if (!(widget.upcomingDueData![0].dueAmount == null &&
+                  widget.upcomingDueData![0].dueDate == null))
+                Divider(
+                  height: 10.h,
+                  thickness: 1,
+                  indent: 10.h,
+                  endIndent: 10,
                 ),
-              ),
+            if (widget.upcomingDueData!.isNotEmpty)
+              if (!(widget.upcomingDueData![0].dueAmount == null &&
+                  widget.upcomingDueData![0].dueDate == null))
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 6.0.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(ICON_CALENDAR),
+                              SizedBox(
+                                width: 5.w,
+                              ),
+                              Text(
+                                widget.upcomingDueData![0].dueDate != null
+                                    ? DateFormat('dd/MM/yyyy').format(
+                                        DateTime.parse(widget
+                                                .upcomingDueData![0].dueDate!
+                                                .toString()
+                                                .substring(0, 10))
+                                            .toLocal()
+                                            .add(const Duration(days: 1)))
+                                    : "-",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xff808080),
+                                  height: 20 / 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (widget.upcomingText != "")
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                          if (widget.upcomingText != "")
+                            Text(
+                              widget.upcomingText!,
+                              style: TextStyle(
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.w600,
+                                color: widget.upcomingTXT_CLR_DEFAULT,
+                              ),
+                              textAlign: TextAlign.center,
+                            )
+                        ],
+                      ),
+                      Text(
+                        widget.upcomingDueData![0].dueAmount != null
+                            ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.upcomingDueData![0].dueAmount.toString()))}"
+                            : "-",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff1b438b),
+                          height: 26 / 16,
+                        ),
+                        textAlign: TextAlign.left,
+                      )
+                    ],
+                  ),
+                ),
           ])),
     );
   }
@@ -1316,7 +1341,7 @@ Widget ModalText(
           textAlign: TextAlign.left,
         ),
         Text(
-          subTitle!,
+          subTitle! ?? "-",
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.bold,

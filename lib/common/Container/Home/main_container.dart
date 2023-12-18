@@ -1,6 +1,10 @@
+import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/constants/colors.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -99,9 +103,85 @@ class MainContainer extends StatelessWidget {
             ),
             trailing: GestureDetector(
               onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0.r)),
+                        child: Container(
+                          height: 200.h,
+                          child: Padding(
+                            padding: EdgeInsets.all(12.0.r),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(ICON_DELETE,
+                                    height: 50.h, width: 50.w),
+                                Text(
+                                  "Are You Sure You Want To Delete",
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xff000000),
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 12.0.w, vertical: 10.h),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Expanded(
+                                        child: MyAppButton(
+                                            onPressed: () async {
+                                              goBack(context);
+                                            },
+                                            buttonText: "Cancel",
+                                            buttonTxtColor: CLR_PRIMARY,
+                                            buttonBorderColor: CLR_PRIMARY,
+                                            buttonColor: BTN_CLR_ACTIVE,
+                                            buttonSizeX: 10.h,
+                                            buttonSizeY: 40.w,
+                                            buttonTextSize: 14.sp,
+                                            buttonTextWeight: FontWeight.w500),
+                                      ),
+                                      SizedBox(
+                                        width: 20.w,
+                                      ),
+                                      Expanded(
+                                        child: MyAppButton(
+                                            onPressed: () async {
+                                              // BlocProvider.of<MybillersCubit>(
+                                              //         context)
+                                              //     .deleteUpcomingDue(
+                                              //         customerBillID);
+                                              // goBack(context);
+                                              // goBack(context);
+                                            },
+                                            buttonText: "Delete",
+                                            buttonTxtColor: BTN_CLR_ACTIVE,
+                                            buttonBorderColor:
+                                                Colors.transparent,
+                                            buttonColor: CLR_PRIMARY,
+                                            buttonSizeX: 10.h,
+                                            buttonSizeY: 40.w,
+                                            buttonTextSize: 14.sp,
+                                            buttonTextWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    });
                 // final state = context.<MybillersCubit>().state;
-                // BlocProvider.of<MybillersCubit>(context)
-                //     .deleteUpcomingDue(customerBillID);
               },
               child: SvgPicture.asset(ICON_DELETE),
             ),

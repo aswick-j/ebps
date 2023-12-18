@@ -2,6 +2,7 @@ import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/ebps.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -71,7 +72,9 @@ class _SessionExpiredState extends State<SessionExpired> {
               ),
               SizedBox(height: 80),
               MyAppButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    AppTrigger.instance.goBackCallback!.call();
+                  },
                   buttonText: "Go Back",
                   buttonTxtColor: BTN_CLR_ACTIVE,
                   buttonBorderColor: Colors.transparent,

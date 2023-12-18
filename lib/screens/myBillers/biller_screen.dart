@@ -122,6 +122,14 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
       return (find.isNotEmpty ? find[0] : "");
     }
 
+    getUpcmoingDueList(customerBILLID) {
+      List<UpcomingDuesData>? find = upcomingDuesData!
+          .where((items) => items.customerBillID == customerBILLID)
+          .toList();
+
+      return find;
+    }
+
     getDueAmount(customerBILLID) {
       try {
         List<UpcomingDuesData>? find = upcomingDuesData!
@@ -166,7 +174,28 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                     )),
           );
         }),
-        showActions: false,
+        actions: [
+          Tooltip(
+            textStyle: TextStyle(color: Colors.white),
+            decoration: BoxDecoration(
+                color: CLR_BLUE_LITE,
+                borderRadius: BorderRadius.circular(8.0.r)),
+            triggerMode: TooltipTriggerMode.tap,
+            showDuration: Duration(milliseconds: 3500),
+            padding: EdgeInsets.all(20.r),
+            margin: EdgeInsets.symmetric(horizontal: 10.w),
+            message:
+                "Auto pay facility is supported only for selected billers and is enabled after you pay a bill atleast once for a  biller",
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.info_outline,
+                color: CLR_PRIMARY,
+              ),
+            ),
+          ),
+        ],
+        showActions: true,
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -248,6 +277,8 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                     // controller: infiniteScrollController,
                     itemBuilder: (context, index) {
                       return MyBillersContainer(
+                          upcomingDueData: getUpcmoingDueList(
+                              savedBillerData![index].cUSTOMERBILLID),
                           buttonText: showAutopayButtonContent(
                             savedBillerData![index],
                           )

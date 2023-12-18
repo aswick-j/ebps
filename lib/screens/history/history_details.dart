@@ -47,7 +47,10 @@ class _HistoryDetailsState extends State<HistoryDetails> {
   }
 
   Widget TxnDetails(
-      {String title = "", String subTitle = "", bool? clipBoard}) {
+      {String title = "",
+      String subTitle = "",
+      bool? clipBoard,
+      bool? showLogo}) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
       child: Column(
@@ -66,6 +69,9 @@ class _HistoryDetailsState extends State<HistoryDetails> {
           SizedBox(height: 5.h),
           Row(
             children: [
+              if (showLogo == true)
+                Image.asset(LOGO_EQUITAS_E, height: 40.h, width: 40.w),
+              if (showLogo == true) SizedBox(width: 10.w),
               Text(
                 subTitle,
                 style: TextStyle(
@@ -194,7 +200,9 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                       textAlign: TextAlign.left,
                                     ),
                                     IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          // Share.share('Hello Welcome to FlutterCampus', subject: 'Welcome Message');
+                                        },
                                         icon: Icon(Icons.share)),
                                     GestureDetector(
                                       onTap: () {
@@ -282,7 +290,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                           clipBoard: false),
                       TxnDetails(
                           title: "Bank Reference Number ",
-                          subTitle: widget.historyData.tRANSACTIONID.toString(),
+                          subTitle: widget.historyData.aPPROVALREFNO.toString(),
                           clipBoard: true),
                       if (widget.historyData.tRANSACTIONSTATUS == 'success')
                         TxnDetails(
@@ -298,7 +306,8 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                       TxnDetails(
                           title: "Transfer Type",
                           subTitle: "Equitas Digital Banking",
-                          clipBoard: false),
+                          clipBoard: false,
+                          showLogo: true),
                     ],
                   )),
               if (widget.historyData.tRANSACTIONSTATUS != 'success')

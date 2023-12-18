@@ -84,7 +84,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
   }
 
   Widget TxnDetails(
-      {String title = "", String subTitle = "", bool? clipBoard}) {
+      {String title = "",
+      String subTitle = "",
+      bool? clipBoard,
+      bool? showLogo}) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
       child: Column(
@@ -103,6 +106,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
           SizedBox(height: 5.h),
           Row(
             children: [
+              if (showLogo == true)
+                Image.asset(LOGO_EQUITAS_E, height: 40.h, width: 40.w),
+              if (showLogo == true) SizedBox(width: 10.w),
               Text(
                 subTitle,
                 style: TextStyle(
@@ -286,7 +292,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           subTitle:
                               tnxResponse!.paymentDetails?.toJson().length !=
                                       null
-                                  ? paymentDetails!['txnReferenceId'].toString()
+                                  ? paymentDetails!['approvalRefNum'].toString()
                                   : "-",
                           clipBoard: true),
                       if (paymentDetails!['success'])
@@ -307,7 +313,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       TxnDetails(
                           title: "Transfer Type",
                           subTitle: "Equitas Digital Banking",
-                          clipBoard: false),
+                          clipBoard: false,
+                          showLogo: true),
                     ],
                   )),
               if (!paymentDetails!['success'])

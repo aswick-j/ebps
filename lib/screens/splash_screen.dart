@@ -113,7 +113,14 @@ class _splashScreenState extends State<splashScreen> {
                         weight: FontWeight.bold,
                       ),
                     ],
-                  )
+                  ),
+                // SizedBox(height: 600),
+                // MyAppText(
+                //   data: 'UAT v1.0',
+                //   size: 12.0,
+                //   color: CLR_PRIMARY,
+                //   weight: FontWeight.w800,
+                // ),
               ],
             ),
           );

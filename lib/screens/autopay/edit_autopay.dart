@@ -96,11 +96,31 @@ class _editAutopayState extends State<editAutopay> {
     return LoaderOverlay(
       child: Scaffold(
         appBar: MyAppBar(
-          context: context,
-          title: "Edit Autopay",
-          onLeadingTap: () => goBack(context),
-          showActions: false,
-        ),
+            context: context,
+            title: "Edit Autopay",
+            onLeadingTap: () => goBack(context),
+            showActions: true,
+            actions: [
+              Tooltip(
+                textStyle: TextStyle(color: Colors.white),
+                decoration: BoxDecoration(
+                    color: CLR_BLUE_LITE,
+                    borderRadius: BorderRadius.circular(8.0.r)),
+                triggerMode: TooltipTriggerMode.tap,
+                showDuration: Duration(milliseconds: 6500),
+                padding: EdgeInsets.all(20.r),
+                margin: EdgeInsets.symmetric(horizontal: 10.w),
+                message:
+                    "Autopay will be enabled from the 1st of the month you selected while setting up the autopay and payments will be made from the date selected for autopay execution. Until the autopay is enabled, you cannot edit it. To edit the auto pay that is not enabled yet, please wait till the autopay is enabled in the month selected during creation or delete the autopay and create a new one.",
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.info_outline,
+                    color: CLR_PRIMARY,
+                  ),
+                ),
+              ),
+            ]),
         body: SingleChildScrollView(
           child: MultiBlocListener(
             listeners: [
