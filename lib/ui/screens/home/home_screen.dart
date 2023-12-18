@@ -61,6 +61,7 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
     handleDialog() {
       showDialog(
         context: dialogContext,
+        barrierDismissible: false,
         builder: (BuildContext ctx) {
           return MismatchNotification(
               allautoPayData: allautoPayData, context: dialogContext);
@@ -160,7 +161,7 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
               });
               var notifiValue =
                   await getSharedNotificationValue("NOTIFICATION");
-              if (notifiValue) {
+              if (notifiValue && allautoPayData!.isNotEmpty) {
                 handleDialog();
               }
             } else if (state is AutopayFailed) {
