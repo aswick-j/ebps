@@ -6,6 +6,6 @@ var logger = Logger(
   errorMethodCount: 0,
   lineLength: 50,
   colors: true,
-  printEmojis: true,
+  printEmojis: false,
   printTime: false,
 ));

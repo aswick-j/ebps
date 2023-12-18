@@ -16,7 +16,7 @@ class _PluginScreenState extends State<PluginScreen> {
     return Scaffold(
       body: WillPopScope(
           onWillPop: () async => false,
-          child: Center(child: EbpsScreen(apiData: apiData))),
+          child: Center(child: EbpsScreen(apiData: apiData, ctx: context))),
     );
   }
 }

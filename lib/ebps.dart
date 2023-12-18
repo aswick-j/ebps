@@ -8,13 +8,38 @@
 
 import 'package:ebps/constants/ebps_theme.dart';
 import 'package:ebps/constants/routes.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+class AppTrigger {
+  AppTrigger._privateConstructor();
+
+  static final AppTrigger instance = AppTrigger._privateConstructor();
+
+  VoidCallback? goBackCallback;
+
+  void goBack() {
+    if (goBackCallback != null) {
+      goBackCallback!();
+    }
+  }
+
+  void setGoBackCallback(VoidCallback callback) {
+    goBackCallback = callback;
+  }
+}
+
 class EbpsScreen extends StatelessWidget {
   String apiData;
-  EbpsScreen({Key? key, required this.apiData}) : super(key: key);
+  BuildContext ctx;
+  EbpsScreen({Key? key, required this.apiData, required this.ctx})
+      : super(key: key) {
+    AppTrigger.instance.setGoBackCallback(() {
+      Navigator.of(ctx).pop();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

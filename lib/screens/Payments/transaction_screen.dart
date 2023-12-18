@@ -138,11 +138,12 @@ class _TransactionScreenState extends State<TransactionScreen> {
           title: 'Go to Home',
           onLeadingTap: () => {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.of(context).pushReplacement(
+              Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                     builder: (context) => BottomNavBar(
                           SelectedIndex: 0,
                         )),
+                (Route<dynamic> route) => false,
               );
             }),
           },
