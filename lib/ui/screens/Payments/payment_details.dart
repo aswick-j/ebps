@@ -394,11 +394,13 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                     setState(() {
                                       selectedAcc = index;
                                     });
-                                    if (double.parse(accountInfo![index]
-                                            .balance
-                                            .toString()) <
-                                        double.parse(
-                                            widget.amount.toString())) {
+                                    if (accountInfo![index].balance ==
+                                            "Unable to fetch balance" ||
+                                        double.parse(accountInfo![index]
+                                                .balance
+                                                .toString()) <
+                                            double.parse(
+                                                widget.amount.toString())) {
                                       setState(() {
                                         accError = true;
                                       });

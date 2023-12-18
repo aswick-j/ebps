@@ -1,4 +1,6 @@
+import 'package:ebps/shared/constants/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class FlickrLoader extends StatelessWidget {
@@ -13,7 +15,7 @@ class FlickrLoader extends StatelessWidget {
     );
     // return Center(
     //   child: Image.asset(
-    //     LOADER,
+    //     LOADER_V3,
     //     height: 50.h,
     //     width: 50.w,
     //   ),

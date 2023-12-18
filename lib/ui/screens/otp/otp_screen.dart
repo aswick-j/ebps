@@ -331,7 +331,10 @@ class _OtpScreenState extends State<OtpScreen> {
             }
 
             if (state is OtpValidateLoading) {
+              LoaderOverlay.of(context).show();
             } else if (state is OtpValidateSuccess) {
+              LoaderOverlay.of(context).hide();
+
               handleOTPSuccess();
             } else if (state is OtpValidateFailed) {
               txtOtpController.clear();
@@ -349,7 +352,10 @@ class _OtpScreenState extends State<OtpScreen> {
                   secondsRemaining = 20;
                 });
               }
-            } else if (state is OtpValidateError) {}
+              LoaderOverlay.of(context).hide();
+            } else if (state is OtpValidateError) {
+              LoaderOverlay.of(context).hide();
+            }
 
             if (state is PayBillLoading) {
               LoaderOverlay.of(context).show();

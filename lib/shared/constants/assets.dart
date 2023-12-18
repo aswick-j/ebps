@@ -91,6 +91,7 @@ const SPLASH_BAG = "packages/ebps/assets/images/splash_background.png";
 const LOADER = "packages/ebps/assets/logo/loader.gif";
 const LOADER_V1 = "packages/ebps/assets/logo/loaderv1.gif";
 const LOADER_V2 = "packages/ebps/assets/logo/loaderv2.gif";
+const LOADER_V3 = "packages/ebps/assets/logo/loaderv3.gif";
 
 String CATEGORY_ICON(String? CATEGORY_NAME) {
   switch (CATEGORY_NAME!.toLowerCase()) {
