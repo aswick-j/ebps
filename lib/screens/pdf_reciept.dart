@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ebps/common/AppBar/MyAppBar.dart';
+import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getNavigators.dart';
@@ -25,7 +26,7 @@ class _pdfRecieptState extends State<pdfReciept> {
     return Scaffold(
       appBar: MyAppBar(
         context: context,
-        title: 'PDF',
+        title: 'Transaction Receipt',
         onLeadingTap: () => {
           goBack(context),
         },
@@ -33,7 +34,7 @@ class _pdfRecieptState extends State<pdfReciept> {
       ),
       body: Center(
         child: PdfPreview(
-          allowPrinting: true,
+          allowPrinting: false,
           onPrinted: (context) => {print("printed")},
           scrollViewDecoration: BoxDecoration(color: Colors.white),
           pdfPreviewPageDecoration: BoxDecoration(
@@ -45,13 +46,67 @@ class _pdfRecieptState extends State<pdfReciept> {
             ),
           ),
           // actions: [Icon(Icons.download)],
-          allowSharing: true,
+          allowSharing: false,
           canChangeOrientation: false,
           canChangePageFormat: false,
           canDebug: false,
           initialPageFormat: PdfPageFormat.a4,
           loadingWidget: FlickrLoader(),
           build: (format) => _generatePdf(format, "title"),
+        ),
+      ),
+      bottomSheet: Container(
+        decoration: const BoxDecoration(
+            border:
+                Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                child: MyAppButton(
+                    onPressed: () async {
+                      final result = await Printing.sharePdf(
+                        bytes: await _generatePdf(PdfPageFormat.a4, 'title'),
+                        filename: 'Transaction_Receipt.pdf',
+                      );
+                      if (result) {
+                        print('Shared');
+                      }
+                    },
+                    buttonText: "Share",
+                    buttonTxtColor: CLR_PRIMARY,
+                    buttonBorderColor: Colors.transparent,
+                    buttonColor: BTN_CLR_ACTIVE,
+                    buttonSizeX: 10.h,
+                    buttonSizeY: 40.w,
+                    buttonTextSize: 14.sp,
+                    buttonTextWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                width: 40.w,
+              ),
+              Expanded(
+                child: MyAppButton(
+                    onPressed: () {
+                      Printing.layoutPdf(
+                        name: "Transaction Receipt",
+                        onLayout: (PdfPageFormat format) async =>
+                            _generatePdf(format, "title"),
+                      );
+                    },
+                    buttonText: "Download",
+                    buttonTxtColor: BTN_CLR_ACTIVE,
+                    buttonBorderColor: Colors.transparent,
+                    buttonColor: CLR_PRIMARY,
+                    buttonSizeX: 10.h,
+                    buttonSizeY: 40.w,
+                    buttonTextSize: 14.sp,
+                    buttonTextWeight: FontWeight.w500),
+              ),
+            ],
+          ),
         ),
       ),
     );
