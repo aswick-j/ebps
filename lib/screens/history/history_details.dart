@@ -189,19 +189,60 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                               children: [
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    SvgPicture.asset(ICON_ARROW_UP,
-                                        height: 20.h),
-                                    Text(
-                                      "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
-                                      style: TextStyle(
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xff1b438b),
-                                        height: 33 / 20,
-                                      ),
-                                      textAlign: TextAlign.left,
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        SvgPicture.asset(ICON_ARROW_UP,
+                                            height: 20.h),
+                                        Text(
+                                          "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
+                                          style: TextStyle(
+                                            fontSize: 20.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xff1b438b),
+                                            height: 33 / 20,
+                                          ),
+                                          textAlign: TextAlign.left,
+                                        ),
+
+                                        // GestureDetector(
+                                        //   onTap: () {
+                                        //     goToData(context, cREATEAUTOPAYROUTE, {
+                                        //       "billerName":
+                                        //           widget.historyData.bILLERNAME,
+                                        //       "categoryName":
+                                        //           widget.historyData.cATEGORYNAME,
+                                        //       "billName":
+                                        //           widget.historyData.bILLNAME,
+                                        //       "customerBillID":
+                                        //           widget.historyData.cUSTOMERBILLID,
+                                        //       "savedInputSignatures":
+                                        //           widget.historyData.pARAMETERS,
+                                        //     });
+                                        //   },
+                                        //   child: Container(
+                                        //     padding: EdgeInsets.symmetric(
+                                        //         horizontal: 8.0.w, vertical: 4.w),
+                                        //     decoration: BoxDecoration(
+                                        //       color: TXT_CLR_PRIMARY,
+                                        //       border: Border.all(
+                                        //           color: TXT_CLR_PRIMARY),
+                                        //       borderRadius:
+                                        //           BorderRadius.circular(12.0.r),
+                                        //     ),
+                                        //     child: Text(
+                                        //       "Setup Autopay",
+                                        //       style: TextStyle(
+                                        //         color: Colors.white,
+                                        //         fontSize: 10.0.sp,
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // ),
+                                      ],
                                     ),
                                     IconButton(
                                         onPressed: () {
@@ -213,40 +254,6 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                         },
                                         icon: Icon(Icons.file_download_outlined,
                                             color: CLR_PRIMARY)),
-                                    GestureDetector(
-                                      onTap: () {
-                                        goToData(context, cREATEAUTOPAYROUTE, {
-                                          "billerName":
-                                              widget.historyData.bILLERNAME,
-                                          "categoryName":
-                                              widget.historyData.cATEGORYNAME,
-                                          "billName":
-                                              widget.historyData.bILLNAME,
-                                          "customerBillID":
-                                              widget.historyData.cUSTOMERBILLID,
-                                          "savedInputSignatures":
-                                              widget.historyData.pARAMETERS,
-                                        });
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8.0.w, vertical: 4.w),
-                                        decoration: BoxDecoration(
-                                          color: TXT_CLR_PRIMARY,
-                                          border: Border.all(
-                                              color: TXT_CLR_PRIMARY),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0.r),
-                                        ),
-                                        child: Text(
-                                          "Setup Autopay",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 10.0.sp,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
                                   ],
                                 ),
                                 SizedBox(

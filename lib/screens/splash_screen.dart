@@ -7,6 +7,7 @@ import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class splashScreen extends StatefulWidget {
   String apiData;
@@ -87,12 +88,34 @@ class _splashScreenState extends State<splashScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
-                  child: Image.asset(
-                    'packages/ebps/assets/logo/logo_equitas_normal.png',
-                    height: 57,
-                    width: 164,
-                  ),
-                ),
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 100.h,
+                      width: 100.w,
+                      child: Image.asset(
+                        LOGO_EQUITAS,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 30.w,
+                    ),
+                    Container(
+                      height: 100.h,
+                      width: 100.w,
+                      child: Image.asset(
+                        LOGO_BBPS_FULL_PNG,
+                      ),
+                    ),
+                  ],
+                )
+                    // Image.asset(
+                    //   'packages/ebps/assets/logo/logo_equitas_normal.png',
+                    //   height: 57,
+                    //   width: 164,
+                    // ),
+                    ),
                 if (isLoginError)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

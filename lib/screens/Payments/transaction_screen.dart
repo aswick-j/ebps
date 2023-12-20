@@ -12,6 +12,7 @@ import 'package:ebps/models/add_biller_model.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/confirm_done_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
+import 'package:ebps/screens/pdf_reciept.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -239,6 +240,16 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                       ),
                                       textAlign: TextAlign.left,
                                     ),
+                                    IconButton(
+                                        onPressed: () {
+                                          Future.microtask(() => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      pdfReciept())));
+                                        },
+                                        icon: Icon(Icons.file_download_outlined,
+                                            color: CLR_PRIMARY)),
                                   ],
                                 ),
                                 SizedBox(

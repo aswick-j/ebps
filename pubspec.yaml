@@ -26,7 +26,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   flutter_screenutil: ^5.9.0
   lottie: ^2.7.0
-  path_provider: ^2.1.1
+  # path_provider: ^2.1.1
   printing: ^5.11.1
   pdf: ^3.10.7
 
