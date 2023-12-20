@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:crypto/crypto.dart';
 import 'package:ebps/widget/centralized_grid_view.dart';
 import 'package:ebps_example/Mock_Params.dart';
 import 'package:ebps_example/PluginScreen.dart';
@@ -59,7 +60,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   Future<void> fetchData(val) async {
     try {
       isLoading = true;
-      final checkSUm = val['redirectionRequest']!['checkSum'];
+      String jsonString = json.encode(val['redirectionRequest']!['msgBdy']);
+      //MB HASHING KEY
+      String hashKey = "ahsdfjkhaklsdf657";
+      String dataToHash = "$jsonString$hashKey";
+
+      Digest sha512Digest = sha512.convert(utf8.encode(dataToHash));
+      String sha512HashHex = sha512Digest.toString();
+      // final checkSUm = val['redirectionRequest']!['checkSum'];
+      final checkSUm = sha512HashHex;
       final response = await http.post(
         Uri.parse(API_URL),
         body: json.encode(val['redirectionRequest']!['msgBdy']),

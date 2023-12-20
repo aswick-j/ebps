@@ -7,12 +7,16 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/confirm_done_model.dart';
 import 'package:ebps/models/history_model.dart';
+import 'package:ebps/screens/pdf_reciept.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:pdf/pdf.dart';
+import 'package:printing/printing.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 class HistoryDetails extends StatefulWidget {
   bool? isSavedBill;
@@ -201,9 +205,14 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                     ),
                                     IconButton(
                                         onPressed: () {
-                                          // Share.share('Hello Welcome to FlutterCampus', subject: 'Welcome Message');
+                                          Future.microtask(() => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      pdfReciept())));
                                         },
-                                        icon: Icon(Icons.share)),
+                                        icon: Icon(Icons.file_download_outlined,
+                                            color: CLR_PRIMARY)),
                                     GestureDetector(
                                       onTap: () {
                                         goToData(context, cREATEAUTOPAYROUTE, {

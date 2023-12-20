@@ -145,7 +145,7 @@ var p5 = {
   "redirectionRequest": {
     "msgBdy": {
       "IPAddress": "1.1.1.1",
-      "platform": "IB",
+      "platform": "MB",
       "service": "bbps",
       "data": {
         "accounts": [
@@ -218,7 +218,7 @@ var p7 = {
   "redirectionRequest": {
     "msgBdy": {
       "IPAddress": "1.1.1.1",
-      "platform": "IB",
+      "platform": "MB",
       "service": "bbps",
       "data": {
         "accounts": [
