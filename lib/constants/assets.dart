@@ -92,6 +92,8 @@ const IMG_SESSIONEXPIRED =
 const IMG_NOTFOUND = "packages/ebps/assets/icon/icon_notFound.svg";
 const SPLASH_BAG = "packages/ebps/assets/images/splash_background.png";
 
+const ANI_SUCCESS = "packages/ebps/assets/logo/success.gif";
+const ANI_SUCCESS1 = "packages/ebps/assets/logo/succe1ss.gif";
 const LOADER = "packages/ebps/assets/logo/loader.gif";
 const LOADER_V1 = "packages/ebps/assets/logo/loaderv1.gif";
 const LOADER_V2 = "packages/ebps/assets/logo/loaderv2.gif";

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ebps/constants/api.dart';
+import 'package:ebps/helpers/logger.dart';
 import 'package:ebps/repository/api_repository.dart';
 import 'package:ebps/services/api.dart';
 
@@ -20,7 +21,14 @@ class ApiClient implements Repository {
           token: false);
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
-    } catch (e) {}
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
   }
 
   //CATEGOEY_REPOSITORY
@@ -36,7 +44,12 @@ class ApiClient implements Repository {
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
     } catch (e) {
-      return {"status": 500, "message": "Request Timed Out", "data": "Error"};
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
     }
   }
 
@@ -61,7 +74,12 @@ class ApiClient implements Repository {
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
     } catch (e) {
-      return {"status": 500, "message": "Request Timed Out", "data": "Error"};
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
     }
   }
 
@@ -87,6 +105,7 @@ class ApiClient implements Repository {
         };
       }
     } catch (e) {
+      logger.w(e);
       return {
         "status": 500,
         "message": "Something went wrong",
@@ -120,7 +139,12 @@ class ApiClient implements Repository {
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
     } catch (e) {
-      return {"status": 500, "message": "Request Timed Out", "data": "Error"};
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
     }
   }
 
@@ -188,6 +212,7 @@ class ApiClient implements Repository {
         };
       }
     } catch (e) {
+      logger.w(e);
       return {
         "status": 500,
         "message": "Something went wrong",
@@ -210,6 +235,7 @@ class ApiClient implements Repository {
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
     } catch (e) {
+      logger.w(e);
       return {
         "status": 500,
         "message": "Something went wrong",
@@ -239,7 +265,14 @@ class ApiClient implements Repository {
 
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
-    } catch (e) {}
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
   }
 
   //VAL-OTP
@@ -256,7 +289,14 @@ class ApiClient implements Repository {
           checkSum: false);
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
-    } catch (e) {}
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
   }
 
   //PAY-BILL
@@ -325,6 +365,7 @@ class ApiClient implements Repository {
         };
       }
     } catch (e) {
+      logger.w(e);
       return {
         "status": 500,
         "message": "Something went wrong",
@@ -356,7 +397,12 @@ class ApiClient implements Repository {
       var decodedResponse = await jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
     } catch (e) {
-      return null;
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
     }
   }
 
@@ -375,7 +421,14 @@ class ApiClient implements Repository {
           checkSum: false);
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
-    } catch (e) {}
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
   }
 
   //COMPLAINT LIST
@@ -391,7 +444,14 @@ class ApiClient implements Repository {
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       return decodedResponse;
-    } catch (e) {}
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
   }
 
   //COMPLAINT CONFIG
@@ -416,6 +476,7 @@ class ApiClient implements Repository {
         };
       }
     } catch (e) {
+      logger.w(e);
       return {
         "status": 500,
         "message": "Something went wrong",
@@ -447,6 +508,7 @@ class ApiClient implements Repository {
         };
       }
     } catch (e) {
+      logger.w(e);
       return {
         "status": 500,
         "message": "Something went wrong",
@@ -468,7 +530,14 @@ class ApiClient implements Repository {
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       return decodedResponse;
-    } catch (e) {}
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
   }
 
   //GET ALL UPCOMING DUES
@@ -485,7 +554,12 @@ class ApiClient implements Repository {
 
       return decodedResponse;
     } catch (e) {
-      return null;
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
     }
   }
 
@@ -502,7 +576,14 @@ class ApiClient implements Repository {
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       return decodedResponse;
-    } catch (e) {}
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
   }
 
   //GET ALL SAVED BILLERS
@@ -519,7 +600,12 @@ class ApiClient implements Repository {
       var decodedResponse = await jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
     } catch (e) {
-      return {"status": 500, "message": "Request Timed Out", "data": "Error"};
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
     }
   }
 
@@ -545,6 +631,7 @@ class ApiClient implements Repository {
         };
       }
     } catch (e) {
+      logger.w(e);
       return {
         "status": 500,
         "message": "Something went wrong",
@@ -578,6 +665,7 @@ class ApiClient implements Repository {
         };
       }
     } catch (e) {
+      logger.w(e);
       return {
         "status": 500,
         "message": "Something went wrong",
@@ -603,7 +691,14 @@ class ApiClient implements Repository {
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       return decodedResponse;
-    } catch (e) {}
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
   }
 
   @override
@@ -618,7 +713,14 @@ class ApiClient implements Repository {
           checkSum: false);
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
-    } catch (e) {}
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
   }
 
   //CREATE AUTOPAY
@@ -635,7 +737,14 @@ class ApiClient implements Repository {
           checkSum: false);
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
-    } catch (e) {}
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
   }
 
   //DELETE AUTOPAY
@@ -653,7 +762,14 @@ class ApiClient implements Repository {
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       return decodedResponse;
-    } catch (e) {}
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
   }
 
   //EDIT AUTOPAY
@@ -670,7 +786,14 @@ class ApiClient implements Repository {
           checkSum: false);
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
-    } catch (e) {}
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
   }
 
   //DELETE UPCOMING DUE
@@ -697,6 +820,7 @@ class ApiClient implements Repository {
         };
       }
     } catch (e) {
+      logger.w(e);
       return {
         "status": 500,
         "message": "Something went wrong",
@@ -750,6 +874,7 @@ class ApiClient implements Repository {
         };
       }
     } catch (e) {
+      logger.w(e);
       return {
         "status": 500,
         "message": "Something went wrong",
@@ -772,6 +897,13 @@ class ApiClient implements Repository {
           checkSum: false);
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
       return decodedResponse;
-    } catch (e) {}
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
   }
 }

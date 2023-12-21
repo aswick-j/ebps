@@ -269,6 +269,21 @@ class _createAutopayState extends State<createAutopay> {
                               onChanged: (val) {
                                 setState(() {
                                   limitGroupRadio = 0;
+                                  final dataAmount = (double.parse(widget
+                                                      .lastPaidAmount
+                                                      .toString() !=
+                                                  "null"
+                                              ? widget.lastPaidAmount.toString()
+                                              : "1000") +
+                                          (double.parse(widget.lastPaidAmount
+                                                          .toString() !=
+                                                      "null"
+                                                  ? widget.lastPaidAmount
+                                                      .toString()
+                                                  : "1000") *
+                                              0.3))
+                                      .toStringAsFixed(2);
+                                  maxAmountController.text = dataAmount;
                                 });
                               },
                               controlAffinity: ListTileControlAffinity.trailing,
@@ -295,6 +310,9 @@ class _createAutopayState extends State<createAutopay> {
                           autocorrect: false,
                           readOnly: limitGroupRadio == 1 ? true : false,
                           enableSuggestions: false,
+                          style: TextStyle(
+                              color:
+                                  limitGroupRadio == 1 ? TXT_CLR_LITE : null),
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             // getInputAmountFormatter(),
@@ -303,17 +321,23 @@ class _createAutopayState extends State<createAutopay> {
                           ],
                           onChanged: (val) {
                             print(val);
-                            if (double.parse(val.toString()) >
-                                    double.parse(maximumAmount.toString()) ||
-                                double.parse(val.toString()) <
-                                    double.parse(
-                                        widget.lastPaidAmount.toString())) {
-                              setState(() {
-                                maxAmountError = true;
-                              });
+                            if (val.isNotEmpty) {
+                              if (double.parse(val.toString()) >
+                                      double.parse(maximumAmount.toString()) ||
+                                  double.parse(val.toString()) <
+                                      double.parse(
+                                          widget.lastPaidAmount.toString())) {
+                                setState(() {
+                                  maxAmountError = true;
+                                });
+                              } else {
+                                setState(() {
+                                  maxAmountError = false;
+                                });
+                              }
                             } else {
                               setState(() {
-                                maxAmountError = false;
+                                maxAmountError = true;
                               });
                             }
                           },
@@ -326,11 +350,15 @@ class _createAutopayState extends State<createAutopay> {
                               fillColor:
                                   const Color(0xffD1D9E8).withOpacity(0.2),
                               filled: true,
-                              labelStyle:
-                                  const TextStyle(color: Color(0xff1b438b)),
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xff1B438B)),
+                              labelStyle: TextStyle(
+                                  color: limitGroupRadio == 1
+                                      ? TXT_CLR_LITE
+                                      : TXT_CLR_PRIMARY),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: limitGroupRadio == 1
+                                        ? TXT_CLR_LITE
+                                        : TXT_CLR_PRIMARY),
                               ),
                               focusedBorder: const UnderlineInputBorder(
                                 borderSide:
@@ -578,8 +606,7 @@ class _createAutopayState extends State<createAutopay> {
                       if (isAccLoading)
                         Center(
                           child: Container(
-                            height: 200.h,
-                            width: 200.w,
+                            height: 100.h,
                             child: FlickrLoader(),
                           ),
                         ),

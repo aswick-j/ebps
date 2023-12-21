@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ebps/constants/routes.dart';
+import 'package:ebps/helpers/NavigationService.dart';
 import 'package:ebps/helpers/logger.dart';
 import 'package:ebps/models/decoded_model.dart';
 import 'package:flutter/material.dart';
@@ -84,6 +86,14 @@ api(
     token,
     checkSum}) async {
   try {
+    var token1 = await getSharedValue(TOKEN);
+    bool hasExpired = JwtToken.isExpired(token1);
+
+    if (!hasExpired) {
+    } else {
+      NavigationService.instance.navigateToReplacement(sESSIONEXPIREDROUTE);
+    }
+
     if (method!.toLowerCase().contains("post")) {
       return client
           .post(Uri.parse(url!),

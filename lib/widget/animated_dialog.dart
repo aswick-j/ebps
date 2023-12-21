@@ -1,4 +1,6 @@
+import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AnimatedDialog extends StatefulWidget {
   final String title;
@@ -99,21 +101,21 @@ class _AnimatedDialogState extends State<AnimatedDialog>
           child: Stack(
             children: [
               Padding(
-                padding: const EdgeInsets.all(0.0),
+                padding: EdgeInsets.all(16.0.r),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const SizedBox(
-                      height: 100,
+                    SizedBox(
+                      height: 100.h,
                     ),
                     Text(
                       widget.title,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 15,
+                      style: TextStyle(
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: CLR_PRIMARY,
                       ),
                     ),
 

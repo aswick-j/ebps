@@ -8,8 +8,7 @@
 
 import 'package:ebps/constants/ebps_theme.dart';
 import 'package:ebps/constants/routes.dart';
-import 'package:ebps/helpers/getNavigators.dart';
-import 'package:ebps/helpers/redirectJWT.dart';
+import 'package:ebps/helpers/NavigationService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,6 +47,7 @@ class EbpsScreen extends StatelessWidget {
   EbpsScreen({Key? key, required this.apiData, required this.ctx})
       : super(key: key) {
     AppTrigger.instance.setGoBackCallback(() {
+      print("-======");
       Navigator.of(ctx).pop();
     });
   }
@@ -56,13 +56,15 @@ class EbpsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     final router = MyRouter();
-    //  AppTrigger.instance.setGoBackCallback(() {
+    // AppTrigger.instance.setGoBackCallback(() {
     //   Navigator.of(context).pop();
     // });
     // AppTrigger.instance.setGoSessionnExpiredCallack(() {
     //   print("======");
     //   validateJWT(context);
     // });
+    final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
@@ -84,6 +86,7 @@ class EbpsScreen extends StatelessWidget {
         ],
         debugShowCheckedModeBanner: false,
         onGenerateRoute: router.generateRoute,
+        navigatorKey: NavigationService.instance.navigationKey,
 
         // home: splashScreen(apiData: apiData)
       ),

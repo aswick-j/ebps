@@ -450,9 +450,9 @@ class _OtpScreenState extends State<OtpScreen> {
                             buttonTxtColor: BTN_CLR_ACTIVE,
                             buttonBorderColor: Colors.transparent,
                             buttonColor: CLR_PRIMARY,
-                            buttonSizeX: 10,
-                            buttonSizeY: 40,
-                            buttonTextSize: 14,
+                            buttonSizeX: 10.h,
+                            buttonSizeY: 40.w,
+                            buttonTextSize: 14.sp,
                             buttonTextWeight: FontWeight.w500),
                       ),
                     ],
@@ -474,42 +474,89 @@ class _OtpScreenState extends State<OtpScreen> {
                 });
               }
 
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return Expanded(
-                    child: AlertDialog(
-                      content: AnimatedDialog(
-                        title: "Your Payment Has Been Failed.",
-                        subTitle: "",
-                        child: Icon(
-                          Icons.close_rounded,
-                          color: Colors.white,
+              if (state.message != "Something went wrong") {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Expanded(
+                      child: AlertDialog(
+                        content: AnimatedDialog(
+                          title: "Your Payment Has Been Failed.",
+                          subTitle: "",
+                          child: Icon(
+                            Icons.close_rounded,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      actions: <Widget>[
-                        Align(
-                          alignment: Alignment.center,
-                          child: MyAppButton(
-                              onPressed: () {
-                                goBack(context);
+                        actions: <Widget>[
+                          Align(
+                            alignment: Alignment.center,
+                            child: MyAppButton(
+                                onPressed: () {
+                                  goBack(context);
 
-                                handleRedirect();
-                              },
-                              buttonText: "Okay",
-                              buttonTxtColor: BTN_CLR_ACTIVE,
-                              buttonBorderColor: Colors.transparent,
-                              buttonColor: CLR_PRIMARY,
-                              buttonSizeX: 10,
-                              buttonSizeY: 40,
-                              buttonTextSize: 14,
-                              buttonTextWeight: FontWeight.w500),
+                                  handleRedirect();
+                                },
+                                buttonText: "Okay",
+                                buttonTxtColor: BTN_CLR_ACTIVE,
+                                buttonBorderColor: Colors.transparent,
+                                buttonColor: CLR_PRIMARY,
+                                buttonSizeX: 10,
+                                buttonSizeY: 40,
+                                buttonTextSize: 14,
+                                buttonTextWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Expanded(
+                      child: AlertDialog(
+                        content: AnimatedDialog(
+                          title: "Your Payment Has Been Failed.",
+                          subTitle:
+                              "Please, Check History Section For More Information",
+                          child: Icon(
+                            Icons.close_rounded,
+                            color: Colors.white,
+                          ),
                         ),
-                      ],
-                    ),
-                  );
-                },
-              );
+                        actions: <Widget>[
+                          Align(
+                            alignment: Alignment.center,
+                            child: MyAppButton(
+                                onPressed: () {
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => BottomNavBar(
+                                                SelectedIndex: 0,
+                                              )),
+                                      (Route<dynamic> route) => false,
+                                    );
+                                  });
+                                },
+                                buttonText: "Okay",
+                                buttonTxtColor: BTN_CLR_ACTIVE,
+                                buttonBorderColor: Colors.transparent,
+                                buttonColor: CLR_PRIMARY,
+                                buttonSizeX: 10,
+                                buttonSizeY: 40,
+                                buttonTextSize: 14,
+                                buttonTextWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }
             } else if (state is PayBillError) {}
 
             if (state is deleteBillerLoading) {

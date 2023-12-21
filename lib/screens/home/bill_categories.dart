@@ -74,21 +74,23 @@ class _BillerCategoriesUIState extends State<BillerCategoriesUI> {
       },
       builder: (context, state) {
         return !isCategoryLoading
-            ? Column(
-                children: [
-                  CategoriesContainer(
-                    headerName: "Bill Categories",
-                    categoriesCount: 8,
-                    categoriesData: categoriesData,
-                    viewall: true,
-                  ),
-                  CategoriesContainer(
-                    headerName: "More Services",
-                    categoriesCount: MoreCategories.length,
-                    categoriesData: MoreCategories,
-                  ),
-                ],
-              )
+            ? categoriesData!.isNotEmpty
+                ? Column(
+                    children: [
+                      CategoriesContainer(
+                        headerName: "Bill Categories",
+                        categoriesCount: 8,
+                        categoriesData: categoriesData,
+                        viewall: true,
+                      ),
+                      CategoriesContainer(
+                        headerName: "More Services",
+                        categoriesCount: MoreCategories.length,
+                        categoriesData: MoreCategories,
+                      ),
+                    ],
+                  )
+                : Container()
             : Center(
                 child: Container(height: 500.h, child: FlickrLoader()),
               );

@@ -361,8 +361,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                   if (isAccLoading)
                     Center(
                       child: Container(
-                        height: 200,
-                        width: 200,
+                        height: 100.h,
                         child: FlickrLoader(),
                       ),
                     ),

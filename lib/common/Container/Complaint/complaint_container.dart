@@ -78,7 +78,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                         // data: "Jio Telecom Services",
                         data: widget.titleText,
                         size: 14.0.sp,
-                        color: TXT_CLR_LITE,
+                        color: TXT_CLR_DEFAULT,
                         weight: FontWeight.w500,
                       ),
                     ),
@@ -107,7 +107,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                         data: widget.subtitleText,
                         size: 14.0.sp,
                         color: TXT_CLR_PRIMARY,
-                        weight: FontWeight.w500,
+                        weight: FontWeight.w700,
                       ),
                     ],
                   ),
@@ -146,7 +146,8 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                       child: Row(children: [
                         if (widget.statusText != null)
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.0.w, vertical: 3.w),
                             decoration: BoxDecoration(
                               border: Border.all(color: CLR_ERROR),
                               borderRadius: BorderRadius.circular(12.0.r),

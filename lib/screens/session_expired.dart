@@ -20,7 +20,7 @@ class _SessionExpiredState extends State<SessionExpired> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      height: MediaQuery.of(context).size.height * 0.9,
+      height: MediaQuery.of(context).size.height,
       width: double.infinity,
       decoration: BoxDecoration(
         // image: const DecorationImage(

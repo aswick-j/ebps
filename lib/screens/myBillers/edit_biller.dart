@@ -1,9 +1,11 @@
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
+import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/MyBillers/bill_details_container.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/helpers/NavigationService.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/edit_bill_modal.dart';
 import 'package:ebps/models/input_signatures_model.dart';
@@ -86,6 +88,14 @@ class _EditBillerUIState extends State<EditBillerUI> {
                   child: MyAppButton(
                       onPressed: () {
                         goBack(context);
+                        // WidgetsBinding.instance.addPostFrameCallback((_) {
+                        //   Navigator.of(context).pushReplacement(
+                        //     MaterialPageRoute(
+                        //         builder: (context) => BottomNavBar(
+                        //               SelectedIndex: 1,
+                        //             )),
+                        //   );
+                        // });
                       },
                       buttonText: "Okay",
                       buttonTxtColor: BTN_CLR_ACTIVE,
@@ -267,6 +277,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
                                             InputSignatureControllers[index],
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
+                                        style: TextStyle(color: TXT_CLR_LITE),
                                         enabled: true,
                                         autocorrect: false,
                                         readOnly: true,

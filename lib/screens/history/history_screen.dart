@@ -9,7 +9,6 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getTransactionStatus.dart';
-import 'package:ebps/helpers/redirectJWT.dart';
 import 'package:ebps/models/categories_model.dart';
 import 'package:ebps/models/category_biller_filter_history._model.dart';
 import 'package:ebps/models/history_model.dart';
@@ -149,17 +148,22 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
             BlocListener<HistoryCubit, HistoryState>(
                 listener: (context, state) {
               if (state is HistoryLoading) {
-                isHistoryLoading = true;
-                validateSession(context);
+                setState(() {
+                  isHistoryLoading = true;
+                });
               } else if (state is HistorySuccess) {
                 setState(() {
                   historyData = state.historyData;
+                  isHistoryLoading = false;
                 });
-                isHistoryLoading = false;
               } else if (state is HistoryFailed) {
-                isHistoryLoading = false;
+                setState(() {
+                  isHistoryLoading = false;
+                });
               } else if (state is HistoryError) {
-                isHistoryLoading = false;
+                setState(() {
+                  isHistoryLoading = false;
+                });
               }
               if (state is billerFilterLoading) {
                 isHistoryFilterLoading = true;
@@ -193,10 +197,10 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
               child: Column(
                 children: [
                   if (!isHistoryLoading)
-                    historyData!.isNotEmpty
-                        ? Container(
-                            height: 550.h,
-                            child: ListView.builder(
+                    Container(
+                      height: 550.h,
+                      child: historyData!.isNotEmpty
+                          ? ListView.builder(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               itemCount: historyData!.length,
@@ -229,11 +233,11 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                   containerBorderColor: Color(0xffD1D9E8),
                                 );
                               },
+                            )
+                          : NoDataFound(
+                              message: "No Transactions Found",
                             ),
-                          )
-                        : NoDataFound(
-                            message: "No Transactions Found",
-                          ),
+                    ),
                   if (isHistoryLoading)
                     Container(
                         height: 500.h,

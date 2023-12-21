@@ -18,7 +18,9 @@ class HomeCubit extends Cubit<HomeState> {
   Repository? repository;
   int pageNumber = 1;
 
-  HomeCubit({required this.repository}) : super(HomeInitial());
+  HomeCubit({
+    required this.repository,
+  }) : super(HomeInitial());
 
   // CATEGORY CUBIT
 

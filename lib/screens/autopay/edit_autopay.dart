@@ -312,24 +312,34 @@ class _editAutopayState extends State<editAutopay> {
                           autocorrect: false,
                           readOnly: limitGroupRadio == 1 ? true : false,
                           enableSuggestions: false,
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(
+                              color:
+                                  limitGroupRadio == 1 ? TXT_CLR_LITE : null),
+
                           inputFormatters: [
                             // getInputAmountFormatter(),
                             FilteringTextInputFormatter.allow(
-                                RegExp(r'^[a-z0-9A-Z ]*'))
+                                RegExp(r'^[0-9]*'))
                           ],
                           onChanged: (val) {
-                            if (double.parse(val.toString()) >
-                                    double.parse(maximumAmount.toString()) ||
-                                double.parse(val.toString()) <
-                                    double.parse(
-                                        widget.lastPaidAmount.toString())) {
-                              setState(() {
-                                maxAmountError = true;
-                              });
+                            if (val.isNotEmpty) {
+                              if (double.parse(val.toString()) >
+                                      double.parse(maximumAmount.toString()) ||
+                                  double.parse(val.toString()) <
+                                      double.parse(
+                                          widget.lastPaidAmount.toString())) {
+                                setState(() {
+                                  maxAmountError = true;
+                                });
+                              } else {
+                                setState(() {
+                                  maxAmountError = false;
+                                });
+                              }
                             } else {
                               setState(() {
-                                maxAmountError = false;
+                                maxAmountError = true;
                               });
                             }
                           },
@@ -342,11 +352,15 @@ class _editAutopayState extends State<editAutopay> {
                               fillColor:
                                   const Color(0xffD1D9E8).withOpacity(0.2),
                               filled: true,
-                              labelStyle:
-                                  const TextStyle(color: Color(0xff1b438b)),
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xff1B438B)),
+                              labelStyle: TextStyle(
+                                  color: limitGroupRadio == 1
+                                      ? TXT_CLR_LITE
+                                      : TXT_CLR_PRIMARY),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: limitGroupRadio == 1
+                                        ? TXT_CLR_LITE
+                                        : Color(0xff1B438B)),
                               ),
                               focusedBorder: const UnderlineInputBorder(
                                 borderSide:
@@ -604,8 +618,7 @@ class _editAutopayState extends State<editAutopay> {
                       if (isAccLoading)
                         Center(
                           child: Container(
-                            height: 200.h,
-                            width: 200.w,
+                            height: 100.h,
                             child: FlickrLoader(),
                           ),
                         ),

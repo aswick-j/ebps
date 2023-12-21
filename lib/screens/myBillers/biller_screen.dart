@@ -57,6 +57,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
   @override
   void initState() {
     super.initState();
+
     BlocProvider.of<MybillersCubit>(context).getAllUpcomingDues();
     BlocProvider.of<MybillersCubit>(context).getAutopay();
     BlocProvider.of<MybillersCubit>(context).getSavedBillers();
@@ -266,8 +267,8 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
           builder: (context, state) {
             return Column(
               children: [
-                if (!isUpcomingDuesLoading ||
-                    !isUpcomingAutopaymentLoading ||
+                if (!isUpcomingDuesLoading &&
+                    !isUpcomingAutopaymentLoading &&
                     !isSavedBillerLoading)
                   Container(
                     child: getBillerDataWithUpcomingFirst(savedBillerData)!

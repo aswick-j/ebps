@@ -326,8 +326,8 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                           showLogo: true),
                     ],
                   )),
-              if (widget.historyData.tRANSACTIONSTATUS != 'success')
-                BbpsLogoContainer(showEquitasLogo: true),
+              // if (widget.historyData.tRANSACTIONSTATUS != 'success')
+              BbpsLogoContainer(showEquitasLogo: true),
               SizedBox(
                 height: 70.h,
               )
