@@ -13,6 +13,7 @@ import 'package:ebps/helpers/redirectJWT.dart';
 import 'package:ebps/models/categories_model.dart';
 import 'package:ebps/models/category_biller_filter_history._model.dart';
 import 'package:ebps/models/history_model.dart';
+import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/services/api_client.dart';
 import 'package:ebps/widget/date_picker.dart';
 import 'package:ebps/widget/flickr_loader.dart';
@@ -149,7 +150,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                 listener: (context, state) {
               if (state is HistoryLoading) {
                 isHistoryLoading = true;
-                validateJWT(context);
+                validateSession(context);
               } else if (state is HistorySuccess) {
                 setState(() {
                   historyData = state.historyData;
@@ -230,10 +231,12 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                               },
                             ),
                           )
-                        : Center(child: Text("No Transactions Found")),
+                        : NoDataFound(
+                            message: "No Transactions Found",
+                          ),
                   if (isHistoryLoading)
                     Container(
-                        height: 500,
+                        height: 500.h,
                         width: double.infinity,
                         child: Center(child: FlickrLoader())),
                 ],

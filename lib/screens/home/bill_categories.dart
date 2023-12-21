@@ -8,6 +8,7 @@ import 'package:ebps/widget/flickr_loader.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BillCategories extends StatefulWidget {
   const BillCategories({super.key});
@@ -89,8 +90,7 @@ class _BillerCategoriesUIState extends State<BillerCategoriesUI> {
                 ],
               )
             : Center(
-                child:
-                    Container(height: 200, width: 200, child: FlickrLoader()),
+                child: Container(height: 500.h, child: FlickrLoader()),
               );
       },
     );

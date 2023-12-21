@@ -8,6 +8,7 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/models/upcoming_dues_model.dart';
+import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/services/api_client.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
@@ -268,68 +269,79 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                 if (!isUpcomingDuesLoading ||
                     !isUpcomingAutopaymentLoading ||
                     !isSavedBillerLoading)
-                  ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount:
-                        getBillerDataWithUpcomingFirst(savedBillerData)!.length,
-                    physics: const BouncingScrollPhysics(),
-                    // controller: infiniteScrollController,
-                    itemBuilder: (context, index) {
-                      return MyBillersContainer(
-                          upcomingDueData: getUpcmoingDueList(
-                              savedBillerData![index].cUSTOMERBILLID),
-                          buttonText: showAutopayButtonContent(
-                            savedBillerData![index],
+                  Container(
+                    child: getBillerDataWithUpcomingFirst(savedBillerData)!
+                                .length ==
+                            0
+                        ? NoDataFound(
+                            message: "No Billers Found",
                           )
-                              ? 'Autopay Enabled'
-                              : "Enable Autopay",
-                          iconPath: LOGO_BBPS,
-                          upcomingText: getupcomingAutoPaymentList(
-                                      savedBillerData![index].cUSTOMERBILLID) !=
-                                  ''
-                              ? 'Upcoming Autopay'
-                              : getUpcmoingDueData(savedBillerData![index]
-                                          .cUSTOMERBILLID) !=
-                                      ""
-                                  ? "Upcoming Due"
-                                  : "",
-                          upcomingTXT_CLR_DEFAULT: getupcomingAutoPaymentList(
-                                      savedBillerData![index].cUSTOMERBILLID) !=
-                                  ''
-                              ? Color(0xff00AB44)
-                              : getUpcmoingDueData(savedBillerData![index]
-                                          .cUSTOMERBILLID) !=
-                                      ""
-                                  ? CLR_ASTRIX
-                                  : Colors.black,
-                          showButton: showAutopayBtn(savedBillerData![index]),
-                          containerBorderColor: Color(0xffD1D9E8),
-                          buttonColor: Color.fromARGB(255, 255, 255, 255),
-                          buttonTxtColor: showAutopayButtonContent(
-                            savedBillerData![index],
-                          )
-                              ? Color(0xff00AB44)
-                              : Color(0xff768eb9),
-                          buttonTextWeight: FontWeight.bold,
-                          buttonBorderColor: showAutopayButtonContent(
-                            savedBillerData![index],
-                          )
-                              ? Color(0xff00AB44)
-                              : Color(0xff768eb9),
-                          SavedinputParameters:
-                              savedBillerData![index].pARAMETERS,
-                          savedBillersData: savedBillerData![index],
-                          allautoPaymentList: allautoPaymentList);
-                    },
+                        : ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount:
+                                getBillerDataWithUpcomingFirst(savedBillerData)!
+                                    .length,
+                            physics: const BouncingScrollPhysics(),
+                            // controller: infiniteScrollController,
+                            itemBuilder: (context, index) {
+                              return MyBillersContainer(
+                                  upcomingDueData: getUpcmoingDueList(
+                                      savedBillerData![index].cUSTOMERBILLID),
+                                  buttonText: showAutopayButtonContent(
+                                    savedBillerData![index],
+                                  )
+                                      ? 'Autopay Enabled'
+                                      : "Enable Autopay",
+                                  iconPath: LOGO_BBPS,
+                                  upcomingText: getupcomingAutoPaymentList(
+                                              savedBillerData![index]
+                                                  .cUSTOMERBILLID) !=
+                                          ''
+                                      ? 'Upcoming Autopay'
+                                      : getUpcmoingDueData(savedBillerData![index].cUSTOMERBILLID) !=
+                                              ""
+                                          ? "Upcoming Due"
+                                          : "",
+                                  upcomingTXT_CLR_DEFAULT:
+                                      getupcomingAutoPaymentList(
+                                                  savedBillerData![index]
+                                                      .cUSTOMERBILLID) !=
+                                              ''
+                                          ? Color(0xff00AB44)
+                                          : getUpcmoingDueData(
+                                                      savedBillerData![index]
+                                                          .cUSTOMERBILLID) !=
+                                                  ""
+                                              ? CLR_ASTRIX
+                                              : Colors.black,
+                                  showButton:
+                                      showAutopayBtn(savedBillerData![index]),
+                                  containerBorderColor: Color(0xffD1D9E8),
+                                  buttonColor: Color.fromARGB(255, 255, 255, 255),
+                                  buttonTxtColor: showAutopayButtonContent(
+                                    savedBillerData![index],
+                                  )
+                                      ? Color(0xff00AB44)
+                                      : Color(0xff768eb9),
+                                  buttonTextWeight: FontWeight.bold,
+                                  buttonBorderColor: showAutopayButtonContent(
+                                    savedBillerData![index],
+                                  )
+                                      ? Color(0xff00AB44)
+                                      : Color(0xff768eb9),
+                                  SavedinputParameters: savedBillerData![index].pARAMETERS,
+                                  savedBillersData: savedBillerData![index],
+                                  allautoPaymentList: allautoPaymentList);
+                            },
+                          ),
                   ),
                 if (isUpcomingDuesLoading ||
                     isUpcomingAutopaymentLoading ||
                     isSavedBillerLoading)
                   Center(
                     child: Container(
-                      height: 200.h,
-                      width: 200.w,
+                      height: 500.h,
                       child: FlickrLoader(),
                     ),
                   ),

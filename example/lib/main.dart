@@ -69,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       String sha512HashHex = sha512Digest.toString();
       // final checkSUm = val['redirectionRequest']!['checkSum'];
       final checkSUm = sha512HashHex;
+      print(sha512HashHex);
       final response = await http.post(
         Uri.parse(API_URL),
         body: json.encode(val['redirectionRequest']!['msgBdy']),
@@ -119,6 +120,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   ];
   double _animationValue = 0.0;
 
+  // List value = [p13, p13];
+  // List Name = ["Dhivya", "Nithiya"];
+  // List Img = [
+  //   // "https://cdn.iconscout.com/icon/free/png-512/free-avatar-378-456330.png?f=webp&w=512",
+  //   "https://cdn.iconscout.com/icon/free/png-512/free-avatar-373-456325.png?f=webp&w=512",
+  //   "https://cdn.iconscout.com/icon/free/png-512/free-avatar-369-456321.png?f=webp&w=512"
+  // ];
   List value = [p8, p6, p7];
   List Name = ["Balaji", "Thangavel", "Aswick"];
   List Img = [

@@ -452,3 +452,295 @@ var p12 = {
         "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
   }
 };
+
+//nithya3
+var p13 = {
+  "redirectionRequest": {
+    "msgBdy": {
+      "data": {
+        "accounts": [
+          {
+            "avlBal": "4994046.68",
+            "entityType": "I",
+            "acctTp": "SA",
+            "crntSts": "8",
+            "acctId": "100047899769",
+            "custRltnsp": "SOW",
+            "prdNm": "1005-Regular Savings",
+            "crntStsDesc": "ACCOUNT OPEN REGULAR"
+          },
+          {
+            "avlBal": "100000",
+            "entityType": "I",
+            "acctTp": "CA",
+            "crntSts": "8",
+            "acctId": "200001953216",
+            "custRltnsp": "JOO",
+            "prdNm": "2017-Merchant OD",
+            "crntStsDesc": "ACCOUNT OPEN REGULAR"
+          },
+          {
+            "avlBal": "0",
+            "entityType": "I",
+            "acctTp": "CA",
+            "crntSts": "8",
+            "acctId": "200001953260",
+            "custRltnsp": "JOO",
+            "prdNm": "2017-Merchant OD",
+            "crntStsDesc": "ACCOUNT OPEN REGULAR"
+          }
+        ],
+        "otpPreference": "SMS",
+        "customer": {
+          "gndr": "M",
+          "mblNb": "918610834309",
+          "dob": "1991-06-19",
+          "custId": "137777655",
+          "emailId": "nithyajai81@gmail.com"
+        }
+      },
+      "service": "bbps",
+      "IPAddress": "1.1.1.1",
+      "platform": "MB"
+    },
+    "checkSum":
+        "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
+  }
+};
+
+//NAVIN
+var p14 = {
+  "redirectionRequest": {
+    "msgBdy": {
+      "data": {
+        "platform": "MB",
+        "service": "bbps",
+        "data": {
+          "accounts": [
+            {
+              "avlBal": "1651751.0",
+              "entityType": "I",
+              "acctTp": "SA",
+              "crntSts": "8",
+              "acctId": "100048428211",
+              "custRltnsp": "SOW",
+              "prdNm": "1005-RegularSavings",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "2000.0",
+              "entityType": "I",
+              "acctTp": "RD",
+              "crntSts": "8",
+              "acctId": "400008588240",
+              "custRltnsp": "SOW",
+              "prdNm": "4001-RecurringDepositRegular",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "2000.0",
+              "entityType": "I",
+              "acctTp": "RD",
+              "crntSts": "8",
+              "acctId": "400008588253",
+              "custRltnsp": "SOW",
+              "prdNm": "4001-RecurringDepositRegular",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "2000.0",
+              "entityType": "I",
+              "acctTp": "RD",
+              "crntSts": "8",
+              "acctId": "400008588266",
+              "custRltnsp": "SOW",
+              "prdNm": "4001-RecurringDepositRegular",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "2000.0",
+              "entityType": "I",
+              "acctTp": "RD",
+              "crntSts": "8",
+              "acctId": "400008588279",
+              "custRltnsp": "SOW",
+              "prdNm": "4001-RecurringDepositRegular",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "2000.0",
+              "entityType": "I",
+              "acctTp": "RD",
+              "crntSts": "8",
+              "acctId": "400008588281",
+              "custRltnsp": "SOW",
+              "prdNm": "4001-RecurringDepositRegular",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "2000.0",
+              "entityType": "I",
+              "acctTp": "RD",
+              "crntSts": "8",
+              "acctId": "400008588294",
+              "custRltnsp": "SOW",
+              "prdNm": "4001-RecurringDepositRegular",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "2000.0",
+              "entityType": "I",
+              "acctTp": "RD",
+              "crntSts": "8",
+              "acctId": "400008588301",
+              "custRltnsp": "SOW",
+              "prdNm": "4001-RecurringDepositRegular",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "2000.0",
+              "entityType": "I",
+              "acctTp": "RD",
+              "crntSts": "8",
+              "acctId": "400008588314",
+              "custRltnsp": "SOW",
+              "prdNm": "4001-RecurringDepositRegular",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "2000.0",
+              "entityType": "I",
+              "acctTp": "RD",
+              "crntSts": "8",
+              "acctId": "400008588327",
+              "custRltnsp": "SOW",
+              "prdNm": "4001-RecurringDepositRegular",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "2000.0",
+              "entityType": "I",
+              "acctTp": "RD",
+              "crntSts": "8",
+              "acctId": "400008588330",
+              "custRltnsp": "SOW",
+              "prdNm": "4001-RecurringDepositRegular",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "400.0",
+              "entityType": "I",
+              "acctTp": "RD",
+              "crntSts": "8",
+              "acctId": "400008378040",
+              "custRltnsp": "COB",
+              "prdNm": "4006-MFIFLEXIBLERD",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "2220.0",
+              "entityType": "I",
+              "acctTp": "RD",
+              "crntSts": "5",
+              "acctId": "400008377765",
+              "custRltnsp": "COB",
+              "prdNm": "4006-MFIFLEXIBLERD",
+              "crntStsDesc": "ACCOUNTCLOSEDTODAY"
+            },
+            {
+              "avlBal": "505562.0",
+              "entityType": "I",
+              "acctTp": " ",
+              "crntSts": "8",
+              "acctId": "700007781345",
+              "custRltnsp": "SOW",
+              "prdNm": "7781-EB-UsedCommercialVehicle",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "-1299750.0",
+              "entityType": "I",
+              "acctTp": null,
+              "crntSts": "8",
+              "acctId": "700000864098",
+              "custRltnsp": "COB",
+              "prdNm": "7001-BB-HousingLoan",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "477351.0",
+              "entityType": "I",
+              "acctTp": null,
+              "crntSts": "8",
+              "acctId": "700000690117",
+              "custRltnsp": "COB",
+              "prdNm": "7001-BB-HousingLoan",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "0.0",
+              "entityType": "I",
+              "acctTp": "TD",
+              "crntSts": "8",
+              "acctId": "300007049085",
+              "custRltnsp": "SOW",
+              "prdNm": "3031-ShortTermFD",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "0.0",
+              "entityType": "I",
+              "acctTp": "TD",
+              "crntSts": "8",
+              "acctId": "300007049098",
+              "custRltnsp": "SOW",
+              "prdNm": "3031-ShortTermFD",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "0.0",
+              "entityType": "I",
+              "acctTp": "TD",
+              "crntSts": "8",
+              "acctId": "300007049105",
+              "custRltnsp": "SOW",
+              "prdNm": "3031-ShortTermFD",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "0.0",
+              "entityType": "I",
+              "acctTp": "TD",
+              "crntSts": "8",
+              "acctId": "300007049118",
+              "custRltnsp": "SOW",
+              "prdNm": "3031-ShortTermFD",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            },
+            {
+              "avlBal": "0.0",
+              "entityType": "I",
+              "acctTp": "TD",
+              "crntSts": "8",
+              "acctId": "300007049120",
+              "custRltnsp": "SOW",
+              "prdNm": "3031-ShortTermFD",
+              "crntStsDesc": "ACCOUNTOPENREGULAR"
+            }
+          ],
+          "otpPreference": "SMS",
+          "customer": {
+            "gndr": "M",
+            "mblNb": "917708551525",
+            "dob": "1985-06-17",
+            "custId": "13974784",
+            "emailId": "A_NAVINKUMARR@EQUITASBANK.COM"
+          }
+        },
+        "ipaddress": null
+      }
+    },
+    "checkSum":
+        "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
+  }
+};

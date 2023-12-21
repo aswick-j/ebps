@@ -5,6 +5,7 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getTransactionStatus.dart';
 import 'package:ebps/models/history_model.dart';
+import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -101,7 +102,9 @@ class _BillHistoryState extends State<BillHistory> {
                           },
                         ),
                       )
-                    : Center(child: Text("No Transactions Found")),
+                    : NoDataFound(
+                        message: "No Transactions Found",
+                      ),
               if (isHistoryLoading)
                 Container(
                     height: 500,

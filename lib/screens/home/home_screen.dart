@@ -7,6 +7,7 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/ebps.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/helpers/redirectJWT.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/screens/home/bill_categories.dart';
 import 'package:ebps/screens/home/mismatch_notification.dart';
@@ -104,6 +105,7 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
                   )))
         ],
         onLeadingTap: () {
+          // validateSession(context);
           AppTrigger.instance.goBack();
         },
         showActions: true,

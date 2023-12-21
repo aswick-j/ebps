@@ -86,6 +86,9 @@ const ICON_BELL = "packages/ebps/assets/icon/icon_bell.svg";
 
 //IMAGE
 
+const IMG_NODATA = "packages/ebps/assets/images/image_no_data.svg";
+const IMG_SESSIONEXPIRED =
+    "packages/ebps/assets/images/image_session_expired.svg";
 const IMG_NOTFOUND = "packages/ebps/assets/icon/icon_notFound.svg";
 const SPLASH_BAG = "packages/ebps/assets/images/splash_background.png";
 

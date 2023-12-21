@@ -20,7 +20,7 @@ class _SessionExpiredState extends State<SessionExpired> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      height: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.9,
       width: double.infinity,
       decoration: BoxDecoration(
         // image: const DecorationImage(
@@ -47,9 +47,9 @@ class _SessionExpiredState extends State<SessionExpired> {
         children: [
           Center(
             child: SvgPicture.asset(
-              IMG_NOTFOUND,
-              height: 160,
-              width: 164,
+              IMG_SESSIONEXPIRED,
+              height: 160.h,
+              width: 164.w,
             ),
           ),
           Column(

@@ -3,10 +3,12 @@ import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Container/Complaint/complaint_container.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/models/complaints_model.dart';
+import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/services/api_client.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class ComplaintScreen extends StatefulWidget {
@@ -101,9 +103,9 @@ class _ComplaintListState extends State<ComplaintList> {
                           );
                         },
                       )
-                    : Center(child: Text("No Complaints Raised"))
+                    : NoDataFound(message: "No Complaints Raised")
                 : Container(
-                    height: 500,
+                    height: 500.h,
                     width: double.infinity,
                     child: Center(child: FlickrLoader())),
           ],
