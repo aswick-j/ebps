@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:ebps/ebps.dart';
 import 'package:ebps/ebps_platform_interface.dart';
 import 'package:ebps/ebps_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
