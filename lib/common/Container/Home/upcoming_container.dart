@@ -130,6 +130,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                   });
 
                                   showModalBottomSheet(
+                                      isDismissible: false,
                                       context: context,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.vertical(

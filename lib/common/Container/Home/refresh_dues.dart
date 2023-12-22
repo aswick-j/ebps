@@ -1,6 +1,9 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
+import 'package:ebps/common/Button/MyAppButton.dart';
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/fetch_bill_model.dart';
 
 import 'package:ebps/services/api_client.dart';
@@ -9,6 +12,8 @@ import 'package:ebps/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 class RefreshDues extends StatefulWidget {
   String? billerID;
@@ -124,40 +129,69 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
       builder: (context, state) {
         return Column(
           children: [
-            Container(),
-            !isFetchbillLoading
-                ? AmountPending!.isNotEmpty
-                    ? Column(
-                        children: [
-                          Text(
-                            "Pending",
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
-                              color: CLR_ERROR,
-                            ),
-                            textAlign: TextAlign.left,
+            if (!isFetchbillLoading)
+              if (AmountPending != null)
+                Container(
+                  height: 250.h,
+                  child: Center(
+                    child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 20.h),
+                        SvgPicture.asset(
+                          ICON_FAILED,
+                          height: 50.h,
+                          width: 50.w,
+                        ),
+                        SizedBox(height: 20.h),
+                        Text(
+                          "You Have Pending Bill",
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xff808080),
                           ),
-                          Text(
-                            "You Have Pending Bill",
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xff808080),
-                            ),
-                            textAlign: TextAlign.left,
+                          textAlign: TextAlign.left,
+                        ),
+                        SizedBox(height: 10.h),
+                        Text(
+                          "₹ ${NumberFormat('#,##,##0.00').format(
+                            double.parse(AmountPending.toString()),
+                          )}",
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff1b438b),
                           ),
-                          Text(AmountPending.toString()),
-                        ],
-                      )
-                    : Text("Unable to fetch the Fill")
-                : Center(
-                    child: Container(
-                      height: 200.h,
-                      width: 200.w,
-                      child: FlickrLoader(),
+                          textAlign: TextAlign.left,
+                        ),
+                        SizedBox(height: 30.h),
+                        MyAppButton(
+                            onPressed: () {
+                              goBack(context);
+                            },
+                            buttonText: "Close",
+                            buttonTxtColor: CLR_PRIMARY,
+                            buttonBorderColor: Color(0xff768EB9),
+                            buttonColor: Colors.white,
+                            buttonSizeX: 10.h,
+                            buttonSizeY: 37.w,
+                            buttonTextSize: 14.sp,
+                            buttonTextWeight: FontWeight.w500),
+                      ],
                     ),
                   ),
+                ),
+            if (AmountPending == null) Text("Unable to fetch the Fill"),
+            if (isFetchbillLoading)
+              Center(
+                child: Container(
+                  height: 250.h,
+                  width: 200.w,
+                  child: FlickrLoader(),
+                ),
+              ),
           ],
         );
       },

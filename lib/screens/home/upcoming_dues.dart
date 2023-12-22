@@ -198,7 +198,7 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
           if (!isUpcomingAutopaymentLoading &&
               !isUpcomingDuesLoading &&
               !isSavedBillerLoading)
-            if (allUpcomingDues.length > 1)
+            if (allUpcomingDues.length > 0)
               Padding(
                 padding: EdgeInsets.only(
                     left: 18.0.w, right: 18.w, top: 10.h, bottom: 5.h),
@@ -206,7 +206,9 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Upcoming Dues',
+                      allUpcomingDues.length > 1
+                          ? 'Upcoming Dues'
+                          : 'Upcoming Due',
                       style: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w600,

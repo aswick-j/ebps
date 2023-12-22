@@ -86,12 +86,14 @@ api(
     token,
     checkSum}) async {
   try {
-    var token1 = await getSharedValue(TOKEN);
-    bool hasExpired = JwtToken.isExpired(token1);
+    if (token == true) {
+      var token1 = await getSharedValue(TOKEN);
+      bool hasExpired = JwtToken.isExpired(token1);
 
-    if (!hasExpired) {
-    } else {
-      NavigationService.instance.navigateToReplacement(sESSIONEXPIREDROUTE);
+      if (!hasExpired) {
+      } else {
+        NavigationService.instance.navigateToReplacement(sESSIONEXPIREDROUTE);
+      }
     }
 
     if (method!.toLowerCase().contains("post")) {
