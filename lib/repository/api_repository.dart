@@ -49,6 +49,10 @@ abstract class Repository {
   Future getSearchedBillers(String searchString, String category,
       String location, int pageNumber) async {}
 
+  //PREPAID PLANS
+
+  Future PrepaidFetchPlans(dynamic id) async {}
+
   //HISTORY
 
   Future getHistory(day) async {}

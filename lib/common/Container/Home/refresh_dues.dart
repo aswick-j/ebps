@@ -183,7 +183,45 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                     ),
                   ),
                 ),
-            if (AmountPending == null) Text("Unable to fetch the Fill"),
+            if (!isFetchbillLoading && AmountPending == null)
+              Container(
+                height: 250.h,
+                child: Center(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20.h),
+                      SvgPicture.asset(
+                        ICON_ERROR,
+                        height: 50.h,
+                        width: 50.w,
+                      ),
+                      SizedBox(height: 20.h),
+                      Text(
+                        "Unable to Fetch the Balance",
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff1b438b),
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                      SizedBox(height: 30.h),
+                      MyAppButton(
+                          onPressed: () {
+                            goBack(context);
+                          },
+                          buttonText: "Close",
+                          buttonTxtColor: CLR_PRIMARY,
+                          buttonBorderColor: Color(0xff768EB9),
+                          buttonColor: Colors.white,
+                          buttonSizeX: 10.h,
+                          buttonSizeY: 37.w,
+                          buttonTextSize: 14.sp,
+                          buttonTextWeight: FontWeight.w500),
+                    ],
+                  ),
+                ),
+              ),
             if (isFetchbillLoading)
               Center(
                 child: Container(

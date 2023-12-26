@@ -10,6 +10,8 @@ import 'package:ebps/screens/BillFlow/biller_details.dart';
 import 'package:ebps/screens/BillFlow/biller_list.dart';
 import 'package:ebps/screens/Payments/payment_details.dart';
 import 'package:ebps/screens/Payments/transaction_screen.dart';
+import 'package:ebps/screens/Prepaid/bill_parameters_prepaid.dart';
+import 'package:ebps/screens/Prepaid/prepaid_plans.dart';
 import 'package:ebps/screens/autopay/create_autopay.dart';
 import 'package:ebps/screens/autopay/edit_autopay.dart';
 import 'package:ebps/screens/complaints/complaint_details.dart';
@@ -35,6 +37,8 @@ const hOMEROUTE = "/home";
 const allCATROUTE = "/allCategory";
 const bILLERLISTROUTE = "/billerList";
 const bILLERPARAMROUTE = "/billerParameters";
+const pREPAIDBILLERPARAMROUTE = "/preapaidBillerParameters";
+const pREPAIDPLANSROUTE = "/prepaidPlansRoute";
 const fETCHBILLERDETAILSROUTE = "/fetchBillerDetails";
 const pAYMENTCONFIRMROUTE = "/paymentConfirmation";
 const sESSIONEXPIREDROUTE = '/SessionExpired';
@@ -150,6 +154,46 @@ class MyRouter {
                       inputSignatureData: null),
                 ));
 
+      //PREPAID BILL PARAMS
+      case pREPAIDBILLERPARAMROUTE:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => BlocProvider(
+                  create: (context) => HomeCubit(repository: apiClient),
+                  child: BillParametersPrepaid(
+                      billerData: args["BILLER_DATA"],
+                      inputSignatureData: null),
+                ));
+
+      //PREPAID PLANS
+
+      case pREPAIDPLANSROUTE:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                        create: (_) => HomeCubit(repository: apiClient)),
+                    BlocProvider(
+                        create: (_) => MybillersCubit(repository: apiClient)),
+                  ],
+                  child: PrepaidPlans(
+                    prepaidPlans: args["prepaidPlans"],
+                    isFetchPlans: args["isFetchPlans"],
+                    billerData: args["billerData"],
+                    mobileNumber: args["mobileNumber"],
+                    operator: args["operator"],
+                    circle: args["circle"],
+                    billName: args["billName"],
+                    inputParameters: [],
+                    SavedinputParameters: [],
+                  ),
+                ));
+
       //FETCH - BILLER DETAILS
 
       case fETCHBILLERDETAILSROUTE:
@@ -176,6 +220,8 @@ class MyRouter {
                     SavedinputParameters: args['SavedinputParameters'],
                   ),
                 ));
+
+      //PAYMENT DETAILS
 
       case pAYMENTCONFIRMROUTE:
         final args = settings.arguments as Map<String, dynamic>;

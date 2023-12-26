@@ -7,6 +7,7 @@ import 'package:ebps/models/fetch_bill_model.dart';
 import 'package:ebps/models/input_signatures_model.dart';
 import 'package:ebps/models/otp_model.dart';
 import 'package:ebps/models/paymentInformationModel.dart';
+import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/validate_bill_model.dart';
 import 'package:ebps/repository/api_repository.dart';
 import 'package:flutter/material.dart';
@@ -842,6 +843,52 @@ class HomeCubit extends Cubit<HomeState> {
 
         if (!isClosed) {
           emit(BillersSearchFailed(message: value['message']));
+        }
+      }
+    } catch (e) {}
+  }
+
+  //FETCH PREPAID PLANS
+
+  void PrepaidFetchPlans(dynamic id) async {
+    if (!isClosed) {
+      emit(PrepaidFetchPlansLoading());
+    }
+
+    try {
+      final value = await repository!.PrepaidFetchPlans(id);
+
+      logger.d(value,
+          error:
+              "PREPAID FETCH PLANS API RESPONSE ===> lib/bloc/home/PrepaidFetchPlans");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            PrepaidFetchPlansModel? prepaidFetchPlansModel =
+                PrepaidFetchPlansModel.fromJson(value);
+            //  success emit
+            if (!isClosed) {
+              emit(PrepaidFetchPlansSuccess(
+                  prepaidPlansData: prepaidFetchPlansModel.data!.data));
+            }
+          } else {
+            //  failed emit
+            if (!isClosed) {
+              emit(PrepaidFetchPlansFailed(message: value['message']));
+            }
+          }
+        } else {
+          //  error emit
+          if (!isClosed) {
+            emit(PrepaidFetchPlansError(message: value['message']));
+          }
+        }
+      } else {
+        //  failed emit
+
+        if (!isClosed) {
+          emit(PrepaidFetchPlansFailed(message: value['message']));
         }
       }
     } catch (e) {}

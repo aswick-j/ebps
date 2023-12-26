@@ -32,6 +32,7 @@ const String VALIDATE_OTP_URL = "/user-services/validate-otp";
 const String ADDUPDATE_UPCOMING_URL = "/billers/add-update-upcoming-due";
 const String UPDATE_UPCOMING_URL = "/billers/update-upcoming-dues";
 const String AUTOPAY_MODIFY_URL = "/auto-pay/status/";
+const String PREPAID_PLANS_URL = "/payment/prepaid-fetch-plans";
 
 const String redirectUrl = "/auth/redirect";
 const String transactionUrl = "/transactions/";
@@ -40,7 +41,6 @@ const String allLocation = "/billers/location";
 const String statesDataUrl = "/billers/states-data/";
 
 const String amountByDateUrl = "/payment/amount-by-date/";
-const String prepaidFetchPlansUrl = "/payment/prepaid-fetch-plans";
 
 const String chartUrl = '/charts';
 const String addNewBillerUrl = "/billers/add-biller";

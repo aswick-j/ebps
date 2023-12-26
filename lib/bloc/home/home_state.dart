@@ -347,3 +347,22 @@ class BillersSearchFailed extends HomeState {
   String? message;
   BillersSearchFailed({@required this.message});
 }
+
+//PREPAID FETCH PLANS
+
+class PrepaidFetchPlansLoading extends HomeState {}
+
+class PrepaidFetchPlansSuccess extends HomeState {
+  List<PrepaidPlansData>? prepaidPlansData;
+  PrepaidFetchPlansSuccess({this.prepaidPlansData});
+}
+
+class PrepaidFetchPlansFailed extends HomeState {
+  final String? message;
+  PrepaidFetchPlansFailed({@required this.message});
+}
+
+class PrepaidFetchPlansError extends HomeState {
+  final String? message;
+  PrepaidFetchPlansError({@required this.message});
+}

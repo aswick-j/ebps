@@ -7,6 +7,7 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/billers_model.dart';
+import 'package:ebps/screens/Prepaid/bill_parameters_prepaid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -198,14 +199,31 @@ class _BillerListState extends State<BillerList> {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                goToData(context, bILLERPARAMROUTE, {
-                                  "BILLER_DATA": _searchController.text.isEmpty
-                                      ? Allbiller![index]
-                                      : BillerSearchResults![index],
-                                  "BILLER_INPUT_SIGN": []
-                                });
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => BillParameters()));
+                                if (_searchController.text.isEmpty
+                                    ? Allbiller![index]
+                                            .cATEGORYNAME!
+                                            .toLowerCase() ==
+                                        "mobile prepaid"
+                                    : BillerSearchResults![index]
+                                            .cATEGORYNAME!
+                                            .toLowerCase() ==
+                                        "mobile prepaid") {
+                                  goToData(context, pREPAIDBILLERPARAMROUTE, {
+                                    "BILLER_DATA":
+                                        _searchController.text.isEmpty
+                                            ? Allbiller![index]
+                                            : BillerSearchResults![index],
+                                    "BILLER_INPUT_SIGN": []
+                                  });
+                                } else {
+                                  goToData(context, bILLERPARAMROUTE, {
+                                    "BILLER_DATA":
+                                        _searchController.text.isEmpty
+                                            ? Allbiller![index]
+                                            : BillerSearchResults![index],
+                                    "BILLER_INPUT_SIGN": []
+                                  });
+                                }
                               },
                               child: ListTile(
                                   contentPadding: EdgeInsets.only(

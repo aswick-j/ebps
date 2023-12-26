@@ -906,4 +906,35 @@ class ApiClient implements Repository {
       };
     }
   }
+
+  //PREPAID FETCH PLANS
+
+  @override
+  Future PrepaidFetchPlans(dynamic id) async {
+    try {
+      var response = await api(
+          method: "get",
+          url:
+              "$BASE_URL${PREPAID_PLANS_URL}?billerId=$id&pageNumber=1&pageSize=10",
+          token: true,
+          checkSum: false);
+
+      if (!response.body.toString().contains("<html>")) {
+        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+        return decodedResponse;
+      } else {
+        return {
+          "status": 500,
+          "message": "Something went wrong",
+          "data": "Error"
+        };
+      }
+    } catch (e) {
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
+  }
 }
