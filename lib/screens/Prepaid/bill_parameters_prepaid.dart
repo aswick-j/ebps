@@ -6,7 +6,9 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/models/add_biller_model.dart';
 import 'package:ebps/models/billers_model.dart';
+import 'package:ebps/models/input_signatures_model.dart';
 import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/screens/Prepaid/prepaid_plans.dart';
@@ -44,9 +46,13 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
 
   bool isBillNameNotValid = true;
   bool isMobileNumberNotValid = true;
+  List<InputSignaturesData>? inputSignatureItems = [];
+  bool isInpuSignLoading = false;
 
   @override
   void initState() {
+    BlocProvider.of<HomeCubit>(context)
+        .getInputSingnature(widget.billerData!.bILLERID);
     BlocProvider.of<HomeCubit>(context)
         .PrepaidFetchPlans(widget.billerData!.bILLERID.toString());
     operatorController.text = widget.billerData!.bILLERNAME.toString();
@@ -65,6 +71,17 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
         body: SingleChildScrollView(
             child: BlocConsumer<HomeCubit, HomeState>(
           listener: (context, state) {
+            if (state is InputSignatureLoading) {
+              isInpuSignLoading = true;
+            } else if (state is InputSignatureSuccess) {
+              inputSignatureItems = state.InputSignatureList;
+
+              isInpuSignLoading = false;
+            } else if (state is InputSignatureFailed) {
+              isInpuSignLoading = false;
+            } else if (state is InputSignatureError) {
+              isInpuSignLoading = false;
+            }
             if (state is PrepaidFetchPlansLoading) {
               setState(() {
                 isPrepaidPlansLoading = true;
@@ -388,6 +405,48 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                             return FilterPlans;
                           }
 
+                          List<AddbillerpayloadModel> inputPayloadData = [];
+
+                          for (var i = 0;
+                              i < inputSignatureItems!.length;
+                              i++) {
+                            AddbillerpayloadModel makeInput;
+                            makeInput = AddbillerpayloadModel(
+                                bILLERID: inputSignatureItems![i].bILLERID,
+                                pARAMETERID:
+                                    inputSignatureItems![i].pARAMETERID,
+                                pARAMETERNAME:
+                                    inputSignatureItems![i].pARAMETERNAME,
+                                pARAMETERTYPE:
+                                    inputSignatureItems![i].pARAMETERTYPE,
+                                mINLENGTH: inputSignatureItems![i].mINLENGTH,
+                                mAXLENGTH: inputSignatureItems![i].mAXLENGTH,
+                                // rEGEX: inputSignatureItems![i].rEGEX,
+                                rEGEX: null,
+                                oPTIONAL: inputSignatureItems![i].oPTIONAL,
+                                eRROR: '',
+                                pARAMETERVALUE: inputSignatureItems![i]
+                                            .pARAMETERNAME
+                                            .toString()
+                                            .toLowerCase() ==
+                                        'mobile number'
+                                    ? mobileNumberController.text
+                                    : inputSignatureItems![i]
+                                                .pARAMETERNAME
+                                                .toString()
+                                                .toLowerCase() ==
+                                            'circle'
+                                        ? CircleValue
+                                        : inputSignatureItems![i]
+                                                    .pARAMETERNAME
+                                                    .toString()
+                                                    .toLowerCase() ==
+                                                'id'
+                                            ? "1"
+                                            : "");
+                            inputPayloadData.add(makeInput);
+                          }
+
                           goToData(context, pREPAIDPLANSROUTE, {
                             "prepaidPlans": handlePlans(),
                             "isFetchPlans": false,
@@ -396,8 +455,9 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                             "operator": operatorController.text,
                             "circle": CircleValue,
                             "billName": billNameController.text,
-                            "inputParameters": [],
+                            "inputParameters": inputPayloadData,
                             "SavedinputParameters": [],
+                            'isSavedBill': false
                           });
                         }
                       },

@@ -2,6 +2,9 @@ import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/routes.dart';
+import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/widget/dash_line.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +14,14 @@ import 'package:intl/intl.dart';
 
 class PrepaidPlansContainer extends StatefulWidget {
   PrepaidPlansData? prepaidPlans;
-  PrepaidPlansContainer({super.key, required this.prepaidPlans});
+  BillersData? billerData;
+  final VoidCallback onPressed;
+
+  PrepaidPlansContainer(
+      {super.key,
+      required this.prepaidPlans,
+      this.billerData,
+      required this.onPressed});
 
   @override
   State<PrepaidPlansContainer> createState() => _PrepaidPlansContainerState();
@@ -122,7 +132,13 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.prepaidPlans!.planDesc.toString(),
+                        widget.prepaidPlans!.planAdditionalInfo!
+                                    .additionalBenefits !=
+                                null
+                            ? widget.prepaidPlans!.planAdditionalInfo!
+                                .additionalBenefits
+                                .toString()
+                            : widget.prepaidPlans!.planDesc.toString(),
                         style: TextStyle(
                           fontSize: 10.sp,
                           fontWeight: FontWeight.w400,
@@ -131,7 +147,16 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                         maxLines: isShowMore ? 10 : 2,
                         textAlign: TextAlign.justify,
                       ),
-                      if (widget.prepaidPlans!.planDesc.toString().length > 70)
+                      if (widget.prepaidPlans!.planAdditionalInfo!
+                                  .additionalBenefits !=
+                              null
+                          ? widget.prepaidPlans!.planAdditionalInfo!
+                                  .additionalBenefits
+                                  .toString()
+                                  .length >
+                              70
+                          : widget.prepaidPlans!.planDesc.toString().length >
+                              70)
                         InkWell(
                           onTap: () {
                             setState(() {
@@ -150,7 +175,9 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                   ),
                 ),
                 MyAppButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      widget.onPressed();
+                    },
                     buttonText: "Pay",
                     buttonTxtColor: BTN_CLR_ACTIVE,
                     buttonBorderColor: Colors.transparent,

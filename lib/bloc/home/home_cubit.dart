@@ -132,40 +132,43 @@ class HomeCubit extends Cubit<HomeState> {
 
   //INPUT SIGN
 
-  void getInputSingnature(billID) {
+  void getInputSingnature(billID) async {
     if (!isClosed) {
       emit(InputSignatureLoading());
     }
     try {
-      repository!.getInputSignature(billID).then((value) {
-        if (value != null) {
-          if (!value.toString().contains("Invalid token")) {
-            if (value['status'] == 200) {
-              InputSignaturesModel? InputDetails =
-                  InputSignaturesModel.fromJson(value);
-              if (!isClosed) {
-                emit(InputSignatureSuccess(
-                    InputSignatureList: InputDetails.data));
-              }
-            } else {
-              if (!isClosed) {
-                emit(InputSignatureFailed(message: value['message']));
-              }
+      final value = await repository!.getInputSignature(billID);
+      logger.d(value,
+          error:
+              "GET INPUT SIGN API RESPONSE ===> lib/bloc/home/getInputSingnature");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            InputSignaturesModel? InputDetails =
+                InputSignaturesModel.fromJson(value);
+            if (!isClosed) {
+              emit(
+                  InputSignatureSuccess(InputSignatureList: InputDetails.data));
             }
           } else {
             if (!isClosed) {
-              emit(InputSignatureError(message: value['message']));
+              emit(InputSignatureFailed(message: value['message']));
             }
           }
         } else {
           if (!isClosed) {
-            //     logger.e(
-            // error: "GET ALL BILLER API ERROR ===> lib/bloc/home/getAllBiller", e);
-
-            emit(InputSignatureFailed(message: value['message']));
+            emit(InputSignatureError(message: value['message']));
           }
         }
-      });
+      } else {
+        if (!isClosed) {
+          //     logger.e(
+          // error: "GET ALL BILLER API ERROR ===> lib/bloc/home/getAllBiller", e);
+
+          emit(InputSignatureFailed(message: value['message']));
+        }
+      }
     } catch (e) {}
   }
 
@@ -335,9 +338,9 @@ class HomeCubit extends Cubit<HomeState> {
     Map<String, dynamic>? billerParams,
     String? billName,
     dynamic forChannel,
-    dynamic planId,
-    dynamic planType,
-    dynamic supportPlan,
+    String? planId,
+    String? planType,
+    String? supportPlan,
   }) async {
     if (isClosed) return;
 

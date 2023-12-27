@@ -189,8 +189,9 @@ class MyRouter {
                     operator: args["operator"],
                     circle: args["circle"],
                     billName: args["billName"],
-                    inputParameters: [],
+                    inputParameters: args["inputParameters"],
                     SavedinputParameters: [],
+                    isSavedBill: args["isSavedBill"],
                   ),
                 ));
 
@@ -242,7 +243,8 @@ class MyRouter {
                       SavedinputParameters: args['SavedinputParameters'],
                       amount: args['amount'],
                       validateBill: args['validateBill'],
-                      billerInputSign: args['billerInputSign']),
+                      billerInputSign: args['billerInputSign'],
+                      planDetails: args["planDetails"]),
                 ));
 
       //SESSION EXPIRED

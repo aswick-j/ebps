@@ -11,6 +11,7 @@ import 'package:ebps/models/account_info_model.dart';
 import 'package:ebps/models/add_biller_model.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/confirm_fetch_bill_model.dart';
+import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/centralized_grid_view.dart';
@@ -36,7 +37,7 @@ class PaymentDetails extends StatefulWidget {
   List<PARAMETERS>? SavedinputParameters;
   Map<String, dynamic>? validateBill;
   Map<String, dynamic>? billerInputSign;
-
+  PrepaidPlansData? planDetails;
   PaymentDetails(
       {Key? key,
       required this.billID,
@@ -50,7 +51,8 @@ class PaymentDetails extends StatefulWidget {
       this.categoryName,
       this.amount,
       this.validateBill,
-      this.billerInputSign})
+      this.billerInputSign,
+      this.planDetails})
       : super(key: key);
 
   @override
@@ -76,23 +78,33 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
   handleSubmit() {
     if (widget.validateBill!["validateBill"]) {
-      var billDetail = {};
-      billDetail["validateBill"] = widget.validateBill!["validateBill"];
-      billDetail["billerID"] = widget.billerData!.bILLERID;
-      billDetail["billerParams"] = widget.billerInputSign;
-      billDetail["quickPay"] = widget.validateBill!["quickPay"];
-      billDetail["quickPayAmount"] = widget.amount.toString();
-      billDetail["billName"] = widget.billName;
+      // var billDetail = {};
+      // billDetail["validateBill"] = widget.validateBill!["validateBill"];
+      // billDetail["billerID"] = widget.billerData!.bILLERID;
+      // billDetail["billerParams"] = widget.billerInputSign;
+      // billDetail["quickPay"] = widget.validateBill!["quickPay"];
+      // billDetail["quickPayAmount"] = widget.amount.toString();
+      // billDetail["billName"] = widget.billName;
 
       Map<String, dynamic> payload = {
-        "validateBill": widget.validateBill!["validateBill"],
+        "validateBill":
+            widget.billerData!.cATEGORYNAME!.toLowerCase() == "mobile prepaid"
+                ? true
+                : widget.validateBill!["validateBill"],
         "billerID": widget.isSavedBill
             ? widget.billerData!.bILLERID
             : widget.billerData!.bILLERID,
         "billerParams": widget.billerInputSign,
-        "quickPay": widget.validateBill!["quickPay"],
+        "quickPay":
+            widget.billerData!.cATEGORYNAME!.toLowerCase() == "mobile prepaid"
+                ? false
+                : widget.validateBill!["quickPay"],
         "quickPayAmount": widget.amount.toString(),
         "billName": widget.billName,
+        "forChannel":
+            widget.billerData!.cATEGORYNAME!.toLowerCase() == "mobile prepaid"
+                ? "prepaid"
+                : ""
       };
       BlocProvider.of<HomeCubit>(context).fetchValidateBill(payload);
     } else if (widget.validateBill!["billerType"] == "instant" ||
@@ -195,11 +207,44 @@ class _PaymentDetailsState extends State<PaymentDetails> {
             }
 
             if (state is ValidateBillLoading) {
+              logger.d("VALIDATE  API CALLING ===>");
+
               isValidateBillLoading = true;
               LoaderOverlay.of(context).show();
             } else if (state is ValidateBillSuccess) {
-              logger.d("VALIDATE  API CALLING ===>");
+              logger.d("VALIDATE  API SUCCESS ===>");
+              //   "validateBill": false,
+              // "billerID": widget.isSavedBill
+              //     ? widget.savedBillerData!.bILLERID
+              //     : widget.billerID,
+              // "billerParams": widget.billerParams,
+              // "quickPay": widget.validate_bill!["quickPay"],
+              // "quickPayAmount": txtAmountController.text,
+              // "forChannel": "prepaid",
+              // "adHocBillValidationRefKey": state.bbpsTranlogId,
+              // "planid": widget.selectedPrepaidPlan!.billerPlanId,
+              // "supportplan": "MANDATORY",
+              // "plantype": widget.selectedPrepaidPlan!.planAdditionalInfo!.Type
 
+              BlocProvider.of<HomeCubit>(context).confirmFetchBill(
+                billerID: widget.isSavedBill
+                    ? widget.savedBillersData!.bILLERID
+                    : widget.billerData!.bILLERID,
+                quickPay: widget.validateBill!["quickPay"],
+                quickPayAmount: widget.amount.toString(),
+                adHocBillValidationRefKey: state.bbpsTranlogId,
+                validateBill: widget.validateBill!["validateBill"],
+                billerParams: widget.billerInputSign,
+                billName: widget.billName,
+                forChannel: widget.billerData!.cATEGORYNAME!.toLowerCase() ==
+                        "mobile prepaid"
+                    ? "Prepaid"
+                    : "",
+                planId: widget.planDetails!.billerPlanId,
+                planType: "CURATED",
+                // planType: widget.planDetails!.planAdditionalInfo!.Type,
+                supportPlan: "MANDATORY",
+              );
               isValidateBillLoading = false;
               LoaderOverlay.of(context).hide();
             } else if (state is ValidateBillFailed) {
@@ -264,35 +309,37 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                             billerName: widget.billerName.toString(),
                             categoryName: widget.categoryName.toString(),
                           ),
-                          Container(
-                              width: double.infinity,
-                              height: 75.h,
-                              color: Colors.white,
-                              child: GridView.count(
-                                primary: false,
-                                physics: NeverScrollableScrollPhysics(),
-                                crossAxisSpacing: 10.h,
-                                crossAxisCount: 2,
-                                childAspectRatio: 4 / 2,
-                                mainAxisSpacing: 10.h,
-                                children: [
-                                  billerDetail(
-                                      widget.isSavedBill
-                                          ? widget.SavedinputParameters![0]
-                                              .pARAMETERNAME
-                                          : widget.inputParameters![0]
-                                              .pARAMETERNAME,
-                                      widget.isSavedBill
-                                          ? widget.SavedinputParameters![0]
-                                              .pARAMETERVALUE
-                                          : widget.inputParameters![0]
-                                              .pARAMETERVALUE
-                                              .toString(),
-                                      context),
-                                  billerDetail("Bill Name",
-                                      widget.billName.toString(), context),
-                                ],
-                              )),
+                          if (widget.SavedinputParameters!.isNotEmpty ||
+                              widget.inputParameters!.isNotEmpty)
+                            Container(
+                                width: double.infinity,
+                                height: 75.h,
+                                color: Colors.white,
+                                child: GridView.count(
+                                  primary: false,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  crossAxisSpacing: 10.h,
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 4 / 2,
+                                  mainAxisSpacing: 10.h,
+                                  children: [
+                                    billerDetail(
+                                        widget.isSavedBill
+                                            ? widget.SavedinputParameters![0]
+                                                .pARAMETERNAME
+                                            : widget.inputParameters![0]
+                                                .pARAMETERNAME,
+                                        widget.isSavedBill
+                                            ? widget.SavedinputParameters![0]
+                                                .pARAMETERVALUE
+                                            : widget.inputParameters![0]
+                                                .pARAMETERVALUE
+                                                .toString(),
+                                        context),
+                                    billerDetail("Bill Name",
+                                        widget.billName.toString(), context),
+                                  ],
+                                )),
                           Divider(
                             height: 10.h,
                             thickness: 1,
