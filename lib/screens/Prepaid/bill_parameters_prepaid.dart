@@ -456,7 +456,6 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                             "circle": CircleValue,
                             "billName": billNameController.text,
                             "inputParameters": inputPayloadData,
-                            "SavedinputParameters": [],
                             'isSavedBill': false
                           });
                         }

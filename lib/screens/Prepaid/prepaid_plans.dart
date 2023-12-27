@@ -1,3 +1,4 @@
+import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Container/Prepaid/prepaid_conatiner.dart';
 import 'package:ebps/constants/colors.dart';
@@ -9,8 +10,10 @@ import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/dot_indicator.dart';
+import 'package:ebps/widget/flickr_loader.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PrepaidPlans extends StatefulWidget {
@@ -38,6 +41,7 @@ class PrepaidPlans extends StatefulWidget {
       required this.mobileNumber,
       required this.operator,
       this.prepaidPlans,
+      this.savedBillerData,
       required this.isSavedBill})
       : super(key: key);
   @override
@@ -50,16 +54,37 @@ class _PrepaidPlansState extends State<PrepaidPlans>
   List categoryList = [];
   Map<String, dynamic>? validateBill;
   Map<String, dynamic> billerInputSign = {};
-
+  bool isPrepaidPlansLoading = true;
+  List<PrepaidPlansData>? prepaidPlansData = [];
+  List<PrepaidPlansData>? FilteredPlansData = [];
+  String? CircleValue;
   @override
   void initState() {
     super.initState();
     handleInitial();
-    handleCatgeoryList();
+    if (!widget.isFetchPlans) {
+      handleCatgeoryList();
+      isPrepaidPlansLoading = false;
+    } else {
+      CircleValue = widget.savedBillerData?.pARAMETERS!
+          .firstWhere(
+            (param) => param.pARAMETERNAME.toString().toLowerCase() == 'circle',
+          )
+          .pARAMETERVALUE
+          .toString();
+    }
+
     // _tabController = TabController(length: 5, vsync: this, initialIndex: 0);
   }
 
   handleInitial() {
+    if (widget.isFetchPlans) {
+      BlocProvider.of<HomeCubit>(context)
+          .PrepaidFetchPlans(widget.savedBillerData!.bILLERID.toString());
+      setState(() {
+        CircleValue = "dd";
+      });
+    }
     if (widget.isSavedBill) {
       setState(() {
         validateBill = getBillerType(
@@ -97,11 +122,20 @@ class _PrepaidPlansState extends State<PrepaidPlans>
 
   handleCatgeoryList() {
     var tempCategoryList = [];
-    widget.prepaidPlans?.forEach((element) {
-      if (!tempCategoryList.contains(element.categoryType!.toString())) {
-        tempCategoryList.add(element.categoryType);
-      }
-    });
+    if (widget.isFetchPlans) {
+      FilteredPlansData?.forEach((element) {
+        if (!tempCategoryList.contains(element.categoryType!.toString())) {
+          tempCategoryList.add(element.categoryType);
+        }
+      });
+    } else {
+      widget.prepaidPlans?.forEach((element) {
+        if (!tempCategoryList.contains(element.categoryType!.toString())) {
+          tempCategoryList.add(element.categoryType);
+        }
+      });
+    }
+
     tempCategoryList.insert(0, 'All');
     dynamic SeperatedCategoryList = Map.fromEntries(
             tempCategoryList.map((e) => MapEntry(e.toLowerCase(), e)))
@@ -119,6 +153,24 @@ class _PrepaidPlansState extends State<PrepaidPlans>
     List<AddbillerpayloadModel> inputPayloadData = [];
 
     if (widget.isSavedBill) {
+      goToData(context, pAYMENTCONFIRMROUTE, {
+        "name": widget.isSavedBill
+            ? widget.savedBillerData!.bILLERNAME
+            : widget.billerData!.bILLERNAME,
+        "billName": widget.billName,
+        "billerData": widget.billerData,
+        "savedBillersData": widget.savedBillerData,
+        "inputParameters": widget.inputParameters,
+        "SavedinputParameters": widget.SavedinputParameters,
+        "categoryName": widget.isSavedBill
+            ? widget.savedBillerData!.cATEGORYNAME
+            : widget.billerData!.cATEGORYNAME,
+        "isSavedBill": widget.isSavedBill,
+        "amount": amount,
+        "validateBill": validateBill,
+        "billerInputSign": billerInputSign,
+        "planDetails": planDetails
+      });
     } else {
       for (var i = 0; i < widget.inputParameters!.length; i++) {
         AddbillerpayloadModel makeInput;
@@ -143,14 +195,18 @@ class _PrepaidPlansState extends State<PrepaidPlans>
       }
 
       goToData(context, pAYMENTCONFIRMROUTE, {
-        "name": widget.billerData!.bILLERNAME,
-        "billName": widget.billerData!.bILLERNAME,
+        "name": widget.isSavedBill
+            ? widget.savedBillerData!.bILLERNAME
+            : widget.billerData!.bILLERNAME,
+        "billName": widget.billName,
         "billerData": widget.billerData,
         "savedBillersData": widget.savedBillerData,
-        "inputParameters": widget.inputParameters,
+        "inputParameters": inputPayloadData,
         "SavedinputParameters": widget.SavedinputParameters,
-        "categoryName": widget.billerData!.cATEGORYNAME,
-        "isSavedBill": false,
+        "categoryName": widget.isSavedBill
+            ? widget.savedBillerData!.cATEGORYNAME
+            : widget.billerData!.cATEGORYNAME,
+        "isSavedBill": widget.isSavedBill,
         "amount": amount,
         "validateBill": validateBill,
         "billerInputSign": billerInputSign,
@@ -162,7 +218,8 @@ class _PrepaidPlansState extends State<PrepaidPlans>
   @override
   Widget build(BuildContext context) {
     handlePlans(String? PlanCategory) {
-      List<PrepaidPlansData>? Plans = widget.prepaidPlans;
+      List<PrepaidPlansData>? Plans =
+          widget.isFetchPlans ? FilteredPlansData : widget.prepaidPlans;
       List<PrepaidPlansData>? filteredPlansByCategory = [];
 
       if (PlanCategory == 'All') {
@@ -175,6 +232,21 @@ class _PrepaidPlansState extends State<PrepaidPlans>
       return filteredPlansByCategory;
     }
 
+    FilterPlans() {
+      List<PrepaidPlansData> FilterPlans = [];
+      if (CircleValue != null) {
+        FilterPlans = prepaidPlansData!
+            .where(
+                (element) => element.planAdditionalInfo!.circle == CircleValue)
+            .toList();
+      } else {
+        FilterPlans = prepaidPlansData!;
+      }
+      setState(() {
+        FilteredPlansData = FilterPlans;
+      });
+    }
+
     return Scaffold(
         appBar: MyAppBar(
           context: context,
@@ -182,65 +254,100 @@ class _PrepaidPlansState extends State<PrepaidPlans>
           onLeadingTap: () => goBack(context),
           showActions: false,
         ),
-        body: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 8.h),
-              child: TabBar(
-                physics: const BouncingScrollPhysics(),
-                dragStartBehavior: DragStartBehavior.start,
-                isScrollable: true,
-                indicatorColor: CLR_PRIMARY,
-                indicator: DotIndicator(),
-                labelStyle:
-                    TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-                unselectedLabelColor: CLR_PRIMARY_LITE,
-                labelColor: CLR_PRIMARY,
-                controller: _tabController,
-                tabs: [
-                  for (var item in categoryList)
-                    Tab(
-                      text: item,
-                    ),
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                Container(
-                  height: 550.h,
-                  child: TabBarView(
-                      physics: const BouncingScrollPhysics(),
-                      controller: _tabController,
-                      children: [
-                        for (var item in categoryList)
-                          ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: handlePlans(item.toString())!.length,
-                            physics: const BouncingScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return PrepaidPlansContainer(
-                                  onPressed: () {
-                                    handlePay(
-                                        amount:
-                                            handlePlans(item.toString())![index]
-                                                .amount
-                                                .toString(),
-                                        planDetails: handlePlans(
-                                            item.toString())![index]);
-                                  },
-                                  billerData: widget.billerData,
-                                  prepaidPlans:
-                                      handlePlans(item.toString())![index]);
-                            },
+        body: BlocConsumer<HomeCubit, HomeState>(
+          listener: (context, state) {
+            if (state is PrepaidFetchPlansLoading) {
+              setState(() {
+                isPrepaidPlansLoading = true;
+              });
+            } else if (state is PrepaidFetchPlansSuccess) {
+              prepaidPlansData = state.prepaidPlansData;
+
+              FilterPlans();
+
+              handleCatgeoryList();
+              setState(() {
+                isPrepaidPlansLoading = false;
+              });
+            } else if (state is PrepaidFetchPlansFailed) {
+              setState(() {
+                isPrepaidPlansLoading = false;
+              });
+            } else if (state is PrepaidFetchPlansError) {
+              setState(() {
+                isPrepaidPlansLoading = false;
+              });
+            }
+          },
+          builder: (context, state) {
+            return !isPrepaidPlansLoading
+                ? Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 8.h),
+                        child: TabBar(
+                          physics: const BouncingScrollPhysics(),
+                          dragStartBehavior: DragStartBehavior.start,
+                          isScrollable: true,
+                          indicatorColor: CLR_PRIMARY,
+                          indicator: DotIndicator(),
+                          labelStyle: TextStyle(
+                              fontSize: 14.sp, fontWeight: FontWeight.bold),
+                          unselectedLabelColor: CLR_PRIMARY_LITE,
+                          labelColor: CLR_PRIMARY,
+                          controller: _tabController,
+                          tabs: [
+                            for (var item in categoryList)
+                              Tab(
+                                text: item,
+                              ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            height: 550.h,
+                            child: TabBarView(
+                                physics: const BouncingScrollPhysics(),
+                                controller: _tabController,
+                                children: [
+                                  for (var item in categoryList)
+                                    ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      itemCount:
+                                          handlePlans(item.toString())!.length,
+                                      physics: const BouncingScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        return PrepaidPlansContainer(
+                                            onPressed: () {
+                                              handlePay(
+                                                  amount: handlePlans(item
+                                                          .toString())![index]
+                                                      .amount
+                                                      .toString(),
+                                                  planDetails: handlePlans(
+                                                      item.toString())![index]);
+                                            },
+                                            billerData: widget.billerData,
+                                            prepaidPlans: handlePlans(
+                                                item.toString())![index]);
+                                      },
+                                    ),
+                                ]),
                           ),
-                      ]),
-                ),
-                SizedBox(height: 10.h)
-              ],
-            ),
-          ],
+                          SizedBox(height: 10.h)
+                        ],
+                      ),
+                    ],
+                  )
+                : Container(
+                    height: 200.h,
+                    width: 200.w,
+                    child: FlickrLoader(),
+                  );
+          },
         ));
   }
 }

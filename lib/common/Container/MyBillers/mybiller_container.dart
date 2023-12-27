@@ -4,6 +4,7 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
+import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/models/upcoming_dues_model.dart';
 import 'package:ebps/widget/custom_switch.dart';
@@ -69,6 +70,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
       return (find.isNotEmpty ? find[0] : null);
     } catch (e) {}
   }
+
+  List<PrepaidPlansData>? PrepaidPlans = [];
 
   @override
   void initState() {
@@ -146,14 +149,29 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
 
     return GestureDetector(
       onTap: () {
-        goToData(context, fETCHBILLERDETAILSROUTE, {
-          "name": widget.savedBillersData.bILLERNAME,
-          "billName": widget.savedBillersData.bILLNAME,
-          "savedBillersData": widget.savedBillersData,
-          "SavedinputParameters": widget.SavedinputParameters,
-          "categoryName": widget.savedBillersData.cATEGORYNAME,
-          "isSavedBill": true,
-        });
+        if (widget.savedBillersData.cATEGORYNAME!.toLowerCase() ==
+            "mobile prepaid") {
+          goToData(context, pREPAIDPLANSROUTE, {
+            "prepaidPlans": PrepaidPlans,
+            "isFetchPlans": true,
+            "savedBillerData": widget.savedBillersData,
+            "mobileNumber": "s",
+            "operator": "",
+            "circle": "",
+            "billName": "ss",
+            "SavedinputParameters": widget.SavedinputParameters,
+            'isSavedBill': true
+          });
+        } else {
+          goToData(context, fETCHBILLERDETAILSROUTE, {
+            "name": widget.savedBillersData.bILLERNAME,
+            "billName": widget.savedBillersData.bILLNAME,
+            "savedBillersData": widget.savedBillersData,
+            "SavedinputParameters": widget.SavedinputParameters,
+            "categoryName": widget.savedBillersData.cATEGORYNAME,
+            "isSavedBill": true,
+          });
+        }
       },
       child: Container(
           width: double.infinity,

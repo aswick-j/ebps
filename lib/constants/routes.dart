@@ -182,17 +182,17 @@ class MyRouter {
                         create: (_) => MybillersCubit(repository: apiClient)),
                   ],
                   child: PrepaidPlans(
-                    prepaidPlans: args["prepaidPlans"],
-                    isFetchPlans: args["isFetchPlans"],
-                    billerData: args["billerData"],
-                    mobileNumber: args["mobileNumber"],
-                    operator: args["operator"],
-                    circle: args["circle"],
-                    billName: args["billName"],
-                    inputParameters: args["inputParameters"],
-                    SavedinputParameters: [],
-                    isSavedBill: args["isSavedBill"],
-                  ),
+                      prepaidPlans: args["prepaidPlans"],
+                      isFetchPlans: args["isFetchPlans"],
+                      billerData: args["billerData"],
+                      mobileNumber: args["mobileNumber"],
+                      operator: args["operator"],
+                      circle: args["circle"],
+                      billName: args["billName"],
+                      inputParameters: args["inputParameters"],
+                      SavedinputParameters: args["SavedinputParameters"],
+                      isSavedBill: args["isSavedBill"],
+                      savedBillerData: args['savedBillerData']),
                 ));
 
       //FETCH - BILLER DETAILS

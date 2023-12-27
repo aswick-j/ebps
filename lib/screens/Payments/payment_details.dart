@@ -87,24 +87,33 @@ class _PaymentDetailsState extends State<PaymentDetails> {
       // billDetail["billName"] = widget.billName;
 
       Map<String, dynamic> payload = {
-        "validateBill":
-            widget.billerData!.cATEGORYNAME!.toLowerCase() == "mobile prepaid"
-                ? true
-                : widget.validateBill!["validateBill"],
+        "validateBill": (widget.isSavedBill
+                ? widget.savedBillersData!.cATEGORYNAME!.toLowerCase() ==
+                    "mobile prepaid"
+                : widget.billerData!.cATEGORYNAME!.toLowerCase() ==
+                    "mobile prepaid")
+            ? true
+            : widget.validateBill!["validateBill"],
         "billerID": widget.isSavedBill
-            ? widget.billerData!.bILLERID
+            ? widget.savedBillersData!.bILLERID
             : widget.billerData!.bILLERID,
         "billerParams": widget.billerInputSign,
-        "quickPay":
-            widget.billerData!.cATEGORYNAME!.toLowerCase() == "mobile prepaid"
-                ? false
-                : widget.validateBill!["quickPay"],
+        "quickPay": (widget.isSavedBill
+                ? widget.savedBillersData!.cATEGORYNAME!.toLowerCase() ==
+                    "mobile prepaid"
+                : widget.billerData!.cATEGORYNAME!.toLowerCase() ==
+                    "mobile prepaid")
+            ? false
+            : widget.validateBill!["quickPay"],
         "quickPayAmount": widget.amount.toString(),
         "billName": widget.billName,
-        "forChannel":
-            widget.billerData!.cATEGORYNAME!.toLowerCase() == "mobile prepaid"
-                ? "prepaid"
-                : ""
+        "forChannel": (widget.isSavedBill
+                ? widget.savedBillersData!.cATEGORYNAME!.toLowerCase() ==
+                    "mobile prepaid"
+                : widget.billerData!.cATEGORYNAME!.toLowerCase() ==
+                    "mobile prepaid")
+            ? "prepaid"
+            : ""
       };
       BlocProvider.of<HomeCubit>(context).fetchValidateBill(payload);
     } else if (widget.validateBill!["billerType"] == "instant" ||
@@ -236,8 +245,12 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 validateBill: widget.validateBill!["validateBill"],
                 billerParams: widget.billerInputSign,
                 billName: widget.billName,
-                forChannel: widget.billerData!.cATEGORYNAME!.toLowerCase() ==
-                        "mobile prepaid"
+                forChannel: (widget.isSavedBill
+                        ? widget.savedBillersData!.cATEGORYNAME!
+                                .toLowerCase() ==
+                            "mobile prepaid"
+                        : widget.billerData!.cATEGORYNAME!.toLowerCase() ==
+                            "mobile prepaid")
                     ? "Prepaid"
                     : "",
                 planId: widget.planDetails!.billerPlanId,
@@ -309,8 +322,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                             billerName: widget.billerName.toString(),
                             categoryName: widget.categoryName.toString(),
                           ),
-                          if (widget.SavedinputParameters!.isNotEmpty ||
-                              widget.inputParameters!.isNotEmpty)
+                          if (widget.SavedinputParameters != null ||
+                              widget.inputParameters != null)
                             Container(
                                 width: double.infinity,
                                 height: 75.h,
