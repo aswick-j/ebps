@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
@@ -12,6 +14,7 @@ import 'package:ebps/models/add_biller_model.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/confirm_done_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
+import 'package:ebps/screens/base64.dart';
 import 'package:ebps/screens/pdf_reciept.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +23,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:pdf/pdf.dart';
+import 'package:printing/printing.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 class TransactionScreen extends StatefulWidget {
   bool isSavedBill;
@@ -240,16 +246,44 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                       ),
                                       textAlign: TextAlign.left,
                                     ),
-                                    IconButton(
-                                        onPressed: () {
-                                          Future.microtask(() => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      pdfReciept())));
-                                        },
-                                        icon: Icon(Icons.file_download_outlined,
-                                            color: CLR_PRIMARY)),
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                            onPressed: () async {
+                                              final result =
+                                                  await Printing.sharePdf(
+                                                bytes: await _generatePdf(
+                                                    PdfPageFormat.a4, 'title'),
+                                                filename:
+                                                    'Transaction_Receipt.pdf',
+                                              );
+                                              if (result) {
+                                                print('Shared');
+                                              }
+                                            },
+                                            icon: Icon(Icons.share_outlined,
+                                                color: CLR_PRIMARY)),
+                                        IconButton(
+                                            onPressed: () {
+                                              Printing.layoutPdf(
+                                                name: "Transaction Receipt",
+                                                onLayout: (PdfPageFormat
+                                                        format) async =>
+                                                    _generatePdf(
+                                                        format, "title"),
+                                              );
+                                              // Future.microtask(() =>
+                                              //     Navigator.push(
+                                              //         context,
+                                              //         MaterialPageRoute(
+                                              //             builder: (context) =>
+                                              //                 pdfReciept())));
+                                            },
+                                            icon: Icon(
+                                                Icons.file_download_outlined,
+                                                color: CLR_PRIMARY)),
+                                      ],
+                                    ),
                                   ],
                                 ),
                                 SizedBox(
@@ -328,8 +362,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           showLogo: true),
                     ],
                   )),
-              if (!paymentDetails!['success'])
-                BbpsLogoContainer(showEquitasLogo: true),
+              BbpsLogoContainer(showEquitasLogo: true),
               SizedBox(
                 height: 70.h,
               )
@@ -353,7 +386,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               paymentDetails!['txnReferenceId'].toString()
                         });
                       },
-                      buttonText: "Raise For Complaint",
+                      buttonText: "Raise a Complaint",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
                       buttonColor: CLR_PRIMARY,
@@ -367,4 +400,30 @@ class _TransactionScreenState extends State<TransactionScreen> {
           ),
         ));
   }
+}
+
+Future<Uint8List> _generatePdf(PdfPageFormat format, String title) async {
+  final pdf = pw.Document(
+    version: PdfVersion.pdf_1_5,
+    compress: true,
+  );
+  final font = await PdfGoogleFonts.nunitoExtraLight();
+
+  final Uint8List imageBytes = base64Decode(base64Image);
+  final pw.Image image =
+      pw.Image(pw.MemoryImage(imageBytes), fit: pw.BoxFit.contain);
+
+  pdf.addPage(pw.Page(
+      pageFormat: PdfPageFormat.a4,
+      build: (pw.Context context) {
+        return pw.Center(
+          child: pw.Container(
+            alignment: pw.Alignment.center,
+            // height: 200,
+            child: image,
+          ),
+        );
+      }));
+
+  return pdf.save();
 }

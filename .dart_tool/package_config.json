@@ -320,6 +320,12 @@
       "languageVersion": "2.16"
     },
     {
+      "name": "screenshot",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/screenshot-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "shared_preferences",
       "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences-2.2.2",
       "packageUri": "lib/",
@@ -476,7 +482,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-12-22T07:23:14.164792Z",
+  "generated": "2023-12-28T06:37:56.214635Z",
   "generator": "pub",
   "generatorVersion": "3.0.6"
 }

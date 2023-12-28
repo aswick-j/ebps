@@ -145,7 +145,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
       child: Scaffold(
         appBar: MyAppBar(
           context: context,
-          title: 'Raise For Complaint',
+          title: 'Raise a Complaint',
           actions: [],
           onLeadingTap: () => Navigator.pop(context),
           showActions: true,
