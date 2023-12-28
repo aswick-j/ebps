@@ -478,36 +478,34 @@ class _OtpScreenState extends State<OtpScreen> {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return Expanded(
-                      child: AlertDialog(
-                        content: AnimatedDialog(
-                          title: "Your Payment Has Been Failed.",
-                          subTitle: "",
-                          child: Icon(
-                            Icons.close_rounded,
-                            color: Colors.white,
-                          ),
+                    return AlertDialog(
+                      content: AnimatedDialog(
+                        title: "Your Payment Has Been Failed.",
+                        subTitle: "",
+                        child: Icon(
+                          Icons.close_rounded,
+                          color: Colors.white,
                         ),
-                        actions: <Widget>[
-                          Align(
-                            alignment: Alignment.center,
-                            child: MyAppButton(
-                                onPressed: () {
-                                  goBack(context);
-
-                                  handleRedirect();
-                                },
-                                buttonText: "Okay",
-                                buttonTxtColor: BTN_CLR_ACTIVE,
-                                buttonBorderColor: Colors.transparent,
-                                buttonColor: CLR_PRIMARY,
-                                buttonSizeX: 10,
-                                buttonSizeY: 40,
-                                buttonTextSize: 14,
-                                buttonTextWeight: FontWeight.w500),
-                          ),
-                        ],
                       ),
+                      actions: <Widget>[
+                        Align(
+                          alignment: Alignment.center,
+                          child: MyAppButton(
+                              onPressed: () {
+                                goBack(context);
+
+                                handleRedirect();
+                              },
+                              buttonText: "Okay",
+                              buttonTxtColor: BTN_CLR_ACTIVE,
+                              buttonBorderColor: Colors.transparent,
+                              buttonColor: CLR_PRIMARY,
+                              buttonSizeX: 10,
+                              buttonSizeY: 40,
+                              buttonTextSize: 14,
+                              buttonTextWeight: FontWeight.w500),
+                        ),
+                      ],
                     );
                   },
                 );
@@ -761,7 +759,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 readOnly: enableReadOnly,
                                 focusNode: focusNode,
                                 androidSmsAutofillMethod:
-                                    AndroidSmsAutofillMethod.smsUserConsentApi,
+                                    AndroidSmsAutofillMethod.none,
                                 listenForMultipleSmsOnAndroid: true,
                                 defaultPinTheme: defaultPinTheme,
                                 onChanged: (s) {

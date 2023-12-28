@@ -8,6 +8,8 @@ const LOGO_BBPS_FULL = "packages/ebps/assets/logo/logo_bbps_full.svg";
 const LOGO_BBPS_FULL_PNG = "packages/ebps/assets/logo/logo_bbps_full_png.png";
 const LOGO_EQUITAS_E = "packages/ebps/assets/logo/logo_equitas_e.jpeg";
 const LOGO_BBPS_ASSURED = "packages/ebps/assets/logo/logo_bbps_assured.png";
+const LOGO_BBPS_ASSURED_BW =
+    "packages/ebps/assets/logo/logo_bbps_assured_bw.png";
 
 //JSON
 
@@ -93,6 +95,7 @@ const IMG_SESSIONEXPIRED =
 const IMG_NOTFOUND = "packages/ebps/assets/icon/icon_notFound.svg";
 const SPLASH_BAG = "packages/ebps/assets/images/splash_background.png";
 const SCREEN_BAG = "packages/ebps/assets/images/screeshot_bg.png";
+const EQUITAS_FOOTER = "packages/ebps/assets/images/image_equitas_footer.png";
 
 const ANI_SUCCESS = "packages/ebps/assets/logo/success.gif";
 const ANI_SUCCESS1 = "packages/ebps/assets/logo/succe1ss.gif";

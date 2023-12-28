@@ -153,6 +153,7 @@ class _BillerDetailsState extends State<BillerDetails> {
             isPaymentInfoLoading = true;
           } else if (state is PaymentInfoSuccess) {
             paymentInform = state.PaymentInfoDetail!.data;
+
             isPaymentInfoLoading = false;
           } else if (state is PaymentInfoFailed) {
             isPaymentInfoLoading = false;
@@ -171,7 +172,15 @@ class _BillerDetailsState extends State<BillerDetails> {
             _additionalInfo =
                 state.fetchBillResponse!.data!.data!.additionalInfo;
             txtAmountController.text = _billerResponseData!.amount.toString();
-            if (double.parse(_billerResponseData!.amount.toString()) > 0) {
+            if (double.parse(_billerResponseData!.amount.toString()) == 0 ||
+                (double.parse(_billerResponseData!.amount.toString()) <
+                        double.parse(paymentInform!.mINLIMIT.toString()) ||
+                    double.parse(_billerResponseData!.amount.toString()) >
+                        double.parse(paymentInform!.mAXLIMIT.toString()))) {
+              setState(() {
+                isInsufficient = true;
+              });
+            } else {
               setState(() {
                 isInsufficient = false;
               });
