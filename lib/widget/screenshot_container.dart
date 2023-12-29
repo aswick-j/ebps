@@ -200,7 +200,13 @@ class ScreenshotContainer extends StatelessWidget {
               ),
             txnDetails(
                 title: "Status",
-                subTitle: "Transaction Success",
+                subTitle: status == 'success'
+                    ? "Transaction Success"
+                    : status == 'bbpsTimeout'
+                        ? 'Transaction Pending'
+                        : status == 'failed'
+                            ? "Transaction Failed"
+                            : "Transaction Failed",
                 clipBoard: false),
             txnDetails(
                 title: "Payment Channel",

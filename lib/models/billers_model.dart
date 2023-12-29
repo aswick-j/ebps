@@ -35,6 +35,7 @@ class BillerModel {
 class BillersData {
   String? bILLERID;
   String? bILLERNAME;
+  String? bILLNAME;
   String? bILLERICON;
   String? bILLERCOVERAGE;
   String? bILLEREFFECTIVEFROM;
@@ -56,6 +57,7 @@ class BillersData {
   BillersData(
       {this.bILLERID,
       this.bILLERNAME,
+      this.bILLNAME,
       this.bILLERICON,
       this.bILLERCOVERAGE,
       this.bILLEREFFECTIVEFROM,
@@ -77,6 +79,7 @@ class BillersData {
   BillersData.fromJson(Map<String, dynamic> json) {
     bILLERID = json['BILLER_ID'];
     bILLERNAME = json['BILLER_NAME'];
+    bILLNAME = json['BILL_NAME'];
     bILLERICON = json['BILLER_ICON'];
     bILLERCOVERAGE = json['BILLER_COVERAGE'];
     bILLEREFFECTIVEFROM = json['BILLER_EFFECTIVE_FROM'];
@@ -100,6 +103,7 @@ class BillersData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['BILLER_ID'] = this.bILLERID;
     data['BILLER_NAME'] = this.bILLERNAME;
+    data['BILL_NAME'] = this.bILLNAME;
     data['BILLER_ICON'] = this.bILLERICON;
     data['BILLER_COVERAGE'] = this.bILLERCOVERAGE;
     data['BILLER_EFFECTIVE_FROM'] = this.bILLEREFFECTIVEFROM;

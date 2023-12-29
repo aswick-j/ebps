@@ -271,8 +271,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                         Material(
                                                             child: ScreenshotContainer(
                                                                 BillerName: widget.billerName.toString(),
-                                                                BillerId: widget.billerData!["customerBillID"].toString(),
-                                                                BillName: widget.billerData!['billName'],
+                                                                BillerId: widget.isSavedBill ? savedBillerTypeData!.bILLERID.toString() : billerTypeData!.bILLERID.toString(),
+                                                                BillName: widget.isSavedBill ? savedBillerTypeData!.bILLNAME.toString() : billerTypeData!.bILLNAME.toString(),
                                                                 BillNumber: widget.billerData!["customerBillID"].toString(),
                                                                 TransactionID: paymentDetails!['txnReferenceId'].toString(),
                                                                 fromAccount: widget.billerData!['acNo'].toString(),
@@ -309,17 +309,28 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                           format,
                                                           widget.billerName
                                                               .toString(),
-                                                          widget.billerData![
-                                                                  "customerBillID"]
-                                                              .toString(),
-                                                          widget.billerData![
-                                                              'billName'],
+                                                          widget
+                                                                  .isSavedBill
+                                                              ? savedBillerTypeData!
+                                                                  .bILLERID
+                                                                  .toString()
+                                                              : billerTypeData!
+                                                                  .bILLERID
+                                                                  .toString(),
+                                                          widget
+                                                                  .isSavedBill
+                                                              ? savedBillerTypeData!
+                                                                  .bILLNAME
+                                                                  .toString()
+                                                              : billerTypeData!
+                                                                  .bILLNAME
+                                                                  .toString(),
                                                           widget.billerData![
                                                                   "customerBillID"]
                                                               .toString(),
                                                           paymentDetails![
-                                                                  'txnReferenceId']
-                                                              .toString(),
+                                                                  'txnReferenceId'] ??
+                                                              "-",
                                                           widget
                                                               .billerData![
                                                                   'acNo']
@@ -327,18 +338,18 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                           "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount'].toString()))}",
                                                           paymentDetails![
                                                                   'success']
-                                                              ? "success"
+                                                              ? "Transaction Success"
                                                               : paymentDetails![
                                                                       'bbpsTimeout']
-                                                                  ? 'bbpsTimeout'
+                                                                  ? 'Transaction Pending'
                                                                   : paymentDetails![
                                                                           'failed']
-                                                                      ? "failed"
-                                                                      : "failed",
+                                                                      ? "Transaction Failed"
+                                                                      : "Transaction Failed",
                                                           DateFormat(
                                                                   "dd/MM/yy | hh:mm a")
-                                                              .format(DateTime
-                                                                  .now())
+                                                              .format(
+                                                                  DateTime.now())
                                                               .toString()),
                                                 );
                                                 // Future.microtask(() =>
@@ -409,10 +420,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                 widget.billerData!["customerBillID"].toString(),
                             clipBoard: false),
                         // if (widget.historyData.tRANSACTIONSTATUS == 'success')
-                        TxnDetails(
-                            title: "Transaction ID",
-                            subTitle: paymentDetails!['txnReferenceId'],
-                            clipBoard: true),
+                        if (paymentDetails!['success'])
+                          TxnDetails(
+                              title: "Transaction ID",
+                              subTitle: paymentDetails!['txnReferenceId'],
+                              clipBoard: true),
 
                         TxnDetails(
                             title: "Status",

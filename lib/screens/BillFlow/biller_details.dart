@@ -172,7 +172,9 @@ class _BillerDetailsState extends State<BillerDetails> {
             _additionalInfo =
                 state.fetchBillResponse!.data!.data!.additionalInfo;
             txtAmountController.text = _billerResponseData!.amount.toString();
+
             if (double.parse(_billerResponseData!.amount.toString()) == 0 ||
+                _billerResponseData!.amount == null ||
                 (double.parse(_billerResponseData!.amount.toString()) <
                         double.parse(paymentInform!.mINLIMIT.toString()) ||
                     double.parse(_billerResponseData!.amount.toString()) >
@@ -407,6 +409,9 @@ class _BillerDetailsState extends State<BillerDetails> {
                                 child: TextFormField(
                                   controller: txtAmountController,
                                   enabled: validateBill!["amountEditable"],
+                                  // style: !validateBill!["amountEditable"]
+                                  //     ? null
+                                  //     : TextStyle(color: TXT_CLR_LITE),
                                   onFieldSubmitted: (_) {},
                                   onChanged: (val) {
                                     setState(() {
@@ -466,8 +471,10 @@ class _BillerDetailsState extends State<BillerDetails> {
                                         ? Color(0xffD1D9E8).withOpacity(0.2)
                                         : Color(0xffD1D9E8).withOpacity(0.5),
                                     filled: true,
-                                    labelStyle:
-                                        TextStyle(color: Color(0xff1b438b)),
+                                    labelStyle: TextStyle(
+                                        color: validateBill!["amountEditable"]
+                                            ? Color(0xff1b438b)
+                                            : TXT_CLR_LITE),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide:
                                           BorderSide(color: Color(0xff1B438B)),

@@ -6,12 +6,13 @@ class AnimatedDialog extends StatefulWidget {
   final String title;
   final String subTitle;
   final Widget child;
-
+  final Color shapeColor;
   const AnimatedDialog({
     super.key,
     required this.title,
     required this.subTitle,
     required this.child,
+    required this.shapeColor,
   });
 
   @override
@@ -118,16 +119,18 @@ class _AnimatedDialogState extends State<AnimatedDialog>
                         color: CLR_PRIMARY,
                       ),
                     ),
-
-                    // Text(
-                    //   widget.subTitle,
-                    //   textAlign: TextAlign.center,
-                    //   style: TextStyle(
-                    //     fontSize: 20,
-                    //     fontWeight: FontWeight.bold,
-                    //     color: Colors.grey[600],
-                    //   ),
-                    // ),
+                    if (widget.title == "Your Payment is Pending")
+                      SizedBox(height: 10.h),
+                    if (widget.title == "Your Payment is Pending")
+                      Text(
+                        widget.subTitle,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.bold,
+                          color: CLR_BLUE_LITE,
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -137,9 +140,9 @@ class _AnimatedDialogState extends State<AnimatedDialog>
                   child: ScaleTransition(
                     scale: _containerScaleAnimation,
                     child: Container(
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.green,
+                        color: widget.shapeColor,
                       ),
                       child: ScaleTransition(
                         scale: _iconScaleAnimation,

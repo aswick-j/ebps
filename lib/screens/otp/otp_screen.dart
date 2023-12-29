@@ -430,13 +430,13 @@ class _OtpScreenState extends State<OtpScreen> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     content: AnimatedDialog(
-                      title: "Your Payment Has Been Successful.",
-                      subTitle: "",
-                      child: Icon(
-                        Icons.check,
-                        color: Colors.white,
-                      ),
-                    ),
+                        title: "Your Payment Has Been Successful.",
+                        subTitle: "",
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                        ),
+                        shapeColor: CLR_GREEN),
                     actions: <Widget>[
                       Align(
                         alignment: Alignment.center,
@@ -474,19 +474,20 @@ class _OtpScreenState extends State<OtpScreen> {
                 });
               }
 
-              if (state.message != "Something went wrong") {
+              if (state.data!["res"]["reason"] ==
+                  'Bill Payment failed from BBPS') {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
                       content: AnimatedDialog(
-                        title: "Your Payment Has Been Failed.",
-                        subTitle: "",
-                        child: Icon(
-                          Icons.close_rounded,
-                          color: Colors.white,
-                        ),
-                      ),
+                          title: "Your Payment Has Been Failed.",
+                          subTitle: "",
+                          child: Icon(
+                            Icons.close_rounded,
+                            color: Colors.white,
+                          ),
+                          shapeColor: CLR_ERROR),
                       actions: <Widget>[
                         Align(
                           alignment: Alignment.center,
@@ -512,45 +513,45 @@ class _OtpScreenState extends State<OtpScreen> {
               } else {
                 showDialog(
                   context: context,
-                  builder: (BuildContext context) {
-                    return Expanded(
-                      child: AlertDialog(
-                        content: AnimatedDialog(
-                          title: "Your Payment Has Been Failed.",
+                  builder: (BuildContext ctx) {
+                    return AlertDialog(
+                      content: AnimatedDialog(
+                          title: "Your Payment is Pending",
                           subTitle:
-                              "Please, Check History Section For More Information",
+                              "Please, Visit History Section For More Information",
                           child: Icon(
-                            Icons.close_rounded,
+                            Icons.warning_amber_rounded,
                             color: Colors.white,
                           ),
+                          shapeColor: Colors.orange),
+                      actions: <Widget>[
+                        Align(
+                          alignment: Alignment.center,
+                          child: MyAppButton(
+                              onPressed: () {
+                                goBack(ctx);
+
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => BottomNavBar(
+                                              SelectedIndex: 0,
+                                            )),
+                                    (Route<dynamic> route) => false,
+                                  );
+                                });
+                              },
+                              buttonText: "Okay",
+                              buttonTxtColor: BTN_CLR_ACTIVE,
+                              buttonBorderColor: Colors.transparent,
+                              buttonColor: CLR_PRIMARY,
+                              buttonSizeX: 10,
+                              buttonSizeY: 40,
+                              buttonTextSize: 14,
+                              buttonTextWeight: FontWeight.w500),
                         ),
-                        actions: <Widget>[
-                          Align(
-                            alignment: Alignment.center,
-                            child: MyAppButton(
-                                onPressed: () {
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((_) {
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                          builder: (context) => BottomNavBar(
-                                                SelectedIndex: 0,
-                                              )),
-                                      (Route<dynamic> route) => false,
-                                    );
-                                  });
-                                },
-                                buttonText: "Okay",
-                                buttonTxtColor: BTN_CLR_ACTIVE,
-                                buttonBorderColor: Colors.transparent,
-                                buttonColor: CLR_PRIMARY,
-                                buttonSizeX: 10,
-                                buttonSizeY: 40,
-                                buttonTextSize: 14,
-                                buttonTextWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
+                      ],
                     );
                   },
                 );
@@ -571,13 +572,13 @@ class _OtpScreenState extends State<OtpScreen> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     content: AnimatedDialog(
-                      title: "Your Biller Has Been Deleted Successfully.",
-                      subTitle: "",
-                      child: Icon(
-                        Icons.check,
-                        color: Colors.white,
-                      ),
-                    ),
+                        title: "Your Biller Has Been Deleted Successfully.",
+                        subTitle: "",
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                        ),
+                        shapeColor: CLR_GREEN),
                     actions: <Widget>[
                       Align(
                         alignment: Alignment.center,
