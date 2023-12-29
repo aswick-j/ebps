@@ -35,7 +35,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
       child: Center(
         child: Column(children: [
           Container(
-            height: 360.h,
+            height: 370.h,
             margin: EdgeInsets.fromLTRB(0, 120.h, 0, 10.h),
             child: PageView.builder(
               controller: controller,
@@ -59,14 +59,20 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                             width: 45.w,
                           ),
                         ),
-                        Text(
-                          "Auto Pay ${widget.allautoPayData![index].rESETDATE == 1 ? "Date" : "Limit"} Seems to be Mismatch",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xff000000),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+                          child: Text(
+                            widget.allautoPayData![index].rESETDATE == 1
+                                ? "Auto Pay Date not in between the Bill Generation and Bill Due date, please update accordingly."
+                                : "Auto Pay Limit lesser than the Bill Due Amount,\ndo you wish to revise it.",
+                            // "Auto Pay ${widget.allautoPayData![index].rESETDATE == 1 ? "Date" : "Limit"} Seems to be Mismatch",
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff000000),
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(0, 20.h, 0, 20.h),
@@ -83,7 +89,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400,
-                              color: Color(0xff000000),
+                              color: CLR_PRIMARY,
                             ),
                             textAlign: TextAlign.center,
                             maxLines: 1,

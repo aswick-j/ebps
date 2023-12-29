@@ -197,13 +197,13 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                       ),
                       SizedBox(height: 20.h),
                       Text(
-                        "Unable to Fetch the Balance",
+                        "Unable to Refresh the Bill Details \nPlease try again",
                         style: TextStyle(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
                           color: Color(0xff1b438b),
                         ),
-                        textAlign: TextAlign.left,
+                        textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 30.h),
                       MyAppButton(

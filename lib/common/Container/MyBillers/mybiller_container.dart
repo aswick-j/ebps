@@ -200,7 +200,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                      width: 210.w,
+                      width: 209.w,
                       child: Text(
                         widget.savedBillersData.bILLERNAME.toString(),
                         style: TextStyle(

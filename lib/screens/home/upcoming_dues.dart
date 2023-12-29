@@ -136,8 +136,43 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                 isUpcomingDuesLoading = true;
               });
             } else if (state is UpcomingDuesSuccess) {
-              upcomingDuesData = state.upcomingDuesData;
+              List<UpcomingDuesData>? tempUpcomingDuesData =
+                  state.upcomingDuesData;
+
+              List<UpcomingDuesData>? NullTemp = [];
+              List<UpcomingDuesData>? DueDateTemp = [];
+              List<UpcomingDuesData>? ExpiredDueDateTemp = [];
+
+              bool isDateExpired(DateTime date) {
+                DateTime currentDate = DateTime.now();
+                return date.isBefore(currentDate);
+              }
+
+              for (var i = 0; i < tempUpcomingDuesData!.length; i++) {
+                if (tempUpcomingDuesData[i].dueDate == null) {
+                  NullTemp.add(tempUpcomingDuesData[i]);
+                } else if (isDateExpired(DateTime.parse(
+                    tempUpcomingDuesData[i].dueDate.toString()))) {
+                  ExpiredDueDateTemp.add(tempUpcomingDuesData[i]);
+                } else {
+                  DueDateTemp.add(tempUpcomingDuesData[i]);
+                }
+              }
+
+              ExpiredDueDateTemp.sort((a, b) =>
+                  DateTime.parse(a.dueDate.toString())
+                      .compareTo(DateTime.parse(b.dueDate.toString())));
+              DueDateTemp.sort((a, b) => DateTime.parse(a.dueDate.toString())
+                  .compareTo(DateTime.parse(b.dueDate.toString())));
+
+              List<UpcomingDuesData>? sortedData = [
+                ...DueDateTemp,
+                ...ExpiredDueDateTemp,
+                ...NullTemp
+              ];
+
               setState(() {
+                upcomingDuesData = sortedData;
                 isUpcomingDuesLoading = false;
               });
               generateDuesList();
