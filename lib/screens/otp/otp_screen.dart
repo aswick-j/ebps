@@ -520,9 +520,10 @@ class _OtpScreenState extends State<OtpScreen> {
                           subTitle:
                               "Please, Visit History Section For More Information",
                           child: Icon(
-                            Icons.warning_amber_rounded,
+                            Icons.error_outline,
                             color: Colors.white,
                           ),
+                          showSub: true,
                           shapeColor: Colors.orange),
                       actions: <Widget>[
                         Align(

@@ -7,11 +7,13 @@ class AnimatedDialog extends StatefulWidget {
   final String subTitle;
   final Widget child;
   final Color shapeColor;
-  const AnimatedDialog({
+  bool? showSub;
+  AnimatedDialog({
     super.key,
     required this.title,
     required this.subTitle,
     required this.child,
+    this.showSub,
     required this.shapeColor,
   });
 
@@ -119,9 +121,8 @@ class _AnimatedDialogState extends State<AnimatedDialog>
                         color: CLR_PRIMARY,
                       ),
                     ),
-                    if (widget.title == "Your Payment is Pending")
-                      SizedBox(height: 10.h),
-                    if (widget.title == "Your Payment is Pending")
+                    if (widget.showSub == true) SizedBox(height: 10.h),
+                    if (widget.showSub == true)
                       Text(
                         widget.subTitle,
                         textAlign: TextAlign.center,

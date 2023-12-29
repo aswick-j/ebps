@@ -14,6 +14,7 @@ import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/confirm_fetch_bill_model.dart';
 import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
+import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/centralized_grid_view.dart';
 import 'package:ebps/widget/flickr_loader.dart';
@@ -223,18 +224,6 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               LoaderOverlay.of(context).show();
             } else if (state is ValidateBillSuccess) {
               logger.d("VALIDATE  API SUCCESS ===>");
-              //   "validateBill": false,
-              // "billerID": widget.isSavedBill
-              //     ? widget.savedBillerData!.bILLERID
-              //     : widget.billerID,
-              // "billerParams": widget.billerParams,
-              // "quickPay": widget.validate_bill!["quickPay"],
-              // "quickPayAmount": txtAmountController.text,
-              // "forChannel": "prepaid",
-              // "adHocBillValidationRefKey": state.bbpsTranlogId,
-              // "planid": widget.selectedPrepaidPlan!.billerPlanId,
-              // "supportplan": "MANDATORY",
-              // "plantype": widget.selectedPrepaidPlan!.planAdditionalInfo!.Type
 
               BlocProvider.of<HomeCubit>(context).confirmFetchBill(
                 billerID: widget.isSavedBill
@@ -262,6 +251,40 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               isValidateBillLoading = false;
               LoaderOverlay.of(context).hide();
             } else if (state is ValidateBillFailed) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: AnimatedDialog(
+                        title: "Unable to Process Payment",
+                        subTitle:
+                            "We're sorry.We were unable to process your payment.Please try again later",
+                        child: Icon(
+                          Icons.close_rounded,
+                          color: Colors.white,
+                        ),
+                        showSub: true,
+                        shapeColor: CLR_ERROR),
+                    actions: <Widget>[
+                      Align(
+                        alignment: Alignment.center,
+                        child: MyAppButton(
+                            onPressed: () {
+                              goBack(context);
+                            },
+                            buttonText: "Okay",
+                            buttonTxtColor: BTN_CLR_ACTIVE,
+                            buttonBorderColor: Colors.transparent,
+                            buttonColor: CLR_PRIMARY,
+                            buttonSizeX: 10,
+                            buttonSizeY: 40,
+                            buttonTextSize: 14,
+                            buttonTextWeight: FontWeight.w500),
+                      ),
+                    ],
+                  );
+                },
+              );
               isValidateBillLoading = false;
               LoaderOverlay.of(context).hide();
             } else if (state is ValidateBillError) {
