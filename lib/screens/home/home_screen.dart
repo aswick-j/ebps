@@ -13,6 +13,7 @@ import 'package:ebps/screens/home/mismatch_notification.dart';
 import 'package:ebps/screens/home/upcoming_dues.dart';
 import 'package:ebps/services/api.dart';
 import 'package:ebps/services/api_client.dart';
+import 'package:ebps/widget/icon_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -76,14 +77,21 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
         title: 'Bill Payment',
         actions: [
           if (allautoPayData!.isNotEmpty)
-            GestureDetector(
-                onTap: () {
-                  handleDialog();
-                },
-                child: SvgPicture.asset(ICON_BELL)),
-          SizedBox(
-            width: 5.w,
-          ),
+            //   GestureDetector(
+            //       onTap: () {
+            //         handleDialog();
+            //       },
+            //       child: SvgPicture.asset(ICON_BELL)),
+            IconBadge(
+              iconData: Icons.notifications_none_outlined,
+              notificationCount: allautoPayData!.length,
+              onTap: () {
+                handleDialog();
+              },
+            ),
+          // SizedBox(
+          //   width: 5.w,
+          // ),
           InkWell(
               onTap: () => {goTo(context, sEARCHROUTE)},
               child: Container(

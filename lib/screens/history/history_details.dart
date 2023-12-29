@@ -463,12 +463,12 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                   color: CLR_PRIMARY)),
                                           IconButton(
                                               onPressed: () {
-                                                Printing.layoutPdf(
-                                                  name: "Transaction Receipt",
-                                                  onLayout: (PdfPageFormat
-                                                          format) async =>
-                                                      _generatePdf(format),
-                                                );
+                                                // Printing.layoutPdf(
+                                                //   name: "Transaction Receipt",
+                                                //   onLayout: (PdfPageFormat
+                                                //           format) async =>
+                                                //       _generatePdf(format),
+                                                // );
                                                 // Future.microtask(() =>
                                                 //     Navigator.push(
                                                 //         context,
