@@ -114,7 +114,8 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                     amount: widget.allUpcomingDues[index]["dueAmount"] != ""
                         ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allUpcomingDues[index]["dueAmount"]!.toString()))}"
                         : "-",
-                    iconPath: LOGO_BBPS,
+                    iconPath: BILLER_LOGO(
+                        widget.allUpcomingDues[index]["billerName"]),
                     containerBorderColor: Color(0xffD1D9E8),
                     buttonColor: widget.allUpcomingDues[index]["itemType"] ==
                             'upcomingDue'

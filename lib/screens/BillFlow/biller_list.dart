@@ -232,7 +232,14 @@ class _BillerListState extends State<BillerList> {
                                     width: 45.w,
                                     child: Padding(
                                       padding: EdgeInsets.all(13.r),
-                                      child: SvgPicture.asset(LOGO_BBPS),
+                                      child: SvgPicture.asset(BILLER_LOGO(
+                                          _searchController.text.isEmpty
+                                              ? Allbiller![index]
+                                                  .bILLERNAME
+                                                  .toString()
+                                              : BillerSearchResults![index]
+                                                  .bILLERNAME
+                                                  .toString())),
                                     ),
                                   ),
                                   title: Text(

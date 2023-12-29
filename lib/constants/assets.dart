@@ -87,6 +87,19 @@ const ICON_FILTER = "packages/ebps/assets/icon/icon_filter.svg";
 const ICON_ERROR = "packages/ebps/assets/icon/icon_error.svg";
 const ICON_BELL = "packages/ebps/assets/icon/icon_bell.svg";
 
+//LOGO
+
+const LOGO_AIRTEL = "packages/ebps/assets/logo/logo_airtel.svg";
+const LOGO_BOB = "packages/ebps/assets/logo/logo_bob.svg";
+const LOGO_BSNL = "packages/ebps/assets/logo/logo_bsnl.svg";
+const LOGO_HDBLOAN = "packages/ebps/assets/logo/logo_hdb_loan.svg";
+const LOGO_JIO = "packages/ebps/assets/logo/logo_jio.svg";
+const LOGO_MEERUTEDU = "packages/ebps/assets/logo/logo_meerut_education.svg";
+const LOGO_MTNL = "packages/ebps/assets/logo/logo_mtnl.svg";
+const LOGO_SUNDIRECT = "packages/ebps/assets/logo/logo_sunDirect.svg";
+const LOGO_TNEB = "packages/ebps/assets/logo/logo_tneb.svg";
+const LOGO_VI = "packages/ebps/assets/logo/logo_vi.svg";
+
 //IMAGE
 
 const IMG_NODATA = "packages/ebps/assets/images/image_no_data.svg";
@@ -179,5 +192,42 @@ String CATEGORY_ICON(String? CATEGORY_NAME) {
 
     default:
       return ICON_CABLE;
+  }
+}
+
+String BILLER_LOGO(String BillerName) {
+  switch (BillerName.toLowerCase()) {
+    case "airtel dth":
+    case "airtel postpaid":
+    case "airtel postpaid (fetch and pay)":
+    case "airtel broadband (fetch and pay)":
+    case "airtel broadband":
+      return LOGO_AIRTEL;
+    case "bsnl":
+    case "bsnl mobile postpaid":
+      return LOGO_BSNL;
+    case "vi postpaid":
+    case "vi postpaid (fetch and pay)":
+      return LOGO_VI;
+    case "mtnl mumbai dolphin":
+      return LOGO_MTNL;
+    case "jio postpaid":
+    case "jio postpaid (fetch and pay)":
+      return LOGO_JIO;
+    case "meerut institute of technology":
+    case "meerut institute of technology test":
+      return LOGO_MEERUTEDU;
+    case "hdb financial services limited test":
+    case "hdb financial services limited":
+      return LOGO_HDBLOAN;
+    case "tamil nadu electricity board (tneb)":
+    case "ofmedn mobile":
+      return LOGO_TNEB;
+    case "bank of baroda":
+    case "bank of baroda test":
+      return LOGO_BOB;
+
+    default:
+      return LOGO_BBPS;
   }
 }

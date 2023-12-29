@@ -1,4 +1,3 @@
-
 const FAILED = "FAILED";
 const PENDING = "PENDING";
 

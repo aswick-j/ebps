@@ -61,23 +61,23 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
         context: context,
         builder: (context) {
           return AlertDialog(
-              actions: [
-                Align(
-                  alignment: Alignment.center,
-                  child: MyAppButton(
-                      onPressed: () {
-                        goBack(context);
-                      },
-                      buttonText: "Okay",
-                      buttonTxtColor: BTN_CLR_ACTIVE,
-                      buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
-                      buttonSizeX: 10.h,
-                      buttonSizeY: 40.w,
-                      buttonTextSize: 14.sp,
-                      buttonTextWeight: FontWeight.w500),
-                ),
-              ],
+              // actions: [
+              //   Align(
+              //     alignment: Alignment.center,
+              //     child: MyAppButton(
+              //         onPressed: () {
+              //           goBack(context);
+              //         },
+              //         buttonText: "Okay",
+              //         buttonTxtColor: BTN_CLR_ACTIVE,
+              //         buttonBorderColor: Colors.transparent,
+              //         buttonColor: CLR_PRIMARY,
+              //         buttonSizeX: 10.h,
+              //         buttonSizeY: 40.w,
+              //         buttonTextSize: 14.sp,
+              //         buttonTextWeight: FontWeight.w500),
+              //   ),
+              // ],
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -92,17 +92,20 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                         height: 50.h,
                         width: 50.w,
                         child: SvgPicture.asset(
-                            success ? ICON_SUCCESS : LOGO_BBPS)),
+                            success ? ICON_SUCCESS : ICON_FAILED)),
+                    SizedBox(
+                      height: 10.h,
+                    ),
                     Text(
                       success
                           ? "Your Compliant Has Been Registered Successfully"
                           : ComplaintMSG.toString(),
                       style: TextStyle(
                         fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xff000000),
+                        fontWeight: FontWeight.w700,
+                        color: CLR_PRIMARY,
                       ),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.justify,
                     ),
                     if (success)
                       Container(
@@ -133,6 +136,24 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                               )
                             ]),
                           )),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: MyAppButton(
+                          onPressed: () {
+                            goBack(context);
+                          },
+                          buttonText: "Okay",
+                          buttonTxtColor: BTN_CLR_ACTIVE,
+                          buttonBorderColor: Colors.transparent,
+                          buttonColor: CLR_PRIMARY,
+                          buttonSizeX: 10.h,
+                          buttonSizeY: 40.w,
+                          buttonTextSize: 14.sp,
+                          buttonTextWeight: FontWeight.w500),
+                    ),
                   ],
                 ),
               ));

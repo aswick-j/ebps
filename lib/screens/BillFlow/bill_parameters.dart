@@ -2,6 +2,7 @@ import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/Home/biller_details_container.dart';
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getInputType.dart';
@@ -153,7 +154,8 @@ class _BillParametersState extends State<BillParameters> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       BillerDetailsContainer(
-                        icon: 'packages/ebps/assets/icon/logo_bbps.svg',
+                        icon: BILLER_LOGO(
+                            widget.billerData!.bILLERNAME.toString()),
                         billerName: widget.billerData!.bILLERNAME.toString(),
                         categoryName:
                             widget.billerData!.cATEGORYNAME.toString(),

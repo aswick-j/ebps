@@ -13,12 +13,12 @@ class noResult extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 150,
-            height: 350,
+            width: 100.w,
+            height: 200.h,
             child: SvgPicture.asset(IMG_NOTFOUND, fit: BoxFit.fitWidth),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(20.0.r),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

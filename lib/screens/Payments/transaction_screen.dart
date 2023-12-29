@@ -9,7 +9,9 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getBillPaymentDetails.dart';
 import 'package:ebps/helpers/getBillerType.dart';
+import 'package:ebps/helpers/getGradientColors.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/helpers/getTransactionStatusText.dart';
 import 'package:ebps/models/add_biller_model.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/confirm_done_model.dart';
@@ -17,6 +19,8 @@ import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/screens/base64.dart';
 import 'package:ebps/screens/pdf_reciept.dart';
 import 'package:ebps/widget/bbps_logo.dart';
+import 'package:ebps/widget/generate_pdf.dart';
+import 'package:ebps/widget/screenshot_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -147,185 +151,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget ScreenshotContainer() {
-      return Container(
-        color: Colors.white,
-        height: double.infinity,
-        child: Container(
-            clipBehavior: Clip.hardEdge,
-            width: double.infinity,
-            height: double.infinity,
-            margin: EdgeInsets.only(
-                left: 18.0.w, right: 18.w, top: 10.h, bottom: 10.h),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  LOGO_BBPS_ASSURED,
-                ),
-                fit: BoxFit.contain,
-                colorFilter: ColorFilter.mode(
-                    Colors.white.withOpacity(0.9), BlendMode.screen),
-              ),
-              border: Border.all(
-                color: Color(0xffD1D9E8),
-                width: 1.0,
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  height: 33.0.h,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topRight,
-                      stops: const [0.001, 19],
-                      colors: [
-                        paymentDetails!['success']
-                            ? Color(0xff99DDB4).withOpacity(.7)
-                            : paymentDetails!['bbpsTimeout']
-                                ? Color(0xff99DDB4).withOpacity(.7)
-                                : Color(0xff982F67).withOpacity(.7),
-                        paymentDetails!['success']
-                            ? Color(0xff31637D).withOpacity(.7)
-                            : paymentDetails!['bbpsTimeout']
-                                ? Color(0xff31637D).withOpacity(.7)
-                                : Color(0xff463A8D).withOpacity(.7)
-                      ],
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        paymentDetails!['success']
-                            ? "Transaction Details"
-                            : paymentDetails!['bbpsTimeout']
-                                ? "Transaction Pending"
-                                : "Transaction Failure",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xffffffff),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 10.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                SvgPicture.asset(ICON_ARROW_UP, height: 20.h),
-                                Text(
-                                  "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount']))}",
-                                  style: TextStyle(
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xff1b438b),
-                                    height: 33 / 20,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ]),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 20.0.w),
-                        child: Text(
-                          DateFormat("dd/MM/yy | hh:mm a")
-                              .format(DateTime.now())
-                              .toString(),
-                          // "01/08/2023 | 12:48 PM",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xff808080),
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Divider(
-                  height: 10.h,
-                  thickness: 1,
-                ),
-                TxnDetails(
-                    title: "Sent From",
-                    subTitle: 'EQUITAS BANK - ${widget.billerData!['acNo']}',
-                    clipBoard: false),
-                TxnDetails(
-                    title: "Sent To",
-                    subTitle: widget.billerName,
-                    clipBoard: false),
-                TxnDetails(
-                    title: "Payee Note", subTitle: "Nil", clipBoard: false),
-                Divider(
-                  height: 10,
-                  thickness: 1,
-                ),
-                TxnDetails(
-                    title: "From Account",
-                    subTitle: widget.billerData!['acNo'],
-                    clipBoard: false),
-                TxnDetails(
-                    title: "Bank Reference Number ",
-                    subTitle:
-                        tnxResponse!.paymentDetails?.toJson().length != null
-                            ? paymentDetails!['approvalRefNum'].toString()
-                            : "-",
-                    clipBoard: true),
-                if (paymentDetails!['success'])
-                  TxnDetails(
-                      title: "Transaction ID",
-                      subTitle:
-                          tnxResponse!.paymentDetails?.toJson().length != null
-                              ? paymentDetails!['txnReferenceId'].toString()
-                              : "-",
-                      clipBoard: false),
-                // if (widget.historyData.tRANSACTIONSTATUS == 'success')
-                //   TxnDetails(
-                //       title: "Payee Note", subTitle: "Nil", clipBoard: false),
-                TxnDetails(
-                    title: "Transfer Type",
-                    subTitle: "Equitas Digital Banking",
-                    clipBoard: false,
-                    showLogo: true),
-                // Divider(
-                //   height: 10,
-                //   thickness: 1,
-                // ),
-                Center(
-                  child: Container(
-                    height: 80.h,
-                    width: 80.w,
-                    child: Image.asset(
-                      LOGO_EQUITAS,
-                    ),
-                  ),
-                ),
-              ],
-            )),
-      );
-    }
-
     return Scaffold(
         appBar: MyAppBar(
           context: context,
@@ -373,18 +198,14 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             gradient: LinearGradient(
                               begin: Alignment.topRight,
                               stops: const [0.001, 19],
-                              colors: [
-                                paymentDetails!['success']
-                                    ? Color(0xff99DDB4).withOpacity(.7)
-                                    : paymentDetails!['bbpsTimeout']
-                                        ? Color(0xff99DDB4).withOpacity(.7)
-                                        : Color(0xff982F67).withOpacity(.7),
-                                paymentDetails!['success']
-                                    ? Color(0xff31637D).withOpacity(.7)
-                                    : paymentDetails!['bbpsTimeout']
-                                        ? Color(0xff31637D).withOpacity(.7)
-                                        : Color(0xff463A8D).withOpacity(.7)
-                              ],
+                              colors: getStatusGradientColors(
+                                  paymentDetails!['success']
+                                      ? "success"
+                                      : paymentDetails!['bbpsTimeout']
+                                          ? 'bbpsTimeout'
+                                          : paymentDetails!['failed']
+                                              ? "failed"
+                                              : "failed"),
                             ),
                           ),
                           child: Column(
@@ -392,11 +213,14 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                paymentDetails!['success']
-                                    ? "Transaction Details"
-                                    : paymentDetails!['bbpsTimeout']
-                                        ? "Transaction Pending"
-                                        : "Transaction Failure",
+                                getTransactionStatusText(
+                                    paymentDetails!['success']
+                                        ? "success"
+                                        : paymentDetails!['bbpsTimeout']
+                                            ? 'bbpsTimeout'
+                                            : paymentDetails!['failed']
+                                                ? "failed"
+                                                : "failed"),
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w600,
@@ -420,12 +244,13 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           SvgPicture.asset(ICON_ARROW_UP,
                                               height: 20.h),
-                                          SizedBox(width: 10.w),
                                           Text(
-                                            "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount']))}",
+                                            "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount'].toString()))}",
                                             style: TextStyle(
                                               fontSize: 20.sp,
                                               fontWeight: FontWeight.w600,
@@ -440,17 +265,27 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                         children: [
                                           IconButton(
                                               onPressed: () async {
-                                                Uint8List? capturedImage =
-                                                    await screenshotController
-                                                        .captureFromWidget(
-                                                            InheritedTheme
-                                                                .captureAll(
-                                                                    context,
-                                                                    Material(
-                                                                        child:
-                                                                            ScreenshotContainer())),
-                                                            delay: Duration(
-                                                                seconds: 0));
+                                                Uint8List? capturedImage = await screenshotController.captureFromWidget(
+                                                    InheritedTheme.captureAll(
+                                                        context,
+                                                        Material(
+                                                            child: ScreenshotContainer(
+                                                                BillerName: widget.billerName.toString(),
+                                                                BillerId: widget.billerData!["customerBillID"].toString(),
+                                                                BillName: widget.billerData!['billName'],
+                                                                BillNumber: widget.billerData!["customerBillID"].toString(),
+                                                                TransactionID: paymentDetails!['txnReferenceId'].toString(),
+                                                                fromAccount: widget.billerData!['acNo'].toString(),
+                                                                billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount']))}",
+                                                                status: paymentDetails!['success']
+                                                                    ? "success"
+                                                                    : paymentDetails!['bbpsTimeout']
+                                                                        ? 'bbpsTimeout'
+                                                                        : paymentDetails!['failed']
+                                                                            ? "failed"
+                                                                            : "failed",
+                                                                TransactionDate: DateFormat("dd/MM/yy | hh:mm a").format(DateTime.now()).toString()))),
+                                                    delay: Duration(seconds: 0));
 
                                                 final result =
                                                     await Printing.sharePdf(
@@ -466,13 +301,46 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                   color: CLR_PRIMARY)),
                                           IconButton(
                                               onPressed: () {
-                                                // Printing.layoutPdf(
-                                                //   name: "Transaction Receipt",
-                                                //   onLayout: (PdfPageFormat
-                                                //           format) async =>
-                                                //       _generatePdf(
-                                                //           format, "title"),
-                                                // );
+                                                Printing.layoutPdf(
+                                                  name: "Transaction Receipt",
+                                                  onLayout: (PdfPageFormat
+                                                          format) async =>
+                                                      generatePdf(
+                                                          format,
+                                                          widget.billerName
+                                                              .toString(),
+                                                          widget.billerData![
+                                                                  "customerBillID"]
+                                                              .toString(),
+                                                          widget.billerData![
+                                                              'billName'],
+                                                          widget.billerData![
+                                                                  "customerBillID"]
+                                                              .toString(),
+                                                          paymentDetails![
+                                                                  'txnReferenceId']
+                                                              .toString(),
+                                                          widget
+                                                              .billerData![
+                                                                  'acNo']
+                                                              .toString(),
+                                                          "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount'].toString()))}",
+                                                          paymentDetails![
+                                                                  'success']
+                                                              ? "success"
+                                                              : paymentDetails![
+                                                                      'bbpsTimeout']
+                                                                  ? 'bbpsTimeout'
+                                                                  : paymentDetails![
+                                                                          'failed']
+                                                                      ? "failed"
+                                                                      : "failed",
+                                                          DateFormat(
+                                                                  "dd/MM/yy | hh:mm a")
+                                                              .format(DateTime
+                                                                  .now())
+                                                              .toString()),
+                                                );
                                                 // Future.microtask(() =>
                                                 //     Navigator.push(
                                                 //         context,
@@ -496,6 +364,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                       DateFormat("dd/MM/yy | hh:mm a")
                                           .format(DateTime.now())
                                           .toString(),
+                                      // DateFormat("dd/MM/yy | hh:mm a")
+                                      //     .format(widget.historyData.cOMPLETIONDATE.toString())
+                                      //   ,
+                                      // widget.historyData.cOMPLETIONDATE
+                                      //     .toString(),
                                       // "01/08/2023 | 12:48 PM",
                                       style: TextStyle(
                                         fontSize: 14.sp,
@@ -521,45 +394,39 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             title: "Sent To",
                             subTitle: widget.billerName,
                             clipBoard: false),
-                        TxnDetails(
-                            title: "Payee Note",
-                            subTitle: "Nil",
-                            clipBoard: false),
+                        // TxnDetails(
+                        //     title: "Payee Note",
+                        //     subTitle: "Nil",
+                        //     clipBoard: false),
                         Divider(
                           height: 10,
                           thickness: 1,
                         ),
+
                         TxnDetails(
-                            title: "From Account",
-                            subTitle: widget.billerData!['acNo'],
+                            title: "Bill Number",
+                            subTitle:
+                                widget.billerData!["customerBillID"].toString(),
+                            clipBoard: false),
+                        // if (widget.historyData.tRANSACTIONSTATUS == 'success')
+                        TxnDetails(
+                            title: "Transaction ID",
+                            subTitle: paymentDetails!['txnReferenceId'],
+                            clipBoard: true),
+
+                        TxnDetails(
+                            title: "Status",
+                            subTitle: paymentDetails!['success']
+                                ? "Transaction Success"
+                                : paymentDetails!['bbpsTimeout']
+                                    ? 'Transaction Pending'
+                                    : paymentDetails!['failed']
+                                        ? "Transaction Failed"
+                                        : "Transaction Failed",
                             clipBoard: false),
                         TxnDetails(
-                            title: "Bank Reference Number ",
-                            subTitle: tnxResponse!.paymentDetails
-                                        ?.toJson()
-                                        .length !=
-                                    null
-                                ? paymentDetails!['approvalRefNum'].toString()
-                                : "-",
-                            clipBoard: true),
-                        if (paymentDetails!['success'])
-                          TxnDetails(
-                              title: "Transaction ID",
-                              subTitle: tnxResponse!.paymentDetails
-                                          ?.toJson()
-                                          .length !=
-                                      null
-                                  ? paymentDetails!['txnReferenceId'].toString()
-                                  : "-",
-                              clipBoard: true),
-                        if (paymentDetails!['success'])
-                          TxnDetails(
-                              title: "Payee Note",
-                              subTitle: "Nil",
-                              clipBoard: false),
-                        TxnDetails(
-                            title: "Transfer Type",
-                            subTitle: "Equitas Digital Banking",
+                            title: "Payment Channel",
+                            subTitle: "Equitas - Mobile Banking",
                             clipBoard: false,
                             showLogo: true),
                       ],
@@ -603,30 +470,4 @@ class _TransactionScreenState extends State<TransactionScreen> {
           ),
         ));
   }
-}
-
-Future<Uint8List> _generatePdf(PdfPageFormat format, String title) async {
-  final pdf = pw.Document(
-    version: PdfVersion.pdf_1_5,
-    compress: true,
-  );
-  final font = await PdfGoogleFonts.nunitoExtraLight();
-
-  final Uint8List imageBytes = base64Decode(base64Image);
-  final pw.Image image =
-      pw.Image(pw.MemoryImage(imageBytes), fit: pw.BoxFit.contain);
-
-  pdf.addPage(pw.Page(
-      pageFormat: PdfPageFormat.a4,
-      build: (pw.Context context) {
-        return pw.Center(
-          child: pw.Container(
-            alignment: pw.Alignment.center,
-            // height: 200,
-            child: image,
-          ),
-        );
-      }));
-
-  return pdf.save();
 }

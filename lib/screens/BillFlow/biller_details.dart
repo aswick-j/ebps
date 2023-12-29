@@ -227,7 +227,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         BillerDetailsContainer(
-                          icon: LOGO_BBPS,
+                          icon: BILLER_LOGO(widget.billerName.toString()),
                           billerName: widget.billerName.toString(),
                           categoryName: widget.categoryName.toString(),
                         ),
@@ -240,7 +240,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                         if (!isFetchbillLoading && isUnableToFetchBill)
                           Container(
                               width: double.infinity,
-                              height: 500,
+                              height: 350.h,
                               child: const noResult()),
                         if (!isFetchbillLoading &&
                             !isUnableToFetchBill &&

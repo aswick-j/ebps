@@ -345,7 +345,7 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                     },
                     amount:
                         "₹ ${NumberFormat('#,##,##0.00').format(double.parse(allUpcomingDues[index]["dueAmount"]!.toString()))}",
-                    iconPath: LOGO_BBPS,
+                    iconPath: BILLER_LOGO(allUpcomingDues[index]["billerName"]),
                     containerBorderColor: Color(0xffD1D9E8),
                     buttonColor:
                         allUpcomingDues[index]["itemType"] == 'upcomingDue'
