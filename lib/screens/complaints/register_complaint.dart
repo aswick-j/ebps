@@ -33,6 +33,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
   String? cmp_reasonID;
   String? cmp_desc;
   String? ComplaintMSG;
+  bool cmpNotValid = true;
 
   bool isComplaintConfigLoading = false;
 
@@ -287,6 +288,11 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                     ],
                                     onChanged: (s) {
                                       setState(() {
+                                        if (s.isNotEmpty) {
+                                          cmpNotValid = false;
+                                        } else {
+                                          cmpNotValid = true;
+                                        }
                                         cmp_desc = s.toString();
                                       });
                                     },
@@ -333,7 +339,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                       onPressed: () {
                         if (cmp_reason != null &&
                             cmp_reasonID != null &&
-                            cmp_desc.toString().isNotEmpty) {
+                            !cmpNotValid) {
                           handleSubmit();
                         }
                       },
@@ -342,7 +348,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                       buttonBorderColor: Colors.transparent,
                       buttonColor: cmp_reason != null &&
                               cmp_reasonID != null &&
-                              cmp_desc.toString().isNotEmpty
+                              !cmpNotValid
                           ? CLR_PRIMARY
                           : Colors.grey,
                       buttonSizeX: 10.h,

@@ -342,7 +342,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                               builder: (context) => BottomNavBar(
-                                    SelectedIndex: 0,
+                                    SelectedIndex: 2,
                                   )),
                           (Route<dynamic> route) => false,
                         );
