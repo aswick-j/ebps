@@ -16,8 +16,6 @@ import 'package:ebps/models/add_biller_model.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/confirm_done_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
-import 'package:ebps/screens/base64.dart';
-import 'package:ebps/screens/pdf_reciept.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/generate_pdf.dart';
 import 'package:ebps/widget/screenshot_container.dart';
@@ -29,7 +27,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:screenshot/screenshot.dart';
 
 class TransactionScreen extends StatefulWidget {

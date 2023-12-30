@@ -137,6 +137,46 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
   @override
   Widget build(BuildContext context) {
+    handleDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            content: AnimatedDialog(
+                title: "Unable to Process Payment",
+                subTitle:
+                    "We're sorry.We were unable to process your payment.Please try again later",
+                child: Icon(
+                  Icons.close_rounded,
+                  color: Colors.white,
+                ),
+                showSub: true,
+                shapeColor: CLR_ERROR),
+            actions: <Widget>[
+              Align(
+                alignment: Alignment.center,
+                child: MyAppButton(
+                    onPressed: () {
+                      goBack(context);
+                    },
+                    buttonText: "Okay",
+                    buttonTxtColor: BTN_CLR_ACTIVE,
+                    buttonBorderColor: Colors.transparent,
+                    buttonColor: CLR_PRIMARY,
+                    buttonSizeX: 10,
+                    buttonSizeY: 40,
+                    buttonTextSize: 14,
+                    buttonTextWeight: FontWeight.w500),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return LoaderOverlay(
       child: Scaffold(
           appBar: MyAppBar(
@@ -212,8 +252,12 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               //     .push(MaterialPageRoute(builder: (context) => OtpScreen()));
               isFetchbillLoading = false;
             } else if (state is ConfirmFetchBillFailed) {
+              handleDialog();
+
               isFetchbillLoading = false;
             } else if (state is ConfirmFetchBillError) {
+              handleDialog();
+
               isFetchbillLoading = false;
             }
 
@@ -251,43 +295,12 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               isValidateBillLoading = false;
               LoaderOverlay.of(context).hide();
             } else if (state is ValidateBillFailed) {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    content: AnimatedDialog(
-                        title: "Unable to Process Payment",
-                        subTitle:
-                            "We're sorry.We were unable to process your payment.Please try again later",
-                        child: Icon(
-                          Icons.close_rounded,
-                          color: Colors.white,
-                        ),
-                        showSub: true,
-                        shapeColor: CLR_ERROR),
-                    actions: <Widget>[
-                      Align(
-                        alignment: Alignment.center,
-                        child: MyAppButton(
-                            onPressed: () {
-                              goBack(context);
-                            },
-                            buttonText: "Okay",
-                            buttonTxtColor: BTN_CLR_ACTIVE,
-                            buttonBorderColor: Colors.transparent,
-                            buttonColor: CLR_PRIMARY,
-                            buttonSizeX: 10,
-                            buttonSizeY: 40,
-                            buttonTextSize: 14,
-                            buttonTextWeight: FontWeight.w500),
-                      ),
-                    ],
-                  );
-                },
-              );
+              handleDialog();
               isValidateBillLoading = false;
               LoaderOverlay.of(context).hide();
             } else if (state is ValidateBillError) {
+              handleDialog();
+
               isValidateBillLoading = false;
               LoaderOverlay.of(context).hide();
             }

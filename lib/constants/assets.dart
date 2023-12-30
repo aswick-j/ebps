@@ -103,6 +103,7 @@ const LOGO_VI = "packages/ebps/assets/logo/logo_vi.svg";
 //IMAGE
 
 const IMG_NODATA = "packages/ebps/assets/images/image_no_data.svg";
+const IMG_SERVERDOWN = "packages/ebps/assets/images/image_serverdown.svg";
 const IMG_SESSIONEXPIRED =
     "packages/ebps/assets/images/image_session_expired.svg";
 const IMG_NOTFOUND = "packages/ebps/assets/icon/icon_notFound.svg";
@@ -202,6 +203,7 @@ String BILLER_LOGO(String BillerName) {
     case "airtel postpaid (fetch and pay)":
     case "airtel broadband (fetch and pay)":
     case "airtel broadband":
+    case "npci mobile prepaid 002":
       return LOGO_AIRTEL;
     case "bsnl":
     case "bsnl mobile postpaid":

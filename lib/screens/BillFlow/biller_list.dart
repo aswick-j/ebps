@@ -38,6 +38,12 @@ class _BillerListState extends State<BillerList> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
+
   void initScrollController(context) {
     infiniteScrollController.addListener(() {
       if (infiniteScrollController.position.atEdge) {
@@ -97,7 +103,7 @@ class _BillerListState extends State<BillerList> {
                 padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                 child: TextField(
                   onChanged: (value) => {
-                    _searchController.text = value,
+                    // _searchController.text = value,
                     _searchController.addListener(() {
                       if (_debounce?.isActive ?? false) _debounce?.cancel();
                       _debounce = Timer(
@@ -105,6 +111,7 @@ class _BillerListState extends State<BillerList> {
                     })
                   },
                   keyboardType: TextInputType.text,
+                  textAlign: TextAlign.left,
                   controller: _searchController,
                   decoration: InputDecoration(
                     fillColor: CLR_PRIMARY_LITE.withOpacity(0.2),

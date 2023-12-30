@@ -5,7 +5,6 @@ import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getNavigators.dart';
-import 'package:ebps/screens/base64.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -120,7 +119,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title) async {
   );
   final font = await PdfGoogleFonts.nunitoExtraLight();
 
-  final Uint8List imageBytes = base64Decode(base64Image);
+  final Uint8List imageBytes = base64Decode("s");
   final pw.Image image =
       pw.Image(pw.MemoryImage(imageBytes), fit: pw.BoxFit.contain);
 

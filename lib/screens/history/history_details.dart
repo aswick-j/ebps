@@ -11,8 +11,6 @@ import 'package:ebps/helpers/getTransactionStatusText.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/confirm_done_model.dart';
 import 'package:ebps/models/history_model.dart';
-import 'package:ebps/screens/base64.dart';
-import 'package:ebps/screens/pdf_reciept.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/generate_pdf.dart';
 import 'package:ebps/widget/screenshot_container.dart';

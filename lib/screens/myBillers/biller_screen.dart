@@ -294,13 +294,17 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                                   )
                                       ? 'Autopay Enabled'
                                       : "Enable Autopay",
-                                  iconPath: LOGO_BBPS,
+                                  iconPath: BILLER_LOGO(savedBillerData![index]
+                                      .bILLERNAME
+                                      .toString()),
                                   upcomingText: getupcomingAutoPaymentList(
                                               savedBillerData![index]
                                                   .cUSTOMERBILLID) !=
                                           ''
                                       ? 'Upcoming Autopay'
-                                      : getUpcmoingDueData(savedBillerData![index].cUSTOMERBILLID) !=
+                                      : getUpcmoingDueData(
+                                                  savedBillerData![index]
+                                                      .cUSTOMERBILLID) !=
                                               ""
                                           ? "Upcoming Due"
                                           : "",
@@ -310,14 +314,10 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                                                       .cUSTOMERBILLID) !=
                                               ''
                                           ? Color(0xff00AB44)
-                                          : getUpcmoingDueData(
-                                                      savedBillerData![index]
-                                                          .cUSTOMERBILLID) !=
-                                                  ""
+                                          : getUpcmoingDueData(savedBillerData![index].cUSTOMERBILLID) != ""
                                               ? CLR_ASTRIX
                                               : Colors.black,
-                                  showButton:
-                                      showAutopayBtn(savedBillerData![index]),
+                                  showButton: showAutopayBtn(savedBillerData![index]),
                                   containerBorderColor: Color(0xffD1D9E8),
                                   buttonColor: Color.fromARGB(255, 255, 255, 255),
                                   buttonTxtColor: showAutopayButtonContent(

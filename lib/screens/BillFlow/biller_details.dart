@@ -58,7 +58,8 @@ class _BillerDetailsState extends State<BillerDetails> {
   Map<String, dynamic>? validateBill;
   PaymentInformationData? paymentInform;
   bool isInsufficient = true;
-
+  int ErrIndex = 0;
+  int ImgIndex = 0;
   AdditionalInfo? _additionalInfo;
   Map<String, dynamic> billerInputSign = {};
   final txtAmountController = TextEditingController();
@@ -202,6 +203,16 @@ class _BillerDetailsState extends State<BillerDetails> {
           } else if (state is FetchBillFailed) {
             BlocProvider.of<MybillersCubit>(context).getAddUpdateUpcomingDue();
             if (state.message.toString().contains("Unable to fetch")) {
+              ErrIndex = 0;
+
+              isUnableToFetchBill = true;
+            } else if (state.message
+                .toString()
+                .contains("Something went wrong")) {
+              ErrIndex = 2;
+              ImgIndex = 2;
+              isUnableToFetchBill = true;
+            } else if (state.message.toString().contains("No Pending Dues")) {
               isUnableToFetchBill = true;
             }
             isFetchbillLoading = false;
@@ -243,7 +254,8 @@ class _BillerDetailsState extends State<BillerDetails> {
                           Container(
                               width: double.infinity,
                               height: 350.h,
-                              child: const noResult()),
+                              child: noResult(
+                                  ErrIndex: ErrIndex, ImgIndex: ImgIndex)),
                         if (!isFetchbillLoading &&
                             !isUnableToFetchBill &&
                             !isPaymentInfoLoading)

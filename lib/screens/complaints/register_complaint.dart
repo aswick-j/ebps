@@ -79,7 +79,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
               //   ),
               // ],
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
               elevation: 3,
               content: SingleChildScrollView(

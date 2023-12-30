@@ -11,6 +11,7 @@ import 'package:ebps/models/edit_bill_modal.dart';
 import 'package:ebps/models/input_signatures_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/services/api_client.dart';
+import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/loader_overlay.dart';
@@ -78,65 +79,52 @@ class _EditBillerUIState extends State<EditBillerUI> {
 
   handleDialog({required bool success}) {
     showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-              actions: [
-                Align(
-                  alignment: Alignment.center,
-                  child: MyAppButton(
-                      onPressed: () {
-                        goBack(context);
-                        // WidgetsBinding.instance.addPostFrameCallback((_) {
-                        //   Navigator.of(context).pushReplacement(
-                        //     MaterialPageRoute(
-                        //         builder: (context) => BottomNavBar(
-                        //               SelectedIndex: 1,
-                        //             )),
-                        //   );
-                        // });
-                      },
-                      buttonText: "Okay",
-                      buttonTxtColor: BTN_CLR_ACTIVE,
-                      buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
-                      buttonSizeX: 10.h,
-                      buttonSizeY: 40.w,
-                      buttonTextSize: 14.sp,
-                      buttonTextWeight: FontWeight.w500),
-                ),
-              ],
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          content: AnimatedDialog(
+              title:
+                  success ? "Bill Updated Successfully" : "Bill Updated Failed",
+              subTitle: "",
+              child: Icon(
+                success ? Icons.check : Icons.close,
+                color: Colors.white,
               ),
-              elevation: 3,
-              content: SingleChildScrollView(
-                padding: EdgeInsets.all(20.r),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                        height: 50.h,
-                        width: 50.w,
-                        child: SvgPicture.asset(
-                            success ? ICON_SUCCESS : LOGO_BBPS)),
-                    Text(
-                      success
-                          ? "Bill Name Updated Successfully"
-                          : "Bill Name Update  Failed",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xff000000),
-                      ),
-                      textAlign: TextAlign.start,
-                    ),
-                  ],
-                ),
-              ));
-        });
+              showSub: false,
+              shapeColor: success ? CLR_GREEN : CLR_ERROR),
+          actions: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: MyAppButton(
+                  onPressed: () {
+                    goBack(ctx);
+
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => BottomNavBar(
+                                  SelectedIndex: 1,
+                                )),
+                        (Route<dynamic> route) => false,
+                      );
+                    });
+                  },
+                  buttonText: "Okay",
+                  buttonTxtColor: BTN_CLR_ACTIVE,
+                  buttonBorderColor: Colors.transparent,
+                  buttonColor: CLR_PRIMARY,
+                  buttonSizeX: 10,
+                  buttonSizeY: 40,
+                  buttonTextSize: 14,
+                  buttonTextWeight: FontWeight.w500),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -181,6 +169,8 @@ class _EditBillerUIState extends State<EditBillerUI> {
 
                 LoaderOverlay.of(context).hide();
               } else if (state is UpdateBillError) {
+                handleDialog(success: false);
+
                 LoaderOverlay.of(context).hide();
               }
             },

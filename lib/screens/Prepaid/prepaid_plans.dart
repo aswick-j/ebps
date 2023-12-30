@@ -292,41 +292,12 @@ class _PrepaidPlansState extends State<PrepaidPlans>
                     ? Container(
                         height: MediaQuery.of(context).size.height * 0.9,
                         width: double.infinity,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Center(
-                                child: SvgPicture.asset(
-                                  IMG_NOTFOUND,
-                                  height: 160.h,
-                                  width: 164.w,
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(height: 80.h),
-                                  MyAppText(
-                                    data: 'Oops!',
-                                    size: 18.0.sp,
-                                    color: CLR_PRIMARY,
-                                    weight: FontWeight.bold,
-                                  ),
-                                  SizedBox(height: 20.h),
-                                  MyAppText(
-                                      data:
-                                          "It seems there is a problem fetching the\nPlans  at the moment. Kindly try again later.",
-                                      size: 14.0.sp,
-                                      color: CLR_PRIMARY,
-                                      weight: FontWeight.bold,
-                                      textAlign: TextAlign.justify),
-                                  SizedBox(height: 80.h),
-                                ],
-                              )
-                            ]),
-                      )
+                        child: Center(
+                          child: Container(
+                              width: double.infinity,
+                              height: 350.h,
+                              child: noResult(ErrIndex: 1, ImgIndex: 0)),
+                        ))
                     : Column(
                         children: [
                           Padding(

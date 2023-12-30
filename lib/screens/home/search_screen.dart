@@ -94,7 +94,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                     child: TextField(
                       onChanged: (value) => {
-                        _searchController.text = value,
+                        // _searchController.text = value,
                         _searchController.addListener(() {
                           if (_debounce?.isActive ?? false) _debounce?.cancel();
                           _debounce = Timer(

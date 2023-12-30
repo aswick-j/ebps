@@ -229,102 +229,73 @@ class _OtpScreenState extends State<OtpScreen> {
     }
   }
 
+  List SuccessMsg = [
+    "Your Biller Has Been Deleted Successfully",
+    "Autopay Created Successfully",
+    "Autopay Updated Successfully",
+    "Autopay Deleted Successfully",
+    "Autopay Paused Successfully",
+    "Autopay Resumed Successfully",
+  ];
+
+  List FailedMsg = [
+    "Biller Delete Failed",
+    "Autopay Create Failed",
+    "Autopay Update Failed",
+    "Autopay Delete Failed",
+    "Autopay Pause Failed",
+    "Autopay Resume Failed",
+  ];
+
   @override
   Widget build(BuildContext context) {
-    showModalDialog({required String title}) {
+    showModalDialog({required int index, required bool Success}) {
       showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Dialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0.r)),
-              child: Container(
-                height: 200.h,
-                child: Padding(
-                  padding: EdgeInsets.all(12.0.r),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.check_circle_outline_sharp,
-                          color: CLR_GREEN, size: 50.r),
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                          color: CLR_GREEN,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      MyAppButton(
-                          onPressed: () {
-                            goBack(context);
-
-                            WidgetsBinding.instance?.addPostFrameCallback((_) {
-                              Navigator.of(widget.ctx).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => BottomNavBar(
-                                          SelectedIndex: 1,
-                                        )),
-                              );
-                            });
-                          },
-                          buttonText: "Okay",
-                          buttonTxtColor: BTN_CLR_ACTIVE,
-                          buttonBorderColor: Colors.transparent,
-                          buttonColor: CLR_PRIMARY,
-                          buttonSizeX: 10.h,
-                          buttonSizeY: 40.w,
-                          buttonTextSize: 14.sp,
-                          buttonTextWeight: FontWeight.w500),
-                    ],
-                  ),
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            content: AnimatedDialog(
+                title: Success ? SuccessMsg[index] : FailedMsg[index],
+                subTitle: "",
+                child: Icon(
+                  Icons.check,
+                  color: Colors.white,
                 ),
-              ),
-            );
-          });
-      // return showDialog(
-      //   context: context,
-      //   builder: (BuildContext context) {
-      //     return AlertDialog(
-      //       content: AnimatedDialog(
-      //         title: title,
-      //         subTitle: "",
-      //         child: Icon(
-      //           Icons.check,
-      //           color: Colors.white,
-      //         ),
-      //       ),
-      //       actions: <Widget>[
-      //         Align(
-      //           alignment: Alignment.center,
-      //           child: MyAppButton(
-      //               onPressed: () {
-      //                 goBack(context);
+                showSub: false,
+                shapeColor: Success ? CLR_GREEN : CLR_ERROR),
+            actions: <Widget>[
+              Align(
+                alignment: Alignment.center,
+                child: MyAppButton(
+                    onPressed: () {
+                      goBack(ctx);
 
-      //                 WidgetsBinding.instance?.addPostFrameCallback((_) {
-      //                   Navigator.of(widget.ctx).pushReplacement(
-      //                     MaterialPageRoute(
-      //                         builder: (context) => BottomNavBar(
-      //                               SelectedIndex: 1,
-      //                             )),
-      //                   );
-      //                 });
-      //               },
-      //               buttonText: "Okay",
-      //               buttonTxtColor: BTN_CLR_ACTIVE,
-      //               buttonBorderColor: Colors.transparent,
-      //               buttonColor: CLR_PRIMARY,
-      //               buttonSizeX: 10,
-      //               buttonSizeY: 40,
-      //               buttonTextSize: 14,
-      //               buttonTextWeight: FontWeight.w500),
-      //         ),
-      //       ],
-      //     );
-      //   },
-      // );
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => BottomNavBar(
+                                    SelectedIndex: 1,
+                                  )),
+                          (Route<dynamic> route) => false,
+                        );
+                      });
+                    },
+                    buttonText: "Okay",
+                    buttonTxtColor: BTN_CLR_ACTIVE,
+                    buttonBorderColor: Colors.transparent,
+                    buttonColor: CLR_PRIMARY,
+                    buttonSizeX: 10,
+                    buttonSizeY: 40,
+                    buttonTextSize: 14,
+                    buttonTextWeight: FontWeight.w500),
+              ),
+            ],
+          );
+        },
+      );
     }
 
     final defaultPinTheme = PinTheme(
@@ -342,6 +313,55 @@ class _OtpScreenState extends State<OtpScreen> {
         border: Border.all(color: Colors.grey),
       ),
     );
+
+    handleDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            content: AnimatedDialog(
+                title: "Your Payment is Pending",
+                subTitle: "Please, Visit History Section For More Information",
+                child: Icon(
+                  Icons.error_outline,
+                  color: Colors.white,
+                ),
+                showSub: true,
+                shapeColor: Colors.orange),
+            actions: <Widget>[
+              Align(
+                alignment: Alignment.center,
+                child: MyAppButton(
+                    onPressed: () {
+                      goBack(ctx);
+
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => BottomNavBar(
+                                    SelectedIndex: 0,
+                                  )),
+                          (Route<dynamic> route) => false,
+                        );
+                      });
+                    },
+                    buttonText: "Okay",
+                    buttonTxtColor: BTN_CLR_ACTIVE,
+                    buttonBorderColor: Colors.transparent,
+                    buttonColor: CLR_PRIMARY,
+                    buttonSizeX: 10,
+                    buttonSizeY: 40,
+                    buttonTextSize: 14,
+                    buttonTextWeight: FontWeight.w500),
+              ),
+            ],
+          );
+        },
+      );
+    }
 
     return LoaderOverlay(
       child: Scaffold(
@@ -429,6 +449,9 @@ class _OtpScreenState extends State<OtpScreen> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
                     content: AnimatedDialog(
                         title: "Your Payment Has Been Successful.",
                         subTitle: "",
@@ -474,12 +497,17 @@ class _OtpScreenState extends State<OtpScreen> {
                 });
               }
 
-              if (state.data!["res"]["reason"] ==
+              if (state.message == 'status_500') {
+                handleDialog();
+              } else if (state.data!["res"]["reason"] ==
                   'Bill Payment failed from BBPS') {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
                       content: AnimatedDialog(
                           title: "Your Payment Has Been Failed.",
                           subTitle: "",
@@ -511,51 +539,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   },
                 );
               } else {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext ctx) {
-                    return AlertDialog(
-                      content: AnimatedDialog(
-                          title: "Your Payment is Pending",
-                          subTitle:
-                              "Please, Visit History Section For More Information",
-                          child: Icon(
-                            Icons.error_outline,
-                            color: Colors.white,
-                          ),
-                          showSub: true,
-                          shapeColor: Colors.orange),
-                      actions: <Widget>[
-                        Align(
-                          alignment: Alignment.center,
-                          child: MyAppButton(
-                              onPressed: () {
-                                goBack(ctx);
-
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((_) {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) => BottomNavBar(
-                                              SelectedIndex: 0,
-                                            )),
-                                    (Route<dynamic> route) => false,
-                                  );
-                                });
-                              },
-                              buttonText: "Okay",
-                              buttonTxtColor: BTN_CLR_ACTIVE,
-                              buttonBorderColor: Colors.transparent,
-                              buttonColor: CLR_PRIMARY,
-                              buttonSizeX: 10,
-                              buttonSizeY: 40,
-                              buttonTextSize: 14,
-                              buttonTextWeight: FontWeight.w500),
-                        ),
-                      ],
-                    );
-                  },
-                );
+                handleDialog();
               }
             } else if (state is PayBillError) {}
 
@@ -563,45 +547,13 @@ class _OtpScreenState extends State<OtpScreen> {
               LoaderOverlay.of(context).show();
             } else if (state is deleteBillerSuccess) {
               LoaderOverlay.of(context).hide();
-              showModalDialog(
-                  title: "Your Biller Has Been Deleted Successfully");
+              showModalDialog(index: 0, Success: true);
             } else if (state is deleteBillerFailed) {
               LoaderOverlay.of(context).hide();
-
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    content: AnimatedDialog(
-                        title: "Your Biller Has Been Deleted Successfully.",
-                        subTitle: "",
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white,
-                        ),
-                        shapeColor: CLR_GREEN),
-                    actions: <Widget>[
-                      Align(
-                        alignment: Alignment.center,
-                        child: MyAppButton(
-                            onPressed: () {
-                              goBack(context);
-                            },
-                            buttonText: "Okay",
-                            buttonTxtColor: BTN_CLR_ACTIVE,
-                            buttonBorderColor: Colors.transparent,
-                            buttonColor: CLR_PRIMARY,
-                            buttonSizeX: 10,
-                            buttonSizeY: 40,
-                            buttonTextSize: 14,
-                            buttonTextWeight: FontWeight.w500),
-                      ),
-                    ],
-                  );
-                },
-              );
+              showModalDialog(index: 0, Success: false);
             } else if (state is deleteBillerError) {
               LoaderOverlay.of(context).hide();
+              showModalDialog(index: 0, Success: false);
             }
 
             if (state is createAutopayLoading) {
@@ -609,33 +561,39 @@ class _OtpScreenState extends State<OtpScreen> {
             } else if (state is createAutopaySuccess) {
               LoaderOverlay.of(context).hide();
 
-              showModalDialog(title: "Autopay Created Successfully");
+              showModalDialog(index: 1, Success: true);
             } else if (state is createAutopayFailed) {
               LoaderOverlay.of(context).hide();
+              showModalDialog(index: 1, Success: false);
             } else if (state is createAutopayError) {
               LoaderOverlay.of(context).hide();
+              showModalDialog(index: 1, Success: false);
             }
             if (state is editAutopayLoading) {
               LoaderOverlay.of(context).show();
             } else if (state is editAutopaySuccess) {
               LoaderOverlay.of(context).hide();
 
-              showModalDialog(title: "Autopay Updated Successfully");
+              showModalDialog(index: 2, Success: true);
             } else if (state is editAutopayFailed) {
               LoaderOverlay.of(context).hide();
+              showModalDialog(index: 2, Success: false);
             } else if (state is editAutopayError) {
               LoaderOverlay.of(context).hide();
+              showModalDialog(index: 2, Success: false);
             }
             if (state is deleteAutopayLoading) {
               LoaderOverlay.of(context).show();
             } else if (state is deleteAutopaySuccess) {
               LoaderOverlay.of(context).hide();
 
-              showModalDialog(title: "Autopay Deleted Successfully");
+              showModalDialog(index: 3, Success: true);
             } else if (state is deleteAutopayFailed) {
               LoaderOverlay.of(context).hide();
+              showModalDialog(index: 3, Success: false);
             } else if (state is deleteAutopayError) {
               LoaderOverlay.of(context).hide();
+              showModalDialog(index: 3, Success: false);
             }
             if (state is modifyAutopayLoading) {
               LoaderOverlay.of(context).show();
@@ -643,12 +601,18 @@ class _OtpScreenState extends State<OtpScreen> {
               LoaderOverlay.of(context).hide();
 
               showModalDialog(
-                  title:
-                      "Autopay ${widget.templateName == "disable-auto-pay" ? "Paused" : "Resume"} Successfully");
+                  index: widget.templateName == "disable-auto-pay" ? 4 : 5,
+                  Success: true);
             } else if (state is modifyAutopayFailed) {
               LoaderOverlay.of(context).hide();
+              showModalDialog(
+                  index: widget.templateName == "disable-auto-pay" ? 4 : 5,
+                  Success: false);
             } else if (state is modifyAutopayError) {
               LoaderOverlay.of(context).hide();
+              showModalDialog(
+                  index: widget.templateName == "disable-auto-pay" ? 4 : 5,
+                  Success: false);
             }
           },
           builder: (context, state) {
