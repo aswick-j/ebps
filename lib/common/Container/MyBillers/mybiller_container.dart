@@ -1344,8 +1344,12 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                     "categoryName":
                                         widget.savedBillersData.cATEGORYNAME,
                                     "lastPaidAmount": widget
-                                        .savedBillersData.bILLAMOUNT
-                                        .toString(),
+                                                .savedBillersData.bILLAMOUNT !=
+                                            null
+                                        ? widget.savedBillersData.bILLAMOUNT
+                                            .toString()
+                                        : widget.upcomingDueData![0].dueAmount
+                                            .toString(),
                                     "billName":
                                         widget.savedBillersData.bILLNAME,
                                     "customerBillID": widget
