@@ -3,6 +3,7 @@ import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/widget/loader_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,6 +23,7 @@ class MainContainer extends StatelessWidget {
   final FontWeight buttonTextWeight;
   final Color? buttonBorderColor;
   final VoidCallback onPressed;
+  final VoidCallback onDeleteUpPressed;
   final String customerBillID;
   final BuildContext ctx;
 
@@ -42,6 +44,7 @@ class MainContainer extends StatelessWidget {
     required this.buttonBorderColor,
     required this.buttonTextWeight,
     required this.onPressed,
+    required this.onDeleteUpPressed,
   });
 
   @override
@@ -235,11 +238,8 @@ class MainContainer extends StatelessWidget {
                                     Expanded(
                                       child: MyAppButton(
                                           onPressed: () async {
-                                            BlocProvider.of<MybillersCubit>(ctx)
-                                                .deleteUpcomingDue(
-                                                    customerBillID);
+                                            onDeleteUpPressed();
                                             goBack(context);
-                                            // goBack(context);
                                           },
                                           buttonText: "Delete",
                                           buttonTxtColor: BTN_CLR_ACTIVE,

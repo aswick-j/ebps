@@ -35,6 +35,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
   String? ComplaintMSG;
   bool cmpNotValid = true;
 
+  String? REG_CMP_ID;
+
   bool isComplaintConfigLoading = false;
 
   final txtDescController = TextEditingController();
@@ -135,7 +137,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "QB145458781589585288",
+                                    REG_CMP_ID.toString(),
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.bold,
@@ -149,7 +151,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                   GestureDetector(
                                       onTap: () {
                                         Clipboard.setData(ClipboardData(
-                                                text: "QB145458781589585288"))
+                                                text: REG_CMP_ID.toString()))
                                             .then((_) {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(SnackBar(
@@ -221,12 +223,19 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                 LoaderOverlay.of(context).show();
               } else if (state is ComplaintSubmitSuccess) {
                 LoaderOverlay.of(context).hide();
+                REG_CMP_ID = state.data.toString();
                 handleDialog(success: true);
               } else if (state is ComplaintSubmitFailed) {
                 ComplaintMSG = state.message.toString();
                 LoaderOverlay.of(context).hide();
                 handleDialog(success: false);
-              } else if (state is ComplaintSubmitError) {}
+              } else if (state is ComplaintSubmitError) {
+                ComplaintMSG = state.message.toString();
+
+                handleDialog(success: false);
+
+                LoaderOverlay.of(context).hide();
+              }
             }, builder: (context, state) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
