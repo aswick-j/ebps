@@ -366,3 +366,41 @@ class PrepaidFetchPlansError extends HomeState {
   final String? message;
   PrepaidFetchPlansError({@required this.message});
 }
+
+//AMOUNT  BY DATE
+
+class AmountByDateLoading extends HomeState {}
+
+class AmountByDateSuccess extends HomeState {
+  final String? amountByDate;
+  AmountByDateSuccess({@required this.amountByDate});
+}
+
+class AmountByDateFailed extends HomeState {
+  final String? message;
+  AmountByDateFailed({@required this.message});
+}
+
+class AmountByDateError extends HomeState {
+  final String? message;
+  AmountByDateError({@required this.message});
+}
+
+//BBPS SETTINGS
+
+class BbpsSettingsLoading extends HomeState {}
+
+class BbpsSettingsSuccess extends HomeState {
+  bbpsSettingsModel? BbpsSettingsDetail;
+  BbpsSettingsSuccess({@required this.BbpsSettingsDetail});
+}
+
+class BbpsSettingsFailed extends HomeState {
+  final String? message;
+  BbpsSettingsFailed({@required this.message});
+}
+
+class BbpsSettingsError extends HomeState {
+  final String? message;
+  BbpsSettingsError({@required this.message});
+}

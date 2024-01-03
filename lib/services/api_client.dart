@@ -937,4 +937,64 @@ class ApiClient implements Repository {
       };
     }
   }
+
+  //AMOUNT BY DATE
+
+  @override
+  Future getAmountByDate() async {
+    try {
+      var response = await api(
+          method: "get",
+          url: BASE_URL + AMOUNT_BY_DATE_URL,
+          token: true,
+          checkSum: false);
+
+      if (!response.body.toString().contains("<html>")) {
+        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+        return decodedResponse;
+      } else {
+        return {
+          "status": 500,
+          "message": "Something went wrong",
+          "data": "Error"
+        };
+      }
+    } catch (e) {
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
+  }
+
+  //BBPS SETTINGS
+
+  @override
+  Future getBbpsSettings() async {
+    try {
+      var response = await api(
+          method: "get",
+          url: BASE_URL + BBPS_SETTINGS_URL,
+          token: true,
+          checkSum: false);
+
+      if (!response.body.toString().contains("<html>")) {
+        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+        return decodedResponse;
+      } else {
+        return {
+          "status": 500,
+          "message": "Something went wrong",
+          "data": "Error"
+        };
+      }
+    } catch (e) {
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
+  }
 }

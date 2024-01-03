@@ -246,11 +246,20 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                             .allautoPayData![index]
                                             .cUSTOMERBILLID
                                             .toString(),
-                                        ""
-                                                "autopayData":
+                                        "AutoDateMisMatch": widget
+                                                    .allautoPayData![index]
+                                                    .rESETDATE ==
+                                                1
+                                            ? true
+                                            : false,
+                                        "DebitLimitMisMatch": widget
+                                                    .allautoPayData![index]
+                                                    .rESETLIMIT ==
+                                                1
+                                            ? true
+                                            : false,
+                                        "autopayData":
                                             widget.allautoPayData![index],
-                                        "savedInputSignatures":
-                                            widget.savedinput,
                                       });
                                     },
                                     buttonText: "Proceed",

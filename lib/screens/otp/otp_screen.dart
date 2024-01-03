@@ -97,6 +97,7 @@ class _OtpScreenState extends State<OtpScreen> {
     if (!mounted) {
       txtOtpController.clear();
     }
+    focusNode.dispose();
 
     super.dispose();
   }
@@ -725,7 +726,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 readOnly: enableReadOnly,
                                 focusNode: focusNode,
                                 androidSmsAutofillMethod:
-                                    AndroidSmsAutofillMethod.none,
+                                    AndroidSmsAutofillMethod.smsUserConsentApi,
                                 listenForMultipleSmsOnAndroid: true,
                                 defaultPinTheme: defaultPinTheme,
                                 onChanged: (s) {

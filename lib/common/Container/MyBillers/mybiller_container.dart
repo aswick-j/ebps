@@ -596,13 +596,34 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                         .savedBillersData
                                                         .bILLAMOUNT
                                                         .toString(),
+                                                    "AutoDateMisMatch": getAllAutopayList(widget
+                                                                .savedBillersData
+                                                                .cUSTOMERBILLID) !=
+                                                            null
+                                                        ? getAllAutopayList(widget
+                                                                        .savedBillersData
+                                                                        .cUSTOMERBILLID)!
+                                                                    .rESETDATE ==
+                                                                1
+                                                            ? true
+                                                            : false
+                                                        : false,
+                                                    "DebitLimitMisMatch": getAllAutopayList(widget
+                                                                .savedBillersData
+                                                                .cUSTOMERBILLID) !=
+                                                            null
+                                                        ? getAllAutopayList(widget
+                                                                        .savedBillersData
+                                                                        .cUSTOMERBILLID)!
+                                                                    .rESETLIMIT ==
+                                                                1
+                                                            ? true
+                                                            : false
+                                                        : false,
                                                     "autopayData":
                                                         getAllAutopayList(widget
                                                             .savedBillersData
                                                             .cUSTOMERBILLID),
-                                                    "savedInputSignatures":
-                                                        widget.savedBillersData
-                                                            .pARAMETERS,
                                                   });
                                                 }),
                                       if (widget.savedBillersData.aUTOPAYID !=
@@ -1071,6 +1092,62 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                         alignment: Alignment.centerLeft,
                         child: Row(
                           children: [
+                            if (getAllAutopayList(
+                                    widget.savedBillersData.cUSTOMERBILLID) !=
+                                null)
+                              if (getAllAutopayList(widget
+                                              .savedBillersData.cUSTOMERBILLID)
+                                          .rESETDATE ==
+                                      1 ||
+                                  getAllAutopayList(widget
+                                              .savedBillersData.cUSTOMERBILLID)!
+                                          .rESETLIMIT ==
+                                      1)
+                                GestureDetector(
+                                    onTap: () {
+                                      goToData(context, eDITAUTOPAYROUTE, {
+                                        "billerName":
+                                            widget.savedBillersData.bILLERNAME,
+                                        "categoryName": widget
+                                            .savedBillersData.cATEGORYNAME,
+                                        "billName":
+                                            widget.savedBillersData.bILLNAME,
+                                        "customerBillID": widget
+                                            .savedBillersData.cUSTOMERBILLID
+                                            .toString(),
+                                        "lastPaidAmount": widget
+                                            .savedBillersData.bILLAMOUNT
+                                            .toString(),
+                                        "AutoDateMisMatch": getAllAutopayList(
+                                                    widget.savedBillersData
+                                                        .cUSTOMERBILLID) !=
+                                                null
+                                            ? getAllAutopayList(widget
+                                                            .savedBillersData
+                                                            .cUSTOMERBILLID)!
+                                                        .rESETDATE ==
+                                                    1
+                                                ? true
+                                                : false
+                                            : false,
+                                        "DebitLimitMisMatch": getAllAutopayList(
+                                                    widget.savedBillersData
+                                                        .cUSTOMERBILLID) !=
+                                                null
+                                            ? getAllAutopayList(widget
+                                                            .savedBillersData
+                                                            .cUSTOMERBILLID)!
+                                                        .rESETLIMIT ==
+                                                    1
+                                                ? true
+                                                : false
+                                            : false,
+                                        "autopayData": getAllAutopayList(widget
+                                            .savedBillersData.cUSTOMERBILLID),
+                                      });
+                                    },
+                                    child: SvgPicture.asset(ICON_ERROR)),
+                            SizedBox(width: 5.w),
                             GestureDetector(
                               onTap: () {
                                 if (widget.buttonText.toString() ==

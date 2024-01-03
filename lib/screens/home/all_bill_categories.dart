@@ -56,6 +56,7 @@ class _AllBillCategoriesState extends State<AllBillCategories> {
         showActions: false,
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             CategoriesContainer(

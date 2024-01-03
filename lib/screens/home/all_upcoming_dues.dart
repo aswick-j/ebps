@@ -1,3 +1,4 @@
+import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Container/Home/main_container.dart';
 import 'package:ebps/constants/assets.dart';
@@ -5,15 +6,20 @@ import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class AllUpcomingDues extends StatefulWidget {
   List<Map<String, dynamic>> allUpcomingDues;
   dynamic SavedBiller;
+  BuildContext ctx;
 
   AllUpcomingDues(
-      {super.key, required this.allUpcomingDues, required this.SavedBiller});
+      {super.key,
+      required this.allUpcomingDues,
+      required this.ctx,
+      required this.SavedBiller});
 
   @override
   State<AllUpcomingDues> createState() => _AllUpcomingDuesState();
@@ -73,6 +79,7 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                 itemCount: widget.allUpcomingDues.length,
                 itemBuilder: (BuildContext context, int index) {
                   return MainContainer(
+                    ctx: widget.ctx,
                     titleText: widget.allUpcomingDues[index]["billName"],
                     subtitleText: widget.allUpcomingDues[index]["billerName"],
                     subtitleText2: handleInputParams(index),

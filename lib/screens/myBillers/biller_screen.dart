@@ -143,7 +143,8 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
 
     showAutopayButtonContent(SavedBillersData savedBiller) {
       if (savedBiller.aUTOPAYID == null &&
-          (savedBiller.tRANSACTIONSTATUS == "success") &&
+          (savedBiller.tRANSACTIONSTATUS == "success" ||
+              getUpcmoingDueData(savedBiller.cUSTOMERBILLID) != "") &&
           savedBiller.bILLERACCEPTSADHOC == "N") {
         return false;
       } else {
@@ -155,7 +156,8 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
       if (((savedBiller.aUTOPAYID != null) ||
           (savedBiller.aUTOPAYID == null &&
               savedBiller.cUSTOMERBILLID != null &&
-              (savedBiller.tRANSACTIONSTATUS == "success") &&
+              (savedBiller.tRANSACTIONSTATUS == "success" ||
+                  getUpcmoingDueData(savedBiller.cUSTOMERBILLID) != "") &&
               savedBiller.bILLERACCEPTSADHOC == "N"))) {
         return true;
       } else {

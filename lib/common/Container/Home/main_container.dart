@@ -23,6 +23,7 @@ class MainContainer extends StatelessWidget {
   final Color? buttonBorderColor;
   final VoidCallback onPressed;
   final String customerBillID;
+  final BuildContext ctx;
 
   const MainContainer({
     super.key,
@@ -32,6 +33,7 @@ class MainContainer extends StatelessWidget {
     required this.dateText,
     required this.buttonText,
     required this.amount,
+    required this.ctx,
     required this.customerBillID,
     required this.iconPath,
     required this.containerBorderColor,
@@ -44,209 +46,232 @@ class MainContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: double.infinity,
-        margin:
-            EdgeInsets.only(left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0.r),
-          border: Border.all(
-            color: Color(0xFFD1D9E8),
-            width: 2.0,
-          ),
-        ),
-        child: Column(children: [
-          ListTile(
-            contentPadding: EdgeInsets.only(left: 8.w, right: 15.w, top: 4.h),
-            leading: Container(
-              width: 45.w,
-              child: Padding(
-                padding: EdgeInsets.all(8.w),
-                child: SvgPicture.asset(iconPath),
+    return Stack(
+      children: [
+        Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(
+                left: 18.0.w, right: 18.w, top: 10.h, bottom: 10.h),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0.r),
+              border: Border.all(
+                color: Color(0xFFD1D9E8),
+                width: 2.0,
               ),
             ),
-            title: Padding(
-              padding: EdgeInsets.only(bottom: 5.h),
-              child: Text(
-                titleText,
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff191919),
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  subtitleText,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xff808080),
+            child: Column(children: [
+              ListTile(
+                contentPadding:
+                    EdgeInsets.only(left: 8.w, right: 15.w, top: 4.h),
+                leading: Container(
+                  width: 45.w,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.w),
+                    child: SvgPicture.asset(iconPath),
                   ),
                 ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                Text(
-                  subtitleText2,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xff808080),
+                title: Padding(
+                  padding: EdgeInsets.only(bottom: 5.h),
+                  child: Text(
+                    titleText,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff191919),
+                    ),
+                    textAlign: TextAlign.left,
                   ),
                 ),
-              ],
-            ),
-            trailing: GestureDetector(
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Dialog(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0.r)),
-                        child: Container(
-                          height: 200.h,
-                          child: Padding(
-                            padding: EdgeInsets.all(12.0.r),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(ICON_DELETE,
-                                    height: 50.h, width: 50.w),
-                                Text(
-                                  "Are You Sure You Want To Delete",
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff000000),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 12.0.w, vertical: 10.h),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Expanded(
-                                        child: MyAppButton(
-                                            onPressed: () async {
-                                              goBack(context);
-                                            },
-                                            buttonText: "Cancel",
-                                            buttonTxtColor: CLR_PRIMARY,
-                                            buttonBorderColor: CLR_PRIMARY,
-                                            buttonColor: BTN_CLR_ACTIVE,
-                                            buttonSizeX: 10.h,
-                                            buttonSizeY: 40.w,
-                                            buttonTextSize: 14.sp,
-                                            buttonTextWeight: FontWeight.w500),
-                                      ),
-                                      SizedBox(
-                                        width: 20.w,
-                                      ),
-                                      Expanded(
-                                        child: MyAppButton(
-                                            onPressed: () async {
-                                              // BlocProvider.of<MybillersCubit>(
-                                              //         context)
-                                              //     .deleteUpcomingDue(
-                                              //         customerBillID);
-                                              // goBack(context);
-                                              // goBack(context);
-                                            },
-                                            buttonText: "Delete",
-                                            buttonTxtColor: BTN_CLR_ACTIVE,
-                                            buttonBorderColor:
-                                                Colors.transparent,
-                                            buttonColor: CLR_PRIMARY,
-                                            buttonSizeX: 10.h,
-                                            buttonSizeY: 40.w,
-                                            buttonTextSize: 14.sp,
-                                            buttonTextWeight: FontWeight.w500),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    });
-                // final state = context.<MybillersCubit>().state;
-              },
-              child: SvgPicture.asset(ICON_DELETE),
-            ),
-          ),
-          Divider(
-            height: 10.h,
-            thickness: 1,
-            indent: 10,
-            endIndent: 10,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 6.0.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
+                subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      amount,
+                      subtitleText,
                       style: TextStyle(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff1b438b),
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xff808080),
+                          overflow: TextOverflow.ellipsis),
+                      maxLines: 1,
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Text(
+                      subtitleText2,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xff808080),
                       ),
-                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                ),
+                // trailing: GestureDetector(
+                //   onTap: () {
+
+                //     // final state = context.<MybillersCubit>().state;
+                //   },
+                //   child: SvgPicture.asset(ICON_DELETE),
+                // ),
+              ),
+              Divider(
+                height: 10.h,
+                thickness: 1,
+                indent: 10,
+                endIndent: 10,
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 6.0.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          amount,
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff1b438b),
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                        Row(
+                          children: [
+                            SvgPicture.asset(ICON_CALENDAR),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              dateText,
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xff808080),
+                                height: 20 / 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                     Row(
                       children: [
-                        SvgPicture.asset(ICON_CALENDAR),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          dateText,
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xff808080),
-                            height: 20 / 12,
-                          ),
-                        ),
+                        MyAppButton(
+                            onPressed: () {
+                              onPressed();
+                            },
+                            buttonText: buttonText,
+                            buttonTxtColor: buttonTxtColor,
+                            buttonBorderColor: buttonBorderColor,
+                            buttonColor: buttonColor,
+                            buttonSizeX: 10.h,
+                            buttonSizeY: 27.w,
+                            buttonTextSize: 10.sp,
+                            buttonTextWeight: FontWeight.w500),
                       ],
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    MyAppButton(
-                        onPressed: () {
-                          onPressed();
-                        },
-                        buttonText: buttonText,
-                        buttonTxtColor: buttonTxtColor,
-                        buttonBorderColor: buttonBorderColor,
-                        buttonColor: buttonColor,
-                        buttonSizeX: 10.h,
-                        buttonSizeY: 27.w,
-                        buttonTextSize: 10.sp,
-                        buttonTextWeight: FontWeight.w500),
-                  ],
-                ),
-              ],
+              ),
+            ])),
+        Positioned(
+          top: 0,
+          right: 17.w,
+          child: InkWell(
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Dialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0.r)),
+                      child: Container(
+                        height: 200.h,
+                        child: Padding(
+                          padding: EdgeInsets.all(12.0.r),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(ICON_DELETE,
+                                  height: 50.h, width: 50.w),
+                              Text(
+                                "Are You Sure You Want To Delete",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xff000000),
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 12.0.w, vertical: 10.h),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Expanded(
+                                      child: MyAppButton(
+                                          onPressed: () async {
+                                            goBack(context);
+                                          },
+                                          buttonText: "Cancel",
+                                          buttonTxtColor: CLR_PRIMARY,
+                                          buttonBorderColor: CLR_PRIMARY,
+                                          buttonColor: BTN_CLR_ACTIVE,
+                                          buttonSizeX: 10.h,
+                                          buttonSizeY: 40.w,
+                                          buttonTextSize: 14.sp,
+                                          buttonTextWeight: FontWeight.w500),
+                                    ),
+                                    SizedBox(
+                                      width: 20.w,
+                                    ),
+                                    Expanded(
+                                      child: MyAppButton(
+                                          onPressed: () async {
+                                            BlocProvider.of<MybillersCubit>(ctx)
+                                                .deleteUpcomingDue(
+                                                    customerBillID);
+                                            goBack(context);
+                                            // goBack(context);
+                                          },
+                                          buttonText: "Delete",
+                                          buttonTxtColor: BTN_CLR_ACTIVE,
+                                          buttonBorderColor: Colors.transparent,
+                                          buttonColor: CLR_PRIMARY,
+                                          buttonSizeX: 10.h,
+                                          buttonSizeY: 40.w,
+                                          buttonTextSize: 14.sp,
+                                          buttonTextWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+            },
+            child: CircleAvatar(
+              backgroundColor: Color(0xFFD1D9E8),
+              radius: 13.5.r,
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 12.r,
+                child: SvgPicture.asset(ICON_DELETE, height: 12.h, width: 12.w),
+              ),
             ),
           ),
-        ]));
+        ),
+      ],
+    );
   }
 }

@@ -256,7 +256,8 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                           onTap: () {
                             goToData(context, uPCOMINGDUESROUTE, {
                               "allUpcomingDues": allUpcomingDues,
-                              "savedBiller": SavedBiller
+                              "savedBiller": SavedBiller,
+                              "ctx": context
                             });
                           },
                           child: Row(

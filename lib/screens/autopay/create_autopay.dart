@@ -11,6 +11,7 @@ import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/getMonthName.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/account_info_model.dart';
+import 'package:ebps/models/edit_bill_modal.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/services/api.dart';
 import 'package:ebps/widget/bbps_logo.dart';
@@ -66,6 +67,8 @@ class _createAutopayState extends State<createAutopay> {
   dynamic selectedAcc = null;
   bool accError = false;
   bool maxAmountError = false;
+  bool isInputItemsLoading = true;
+  List<InputSignaturess>? InputItems = [];
 
   List<String> EffectiveFrom = <String>[
     'Immediately',
@@ -79,6 +82,8 @@ class _createAutopayState extends State<createAutopay> {
 
     BlocProvider.of<HomeCubit>(context).getAccountInfo(myAccounts);
     BlocProvider.of<MybillersCubit>(context).getAutoPayMaxAmount();
+    // BlocProvider.of<MybillersCubit>(context)
+    //     .getEditBillItems(widget.customerBillID);
     super.initState();
   }
 
@@ -136,6 +141,16 @@ class _createAutopayState extends State<createAutopay> {
               ),
               BlocListener<MybillersCubit, MybillersState>(
                 listener: (context, state) {
+                  if (state is EditBillLoading) {
+                    isInputItemsLoading = true;
+                  } else if (state is EditBillSuccess) {
+                    InputItems = state.EditBillList?.inputSignaturess;
+                    isInputItemsLoading = false;
+                  } else if (state is EditBillFailed) {
+                    isInputItemsLoading = false;
+                  } else if (state is EditBillError) {
+                    isInputItemsLoading = false;
+                  }
                   if (state is FetchAutoPayMaxAmountLoading) {
                   } else if (state is FetchAutoPayMaxAmountSuccess) {
                     setState(() {
@@ -274,13 +289,13 @@ class _createAutopayState extends State<createAutopay> {
                                                       .toString() !=
                                                   "null"
                                               ? widget.lastPaidAmount.toString()
-                                              : "1000") +
+                                              : "10000") +
                                           (double.parse(widget.lastPaidAmount
                                                           .toString() !=
                                                       "null"
                                                   ? widget.lastPaidAmount
                                                       .toString()
-                                                  : "1000") *
+                                                  : "10000") *
                                               0.3))
                                       .toStringAsFixed(2);
                                   maxAmountController.text = dataAmount;
@@ -575,7 +590,7 @@ class _createAutopayState extends State<createAutopay> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(
-                            left: 18.0.w, right: 18.w, top: 18.w, bottom: 18.w),
+                            left: 18.0.w, right: 18.w, top: 18.h, bottom: 0.h),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -622,7 +637,7 @@ class _createAutopayState extends State<createAutopay> {
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               // itemCount: accountInfo!.length,
-                              childAspectRatio: 4 / 2,
+                              childAspectRatio: 5 / 3.5,
                               mainAxisSpacing: 10.0,
                             ),
                             itemBuilder: (context, index) {

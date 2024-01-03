@@ -111,7 +111,8 @@ class MyRouter {
                   ],
                   child: AllUpcomingDues(
                       allUpcomingDues: args["allUpcomingDues"],
-                      SavedBiller: args["savedBiller"]),
+                      SavedBiller: args["savedBiller"],
+                      ctx: args["ctx"]),
                 ));
       //ALL CATEGORIES PAGE ROUTE
 
@@ -455,7 +456,8 @@ class MyRouter {
                       billName: args["billName"],
                       customerBillID: args["customerBillID"],
                       lastPaidAmount: args["lastPaidAmount"],
-                      savedInputSignatures: args["savedInputSignatures"],
+                      AutoDateMisMatch: args["AutoDateMisMatch"],
+                      DebitLimitMisMatch: args["DebitLimitMisMatch"],
                       autopayData: args["autopayData"]),
                 ));
 

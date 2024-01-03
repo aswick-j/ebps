@@ -121,4 +121,12 @@ abstract class Repository {
 //MODIFY AUTOPAY
 
   Future modifyAutopay(id, status, otp) async {}
+
+//AMOUNT BY DATE
+
+  Future getAmountByDate() async {}
+
+//BBPS SETTINGS
+
+  Future getBbpsSettings() async {}
 }

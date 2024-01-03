@@ -84,7 +84,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
               ),
               elevation: 3,
               content: SingleChildScrollView(
-                padding: EdgeInsets.all(20.r),
+                padding: EdgeInsets.all(0.r),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -106,34 +106,60 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                         fontWeight: FontWeight.w700,
                         color: CLR_PRIMARY,
                       ),
-                      textAlign: TextAlign.justify,
+                      textAlign: TextAlign.center,
                     ),
                     if (success)
                       Container(
                           margin: EdgeInsets.symmetric(
-                              horizontal: 8.w, vertical: 8.h),
-                          decoration: BoxDecoration(color: Color(0xffE8ECF3)),
+                              horizontal: 0.w, vertical: 16.h),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6.0.r + 2.r),
+                            color: Color(0xffE8ECF3),
+                          ),
                           child: Padding(
-                            padding: EdgeInsets.all(8.0.r),
+                            padding: EdgeInsets.all(16.0.r),
                             child: Column(children: [
                               Text(
                                 "For future detail track compliant ID",
                                 style: TextStyle(
-                                  fontSize: 14.sp,
+                                  fontSize: 10.sp,
                                   fontWeight: FontWeight.w400,
                                   color: TXT_CLR_PRIMARY,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
-                              Text(
-                                "QB145458781589585288",
-                                style: TextStyle(
-                                  fontFamily: "Poppins",
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xff1b438b),
-                                ),
-                                textAlign: TextAlign.center,
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "QB145458781589585288",
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xff1b438b),
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(
+                                    width: 5.w,
+                                  ),
+                                  GestureDetector(
+                                      onTap: () {
+                                        Clipboard.setData(ClipboardData(
+                                                text: "QB145458781589585288"))
+                                            .then((_) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: Text(
+                                                      'Compliant ID copied to clipboard')));
+                                        });
+                                      },
+                                      child: Icon(Icons.copy,
+                                          color: Color(0xff1b438b), size: 20))
+                                ],
                               )
                             ]),
                           )),
@@ -340,6 +366,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                         if (cmp_reason != null &&
                             cmp_reasonID != null &&
                             !cmpNotValid) {
+                          // handleDialog(success: true);
                           handleSubmit();
                         }
                       },

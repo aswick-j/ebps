@@ -292,6 +292,16 @@ class _PrepaidPlansState extends State<PrepaidPlans>
                     ? Container(
                         height: MediaQuery.of(context).size.height * 0.9,
                         width: double.infinity,
+                        clipBehavior: Clip.hardEdge,
+                        margin: EdgeInsets.only(
+                            left: 18.0.w, right: 18.w, top: 10.h, bottom: 80.h),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6.0.r + 2.r),
+                          border: Border.all(
+                            color: Color(0xffD1D9E8),
+                            width: 1.0,
+                          ),
+                        ),
                         child: Center(
                           child: Container(
                               width: double.infinity,
@@ -324,7 +334,7 @@ class _PrepaidPlansState extends State<PrepaidPlans>
                           Column(
                             children: [
                               Container(
-                                height: 550.h,
+                                height: 540.h,
                                 child: TabBarView(
                                     physics: const BouncingScrollPhysics(),
                                     controller: _tabController,

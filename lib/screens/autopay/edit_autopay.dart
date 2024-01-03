@@ -12,6 +12,7 @@ import 'package:ebps/helpers/getMonthName.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/account_info_model.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
+import 'package:ebps/models/edit_bill_modal.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/services/api.dart';
 import 'package:ebps/widget/bbps_logo.dart';
@@ -34,7 +35,8 @@ class editAutopay extends StatefulWidget {
   String customerBillID;
   AllConfigurationsData? autopayData;
   String? lastPaidAmount;
-  List<PARAMETERS>? savedInputSignatures;
+  bool AutoDateMisMatch;
+  bool DebitLimitMisMatch;
 
   editAutopay(
       {super.key,
@@ -42,9 +44,10 @@ class editAutopay extends StatefulWidget {
       required this.categoryName,
       required this.billName,
       required this.customerBillID,
+      required this.AutoDateMisMatch,
+      required this.DebitLimitMisMatch,
       this.autopayData,
-      required this.lastPaidAmount,
-      required this.savedInputSignatures});
+      required this.lastPaidAmount});
 
   @override
   State<editAutopay> createState() => _editAutopayState();
@@ -57,6 +60,7 @@ class _editAutopayState extends State<editAutopay> {
 
   bool isAccLoading = true;
   String? maximumAmount = "0";
+  List<InputSignaturess>? InputItems = [];
 
   List<AccountsData>? accountInfo = [];
 
@@ -68,6 +72,7 @@ class _editAutopayState extends State<editAutopay> {
   dynamic selectedAcc = null;
   bool accError = false;
   bool maxAmountError = false;
+  bool isInputItemsLoading = true;
 
   List<String> EffectiveFrom = <String>[
     'Immediately',
@@ -91,6 +96,8 @@ class _editAutopayState extends State<editAutopay> {
     isActive = widget.autopayData?.iSACTIVE;
     BlocProvider.of<HomeCubit>(context).getAccountInfo(myAccounts);
     BlocProvider.of<MybillersCubit>(context).getAutoPayMaxAmount();
+    BlocProvider.of<MybillersCubit>(context)
+        .getEditBillItems(widget.autopayData!.cUSTOMERBILLID);
     super.initState();
   }
 
@@ -155,6 +162,16 @@ class _editAutopayState extends State<editAutopay> {
               ),
               BlocListener<MybillersCubit, MybillersState>(
                 listener: (context, state) {
+                  if (state is EditBillLoading) {
+                    isInputItemsLoading = true;
+                  } else if (state is EditBillSuccess) {
+                    InputItems = state.EditBillList?.inputSignaturess;
+                    isInputItemsLoading = false;
+                  } else if (state is EditBillFailed) {
+                    isInputItemsLoading = false;
+                  } else if (state is EditBillError) {
+                    isInputItemsLoading = false;
+                  }
                   if (state is FetchAutoPayMaxAmountLoading) {
                   } else if (state is FetchAutoPayMaxAmountSuccess) {
                     setState(() {
@@ -167,11 +184,63 @@ class _editAutopayState extends State<editAutopay> {
               ),
             ],
             child: Column(children: [
+              if (widget.AutoDateMisMatch)
+                Container(
+                    clipBehavior: Clip.hardEdge,
+                    width: double.infinity,
+                    margin: EdgeInsets.only(
+                        left: 18.0.w, right: 18.w, top: 10.h, bottom: 15.h),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6.0.r + 2.r),
+                        color: CLR_ERROR
+                        // border: Border.all(
+                        //   color: Color(0xffD1D9E8),
+                        //   width: 1.0,
+                        // ),
+                        ),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0.r),
+                      child: Text(
+                        "Autopay date seems to be mismatched with the due date.",
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    )),
+              if (widget.DebitLimitMisMatch)
+                Container(
+                    clipBehavior: Clip.hardEdge,
+                    width: double.infinity,
+                    margin: EdgeInsets.only(
+                        left: 18.0.w, right: 18.w, top: 10.h, bottom: 15.h),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6.0.r + 2.r),
+                        color: CLR_ERROR
+                        // border: Border.all(
+                        //   color: Color(0xffD1D9E8),
+                        //   width: 1.0,
+                        // ),
+                        ),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0.r),
+                      child: Text(
+                        "Autopay Amount Limit seems to be mismatched with the due Amount.",
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    )),
               Container(
                   clipBehavior: Clip.hardEdge,
                   width: double.infinity,
                   margin: EdgeInsets.only(
-                      left: 18.0.w, right: 18.w, top: 10.h, bottom: 15.h),
+                      left: 18.0.w, right: 18.w, top: 5.h, bottom: 15.h),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6.0.r + 2.r),
                     border: Border.all(
@@ -214,8 +283,10 @@ class _editAutopayState extends State<editAutopay> {
                         indent: 10.w,
                         endIndent: 10.w,
                       ),
-                      billDetailsContainer(
-                          title: "Customer No", subTitle: "3445556666"),
+                      if (!isInputItemsLoading)
+                        billDetailsContainer(
+                            title: InputItems![0].pARAMETERNAME.toString(),
+                            subTitle: InputItems![0].pARAMETERVALUE.toString()),
                       billDetailsContainer(
                           title: "Bill Name", subTitle: widget.billName)
                     ],
@@ -587,7 +658,7 @@ class _editAutopayState extends State<editAutopay> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(
-                            left: 18.0.w, right: 18.w, top: 18.w, bottom: 18.w),
+                            left: 18.0.w, right: 18.w, top: 18.h, bottom: 4.h),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -634,7 +705,7 @@ class _editAutopayState extends State<editAutopay> {
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               // itemCount: accountInfo!.length,
-                              childAspectRatio: 4 / 2,
+                              childAspectRatio: 5 / 3.5,
                               mainAxisSpacing: 10.0,
                             ),
                             itemBuilder: (context, index) {

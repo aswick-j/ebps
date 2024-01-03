@@ -261,13 +261,17 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                             children: [
                               Column(
                                 children: [
-                                  Text(
-                                    widget.savedBillersData!.pARAMETERVALUE
-                                        .toString(),
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff808080),
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      widget.savedBillersData!.pARAMETERVALUE
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff808080),
+                                          overflow: TextOverflow.ellipsis),
+                                      maxLines: 1,
                                     ),
                                   ),
                                 ],

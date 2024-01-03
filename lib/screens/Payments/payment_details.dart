@@ -16,7 +16,6 @@ import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/bbps_logo.dart';
-import 'package:ebps/widget/centralized_grid_view.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/getAccountInfoCard.dart';
 import 'package:ebps/widget/get_biller_detail.dart';
@@ -149,12 +148,12 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 title: "Unable to Process Payment",
                 subTitle:
                     "We're sorry.We were unable to process your payment.Please try again later",
+                showSub: true,
+                shapeColor: CLR_ERROR,
                 child: Icon(
                   Icons.close_rounded,
                   color: Colors.white,
-                ),
-                showSub: true,
-                shapeColor: CLR_ERROR),
+                )),
             actions: <Widget>[
               Align(
                 alignment: Alignment.center,
@@ -428,7 +427,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       )),
                   Padding(
                     padding: EdgeInsets.only(
-                        left: 18.0.w, right: 18.w, top: 18.w, bottom: 18.w),
+                        left: 18.0.w, right: 18.w, top: 18.w, bottom: 5.w),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -477,7 +476,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                 crossAxisCount: 2,
                                 // itemCount: accountInfo!.length,
 
-                                childAspectRatio: 4 / 2,
+                                childAspectRatio: 5 / 3,
                                 mainAxisSpacing: 10.h,
                                 // mainAxisSpacing: 10,
                               ),

@@ -1,5 +1,7 @@
 import 'package:ebps/helpers/logger.dart';
 import 'package:ebps/models/account_info_model.dart';
+import 'package:ebps/models/amount_by_date_model.dart';
+import 'package:ebps/models/bbps_settings_model.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/categories_model.dart';
 import 'package:ebps/models/confirm_fetch_bill_model.dart';
@@ -265,7 +267,7 @@ class HomeCubit extends Cubit<HomeState> {
       final value = await repository!.getPaymentInformation(billerID);
       logger.d(value,
           error:
-              "FETCH BILL API ERROR ===> lib/bloc/home/getPaymentInformation");
+              "PAYMENT API RESPONSE ===> lib/bloc/home/getPaymentInformation");
       if (value != null &&
           !value.toString().contains("Invalid token") &&
           value['status'] == 200) {
@@ -277,14 +279,97 @@ class HomeCubit extends Cubit<HomeState> {
         if (!isClosed) {
           logger.e(value,
               error:
-                  "FETCH BILL API ERROR ===> lib/bloc/home/getPaymentInformation");
+                  "PAYMENT API  API ERROR ===> lib/bloc/home/getPaymentInformation");
           emit(PaymentInfoFailed(message: value['message']));
         }
       }
     } catch (e) {
       logger.e(e,
           error:
-              "FETCH BILL API ERROR ===> lib/bloc/home/getPaymentInformation");
+              "PAYMENT API  API ERROR ===> lib/bloc/home/getPaymentInformation");
+    }
+  }
+
+  //AMOUNT BY DATE
+
+  void getAmountByDate() async {
+    if (!isClosed) {
+      emit(AmountByDateLoading());
+    }
+    try {
+      final value = await repository!.getAmountByDate();
+      logger.d(value,
+          error:
+              "AMOUNT BY DATE API RESPONSE ===> lib/bloc/home/getAmountByDate");
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            AmountByDateModel? amountByDateModel =
+                AmountByDateModel.fromJson(value);
+            if (!isClosed) {
+              emit(AmountByDateSuccess(amountByDate: amountByDateModel.data));
+            }
+          } else {
+            if (!isClosed) {
+              emit(AmountByDateFailed(message: value['message']));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(AmountByDateError(message: value['message']));
+          }
+        }
+      } else {
+        if (!isClosed) {
+          emit(AmountByDateFailed(message: value['message']));
+        }
+      }
+    } catch (e) {
+      logger.e(e,
+          error: "AMOUNT BY DATE API ERROR ===> lib/bloc/home/getAmountByDate");
+    }
+  }
+
+  //BBPS SETTING
+
+  void getBbpsSettings() async {
+    if (!isClosed) {
+      emit(BbpsSettingsLoading());
+    }
+    try {
+      final value = await repository!.getBbpsSettings();
+
+      logger.d(value,
+          error:
+              "BBPS SETTINGS API RESPONSE ===> lib/bloc/home/getBbpsSettings");
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            bbpsSettingsModel? BbpsSettingsDetails =
+                bbpsSettingsModel.fromJson(value);
+            if (!isClosed) {
+              emit(
+                  BbpsSettingsSuccess(BbpsSettingsDetail: BbpsSettingsDetails));
+            }
+          } else {
+            if (!isClosed) {
+              emit(BbpsSettingsFailed(message: value['message']));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(BbpsSettingsError(message: value['message']));
+          }
+        }
+      } else {
+        if (!isClosed) {
+          emit(BbpsSettingsFailed(message: value['message']));
+        }
+      }
+    } catch (e) {
+      logger.e(e,
+          error:
+              "BBPS SETTINGS API ERROR RESPONSE ===> lib/bloc/home/getBbpsSettings");
     }
   }
 

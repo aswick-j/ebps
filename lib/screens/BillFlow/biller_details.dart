@@ -11,10 +11,12 @@ import 'package:ebps/helpers/getBillerType.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/logger.dart';
 import 'package:ebps/models/add_biller_model.dart';
+import 'package:ebps/models/bbps_settings_model.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/fetch_bill_model.dart';
 import 'package:ebps/models/paymentInformationModel.dart';
 import 'package:ebps/models/saved_biller_model.dart';
+import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/centralized_grid_view.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/get_biller_detail.dart';
@@ -68,8 +70,9 @@ class _BillerDetailsState extends State<BillerDetails> {
   bool isPaymentInfoLoading = true;
 
   bool isUnableToFetchBill = true;
-
+  String DailyLimit = '0';
   String PaymentExactErrMsg = "";
+  bbpsSettingsData? BbpsSettingInfo;
 
   void initialFetch() {
     txtAmountController.text = billAmount.toString();
@@ -135,11 +138,54 @@ class _BillerDetailsState extends State<BillerDetails> {
     //     customerBillID: widget.isSavedBill
     //         ? widget.savedBillersData!.cUSTOMERBILLID
     //         : _customerBIllID);
+    BlocProvider.of<HomeCubit>(context).getAmountByDate();
+    BlocProvider.of<HomeCubit>(context).getBbpsSettings();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    handleDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            content: AnimatedDialog(
+                title: "Your daily bill payment limit has been exceeded.",
+                subTitle:
+                    " For additional information, please contact the bank.",
+                showSub: true,
+                shapeColor: Colors.orange,
+                child: Icon(
+                  Icons.error_outline,
+                  color: Colors.white,
+                )),
+            actions: <Widget>[
+              Align(
+                alignment: Alignment.center,
+                child: MyAppButton(
+                    onPressed: () {
+                      goBack(ctx);
+                    },
+                    buttonText: "Okay",
+                    buttonTxtColor: BTN_CLR_ACTIVE,
+                    buttonBorderColor: Colors.transparent,
+                    buttonColor: CLR_PRIMARY,
+                    buttonSizeX: 10,
+                    buttonSizeY: 40,
+                    buttonTextSize: 14,
+                    buttonTextWeight: FontWeight.w500),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
         appBar: MyAppBar(
           context: context,
@@ -161,6 +207,22 @@ class _BillerDetailsState extends State<BillerDetails> {
           } else if (state is PaymentInfoError) {
             isPaymentInfoLoading = false;
           }
+
+          if (state is AmountByDateLoading) {
+          } else if (state is AmountByDateSuccess) {
+            setState(() {
+              DailyLimit = state.amountByDate!;
+            });
+          } else if (state is AmountByDateFailed) {
+          } else if (state is AmountByDateError) {}
+
+          if (state is BbpsSettingsLoading) {
+          } else if (state is BbpsSettingsSuccess) {
+            setState(() {
+              BbpsSettingInfo = state.BbpsSettingsDetail!.data;
+            });
+          } else if (state is BbpsSettingsFailed) {
+          } else if (state is BbpsSettingsError) {}
 
           //FETCH BILL
 
@@ -203,22 +265,34 @@ class _BillerDetailsState extends State<BillerDetails> {
           } else if (state is FetchBillFailed) {
             BlocProvider.of<MybillersCubit>(context).getAddUpdateUpcomingDue();
             if (state.message.toString().contains("Unable to fetch")) {
-              ErrIndex = 0;
+              setState(() {
+                ErrIndex = 0;
 
-              isUnableToFetchBill = true;
+                isUnableToFetchBill = true;
+              });
             } else if (state.message
                 .toString()
                 .contains("Something went wrong")) {
+              setState(() {
+                ErrIndex = 2;
+                ImgIndex = 2;
+                isUnableToFetchBill = true;
+              });
+            } else if (state.message.toString().contains("No Pending Dues")) {
+              setState(() {
+                isUnableToFetchBill = true;
+              });
+            }
+            setState(() {
+              isFetchbillLoading = false;
+            });
+          } else if (state is FetchBillError) {
+            setState(() {
               ErrIndex = 2;
               ImgIndex = 2;
               isUnableToFetchBill = true;
-            } else if (state.message.toString().contains("No Pending Dues")) {
-              isUnableToFetchBill = true;
-            }
-            isFetchbillLoading = false;
-          } else if (state is FetchBillError) {
-            isFetchbillLoading = false;
-            isUnableToFetchBill = false;
+              isFetchbillLoading = false;
+            });
           }
         }, builder: (context, state) {
           return SingleChildScrollView(
@@ -246,8 +320,8 @@ class _BillerDetailsState extends State<BillerDetails> {
                         ),
                         if (isFetchbillLoading)
                           Container(
-                            height: 200,
-                            width: 200,
+                            height: 200.h,
+                            width: 200.w,
                             child: FlickrLoader(),
                           ),
                         if (!isFetchbillLoading && isUnableToFetchBill)
@@ -575,26 +649,36 @@ class _BillerDetailsState extends State<BillerDetails> {
                       Expanded(
                         child: MyAppButton(
                             onPressed: () {
+                              final dailyLimit =
+                                  double.parse(DailyLimit.toString());
+                              final bankLimit = double.parse(
+                                  BbpsSettingInfo!.dAILYLIMIT.toString());
+
                               if (!isInsufficient &&
                                   PaymentExactErrMsg.isEmpty) {
-                                goToData(context, pAYMENTCONFIRMROUTE, {
-                                  "name": widget.isSavedBill
-                                      ? widget.savedBillersData!.bILLERNAME
-                                      : widget.billerData!.bILLERNAME,
-                                  "billName": widget.billName,
-                                  "billerData": widget.billerData,
-                                  "savedBillersData": widget.savedBillersData,
-                                  "inputParameters": widget.inputParameters,
-                                  "SavedinputParameters":
-                                      widget.SavedinputParameters,
-                                  "categoryName": widget.isSavedBill
-                                      ? widget.savedBillersData!.cATEGORYNAME
-                                      : widget.billerData!.cATEGORYNAME,
-                                  "isSavedBill": widget.isSavedBill,
-                                  "amount": txtAmountController.text,
-                                  "validateBill": validateBill,
-                                  "billerInputSign": billerInputSign
-                                });
+                                if ((double.parse(txtAmountController.text) >
+                                    (bankLimit - dailyLimit))) {
+                                  handleDialog();
+                                } else {
+                                  goToData(context, pAYMENTCONFIRMROUTE, {
+                                    "name": widget.isSavedBill
+                                        ? widget.savedBillersData!.bILLERNAME
+                                        : widget.billerData!.bILLERNAME,
+                                    "billName": widget.billName,
+                                    "billerData": widget.billerData,
+                                    "savedBillersData": widget.savedBillersData,
+                                    "inputParameters": widget.inputParameters,
+                                    "SavedinputParameters":
+                                        widget.SavedinputParameters,
+                                    "categoryName": widget.isSavedBill
+                                        ? widget.savedBillersData!.cATEGORYNAME
+                                        : widget.billerData!.cATEGORYNAME,
+                                    "isSavedBill": widget.isSavedBill,
+                                    "amount": txtAmountController.text,
+                                    "validateBill": validateBill,
+                                    "billerInputSign": billerInputSign
+                                  });
+                                }
                               }
                             },
                             buttonText: "Pay Now",

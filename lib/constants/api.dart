@@ -33,6 +33,8 @@ const String ADDUPDATE_UPCOMING_URL = "/billers/add-update-upcoming-due";
 const String UPDATE_UPCOMING_URL = "/billers/update-upcoming-dues";
 const String AUTOPAY_MODIFY_URL = "/auto-pay/status/";
 const String PREPAID_PLANS_URL = "/payment/prepaid-fetch-plans";
+const String AMOUNT_BY_DATE_URL = "/payment/amount-by-date/";
+const String BBPS_SETTINGS_URL = "/user-services/bbps-settings";
 
 const String redirectUrl = "/auth/redirect";
 const String transactionUrl = "/transactions/";
@@ -40,8 +42,5 @@ const String transactionUrl = "/transactions/";
 const String allLocation = "/billers/location";
 const String statesDataUrl = "/billers/states-data/";
 
-const String amountByDateUrl = "/payment/amount-by-date/";
-
 const String chartUrl = '/charts';
 const String addNewBillerUrl = "/billers/add-biller";
-const String bbpsSettings = "/user-services/bbps-settings";
