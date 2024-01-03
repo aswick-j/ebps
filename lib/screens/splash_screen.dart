@@ -5,6 +5,7 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/logger.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,7 +46,8 @@ class _splashScreenState extends State<splashScreen> {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               // goToReplace(context, hOMEROUTE);
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
+                CupertinoPageRoute(
+                    fullscreenDialog: true,
                     builder: (context) => BottomNavBar(
                           SelectedIndex: 0,
                         )),

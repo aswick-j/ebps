@@ -11,6 +11,7 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/loader_overlay.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -94,7 +95,8 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
 
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
+                          CupertinoPageRoute(
+                              fullscreenDialog: true,
                               builder: (context) => BottomNavBar(
                                     SelectedIndex: 0,
                                   )),

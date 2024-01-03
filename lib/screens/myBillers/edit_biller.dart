@@ -15,6 +15,7 @@ import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/loader_overlay.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -104,7 +105,8 @@ class _EditBillerUIState extends State<EditBillerUI> {
 
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
+                        CupertinoPageRoute(
+                            fullscreenDialog: true,
                             builder: (context) => BottomNavBar(
                                   SelectedIndex: 1,
                                 )),

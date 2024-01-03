@@ -12,6 +12,7 @@ import 'package:ebps/services/api.dart';
 import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/loader_overlay.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -276,7 +277,8 @@ class _OtpScreenState extends State<OtpScreen> {
 
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
+                          CupertinoPageRoute(
+                              fullscreenDialog: true,
                               builder: (context) => BottomNavBar(
                                     SelectedIndex: 1,
                                   )),
@@ -341,7 +343,8 @@ class _OtpScreenState extends State<OtpScreen> {
 
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
+                          CupertinoPageRoute(
+                              fullscreenDialog: true,
                               builder: (context) => BottomNavBar(
                                     SelectedIndex: 2,
                                   )),
@@ -726,7 +729,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 readOnly: enableReadOnly,
                                 focusNode: focusNode,
                                 androidSmsAutofillMethod:
-                                    AndroidSmsAutofillMethod.smsUserConsentApi,
+                                    AndroidSmsAutofillMethod.none,
                                 listenForMultipleSmsOnAndroid: true,
                                 defaultPinTheme: defaultPinTheme,
                                 onChanged: (s) {

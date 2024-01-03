@@ -19,6 +19,7 @@ import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/generate_pdf.dart';
 import 'package:ebps/widget/screenshot_container.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -155,7 +156,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
           onLeadingTap: () => {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
+                CupertinoPageRoute(
+                  
+                    fullscreenDialog: true,
                     builder: (context) => BottomNavBar(
                           SelectedIndex: 0,
                         )),

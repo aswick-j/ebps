@@ -11,6 +11,7 @@ import 'package:ebps/models/upcoming_dues_model.dart';
 import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/services/api_client.dart';
 import 'package:ebps/widget/flickr_loader.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -172,7 +173,8 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
         onLeadingTap: () => WidgetsBinding.instance.addPostFrameCallback((_) {
           // goToReplace(context, hOMEROUTE);
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
+            CupertinoPageRoute(
+                fullscreenDialog: true,
                 builder: (context) => BottomNavBar(
                       SelectedIndex: 0,
                     )),

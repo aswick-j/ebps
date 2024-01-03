@@ -16,6 +16,7 @@ import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/services/api_client.dart';
 import 'package:ebps/widget/date_picker.dart';
 import 'package:ebps/widget/flickr_loader.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -105,7 +106,9 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
 
     handleFilter() {
       BlocProvider.of<HistoryCubit>(context).getHistoryDetails({
-        "startDate": fromDate!.toLocal().toIso8601String(),
+        "startDate": fromDate != null
+            ? fromDate!.toLocal().toIso8601String()
+            : DateTime(2016).toLocal().toIso8601String(),
         "endDate": toDate != null
             ? toDate!.toLocal().toIso8601String()
             : DateTime.now().toLocal().toIso8601String(),
@@ -119,7 +122,8 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
         title: 'History',
         onLeadingTap: () => WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
+            CupertinoPageRoute(
+                fullscreenDialog: true,
                 builder: (context) => BottomNavBar(
                       SelectedIndex: 1,
                     )),
