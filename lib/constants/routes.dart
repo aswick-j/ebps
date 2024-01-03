@@ -410,7 +410,11 @@ class MyRouter {
             fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => ComplaintCubit(repository: apiClient),
-                  child: RegisterComplaint(txnRefID: args["txnRefID"]),
+                  child: RegisterComplaint(
+                    txnRefID: args["txnRefID"],
+                    BillerName: args["BillerName"],
+                    CategoryName: args["CategoryName"],
+                  ),
                 ));
 
 //CREATE AUTOPAY

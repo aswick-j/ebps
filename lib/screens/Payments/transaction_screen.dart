@@ -157,7 +157,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.of(context).pushAndRemoveUntil(
                 CupertinoPageRoute(
-                  
+
                     fullscreenDialog: true,
                     builder: (context) => BottomNavBar(
                           SelectedIndex: 0,
@@ -465,7 +465,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       onPressed: () {
                         goToData(context, cOMPLAINTREGISTERROUTE, {
                           "txnRefID":
-                              paymentDetails!['txnReferenceId'].toString()
+                              paymentDetails!['txnReferenceId'].toString(),
+                        
+                         "BillerName": widget.billerName.toString(),
+                          "CategoryName": widget.categoryName,
                         });
                       },
                       buttonText: "Raise a Complaint",

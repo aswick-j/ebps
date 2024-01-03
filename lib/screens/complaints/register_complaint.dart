@@ -17,9 +17,13 @@ import 'package:flutter_svg/svg.dart';
 
 class RegisterComplaint extends StatefulWidget {
   String txnRefID;
+  String BillerName;
+  String CategoryName;
   RegisterComplaint({
     super.key,
     required this.txnRefID,
+    required this.BillerName,
+    required this.CategoryName,
   });
 
   @override
@@ -258,8 +262,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                               children: [
                                 BillerDetailsContainer(
                                     icon: LOGO_BBPS,
-                                    billerName: "billerName",
-                                    categoryName: "categoryName"),
+                                    billerName: widget.BillerName,
+                                    categoryName: widget.CategoryName),
                                 Container(
                                     width: double.infinity,
                                     height: 75.h,

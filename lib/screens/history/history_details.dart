@@ -418,7 +418,9 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                       onPressed: () {
                         goToData(context, cOMPLAINTREGISTERROUTE, {
                           "txnRefID": widget.historyData.tRANSACTIONREFERENCEID
-                              .toString()
+                              .toString(),
+                          "BillerName": widget.historyData.bILLERNAME.toString(),
+                          "CategoryName": widget.historyData.cATEGORYNAME.toString(),
                         });
                       },
                       buttonText: "Raise a Complaint",
