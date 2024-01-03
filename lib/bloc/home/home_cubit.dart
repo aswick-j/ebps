@@ -832,6 +832,16 @@ class HomeCubit extends Cubit<HomeState> {
               emit(PayBillFailed(
                 from: "fromConfirmPaymentOtp",
                 message: "status_500",
+                data: {
+                  "res": value['data'],
+                  "billerID": billerID,
+                  "acNo": acNo,
+                  "billerName": billerName,
+                  "billAmount": billAmount,
+                  "customerBillID": customerBillID,
+                  "inputSignature": inputSignature,
+                  "billerData": billerData,
+                },
               ));
             } else {
               emit(
@@ -839,13 +849,14 @@ class HomeCubit extends Cubit<HomeState> {
                   from: "fromConfirmPaymentOtp",
                   message: message,
                   data: {
-                    "errData": data,
+                    "res": value['data'],
                     "billerID": billerID,
                     "acNo": acNo,
                     "billerName": billerName,
                     "billAmount": billAmount,
                     "customerBillID": customerBillID,
                     "inputSignature": inputSignature,
+                    "billerData": billerData,
                   },
                 ),
               );
@@ -856,7 +867,7 @@ class HomeCubit extends Cubit<HomeState> {
                 from: "fromConfirmPaymentOtp",
                 message: message,
                 data: {
-                  "errData": data,
+                  "res": value['data'],
                   "billerID": billerID,
                   "acNo": acNo,
                   "billerName": billerName,

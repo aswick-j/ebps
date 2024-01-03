@@ -501,48 +501,55 @@ class _OtpScreenState extends State<OtpScreen> {
                 });
               }
 
-              if (state.message == 'status_500') {
-                handleDialog();
-              } else if (state.data!["res"]["reason"] ==
-                  'Bill Payment failed from BBPS') {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      content: AnimatedDialog(
-                          title: "Your Payment Has Been Failed.",
-                          subTitle: "",
-                          child: Icon(
-                            Icons.close_rounded,
-                            color: Colors.white,
-                          ),
-                          shapeColor: CLR_ERROR),
-                      actions: <Widget>[
-                        Align(
-                          alignment: Alignment.center,
-                          child: MyAppButton(
-                              onPressed: () {
-                                goBack(context);
+              print(state.data);
 
-                                handleRedirect();
-                              },
-                              buttonText: "Okay",
-                              buttonTxtColor: BTN_CLR_ACTIVE,
-                              buttonBorderColor: Colors.transparent,
-                              buttonColor: CLR_PRIMARY,
-                              buttonSizeX: 10,
-                              buttonSizeY: 40,
-                              buttonTextSize: 14,
-                              buttonTextWeight: FontWeight.w500),
+              if (state.data != null) {
+                if (state.data!["res"]["reason"] ==
+                        'Bill Payment failed from BBPS' ||
+                    state.data!["res"]["reason"] ==
+                        'Server Rejected Request.' ||
+                    state.data!["res"]["reason"] == 'Account is Dormant.') {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
                         ),
-                      ],
-                    );
-                  },
-                );
-              } else {
+                        content: AnimatedDialog(
+                            title: "Your Payment Has Been Failed.",
+                            subTitle: "",
+                            child: Icon(
+                              Icons.close_rounded,
+                              color: Colors.white,
+                            ),
+                            shapeColor: CLR_ERROR),
+                        actions: <Widget>[
+                          Align(
+                            alignment: Alignment.center,
+                            child: MyAppButton(
+                                onPressed: () {
+                                  goBack(context);
+
+                                  handleRedirect();
+                                },
+                                buttonText: "Okay",
+                                buttonTxtColor: BTN_CLR_ACTIVE,
+                                buttonBorderColor: Colors.transparent,
+                                buttonColor: CLR_PRIMARY,
+                                buttonSizeX: 10,
+                                buttonSizeY: 40,
+                                buttonTextSize: 14,
+                                buttonTextWeight: FontWeight.w500),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  handleDialog();
+                }
+              } else if (state.message == 'status_500') {
                 handleDialog();
               }
             } else if (state is PayBillError) {}
@@ -725,6 +732,8 @@ class _OtpScreenState extends State<OtpScreen> {
                               height: 38.h,
                               child: Pinput(
                                 length: 6,
+                                obscureText: true,
+                                obscuringCharacter: "*",
                                 controller: txtOtpController,
                                 readOnly: enableReadOnly,
                                 focusNode: focusNode,
