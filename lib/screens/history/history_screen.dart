@@ -59,6 +59,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
   dynamic billerController = TextEditingController();
 
   DateTime? fromDate;
+  DateTime? toFirstDate;
   DateTime? toDate;
 
   String? categoryID;
@@ -327,7 +328,8 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                               onChanged: (val) {},
                               onTap: () async {
                                 DateTime? pickedDate = await DatePicker(
-                                    context, fromdateController.text);
+                                    context, fromdateController.text, null);
+
                                 if (pickedDate != null) {
                                   String formattedDate =
                                       DateFormat('dd-MM-yyyy')
@@ -336,6 +338,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                     fromdateController.text = formattedDate;
                                     todateController.clear();
                                     fromDate = pickedDate;
+                                    toFirstDate = pickedDate;
                                   });
                                 }
                               },
@@ -368,12 +371,16 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                               readOnly: true,
                               autocorrect: false,
                               enableSuggestions: false,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               keyboardType: TextInputType.text,
                               onChanged: (val) {},
                               onTap: () async {
                                 if (fromdateController.text.isNotEmpty) {
                                   DateTime? pickedDate = await DatePicker(
-                                      context, fromdateController.text);
+                                      context,
+                                      fromdateController.text,
+                                      toFirstDate);
                                   if (pickedDate != null) {
                                     String formattedDate =
                                         DateFormat('dd-MM-yyyy')
@@ -397,9 +404,10 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                 fillColor:
                                     const Color(0xffD1D9E8).withOpacity(0.2),
                                 filled: true,
-                                // errorText: fromdateController.text.isEmpty
-                                //     ? "Please select 'From Date' first."
-                                //     : null,
+                                errorText: fromdateController.text.isEmpty
+                                    ? "Please select From Date first."
+                                    : null,
+                                // errorStyle: TextStyle(color: Colors.green),
                                 labelStyle:
                                     const TextStyle(color: Color(0xff1b438b)),
                                 enabledBorder: const UnderlineInputBorder(

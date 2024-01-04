@@ -2,11 +2,12 @@ import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-Future<DateTime?> DatePicker(BuildContext context, String? fromDate) async {
+Future<DateTime?> DatePicker(
+    BuildContext context, String? fromDate, DateTime? toFirstDate) async {
   DateTime? pickedDate = await showDatePicker(
     context: context,
     initialDate: DateTime.now(),
-    firstDate: DateTime(1900),
+    firstDate: toFirstDate ?? DateTime(1900),
     lastDate: DateTime.now(),
     initialEntryMode: DatePickerEntryMode.calendarOnly,
     builder: (BuildContext context, Widget? child) {

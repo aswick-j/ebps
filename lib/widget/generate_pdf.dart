@@ -185,7 +185,7 @@ Future<Uint8List> generatePdf(
                           "Mobile Banking",
                         ],
                         [
-                          'Amount Debited From',
+                          'Amount Debited Account',
                           fromAccount,
                         ],
                         ['Paid Amount', billAmount],

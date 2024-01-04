@@ -244,6 +244,7 @@ class _BillParametersState extends State<BillParameters> {
                                           fillColor: const Color(0xffD1D9E8)
                                               .withOpacity(0.2),
                                           filled: true,
+                                          errorMaxLines: 5,
                                           enabledBorder:
                                               const UnderlineInputBorder(
                                             borderSide: BorderSide(

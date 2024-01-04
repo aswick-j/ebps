@@ -404,37 +404,43 @@ class _HistoryDetailsState extends State<HistoryDetails> {
             ),
           ),
         ),
-        bottomSheet: Container(
-          decoration: BoxDecoration(
-              border:
-                  Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: MyAppButton(
-                      onPressed: () {
-                        goToData(context, cOMPLAINTREGISTERROUTE, {
-                          "txnRefID": widget.historyData.tRANSACTIONREFERENCEID
-                              .toString(),
-                          "BillerName": widget.historyData.bILLERNAME.toString(),
-                          "CategoryName": widget.historyData.cATEGORYNAME.toString(),
-                        });
-                      },
-                      buttonText: "Raise a Complaint",
-                      buttonTxtColor: BTN_CLR_ACTIVE,
-                      buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
-                      buttonSizeX: 10.h,
-                      buttonSizeY: 40.w,
-                      buttonTextSize: 14.sp,
-                      buttonTextWeight: FontWeight.w500),
+        bottomSheet: widget.historyData.tRANSACTIONSTATUS != 'success'
+            ? null
+            : Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: MyAppButton(
+                            onPressed: () {
+                              goToData(context, cOMPLAINTREGISTERROUTE, {
+                                "txnRefID": widget
+                                    .historyData.tRANSACTIONREFERENCEID
+                                    .toString(),
+                                "BillerName":
+                                    widget.historyData.bILLERNAME.toString(),
+                                "CategoryName":
+                                    widget.historyData.cATEGORYNAME.toString(),
+                              });
+                            },
+                            buttonText: "Raise a Complaint",
+                            buttonTxtColor: BTN_CLR_ACTIVE,
+                            buttonBorderColor: Colors.transparent,
+                            buttonColor: CLR_PRIMARY,
+                            buttonSizeX: 10.h,
+                            buttonSizeY: 40.w,
+                            buttonTextSize: 14.sp,
+                            buttonTextWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
-        ));
+              ));
   }
 }
