@@ -76,6 +76,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
   ];
 
   var dragController = DraggableScrollableController();
+  final infiniteScrollController = ScrollController();
 
   List<HistoryData>? historyData = [];
   List<Data>? billerFilterData = [];
@@ -83,14 +84,35 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
 
   bool isCategoryLoading = false;
   bool isHistoryLoading = true;
+  bool isHistoryMoreLoading = false;
   bool isHistoryFilterLoading = false;
+  int pageNumber = 1;
   @override
   void initState() {
-    BlocProvider.of<HistoryCubit>(context)
-        .getHistoryDetails('Today', "", "", "-1", false);
+    BlocProvider.of<HistoryCubit>(context).getHistoryDetails({
+      "startDate": DateTime(2016).toLocal().toIso8601String(),
+      "endDate": DateTime.now().toLocal().toIso8601String(),
+    }, "", "", pageNumber, true);
     BlocProvider.of<HomeCubit>(context).getAllCategories();
-
+    initScrollController(context);
     super.initState();
+  }
+
+  void initScrollController(context) {
+    infiniteScrollController.addListener(() {
+      print("======ssss");
+      if (infiniteScrollController.position.atEdge) {
+        if (infiniteScrollController.position.pixels != 0) {
+          setState(() {
+            pageNumber++;
+          });
+          BlocProvider.of<HistoryCubit>(context).getHistoryDetails({
+            "startDate": DateTime(2016).toLocal().toIso8601String(),
+            "endDate": DateTime.now().toLocal().toIso8601String(),
+          }, "", "", pageNumber, true);
+        }
+      }
+    });
   }
 
   @override
@@ -152,22 +174,33 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
               listeners: [
             BlocListener<HistoryCubit, HistoryState>(
                 listener: (context, state) {
+              if (state is HistoryLoading && state.isFirstFetch) {}
+              setState(() {
+                isHistoryMoreLoading = true;
+                isHistoryLoading = true;
+              });
+
               if (state is HistoryLoading) {
                 setState(() {
-                  isHistoryLoading = true;
+                  historyData = state.prevData;
+                  isHistoryMoreLoading = true;
+                  isHistoryLoading = false;
                 });
               } else if (state is HistorySuccess) {
                 setState(() {
                   historyData = state.historyData;
                   isHistoryLoading = false;
+                  isHistoryMoreLoading = true;
                 });
               } else if (state is HistoryFailed) {
                 setState(() {
                   isHistoryLoading = false;
+                  isHistoryMoreLoading = false;
                 });
               } else if (state is HistoryError) {
                 setState(() {
                   isHistoryLoading = false;
+                  isHistoryMoreLoading = false;
                 });
               }
               if (state is billerFilterLoading) {
@@ -210,7 +243,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                               shrinkWrap: true,
                               itemCount: historyData!.length,
                               physics: const BouncingScrollPhysics(),
-                              // controller: infiniteScrollController,
+                              controller: infiniteScrollController,
                               itemBuilder: (context, index) {
                                 return HistoryContainer(
                                   historyData: historyData![index],
@@ -243,6 +276,11 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                               message: "No Transactions Found",
                             ),
                     ),
+                  if (isHistoryMoreLoading)
+                    Container(
+                        height: 50.h,
+                        width: double.infinity,
+                        child: Center(child: FlickrLoader())),
                   if (isHistoryLoading)
                     Container(
                         height: 500.h,

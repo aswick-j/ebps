@@ -9,7 +9,9 @@ class ScreenshotContainer extends StatelessWidget {
   final String BillName;
   final String BillerName;
   final String BillerId;
-  final String BillNumber;
+  final String ParamName;
+  final String ParamValue;
+
   final String TransactionID;
   final String fromAccount;
   final String billAmount;
@@ -21,7 +23,8 @@ class ScreenshotContainer extends StatelessWidget {
     required this.BillName,
     required this.billAmount,
     required this.BillerId,
-    required this.BillNumber,
+    required this.ParamName,
+    required this.ParamValue,
     required this.TransactionID,
     required this.fromAccount,
     required this.status,
@@ -174,12 +177,12 @@ class ScreenshotContainer extends StatelessWidget {
               thickness: 1,
             ),
             txnDetails(
-              title: "Sent From",
+              title: "Account",
               subTitle: 'EQUITAS BANK - $fromAccount',
               clipBoard: false,
             ),
             txnDetails(
-              title: "Sent To",
+              title: "Biller Name",
               subTitle: BillerName,
               clipBoard: false,
             ),
@@ -188,8 +191,8 @@ class ScreenshotContainer extends StatelessWidget {
               thickness: 1,
             ),
             txnDetails(
-              title: "Bill Number",
-              subTitle: BillNumber,
+              title: ParamName,
+              subTitle: ParamValue,
               clipBoard: false,
             ),
             if (status == 'success')

@@ -5,7 +5,12 @@ abstract class HistoryState {}
 
 class HistoryInitial extends HistoryState {}
 
-class HistoryLoading extends HistoryState {}
+class HistoryLoading extends HistoryState {
+  List<HistoryData> prevData;
+  bool isFirstFetch;
+
+  HistoryLoading(this.prevData, {this.isFirstFetch = false});
+}
 
 class HistorySuccess extends HistoryState {
   List<HistoryData>? historyData;

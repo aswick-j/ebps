@@ -9,7 +9,8 @@ Future<Uint8List> generatePdf(
     String BillerName,
     String BillerId,
     String BillName,
-    String BillNumber,
+    String ParamName,
+    String ParamValue,
     String TransactionID,
     String fromAccount,
     String billAmount,
@@ -173,19 +174,19 @@ Future<Uint8List> generatePdf(
                           BillerId,
                         ],
                         [
-                          'Bill Number',
-                          BillNumber,
+                          ParamName,
+                          ParamValue,
                         ],
                         [
                           'Transaction Reference Id',
-                          TransactionID,
+                          TransactionID != "null" ? TransactionID : "-",
                         ],
                         [
                           'Payment Channel ',
                           "Mobile Banking",
                         ],
                         [
-                          'Amount Debited Account',
+                          'Debited Account',
                           fromAccount,
                         ],
                         ['Paid Amount', billAmount],

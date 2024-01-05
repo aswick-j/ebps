@@ -1,16 +1,11 @@
-import 'dart:convert';
-
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
-import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
-import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getBillPaymentDetails.dart';
 import 'package:ebps/helpers/getBillerType.dart';
 import 'package:ebps/helpers/getGradientColors.dart';
-import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getTransactionStatusText.dart';
 import 'package:ebps/models/add_biller_model.dart';
 import 'package:ebps/models/billers_model.dart';
@@ -272,7 +267,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                               BillerName: widget.billerName.toString(),
                                                               BillerId: widget.isSavedBill ? savedBillerTypeData!.bILLERID.toString() : billerTypeData!.bILLERID.toString(),
                                                               BillName: widget.isSavedBill ? savedBillerTypeData!.bILLNAME.toString() : billerTypeData!.bILLNAME.toString(),
-                                                              BillNumber: widget.billerData!["customerBillID"].toString(),
+                                                              ParamName: widget.billerData!["inputSignature"][0].pARAMETERNAME,
+                                                              ParamValue: widget.billerData!["inputSignature"][0].pARAMETERVALUE,
                                                               TransactionID: paymentDetails!['txnReferenceId'].toString(),
                                                               fromAccount: widget.billerData!['acNo'].toString(),
                                                               billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount']))}",
@@ -301,9 +297,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                         IconButton(
                                             onPressed: () {
                                               Printing.layoutPdf(
-                                                name: "Transaction Receipt",
-                                                onLayout: (PdfPageFormat
-                                                        format) async =>
+                                                name: widget.billerName,
+                                                onLayout: (PdfPageFormat format) async =>
                                                     generatePdf(
                                                         format,
                                                         widget
@@ -316,8 +311,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                             : billerTypeData!
                                                                 .bILLERID
                                                                 .toString(),
-                                                        widget
-                                                                .isSavedBill
+                                                        widget.isSavedBill
                                                             ? savedBillerTypeData!
                                                                 .bILLNAME
                                                                 .toString()
@@ -326,30 +320,28 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                                 .toString(),
                                                         widget
                                                             .billerData![
-                                                                "customerBillID"]
-                                                            .toString(),
-                                                        paymentDetails![
-                                                                'txnReferenceId'] ??
+                                                                "inputSignature"]
+                                                                [0]
+                                                            .pARAMETERNAME,
+                                                        widget
+                                                            .billerData![
+                                                                "inputSignature"]
+                                                                [0]
+                                                            .pARAMETERVALUE,
+                                                        paymentDetails!['txnReferenceId'] ??
                                                             "-",
                                                         widget
                                                             .billerData!['acNo']
                                                             .toString(),
                                                         "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount'].toString()))}",
-                                                        paymentDetails![
-                                                                'success']
+                                                        paymentDetails!['success']
                                                             ? "Transaction Success"
-                                                            : paymentDetails![
-                                                                    'bbpsTimeout']
+                                                            : paymentDetails!['bbpsTimeout']
                                                                 ? 'Transaction Pending'
-                                                                : paymentDetails![
-                                                                        'failed']
+                                                                : paymentDetails!['failed']
                                                                     ? "Transaction Failed"
                                                                     : "Transaction Failed",
-                                                        DateFormat(
-                                                                "dd/MM/yy | hh:mm a")
-                                                            .format(
-                                                                DateTime.now())
-                                                            .toString()),
+                                                        DateFormat("dd/MM/yy | hh:mm a").format(DateTime.now()).toString()),
                                               );
                                               // Future.microtask(() =>
                                               //     Navigator.push(
@@ -396,12 +388,12 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         thickness: 1,
                       ),
                       TxnDetails(
-                          title: "Sent From",
+                          title: "Account",
                           subTitle:
                               'EQUITAS BANK - ${widget.billerData!['acNo']}',
                           clipBoard: false),
                       TxnDetails(
-                          title: "Sent To",
+                          title: "Biller Name",
                           subTitle: widget.billerName,
                           clipBoard: false),
                       // TxnDetails(
@@ -414,9 +406,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       ),
 
                       TxnDetails(
-                          title: "Bill Number",
-                          subTitle:
-                              widget.billerData!["customerBillID"].toString(),
+                          title: widget
+                              .billerData!["inputSignature"][0].pARAMETERNAME,
+                          subTitle: widget
+                              .billerData!["inputSignature"][0].pARAMETERVALUE,
                           clipBoard: false),
                       // if (widget.historyData.tRANSACTIONSTATUS == 'success')
                       if (paymentDetails!['success'])

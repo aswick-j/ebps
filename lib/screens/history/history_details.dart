@@ -224,18 +224,19 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                                     .historyData
                                                                     .bILLNAME
                                                                     .toString(),
-                                                                BillNumber: widget
+                                                                ParamName: widget
                                                                     .historyData
-                                                                    .bILLNUMBER
+                                                                    .pARAMETERNAME
+                                                                    .toString(),
+                                                                ParamValue: widget
+                                                                    .historyData
+                                                                    .pARAMETERVALUE
                                                                     .toString(),
                                                                 TransactionID: widget
                                                                     .historyData
                                                                     .tRANSACTIONREFERENCEID
                                                                     .toString(),
-                                                                fromAccount: widget
-                                                                    .historyData
-                                                                    .aCCOUNTNUMBER
-                                                                    .toString(),
+                                                                fromAccount: widget.historyData.aCCOUNTNUMBER.toString(),
                                                                 billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
                                                                 status: widget.historyData.tRANSACTIONSTATUS.toString(),
                                                                 TransactionDate: DateFormat('dd/MM/yy | hh:mm a').format(DateTime.parse(widget.historyData.cOMPLETIONDATE.toString()).toLocal())))),
@@ -256,17 +257,21 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                           IconButton(
                                               onPressed: () {
                                                 Printing.layoutPdf(
-                                                  name: "Transaction Receipt",
+                                                  name: widget
+                                                      .historyData.bILLERNAME
+                                                      .toString(),
                                                   onLayout: (PdfPageFormat format) async => generatePdf(
                                                       format,
                                                       widget.billerName
                                                           .toString(),
                                                       widget.historyData.bILLERID
                                                           .toString(),
-                                                      widget.historyData.bILLNAME
+                                                      widget.billName
+                                                          .toString(),
+                                                      widget.historyData.pARAMETERNAME
                                                           .toString(),
                                                       widget.historyData
-                                                          .bILLNUMBER
+                                                          .pARAMETERVALUE
                                                           .toString(),
                                                       widget.historyData
                                                           .tRANSACTIONREFERENCEID
@@ -332,12 +337,12 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                           thickness: 1,
                         ),
                         TxnDetails(
-                            title: "Sent From",
+                            title: "Account",
                             subTitle:
-                                'EQUITAS BANK - ${widget.historyData.aCCOUNTNUMBER.toString()}',
+                                'Equitas Bank - ${widget.historyData.aCCOUNTNUMBER.toString()}',
                             clipBoard: false),
                         TxnDetails(
-                            title: "Sent To",
+                            title: "Biller Name",
                             subTitle: widget.billerName,
                             clipBoard: false),
                         // TxnDetails(
@@ -359,8 +364,9 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                         //         widget.historyData.aPPROVALREFNO.toString(),
                         //     clipBoard: true),
                         TxnDetails(
-                            title: "Bill Number",
-                            subTitle: widget.historyData.bILLNUMBER.toString(),
+                            title: widget.historyData.pARAMETERNAME.toString(),
+                            subTitle:
+                                widget.historyData.pARAMETERVALUE.toString(),
                             clipBoard: false),
                         if (widget.historyData.tRANSACTIONSTATUS == 'success')
                           TxnDetails(
@@ -372,7 +378,12 @@ class _HistoryDetailsState extends State<HistoryDetails> {
 
                         TxnDetails(
                             title: "Status",
-                            subTitle: "Transaction Success",
+                            subTitle: widget.historyData.tRANSACTIONSTATUS
+                                        .toString()
+                                        .toLowerCase() ==
+                                    "success"
+                                ? "Transaction Success"
+                                : "Transaction Failure",
                             clipBoard: false),
                         TxnDetails(
                             title: "Payment Channel",

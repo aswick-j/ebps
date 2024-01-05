@@ -327,7 +327,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                                   buttonTxtColor: showAutopayButtonContent(
                                     savedBillerData![index],
                                   )
-                                      ? Color(0xff00AB44)
+                                      ? Color.fromARGB(255, 16, 113, 55)
                                       : Color(0xff768eb9),
                                   buttonTextWeight: FontWeight.bold,
                                   buttonBorderColor: showAutopayButtonContent(

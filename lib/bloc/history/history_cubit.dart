@@ -40,9 +40,16 @@ class HistoryCubit extends Cubit<HistoryState> {
       };
     }
 
-    if (!isClosed) {
-      emit(HistoryLoading());
+    if (state is HistoryLoading) return;
+
+    final currentState = state;
+    List<HistoryData>? prevHistoryData = <HistoryData>[];
+
+    if (currentState is HistorySuccess) {
+      prevHistoryData = currentState.historyData;
     }
+
+    emit(HistoryLoading(prevHistoryData!, isFirstFetch: pageNumber == 1));
     try {
       final value = await repository!.getHistory(payload);
       // logger.d(value,
@@ -53,7 +60,10 @@ class HistoryCubit extends Cubit<HistoryState> {
           if (value['status'] == 200) {
             HistoryModel? historyModel = HistoryModel.fromJson(value);
             if (!isClosed) {
-              emit(HistorySuccess(historyData: historyModel.data));
+              prevHistoryData
+                  .addAll(historyModel.data as Iterable<HistoryData>);
+
+              emit(HistorySuccess(historyData: prevHistoryData));
             }
           } else {
             if (!isClosed) {
