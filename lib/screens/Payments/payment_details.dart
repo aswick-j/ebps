@@ -138,6 +138,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   Widget build(BuildContext context) {
     handleDialog() {
       showDialog(
+        barrierDismissible: true,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(

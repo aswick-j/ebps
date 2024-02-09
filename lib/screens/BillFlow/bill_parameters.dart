@@ -54,7 +54,7 @@ class _BillParametersState extends State<BillParameters> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormFieldState> _billnameKey = GlobalKey<FormFieldState>();
   dynamic billNameController = TextEditingController();
-  bool isInpuSignLoading = false;
+  bool isInpuSignLoading = true;
 
   @override
   void initState() {

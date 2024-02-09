@@ -411,6 +411,7 @@ class MyRouter {
             builder: (_) => BlocProvider(
                   create: (context) => ComplaintCubit(repository: apiClient),
                   child: RegisterComplaint(
+                    Date: args["Date"],
                     txnRefID: args["txnRefID"],
                     BillerName: args["BillerName"],
                     CategoryName: args["CategoryName"],

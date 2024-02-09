@@ -253,6 +253,7 @@ class _OtpScreenState extends State<OtpScreen> {
   Widget build(BuildContext context) {
     showModalDialog({required int index, required bool Success}) {
       showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
@@ -319,6 +320,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
     handleDialog() {
       showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
@@ -450,6 +452,7 @@ class _OtpScreenState extends State<OtpScreen> {
               }
 
               showDialog(
+                barrierDismissible: false,
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
@@ -505,6 +508,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
               if (state.data != null) {
                 showDialog(
+                  barrierDismissible: false,
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
@@ -679,7 +683,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Enter the OTP we sent to your preferd channel \n by Equitas Bank",
+                                  "Enter the OTP we sent to your preferred channel \n by Equitas Bank",
                                   style: TextStyle(
                                     fontSize: 11.sp,
                                     fontWeight: FontWeight.w400,
@@ -730,7 +734,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 readOnly: enableReadOnly,
                                 focusNode: focusNode,
                                 androidSmsAutofillMethod:
-                                    AndroidSmsAutofillMethod.none,
+                                    AndroidSmsAutofillMethod.smsUserConsentApi,
                                 listenForMultipleSmsOnAndroid: true,
                                 defaultPinTheme: defaultPinTheme,
                                 onChanged: (s) {

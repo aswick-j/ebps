@@ -88,7 +88,10 @@ class _editAutopayState extends State<editAutopay> {
     dateController.text =
         '${widget.autopayData!.pAYMENTDATE.toString()}${getDaySuffix(widget.autopayData!.pAYMENTDATE.toString())}';
     limitGroupRadio = widget.autopayData!.aMOUNTLIMIT ?? 0;
-    maxAmountController.text = widget.autopayData!.mAXIMUMAMOUNT.toString();
+    billPayGroupRadio = widget.autopayData!.iSBIMONTHLY ?? 0;
+    maxAmountController.text =
+        double.parse(widget.autopayData!.mAXIMUMAMOUNT.toString())
+            .toStringAsFixed(2);
     activatesFrom = widget.autopayData!.aCTIVATESFROM != null
         ? widget.autopayData!.aCTIVATESFROM![0].toUpperCase() +
             widget.autopayData!.aCTIVATESFROM!.substring(1)
@@ -99,6 +102,55 @@ class _editAutopayState extends State<editAutopay> {
     BlocProvider.of<MybillersCubit>(context)
         .getEditBillItems(widget.autopayData!.cUSTOMERBILLID);
     super.initState();
+  }
+
+  handleButton() {
+    if (selectedAcc != null &&
+        !accError &&
+        !maxAmountError &&
+        (maxAmountController.text.isNotEmpty &&
+            double.parse(widget.autopayData!.mAXIMUMAMOUNT.toString()) !=
+                double.parse(maxAmountController.text.toString()))) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  handleAutopayUpdate() async {
+    if (handleButton()) {
+      Map<String, dynamic> decodedToken = await getDecodedToken();
+      List decodedToken2 = decodedToken["accounts"].toList();
+      print(decodedToken2);
+      var accID;
+      for (var i = 0; i < decodedToken2.length; i++) {
+        if (decodedToken2[i]["accountID"] ==
+            accountInfo![selectedAcc].accountNumber) {
+          setState(() {
+            accID = decodedToken2[i]["id"];
+          });
+        }
+      }
+      goToData(context, oTPPAGEROUTE, {
+        "from": "edit-auto-pay",
+        "templateName": "edit-auto-pay",
+        "context": context,
+        "autopayData": widget.autopayData,
+        "data": {
+          "accountNumber": accID,
+          "maximumAmount": maxAmountController.text,
+          "paymentDate": selectedDate,
+          "isBimonthly": billPayGroupRadio,
+          "activatesFrom": activatesFrom == "Immediately"
+              ? null
+              : activatesFrom.toLowerCase(),
+          "isActive": isActive,
+          "billID": widget.customerBillID,
+          "billerName": widget.billerName,
+          "amountLimit": limitGroupRadio,
+        }
+      });
+    }
   }
 
   @override
@@ -795,62 +847,12 @@ class _editAutopayState extends State<editAutopay> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () async {
-                        if (selectedAcc != null &&
-                            !accError &&
-                            !maxAmountError &&
-                            (maxAmountController.text.isNotEmpty &&
-                                double.parse(widget.autopayData!.mAXIMUMAMOUNT
-                                        .toString()) !=
-                                    double.parse(
-                                        maxAmountController.text.toString()))) {
-                          Map<String, dynamic> decodedToken =
-                              await getDecodedToken();
-                          List decodedToken2 =
-                              decodedToken["accounts"].toList();
-                          print(decodedToken2);
-                          var accID;
-                          for (var i = 0; i < decodedToken2.length; i++) {
-                            if (decodedToken2[i]["accountID"] ==
-                                accountInfo![selectedAcc].accountNumber) {
-                              setState(() {
-                                accID = decodedToken2[i]["id"];
-                              });
-                            }
-                          }
-                          goToData(context, oTPPAGEROUTE, {
-                            "from": "edit-auto-pay",
-                            "templateName": "edit-auto-pay",
-                            "context": context,
-                            "autopayData": widget.autopayData,
-                            "data": {
-                              "accountNumber": accID,
-                              "maximumAmount": maxAmountController.text,
-                              "paymentDate": selectedDate,
-                              "isBimonthly": billPayGroupRadio,
-                              "activatesFrom": activatesFrom == "Immediately"
-                                  ? null
-                                  : activatesFrom.toLowerCase(),
-                              "isActive": isActive,
-                              "billID": widget.customerBillID,
-                              "billerName": widget.billerName,
-                              "amountLimit": limitGroupRadio,
-                            }
-                          });
-                        }
+                        handleAutopayUpdate();
                       },
                       buttonText: "Update",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: selectedAcc != null &&
-                              !accError &&
-                              !maxAmountError &&
-                              (maxAmountController.text.isNotEmpty &&
-                                  double.parse(widget.autopayData!.mAXIMUMAMOUNT
-                                          .toString()) !=
-                                      double.parse(
-                                          maxAmountController.text.toString()))
-                          ? CLR_PRIMARY
-                          : Colors.grey,
+                      buttonColor: handleButton() ? CLR_PRIMARY : Colors.grey,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,
                       buttonTextSize: 14.sp,

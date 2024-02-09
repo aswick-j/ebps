@@ -3,7 +3,9 @@
 const String ACCOUNT_INFO_URL = "/payment/account-info";
 const String AUTOPAY_DELETE_URL = "/auto-pay/delete/";
 
-const String BASE_URL = "https://digiservicesuat.equitasbank.com/api";
+const String BASE_URL = "https://digiservicesuat.equitasbank.com/bbps/api";
+// const String BASE_URL =
+//     "https://digiservicesuat.equitasbank.com/bbpsnew-node-server-uat-new/api";
 
 const String BILLER_URL = "/billers/billers-by-category/";
 const String CATEGORIES_URL = "/categories/";

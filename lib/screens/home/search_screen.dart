@@ -168,11 +168,28 @@ class _SearchScreenState extends State<SearchScreen> {
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                   onTap: () {
-                                    goToData(context, bILLERPARAMROUTE, {
-                                      "BILLER_DATA":
-                                          BillerSearchResults![index],
-                                      "BILLER_INPUT_SIGN": []
-                                    });
+                                    if (BillerSearchResults![index]
+                                            .cATEGORYNAME!
+                                            .toLowerCase() ==
+                                        "mobile prepaid") {
+                                      goToData(
+                                          context, pREPAIDBILLERPARAMROUTE, {
+                                        "BILLER_DATA":
+                                            BillerSearchResults![index],
+                                        "BILLER_INPUT_SIGN": []
+                                      });
+                                    } else {
+                                      goToData(context, bILLERPARAMROUTE, {
+                                        "BILLER_DATA":
+                                            BillerSearchResults![index],
+                                        "BILLER_INPUT_SIGN": []
+                                      });
+                                    }
+                                    // goToData(context, bILLERPARAMROUTE, {
+                                    //   "BILLER_DATA":
+                                    //       BillerSearchResults![index],
+                                    //   "BILLER_INPUT_SIGN": []
+                                    // });
                                   },
                                   child: ListTile(
                                       contentPadding: EdgeInsets.only(

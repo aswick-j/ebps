@@ -14,16 +14,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 class RegisterComplaint extends StatefulWidget {
   String txnRefID;
   String BillerName;
   String CategoryName;
+  String Date;
   RegisterComplaint({
     super.key,
     required this.txnRefID,
     required this.BillerName,
     required this.CategoryName,
+    required this.Date,
   });
 
   @override
@@ -62,7 +65,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
     BlocProvider.of<ComplaintCubit>(context).submitComplaint(data);
   }
 
-  handleDialog({required bool success}) {
+  handleDialog({required bool success, required BuildContext ctx}) {
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -177,6 +180,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                       child: MyAppButton(
                           onPressed: () {
                             goBack(context);
+                            goBack(ctx);
                           },
                           buttonText: "Okay",
                           buttonTxtColor: BTN_CLR_ACTIVE,
@@ -228,15 +232,15 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
               } else if (state is ComplaintSubmitSuccess) {
                 LoaderOverlay.of(context).hide();
                 REG_CMP_ID = state.data.toString();
-                handleDialog(success: true);
+                handleDialog(success: true, ctx: context);
               } else if (state is ComplaintSubmitFailed) {
                 ComplaintMSG = state.message.toString();
                 LoaderOverlay.of(context).hide();
-                handleDialog(success: false);
+                handleDialog(success: false, ctx: context);
               } else if (state is ComplaintSubmitError) {
                 ComplaintMSG = state.message.toString();
 
-                handleDialog(success: false);
+                handleDialog(success: false, ctx: context);
 
                 LoaderOverlay.of(context).hide();
               }
@@ -277,9 +281,14 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                       mainAxisSpacing: 10.h,
                                       children: [
                                         billerDetail(
-                                            "Date", "01/08/2023", context),
-                                        billerDetail(
-                                            "Refernce ID", "TRAN1234", context),
+                                            "Date",
+                                            DateFormat('dd/MM/yy | hh:mm a')
+                                                .format(DateTime.parse(
+                                                        widget.Date.toString())
+                                                    .toLocal()),
+                                            context),
+                                        billerDetail("Transaction ID",
+                                            widget.txnRefID, context),
                                       ],
                                     )),
                                 Padding(

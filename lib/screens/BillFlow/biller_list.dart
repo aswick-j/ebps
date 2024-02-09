@@ -7,6 +7,8 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/billers_model.dart';
+import 'package:ebps/screens/nodataFound.dart';
+import 'package:ebps/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,6 +26,7 @@ class BillerList extends StatefulWidget {
 class _BillerListState extends State<BillerList> {
   final infiniteScrollController = ScrollController();
   List<BillersData>? BillerSearchResults = [];
+  bool isBillSerachLoading = false;
 
   List<BillersData>? Allbiller = [];
   bool isAllBiller = false;
@@ -74,13 +77,15 @@ class _BillerListState extends State<BillerList> {
         body: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
           if (state is AllbillerListLoading && state.isFirstFetch) {}
           // bool isLoading = false;
-          // isAllBiller = true;
+          isAllBiller = true;
           if (state is AllbillerListLoading) {
             Allbiller = state.prevData;
             // isLoading = true;
             isAllBiller = false;
           } else if (state is AllbillerListSuccess) {
             Allbiller = state.allbillerList;
+            isAllBiller = false;
+
             // isLoading = false;
           } else if (state is AllbillerListFailed) {
             isAllBiller = false;
@@ -92,10 +97,15 @@ class _BillerListState extends State<BillerList> {
           }
 
           if (state is BillersSearchLoading) {
+            isBillSerachLoading = true;
           } else if (state is BillersSearchSuccess) {
+            isBillSerachLoading = false;
             BillerSearchResults = state.searchResultsData;
           } else if (state is BillersSearchFailed) {
-          } else if (state is BillersSearchError) {}
+            isBillSerachLoading = false;
+          } else if (state is BillersSearchError) {
+            isBillSerachLoading = false;
+          }
           return Column(children: [
             Padding(
               padding: EdgeInsets.all(8.0.r),
@@ -189,8 +199,21 @@ class _BillerListState extends State<BillerList> {
                       ),
                     ),
                     SizedBox(height: 10.h),
-                    if (isAllBiller) Text("Loading...."),
-                    if (!isAllBiller)
+                    if (isBillSerachLoading)
+                      Center(
+                        child: Container(
+                          height: 500.h,
+                          child: FlickrLoader(),
+                        ),
+                      ),
+                    if (isAllBiller && BillerSearchResults!.isEmpty)
+                      Container(
+                        height: 500.h,
+                        child: NoDataFound(
+                          message: "No Billers Found",
+                        ),
+                      ),
+                    if (!isBillSerachLoading || !isAllBiller)
                       Container(
                         height: 480.h,
                         child: ListView.builder(

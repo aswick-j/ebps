@@ -148,6 +148,7 @@ class _BillerDetailsState extends State<BillerDetails> {
   Widget build(BuildContext context) {
     handleDialog() {
       showDialog(
+        barrierDismissible: true,
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(

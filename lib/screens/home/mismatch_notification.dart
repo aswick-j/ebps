@@ -6,6 +6,7 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/services/api.dart';
+import 'package:ebps/widget/animated_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -228,39 +229,96 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                               ),
                               Expanded(
                                 child: MyAppButton(
-                                    onPressed: () async {
-                                      await setSharedNotificationValue(
+                                    onPressed: () {
+                                      setSharedNotificationValue(
                                           "NOTIFICATION", false);
 
-                                      goBack(context);
-                                      goToData(
-                                          widget.context, eDITAUTOPAYROUTE, {
-                                        "billerName": widget
-                                            .allautoPayData![index].bILLERNAME,
-                                        "categoryName": "sss",
-                                        "lastPaidAmount": widget
-                                            .allautoPayData![index].dUEAMOUNT,
-                                        "billName": widget
-                                            .allautoPayData![index].bILLNAME,
-                                        "customerBillID": widget
-                                            .allautoPayData![index]
-                                            .cUSTOMERBILLID
-                                            .toString(),
-                                        "AutoDateMisMatch": widget
-                                                    .allautoPayData![index]
-                                                    .rESETDATE ==
-                                                1
-                                            ? true
-                                            : false,
-                                        "DebitLimitMisMatch": widget
-                                                    .allautoPayData![index]
-                                                    .rESETLIMIT ==
-                                                1
-                                            ? true
-                                            : false,
-                                        "autopayData":
-                                            widget.allautoPayData![index],
-                                      });
+                                      if (widget.allautoPayData![index]
+                                                  .pAYMENTDATE ==
+                                              DateTime.now().day.toString() ||
+                                          widget.allautoPayData![index]
+                                                  .iSACTIVE ==
+                                              0) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext ctx) {
+                                            return AlertDialog(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.r),
+                                              ),
+                                              content: AnimatedDialog(
+                                                  title: widget
+                                                              .allautoPayData![
+                                                                  index]
+                                                              .pAYMENTDATE ==
+                                                          DateTime.now()
+                                                              .day
+                                                              .toString()
+                                                      ? " We are unable to edit your autopay as the autopay is scheduled for today"
+                                                      : "We can't edit your Autopay because it's currently paused. Please enable it to make changes.",
+                                                  subTitle: "",
+                                                  child: Icon(
+                                                    Icons.close,
+                                                    color: Colors.white,
+                                                  ),
+                                                  showSub: false,
+                                                  shapeColor: CLR_ERROR),
+                                              actions: <Widget>[
+                                                Align(
+                                                  alignment: Alignment.center,
+                                                  child: MyAppButton(
+                                                      onPressed: () {
+                                                        goBack(ctx);
+                                                      },
+                                                      buttonText: "Okay",
+                                                      buttonTxtColor:
+                                                          BTN_CLR_ACTIVE,
+                                                      buttonBorderColor:
+                                                          Colors.transparent,
+                                                      buttonColor: CLR_PRIMARY,
+                                                      buttonSizeX: 10,
+                                                      buttonSizeY: 40,
+                                                      buttonTextSize: 14,
+                                                      buttonTextWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        goBack(context);
+                                        goToData(
+                                            widget.context, eDITAUTOPAYROUTE, {
+                                          "billerName": widget
+                                              .allautoPayData![index]
+                                              .bILLERNAME,
+                                          "categoryName": "sss",
+                                          "lastPaidAmount": widget
+                                              .allautoPayData![index].dUEAMOUNT,
+                                          "billName": widget
+                                              .allautoPayData![index].bILLNAME,
+                                          "customerBillID": widget
+                                              .allautoPayData![index]
+                                              .cUSTOMERBILLID
+                                              .toString(),
+                                          "AutoDateMisMatch": widget
+                                                      .allautoPayData![index]
+                                                      .rESETDATE ==
+                                                  1
+                                              ? true
+                                              : false,
+                                          "DebitLimitMisMatch": widget
+                                                      .allautoPayData![index]
+                                                      .rESETLIMIT ==
+                                                  1
+                                              ? true
+                                              : false,
+                                          "autopayData":
+                                              widget.allautoPayData![index],
+                                        });
+                                      }
                                     },
                                     buttonText: "Proceed",
                                     buttonTxtColor: BTN_CLR_ACTIVE,

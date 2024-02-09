@@ -727,45 +727,43 @@ class _createAutopayState extends State<createAutopay> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () async {
-                        if (selectedAcc != null &&
-                            !accError &&
-                            !maxAmountError) {
-                          Map<String, dynamic> decodedToken =
-                              await getDecodedToken();
-                          List decodedToken2 =
-                              decodedToken["accounts"].toList();
-                          print(decodedToken2);
-                          var accID;
-                          for (var i = 0; i < decodedToken2.length; i++) {
-                            if (decodedToken2[i]["accountID"] ==
-                                accountInfo![selectedAcc].accountNumber) {
-                              setState(() {
-                                accID = decodedToken2[i]["id"];
-                              });
-                            }
+                        // if (selectedAcc != null &&
+                        //     !accError &&
+                        //     !maxAmountError) {
+                        Map<String, dynamic> decodedToken =
+                            await getDecodedToken();
+                        List decodedToken2 = decodedToken["accounts"].toList();
+                        print(decodedToken2);
+                        var accID;
+                        for (var i = 0; i < decodedToken2.length; i++) {
+                          if (decodedToken2[i]["accountID"] ==
+                              accountInfo![selectedAcc].accountNumber) {
+                            setState(() {
+                              accID = decodedToken2[i]["id"];
+                            });
                           }
-                          print("====ACCID=====");
-                          print(accID);
-                          goToData(context, oTPPAGEROUTE, {
-                            "from": "create-auto-pay",
-                            "templateName": "create-auto-pay",
-                            "context": context,
-                            "data": {
-                              "accountNumber": accID,
-                              "maximumAmount": maxAmountController.text,
-                              "paymentDate": selectedDate,
-                              "isBimonthly": billPayGroupRadio,
-                              "activatesFrom": activatesFrom == "Immediately"
-                                  ? null
-                                  : activatesFrom.toLowerCase(),
-                              "isActive":
-                                  activatesFrom == "Immediately" ? 1 : 0,
-                              "billID": widget.customerBillID,
-                              "billerName": widget.billerName,
-                              "amountLimit": limitGroupRadio
-                            }
-                          });
                         }
+                        print("====ACCID=====");
+                        print(accID);
+                        goToData(context, oTPPAGEROUTE, {
+                          "from": "create-auto-pay",
+                          "templateName": "create-auto-pay",
+                          "context": context,
+                          "data": {
+                            "accountNumber": accID,
+                            "maximumAmount": maxAmountController.text,
+                            "paymentDate": selectedDate,
+                            "isBimonthly": billPayGroupRadio,
+                            "activatesFrom": activatesFrom == "Immediately"
+                                ? null
+                                : activatesFrom.toLowerCase(),
+                            "isActive": activatesFrom == "Immediately" ? 1 : 0,
+                            "billID": widget.customerBillID,
+                            "billerName": widget.billerName,
+                            "amountLimit": limitGroupRadio
+                          }
+                        });
+                        // }
                       },
                       buttonText: "Create",
                       buttonTxtColor: BTN_CLR_ACTIVE,

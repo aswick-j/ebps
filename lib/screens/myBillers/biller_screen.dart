@@ -133,6 +133,23 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
       return find;
     }
 
+    getAllAutopayList(customerBILLID) {
+      try {
+        List<AllConfigurationsData>? autopayData = [];
+        for (int i = 0; i < allautoPaymentList!.length; i++) {
+          for (int j = 0; j < allautoPaymentList![i].data!.length; j++) {
+            autopayData.add(allautoPaymentList![i].data![j]);
+          }
+        }
+
+        List<AllConfigurationsData>? find = autopayData
+            .where((item) => item.cUSTOMERBILLID == customerBILLID)
+            .toList();
+
+        return (find.isNotEmpty ? find[0].iSACTIVE : null);
+      } catch (e) {}
+    }
+
     getDueAmount(customerBILLID) {
       try {
         List<UpcomingDuesData>? find = upcomingDuesData!
@@ -293,11 +310,15 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                               return MyBillersContainer(
                                   upcomingDueData: getUpcmoingDueList(
                                       savedBillerData![index].cUSTOMERBILLID),
-                                  buttonText: showAutopayButtonContent(
-                                    savedBillerData![index],
-                                  )
-                                      ? 'Autopay Enabled'
-                                      : "Enable Autopay",
+                                  buttonText:
+                                      getAllAutopayList(savedBillerData![index].cUSTOMERBILLID) ==
+                                              0
+                                          ? "Autopay Paused"
+                                          : showAutopayButtonContent(
+                                              savedBillerData![index],
+                                            )
+                                              ? 'Autopay Enabled'
+                                              : "Enable Autopay",
                                   iconPath: BILLER_LOGO(savedBillerData![index]
                                       .bILLERNAME
                                       .toString()),
@@ -306,25 +327,25 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                                                   .cUSTOMERBILLID) !=
                                           ''
                                       ? 'Upcoming Autopay'
-                                      : getUpcmoingDueData(
-                                                  savedBillerData![index]
-                                                      .cUSTOMERBILLID) !=
+                                      : getUpcmoingDueData(savedBillerData![index]
+                                                  .cUSTOMERBILLID) !=
                                               ""
                                           ? "Upcoming Due"
                                           : "",
-                                  upcomingTXT_CLR_DEFAULT:
-                                      getupcomingAutoPaymentList(
-                                                  savedBillerData![index]
-                                                      .cUSTOMERBILLID) !=
-                                              ''
-                                          ? Color(0xff00AB44)
-                                          : getUpcmoingDueData(savedBillerData![index].cUSTOMERBILLID) != ""
-                                              ? CLR_ASTRIX
-                                              : Colors.black,
+                                  upcomingTXT_CLR_DEFAULT: getupcomingAutoPaymentList(
+                                              savedBillerData![index].cUSTOMERBILLID) !=
+                                          ''
+                                      ? Color(0xff00AB44)
+                                      : getUpcmoingDueData(savedBillerData![index].cUSTOMERBILLID) != ""
+                                          ? CLR_ASTRIX
+                                          : Colors.black,
                                   showButton: showAutopayBtn(savedBillerData![index]),
                                   containerBorderColor: Color(0xffD1D9E8),
                                   buttonColor: Color.fromARGB(255, 255, 255, 255),
-                                  buttonTxtColor: showAutopayButtonContent(
+                                  buttonTxtColor: 
+                                   getAllAutopayList(savedBillerData![index].cUSTOMERBILLID) ==
+                                              0?Color.fromARGB(255, 171, 39, 30):
+                                  showAutopayButtonContent(
                                     savedBillerData![index],
                                   )
                                       ? Color.fromARGB(255, 16, 113, 55)

@@ -77,6 +77,7 @@ const ICON_WATER = "packages/ebps/assets/icon/icon_water.svg";
 
 const ICON_EDIT = "packages/ebps/assets/icon/icon_edit.svg";
 const ICON_DELETE = "packages/ebps/assets/icon/icon_delete.svg";
+const ICON_DELETE_RED = "packages/ebps/assets/icon/icon_delete_red.svg";
 const ICON_FAILED = "packages/ebps/assets/icon/icon_failed.svg";
 const ICON_PENDING = "packages/ebps/assets/icon/icon_pending.svg";
 const ICON_THREEMENU = "packages/ebps/assets/icon/icon_threeDotsMenu.svg";

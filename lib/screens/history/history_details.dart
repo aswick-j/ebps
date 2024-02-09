@@ -431,6 +431,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                         child: MyAppButton(
                             onPressed: () {
                               goToData(context, cOMPLAINTREGISTERROUTE, {
+                                "Date":widget.historyData.cOMPLETIONDATE,
                                 "txnRefID": widget
                                     .historyData.tRANSACTIONREFERENCEID
                                     .toString(),

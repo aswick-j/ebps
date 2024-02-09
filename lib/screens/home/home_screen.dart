@@ -188,7 +188,20 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
                 BillCategories(),
                 SizedBox(
                   height: 10.h,
-                )
+                ),
+                Center(
+                  child: Text(
+                    "V 0.0.18",
+                    style: TextStyle(
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xff4c4c4c),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
               ],
             );
           },

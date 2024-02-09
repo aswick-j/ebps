@@ -204,16 +204,22 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                 });
               }
               if (state is billerFilterLoading) {
-                isHistoryFilterLoading = true;
+                setState(() {
+                  isHistoryFilterLoading = true;
+                });
               } else if (state is billerFilterSuccess) {
                 setState(() {
                   billerFilterData = state.billerFilterData;
                   isHistoryFilterLoading = false;
                 });
               } else if (state is billerFilterFailed) {
-                isHistoryFilterLoading = false;
+                setState(() {
+                  isHistoryFilterLoading = false;
+                });
               } else if (state is billerFilterError) {
-                isHistoryFilterLoading = false;
+                setState(() {
+                  isHistoryFilterLoading = false;
+                });
               }
             }),
             BlocListener<HomeCubit, HomeState>(
@@ -702,6 +708,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                           if (isHistoryFilterLoading)
                             Container(
                                 height: 200, width: 200, child: FlickrLoader()),
+                          // if (billerFilterData!.isEmpty) SizedBox(height: 85.h),
                           if (billerFilterData!.isNotEmpty)
                             Padding(
                               padding: EdgeInsets.symmetric(

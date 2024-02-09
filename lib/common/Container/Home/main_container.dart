@@ -201,7 +201,7 @@ class MainContainer extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                SvgPicture.asset(ICON_DELETE,
+                                SvgPicture.asset(ICON_DELETE_RED,
                                     height: 50.h, width: 50.w),
                                 Text(
                                   "Are You Sure You Want To Delete",
