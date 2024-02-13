@@ -1,18 +1,22 @@
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AnimatedDialog extends StatefulWidget {
   final String title;
   final String subTitle;
   final Widget child;
   final Color shapeColor;
+  final bool showImgIcon;
   bool? showSub;
   AnimatedDialog({
     super.key,
     required this.title,
     required this.subTitle,
     required this.child,
+    required this.showImgIcon,
     this.showSub,
     required this.shapeColor,
   });
@@ -109,9 +113,23 @@ class _AnimatedDialogState extends State<AnimatedDialog>
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(
-                      height: 100.h,
-                    ),
+                    if (widget.showImgIcon)
+                      Column(
+                        children: [
+                          SvgPicture.asset(
+                            ICON_SUCCESS,
+                            height: 60.h,
+                            width: 60.h,
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                        ],
+                      ),
+                    if (!widget.showImgIcon)
+                      SizedBox(
+                        height: 100.h,
+                      ),
                     Text(
                       widget.title,
                       textAlign: TextAlign.center,
@@ -135,24 +153,34 @@ class _AnimatedDialogState extends State<AnimatedDialog>
                   ],
                 ),
               ),
-              Positioned.fill(
-                child: SlideTransition(
-                  position: _yAnimation,
-                  child: ScaleTransition(
-                    scale: _containerScaleAnimation,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: widget.shapeColor,
-                      ),
-                      child: ScaleTransition(
-                        scale: _iconScaleAnimation,
-                        child: widget.child,
+              // if (widget.showImgIcon)
+              //   Positioned(
+              //       left: 75.w,
+              //       top: 20.h,
+              //       child: SvgPicture.asset(
+              //         ICON_SUCCESS,
+              //         height: 60.h,
+              //         width: 60.h,
+              //       )),
+              if (!widget.showImgIcon)
+                Positioned.fill(
+                  child: SlideTransition(
+                    position: _yAnimation,
+                    child: ScaleTransition(
+                      scale: _containerScaleAnimation,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: widget.shapeColor,
+                        ),
+                        child: ScaleTransition(
+                          scale: _iconScaleAnimation,
+                          child: widget.child,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              )
+                )
             ],
           ),
         ),

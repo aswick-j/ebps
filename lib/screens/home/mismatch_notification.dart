@@ -248,6 +248,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                     BorderRadius.circular(12.r),
                                               ),
                                               content: AnimatedDialog(
+                                                  showImgIcon: false,
                                                   title: widget
                                                               .allautoPayData![
                                                                   index]

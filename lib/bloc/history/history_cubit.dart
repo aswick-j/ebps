@@ -62,8 +62,11 @@ class HistoryCubit extends Cubit<HistoryState> {
             if (!isClosed) {
               prevHistoryData
                   .addAll(historyModel.data as Iterable<HistoryData>);
-
-              emit(HistorySuccess(historyData: prevHistoryData));
+              if (pageNumber == 1) {
+                emit(HistorySuccess(historyData: historyModel.data));
+              } else {
+                emit(HistorySuccess(historyData: prevHistoryData));
+              }
             }
           } else {
             if (!isClosed) {

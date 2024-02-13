@@ -4,14 +4,14 @@ import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/History/history_container.dart';
+import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getTransactionStatus.dart';
-import 'package:ebps/models/categories_model.dart';
-import 'package:ebps/models/category_biller_filter_history._model.dart';
 import 'package:ebps/models/history_model.dart';
+import 'package:ebps/screens/history/history_filter.dart';
 import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/services/api_client.dart';
 import 'package:ebps/widget/date_picker.dart';
@@ -55,8 +55,6 @@ class HistoryScreenUI extends StatefulWidget {
 class _HistoryScreenUIState extends State<HistoryScreenUI> {
   dynamic fromdateController = TextEditingController();
   dynamic todateController = TextEditingController();
-  dynamic catController = TextEditingController();
-  dynamic billerController = TextEditingController();
 
   DateTime? fromDate;
   DateTime? toFirstDate;
@@ -64,6 +62,10 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
 
   String? categoryID;
   String? billerID;
+  String? categoryName;
+  String? billerName;
+  bool showClrFltr = false;
+  bool showToDateErr = false;
 
   List<String> Periods = [
     "Today",
@@ -79,8 +81,6 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
   final infiniteScrollController = ScrollController();
 
   List<HistoryData>? historyData = [];
-  List<Data>? billerFilterData = [];
-  List<CategorieData>? categoriesData = [];
 
   bool isCategoryLoading = false;
   bool isHistoryLoading = true;
@@ -107,9 +107,13 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
             pageNumber++;
           });
           BlocProvider.of<HistoryCubit>(context).getHistoryDetails({
-            "startDate": DateTime(2016).toLocal().toIso8601String(),
-            "endDate": DateTime.now().toLocal().toIso8601String(),
-          }, "", "", pageNumber, true);
+            "startDate": fromDate != null
+                ? fromDate!.toLocal().toIso8601String()
+                : DateTime(2016).toLocal().toIso8601String(),
+            "endDate": toDate != null
+                ? toDate!.toLocal().toIso8601String()
+                : DateTime.now().toLocal().toIso8601String(),
+          }, categoryID, billerID, pageNumber, true);
         }
       }
     });
@@ -117,14 +121,13 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
 
   @override
   Widget build(BuildContext context) {
-    handleBiller(categoryName, category_ID) {
+    handleFilterModal(biller_id, biller_name, category_ID, category_name) {
       setState(() {
-        catController.text = categoryName;
+        billerID = biller_id;
         categoryID = category_ID;
+        billerName = biller_name;
+        categoryName = category_name;
       });
-
-      billerController.clear();
-      BlocProvider.of<HistoryCubit>(context).billerFilter(category_ID);
     }
 
     handleFilter() {
@@ -135,8 +138,11 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
         "endDate": toDate != null
             ? toDate!.toLocal().toIso8601String()
             : DateTime.now().toLocal().toIso8601String(),
-      }, categoryID, billerID, "1", true);
+      }, categoryID, billerID, pageNumber, true);
       goBack(context);
+      setState(() {
+        showClrFltr = true;
+      });
     }
 
     return Scaffold(
@@ -178,6 +184,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
               setState(() {
                 isHistoryMoreLoading = true;
                 isHistoryLoading = true;
+                historyData = [];
               });
 
               if (state is HistoryLoading) {
@@ -203,43 +210,36 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                   isHistoryMoreLoading = false;
                 });
               }
-              if (state is billerFilterLoading) {
-                setState(() {
-                  isHistoryFilterLoading = true;
-                });
-              } else if (state is billerFilterSuccess) {
-                setState(() {
-                  billerFilterData = state.billerFilterData;
-                  isHistoryFilterLoading = false;
-                });
-              } else if (state is billerFilterFailed) {
-                setState(() {
-                  isHistoryFilterLoading = false;
-                });
-              } else if (state is billerFilterError) {
-                setState(() {
-                  isHistoryFilterLoading = false;
-                });
-              }
             }),
-            BlocListener<HomeCubit, HomeState>(
-              listener: (context, state) {
-                if (state is CategoriesLoading) {
-                  isCategoryLoading = true;
-                } else if (state is CategoriesSuccess) {
-                  categoriesData = state.CategoriesList;
-
-                  isCategoryLoading = false;
-                } else if (state is CategoriesFailed) {
-                  isCategoryLoading = false;
-                } else if (state is CategoriesError) {
-                  isCategoryLoading = false;
-                }
-              },
-            )
           ],
               child: Column(
                 children: [
+                  if (!isHistoryLoading && showClrFltr)
+                    InkWell(
+                      onTap: () =>
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Navigator.of(context).pushReplacement(
+                          CupertinoPageRoute(
+                              fullscreenDialog: true,
+                              builder: (context) => BottomNavBar(
+                                    SelectedIndex: 2,
+                                  )),
+                        );
+                      }),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: 18.0.w, right: 18.w, top: 0.h, bottom: 5.h),
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: MyAppText(
+                            data: "Clear Filters",
+                            size: 14.0.sp,
+                            color: CLR_PRIMARY,
+                            weight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
                   if (!isHistoryLoading)
                     Container(
                       height: 550.h,
@@ -282,11 +282,11 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                               message: "No Transactions Found",
                             ),
                     ),
-                  if (isHistoryMoreLoading)
-                    Container(
-                        height: 50.h,
-                        width: double.infinity,
-                        child: Center(child: FlickrLoader())),
+                  // if (isHistoryMoreLoading)
+                  //   Container(
+                  //       height: 50.h,
+                  //       width: double.infinity,
+                  //       child: Center(child: FlickrLoader())),
                   if (isHistoryLoading)
                     Container(
                         height: 500.h,
@@ -302,6 +302,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
           return FloatingActionButton(
             onPressed: () {
               showModalBottomSheet(
+                  isDismissible: false,
                   elevation: 10,
                   isScrollControlled: true,
                   context: context,
@@ -421,6 +422,9 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                               onChanged: (val) {},
                               onTap: () async {
                                 if (fromdateController.text.isNotEmpty) {
+                                  setState(() {
+                                    showToDateErr = false;
+                                  });
                                   DateTime? pickedDate = await DatePicker(
                                       context,
                                       fromdateController.text,
@@ -435,7 +439,9 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                     });
                                   }
                                 } else {
-                                  print("Please select 'From Date' first.");
+                                  setState(() {
+                                    showToDateErr = true;
+                                  });
                                 }
                               },
                               validator: (inputValue) {
@@ -448,7 +454,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                 fillColor:
                                     const Color(0xffD1D9E8).withOpacity(0.2),
                                 filled: true,
-                                errorText: fromdateController.text.isEmpty
+                                errorText: showToDateErr
                                     ? "Please select From Date first."
                                     : null,
                                 // errorStyle: TextStyle(color: Colors.green),
@@ -468,488 +474,10 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 16.h),
-                            child: TextFormField(
-                              controller: catController,
-                              readOnly: true,
-                              autocorrect: false,
-                              enableSuggestions: false,
-                              keyboardType: TextInputType.text,
-                              onChanged: (val) {},
-                              onTap: () {
-                                showModalBottomSheet(
-                                    elevation: 10,
-                                    useRootNavigator: true,
-                                    isScrollControlled: true,
-                                    context: context,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(16.0.r),
-                                      ),
-                                    ),
-                                    builder: (context) {
-                                      return DraggableScrollableSheet(
-                                          initialChildSize: 0.50,
-                                          minChildSize: 0.25,
-                                          maxChildSize: 0.95,
-                                          expand: false,
-                                          controller: dragController,
-                                          builder:
-                                              (context, scrollController) =>
-                                                  StatefulBuilder(builder:
-                                                      (context,
-                                                          StateSetter
-                                                              setState) {
-                                                    return SingleChildScrollView(
-                                                      controller:
-                                                          scrollController,
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: <Widget>[
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    top: 15.h,
-                                                                    bottom:
-                                                                        15.h,
-                                                                    left: 15.w,
-                                                                    right:
-                                                                        15.w),
-                                                            child: Row(
-                                                              children: [
-                                                                Icon(
-                                                                  Icons
-                                                                      .menu_outlined,
-                                                                  color: Color(
-                                                                      0xff1b438b),
-                                                                ),
-                                                                SizedBox(
-                                                                    width:
-                                                                        20.w),
-                                                                Text(
-                                                                  "Selcet Categories",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        16.sp,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    color: Color(
-                                                                        0xff1b438b),
-                                                                  ),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                )
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                    color: Colors
-                                                                        .grey
-                                                                        .withOpacity(
-                                                                            0.5),
-                                                                    spreadRadius:
-                                                                        0.6,
-                                                                    blurRadius:
-                                                                        4,
-                                                                    offset:
-                                                                        Offset(
-                                                                            0,
-                                                                            2)),
-                                                              ],
-                                                            ),
-                                                            child: Divider(
-                                                              height: 1.h,
-                                                              thickness: 1,
-                                                              color: Colors.grey
-                                                                  .withOpacity(
-                                                                      0.1),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 10.h,
-                                                          ),
-                                                          Container(
-                                                            child: ListView
-                                                                .builder(
-                                                              scrollDirection:
-                                                                  Axis.vertical,
-                                                              shrinkWrap: true,
-                                                              itemCount:
-                                                                  categoriesData!
-                                                                      .length,
-                                                              physics:
-                                                                  const BouncingScrollPhysics(),
-                                                              // controller: infiniteScrollController,
-                                                              itemBuilder:
-                                                                  (context,
-                                                                      index) {
-                                                                return GestureDetector(
-                                                                    onTap: () {
-                                                                      handleBiller(
-                                                                          categoriesData![index]
-                                                                              .cATEGORYNAME
-                                                                              .toString(),
-                                                                          categoriesData![index]
-                                                                              .iD
-                                                                              .toString());
-                                                                      goBack(
-                                                                          context);
-                                                                    },
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsets.symmetric(
-                                                                          horizontal: 16
-                                                                              .w,
-                                                                          vertical:
-                                                                              2.h),
-                                                                      child: ListTile(
-                                                                          contentPadding: EdgeInsets.only(left: 6.w, right: 6.w, top: 0),
-                                                                          leading: Container(
-                                                                            width:
-                                                                                45.w,
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: EdgeInsets.all(13.r),
-                                                                              child: SvgPicture.asset(LOGO_BBPS),
-                                                                            ),
-                                                                          ),
-                                                                          title: Text(
-                                                                            categoriesData![index].cATEGORYNAME.toString(),
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 14.sp,
-                                                                              fontWeight: FontWeight.w400,
-                                                                              color: Color(0xff000000),
-                                                                              height: 23 / 14,
-                                                                            ),
-                                                                            textAlign:
-                                                                                TextAlign.left,
-                                                                          )),
-                                                                    ));
-                                                              },
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    top: 0.h,
-                                                                    bottom:
-                                                                        16.h,
-                                                                    left: 16.w,
-                                                                    right:
-                                                                        16.w),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Expanded(
-                                                                  child: MyAppButton(
-                                                                      onPressed: () {
-                                                                        goBack(
-                                                                            context);
-                                                                      },
-                                                                      buttonText: "Cancel",
-                                                                      buttonTxtColor: CLR_PRIMARY,
-                                                                      buttonBorderColor: Colors.transparent,
-                                                                      buttonColor: BTN_CLR_ACTIVE,
-                                                                      buttonSizeX: 10.h,
-                                                                      buttonSizeY: 40.w,
-                                                                      buttonTextSize: 14.sp,
-                                                                      buttonTextWeight: FontWeight.w500),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 10.h,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  }));
-                                    });
-                              },
-                              validator: (inputValue) {
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                  fillColor:
-                                      const Color(0xffD1D9E8).withOpacity(0.2),
-                                  filled: true,
-                                  labelStyle:
-                                      const TextStyle(color: Color(0xff1b438b)),
-                                  enabledBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff1B438B)),
-                                  ),
-                                  focusedBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff1B438B)),
-                                  ),
-                                  border: const UnderlineInputBorder(),
-                                  labelText: 'Select Categories',
-                                  hintText: "Select Categories"),
-                            ),
-                          ),
-                          if (isHistoryFilterLoading)
-                            Container(
-                                height: 200, width: 200, child: FlickrLoader()),
-                          // if (billerFilterData!.isEmpty) SizedBox(height: 85.h),
-                          if (billerFilterData!.isNotEmpty)
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 16.w, vertical: 16.h),
-                              child: TextFormField(
-                                controller: billerController,
-                                readOnly: true,
-                                autocorrect: false,
-                                enableSuggestions: false,
-                                keyboardType: TextInputType.text,
-                                onChanged: (val) {},
-                                onTap: () {
-                                  showModalBottomSheet(
-                                      elevation: 10,
-                                      useRootNavigator: true,
-                                      isScrollControlled: true,
-                                      context: context,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(16.0.r),
-                                        ),
-                                      ),
-                                      builder: (context) {
-                                        return DraggableScrollableSheet(
-                                            initialChildSize: 0.50,
-                                            minChildSize: 0.25,
-                                            maxChildSize: 0.95,
-                                            expand: false,
-                                            controller: dragController,
-                                            builder:
-                                                (context, scrollController) =>
-                                                    StatefulBuilder(builder:
-                                                        (context,
-                                                            StateSetter
-                                                                setState) {
-                                                      return SingleChildScrollView(
-                                                        controller:
-                                                            scrollController,
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: <Widget>[
-                                                            Padding(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      top: 15.h,
-                                                                      bottom:
-                                                                          15.h,
-                                                                      left:
-                                                                          15.w,
-                                                                      right:
-                                                                          15.w),
-                                                              child: Row(
-                                                                children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .menu_outlined,
-                                                                    color: Color(
-                                                                        0xff1b438b),
-                                                                  ),
-                                                                  SizedBox(
-                                                                      width:
-                                                                          20.w),
-                                                                  Text(
-                                                                    "Select Billers",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          16.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      color: Color(
-                                                                          0xff1b438b),
-                                                                    ),
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                boxShadow: [
-                                                                  BoxShadow(
-                                                                      color: Colors
-                                                                          .grey
-                                                                          .withOpacity(
-                                                                              0.5),
-                                                                      spreadRadius:
-                                                                          0.6,
-                                                                      blurRadius:
-                                                                          4,
-                                                                      offset:
-                                                                          Offset(
-                                                                              0,
-                                                                              2)),
-                                                                ],
-                                                              ),
-                                                              child: Divider(
-                                                                height: 1.h,
-                                                                thickness: 1,
-                                                                color: Colors
-                                                                    .grey
-                                                                    .withOpacity(
-                                                                        0.1),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 10.h,
-                                                            ),
-                                                            Container(
-                                                              child: ListView
-                                                                  .builder(
-                                                                scrollDirection:
-                                                                    Axis.vertical,
-                                                                shrinkWrap:
-                                                                    true,
-                                                                itemCount:
-                                                                    billerFilterData!
-                                                                        .length,
-                                                                physics:
-                                                                    const BouncingScrollPhysics(),
-                                                                // controller: infiniteScrollController,
-                                                                itemBuilder:
-                                                                    (context,
-                                                                        index) {
-                                                                  return GestureDetector(
-                                                                      onTap:
-                                                                          () {
-                                                                        setState(
-                                                                            () {
-                                                                          billerController.text = billerFilterData![index]
-                                                                              .bILLERNAME
-                                                                              .toString();
-                                                                          billerID = billerFilterData![index]
-                                                                              .bILLERID
-                                                                              .toString();
-                                                                        });
-
-                                                                        goBack(
-                                                                            context);
-                                                                      },
-                                                                      child:
-                                                                          Padding(
-                                                                        padding: EdgeInsets.symmetric(
-                                                                            horizontal:
-                                                                                16.w,
-                                                                            vertical: 2.h),
-                                                                        child: ListTile(
-                                                                            contentPadding: EdgeInsets.only(left: 6.w, right: 6.w, top: 0),
-                                                                            leading: Container(
-                                                                              width: 45.w,
-                                                                              child: Padding(
-                                                                                padding: EdgeInsets.all(13.r),
-                                                                                child: SvgPicture.asset(LOGO_BBPS),
-                                                                              ),
-                                                                            ),
-                                                                            title: Text(
-                                                                              billerFilterData![index].bILLERNAME.toString(),
-                                                                              style: TextStyle(
-                                                                                fontSize: 14.sp,
-                                                                                fontWeight: FontWeight.w400,
-                                                                                color: Color(0xff000000),
-                                                                                height: 23 / 14,
-                                                                              ),
-                                                                              textAlign: TextAlign.left,
-                                                                            )),
-                                                                      ));
-                                                                },
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      top: 0.h,
-                                                                      bottom:
-                                                                          16.h,
-                                                                      left:
-                                                                          16.w,
-                                                                      right:
-                                                                          16.w),
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Expanded(
-                                                                    child: MyAppButton(
-                                                                        onPressed: () {
-                                                                          goBack(
-                                                                              context);
-                                                                        },
-                                                                        buttonText: "Cancel",
-                                                                        buttonTxtColor: CLR_PRIMARY,
-                                                                        buttonBorderColor: Colors.transparent,
-                                                                        buttonColor: BTN_CLR_ACTIVE,
-                                                                        buttonSizeX: 10.h,
-                                                                        buttonSizeY: 40.w,
-                                                                        buttonTextSize: 14.sp,
-                                                                        buttonTextWeight: FontWeight.w500),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 10.h,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      );
-                                                    }));
-                                      });
-                                },
-                                validator: (inputValue) {
-                                  return null;
-                                },
-                                decoration: InputDecoration(
-                                    fillColor: const Color(0xffD1D9E8)
-                                        .withOpacity(0.2),
-                                    filled: true,
-                                    labelStyle: const TextStyle(
-                                        color: Color(0xff1b438b)),
-                                    enabledBorder: const UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xff1B438B)),
-                                    ),
-                                    focusedBorder: const UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xff1B438B)),
-                                    ),
-                                    border: const UnderlineInputBorder(),
-                                    labelText: 'Select Billers',
-                                    hintText: "Select Billers"),
-                              ),
-                            ),
+                          HistoryFilter(
+                              billerName: billerName,
+                              categoryName: categoryName,
+                              handleFilterModal: handleFilterModal),
                           Padding(
                             padding: EdgeInsets.only(
                                 top: 0.h,
@@ -979,12 +507,23 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                 Expanded(
                                   child: MyAppButton(
                                       onPressed: () {
-                                        handleFilter();
+                                        setState(() {
+                                          pageNumber = 1;
+                                        });
+                                        if ((fromDate != null &&
+                                                toDate != null) ||
+                                            categoryID != null) {
+                                          handleFilter();
+                                        }
                                       },
                                       buttonText: "Apply",
                                       buttonTxtColor: BTN_CLR_ACTIVE,
                                       buttonBorderColor: Colors.transparent,
-                                      buttonColor: CLR_PRIMARY,
+                                      buttonColor: ((fromDate != null &&
+                                                  toDate != null) ||
+                                              categoryID != null)
+                                          ? CLR_PRIMARY
+                                          : Colors.grey,
                                       buttonSizeX: 10.h,
                                       buttonSizeY: 40.w,
                                       buttonTextSize: 14.sp,

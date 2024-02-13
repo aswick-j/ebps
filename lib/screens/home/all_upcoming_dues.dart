@@ -76,12 +76,13 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
               borderRadius: BorderRadius.circular(12.r),
             ),
             content: AnimatedDialog(
+                showImgIcon: success ? true : false,
                 title: success
                     ? "Due Deleted Successfully"
                     : "Due Deletion Failed",
                 subTitle: "",
                 child: Icon(
-                  success ? Icons.check : Icons.close,
+                  Icons.close,
                   color: Colors.white,
                 ),
                 showSub: false,

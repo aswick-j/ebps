@@ -146,6 +146,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               borderRadius: BorderRadius.circular(12.r),
             ),
             content: AnimatedDialog(
+                showImgIcon: false,
                 title: "Unable to Process Payment",
                 subTitle:
                     "We're sorry.We were unable to process your payment.Please try again later",

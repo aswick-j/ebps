@@ -156,6 +156,7 @@ class _BillerDetailsState extends State<BillerDetails> {
               borderRadius: BorderRadius.circular(12.r),
             ),
             content: AnimatedDialog(
+                showImgIcon: false,
                 title: "Your daily bill payment limit has been exceeded.",
                 subTitle:
                     " For additional information, please contact the bank.",

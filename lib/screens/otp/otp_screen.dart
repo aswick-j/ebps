@@ -261,6 +261,7 @@ class _OtpScreenState extends State<OtpScreen> {
               borderRadius: BorderRadius.circular(12.r),
             ),
             content: AnimatedDialog(
+                showImgIcon: Success ? true : false,
                 title: Success ? SuccessMsg[index] : FailedMsg[index],
                 subTitle: "",
                 child: Icon(
@@ -328,6 +329,7 @@ class _OtpScreenState extends State<OtpScreen> {
               borderRadius: BorderRadius.circular(12.r),
             ),
             content: AnimatedDialog(
+                showImgIcon: false,
                 title: "Your Payment is Pending",
                 subTitle: "Please, Visit History Section For More Information",
                 child: Icon(
@@ -460,6 +462,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                     content: AnimatedDialog(
+                        showImgIcon: true,
                         title: "Your Payment Has Been Successful.",
                         subTitle: "",
                         child: Icon(
@@ -516,6 +519,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       content: AnimatedDialog(
+                          showImgIcon: false,
                           title: "Your Payment Has Been Failed.",
                           subTitle: "",
                           child: Icon(
@@ -580,7 +584,9 @@ class _OtpScreenState extends State<OtpScreen> {
               LoaderOverlay.of(context).show();
             } else if (state is editAutopaySuccess) {
               LoaderOverlay.of(context).hide();
-
+              var billerNamE = widget.data!['billerName'];
+              SuccessMsg[2] =
+                  "Auto Pay for $billerNamE Has Been Updated Successfully";
               showModalDialog(index: 2, Success: true);
             } else if (state is editAutopayFailed) {
               LoaderOverlay.of(context).hide();

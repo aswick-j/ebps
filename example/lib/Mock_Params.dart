@@ -460,43 +460,33 @@ var p13 = {
       "data": {
         "accounts": [
           {
-            "avlBal": "4994046.68",
+            "avlBal": "2931738.0",
             "entityType": "I",
             "acctTp": "SA",
             "crntSts": "8",
-            "acctId": "100047899769",
+            "acctId": "100048414848",
             "custRltnsp": "SOW",
-            "prdNm": "1005-Regular Savings",
-            "crntStsDesc": "ACCOUNT OPEN REGULAR"
+            "prdNm": "1005-RegularSavings",
+            "crntStsDesc": "ACCOUNTOPENREGULAR"
           },
           {
-            "avlBal": "100000",
+            "avlBal": "5744658.5",
             "entityType": "I",
-            "acctTp": "CA",
+            "acctTp": "SA",
             "crntSts": "8",
-            "acctId": "200001953216",
-            "custRltnsp": "JOO",
-            "prdNm": "2017-Merchant OD",
-            "crntStsDesc": "ACCOUNT OPEN REGULAR"
-          },
-          {
-            "avlBal": "0",
-            "entityType": "I",
-            "acctTp": "CA",
-            "crntSts": "8",
-            "acctId": "200001953260",
-            "custRltnsp": "JOO",
-            "prdNm": "2017-Merchant OD",
-            "crntStsDesc": "ACCOUNT OPEN REGULAR"
+            "acctId": "100048439540",
+            "custRltnsp": "JOF",
+            "prdNm": "1005-RegularSavings",
+            "crntStsDesc": "ACCOUNTOPENREGULAR"
           }
         ],
         "otpPreference": "SMS",
         "customer": {
           "gndr": "M",
           "mblNb": "918610834309",
-          "dob": "1991-06-19",
-          "custId": "137777655",
-          "emailId": "nithyajai81@gmail.com"
+          "dob": "2001-05-23",
+          "custId": "13972536",
+          "emailId": "a_nithyadevis@equitasbank.com"
         }
       },
       "service": "bbps",

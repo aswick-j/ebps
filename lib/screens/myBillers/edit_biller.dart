@@ -88,15 +88,17 @@ class _EditBillerUIState extends State<EditBillerUI> {
             borderRadius: BorderRadius.circular(12.r),
           ),
           content: AnimatedDialog(
-              title:
-                  success ? "Bill Updated Successfully" : "Bill Updated Failed",
+              showImgIcon: success ? true : false,
+              title: success
+                  ? "Bill Name Has Been Updated Successfully"
+                  : "Bill Name Update Failed",
               subTitle: "",
               child: Icon(
-                success ? Icons.check : Icons.close,
+                Icons.close,
                 color: Colors.white,
               ),
               showSub: false,
-              shapeColor: success ? CLR_GREEN : CLR_ERROR),
+              shapeColor: CLR_ERROR),
           actions: <Widget>[
             Align(
               alignment: Alignment.center,

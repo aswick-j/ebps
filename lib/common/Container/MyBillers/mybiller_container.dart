@@ -1396,6 +1396,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                     BorderRadius.circular(12.r),
                                               ),
                                               content: AnimatedDialog(
+                                                  showImgIcon: false,
                                                   title: getAllAutopayList(widget
                                                                   .savedBillersData
                                                                   .cUSTOMERBILLID)!
