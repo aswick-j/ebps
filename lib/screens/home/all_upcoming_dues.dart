@@ -9,12 +9,16 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/saved_biller_model.dart';
+import 'package:ebps/screens/history/history_screen.dart';
+import 'package:ebps/screens/home/home_screen.dart';
+import 'package:ebps/screens/myBillers/biller_screen.dart';
 import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/loader_overlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class AllUpcomingDues extends StatefulWidget {
@@ -33,6 +37,8 @@ class AllUpcomingDues extends StatefulWidget {
 }
 
 class _AllUpcomingDuesState extends State<AllUpcomingDues> {
+  int selectedIndex = 0;
+
   handleCustomerBillID(int index) {
     SavedBillersData savedBillersData;
     List<SavedBillersData> billerDataTemp = [];
@@ -62,6 +68,39 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
     if (billerDataTemp.isNotEmpty) {
       savedBillersData = billerDataTemp[0];
       return savedBillersData.pARAMETERVALUE.toString();
+    }
+  }
+
+  _onItemTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+    switch (index) {
+      case 0:
+        return goBack(context);
+      case 1:
+        return WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.of(context).pushReplacement(
+            CupertinoPageRoute(
+                fullscreenDialog: true,
+                builder: (context) => BottomNavBar(
+                      SelectedIndex: 1,
+                    )),
+          );
+        });
+      case 2:
+        return WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.of(context).pushReplacement(
+            CupertinoPageRoute(
+                fullscreenDialog: true,
+                builder: (context) => BottomNavBar(
+                      SelectedIndex: 2,
+                    )),
+          );
+        });
+
+      default:
+        return goBack(context);
     }
   }
 
@@ -127,6 +166,53 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
           title: 'Upcoming Dues',
           onLeadingTap: () => Navigator.pop(context),
           showActions: false,
+        ),
+        bottomNavigationBar: BottomAppBar(
+          height: 60.h,
+          elevation: 0,
+          notchMargin: 4,
+          shape: const CircularNotchedRectangle(),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(30.r),
+                  topLeft: Radius.circular(30.r)),
+              boxShadow: const [
+                BoxShadow(
+                    color: Colors.black38, spreadRadius: 0, blurRadius: 0),
+              ],
+            ),
+            child: Theme(
+              data: ThemeData(splashColor: Colors.white),
+              child: BottomNavigationBar(
+                backgroundColor: Colors.white,
+                showUnselectedLabels: true,
+                onTap: _onItemTapped,
+                elevation: 0,
+                type: BottomNavigationBarType.fixed,
+                selectedItemColor: Color(0xff1b438b),
+                unselectedItemColor: Color(0xffa4b4d1),
+                currentIndex: selectedIndex,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset(ICON_HOME_INACTIVE),
+                    label: "Home",
+                    activeIcon: SvgPicture.asset(ICON_HOME),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset(ICON_BILLERS_INACTIVE),
+                    label: "Billers",
+                    activeIcon: SvgPicture.asset(ICON_BILLERS),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset(ICON_HISTORY_INACTIVE),
+                    label: "History",
+                    activeIcon: SvgPicture.asset(ICON_HISTORY),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,

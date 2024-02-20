@@ -440,11 +440,13 @@ class _BillerDetailsState extends State<BillerDetails> {
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
                                               children: [
                                                 Padding(
                                                     padding:
                                                         EdgeInsets.fromLTRB(
-                                                            8.w, 10.h, 0, 0),
+                                                            8.w, 10.h, 8.w, 0),
                                                     child: Text(
                                                       _additionalInfo!
                                                           .tag![index].name

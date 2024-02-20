@@ -430,6 +430,55 @@ class _OtpScreenState extends State<OtpScreen> {
                   showGenerateOtpSuccessMsg = false;
                   secondsRemaining = 20;
                 });
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (BuildContext ctx) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      content: AnimatedDialog(
+                          showImgIcon: false,
+                          title: state.message.toString(),
+                          subTitle: "",
+                          child: Icon(
+                            Icons.error_outline,
+                            color: Colors.white,
+                          ),
+                          showSub: false,
+                          shapeColor: Colors.orange),
+                      actions: <Widget>[
+                        Align(
+                          alignment: Alignment.center,
+                          child: MyAppButton(
+                              onPressed: () {
+                                goBack(ctx);
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    CupertinoPageRoute(
+                                        fullscreenDialog: true,
+                                        builder: (context) => BottomNavBar(
+                                              SelectedIndex: 0,
+                                            )),
+                                    (Route<dynamic> route) => false,
+                                  );
+                                });
+                              },
+                              buttonText: "Okay",
+                              buttonTxtColor: BTN_CLR_ACTIVE,
+                              buttonBorderColor: Colors.transparent,
+                              buttonColor: CLR_PRIMARY,
+                              buttonSizeX: 10,
+                              buttonSizeY: 40,
+                              buttonTextSize: 14,
+                              buttonTextWeight: FontWeight.w500),
+                        ),
+                      ],
+                    );
+                  },
+                );
               }
               LoaderOverlay.of(context).hide();
             } else if (state is OtpValidateError) {
@@ -510,45 +559,51 @@ class _OtpScreenState extends State<OtpScreen> {
               print(state.data);
 
               if (state.data != null) {
-                showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      content: AnimatedDialog(
-                          showImgIcon: false,
-                          title: "Your Payment Has Been Failed.",
-                          subTitle: "",
-                          child: Icon(
-                            Icons.close_rounded,
-                            color: Colors.white,
-                          ),
-                          shapeColor: CLR_ERROR),
-                      actions: <Widget>[
-                        Align(
-                          alignment: Alignment.center,
-                          child: MyAppButton(
-                              onPressed: () {
-                                goBack(context);
-
-                                handleRedirect();
-                              },
-                              buttonText: "Okay",
-                              buttonTxtColor: BTN_CLR_ACTIVE,
-                              buttonBorderColor: Colors.transparent,
-                              buttonColor: CLR_PRIMARY,
-                              buttonSizeX: 10,
-                              buttonSizeY: 40,
-                              buttonTextSize: 14,
-                              buttonTextWeight: FontWeight.w500),
+                if (state.data!["res"]!["paymentDetails"]!["message"]
+                    .toString()
+                    .contains("Transaction initiated")) {
+                  handleDialog();
+                } else {
+                  showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
                         ),
-                      ],
-                    );
-                  },
-                );
+                        content: AnimatedDialog(
+                            showImgIcon: false,
+                            title: "Your Payment Has Been Failed.",
+                            subTitle: "",
+                            child: Icon(
+                              Icons.close_rounded,
+                              color: Colors.white,
+                            ),
+                            shapeColor: CLR_ERROR),
+                        actions: <Widget>[
+                          Align(
+                            alignment: Alignment.center,
+                            child: MyAppButton(
+                                onPressed: () {
+                                  goBack(context);
+
+                                  handleRedirect();
+                                },
+                                buttonText: "Okay",
+                                buttonTxtColor: BTN_CLR_ACTIVE,
+                                buttonBorderColor: Colors.transparent,
+                                buttonColor: CLR_PRIMARY,
+                                buttonSizeX: 10,
+                                buttonSizeY: 40,
+                                buttonTextSize: 14,
+                                buttonTextWeight: FontWeight.w500),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
               } else {
                 handleDialog();
               }

@@ -135,7 +135,9 @@ class HistoryContainer extends StatelessWidget {
                     ],
                   ),
                   InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        handleClick();
+                      },
                       child: Row(children: [
                         if (statusText != null)
                           Container(
@@ -170,8 +172,11 @@ class HistoryContainer extends StatelessWidget {
                             textAlign: TextAlign.left,
                           ),
                         SizedBox(width: 10.w),
-                        Icon(
-                          Icons.arrow_forward,
+                        IconButton(
+                          onPressed: () {
+                            handleClick();
+                          },
+                          icon: Icon(Icons.arrow_forward),
                           color: TXT_CLR_LITE,
                         )
                       ]))

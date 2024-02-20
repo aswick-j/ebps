@@ -53,7 +53,7 @@ getBillPaymentDetails(
         paymentChannel =
             (payBillInfo.tran != null ? payBillInfo.tran?.paymentChannel : "-");
         customerName = payBillInfo.bbpsResponse != null
-            ? payBillInfo.bbpsResponse?.data?.billerResponse!.customerName
+            ? payBillInfo.bbpsResponse?.data?.billerResponse?.customerName
             : "-";
         mobileNumber = payBillInfo.tran != null
             ? payBillInfo.tran?.mobile.toString()

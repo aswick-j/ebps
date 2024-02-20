@@ -233,17 +233,18 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                             .cATEGORYNAME
                                                             .toString();
                                                     handleBiller(
-                                                        categoriesData![index]
-                                                            .cATEGORYID
-                                                            .toString(),
-                                                        categoriesData![index]
-                                                            .cATEGORYNAME
-                                                            .toString());
+                                                      categoriesData![index]
+                                                          .cATEGORYNAME
+                                                          .toString(),
+                                                      categoriesData![index]
+                                                          .iD
+                                                          .toString(),
+                                                    );
                                                     widget.handleFilterModal(
                                                         null,
                                                         null,
                                                         categoriesData![index]
-                                                            .cATEGORYID
+                                                            .iD
                                                             .toString(),
                                                         categoriesData![index]
                                                             .cATEGORYNAME
@@ -469,7 +470,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                               .bILLERNAME
                                                               .toString(),
                                                           categoriesData![index]
-                                                              .cATEGORYID
+                                                              .iD
                                                               .toString(),
                                                           categoriesData![index]
                                                               .cATEGORYNAME

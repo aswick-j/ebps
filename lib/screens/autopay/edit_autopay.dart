@@ -13,10 +13,8 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/account_info_model.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/edit_bill_modal.dart';
-import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/services/api.dart';
 import 'package:ebps/widget/bbps_logo.dart';
-import 'package:ebps/widget/centralized_grid_view.dart';
 import 'package:ebps/widget/date_picker_dialog.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/getAccountInfoCard.dart';
@@ -105,15 +103,24 @@ class _editAutopayState extends State<editAutopay> {
   }
 
   handleButton() {
-    if (selectedAcc != null &&
-        !accError &&
-        !maxAmountError &&
-        (maxAmountController.text.isNotEmpty &&
-            double.parse(widget.autopayData!.mAXIMUMAMOUNT.toString()) !=
-                double.parse(maxAmountController.text.toString()))) {
-      return true;
-    } else {
+    if (selectedAcc == null ||
+        selectedAcc == 99 ||
+        accError ||
+        maxAmountError ||
+        ((double.parse(widget.autopayData!.mAXIMUMAMOUNT.toString()) ==
+                double.parse(maxAmountController.text.toString())) &&
+            widget.autopayData!.pAYMENTDATE.toString() == selectedDate &&
+            billPayGroupRadio == widget.autopayData!.iSBIMONTHLY
+        // (widget.autopayData!.aCTIVATESFROM ==
+        //     (widget.autopayData!.aCTIVATESFROM != null
+        //         ? widget.autopayData!.aCTIVATESFROM![0].toUpperCase() +
+        //             widget.autopayData!.aCTIVATESFROM!.substring(1)
+        //         : "Immediately")
+        //         )`````````````````````````
+        )) {
       return false;
+    } else {
+      return true;
     }
   }
 

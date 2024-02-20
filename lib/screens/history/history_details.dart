@@ -83,14 +83,18 @@ class _HistoryDetailsState extends State<HistoryDetails> {
               if (showLogo == true)
                 Image.asset(LOGO_EQUITAS_E, height: 40.h, width: 40.w),
               if (showLogo == true) SizedBox(width: 10.w),
-              Text(
-                subTitle,
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xff1b438b),
+              SizedBox(
+                width: showLogo == true || clipBoard != false ? null : 250.w,
+                child: Text(
+                  subTitle,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff1b438b),
+                  ),
+                  textAlign: TextAlign.left,
+                  maxLines: 2,
                 ),
-                textAlign: TextAlign.left,
               ),
               SizedBox(width: 10.w),
               if (clipBoard != false)
@@ -431,7 +435,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                         child: MyAppButton(
                             onPressed: () {
                               goToData(context, cOMPLAINTREGISTERROUTE, {
-                                "Date":widget.historyData.cOMPLETIONDATE,
+                                "Date": widget.historyData.cOMPLETIONDATE,
                                 "txnRefID": widget
                                     .historyData.tRANSACTIONREFERENCEID
                                     .toString(),
