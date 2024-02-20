@@ -56,6 +56,19 @@ class MyBillersContainer extends StatefulWidget {
 
 class _MyBillersContainerState extends State<MyBillersContainer> {
   bool switchButton = true;
+
+  String capitalizeFirstWord(String value) {
+    var result = value[0].toUpperCase();
+    for (int i = 1; i < value.length; i++) {
+      if (value[i - 1] == " ") {
+        result = result + value[i].toUpperCase();
+      } else {
+        result = result + value[i];
+      }
+    }
+    return result;
+  }
+
   getAllAutopayList(customerBILLID) {
     try {
       List<AllConfigurationsData>? autopayData = [];
@@ -281,12 +294,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                               ],
                                             ),
                                           ),
-                                          if (widget.showButton &&
-                                              (widget.buttonText.toString() ==
-                                                      "Autopay Enabled" ||
-                                                  widget.buttonText
-                                                          .toString() ==
-                                                      "Autopay Paused") &&
+                                          if (widget.upcomingText ==
+                                                  'Upcoming Autopay' &&
                                               getAllAutopayList(widget
                                                           .savedBillersData
                                                           .cUSTOMERBILLID)
@@ -345,8 +354,11 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                 child: Row(
                                                                   children: [
                                                                     Icon(
-                                                                      Icons
-                                                                          .delete_sweep_outlined,
+                                                                      getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1
+                                                                          ? Icons
+                                                                              .pause_circle
+                                                                          : Icons
+                                                                              .play_circle,
                                                                       color: Color(
                                                                           0xff1b438b),
                                                                     ),
@@ -417,7 +429,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                             .w),
                                                                 child: Center(
                                                                   child: Text(
-                                                                    'Are You Sure You Want To ${getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "Pause Autopay" : "Resume Autopay"}',
+                                                                    'Are You Sure You Want To ${getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "Pause Autopay" : "Resume Autopay"}?',
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -524,262 +536,6 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                         ],
                                       ),
                                     ),
-                                    // subtitle: Column(
-                                    //   crossAxisAlignment:
-                                    //       CrossAxisAlignment.start,
-                                    //   children: [
-                                    //     Row(
-                                    //       mainAxisAlignment:
-                                    //           MainAxisAlignment.spaceBetween,
-                                    //       children: [
-                                    //         Text(
-                                    //           widget.savedBillersData
-                                    //               .pARAMETERVALUE
-                                    //               .toString(),
-                                    //           style: TextStyle(
-                                    //             fontSize: 14.sp,
-                                    //             fontWeight: FontWeight.w400,
-                                    //             color: Color(0xff808080),
-                                    //           ),
-                                    //         ),
-                                    //         if (widget.showButton &&
-                                    //             widget.buttonText.toString() ==
-                                    //                 "Autopay Enabled" &&
-                                    //             getAllAutopayList(widget
-                                    //                         .savedBillersData
-                                    //                         .cUSTOMERBILLID)
-                                    //                     .pAYMENTDATE !=
-                                    //                 DateTime.now()
-                                    //                     .day
-                                    //                     .toString())
-                                    //           GestureDetector(
-                                    //             onTap: () {
-                                    //               print("======");
-                                    //               showModalBottomSheet(
-                                    //                   context: context,
-                                    //                   shape:
-                                    //                       RoundedRectangleBorder(
-                                    //                     borderRadius:
-                                    //                         BorderRadius
-                                    //                             .vertical(
-                                    //                       top: Radius.circular(
-                                    //                           16.0.r),
-                                    //                     ),
-                                    //                   ),
-                                    //                   builder: (context) {
-                                    //                     return Column(
-                                    //                       mainAxisSize:
-                                    //                           MainAxisSize.min,
-                                    //                       crossAxisAlignment:
-                                    //                           CrossAxisAlignment
-                                    //                               .start,
-                                    //                       children: <Widget>[
-                                    //                         Padding(
-                                    //                           padding: EdgeInsets
-                                    //                               .only(
-                                    //                                   top: 15.h,
-                                    //                                   bottom:
-                                    //                                       15.h,
-                                    //                                   left:
-                                    //                                       15.w,
-                                    //                                   right:
-                                    //                                       15.w),
-                                    //                           child: Row(
-                                    //                             children: [
-                                    //                               Icon(
-                                    //                                 Icons
-                                    //                                     .delete_sweep_outlined,
-                                    //                                 color: Color(
-                                    //                                     0xff1b438b),
-                                    //                               ),
-                                    //                               SizedBox(
-                                    //                                   width:
-                                    //                                       20.w),
-                                    //                               Text(
-                                    //                                 getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE ==
-                                    //                                         1
-                                    //                                     ? "Pause Autopay"
-                                    //                                     : "Resume Autopay",
-                                    //                                 style:
-                                    //                                     TextStyle(
-                                    //                                   fontSize:
-                                    //                                       16.sp,
-                                    //                                   fontWeight:
-                                    //                                       FontWeight
-                                    //                                           .w600,
-                                    //                                   color: Color(
-                                    //                                       0xff1b438b),
-                                    //                                 ),
-                                    //                                 textAlign:
-                                    //                                     TextAlign
-                                    //                                         .left,
-                                    //                               )
-                                    //                             ],
-                                    //                           ),
-                                    //                         ),
-                                    //                         Container(
-                                    //                           decoration:
-                                    //                               BoxDecoration(
-                                    //                             boxShadow: [
-                                    //                               BoxShadow(
-                                    //                                   color: Colors
-                                    //                                       .grey
-                                    //                                       .withOpacity(
-                                    //                                           0.5),
-                                    //                                   spreadRadius:
-                                    //                                       0.6,
-                                    //                                   blurRadius:
-                                    //                                       4,
-                                    //                                   offset:
-                                    //                                       Offset(
-                                    //                                           0,
-                                    //                                           2)),
-                                    //                             ],
-                                    //                           ),
-                                    //                           child: Divider(
-                                    //                             height: 1.h,
-                                    //                             thickness: 1,
-                                    //                             color: Colors
-                                    //                                 .grey
-                                    //                                 .withOpacity(
-                                    //                                     0.1),
-                                    //                           ),
-                                    //                         ),
-                                    //                         SizedBox(
-                                    //                           height: 10.h,
-                                    //                         ),
-                                    //                         Padding(
-                                    //                           padding: EdgeInsets
-                                    //                               .only(
-                                    //                                   top: 0.h,
-                                    //                                   bottom:
-                                    //                                       16.h,
-                                    //                                   left:
-                                    //                                       16.w,
-                                    //                                   right:
-                                    //                                       16.w),
-                                    //                           child: Center(
-                                    //                             child: Text(
-                                    //                               'Are You Sure You Want To ${getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "Pause Autopay" : "Resume Autopay"}',
-                                    //                               style:
-                                    //                                   TextStyle(
-                                    //                                 fontSize:
-                                    //                                     14.sp,
-                                    //                                 fontWeight:
-                                    //                                     FontWeight
-                                    //                                         .w400,
-                                    //                                 color: Color(
-                                    //                                     0xff000000),
-                                    //                               ),
-                                    //                               textAlign:
-                                    //                                   TextAlign
-                                    //                                       .center,
-                                    //                             ),
-                                    //                           ),
-                                    //                         ),
-                                    //                         Padding(
-                                    //                           padding: EdgeInsets
-                                    //                               .only(
-                                    //                                   top: 0.h,
-                                    //                                   bottom:
-                                    //                                       16.h,
-                                    //                                   left:
-                                    //                                       16.w,
-                                    //                                   right:
-                                    //                                       16.w),
-                                    //                           child: Row(
-                                    //                             mainAxisAlignment:
-                                    //                                 MainAxisAlignment
-                                    //                                     .center,
-                                    //                             children: [
-                                    //                               Expanded(
-                                    //                                 child: MyAppButton(
-                                    //                                     onPressed: () {
-                                    //                                       goBack(
-                                    //                                           context);
-                                    //                                     },
-                                    //                                     buttonText: "Cancel",
-                                    //                                     buttonTxtColor: CLR_PRIMARY,
-                                    //                                     buttonBorderColor: Colors.transparent,
-                                    //                                     buttonColor: BTN_CLR_ACTIVE,
-                                    //                                     buttonSizeX: 10.h,
-                                    //                                     buttonSizeY: 40.w,
-                                    //                                     buttonTextSize: 14.sp,
-                                    //                                     buttonTextWeight: FontWeight.w500),
-                                    //                               ),
-                                    //                               SizedBox(
-                                    //                                 width: 40.w,
-                                    //                               ),
-                                    //                               Expanded(
-                                    //                                 child: MyAppButton(
-                                    //                                     onPressed: () {
-                                    //                                       goToData(
-                                    //                                           context,
-                                    //                                           oTPPAGEROUTE,
-                                    //                                           {
-                                    //                                             "from": "modify-auto-pay",
-                                    //                                             "context": context,
-                                    //                                             "templateName": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "disable-auto-pay" : "enable-auto-pay",
-                                    //                                             "autopayData": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID),
-                                    //                                             "data": {
-                                    //                                               "billerName": widget.savedBillersData.bILLERNAME,
-                                    //                                               "cUSTOMERBILLID": widget.savedBillersData.cUSTOMERBILLID.toString(),
-                                    //                                               "status": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "0" : "1",
-                                    //                                             }
-                                    //                                           });
-                                    //                                     },
-                                    //                                     buttonText: getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "Pause" : "Resume",
-                                    //                                     buttonTxtColor: BTN_CLR_ACTIVE,
-                                    //                                     buttonBorderColor: Colors.transparent,
-                                    //                                     buttonColor: CLR_PRIMARY,
-                                    //                                     buttonSizeX: 10.h,
-                                    //                                     buttonSizeY: 40.w,
-                                    //                                     buttonTextSize: 14.sp,
-                                    //                                     buttonTextWeight: FontWeight.w500),
-                                    //                               ),
-                                    //                             ],
-                                    //                           ),
-                                    //                         ),
-                                    //                         SizedBox(
-                                    //                           height: 10.h,
-                                    //                         ),
-                                    //                       ],
-                                    //                     );
-                                    //                   });
-                                    //             },
-                                    //             child: CustomSwitch(
-                                    //               value: switchButton =
-                                    //                   getAllAutopayList(widget
-                                    //                                   .savedBillersData
-                                    //                                   .cUSTOMERBILLID)
-                                    //                               .iSACTIVE ==
-                                    //                           1
-                                    //                       ? false
-                                    //                       : true,
-                                    //               onChanged: (val) {
-                                    //                 // setState(() {
-                                    //                 //   switchButton = val;
-                                    //                 // });
-                                    //               },
-                                    //             ),
-                                    //           ),
-                                    //       ],
-                                    //     ),
-
-                                    //     SizedBox(
-                                    //       height: 10,
-                                    //     ),
-                                    //     // Text(
-                                    //     //   buttonText.toString(),
-                                    //     //   style: TextStyle(
-                                    //     //     fontSize: 14.sp,
-                                    //     //     fontWeight: FontWeight.w500,
-                                    //     //     color: buttonTxtColor,
-                                    //     //   ),
-                                    //     //   textAlign: TextAlign.center,
-                                    //     // )
-                                    //   ],
-                                    // ),
                                   ),
                                   Container(
                                     decoration: BoxDecoration(
@@ -990,7 +746,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                   right: 16.w),
                                                           child: Center(
                                                             child: Text(
-                                                              "Are You Sure You Want To Delete",
+                                                              "Are You Sure You Want To Delete ?",
                                                               style: TextStyle(
                                                                 fontSize: 14.sp,
                                                                 fontWeight:
@@ -1309,6 +1065,29 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                             })
                                     ],
                                   ),
+                                  if (widget.upcomingText != 'Upcoming Autopay')
+                                    if (getAllAutopayList(widget
+                                            .savedBillersData.cUSTOMERBILLID) !=
+                                        null)
+                                      if (getAllAutopayList(widget
+                                                  .savedBillersData
+                                                  .cUSTOMERBILLID)!
+                                              .iSACTIVE ==
+                                          0)
+                                        Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 24.0.w,
+                                                vertical: 8.h),
+                                            child: Center(
+                                              child: Text(
+                                                "Autopay Edit Disabled Till Autopay enables",
+                                                style: TextStyle(
+                                                  fontSize: 10.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color(0xff808080),
+                                                ),
+                                              ),
+                                            )),
                                   Padding(
                                     padding: EdgeInsets.only(
                                         top: 48.0.h, bottom: 16.h),
@@ -1410,7 +1189,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                               .day
                                                               .toString()
                                                       ? " We are unable to edit your autopay as the autopay is scheduled for today"
-                                                      : "We can't edit your Autopay because it's currently paused. Please enable it to make changes.",
+                                                      : "We can't edit your Autopay because it's currently paused.",
                                                   subTitle: "",
                                                   child: Icon(
                                                     Icons.close,
@@ -1630,11 +1409,38 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                             .add(const Duration(days: 1)))
                                                     : "-",
                                                 context: context),
-                                            ModalText(
-                                                title: "Autopay Date",
-                                                subTitle:
-                                                    '${numberPrefixSetter(getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.pAYMENTDATE)}${" of"}${getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.iSBIMONTHLY == 0 ? " every" : " every two"}${" month"}',
-                                                context: context),
+                                            if (getAllAutopayList(widget
+                                                    .savedBillersData
+                                                    .cUSTOMERBILLID) !=
+                                                null)
+                                              if ((getAllAutopayList(widget
+                                                              .savedBillersData
+                                                              .cUSTOMERBILLID)!
+                                                          .iSACTIVE ==
+                                                      1) ||
+                                                  widget.upcomingText ==
+                                                      'Upcoming Autopay')
+                                                ModalText(
+                                                    title: "Autopay Date",
+                                                    subTitle:
+                                                        '${numberPrefixSetter(getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.pAYMENTDATE)}${" of"}${getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.iSBIMONTHLY == 0 ? " every" : " every two"}${" month"}',
+                                                    context: context),
+                                            if (getAllAutopayList(widget
+                                                    .savedBillersData
+                                                    .cUSTOMERBILLID) !=
+                                                null)
+                                              if (getAllAutopayList(widget
+                                                              .savedBillersData
+                                                              .cUSTOMERBILLID)!
+                                                          .iSACTIVE ==
+                                                      0 &&
+                                                  widget.upcomingText !=
+                                                      'Upcoming Autopay')
+                                                ModalText(
+                                                    title: "Autopay Enables On",
+                                                    subTitle: capitalizeFirstWord(
+                                                        '${(getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.aCTIVATESFROM).toString()}'),
+                                                    context: context),
                                             ModalText(
                                                 title: "Debit Account",
                                                 subTitle: getAllAutopayList(

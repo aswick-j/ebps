@@ -134,52 +134,51 @@ class HistoryContainer extends StatelessWidget {
                       ),
                     ],
                   ),
-                  InkWell(
-                      onTap: () {
-                        handleClick();
-                      },
-                      child: Row(children: [
-                        if (statusText != null)
-                          Container(
-                              margin: EdgeInsets.all(5.r),
-                              // decoration: BoxDecoration(
-                              //   shape: BoxShape.circle,
-                              //   color: statusText == "PENDING"
-                              //       ? CLR_ASTRIX
-                              //       : CLR_ERROR,
-                              //   border: Border.all(
-                              //     color: statusText == "PENDING"
-                              //         ? CLR_ASTRIX
-                              //         : CLR_ERROR,
-                              //     width: 2.0,
-                              //   ),
-                              // ),
-                              child: Container(
-                                  child: statusText == "PENDING"
-                                      ? SvgPicture.asset(ICON_PENDING)
-                                      : SvgPicture.asset(ICON_FAILED))),
-                        if (statusText != null)
-                          Text(
-                            statusText!,
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.bold,
-                              color: statusText == "PENDING"
-                                  ? CLR_ASTRIX
-                                  : CLR_ERROR,
-                              height: 20 / 12,
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                        SizedBox(width: 10.w),
-                        IconButton(
-                          onPressed: () {
-                            handleClick();
-                          },
-                          icon: Icon(Icons.arrow_forward),
-                          color: TXT_CLR_LITE,
-                        )
-                      ]))
+                  Row(children: [
+                    if (statusText != null)
+                      Container(
+                          margin: EdgeInsets.all(5.r),
+                          // decoration: BoxDecoration(
+                          //   shape: BoxShape.circle,
+                          //   color: statusText == "PENDING"
+                          //       ? CLR_ASTRIX
+                          //       : CLR_ERROR,
+                          //   border: Border.all(
+                          //     color: statusText == "PENDING"
+                          //         ? CLR_ASTRIX
+                          //         : CLR_ERROR,
+                          //     width: 2.0,
+                          //   ),
+                          // ),
+                          child: Container(
+                              child: statusText == "PENDING"
+                                  ? SvgPicture.asset(ICON_PENDING)
+                                  : SvgPicture.asset(ICON_FAILED))),
+                    if (statusText != null)
+                      Text(
+                        statusText!,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.bold,
+                          color:
+                              statusText == "PENDING" ? CLR_ASTRIX : CLR_ERROR,
+                          height: 20 / 12,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    SizedBox(width: 10.w),
+                    Icon(
+                      Icons.arrow_forward,
+                      color: TXT_CLR_LITE,
+                    )
+                    // IconButton(
+                    //   onPressed: () {
+                    //     handleClick();
+                    //   },
+                    //   icon: Icon(Icons.arrow_forward),
+                    //   color: TXT_CLR_LITE,
+                    // )
+                  ])
                 ],
               ),
             ),

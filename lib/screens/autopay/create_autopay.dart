@@ -10,6 +10,7 @@ import 'package:ebps/helpers/getDaySuffix.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/getMonthName.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/helpers/numberPrefixSetter.dart';
 import 'package:ebps/models/account_info_model.dart';
 import 'package:ebps/models/edit_bill_modal.dart';
 import 'package:ebps/models/saved_biller_model.dart';
@@ -51,7 +52,7 @@ class createAutopay extends StatefulWidget {
 
 class _createAutopayState extends State<createAutopay> {
   int? limitGroupRadio = 1;
-  int? billPayGroupRadio = 0;
+  int billPayGroupRadio = 0;
   String activatesFrom = "Immediately";
 
   bool isAccLoading = true;
@@ -70,11 +71,11 @@ class _createAutopayState extends State<createAutopay> {
   bool isInputItemsLoading = true;
   List<InputSignaturess>? InputItems = [];
 
-  List<String> EffectiveFrom = <String>[
-    'Immediately',
-    getMonthName(0)[0]!,
-    getMonthName(0)[1]!
-  ];
+  // List<String> EffectiveFrom = <String>[
+  //   'Immediately',
+  //   getMonthName(billPayGroupRadio)[0]!,
+  //   getMonthName(billPayGroupRadio)[1]!
+  // ];
 
   @override
   void initState() {
@@ -103,7 +104,7 @@ class _createAutopayState extends State<createAutopay> {
                     color: CLR_BLUE_LITE,
                     borderRadius: BorderRadius.circular(8.0.r)),
                 triggerMode: TooltipTriggerMode.tap,
-                showDuration: Duration(milliseconds: 6500),
+                showDuration: Duration(milliseconds: 20000),
                 padding: EdgeInsets.all(20.r),
                 margin: EdgeInsets.symmetric(horizontal: 10.w),
                 message:
@@ -455,6 +456,19 @@ class _createAutopayState extends State<createAutopay> {
                               hintText: "Date of Payment"),
                         ),
                       ),
+                      if (selectedDate == "30")
+                        Padding(
+                          padding: EdgeInsets.only(left: 18.0.w, right: 18.w),
+                          child: Text(
+                            "In the month of February, payment will be done on 1st of March",
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xff808080),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 16.w, vertical: 16.h),
@@ -487,8 +501,11 @@ class _createAutopayState extends State<createAutopay> {
                             Icons.keyboard_arrow_down,
                             color: Colors.grey,
                           ),
-                          items: EffectiveFrom.map<DropdownMenuItem<String>>(
-                              (value) {
+                          items: [
+                            'Immediately',
+                            getMonthName(billPayGroupRadio)[0]!,
+                            getMonthName(billPayGroupRadio)[1]!
+                          ].map<DropdownMenuItem<String>>((value) {
                             print(value);
                             return DropdownMenuItem<String>(
                               value: value,
@@ -568,6 +585,18 @@ class _createAutopayState extends State<createAutopay> {
                             ),
                           ),
                         ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 18.0.w, right: 18.w),
+                        child: Text(
+                          "You can choose when you want to activate your auto pay setup by selecting an option from the dropdown. Based on your current selections, we will start attempting to pay your bills from ${activatesFrom == "Immediately" ? "the next" : ""} ${numberPrefixSetter(selectedDate!)} ${activatesFrom != "Immediately" ? activatesFrom : ""} and once ${billPayGroupRadio == 0 ? "every month" : "every two months"} after that.",
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xff808080),
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
                       ),
                       SizedBox(
                         height: 10.h,

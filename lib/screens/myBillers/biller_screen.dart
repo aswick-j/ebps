@@ -204,7 +204,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                 color: CLR_BLUE_LITE,
                 borderRadius: BorderRadius.circular(8.0.r)),
             triggerMode: TooltipTriggerMode.tap,
-            showDuration: Duration(milliseconds: 3500),
+            showDuration: Duration(milliseconds: 20000),
             padding: EdgeInsets.all(20.r),
             margin: EdgeInsets.symmetric(horizontal: 10.w),
             message:
@@ -342,14 +342,13 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                                   showButton: showAutopayBtn(savedBillerData![index]),
                                   containerBorderColor: Color(0xffD1D9E8),
                                   buttonColor: Color.fromARGB(255, 255, 255, 255),
-                                  buttonTxtColor: 
-                                   getAllAutopayList(savedBillerData![index].cUSTOMERBILLID) ==
-                                              0?Color.fromARGB(255, 171, 39, 30):
-                                  showAutopayButtonContent(
-                                    savedBillerData![index],
-                                  )
-                                      ? Color.fromARGB(255, 16, 113, 55)
-                                      : Color(0xff768eb9),
+                                  buttonTxtColor: getAllAutopayList(savedBillerData![index].cUSTOMERBILLID) == 0
+                                      ? Color.fromARGB(255, 171, 39, 30)
+                                      : showAutopayButtonContent(
+                                          savedBillerData![index],
+                                        )
+                                          ? Color.fromARGB(255, 16, 113, 55)
+                                          : Color(0xff768eb9),
                                   buttonTextWeight: FontWeight.bold,
                                   buttonBorderColor: showAutopayButtonContent(
                                     savedBillerData![index],

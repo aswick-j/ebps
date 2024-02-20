@@ -257,7 +257,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                               .day
                                                               .toString()
                                                       ? " We are unable to edit your autopay as the autopay is scheduled for today"
-                                                      : "We can't edit your Autopay because it's currently paused. Please enable it to make changes.",
+                                                      : "We can't edit your Autopay because it's currently paused.",
                                                   subTitle: "",
                                                   child: Icon(
                                                     Icons.close,

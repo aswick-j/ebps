@@ -10,6 +10,7 @@ import 'package:ebps/helpers/getDaySuffix.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/getMonthName.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/helpers/numberPrefixSetter.dart';
 import 'package:ebps/models/account_info_model.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/edit_bill_modal.dart';
@@ -75,7 +76,7 @@ class _editAutopayState extends State<editAutopay> {
   List<String> EffectiveFrom = <String>[
     'Immediately',
     getMonthName(0)[0]!,
-    getMonthName(0)[1]!
+    // getMonthName(0)[1]!
   ];
 
   int? isActive = 0;
@@ -176,7 +177,7 @@ class _editAutopayState extends State<editAutopay> {
                     color: CLR_BLUE_LITE,
                     borderRadius: BorderRadius.circular(8.0.r)),
                 triggerMode: TooltipTriggerMode.tap,
-                showDuration: Duration(milliseconds: 6500),
+                showDuration: Duration(milliseconds: 20000),
                 padding: EdgeInsets.all(20.r),
                 margin: EdgeInsets.symmetric(horizontal: 10.w),
                 message:
@@ -572,6 +573,19 @@ class _editAutopayState extends State<editAutopay> {
                               hintText: "Date of Payment"),
                         ),
                       ),
+                      if (selectedDate == "30")
+                        Padding(
+                          padding: EdgeInsets.only(left: 18.0.w, right: 18.w),
+                          child: Text(
+                            "In the month of February, payment will be done on 1st of March",
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xff808080),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 16.w, vertical: 16.h),
@@ -696,6 +710,19 @@ class _editAutopayState extends State<editAutopay> {
                           ),
                         ],
                       ),
+                      if (activatesFrom == getMonthName(99)[0])
+                        Padding(
+                          padding: EdgeInsets.only(left: 18.0.w, right: 18.w),
+                          child: Text(
+                            "Your auto pay will stay inactive and we will resume paying your bills only from ${numberPrefixSetter(selectedDate!)} ${getMonthName(99)[0].split(" ")[0]}, ${getMonthName(99)[0].split(" ")[1]}. If you want us to pay your bills on the  ${numberPrefixSetter(selectedDate!)} of this (current) month, please select Immediately from the dropdown.",
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xff808080),
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
                       SizedBox(
                         height: 10.h,
                       )
