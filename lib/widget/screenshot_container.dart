@@ -205,7 +205,9 @@ class ScreenshotContainer extends StatelessWidget {
                 title: "Status",
                 subTitle: status == 'success'
                     ? "Transaction Success"
-                    : status == 'bbpsTimeout'
+                    : status == 'bbpsTimeout' ||
+                            status == 'bbps-timeout' ||
+                            status == 'bbps-in-progress'
                         ? 'Transaction Pending'
                         : status == 'failed'
                             ? "Transaction Failed"

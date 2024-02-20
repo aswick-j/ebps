@@ -1,3 +1,4 @@
+import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 List<Color> getStatusGradientColors(transactionStatus) {
@@ -6,10 +7,11 @@ List<Color> getStatusGradientColors(transactionStatus) {
           Color(0xff99DDB4).withOpacity(.7),
           Color(0xff31637D).withOpacity(.7),
         ]
-      : transactionStatus == 'bbpsTimeout'
+      : (transactionStatus == 'bbps-timeout' ||
+              transactionStatus == 'bbps-in-progress')
           ? [
-              Color(0xff99DDB4).withOpacity(.7),
-              Color(0xff31637D).withOpacity(.7),
+              Color.fromRGBO(115, 59, 89, 1).withOpacity(.7),
+              CLR_ASTRIX.withOpacity(.7),
             ]
           : [
               Color(0xff982F67).withOpacity(.7),

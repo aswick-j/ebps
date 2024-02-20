@@ -85,6 +85,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
     if (paymentDetails!['success']) {
       BlocProvider.of<MybillersCubit>(context)
           .deleteUpcomingDue(widget.billerData!["customerBillID"]);
+    } else {
       BlocProvider.of<MybillersCubit>(context).getAddUpdateUpcomingDue();
     }
   }
@@ -275,7 +276,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                               status: paymentDetails!['success']
                                                                   ? "success"
                                                                   : paymentDetails!['bbpsTimeout']
-                                                                      ? 'bbpsTimeout'
+                                                                      ? 'bbps-timeout'
                                                                       : paymentDetails!['failed']
                                                                           ? "failed"
                                                                           : "failed",

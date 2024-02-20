@@ -1,30 +1,25 @@
-const FAILED = "Failed";
-const PENDING = "Pending";
-const SUCCESS = "Success";
-
-dynamic getTransactionStatus(String? value) {
-  switch (value) {
+String getTransactionReason(String status) {
+  switch (status) {
     case "Memo present on Loan Account.":
-      return FAILED;
+      return "Memo present on Loan Account";
     case "aggregator-failed":
     case "aggregator-response-unknown":
-      return FAILED;
+      return "Bill Payment failed";
     case "Insufficient Balance.":
     case " Insufficient Balance. ":
-      return FAILED;
+      return "Insufficient Balance";
     case "Database Error :":
     case "Called function has had a Fatal Error":
-      return FAILED;
+      return "Internal Failure";
     case "fund-transfer-failed":
-      return FAILED;
+      return "Fund Transfer failed from Bank";
+    case "pending":
     case "bbps-timeout":
     case "bbps-in-progress":
-      return PENDING;
+      return "Waiting Confirmation from Biller";
     case "Customer is KYC Pending/KYC Non-Compliant. KYC Documents need to be collected from Customer.":
-      return FAILED;
-    case "success":
-      return SUCCESS;
+      return "KYC Pending";
     default:
-      return FAILED;
+      return "Bill Payment Failed";
   }
 }

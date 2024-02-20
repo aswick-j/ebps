@@ -43,6 +43,18 @@ class HistoryContainer extends StatelessWidget {
       });
     }
 
+    String capitalizeFirstWord(String value) {
+      var result = value[0].toUpperCase();
+      for (int i = 1; i < value.length; i++) {
+        if (value[i - 1] == " ") {
+          result = result + value[i].toUpperCase();
+        } else {
+          result = result + value[i];
+        }
+      }
+      return result;
+    }
+
     return GestureDetector(
       onTap: () {
         handleClick();
@@ -135,37 +147,44 @@ class HistoryContainer extends StatelessWidget {
                     ],
                   ),
                   Row(children: [
-                    if (statusText != null)
-                      Container(
-                          margin: EdgeInsets.all(5.r),
-                          // decoration: BoxDecoration(
-                          //   shape: BoxShape.circle,
-                          //   color: statusText == "PENDING"
-                          //       ? CLR_ASTRIX
-                          //       : CLR_ERROR,
-                          //   border: Border.all(
-                          //     color: statusText == "PENDING"
-                          //         ? CLR_ASTRIX
-                          //         : CLR_ERROR,
-                          //     width: 2.0,
-                          //   ),
-                          // ),
-                          child: Container(
-                              child: statusText == "PENDING"
-                                  ? SvgPicture.asset(ICON_PENDING)
-                                  : SvgPicture.asset(ICON_FAILED))),
-                    if (statusText != null)
-                      Text(
-                        statusText!,
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              statusText == "PENDING" ? CLR_ASTRIX : CLR_ERROR,
-                          height: 20 / 12,
-                        ),
-                        textAlign: TextAlign.left,
+                    Container(
+                        margin: EdgeInsets.all(5.r),
+                        // decoration: BoxDecoration(
+                        //   shape: BoxShape.circle,
+                        //   color: statusText == "PENDING"
+                        //       ? CLR_ASTRIX
+                        //       : CLR_ERROR,
+                        //   border: Border.all(
+                        //     color: statusText == "PENDING"
+                        //         ? CLR_ASTRIX
+                        //         : CLR_ERROR,
+                        //     width: 2.0,
+                        //   ),
+                        // ),
+                        child: Container(
+                            child: statusText == "Pending"
+                                ? SvgPicture.asset(ICON_PENDING)
+                                : statusText == "Success"
+                                    ? Icon(
+                                        Icons.check_circle_outline_rounded,
+                                        size: 11.sp,
+                                        color: CLR_GREEN,
+                                      )
+                                    : SvgPicture.asset(ICON_FAILED))),
+                    Text(
+                      statusText!,
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.bold,
+                        color: statusText == "Pending"
+                            ? CLR_ASTRIX
+                            : statusText == "Success"
+                                ? CLR_GREEN
+                                : CLR_ERROR,
+                        height: 20 / 12,
                       ),
+                      textAlign: TextAlign.left,
+                    ),
                     SizedBox(width: 10.w),
                     Icon(
                       Icons.arrow_forward,
