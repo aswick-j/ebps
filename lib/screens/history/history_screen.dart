@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ebps/bloc/history/history_cubit.dart';
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
@@ -66,7 +68,9 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
   String? billerName;
   bool showClrFltr = false;
   bool showToDateErr = false;
-
+  bool MoreLoading = true;
+  late int _pageNumber;
+  late int _totalPages;
   List<String> Periods = [
     "Today",
     'Yesterday',
@@ -86,13 +90,14 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
   bool isHistoryLoading = true;
   bool isHistoryMoreLoading = false;
   bool isHistoryFilterLoading = false;
-  int pageNumber = 1;
   @override
   void initState() {
+    _pageNumber = 1;
+    _totalPages = 1;
     BlocProvider.of<HistoryCubit>(context).getHistoryDetails({
       "startDate": DateTime(2016).toLocal().toIso8601String(),
       "endDate": DateTime.now().toLocal().toIso8601String(),
-    }, "", "", pageNumber, true);
+    }, "", "", _pageNumber, true);
     // BlocProvider.of<HomeCubit>(context).getAllCategories();
     initScrollController(context);
     super.initState();
@@ -100,20 +105,20 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
 
   void initScrollController(context) {
     infiniteScrollController.addListener(() {
-      print("======ssss");
       if (infiniteScrollController.position.atEdge) {
         if (infiniteScrollController.position.pixels != 0) {
-          setState(() {
-            pageNumber++;
-          });
-          BlocProvider.of<HistoryCubit>(context).getHistoryDetails({
-            "startDate": fromDate != null
-                ? fromDate!.toLocal().toIso8601String()
-                : DateTime(2016).toLocal().toIso8601String(),
-            "endDate": toDate != null
-                ? toDate!.toLocal().toIso8601String()
-                : DateTime.now().toLocal().toIso8601String(),
-          }, categoryID, billerID, pageNumber, true);
+          if (_totalPages != _pageNumber) {
+            MoreLoading = true;
+            _pageNumber = _pageNumber + 1;
+            BlocProvider.of<HistoryCubit>(context).getHistoryDetails({
+              "startDate": fromDate != null
+                  ? fromDate!.toLocal().toIso8601String()
+                  : DateTime(2016).toLocal().toIso8601String(),
+              "endDate": toDate != null
+                  ? toDate!.toLocal().toIso8601String()
+                  : DateTime.now().toLocal().toIso8601String(),
+            }, categoryID, billerID, _pageNumber, true);
+          }
         }
       }
     });
@@ -138,7 +143,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
         "endDate": toDate != null
             ? toDate!.toLocal().toIso8601String()
             : DateTime.now().toLocal().toIso8601String(),
-      }, categoryID, billerID, pageNumber, true);
+      }, categoryID, billerID, _pageNumber, true);
       goBack(context);
       setState(() {
         showClrFltr = true;
@@ -180,24 +185,33 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
               listeners: [
             BlocListener<HistoryCubit, HistoryState>(
                 listener: (context, state) {
-              if (state is HistoryLoading && state.isFirstFetch) {}
+              if (state is HistoryLoading && state.isFirstFetch) {
+                isHistoryLoading = true;
+              }
               setState(() {
                 isHistoryMoreLoading = true;
-                isHistoryLoading = true;
                 historyData = [];
               });
 
               if (state is HistoryLoading) {
                 setState(() {
                   historyData = state.prevData;
+                  MoreLoading = true;
+                  if (historyData!.length > 1) {
+                    _totalPages =
+                        historyData![historyData!.length - 1].tOTALPAGES!;
+                  }
                   isHistoryMoreLoading = true;
-                  isHistoryLoading = false;
                 });
               } else if (state is HistorySuccess) {
                 setState(() {
                   historyData = state.historyData;
+                  if (historyData!.length > 1) {
+                    _totalPages =
+                        historyData![historyData!.length - 1].tOTALPAGES!;
+                  }
                   isHistoryLoading = false;
-                  isHistoryMoreLoading = true;
+                  MoreLoading = false;
                 });
               } else if (state is HistoryFailed) {
                 setState(() {
@@ -242,38 +256,49 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                     ),
                   if (!isHistoryLoading)
                     Container(
-                      height: 550.h,
+                      height: showClrFltr ? 500.h : 530.h,
                       child: historyData!.isNotEmpty
                           ? ListView.builder(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
-                              itemCount: historyData!.length,
-                              physics: const BouncingScrollPhysics(),
+                              itemCount:
+                                  historyData!.length + (MoreLoading ? 1 : 0),
+                              physics: const PageScrollPhysics(),
                               controller: infiniteScrollController,
                               itemBuilder: (context, index) {
-                                return HistoryContainer(
-                                  historyData: historyData![index],
-                                  // billerFilterData: billerFilterData,
-                                  titleText: 'Paid to',
-                                  subtitleText:
-                                      historyData![index].bILLERNAME.toString(),
-                                  dateText: DateFormat('dd/MM/yyyy').format(
-                                      DateTime.parse(historyData![index]
-                                              .cOMPLETIONDATE
-                                              .toString())
-                                          .toLocal()),
-                                  amount:
-                                      "₹ ${NumberFormat('#,##,##0.00').format(double.parse(historyData![index].bILLAMOUNT.toString()))}",
-                                  // '₹ ${historyData![index].bILLAMOUNT.toString()}',
-                                  statusText: getTransactionStatus(
-                                      historyData![index]
-                                          .tRANSACTIONSTATUS
-                                          .toString()),
-                                  iconPath: LOGO_BBPS,
-                                  containerBorderColor: Color(0xffD1D9E8),
-                                );
-                              },
-                            )
+                                if (index < historyData!.length) {
+                                  return HistoryContainer(
+                                    historyData: historyData![index],
+                                    // billerFilterData: billerFilterData,
+                                    titleText: 'Paid to',
+                                    subtitleText: historyData![index]
+                                        .bILLERNAME
+                                        .toString(),
+                                    dateText: DateFormat('dd/MM/yyyy').format(
+                                        DateTime.parse(historyData![index]
+                                                .cOMPLETIONDATE
+                                                .toString())
+                                            .toLocal()),
+                                    amount:
+                                        "₹ ${NumberFormat('#,##,##0.00').format(double.parse(historyData![index].bILLAMOUNT.toString()))}",
+                                    // '₹ ${historyData![index].bILLAMOUNT.toString()}',
+                                    statusText: getTransactionStatus(
+                                        historyData![index]
+                                            .tRANSACTIONSTATUS
+                                            .toString()),
+                                    iconPath: LOGO_BBPS,
+                                    containerBorderColor: Color(0xffD1D9E8),
+                                  );
+                                } else {
+                                  Timer(Duration(milliseconds: 30), () {
+                                    infiniteScrollController.jumpTo(
+                                        infiniteScrollController
+                                            .position.maxScrollExtent);
+                                  });
+
+                                  return FlickrLoader();
+                                }
+                              })
                           : NoDataFound(
                               message: "No Transactions Found",
                             ),
@@ -507,7 +532,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                   child: MyAppButton(
                                       onPressed: () {
                                         setState(() {
-                                          pageNumber = 1;
+                                          _pageNumber = 1;
                                         });
                                         if ((fromDate != null &&
                                                 toDate != null) ||

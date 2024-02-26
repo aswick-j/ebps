@@ -119,16 +119,18 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
           }),
           BlocListener<HomeCubit, HomeState>(
             listener: (context, state) {
-              if (state is CategoriesLoading) {
-                isCategoryLoading = true;
-              } else if (state is CategoriesSuccess) {
-                categoriesData = state.CategoriesList;
-                isCategoryLoading = false;
-              } else if (state is CategoriesFailed) {
-                isCategoryLoading = false;
-              } else if (state is CategoriesError) {
-                isCategoryLoading = false;
-              }
+              categoriesData = context.read<HomeCubit>().categoriesData;
+
+              // if (state is CategoriesLoading) {
+              //   isCategoryLoading = true;
+              // } else if (state is CategoriesSuccess) {
+              //   categoriesData = state.CategoriesList;
+              //   isCategoryLoading = false;
+              // } else if (state is CategoriesFailed) {
+              //   isCategoryLoading = false;
+              // } else if (state is CategoriesError) {
+              //   isCategoryLoading = false;
+              // }
             },
           )
         ],

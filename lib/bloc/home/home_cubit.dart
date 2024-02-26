@@ -20,6 +20,7 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   Repository? repository;
   int pageNumber = 1;
+  List<CategorieData>? categoriesData = [];
 
   HomeCubit({
     required this.repository,
@@ -41,6 +42,7 @@ class HomeCubit extends Cubit<HomeState> {
 
         if (status == 200) {
           final categoriesModel = CategoriesModel.fromJson(value);
+          categoriesData = categoriesModel.data;
           emit(CategoriesSuccess(CategoriesList: categoriesModel.data));
         } else {
           emit(CategoriesFailed(message: message));
