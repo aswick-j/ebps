@@ -93,7 +93,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
       "startDate": DateTime(2016).toLocal().toIso8601String(),
       "endDate": DateTime.now().toLocal().toIso8601String(),
     }, "", "", pageNumber, true);
-    BlocProvider.of<HomeCubit>(context).getAllCategories();
+    // BlocProvider.of<HomeCubit>(context).getAllCategories();
     initScrollController(context);
     super.initState();
   }
@@ -288,6 +288,9 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                         height: 500.h,
                         width: double.infinity,
                         child: Center(child: FlickrLoader())),
+                  SizedBox(
+                    height: 100.h,
+                  )
                 ],
               ))),
       floatingActionButton: BlocConsumer<HistoryCubit, HistoryState>(

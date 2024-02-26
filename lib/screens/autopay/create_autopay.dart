@@ -666,11 +666,12 @@ class _createAutopayState extends State<createAutopay> {
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               // itemCount: accountInfo!.length,
-                              childAspectRatio: 5 / 3.5,
+                              childAspectRatio: 5 / 2.5,
                               mainAxisSpacing: 10.0,
                             ),
                             itemBuilder: (context, index) {
                               return AccountInfoCard(
+                                showAccDetails: false,
                                 accountNumber: accountInfo![index]
                                     .accountNumber
                                     .toString(),
@@ -679,16 +680,16 @@ class _createAutopayState extends State<createAutopay> {
                                   setState(() {
                                     selectedAcc = index;
                                   });
-                                  if (accountInfo![index].balance ==
-                                      "Unable to fetch balance") {
-                                    setState(() {
-                                      accError = true;
-                                    });
-                                  } else {
-                                    setState(() {
-                                      accError = false;
-                                    });
-                                  }
+                                  // if (accountInfo![index].balance ==
+                                  //     "Unable to fetch balance") {
+                                  //   setState(() {
+                                  //     accError = true;
+                                  //   });
+                                  // } else {
+                                  //   setState(() {
+                                  //     accError = false;
+                                  //   });
+                                  // }
                                 },
                                 index: index,
                                 AccErr: accError,
@@ -697,22 +698,22 @@ class _createAutopayState extends State<createAutopay> {
                             },
                           ),
                         ),
-                      if (accError)
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 20.w, top: 10.h, right: 20.w),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Insufficient balance in the account',
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w600,
-                                color: CLR_ERROR,
-                              ),
-                            ),
-                          ),
-                        ),
+                      // if (accError)
+                      //   Padding(
+                      //     padding: EdgeInsets.only(
+                      //         left: 20.w, top: 10.h, right: 20.w),
+                      //     child: Align(
+                      //       alignment: Alignment.centerLeft,
+                      //       child: Text(
+                      //         'Insufficient balance in the account',
+                      //         style: TextStyle(
+                      //           fontSize: 12.sp,
+                      //           fontWeight: FontWeight.w600,
+                      //           color: CLR_ERROR,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
                       SizedBox(
                         height: 10.h,
                       ),
@@ -797,10 +798,9 @@ class _createAutopayState extends State<createAutopay> {
                       buttonText: "Create",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor:
-                          selectedAcc != null && !accError && !maxAmountError
-                              ? CLR_PRIMARY
-                              : Colors.grey,
+                      buttonColor: selectedAcc != null && !maxAmountError
+                          ? CLR_PRIMARY
+                          : Colors.grey,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,
                       buttonTextSize: 14.sp,

@@ -208,7 +208,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
             padding: EdgeInsets.all(20.r),
             margin: EdgeInsets.symmetric(horizontal: 10.w),
             message:
-                "Auto pay facility is supported only for selected billers and is enabled after you pay a bill atleast once for a  biller",
+                "Auto Pay is supported only for selected billers and is enabled after you pay a bill atleast once for a  biller or if the biller has an due.",
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Icon(

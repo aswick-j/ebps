@@ -123,7 +123,6 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                 isCategoryLoading = true;
               } else if (state is CategoriesSuccess) {
                 categoriesData = state.CategoriesList;
-
                 isCategoryLoading = false;
               } else if (state is CategoriesFailed) {
                 isCategoryLoading = false;

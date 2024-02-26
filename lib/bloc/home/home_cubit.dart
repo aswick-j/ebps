@@ -70,13 +70,13 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   //BILLER CUBIT
-  void getAllBiller(cid) async {
+  void getAllBiller(cid, pageNumber) async {
     if (state is AllbillerListLoading) return;
 
     final currentState = state;
     List<BillersData>? prevBillerData = <BillersData>[];
 
-    if (currentState is AllbillerListSuccess) {
+    if (pageNumber != 1 && currentState is AllbillerListSuccess) {
       prevBillerData = currentState.allbillerList;
     }
 
@@ -93,7 +93,6 @@ class HomeCubit extends Cubit<HomeState> {
         if (!value.toString().contains("Invalid token")) {
           if (value['status'] == 200) {
             BillerModel? all_biller = BillerModel.fromJson(value);
-            pageNumber++;
             // final List<BillersData> billdata =
             //     (state as AllbillerListLoading).prevData;
             prevBillerData.addAll(all_biller.billData as Iterable<BillersData>);
@@ -894,16 +893,24 @@ class HomeCubit extends Cubit<HomeState> {
 
   //SEARCH
 
-  void searchBiller(queryString, Category) async {
-    if (!isClosed) {
-      emit(BillersSearchLoading());
+  void searchBiller(queryString, Category, pageNumber) async {
+    if (state is BillersSearchLoading) return;
+
+    final currentState = state;
+    List<BillersData>? prevSearchBillerData = <BillersData>[];
+
+    if (pageNumber != 1 && currentState is BillersSearchSuccess) {
+      prevSearchBillerData = currentState.searchResultsData;
     }
+
+    emit(BillersSearchLoading(prevSearchBillerData!,
+        isFirstFetch: pageNumber == 1));
 
     Map<String, dynamic> searchPayload = {
       "searchString": queryString,
       "category": Category,
       "location": "All",
-      "pageNumber": 1
+      "pageNumber": pageNumber
     };
     //{"searchString":"test","category":"All","location":"All","pageNumber":1}
 
@@ -920,11 +927,20 @@ class HomeCubit extends Cubit<HomeState> {
         if (!value.toString().contains("Invalid token")) {
           if (value['status'] == 200) {
             BillerModel? billersSearchModel = BillerModel.fromJson(value);
-            //  success emit
+            // final List<BillersData> billdata =
+            //     (state as AllbillerListLoading).prevData;
+            prevSearchBillerData
+                .addAll(billersSearchModel.billData as Iterable<BillersData>);
             if (!isClosed) {
               emit(BillersSearchSuccess(
-                  searchResultsData: billersSearchModel.billData));
+                  searchResultsData: prevSearchBillerData));
             }
+            //
+            //  success emit
+            // if (!isClosed) {
+            //   emit(BillersSearchSuccess(
+            //       searchResultsData: billersSearchModel.billData));
+            // }
           } else {
             //  failed emit
             if (!isClosed) {

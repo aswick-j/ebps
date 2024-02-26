@@ -43,6 +43,7 @@ class _OtpScreenState extends State<OtpScreen> {
   final txtOtpController = TextEditingController();
   final focusNode = FocusNode();
   String? OTP_ERR_MSG;
+  bool showRedBorder = false;
   String? customerID;
   bool isLoading = true;
   String? REF_NO = '';
@@ -104,6 +105,8 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   handleSubmit() {
+    showRedBorder = false;
+    OTP_ERR_MSG = null;
     BlocProvider.of<HomeCubit>(context).validateOTP(txtOtpController.text);
   }
 
@@ -121,6 +124,7 @@ class _OtpScreenState extends State<OtpScreen> {
           if (mounted) {
             setState(() {
               timer.cancel();
+              showTimer = false;
               enableResend = true;
             });
           }
@@ -134,12 +138,14 @@ class _OtpScreenState extends State<OtpScreen> {
 
   resetOtpErr() {
     setState(() {
+      showRedBorder = false;
       OTP_ERR_MSG = null;
     });
   }
 
   resendCode() async {
     try {
+      showTimer = true;
       resetOtpErr();
       if (widget.from == pAYMENTCONFIRMROUTE) {
         BlocProvider.of<HomeCubit>(context).generateOtp(
@@ -315,7 +321,9 @@ class _OtpScreenState extends State<OtpScreen> {
       decoration: BoxDecoration(
         color: BTN_CLR_ACTIVE,
         borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: Colors.grey),
+        border: !showRedBorder
+            ? Border.all(color: Colors.grey)
+            : Border.all(color: CLR_ERROR),
       ),
     );
 
@@ -400,11 +408,13 @@ class _OtpScreenState extends State<OtpScreen> {
               setState(() {
                 isLoading = false;
                 OTP_ERR_MSG = state.message;
+                showRedBorder = true;
               });
             } else if (state is OtpError) {
               setState(() {
                 isLoading = false;
                 OTP_ERR_MSG = state.message;
+                showRedBorder = true;
               });
               // goToUntil(context, hOMEROUTE);
             }
@@ -412,6 +422,8 @@ class _OtpScreenState extends State<OtpScreen> {
             if (state is OtpValidateLoading) {
               LoaderOverlay.of(context).show();
             } else if (state is OtpValidateSuccess) {
+              showTimer = false;
+
               LoaderOverlay.of(context).hide();
 
               handleOTPSuccess();
@@ -420,6 +432,7 @@ class _OtpScreenState extends State<OtpScreen> {
               setState(() {
                 isLoading = false;
                 OTP_ERR_MSG = state.message;
+                showRedBorder = true;
               });
               if (state.message!.contains('OTP validation exceeded')) {
                 triggerTimer(0);
@@ -799,6 +812,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 listenForMultipleSmsOnAndroid: true,
                                 defaultPinTheme: defaultPinTheme,
                                 onChanged: (s) {
+                                  showRedBorder = false;
                                   // widget.resetErr();
                                   if (s.isEmpty) {
                                     setState(
@@ -899,43 +913,44 @@ class _OtpScreenState extends State<OtpScreen> {
                                 ],
                               ),
                             ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 14.0.h),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Didn't recieve the OTP?",
-                                  style: TextStyle(
-                                    fontSize: 11.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff808080),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(height: 10.h),
-                                GestureDetector(
-                                  onTap: () {
-                                    if (enableResend) {
-                                      resendCode();
-                                    }
-                                  },
-                                  child: Text(
-                                    "Resend OTP",
+                          if (enableResend)
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 14.0.h),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Didn't recieve the OTP?",
                                     style: TextStyle(
                                       fontSize: 11.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: enableResend
-                                          ? TXT_CLR_PRIMARY
-                                          : Colors.grey,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff808080),
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
-                                ),
-                              ],
+                                  SizedBox(height: 10.h),
+                                  GestureDetector(
+                                    onTap: () {
+                                      if (enableResend) {
+                                        resendCode();
+                                      }
+                                    },
+                                    child: Text(
+                                      "Resend OTP",
+                                      style: TextStyle(
+                                        fontSize: 11.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: enableResend
+                                            ? TXT_CLR_PRIMARY
+                                            : Colors.grey,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
                           SizedBox(
                             height: 20.h,
                           )

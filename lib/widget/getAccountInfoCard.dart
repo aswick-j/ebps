@@ -9,6 +9,7 @@ class AccountInfoCard extends StatelessWidget {
   int? isSelected;
   int index;
   bool? AccErr;
+  bool? showAccDetails;
   Function onAccSelected;
 
   AccountInfoCard(
@@ -18,6 +19,7 @@ class AccountInfoCard extends StatelessWidget {
       required this.balance,
       required this.isSelected,
       required this.index,
+      this.showAccDetails,
       this.AccErr});
 
   @override
@@ -29,10 +31,11 @@ class AccountInfoCard extends StatelessWidget {
       child: Stack(
         children: [
           Container(
+            height: showAccDetails == true ? null : 40.h,
             clipBehavior: Clip.hardEdge,
             width: double.infinity,
             margin: EdgeInsets.only(
-                left: 18.0.w, right: 18.w, top: 10.h, bottom: 10.h),
+                left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6.0),
               border: Border.all(
@@ -63,32 +66,34 @@ class AccountInfoCard extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(15.0.w, 4.0.h, 0, 0),
-                  child: Text(
-                    "Balance Amount",
-                    style: TextStyle(
-                      fontSize: 10.0.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xff808080),
+                if (showAccDetails == true)
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(15.0.w, 4.0.h, 0, 0),
+                    child: Text(
+                      "Balance Amount",
+                      style: TextStyle(
+                        fontSize: 10.0.sp,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xff808080),
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(15.0.w, 0, 0, 10),
-                  child: Text(
-                    balance != "Unable to fetch balance"
-                        ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(balance))}"
-                        : "-",
-                    style: TextStyle(
-                      fontSize: 13.0.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xff0e2146),
+                if (showAccDetails == true)
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(15.0.w, 0, 0, 10.h),
+                    child: Text(
+                      balance != "Unable to fetch balance"
+                          ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(balance))}"
+                          : "-",
+                      style: TextStyle(
+                        fontSize: 13.0.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xff0e2146),
+                      ),
+                      textAlign: TextAlign.left,
                     ),
-                    textAlign: TextAlign.left,
                   ),
-                ),
               ],
             ),
           ),

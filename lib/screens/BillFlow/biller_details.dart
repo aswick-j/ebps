@@ -335,8 +335,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                         if (!isFetchbillLoading &&
                             !isUnableToFetchBill &&
                             !isPaymentInfoLoading)
-                          if (((_billerResponseData == null ||
-                              _billerResponseData!.tag!.isEmpty)))
+                          if (((_billerResponseData != null)))
                             Container(
                                 width: double.infinity,
                                 constraints: BoxConstraints(

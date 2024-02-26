@@ -296,12 +296,10 @@ class _BillParametersState extends State<BillParameters> {
                             if (billNameController.text.isNotEmpty) {
                               setState(() {
                                 isValidBillName = true;
-                                isButtonActive = true;
                               });
                             } else {
                               setState(() {
                                 isValidBillName = false;
-                                isButtonActive = false;
                               });
                             }
                           },
@@ -329,6 +327,9 @@ class _BillParametersState extends State<BillParameters> {
                       ),
                     ],
                   )),
+              SizedBox(
+                height: 80.h,
+              )
             ],
           ),
         );

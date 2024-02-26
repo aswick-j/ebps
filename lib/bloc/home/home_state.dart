@@ -331,7 +331,12 @@ class PayBillError extends HomeState {
 
 //SEARCH
 
-class BillersSearchLoading extends HomeState {}
+class BillersSearchLoading extends HomeState {
+  List<BillersData> prevData;
+  bool isFirstFetch;
+
+  BillersSearchLoading(this.prevData, {this.isFirstFetch = false});
+}
 
 class BillersSearchSuccess extends HomeState {
   List<BillersData>? searchResultsData;

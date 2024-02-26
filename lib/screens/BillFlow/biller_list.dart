@@ -26,16 +26,21 @@ class BillerList extends StatefulWidget {
 class _BillerListState extends State<BillerList> {
   final infiniteScrollController = ScrollController();
   List<BillersData>? BillerSearchResults = [];
-  bool isBillSerachLoading = false;
+  bool isBillSerachLoading = true;
 
   List<BillersData>? Allbiller = [];
-  bool isAllBiller = false;
+  bool isAllBiller = true;
   final _searchController = TextEditingController();
   Timer? _debounce;
-
+  bool MoreLoading = true;
+  late int _pageNumber;
+  late int _totalPages;
   @override
   void initState() {
-    BlocProvider.of<HomeCubit>(context).getAllBiller(widget.id);
+    _pageNumber = 1;
+    _totalPages = 1;
+    BlocProvider.of<HomeCubit>(context).getAllBiller(widget.id, 1);
+
     initScrollController(context);
     super.initState();
   }
@@ -51,7 +56,18 @@ class _BillerListState extends State<BillerList> {
     infiniteScrollController.addListener(() {
       if (infiniteScrollController.position.atEdge) {
         if (infiniteScrollController.position.pixels != 0) {
-          BlocProvider.of<HomeCubit>(context).getAllBiller(widget.id);
+          if (_totalPages != _pageNumber) {
+            MoreLoading = true;
+            _pageNumber = _pageNumber + 1;
+            print("========>>>>dddd");
+            if (_searchController.text.isEmpty) {
+              BlocProvider.of<HomeCubit>(context)
+                  .getAllBiller(widget.id, _pageNumber);
+            } else {
+              BlocProvider.of<HomeCubit>(context)
+                  .searchBiller("", "", _pageNumber);
+            }
+          }
         }
       }
     });
@@ -59,9 +75,10 @@ class _BillerListState extends State<BillerList> {
 
   handleSearch() {
     if (_searchController.text.isEmpty) {
+      BlocProvider.of<HomeCubit>(context).getAllBiller(widget.id, _pageNumber);
     } else {
       BlocProvider.of<HomeCubit>(context)
-          .searchBiller(_searchController.text, widget.name);
+          .searchBiller(_searchController.text, widget.name, _pageNumber);
     }
   }
 
@@ -75,32 +92,58 @@ class _BillerListState extends State<BillerList> {
           showActions: false,
         ),
         body: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
-          if (state is AllbillerListLoading && state.isFirstFetch) {}
-          // bool isLoading = false;
-          isAllBiller = true;
+          if (state is AllbillerListLoading && state.isFirstFetch) {
+            isAllBiller = true;
+          }
           if (state is AllbillerListLoading) {
+            MoreLoading = true;
+
             Allbiller = state.prevData;
-            // isLoading = true;
+            if (Allbiller!.length > 1) {
+              _totalPages = Allbiller![Allbiller!.length - 1].tOTALPAGES!;
+            }
             isAllBiller = false;
           } else if (state is AllbillerListSuccess) {
             Allbiller = state.allbillerList;
+            if (Allbiller!.length > 1) {
+              _totalPages = Allbiller![Allbiller!.length - 1].tOTALPAGES!;
+            }
             isAllBiller = false;
-
-            // isLoading = false;
+            isBillSerachLoading = false;
+            MoreLoading = false;
           } else if (state is AllbillerListFailed) {
             isAllBiller = false;
+            isBillSerachLoading = false;
           } else if (state is AllbillerListError) {
             if (state.message!.contains('Invalid')) {
               goTo(context, sESSIONEXPIREDROUTE);
             }
+            isBillSerachLoading = false;
+
             isAllBiller = false;
           }
 
-          if (state is BillersSearchLoading) {
+          if (state is BillersSearchLoading && state.isFirstFetch) {
             isBillSerachLoading = true;
+          }
+
+          if (state is BillersSearchLoading) {
+            BillerSearchResults = state.prevData;
+            MoreLoading = true;
+            if (BillerSearchResults!.length > 1) {
+              _totalPages =
+                  BillerSearchResults![BillerSearchResults!.length - 1]
+                      .tOTALPAGES!;
+            }
           } else if (state is BillersSearchSuccess) {
-            isBillSerachLoading = false;
             BillerSearchResults = state.searchResultsData;
+            if (BillerSearchResults!.length > 1) {
+              _totalPages =
+                  BillerSearchResults![BillerSearchResults!.length - 1]
+                      .tOTALPAGES!;
+            }
+            isBillSerachLoading = false;
+            MoreLoading = false;
           } else if (state is BillersSearchFailed) {
             isBillSerachLoading = false;
           } else if (state is BillersSearchError) {
@@ -113,6 +156,7 @@ class _BillerListState extends State<BillerList> {
                 padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                 child: TextField(
                   onChanged: (value) => {
+                    _pageNumber = 1,
                     // _searchController.text = value,
                     _searchController.addListener(() {
                       if (_debounce?.isActive ?? false) _debounce?.cancel();
@@ -199,96 +243,117 @@ class _BillerListState extends State<BillerList> {
                       ),
                     ),
                     SizedBox(height: 10.h),
-                    if (isBillSerachLoading)
+                    if (isBillSerachLoading || isAllBiller)
                       Center(
                         child: Container(
                           height: 500.h,
                           child: FlickrLoader(),
                         ),
                       ),
-                    if (isAllBiller && BillerSearchResults!.isEmpty)
+                    if (_searchController.text.isEmpty && Allbiller!.isEmpty)
                       Container(
                         height: 500.h,
                         child: NoDataFound(
                           message: "No Billers Found",
                         ),
                       ),
-                    if (!isBillSerachLoading || !isAllBiller)
+                    if (_searchController.text.isNotEmpty &&
+                        BillerSearchResults!.isEmpty)
+                      Container(
+                        height: 500.h,
+                        child: NoDataFound(
+                          message: "No Billers Found",
+                        ),
+                      ),
+                    if ((!isAllBiller && Allbiller!.isNotEmpty) ||
+                        (!isBillSerachLoading &&
+                            BillerSearchResults!.isNotEmpty))
                       Container(
                         height: 480.h,
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           itemCount: _searchController.text.isEmpty
-                              ? Allbiller!.length
-                              : BillerSearchResults!.length,
-                          physics: const BouncingScrollPhysics(),
-                          controller: _searchController.text.isEmpty
-                              ? infiniteScrollController
-                              : null,
+                              ? Allbiller!.length + (MoreLoading ? 1 : 0)
+                              : BillerSearchResults!.length +
+                                  (MoreLoading ? 1 : 0),
+                          physics: const PageScrollPhysics(),
+                          controller: infiniteScrollController,
                           itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                if (_searchController.text.isEmpty
-                                    ? Allbiller![index]
-                                            .cATEGORYNAME!
-                                            .toLowerCase() ==
-                                        "mobile prepaid"
-                                    : BillerSearchResults![index]
-                                            .cATEGORYNAME!
-                                            .toLowerCase() ==
-                                        "mobile prepaid") {
-                                  goToData(context, pREPAIDBILLERPARAMROUTE, {
-                                    "BILLER_DATA":
-                                        _searchController.text.isEmpty
-                                            ? Allbiller![index]
-                                            : BillerSearchResults![index],
-                                    "BILLER_INPUT_SIGN": []
-                                  });
-                                } else {
-                                  goToData(context, bILLERPARAMROUTE, {
-                                    "BILLER_DATA":
-                                        _searchController.text.isEmpty
-                                            ? Allbiller![index]
-                                            : BillerSearchResults![index],
-                                    "BILLER_INPUT_SIGN": []
-                                  });
-                                }
-                              },
-                              child: ListTile(
-                                  contentPadding: EdgeInsets.only(
-                                      left: 6.w, right: 6.w, top: 0),
-                                  leading: Container(
-                                    width: 45.w,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(13.r),
-                                      child: SvgPicture.asset(BILLER_LOGO(
+                            if (_searchController.text.isEmpty
+                                ? index < Allbiller!.length
+                                : index < BillerSearchResults!.length) {
+                              return GestureDetector(
+                                onTap: () {
+                                  if (_searchController.text.isEmpty
+                                      ? Allbiller![index]
+                                              .cATEGORYNAME!
+                                              .toLowerCase() ==
+                                          "mobile prepaid"
+                                      : BillerSearchResults![index]
+                                              .cATEGORYNAME!
+                                              .toLowerCase() ==
+                                          "mobile prepaid") {
+                                    goToData(context, pREPAIDBILLERPARAMROUTE, {
+                                      "BILLER_DATA":
                                           _searchController.text.isEmpty
                                               ? Allbiller![index]
-                                                  .bILLERNAME
-                                                  .toString()
-                                              : BillerSearchResults![index]
-                                                  .bILLERNAME
-                                                  .toString())),
+                                              : BillerSearchResults![index],
+                                      "BILLER_INPUT_SIGN": []
+                                    });
+                                  } else {
+                                    goToData(context, bILLERPARAMROUTE, {
+                                      "BILLER_DATA":
+                                          _searchController.text.isEmpty
+                                              ? Allbiller![index]
+                                              : BillerSearchResults![index],
+                                      "BILLER_INPUT_SIGN": []
+                                    });
+                                  }
+                                },
+                                child: ListTile(
+                                    contentPadding: EdgeInsets.only(
+                                        left: 6.w, right: 6.w, top: 0),
+                                    leading: Container(
+                                      width: 45.w,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(13.r),
+                                        child: SvgPicture.asset(BILLER_LOGO(
+                                            _searchController.text.isEmpty
+                                                ? Allbiller![index]
+                                                    .bILLERNAME
+                                                    .toString()
+                                                : BillerSearchResults![index]
+                                                    .bILLERNAME
+                                                    .toString())),
+                                      ),
                                     ),
-                                  ),
-                                  title: Text(
-                                    _searchController.text.isEmpty
-                                        ? Allbiller![index]
-                                            .bILLERNAME
-                                            .toString()
-                                        : BillerSearchResults![index]
-                                            .bILLERNAME
-                                            .toString(),
-                                    // "Airtel Digital TV",
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff4c4c4c),
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  )),
-                            );
+                                    title: Text(
+                                      _searchController.text.isEmpty
+                                          ? Allbiller![index]
+                                              .bILLERNAME
+                                              .toString()
+                                          : BillerSearchResults![index]
+                                              .bILLERNAME
+                                              .toString(),
+                                      // "Airtel Digital TV",
+                                      style: TextStyle(
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xff4c4c4c),
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    )),
+                              );
+                            } else {
+                              Timer(Duration(milliseconds: 30), () {
+                                infiniteScrollController.jumpTo(
+                                    infiniteScrollController
+                                        .position.maxScrollExtent);
+                              });
+
+                              return FlickrLoader();
+                            }
                           },
                         ),
                       ),

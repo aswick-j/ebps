@@ -267,8 +267,10 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  widget.savedBillersData
-                                                      .bILLERNAME
+                                                  widget
+                                                      .savedBillersData
+                                                      .pARAMETERS![0]
+                                                      .pARAMETERNAME
                                                       .toString(),
                                                   style: TextStyle(
                                                       fontSize: 16.sp,
@@ -282,7 +284,9 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                   softWrap: false,
                                                 ),
                                                 Text(
-                                                  widget.savedBillersData
+                                                  widget
+                                                      .savedBillersData
+                                                      .pARAMETERS![0]
                                                       .pARAMETERVALUE
                                                       .toString(),
                                                   style: TextStyle(
@@ -1126,7 +1130,19 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                   SizedBox(
                     width: 110.w,
                     child: Text(
-                      widget.savedBillersData.pARAMETERVALUE.toString(),
+                    widget.savedBillersData.cATEGORYNAME
+                        .toString()
+                        .toLowerCase()
+                        .contains("mobile prepaid")
+                    ? widget.savedBillersData.pARAMETERS!
+                            .firstWhere((params) => params.pARAMETERNAME == null
+                                ? params.pARAMETERNAME == null
+                                : params.pARAMETERNAME
+                                        .toString()
+                                        .toLowerCase() ==
+                                    "mobile number")
+                            .pARAMETERVALUE.toString():  widget.savedBillersData.pARAMETERS![0].pARAMETERVALUE
+                          .toString(),
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,

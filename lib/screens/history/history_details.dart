@@ -229,17 +229,16 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                                     .bILLNAME
                                                                     .toString(),
                                                                 ParamName: widget
-                                                                    .historyData
-                                                                    .pARAMETERNAME
-                                                                    .toString(),
-                                                                ParamValue: widget
-                                                                    .historyData
-                                                                    .pARAMETERVALUE
-                                                                    .toString(),
-                                                                TransactionID: widget
-                                                                    .historyData
-                                                                    .tRANSACTIONREFERENCEID
-                                                                    .toString(),
+                                                                        .historyData
+                                                                        .cATEGORYNAME
+                                                                        .toString()
+                                                                        .toLowerCase()
+                                                                        .contains(
+                                                                            "mobile prepaid")
+                                                                    ? widget.historyData.pARAMETERS!.firstWhere((params) => params.pARAMETERNAME == null ? params.pARAMETERNAME == null : params.pARAMETERNAME.toString().toLowerCase() == "mobile number").pARAMETERNAME.toString()
+                                                                    : widget.historyData.pARAMETERS![0].pARAMETERNAME.toString(),
+                                                                ParamValue: widget.historyData.cATEGORYNAME.toString().toLowerCase().contains("mobile prepaid") ? widget.historyData.pARAMETERS!.firstWhere((params) => params.pARAMETERNAME == null ? params.pARAMETERNAME == null : params.pARAMETERNAME.toString().toLowerCase() == "mobile number").pARAMETERVALUE.toString() : widget.historyData.pARAMETERS![0].pARAMETERVALUE.toString(),
+                                                                TransactionID: widget.historyData.tRANSACTIONREFERENCEID.toString(),
                                                                 fromAccount: widget.historyData.aCCOUNTNUMBER.toString(),
                                                                 billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
                                                                 status: widget.historyData.tRANSACTIONSTATUS.toString(),
@@ -272,27 +271,32 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                           .toString(),
                                                       widget.billName
                                                           .toString(),
-                                                      widget.historyData.pARAMETERNAME
-                                                          .toString(),
-                                                      widget.historyData
-                                                          .pARAMETERVALUE
-                                                          .toString(),
-                                                      widget.historyData
-                                                          .tRANSACTIONREFERENCEID
-                                                          .toString(),
-                                                      widget.historyData
-                                                          .aCCOUNTNUMBER
-                                                          .toString(),
+                                                      widget.historyData.cATEGORYNAME.toString().toLowerCase().contains("mobile prepaid")
+                                                          ? widget.historyData.pARAMETERS!
+                                                              .firstWhere((params) => params.pARAMETERNAME == null
+                                                                  ? params.pARAMETERNAME ==
+                                                                      null
+                                                                  : params.pARAMETERNAME.toString().toLowerCase() ==
+                                                                      "mobile number")
+                                                              .pARAMETERNAME
+                                                              .toString()
+                                                          : widget
+                                                              .historyData
+                                                              .pARAMETERS![0]
+                                                              .pARAMETERNAME
+                                                              .toString(),
+                                                      widget.historyData.cATEGORYNAME.toString().toLowerCase().contains("mobile prepaid")
+                                                          ? widget.historyData
+                                                              .pARAMETERS!
+                                                              .firstWhere((params) => params.pARAMETERNAME == null ? params.pARAMETERNAME == null : params.pARAMETERNAME.toString().toLowerCase() == "mobile number")
+                                                              .pARAMETERVALUE
+                                                              .toString()
+                                                          : widget.historyData.pARAMETERS![0].pARAMETERVALUE.toString(),
+                                                      widget.historyData.tRANSACTIONREFERENCEID.toString(),
+                                                      widget.historyData.aCCOUNTNUMBER.toString(),
                                                       "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
-                                                      widget.historyData
-                                                          .tRANSACTIONSTATUS
-                                                          .toString(),
-                                                      DateFormat('dd/MM/yy | hh:mm a')
-                                                          .format(DateTime.parse(widget
-                                                                  .historyData
-                                                                  .cOMPLETIONDATE
-                                                                  .toString())
-                                                              .toLocal())),
+                                                      widget.historyData.tRANSACTIONSTATUS.toString(),
+                                                      DateFormat('dd/MM/yy | hh:mm a').format(DateTime.parse(widget.historyData.cOMPLETIONDATE.toString()).toLocal())),
                                                 );
                                                 // Future.microtask(() =>
                                                 //     Navigator.push(
@@ -368,9 +372,32 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                         //         widget.historyData.aPPROVALREFNO.toString(),
                         //     clipBoard: true),
                         TxnDetails(
-                            title: widget.historyData.pARAMETERNAME.toString(),
-                            subTitle:
-                                widget.historyData.pARAMETERVALUE.toString(),
+                            title: widget.historyData.cATEGORYNAME
+                                    .toString()
+                                    .toLowerCase()
+                                    .contains("mobile prepaid")
+                                ? "Mobile Number"
+                                : widget
+                                    .historyData.pARAMETERS![0].pARAMETERNAME
+                                    .toString(),
+                            subTitle: widget.historyData.cATEGORYNAME
+                                    .toString()
+                                    .toLowerCase()
+                                    .contains("mobile prepaid")
+                                ? widget.historyData.pARAMETERS!
+                                    .firstWhere(
+                                        (params) =>
+                                            params.pARAMETERNAME == null
+                                                ? params.pARAMETERNAME == null
+                                                : params.pARAMETERNAME
+                                                        .toString()
+                                                        .toLowerCase() ==
+                                                    "mobile number")
+                                    .pARAMETERVALUE
+                                    .toString()
+                                : widget
+                                    .historyData.pARAMETERS![0].pARAMETERVALUE
+                                    .toString(),
                             clipBoard: false),
                         if (widget.historyData.tRANSACTIONSTATUS == 'success')
                           TxnDetails(
@@ -391,7 +418,9 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                             clipBoard: false),
                         TxnDetails(
                             title: "Payment Channel",
-                            subTitle: "Equitas - Mobile Banking",
+                            subTitle: widget.historyData.pAYMENTCHANNEL == 'IB'
+                                ? "Equitas - Internet Banking"
+                                : "Equitas - Mobile Banking",
                             clipBoard: false,
                             showLogo: true),
                         // if (widget.historyData.tRANSACTIONSTATUS == 'success')

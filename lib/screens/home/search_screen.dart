@@ -27,19 +27,49 @@ class _SearchScreenState extends State<SearchScreen> {
   final _searchController = TextEditingController();
   Timer? _debounce;
   bool isBillSerachLoading = true;
+  bool MoreLoading = true;
+  late int _pageNumber;
+  late int _totalPages;
+  final infiniteScrollController = ScrollController();
 
   @override
   void initState() {
+    _pageNumber = 1;
+    _totalPages = 1;
+    initScrollController(context);
+
     handleSearch();
     super.initState();
   }
 
+  void initScrollController(context) {
+    print("=======SSS");
+    infiniteScrollController.addListener(() {
+      if (infiniteScrollController.position.atEdge) {
+        if (infiniteScrollController.position.pixels != 0) {
+          if (_totalPages != _pageNumber) {
+            MoreLoading = true;
+            _pageNumber = _pageNumber + 1;
+            print("========>>>>dddd");
+            if (_searchController.text.isEmpty) {
+              BlocProvider.of<HomeCubit>(context)
+                  .searchBiller("", "", _pageNumber);
+            } else {
+              BlocProvider.of<HomeCubit>(context)
+                  .searchBiller(_searchController.text, "All", _pageNumber);
+            }
+          }
+        }
+      }
+    });
+  }
+
   handleSearch() {
     if (_searchController.text.isEmpty) {
-      BlocProvider.of<HomeCubit>(context).searchBiller("", "");
+      BlocProvider.of<HomeCubit>(context).searchBiller("", "", _pageNumber);
     } else {
       BlocProvider.of<HomeCubit>(context)
-          .searchBiller(_searchController.text, "All");
+          .searchBiller(_searchController.text, "All", _pageNumber);
     }
   }
 
@@ -73,16 +103,45 @@ class _SearchScreenState extends State<SearchScreen> {
                       )))
             ]),
         body: BlocConsumer<HomeCubit, HomeState>(listener: (context, state) {
-          if (state is BillersSearchLoading) {
+          if (state is BillersSearchLoading && state.isFirstFetch) {
             isBillSerachLoading = true;
+          }
+
+          if (state is BillersSearchLoading) {
+            BillerSearchResults = state.prevData;
+            MoreLoading = true;
+            if (BillerSearchResults!.length > 1) {
+              _totalPages =
+                  BillerSearchResults![BillerSearchResults!.length - 1]
+                      .tOTALPAGES!;
+            }
           } else if (state is BillersSearchSuccess) {
             BillerSearchResults = state.searchResultsData;
-            // if (BillerSearchResults!.isEmpty) alert = true;
+            if (BillerSearchResults!.length > 1) {
+              _totalPages =
+                  BillerSearchResults![BillerSearchResults!.length - 1]
+                      .tOTALPAGES!;
+            }
             isBillSerachLoading = false;
-          } else if (state is BillersSearchFailed) {
+            MoreLoading = false;
+          }
+          // if (state is BillersSearchLoading) {
+          //   MoreLoading = true;
+          // } else if (state is BillersSearchSuccess) {
+          //   BillerSearchResults = state.searchResultsData;
+          //   if (BillerSearchResults!.length > 1 &&
+          //       BillerSearchResults![0].tOTALPAGES == 1) {
+          //     _totalPages = BillerSearchResults![0].tOTALPAGES!;
+          //   }
+          //   // if (BillerSearchResults!.isEmpty) alert = true;
+          //   isBillSerachLoading = false;
+          //   MoreLoading = false;
+          else if (state is BillersSearchFailed) {
             isBillSerachLoading = false;
+            MoreLoading = false;
           } else if (state is BillersSearchError) {
             isBillSerachLoading = false;
+            MoreLoading = false;
           }
         }, builder: (context, state) {
           return SingleChildScrollView(
@@ -94,6 +153,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                     child: TextField(
                       onChanged: (value) => {
+                        _pageNumber = 1,
                         // _searchController.text = value,
                         _searchController.addListener(() {
                           if (_debounce?.isActive ?? false) _debounce?.cancel();
@@ -162,58 +222,69 @@ class _SearchScreenState extends State<SearchScreen> {
                             child: ListView.builder(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
-                              itemCount: BillerSearchResults!.length,
-                              physics: const BouncingScrollPhysics(),
-                              // controller: infiniteScrollController,
+                              itemCount: BillerSearchResults!.length +
+                                  (MoreLoading ? 1 : 0),
+                              physics: PageScrollPhysics(),
+                              controller: infiniteScrollController,
                               itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    if (BillerSearchResults![index]
-                                            .cATEGORYNAME!
-                                            .toLowerCase() ==
-                                        "mobile prepaid") {
-                                      goToData(
-                                          context, pREPAIDBILLERPARAMROUTE, {
-                                        "BILLER_DATA":
-                                            BillerSearchResults![index],
-                                        "BILLER_INPUT_SIGN": []
-                                      });
-                                    } else {
-                                      goToData(context, bILLERPARAMROUTE, {
-                                        "BILLER_DATA":
-                                            BillerSearchResults![index],
-                                        "BILLER_INPUT_SIGN": []
-                                      });
-                                    }
-                                    // goToData(context, bILLERPARAMROUTE, {
-                                    //   "BILLER_DATA":
-                                    //       BillerSearchResults![index],
-                                    //   "BILLER_INPUT_SIGN": []
-                                    // });
-                                  },
-                                  child: ListTile(
-                                      contentPadding: EdgeInsets.only(
-                                          left: 6.w, right: 6.w, top: 0),
-                                      leading: Container(
-                                        width: 45.w,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(13.r),
-                                          child: SvgPicture.asset(LOGO_BBPS),
+                                if (index < BillerSearchResults!.length) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      if (BillerSearchResults![index]
+                                              .cATEGORYNAME!
+                                              .toLowerCase() ==
+                                          "mobile prepaid") {
+                                        goToData(
+                                            context, pREPAIDBILLERPARAMROUTE, {
+                                          "BILLER_DATA":
+                                              BillerSearchResults![index],
+                                          "BILLER_INPUT_SIGN": []
+                                        });
+                                      } else {
+                                        goToData(context, bILLERPARAMROUTE, {
+                                          "BILLER_DATA":
+                                              BillerSearchResults![index],
+                                          "BILLER_INPUT_SIGN": []
+                                        });
+                                      }
+                                      // goToData(context, bILLERPARAMROUTE, {
+                                      //   "BILLER_DATA":
+                                      //       BillerSearchResults![index],
+                                      //   "BILLER_INPUT_SIGN": []
+                                      // });
+                                    },
+                                    child: ListTile(
+                                        contentPadding: EdgeInsets.only(
+                                            left: 6.w, right: 6.w, top: 0),
+                                        leading: Container(
+                                          width: 45.w,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(13.r),
+                                            child: SvgPicture.asset(LOGO_BBPS),
+                                          ),
                                         ),
-                                      ),
-                                      title: Text(
-                                        BillerSearchResults![index]
-                                            .bILLERNAME
-                                            .toString(),
-                                        // "Airtel Digital TV",
-                                        style: TextStyle(
-                                          fontSize: 13.sp,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0xff4c4c4c),
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      )),
-                                );
+                                        title: Text(
+                                          BillerSearchResults![index]
+                                              .bILLERNAME
+                                              .toString(),
+                                          // "Airtel Digital TV",
+                                          style: TextStyle(
+                                            fontSize: 13.sp,
+                                            fontWeight: FontWeight.w400,
+                                            color: const Color(0xff4c4c4c),
+                                          ),
+                                          textAlign: TextAlign.left,
+                                        )),
+                                  );
+                                } else {
+                                  Timer(Duration(milliseconds: 30), () {
+                                    infiniteScrollController.jumpTo(
+                                        infiniteScrollController
+                                            .position.maxScrollExtent);
+                                  });
+
+                                  return FlickrLoader();
+                                }
                               },
                             ),
                           ),
