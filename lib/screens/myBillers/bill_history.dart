@@ -85,17 +85,14 @@ class _BillHistoryState extends State<BillHistory> {
                                           .cOMPLETIONDATE
                                           .toString())
                                       .toLocal()),
+                              statusText: getTransactionStatus(
+                                  historyData![index]
+                                      .tRANSACTIONSTATUS
+                                      .toString()),
                               amount:
                                   "₹ ${NumberFormat('#,##,##0.00').format(double.parse(historyData![index].bILLAMOUNT.toString()))}",
                               // '₹ ${historyData![index].bILLAMOUNT.toString()}',
-                              statusText: historyData![index]
-                                          .tRANSACTIONSTATUS
-                                          .toString() ==
-                                      'success'
-                                  ? null
-                                  : getTransactionStatus(historyData![index]
-                                      .tRANSACTIONSTATUS
-                                      .toString()),
+
                               iconPath: LOGO_BBPS,
                               containerBorderColor: Color(0xffD1D9E8),
                             );

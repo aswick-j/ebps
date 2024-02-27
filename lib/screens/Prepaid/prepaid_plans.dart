@@ -187,8 +187,8 @@ class _PrepaidPlansState extends State<PrepaidPlans>
             pARAMETERTYPE: widget.inputParameters![i].pARAMETERTYPE,
             mINLENGTH: widget.inputParameters![i].mINLENGTH,
             mAXLENGTH: widget.inputParameters![i].mAXLENGTH,
-            // rEGEX:  widget.inputParameters![i].rEGEX,
-            rEGEX: null,
+            rEGEX: widget.inputParameters![i].rEGEX,
+            // rEGEX: null,
             oPTIONAL: widget.inputParameters![i].oPTIONAL,
             eRROR: '',
             pARAMETERVALUE: widget.inputParameters![i].pARAMETERNAME

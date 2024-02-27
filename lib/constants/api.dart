@@ -22,6 +22,7 @@ const String GET_AUTOPAY_MAXAMOUNT_URL = "/auto-pay/max-amount/";
 const String GET_AUTOPAY_URL = "/auto-pay/";
 const String GET_EDIT_SAVED_URL = "/billers/get-saved-details/";
 const String GET_SAVED_BILLERS_URL = "/billers/saved/";
+const String GET_COMPLAINT_STATUS = "/complaints/status/";
 const String HISTORY_URL = "/transactions/";
 const String INPUT_SIGN_URL = "/billers/input-signatures/";
 const String LOGIN_URL = "/auth/login/";

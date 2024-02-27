@@ -77,7 +77,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                       child: MyAppText(
                         // data: "Jio Telecom Services",
                         data: widget.titleText,
-                        size: 14.0.sp,
+                        size: 13.0.sp,
                         color: TXT_CLR_DEFAULT,
                         weight: FontWeight.w500,
                       ),
@@ -105,7 +105,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                     children: [
                       MyAppText(
                         data: widget.subtitleText,
-                        size: 14.0.sp,
+                        size: 12.0.sp,
                         color: TXT_CLR_PRIMARY,
                         weight: FontWeight.w700,
                       ),
@@ -133,7 +133,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                       ),
                       MyAppText(
                         data: widget.dateText,
-                        size: 14.0.sp,
+                        size: 12.0.sp,
                         color: TXT_CLR_LITE,
                         weight: FontWeight.w400,
                       ),
@@ -156,14 +156,14 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                               widget.statusText.toString(),
                               style: TextStyle(
                                 color: CLR_ERROR,
-                                fontSize: 10.0.sp,
+                                fontSize: 8.0.sp,
                               ),
                             ),
                           ),
                         SizedBox(width: 10.w),
                         Icon(
                           Icons.arrow_forward,
-                          size: 20.r,
+                          size: 18.r,
                           color: TXT_CLR_LITE,
                         )
                       ]))

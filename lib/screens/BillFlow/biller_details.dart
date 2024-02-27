@@ -57,6 +57,7 @@ class _BillerDetailsState extends State<BillerDetails> {
   BillerResponse? _billerResponseData;
   int? _customerBIllID;
   int billAmount = 0;
+  String? checkBillAmount = "0";
   Map<String, dynamic>? validateBill;
   PaymentInformationData? paymentInform;
   bool isInsufficient = true;
@@ -236,6 +237,7 @@ class _BillerDetailsState extends State<BillerDetails> {
             _customerBIllID = state.fetchBillResponse!.customerbillId;
             _additionalInfo =
                 state.fetchBillResponse!.data!.data!.additionalInfo;
+            checkBillAmount = _billerResponseData!.amount.toString();
             txtAmountController.text = _billerResponseData!.amount.toString();
 
             if (double.parse(_billerResponseData!.amount.toString()) == 0 ||
@@ -679,7 +681,13 @@ class _BillerDetailsState extends State<BillerDetails> {
                                     "isSavedBill": widget.isSavedBill,
                                     "amount": txtAmountController.text,
                                     "validateBill": validateBill,
-                                    "billerInputSign": billerInputSign
+                                    "billerInputSign": billerInputSign,
+                                    "otherAmount": double.parse(
+                                                checkBillAmount.toString()) ==
+                                            double.parse(
+                                                txtAmountController.text)
+                                        ? false
+                                        : true
                                   });
                                 }
                               }

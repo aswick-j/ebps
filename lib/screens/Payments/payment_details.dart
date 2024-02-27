@@ -39,14 +39,16 @@ class PaymentDetails extends StatefulWidget {
   Map<String, dynamic>? validateBill;
   Map<String, dynamic>? billerInputSign;
   PrepaidPlansData? planDetails;
+  bool otherAmount;
   PaymentDetails(
       {Key? key,
       required this.billID,
       required this.billerName,
       required this.isSavedBill,
+      required this.otherAmount,
       this.billName,
-      this.billerData,
       this.savedBillersData,
+      this.billerData,
       this.inputParameters,
       required this.SavedinputParameters,
       this.categoryName,
@@ -66,7 +68,6 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   bool isFetchbillLoading = false;
   List<AccountsData>? accountInfo = [];
   ConfirmFetchBillData? confirmbillerResData;
-  final bool _otherAmount = false;
   dynamic selectedAcc;
   bool accError = false;
 
@@ -226,7 +227,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                   "quickPay": widget.validateBill!["quickPay"],
                   "inputSignature": widget.inputParameters,
                   "SavedinputParameters": widget.SavedinputParameters,
-                  "otherAmount": _otherAmount,
+                  "otherAmount": widget.otherAmount,
                   "autoPayStatus": '',
                   "billerData": widget.billerData,
                   "savedBillersData": widget.savedBillersData,

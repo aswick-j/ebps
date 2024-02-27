@@ -267,10 +267,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  widget
-                                                      .savedBillersData
-                                                      .pARAMETERS![0]
-                                                      .pARAMETERNAME
+                                                  widget.savedBillersData
+                                                      .bILLERNAME
                                                       .toString(),
                                                   style: TextStyle(
                                                       fontSize: 16.sp,

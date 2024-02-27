@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:basic_utils/basic_utils.dart';
+import 'package:ebps/constants/api.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/NavigationService.dart';
 import 'package:ebps/helpers/logger.dart';
 import 'package:ebps/models/decoded_model.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_io/jwt_io.dart';
@@ -85,6 +88,47 @@ api(
     Map<String, dynamic>? body,
     token,
     checkSum}) async {
+  late String bodyPayload;
+
+  if (url.toString().contains("/auth/redirect") ||
+      url.toString().contains(LOGIN_URL)) {
+    bodyPayload = json.encode(body);
+  } else if (method!.toLowerCase().contains("put") ||
+      method.toLowerCase().contains("post")) {
+    var publicKey = await getSharedValue(ENCRYPTION_KEY);
+
+    final rsaencryption = encrypt.Encrypter(
+      encrypt.RSA(
+          publicKey: CryptoUtils.rsaPublicKeyFromPem(publicKey),
+          encoding: encrypt.RSAEncoding.OAEP),
+    );
+
+    List<String> splitByLength(String value, int length) {
+      List<String> SplitDatas = [];
+
+      for (int i = 0; i < value.length; i += length) {
+        int offset = i + length;
+        SplitDatas.add(
+            value.substring(i, offset >= value.length ? value.length : offset));
+      }
+      return SplitDatas;
+    }
+
+    final data = splitByLength(jsonEncode(body), 64);
+
+    final iv = encrypt.IV.fromUtf8("1234567890123456");
+
+    List<String> newChunks = [];
+    for (var chunk in data) {
+      final encryptedChunk = rsaencryption.encrypt(chunk, iv: iv).base64;
+      newChunks.add(encryptedChunk);
+    }
+
+    final chunksstring = newChunks.join("");
+
+    bodyPayload =
+        json.encode({"encryptedData": chunksstring, "fromMobile": true});
+  }
   try {
     if (token == true) {
       var token1 = await getSharedValue(TOKEN);
@@ -99,7 +143,7 @@ api(
     if (method!.toLowerCase().contains("post")) {
       return client
           .post(Uri.parse(url!),
-              body: json.encode(body),
+              body: bodyPayload,
               headers: token == true
                   ? {
                       HttpHeaders.authorizationHeader:
@@ -136,7 +180,7 @@ api(
       // log(await getSharedBoolValue(TOKEN));
       return client
           .put(Uri.parse(url!),
-              body: json.encode(body),
+              body: bodyPayload,
               headers: token == true
                   ? {
                       HttpHeaders.authorizationHeader:

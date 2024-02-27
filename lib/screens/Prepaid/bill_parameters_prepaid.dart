@@ -423,8 +423,8 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                                     inputSignatureItems![i].pARAMETERTYPE,
                                 mINLENGTH: inputSignatureItems![i].mINLENGTH,
                                 mAXLENGTH: inputSignatureItems![i].mAXLENGTH,
-                                // rEGEX: inputSignatureItems![i].rEGEX,
-                                rEGEX: null,
+                                rEGEX: inputSignatureItems![i].rEGEX,
+                                //  rEGEX: null,
                                 oPTIONAL: inputSignatureItems![i].oPTIONAL,
                                 eRROR: '',
                                 pARAMETERVALUE: inputSignatureItems![i]

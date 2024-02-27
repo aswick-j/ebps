@@ -840,12 +840,12 @@ class _editAutopayState extends State<editAutopay> {
                                         SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
                                       // itemCount: accountInfo!.length,
-                                      childAspectRatio: 5 / 2.5,
+                                      childAspectRatio: 5 / 3,
                                       mainAxisSpacing: 10.0,
                                     ),
                                     itemBuilder: (context, index) {
                                       return AccountInfoCard(
-                                        showAccDetails: false,
+                                        showAccDetails: true,
                                         accountNumber: accountInfo![index]
                                             .accountNumber
                                             .toString(),

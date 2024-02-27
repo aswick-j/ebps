@@ -3,6 +3,7 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/helpers/numberPrefixSetter.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/services/api.dart';
@@ -10,6 +11,7 @@ import 'package:ebps/widget/animated_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class MismatchNotification extends StatefulWidget {
@@ -142,9 +144,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                 ? widget.allautoPayData![index]
                                                     .dUEDATE
                                                     .toString()
-                                                : widget.allautoPayData![index]
-                                                    .dUEAMOUNT
-                                                    .toString(),
+                                                : "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allautoPayData![index].dUEAMOUNT.toString()))}",
                                             style: TextStyle(
                                               fontSize: 13.sp,
                                               fontWeight: FontWeight.bold,
@@ -185,12 +185,8 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                             widget.allautoPayData![index]
                                                         .rESETDATE ==
                                                     1
-                                                ? widget.allautoPayData![index]
-                                                    .pAYMENTDATE
-                                                    .toString()
-                                                : widget.allautoPayData![index]
-                                                    .mAXIMUMAMOUNT
-                                                    .toString(),
+                                                ? '${numberPrefixSetter(widget.allautoPayData![index].pAYMENTDATE.toString())}${" of"}${widget.allautoPayData![index].iSBIMONTHLY == 0 ? " every" : " every two"}${" month"}'
+                                                : "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allautoPayData![index].mAXIMUMAMOUNT.toString()))}",
                                             style: TextStyle(
                                               fontSize: 13.sp,
                                               fontWeight: FontWeight.bold,

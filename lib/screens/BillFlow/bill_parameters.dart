@@ -91,8 +91,8 @@ class _BillParametersState extends State<BillParameters> {
           pARAMETERTYPE: inputSignatureItems![i].pARAMETERTYPE,
           mINLENGTH: inputSignatureItems![i].mINLENGTH,
           mAXLENGTH: inputSignatureItems![i].mAXLENGTH,
-          // rEGEX: inputSignatureItems![i].rEGEX,
-          rEGEX: null,
+          rEGEX: inputSignatureItems![i].rEGEX,
+          // rEGEX: null,
           oPTIONAL: inputSignatureItems![i].oPTIONAL,
           eRROR: '',
           pARAMETERVALUE: inputSignatureControllers[i].text);

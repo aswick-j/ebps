@@ -245,7 +245,8 @@ class MyRouter {
                       amount: args['amount'],
                       validateBill: args['validateBill'],
                       billerInputSign: args['billerInputSign'],
-                      planDetails: args["planDetails"]),
+                      planDetails: args["planDetails"],
+                      otherAmount: args["otherAmount"]),
                 ));
 
       //SESSION EXPIRED

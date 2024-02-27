@@ -258,9 +258,23 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Column(
                                 children: [
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      widget.savedBillersData!.bILLERNAME
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff808080),
+                                          overflow: TextOverflow.ellipsis),
+                                      maxLines: 1,
+                                    ),
+                                  ),
                                   SizedBox(
                                     width: 150.w,
                                     child: Text(
@@ -291,14 +305,14 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                       ),
                     ),
                     Divider(
-                      height: 10.h,
+                      height: 1.h,
                       thickness: 1,
                       indent: 10.w,
                       endIndent: 10.w,
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.only(left: 15.w, right: 15.w, bottom: 5.h),
+                          EdgeInsets.only(left: 15.w, right: 15.w, bottom: 0.h),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
