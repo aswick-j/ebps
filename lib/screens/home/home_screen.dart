@@ -136,15 +136,11 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
                   }
                 }
 
-                List<AllConfigurationsData> newData = autopayData
-                    .where(
-                        (item) => item.rESETDATE == 1 || item.rESETLIMIT == 1)
-                    .toList();
+                List<AllConfigurationsData> newData =
+                    autopayData.where((item) => item.rESETDATE == 1).toList();
 
-                List<AllConfigurationsData> newData2 = autopayData
-                    .where(
-                        (item) => item.rESETDATE == 1 && item.rESETLIMIT == 1)
-                    .toList();
+                List<AllConfigurationsData> newData2 =
+                    autopayData.where((item) => item.rESETLIMIT == 1).toList();
 
                 List<AllConfigurationsData> modifiedData = newData2
                     .map((item) => AllConfigurationsData(

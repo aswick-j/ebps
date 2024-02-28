@@ -43,14 +43,12 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void initScrollController(context) {
-    print("=======SSS");
     infiniteScrollController.addListener(() {
       if (infiniteScrollController.position.atEdge) {
         if (infiniteScrollController.position.pixels != 0) {
           if (_totalPages != _pageNumber) {
             MoreLoading = true;
             _pageNumber = _pageNumber + 1;
-            print("========>>>>dddd");
             if (_searchController.text.isEmpty) {
               BlocProvider.of<HomeCubit>(context)
                   .searchBiller("", "", _pageNumber);
@@ -88,19 +86,19 @@ class _SearchScreenState extends State<SearchScreen> {
             onLeadingTap: () => goBack(context),
             showActions: true,
             actions: [
-              InkWell(
-                  onTap: () => {goTo(context, cOMPLAINTLISTROUTE)},
-                  child: Container(
-                      margin: EdgeInsets.only(right: 15.w),
-                      decoration: ShapeDecoration(
-                        color: Color(0xff4969A2),
-                        shape: CircleBorder(),
-                      ),
-                      child: Container(
-                        width: 30.w,
-                        height: 30.h,
-                        child: SvgPicture.asset(ICON_COMPLAINTS),
-                      )))
+              // InkWell(
+              //     onTap: () => {goTo(context, cOMPLAINTLISTROUTE)},
+              //     child: Container(
+              //         margin: EdgeInsets.only(right: 15.w),
+              //         decoration: ShapeDecoration(
+              //           color: Color(0xff4969A2),
+              //           shape: CircleBorder(),
+              //         ),
+              //         child: Container(
+              //           width: 30.w,
+              //           height: 30.h,
+              //           child: SvgPicture.asset(ICON_COMPLAINTS),
+              //         )))
             ]),
         body: BlocConsumer<HomeCubit, HomeState>(listener: (context, state) {
           if (state is BillersSearchLoading && state.isFirstFetch) {

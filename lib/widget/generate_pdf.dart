@@ -15,6 +15,7 @@ Future<Uint8List> generatePdf(
     String fromAccount,
     String billAmount,
     String status,
+    String channel,
     TransactionDate) async {
   final pdf = pw.Document(
     version: PdfVersion.pdf_1_5,
@@ -183,7 +184,7 @@ Future<Uint8List> generatePdf(
                         ],
                         [
                           'Payment Channel ',
-                          "Mobile Banking",
+                          channel,
                         ],
                         [
                           'Debited Account',

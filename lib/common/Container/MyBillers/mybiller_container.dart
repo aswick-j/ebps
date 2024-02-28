@@ -30,7 +30,7 @@ class MyBillersContainer extends StatefulWidget {
   List<PARAMETERS>? SavedinputParameters;
   bool showButton;
   List<AllConfigurations>? allautoPaymentList;
-  List<UpcomingDuesData>? upcomingDueData;
+  UpcomingDuesData? upcomingDueData;
   MyBillersContainer({
     super.key,
     this.buttonText,
@@ -320,7 +320,6 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                 ),
                                                 GestureDetector(
                                                   onTap: () {
-                                                    print("======");
                                                     showModalBottomSheet(
                                                         context: context,
                                                         shape:
@@ -748,7 +747,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                   right: 16.w),
                                                           child: Center(
                                                             child: Text(
-                                                              "Are You Sure You Want To Delete ?",
+                                                              "Are You Sure You Want To Delete the Autopay?",
                                                               style: TextStyle(
                                                                 fontSize: 14.sp,
                                                                 fontWeight:
@@ -1397,34 +1396,31 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                 context: context),
                                             ModalText(
                                                 title: "Due Amount",
-                                                subTitle: widget
-                                                            .upcomingDueData!
-                                                            .isNotEmpty &&
-                                                        widget.upcomingDueData![0]
+                                                subTitle: widget.upcomingDueData !=
+                                                            null &&
+                                                        widget.upcomingDueData!
                                                                 .dueAmount !=
                                                             null
-                                                    ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.upcomingDueData![0].dueAmount.toString()))}"
+                                                    ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.upcomingDueData!.dueAmount.toString()))}"
                                                     : "-",
                                                 context: context),
                                             ModalText(
                                                 title: "Due Date",
-                                                subTitle: (widget
-                                                            .upcomingDueData!
-                                                            .isNotEmpty &&
-                                                        widget
-                                                                .upcomingDueData![
-                                                                    0]
+                                                subTitle: (widget.upcomingDueData !=
+                                                            null &&
+                                                        widget.upcomingDueData!
                                                                 .dueDate !=
                                                             null)
                                                     ? DateFormat('dd/MM/yyyy')
                                                         .format(DateTime.parse(widget
-                                                                .upcomingDueData![
-                                                                    0]
+                                                                .upcomingDueData!
                                                                 .dueDate!
                                                                 .toString()
-                                                                .substring(0, 10))
+                                                                .substring(
+                                                                    0, 10))
                                                             .toLocal()
-                                                            .add(const Duration(days: 1)))
+                                                            .add(const Duration(
+                                                                days: 1)))
                                                     : "-",
                                                 context: context),
                                             if (getAllAutopayList(widget
@@ -1647,13 +1643,13 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                         widget.savedBillersData.bILLERNAME,
                                     "categoryName":
                                         widget.savedBillersData.cATEGORYNAME,
-                                    "lastPaidAmount": widget
-                                                .savedBillersData.bILLAMOUNT !=
-                                            null
-                                        ? widget.savedBillersData.bILLAMOUNT
-                                            .toString()
-                                        : widget.upcomingDueData![0].dueAmount
-                                            .toString(),
+                                    "lastPaidAmount":
+                                        widget.savedBillersData.bILLAMOUNT !=
+                                                null
+                                            ? widget.savedBillersData.bILLAMOUNT
+                                                .toString()
+                                            : widget.upcomingDueData!.dueAmount
+                                                .toString(),
                                     "billName":
                                         widget.savedBillersData.bILLNAME,
                                     "customerBillID": widget
@@ -1724,27 +1720,27 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
               ),
               // trailing:
             ),
-            if (widget.upcomingDueData!.isNotEmpty)
-              if (!(widget.upcomingDueData![0].dueAmount == null &&
-                  widget.upcomingDueData![0].dueDate == null))
+            if (widget.upcomingDueData != null)
+              if (!(widget.upcomingDueData!.dueAmount == null &&
+                  widget.upcomingDueData!.dueDate == null))
                 Divider(
                   height: 10.h,
                   thickness: 1,
                   indent: 10.h,
                   endIndent: 10,
                 ),
-            if (widget.upcomingDueData!.isNotEmpty)
-              if (!(widget.upcomingDueData![0].dueAmount == null &&
-                  widget.upcomingDueData![0].dueDate == null))
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 6.0.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 6.0.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                      if (widget.upcomingDueData != null)
+                        if (!(widget.upcomingDueData!.dueAmount == null &&
+                            widget.upcomingDueData!.dueDate == null))
                           Row(
                             children: [
                               SvgPicture.asset(ICON_CALENDAR),
@@ -1752,10 +1748,10 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                 width: 5.w,
                               ),
                               Text(
-                                widget.upcomingDueData![0].dueDate != null
+                                widget.upcomingDueData!.dueDate != null
                                     ? DateFormat('dd/MM/yyyy').format(
                                         DateTime.parse(widget
-                                                .upcomingDueData![0].dueDate!
+                                                .upcomingDueData!.dueDate!
                                                 .toString()
                                                 .substring(0, 10))
                                             .toLocal()
@@ -1770,25 +1766,28 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                               ),
                             ],
                           ),
-                          if (widget.upcomingText != "")
-                            SizedBox(
-                              height: 3.h,
-                            ),
-                          if (widget.upcomingText != "")
-                            Text(
-                              widget.upcomingText!,
-                              style: TextStyle(
-                                fontSize: 10.sp,
-                                fontWeight: FontWeight.w600,
-                                color: widget.upcomingTXT_CLR_DEFAULT,
-                              ),
-                              textAlign: TextAlign.center,
-                            )
-                        ],
-                      ),
+                      if (widget.upcomingText != "")
+                        SizedBox(
+                          height: 3.h,
+                        ),
+                      if (widget.upcomingText != "")
+                        Text(
+                          widget.upcomingText!,
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w600,
+                            color: widget.upcomingTXT_CLR_DEFAULT,
+                          ),
+                          textAlign: TextAlign.center,
+                        )
+                    ],
+                  ),
+                  if (widget.upcomingDueData != null)
+                    if (!(widget.upcomingDueData!.dueAmount == null &&
+                        widget.upcomingDueData!.dueDate == null))
                       Text(
-                        widget.upcomingDueData![0].dueAmount != null
-                            ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.upcomingDueData![0].dueAmount.toString()))}"
+                        widget.upcomingDueData!.dueAmount != null
+                            ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.upcomingDueData!.dueAmount.toString()))}"
                             : "-",
                         style: TextStyle(
                           fontSize: 14.sp,
@@ -1798,9 +1797,9 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                         ),
                         textAlign: TextAlign.left,
                       )
-                    ],
-                  ),
-                ),
+                ],
+              ),
+            ),
           ])),
     );
   }

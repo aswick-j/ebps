@@ -52,14 +52,12 @@ class _BillerListState extends State<BillerList> {
   }
 
   void initScrollController(context) {
-    print("=======SSS");
     infiniteScrollController.addListener(() {
       if (infiniteScrollController.position.atEdge) {
         if (infiniteScrollController.position.pixels != 0) {
           if (_totalPages != _pageNumber) {
             MoreLoading = true;
             _pageNumber = _pageNumber + 1;
-            print("========>>>>dddd");
             if (_searchController.text.isEmpty) {
               BlocProvider.of<HomeCubit>(context)
                   .getAllBiller(widget.id, _pageNumber);

@@ -31,9 +31,7 @@ Future<DateTime?> DatePicker(
   );
 
   if (pickedDate != null) {
-    print(pickedDate);
     String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-    print(formattedDate);
     return pickedDate;
   } else {
     return null;

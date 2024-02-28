@@ -203,9 +203,6 @@ class _BillParametersState extends State<BillParameters> {
                                         final fieldRegExp = RegExp(
                                             "${inputSignatureItems![index].rEGEX}");
 
-                                        debugPrint(fieldRegExp
-                                            .hasMatch(inputValue!)
-                                            .toString());
                                         if (inputValue.length <
                                             inputSignatureItems![index]
                                                 .mINLENGTH!

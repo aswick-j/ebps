@@ -108,7 +108,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                     ),
                     Text(
                       success
-                          ? "Your Compliant Has Been Registered Successfully"
+                          ? "Your Complaint Has Been Registered Successfully"
                           : ComplaintMSG.toString(),
                       style: TextStyle(
                         fontSize: 14.sp,
@@ -129,7 +129,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                             padding: EdgeInsets.all(16.0.r),
                             child: Column(children: [
                               Text(
-                                "For future detail track compliant ID",
+                                "For future detail track complaint ID",
                                 style: TextStyle(
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.w400,
@@ -163,7 +163,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(SnackBar(
                                                   content: Text(
-                                                      'Compliant ID copied to clipboard')));
+                                                      'Complaint ID copied to clipboard')));
                                         });
                                       },
                                       child: Icon(Icons.copy,
@@ -306,7 +306,6 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                     items: complaint_reasons!.map<
                                             DropdownMenuItem<String>>(
                                         (ComplaintTransactionReasons value) {
-                                      print(value);
                                       return DropdownMenuItem<String>(
                                         value:
                                             value.cOMPLAINTREASONSID.toString(),

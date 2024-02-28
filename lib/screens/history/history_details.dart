@@ -217,6 +217,9 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                         context,
                                                         Material(
                                                             child: ScreenshotContainer(
+                                                                channel: widget.historyData.pAYMENTCHANNEL == 'IB'
+                                                                    ? "Equitas - Internet Banking"
+                                                                    : "Equitas - Mobile Banking",
                                                                 BillerName: widget
                                                                     .billerName
                                                                     .toString(),
@@ -233,8 +236,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                                         .cATEGORYNAME
                                                                         .toString()
                                                                         .toLowerCase()
-                                                                        .contains(
-                                                                            "mobile prepaid")
+                                                                        .contains("mobile prepaid")
                                                                     ? widget.historyData.pARAMETERS!.firstWhere((params) => params.pARAMETERNAME == null ? params.pARAMETERNAME == null : params.pARAMETERNAME.toString().toLowerCase() == "mobile number").pARAMETERNAME.toString()
                                                                     : widget.historyData.pARAMETERS![0].pARAMETERNAME.toString(),
                                                                 ParamValue: widget.historyData.cATEGORYNAME.toString().toLowerCase().contains("mobile prepaid") ? widget.historyData.pARAMETERS!.firstWhere((params) => params.pARAMETERNAME == null ? params.pARAMETERNAME == null : params.pARAMETERNAME.toString().toLowerCase() == "mobile number").pARAMETERVALUE.toString() : widget.historyData.pARAMETERS![0].pARAMETERVALUE.toString(),
@@ -263,40 +265,87 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                   name: widget
                                                       .historyData.bILLERNAME
                                                       .toString(),
-                                                  onLayout: (PdfPageFormat format) async => generatePdf(
-                                                      format,
-                                                      widget.billerName
-                                                          .toString(),
-                                                      widget.historyData.bILLERID
-                                                          .toString(),
-                                                      widget.billName
-                                                          .toString(),
-                                                      widget.historyData.cATEGORYNAME.toString().toLowerCase().contains("mobile prepaid")
-                                                          ? widget.historyData.pARAMETERS!
-                                                              .firstWhere((params) => params.pARAMETERNAME == null
-                                                                  ? params.pARAMETERNAME ==
-                                                                      null
-                                                                  : params.pARAMETERNAME.toString().toLowerCase() ==
-                                                                      "mobile number")
-                                                              .pARAMETERNAME
-                                                              .toString()
-                                                          : widget
-                                                              .historyData
-                                                              .pARAMETERS![0]
-                                                              .pARAMETERNAME
-                                                              .toString(),
-                                                      widget.historyData.cATEGORYNAME.toString().toLowerCase().contains("mobile prepaid")
-                                                          ? widget.historyData
-                                                              .pARAMETERS!
-                                                              .firstWhere((params) => params.pARAMETERNAME == null ? params.pARAMETERNAME == null : params.pARAMETERNAME.toString().toLowerCase() == "mobile number")
-                                                              .pARAMETERVALUE
-                                                              .toString()
-                                                          : widget.historyData.pARAMETERS![0].pARAMETERVALUE.toString(),
-                                                      widget.historyData.tRANSACTIONREFERENCEID.toString(),
-                                                      widget.historyData.aCCOUNTNUMBER.toString(),
-                                                      "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
-                                                      widget.historyData.tRANSACTIONSTATUS.toString(),
-                                                      DateFormat('dd/MM/yy | hh:mm a').format(DateTime.parse(widget.historyData.cOMPLETIONDATE.toString()).toLocal())),
+                                                  onLayout: (PdfPageFormat
+                                                          format) async =>
+                                                      generatePdf(
+                                                    format,
+                                                    widget.billerName
+                                                        .toString(),
+                                                    widget.historyData.bILLERID
+                                                        .toString(),
+                                                    widget.billName.toString(),
+                                                    widget.historyData
+                                                            .cATEGORYNAME
+                                                            .toString()
+                                                            .toLowerCase()
+                                                            .contains(
+                                                                "mobile prepaid")
+                                                        ? widget.historyData
+                                                            .pARAMETERS!
+                                                            .firstWhere((params) => params
+                                                                        .pARAMETERNAME ==
+                                                                    null
+                                                                ? params.pARAMETERNAME ==
+                                                                    null
+                                                                : params.pARAMETERNAME
+                                                                        .toString()
+                                                                        .toLowerCase() ==
+                                                                    "mobile number")
+                                                            .pARAMETERNAME
+                                                            .toString()
+                                                        : widget
+                                                            .historyData
+                                                            .pARAMETERS![0]
+                                                            .pARAMETERNAME
+                                                            .toString(),
+                                                    widget.historyData
+                                                            .cATEGORYNAME
+                                                            .toString()
+                                                            .toLowerCase()
+                                                            .contains(
+                                                                "mobile prepaid")
+                                                        ? widget.historyData
+                                                            .pARAMETERS!
+                                                            .firstWhere((params) => params
+                                                                        .pARAMETERNAME ==
+                                                                    null
+                                                                ? params.pARAMETERNAME ==
+                                                                    null
+                                                                : params.pARAMETERNAME
+                                                                        .toString()
+                                                                        .toLowerCase() ==
+                                                                    "mobile number")
+                                                            .pARAMETERVALUE
+                                                            .toString()
+                                                        : widget
+                                                            .historyData
+                                                            .pARAMETERS![0]
+                                                            .pARAMETERVALUE
+                                                            .toString(),
+                                                    widget.historyData
+                                                        .tRANSACTIONREFERENCEID
+                                                        .toString(),
+                                                    widget.historyData
+                                                        .aCCOUNTNUMBER
+                                                        .toString(),
+                                                    "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
+                                                    widget.historyData
+                                                        .tRANSACTIONSTATUS
+                                                        .toString(),
+                                                    widget.historyData
+                                                                .pAYMENTCHANNEL ==
+                                                            'IB'
+                                                        ? "Equitas - Internet Banking"
+                                                        : "Equitas - Mobile Banking",
+                                                    DateFormat(
+                                                            'dd/MM/yy | hh:mm a')
+                                                        .format(DateTime.parse(
+                                                                widget
+                                                                    .historyData
+                                                                    .cOMPLETIONDATE
+                                                                    .toString())
+                                                            .toLocal()),
+                                                  ),
                                                 );
                                                 // Future.microtask(() =>
                                                 //     Navigator.push(

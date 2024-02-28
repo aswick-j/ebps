@@ -17,12 +17,14 @@ class ScreenshotContainer extends StatelessWidget {
   final String billAmount;
   final String status;
   final String TransactionDate;
+  final String channel;
 
   const ScreenshotContainer({
     required this.BillerName,
     required this.BillName,
     required this.billAmount,
     required this.BillerId,
+    required this.channel,
     required this.ParamName,
     required this.ParamValue,
     required this.TransactionID,
@@ -215,7 +217,7 @@ class ScreenshotContainer extends StatelessWidget {
                 clipBoard: false),
             txnDetails(
                 title: "Payment Channel",
-                subTitle: "Equitas - Mobile Banking",
+                subTitle: channel,
                 clipBoard: false,
                 showLogo: true),
             Center(

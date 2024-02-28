@@ -265,6 +265,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                       context,
                                                       Material(
                                                           child: ScreenshotContainer(
+                                                              channel: "Equitas - Mobile Banking",
                                                               BillerName: widget.billerName.toString(),
                                                               BillerId: widget.isSavedBill ? savedBillerTypeData!.bILLERID.toString() : billerTypeData!.bILLERID.toString(),
                                                               BillName: widget.isSavedBill ? savedBillerTypeData!.bILLNAME.toString() : billerTypeData!.bILLNAME.toString(),
@@ -299,50 +300,52 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                             onPressed: () {
                                               Printing.layoutPdf(
                                                 name: widget.billerName,
-                                                onLayout: (PdfPageFormat format) async =>
+                                                onLayout: (PdfPageFormat
+                                                        format) async =>
                                                     generatePdf(
-                                                        format,
-                                                        widget
-                                                            .billerName
-                                                            .toString(),
-                                                        widget.isSavedBill
-                                                            ? savedBillerTypeData!
-                                                                .bILLERID
-                                                                .toString()
-                                                            : billerTypeData!
-                                                                .bILLERID
-                                                                .toString(),
-                                                        widget.isSavedBill
-                                                            ? savedBillerTypeData!
-                                                                .bILLNAME
-                                                                .toString()
-                                                            : billerTypeData!
-                                                                .bILLNAME
-                                                                .toString(),
-                                                        widget
-                                                            .billerData![
-                                                                "inputSignature"]
-                                                                [0]
-                                                            .pARAMETERNAME,
-                                                        widget
-                                                            .billerData![
-                                                                "inputSignature"]
-                                                                [0]
-                                                            .pARAMETERVALUE,
-                                                        paymentDetails!['txnReferenceId'] ??
-                                                            "-",
-                                                        widget
-                                                            .billerData!['acNo']
-                                                            .toString(),
-                                                        "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount'].toString()))}",
-                                                        paymentDetails!['success']
-                                                            ? "Transaction Success"
-                                                            : paymentDetails!['bbpsTimeout']
-                                                                ? 'Transaction Pending'
-                                                                : paymentDetails!['failed']
-                                                                    ? "Transaction Failed"
-                                                                    : "Transaction Failed",
-                                                        DateFormat("dd/MM/yy | hh:mm a").format(DateTime.now()).toString()),
+                                                  format,
+                                                  widget.billerName.toString(),
+                                                  widget.isSavedBill
+                                                      ? savedBillerTypeData!
+                                                          .bILLERID
+                                                          .toString()
+                                                      : billerTypeData!.bILLERID
+                                                          .toString(),
+                                                  widget.isSavedBill
+                                                      ? savedBillerTypeData!
+                                                          .bILLNAME
+                                                          .toString()
+                                                      : billerTypeData!.bILLNAME
+                                                          .toString(),
+                                                  widget
+                                                      .billerData![
+                                                          "inputSignature"][0]
+                                                      .pARAMETERNAME,
+                                                  widget
+                                                      .billerData![
+                                                          "inputSignature"][0]
+                                                      .pARAMETERVALUE,
+                                                  paymentDetails![
+                                                          'txnReferenceId'] ??
+                                                      "-",
+                                                  widget.billerData!['acNo']
+                                                      .toString(),
+                                                  "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount'].toString()))}",
+                                                  paymentDetails!['success']
+                                                      ? "Transaction Success"
+                                                      : paymentDetails![
+                                                              'bbpsTimeout']
+                                                          ? 'Transaction Pending'
+                                                          : paymentDetails![
+                                                                  'failed']
+                                                              ? "Transaction Failed"
+                                                              : "Transaction Failed",
+                                                  "Equitas - Mobile banking",
+                                                  DateFormat(
+                                                          "dd/MM/yy | hh:mm a")
+                                                      .format(DateTime.now())
+                                                      .toString(),
+                                                ),
                                               );
                                               // Future.microtask(() =>
                                               //     Navigator.push(

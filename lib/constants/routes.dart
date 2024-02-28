@@ -110,6 +110,7 @@ class MyRouter {
                         create: (_) => HomeCubit(repository: apiClient)),
                   ],
                   child: AllUpcomingDues(
+                      autopayData: args["autopayData"],
                       allUpcomingDues: args["allUpcomingDues"],
                       SavedBiller: args["savedBiller"],
                       ctx: args["ctx"]),

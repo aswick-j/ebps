@@ -280,7 +280,6 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                                   items:
                                       CircleData.map<DropdownMenuItem<String>>(
                                           (value) {
-                                    print(value);
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Text(

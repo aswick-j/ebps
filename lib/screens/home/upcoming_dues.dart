@@ -47,6 +47,7 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
   List<UpcomingDuesData>? upcomingDuesData = [];
   List<UpcomingPaymentsData>? upcomingAutoPaymentData = [];
   List<SavedBillersData>? SavedBiller = [];
+  List<AllConfigurations>? allautoPaymentList = [];
 
   List<Map<String, dynamic>> allUpcomingDues = [];
 
@@ -191,6 +192,8 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
               });
             } else if (state is AutopaySuccess) {
               if (state.autoScheduleData!.upcomingPayments!.isNotEmpty) {
+                allautoPaymentList = state.autoScheduleData!.allConfigurations!;
+
                 upcomingAutoPaymentData =
                     state.autoScheduleData!.upcomingPayments![0].data;
               }
@@ -257,7 +260,8 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                             goToData(context, uPCOMINGDUESROUTE, {
                               "allUpcomingDues": allUpcomingDues,
                               "savedBiller": SavedBiller,
-                              "ctx": context
+                              "ctx": context,
+                              "autopayData": allautoPaymentList
                             });
                           },
                           child: Row(

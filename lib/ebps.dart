@@ -47,7 +47,6 @@ class EbpsScreen extends StatelessWidget {
   EbpsScreen({Key? key, required this.apiData, required this.ctx})
       : super(key: key) {
     AppTrigger.instance.setGoBackCallback(() {
-      print("-======");
       Navigator.of(ctx).pop();
     });
   }

@@ -196,7 +196,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               isAccLoading = false;
             } else if (state is AccountInfoFailed) {
               isAccLoading = false;
-            } else if (state is AccountInfoError) {}
+            } else if (state is AccountInfoError) {
+              isAccLoading = false;
+            }
 
             if (state is ConfirmFetchBillLoading) {
               LoaderOverlay.of(context).show();
@@ -253,12 +255,15 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               // Navigator.of(context)
               //     .push(MaterialPageRoute(builder: (context) => OtpScreen()));
               isFetchbillLoading = false;
+              LoaderOverlay.of(context).hide();
             } else if (state is ConfirmFetchBillFailed) {
               handleDialog();
+              LoaderOverlay.of(context).hide();
 
               isFetchbillLoading = false;
             } else if (state is ConfirmFetchBillError) {
               handleDialog();
+              LoaderOverlay.of(context).hide();
 
               isFetchbillLoading = false;
             }

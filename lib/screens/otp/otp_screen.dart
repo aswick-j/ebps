@@ -569,8 +569,6 @@ class _OtpScreenState extends State<OtpScreen> {
                 });
               }
 
-              print(state.data);
-
               if (state.data != null) {
                 if (state.data!["res"]!["paymentDetails"]!["message"]
                     .toString()

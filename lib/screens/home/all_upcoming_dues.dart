@@ -8,10 +8,8 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
-import 'package:ebps/screens/history/history_screen.dart';
-import 'package:ebps/screens/home/home_screen.dart';
-import 'package:ebps/screens/myBillers/biller_screen.dart';
 import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/loader_overlay.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,10 +23,12 @@ class AllUpcomingDues extends StatefulWidget {
   List<Map<String, dynamic>> allUpcomingDues;
   dynamic SavedBiller;
   BuildContext ctx;
+  List<AllConfigurations>? autopayData;
 
   AllUpcomingDues(
       {super.key,
       required this.allUpcomingDues,
+      required this.autopayData,
       required this.ctx,
       required this.SavedBiller});
 
@@ -290,6 +290,7 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                             });
                           }
                         },
+                        autopayData: widget.autopayData,
                         amount: widget.allUpcomingDues[index]["dueAmount"] != ""
                             ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allUpcomingDues[index]["dueAmount"]!.toString()))}"
                             : "-",

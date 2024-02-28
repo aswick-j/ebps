@@ -88,6 +88,8 @@ class _createAutopayState extends State<createAutopay> {
     super.initState();
   }
 
+  var todayDate = DateTime.parse(DateTime.now().toString()).day.toString();
+
   @override
   Widget build(BuildContext context) {
     return LoaderOverlay(
@@ -355,7 +357,6 @@ class _createAutopayState extends State<createAutopay> {
                                       RegExp(r'^[a-z0-9A-Z ]*'))
                                 ],
                                 onChanged: (val) {
-                                  print(val);
                                   if (val.isNotEmpty) {
                                     if (double.parse(val.toString()) >
                                             double.parse(
@@ -529,7 +530,6 @@ class _createAutopayState extends State<createAutopay> {
                                   getMonthName(billPayGroupRadio)[0]!,
                                   getMonthName(billPayGroupRadio)[1]!
                                 ].map<DropdownMenuItem<String>>((value) {
-                                  print(value);
                                   return DropdownMenuItem<String>(
                                     value: value,
                                     child: Text(
@@ -790,48 +790,49 @@ class _createAutopayState extends State<createAutopay> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () async {
-                        // if (selectedAcc != null &&
-                        //     !accError &&
-                        //     !maxAmountError) {
-                        Map<String, dynamic> decodedToken =
-                            await getDecodedToken();
-                        List decodedToken2 = decodedToken["accounts"].toList();
-                        print(decodedToken2);
-                        var accID;
-                        for (var i = 0; i < decodedToken2.length; i++) {
-                          if (decodedToken2[i]["accountID"] ==
-                              accountInfo![selectedAcc].accountNumber) {
-                            setState(() {
-                              accID = decodedToken2[i]["id"];
-                            });
+                        if (selectedAcc != null &&
+                            !maxAmountError &&
+                            todayDate != selectedDate) {
+                          Map<String, dynamic> decodedToken =
+                              await getDecodedToken();
+                          List decodedToken2 =
+                              decodedToken["accounts"].toList();
+                          var accID;
+                          for (var i = 0; i < decodedToken2.length; i++) {
+                            if (decodedToken2[i]["accountID"] ==
+                                accountInfo![selectedAcc].accountNumber) {
+                              setState(() {
+                                accID = decodedToken2[i]["id"];
+                              });
+                            }
                           }
+                          goToData(context, oTPPAGEROUTE, {
+                            "from": "create-auto-pay",
+                            "templateName": "create-auto-pay",
+                            "context": context,
+                            "data": {
+                              "accountNumber": accID,
+                              "maximumAmount": maxAmountController.text,
+                              "paymentDate": selectedDate,
+                              "isBimonthly": billPayGroupRadio,
+                              "activatesFrom": activatesFrom == "Immediately"
+                                  ? null
+                                  : activatesFrom.toLowerCase(),
+                              "isActive":
+                                  activatesFrom == "Immediately" ? 1 : 0,
+                              "billID": widget.customerBillID,
+                              "billerName": widget.billerName,
+                              "amountLimit": limitGroupRadio
+                            }
+                          });
                         }
-                        print("====ACCID=====");
-                        print(accID);
-                        goToData(context, oTPPAGEROUTE, {
-                          "from": "create-auto-pay",
-                          "templateName": "create-auto-pay",
-                          "context": context,
-                          "data": {
-                            "accountNumber": accID,
-                            "maximumAmount": maxAmountController.text,
-                            "paymentDate": selectedDate,
-                            "isBimonthly": billPayGroupRadio,
-                            "activatesFrom": activatesFrom == "Immediately"
-                                ? null
-                                : activatesFrom.toLowerCase(),
-                            "isActive": activatesFrom == "Immediately" ? 1 : 0,
-                            "billID": widget.customerBillID,
-                            "billerName": widget.billerName,
-                            "amountLimit": limitGroupRadio
-                          }
-                        });
-                        // }
                       },
                       buttonText: "Create",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: selectedAcc != null && !maxAmountError
+                      buttonColor: selectedAcc != null &&
+                              !maxAmountError &&
+                              todayDate != selectedDate
                           ? CLR_PRIMARY
                           : Colors.grey,
                       buttonSizeX: 10.h,

@@ -127,7 +127,6 @@ class _editAutopayState extends State<editAutopay> {
     if (handleButton()) {
       Map<String, dynamic> decodedToken = await getDecodedToken();
       List decodedToken2 = decodedToken["accounts"].toList();
-      print(decodedToken2);
       var accID;
       for (var i = 0; i < decodedToken2.length; i++) {
         if (decodedToken2[i]["accountID"] ==
@@ -658,7 +657,6 @@ class _editAutopayState extends State<editAutopay> {
                                   ),
                                   items: EffectiveFrom.map<
                                       DropdownMenuItem<String>>((value) {
-                                    print(value);
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Text(

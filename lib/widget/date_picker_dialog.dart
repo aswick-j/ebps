@@ -55,7 +55,6 @@ class _DateDialogState extends State<DateDialog> {
                   onTap: () {
                     setState(() {
                       selectedDate = '${index + 1}';
-                      print(selectedDate);
                     });
                   },
                   child: Container(

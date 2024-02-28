@@ -53,25 +53,9 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
           );
         });
       case 2:
-        return WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).pushReplacement(
-            CupertinoPageRoute(
-                fullscreenDialog: true,
-                builder: (context) => BottomNavBar(
-                      SelectedIndex: 2,
-                    )),
-          );
-        });
+        return goBack(context);
       default:
-        return WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).pushReplacement(
-            CupertinoPageRoute(
-                fullscreenDialog: true,
-                builder: (context) => BottomNavBar(
-                      SelectedIndex: 0,
-                    )),
-          );
-        });
+        return goBack(context);
     }
   }
 
@@ -115,17 +99,17 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                 BottomNavigationBarItem(
                   icon: SvgPicture.asset(ICON_HOME_INACTIVE),
                   label: "Home",
-                  activeIcon: SvgPicture.asset(ICON_HOME_INACTIVE),
+                  activeIcon: SvgPicture.asset(ICON_HOME),
                 ),
                 BottomNavigationBarItem(
                   icon: SvgPicture.asset(ICON_BILLERS_INACTIVE),
                   label: "Billers",
-                  activeIcon: SvgPicture.asset(ICON_BILLERS_INACTIVE),
+                  activeIcon: SvgPicture.asset(ICON_BILLERS),
                 ),
                 BottomNavigationBarItem(
                   icon: SvgPicture.asset(ICON_HISTORY_INACTIVE),
                   label: "History",
-                  activeIcon: SvgPicture.asset(ICON_HISTORY_INACTIVE),
+                  activeIcon: SvgPicture.asset(ICON_HISTORY),
                 ),
               ],
             ),

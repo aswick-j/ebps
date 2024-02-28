@@ -213,6 +213,7 @@ String BILLER_LOGO(String BillerName) {
     case "vi postpaid (fetch and pay)":
       return LOGO_VI;
     case "mtnl mumbai dolphin":
+    case "mtnl mumbai test":
       return LOGO_MTNL;
     case "jio postpaid":
     case "jio postpaid (fetch and pay)":

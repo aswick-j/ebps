@@ -66,45 +66,6 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
 
   @override
   Widget build(BuildContext context) {
-    getBillerDataWithUpcomingFirst(billerResponseData) {
-      try {
-        List billerData = billerResponseData!;
-        List tempUpcomingDuedata;
-        List tempBillerData;
-        List<UpcomingPaymentsData>? upcomingReversed =
-            upcomingPaymentList!.reversed.toList();
-
-        List<UpcomingDuesData>? upcomingReversedAgain =
-            upcomingDuesData!.reversed.toList();
-
-        for (var i = 0; i < upcomingReversedAgain.length; i++) {
-          tempUpcomingDuedata = billerData
-              .where((element) =>
-                  element.cUSTOMERBILLID ==
-                  upcomingReversedAgain[i].customerBillID)
-              .toList();
-
-          for (var j = 0; j < tempUpcomingDuedata.length; j++) {
-            billerData.remove(tempUpcomingDuedata[j]);
-            billerData.insert(0, tempUpcomingDuedata[j]);
-          }
-        }
-
-        for (var i = 0; i < upcomingReversed.length; i++) {
-          tempBillerData = billerData
-              .where((element) =>
-                  element.cUSTOMERBILLID == upcomingReversed[i].cUSTOMERBILLID)
-              .toList();
-          for (var j = 0; j < tempBillerData.length; j++) {
-            billerData.remove(tempBillerData[j]);
-            billerData.insert(0, tempBillerData[j]);
-          }
-        }
-
-        return billerData;
-      } catch (e) {}
-    }
-
     getupcomingAutoPaymentList(customerBILLID) {
       try {
         List<UpcomingPaymentsData>? find = upcomingPaymentList!
@@ -125,12 +86,71 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
       return (find.isNotEmpty ? find[0] : "");
     }
 
+    getBillerDataWithUpcomingFirst(billerResponseData) {
+      try {
+        List billerData = billerResponseData!;
+        // List tempUpcomingDuedata;
+        // List tempBillerData;
+        // List<UpcomingPaymentsData>? upcomingReversed =
+        //     upcomingPaymentList!.reversed.toList();
+
+        // List<UpcomingDuesData>? upcomingReversedAgain =
+        //     upcomingDuesData!.reversed.toList();
+
+        // for (var i = 0; i < upcomingReversedAgain.length; i++) {
+        //   tempUpcomingDuedata = billerData
+        //       .where((element) =>
+        //           element.cUSTOMERBILLID ==
+        //           upcomingReversedAgain[i].customerBillID)
+        //       .toList();
+
+        //   for (var j = 0; j < tempUpcomingDuedata.length; j++) {
+        //     billerData.remove(tempUpcomingDuedata[j]);
+        //     billerData.insert(0, tempUpcomingDuedata[j]);
+        //   }
+        // }
+
+        // for (var i = 0; i < upcomingReversed.length; i++) {
+        //   tempBillerData = billerData
+        //       .where((element) =>
+        //           element.cUSTOMERBILLID == upcomingReversed[i].cUSTOMERBILLID)
+        //       .toList();
+        //   for (var j = 0; j < tempBillerData.length; j++) {
+        //     billerData.remove(tempBillerData[j]);
+        //     billerData.insert(0, tempBillerData[j]);
+        //   }
+        // }
+
+        /// The above Dart code is creating three empty lists `TempAutoData`, `TempDueData`, and
+        /// `TempBillData`. It then iterates over the `billerData` list and based on certain conditions,
+        /// it populates these lists with elements from `billerData`.
+        List TempAutoData = [];
+        List TempDueData = [];
+        List TempBillData = [];
+
+        for (var i = 0; i < billerData.length; i++) {
+          if (getupcomingAutoPaymentList(billerData[i].cUSTOMERBILLID) != '') {
+            TempAutoData.add(billerData[i]!);
+          } else if (getUpcmoingDueData(billerData[i].cUSTOMERBILLID) != "") {
+            TempDueData.add(billerData[i]!);
+          } else {
+            TempBillData.add(billerData[i]!);
+          }
+        }
+        TempAutoData.sort((a, b) => a.bILLERNAME.compareTo(b.bILLERNAME));
+        TempDueData.sort((a, b) => a.bILLERNAME.compareTo(b.bILLERNAME));
+        TempBillData.sort((a, b) => a.bILLERNAME.compareTo(b.bILLERNAME));
+        return [...TempAutoData, ...TempDueData, ...TempBillData];
+        // return billerData;
+      } catch (e) {}
+    }
+
     getUpcmoingDueList(customerBILLID) {
       List<UpcomingDuesData>? find = upcomingDuesData!
           .where((items) => items.customerBillID == customerBILLID)
           .toList();
 
-      return find;
+      return find.isNotEmpty ? find[0] : null;
     }
 
     getAllAutopayList(customerBILLID) {
@@ -309,43 +329,46 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                             itemBuilder: (context, index) {
                               return MyBillersContainer(
                                   upcomingDueData: getUpcmoingDueList(
-                                      savedBillerData![index].cUSTOMERBILLID),
+                                      getBillerDataWithUpcomingFirst(savedBillerData)![index]
+                                          .cUSTOMERBILLID),
                                   buttonText:
-                                      getAllAutopayList(savedBillerData![index].cUSTOMERBILLID) ==
+                                      getAllAutopayList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) ==
                                               0
                                           ? "Autopay Paused"
                                           : showAutopayButtonContent(
-                                              savedBillerData![index],
+                                              getBillerDataWithUpcomingFirst(
+                                                  savedBillerData)![index],
                                             )
                                               ? 'Autopay Enabled'
                                               : "Enable Autopay",
-                                  iconPath: BILLER_LOGO(savedBillerData![index]
-                                      .bILLERNAME
-                                      .toString()),
+                                  iconPath: BILLER_LOGO(
+                                      getBillerDataWithUpcomingFirst(savedBillerData)![index]
+                                          .bILLERNAME
+                                          .toString()),
                                   upcomingText: getupcomingAutoPaymentList(
-                                              savedBillerData![index]
+                                              getBillerDataWithUpcomingFirst(
+                                                      savedBillerData)![index]
                                                   .cUSTOMERBILLID) !=
                                           ''
                                       ? 'Upcoming Autopay'
-                                      : getUpcmoingDueData(savedBillerData![index]
-                                                  .cUSTOMERBILLID) !=
+                                      : getUpcmoingDueData(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) !=
                                               ""
                                           ? "Upcoming Due"
                                           : "",
-                                  upcomingTXT_CLR_DEFAULT: getupcomingAutoPaymentList(
-                                              savedBillerData![index].cUSTOMERBILLID) !=
-                                          ''
-                                      ? Color(0xff00AB44)
-                                      : getUpcmoingDueData(savedBillerData![index].cUSTOMERBILLID) != ""
-                                          ? CLR_ASTRIX
-                                          : Colors.black,
-                                  showButton: showAutopayBtn(savedBillerData![index]),
+                                  upcomingTXT_CLR_DEFAULT:
+                                      getupcomingAutoPaymentList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ''
+                                          ? Color(0xff00AB44)
+                                          : getUpcmoingDueData(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ""
+                                              ? CLR_ASTRIX
+                                              : Colors.black,
+                                  showButton: showAutopayBtn(getBillerDataWithUpcomingFirst(savedBillerData)![index]),
                                   containerBorderColor: Color(0xffD1D9E8),
                                   buttonColor: Color.fromARGB(255, 255, 255, 255),
-                                  buttonTxtColor: getAllAutopayList(savedBillerData![index].cUSTOMERBILLID) == 0
+                                  buttonTxtColor: getAllAutopayList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) == 0
                                       ? Color.fromARGB(255, 171, 39, 30)
                                       : showAutopayButtonContent(
-                                          savedBillerData![index],
+                                          getBillerDataWithUpcomingFirst(
+                                              savedBillerData)![index],
                                         )
                                           ? Color.fromARGB(255, 16, 113, 55)
                                           : Color(0xff768eb9),
@@ -355,8 +378,8 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                                   )
                                       ? Color(0xff00AB44)
                                       : Color(0xff768eb9),
-                                  SavedinputParameters: savedBillerData![index].pARAMETERS,
-                                  savedBillersData: savedBillerData![index],
+                                  SavedinputParameters: getBillerDataWithUpcomingFirst(savedBillerData)![index].pARAMETERS,
+                                  savedBillersData: getBillerDataWithUpcomingFirst(savedBillerData)![index],
                                   allautoPaymentList: allautoPaymentList);
                             },
                           ),
