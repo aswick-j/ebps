@@ -203,7 +203,7 @@ class _BillParametersState extends State<BillParameters> {
                                         final fieldRegExp = RegExp(
                                             "${inputSignatureItems![index].rEGEX}");
 
-                                        if (inputValue.length <
+                                        if (inputValue!.length <
                                             inputSignatureItems![index]
                                                 .mINLENGTH!
                                                 .toInt()) {
@@ -228,7 +228,7 @@ class _BillParametersState extends State<BillParameters> {
                                             return "${inputSignatureItems![index].pARAMETERNAME} should have no more than ${inputSignatureItems![index].mAXLENGTH} ${inputSignatureItems![index].pARAMETERTYPE!.toLowerCase() == 'numeric' ? 'digits' : 'characters'}";
                                           }
                                         } else if (!fieldRegExp
-                                                .hasMatch(inputValue) &&
+                                                .hasMatch(inputValue!) &&
                                             inputSignatureItems![index].rEGEX !=
                                                 null) {
                                           return "${inputSignatureItems![index].pARAMETERNAME} Must be Valid";
