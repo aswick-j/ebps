@@ -175,7 +175,8 @@ class _PrepaidPlansState extends State<PrepaidPlans>
         "amount": amount,
         "validateBill": validateBill,
         "billerInputSign": billerInputSign,
-        "planDetails": planDetails
+        "planDetails": planDetails,
+        "otherAmount": true
       });
     } else {
       for (var i = 0; i < widget.inputParameters!.length; i++) {
@@ -216,7 +217,8 @@ class _PrepaidPlansState extends State<PrepaidPlans>
         "amount": amount,
         "validateBill": validateBill,
         "billerInputSign": billerInputSign,
-        "planDetails": planDetails
+        "planDetails": planDetails,
+        "otherAmount": true
       });
     }
   }
