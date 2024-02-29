@@ -11,6 +11,7 @@ String getTransactionReason(String status) {
     case "Database Error :":
     case "Called function has had a Fatal Error":
       return "Internal Failure";
+    case "XfaceGenericFundTransferRequestDTO/fromAccountInvalid String Value in field fromAccount.":
     case "fund-transfer-failed":
       return "Fund Transfer failed from Bank";
     case "pending":

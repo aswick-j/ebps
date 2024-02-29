@@ -61,6 +61,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   void initState() {
     super.initState();
     tnxResponse = confirmDoneData.fromJson(widget.billerData!['res']);
+    print(tnxResponse!);
     // billData = jsonDecode(tnxResponse!.paymentDetails!.tran!.bill.toString());
 
     if (widget.isSavedBill) {
@@ -193,14 +194,15 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           gradient: LinearGradient(
                             begin: Alignment.topRight,
                             stops: const [0.001, 19],
-                            colors: getStatusGradientColors(
-                                paymentDetails!['success']
-                                    ? "success"
-                                    : paymentDetails!['bbpsTimeout']
-                                        ? 'bbpsTimeout'
-                                        : paymentDetails!['failed']
-                                            ? "failed"
-                                            : "failed"),
+                            colors: getStatusGradientColors(tnxResponse!
+                                        .paymentDetails!.success ==
+                                    true
+                                ? "success"
+                                : tnxResponse!.paymentDetails!.failed == true ||
+                                        tnxResponse!.paymentDetails!.success ==
+                                            false
+                                    ? 'failed'
+                                    : "pending"),
                           ),
                         ),
                         child: Column(
@@ -209,13 +211,15 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           children: [
                             Text(
                               getTransactionStatusText(
-                                  paymentDetails!['success']
+                                  tnxResponse!.paymentDetails!.success == true
                                       ? "success"
-                                      : paymentDetails!['bbpsTimeout']
-                                          ? 'bbpsTimeout'
-                                          : paymentDetails!['failed']
-                                              ? "failed"
-                                              : "failed"),
+                                      : tnxResponse!.paymentDetails!.failed ==
+                                                  true ||
+                                              tnxResponse!.paymentDetails!
+                                                      .success ==
+                                                  false
+                                          ? 'failed'
+                                          : "pending"),
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,
@@ -271,15 +275,15 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                               BillName: widget.isSavedBill ? savedBillerTypeData!.bILLNAME.toString() : billerTypeData!.bILLNAME.toString(),
                                                               ParamName: widget.billerData!["inputSignature"][0].pARAMETERNAME,
                                                               ParamValue: widget.billerData!["inputSignature"][0].pARAMETERVALUE,
-                                                              TransactionID: paymentDetails!['txnReferenceId'].toString(),
+                                                              TransactionID: tnxResponse!.paymentDetails!.bbpsResponse!.data!.txnReferenceId.toString(),
                                                               fromAccount: widget.billerData!['acNo'].toString(),
                                                               billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount']))}",
-                                                              status: paymentDetails!['success']
+                                                              status: tnxResponse!.paymentDetails!.success == true
                                                                   ? "success"
-                                                                  : paymentDetails!['bbpsTimeout']
-                                                                      ? 'bbps-timeout'
-                                                                      : paymentDetails!['failed']
-                                                                          ? "failed"
+                                                                  : tnxResponse!.paymentDetails!.failed == true || tnxResponse!.paymentDetails!.success == false
+                                                                      ? "failed"
+                                                                      : tnxResponse!.paymentDetails!.failed == true
+                                                                          ? "bbps-timeout"
                                                                           : "failed",
                                                               TransactionDate: DateFormat("dd/MM/yy | hh:mm a").format(DateTime.now()).toString()))),
                                                   delay: Duration(seconds: 0));
@@ -300,52 +304,52 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                             onPressed: () {
                                               Printing.layoutPdf(
                                                 name: widget.billerName,
-                                                onLayout: (PdfPageFormat
-                                                        format) async =>
+                                                onLayout: (PdfPageFormat format) async =>
                                                     generatePdf(
-                                                  format,
-                                                  widget.billerName.toString(),
-                                                  widget.isSavedBill
-                                                      ? savedBillerTypeData!
-                                                          .bILLERID
-                                                          .toString()
-                                                      : billerTypeData!.bILLERID
-                                                          .toString(),
-                                                  widget.isSavedBill
-                                                      ? savedBillerTypeData!
-                                                          .bILLNAME
-                                                          .toString()
-                                                      : billerTypeData!.bILLNAME
-                                                          .toString(),
-                                                  widget
-                                                      .billerData![
-                                                          "inputSignature"][0]
-                                                      .pARAMETERNAME,
-                                                  widget
-                                                      .billerData![
-                                                          "inputSignature"][0]
-                                                      .pARAMETERVALUE,
-                                                  paymentDetails![
-                                                          'txnReferenceId'] ??
-                                                      "-",
-                                                  widget.billerData!['acNo']
-                                                      .toString(),
-                                                  "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount'].toString()))}",
-                                                  paymentDetails!['success']
-                                                      ? "Transaction Success"
-                                                      : paymentDetails![
-                                                              'bbpsTimeout']
-                                                          ? 'Transaction Pending'
-                                                          : paymentDetails![
-                                                                  'failed']
-                                                              ? "Transaction Failed"
-                                                              : "Transaction Failed",
-                                                  "Equitas - Mobile banking",
-                                                  DateFormat(
-                                                          "dd/MM/yy | hh:mm a")
-                                                      .format(DateTime.now())
-                                                      .toString(),
-                                                ),
+                                                        format,
+                                                        widget.billerName
+                                                            .toString(),
+                                                        widget.isSavedBill
+                                                            ? savedBillerTypeData!.bILLERID
+                                                                .toString()
+                                                            : billerTypeData!.bILLERID
+                                                                .toString(),
+                                                        widget.isSavedBill
+                                                            ? savedBillerTypeData!
+                                                                .bILLNAME
+                                                                .toString()
+                                                            : billerTypeData!.bILLNAME
+                                                                .toString(),
+                                                        widget
+                                                            .billerData!["inputSignature"]
+                                                                [0]
+                                                            .pARAMETERNAME,
+                                                        widget
+                                                            .billerData!["inputSignature"]
+                                                                [0]
+                                                            .pARAMETERVALUE,
+                                                        tnxResponse!
+                                                                .paymentDetails!
+                                                                .bbpsResponse!
+                                                                .data!
+                                                                .txnReferenceId ??
+                                                            "-",
+                                                        widget.billerData!['acNo']
+                                                            .toString(),
+                                                        "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount'].toString()))}",
+                                                        tnxResponse!.paymentDetails!.success ==
+                                                                true
+                                                            ? "Transaction Success"
+                                                            : tnxResponse!.paymentDetails!.failed == true ||
+                                                                    tnxResponse!.paymentDetails!.success ==
+                                                                        false
+                                                                ? 'Transaction Failure'
+                                                                : "Transaction Pending",
+                                                        "Equitas - Mobile banking",
+                                                        DateFormat("dd/MM/yy | hh:mm a")
+                                                            .format(DateTime.now())
+                                                            .toString(),
+                                                        "uu"),
                                               );
                                               // Future.microtask(() =>
                                               //     Navigator.push(
@@ -416,22 +420,29 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               .billerData!["inputSignature"][0].pARAMETERVALUE,
                           clipBoard: false),
                       // if (widget.historyData.tRANSACTIONSTATUS == 'success')
-                      if (paymentDetails!['success'])
+                      if (tnxResponse!.paymentDetails!.success == true)
                         TxnDetails(
                             title: "Transaction ID",
-                            subTitle: paymentDetails!['txnReferenceId'],
+                            subTitle: tnxResponse!.paymentDetails!.bbpsResponse!
+                                .data!.txnReferenceId
+                                .toString(),
                             clipBoard: true),
 
                       TxnDetails(
                           title: "Status",
-                          subTitle: paymentDetails!['success']
+                          subTitle: tnxResponse!.paymentDetails!.success == true
                               ? "Transaction Success"
-                              : paymentDetails!['bbpsTimeout']
-                                  ? 'Transaction Pending'
-                                  : paymentDetails!['failed']
-                                      ? "Transaction Failed"
-                                      : "Transaction Failed",
+                              : tnxResponse!.paymentDetails!.failed == true ||
+                                      tnxResponse!.paymentDetails!.success ==
+                                          false
+                                  ? 'Transaction Failure'
+                                  : "Transaction pending",
                           clipBoard: false),
+                      if (tnxResponse!.paymentDetails!.success != true)
+                        TxnDetails(
+                            title: "Reason",
+                            subTitle: "Bill Payment Failed from BBPS",
+                            clipBoard: false),
                       TxnDetails(
                           title: "Payment Channel",
                           subTitle: "Equitas - Mobile Banking",

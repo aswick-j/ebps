@@ -8,7 +8,8 @@ List<Color> getStatusGradientColors(transactionStatus) {
           Color(0xff31637D).withOpacity(.7),
         ]
       : (transactionStatus == 'bbps-timeout' ||
-              transactionStatus == 'bbps-in-progress')
+              transactionStatus == 'bbps-in-progress' ||
+              transactionStatus == 'pending')
           ? [
               Color.fromRGBO(115, 59, 89, 1).withOpacity(.7),
               CLR_ASTRIX.withOpacity(.7),

@@ -505,43 +505,60 @@ class _BillerDetailsState extends State<BillerDetails> {
                                   //     : TextStyle(color: TXT_CLR_LITE),
                                   onFieldSubmitted: (_) {},
                                   onChanged: (val) {
-                                    setState(() {
-                                      if (validateBill!["fetchBill"]) {
-                                        PaymentExactErrMsg = checkIsExact(
-                                            double.parse(val.toString()),
-                                            double.parse(_billerResponseData!
-                                                .amount
-                                                .toString()),
-                                            widget.isSavedBill
-                                                ? widget.savedBillersData!
-                                                    .pAYMENTEXACTNESS
-                                                : widget.billerData!
-                                                    .pAYMENTEXACTNESS);
-                                      }
-                                    });
-
-                                    if (txtAmountController.text.isNotEmpty) {
-                                      if (double.parse(
-                                                  txtAmountController.text) <
-                                              double.parse(paymentInform!
-                                                  .mINLIMIT
-                                                  .toString()) ||
-                                          double.parse(
-                                                  txtAmountController.text) >
-                                              double.parse(paymentInform!
-                                                  .mAXLIMIT
-                                                  .toString())) {
-                                        setState(() {
-                                          isInsufficient = true;
-                                        });
-                                      } else {
-                                        setState(() {
-                                          isInsufficient = false;
-                                        });
-                                      }
+                                    if (val.isNotEmpty &&
+                                        val.length == 1 &&
+                                        val[0] == ".") {
+                                      isInsufficient = true;
+                                    } else {
                                       setState(() {
-                                        // isInsufficient = true;
+                                        if (val.isEmpty) {
+                                          setState(() {
+                                            isInsufficient = true;
+                                          });
+                                        }
+                                        print(val);
+
+                                        if (validateBill!["fetchBill"]) {
+                                          PaymentExactErrMsg = checkIsExact(
+                                              double.parse(txtAmountController
+                                                      .text.isEmpty
+                                                  ? "0"
+                                                  : txtAmountController.text
+                                                      .toString()),
+                                              double.parse(_billerResponseData!
+                                                  .amount
+                                                  .toString()),
+                                              widget.isSavedBill
+                                                  ? widget.savedBillersData!
+                                                      .pAYMENTEXACTNESS
+                                                  : widget.billerData!
+                                                      .pAYMENTEXACTNESS);
+                                        }
                                       });
+
+                                      if (txtAmountController.text.isNotEmpty) {
+                                        if (double.parse(
+                                                    txtAmountController.text) <
+                                                double.parse(paymentInform!
+                                                    .mINLIMIT
+                                                    .toString()) ||
+                                            double.parse(
+                                                    txtAmountController.text) >
+                                                double.parse(paymentInform!
+                                                    .mAXLIMIT
+                                                    .toString())) {
+                                          setState(() {
+                                            isInsufficient = true;
+                                          });
+                                        } else {
+                                          setState(() {
+                                            isInsufficient = false;
+                                          });
+                                        }
+                                        setState(() {
+                                          // isInsufficient = true;
+                                        });
+                                      }
                                     }
                                   },
                                   inputFormatters: <TextInputFormatter>[
@@ -679,7 +696,9 @@ class _BillerDetailsState extends State<BillerDetails> {
                                         ? widget.savedBillersData!.cATEGORYNAME
                                         : widget.billerData!.cATEGORYNAME,
                                     "isSavedBill": widget.isSavedBill,
-                                    "amount": txtAmountController.text,
+                                    "amount":
+                                        double.parse(txtAmountController.text)
+                                            .toString(),
                                     "validateBill": validateBill,
                                     "billerInputSign": billerInputSign,
                                     "otherAmount": double.parse(

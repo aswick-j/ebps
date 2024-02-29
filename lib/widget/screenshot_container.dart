@@ -1,5 +1,6 @@
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/helpers/getGradientColors.dart';
+import 'package:ebps/helpers/getTransactionStatusReason.dart';
 import 'package:ebps/helpers/getTransactionStatusText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -113,7 +114,13 @@ class ScreenshotContainer extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topRight,
                   stops: const [0.001, 19],
-                  colors: getStatusGradientColors(status),
+                  colors: getStatusGradientColors(
+                      status.toLowerCase() == "success"
+                          ? "success"
+                          : status.toLowerCase() == "bbps-in-progress" ||
+                                  status.toLowerCase() == "bbps-timeout"
+                              ? "pending "
+                              : "failed"),
                 ),
               ),
               child: Column(
@@ -121,7 +128,12 @@ class ScreenshotContainer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    getTransactionStatusText(status),
+                    status.toLowerCase() == "success"
+                        ? "Transaction Success"
+                        : status.toLowerCase() == "bbps-in-progress" ||
+                                status.toLowerCase() == "bbps-timeout"
+                            ? "Transaction Pending "
+                            : "Transaction Failure",
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
@@ -205,16 +217,18 @@ class ScreenshotContainer extends StatelessWidget {
               ),
             txnDetails(
                 title: "Status",
-                subTitle: status == 'success'
+                subTitle: status.toLowerCase() == "success"
                     ? "Transaction Success"
-                    : status == 'bbpsTimeout' ||
-                            status == 'bbps-timeout' ||
-                            status == 'bbps-in-progress'
-                        ? 'Transaction Pending'
-                        : status == 'failed'
-                            ? "Transaction Failed"
-                            : "Transaction Failed",
+                    : status.toLowerCase() == "bbps-in-progress" ||
+                            status.toLowerCase() == "bbps-timeout"
+                        ? "Transaction Pending "
+                        : "Transaction Failure",
                 clipBoard: false),
+            if (status.toLowerCase() != "success")
+              txnDetails(
+                  title: "Reason",
+                  subTitle: getTransactionReason(status),
+                  clipBoard: false),
             txnDetails(
                 title: "Payment Channel",
                 subTitle: channel,

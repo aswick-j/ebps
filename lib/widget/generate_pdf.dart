@@ -1,22 +1,25 @@
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/helpers/getTransactionStatusReason.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 Future<Uint8List> generatePdf(
-    PdfPageFormat format,
-    String BillerName,
-    String BillerId,
-    String BillName,
-    String ParamName,
-    String ParamValue,
-    String TransactionID,
-    String fromAccount,
-    String billAmount,
-    String status,
-    String channel,
-    TransactionDate) async {
+  PdfPageFormat format,
+  String BillerName,
+  String BillerId,
+  String BillName,
+  String ParamName,
+  String ParamValue,
+  String TransactionID,
+  String fromAccount,
+  String billAmount,
+  String status,
+  String channel,
+  TransactionDate,
+  String txnstatus,
+) async {
   final pdf = pw.Document(
     version: PdfVersion.pdf_1_5,
     compress: true,
@@ -199,6 +202,11 @@ Future<Uint8List> generatePdf(
                           'Status',
                           status,
                         ],
+                        if (status != "Transaction Success")
+                          [
+                            'Reason',
+                            getTransactionReason(txnstatus),
+                          ],
                       ]),
                 ),
                 pw.Padding(
