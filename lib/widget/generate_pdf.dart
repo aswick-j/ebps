@@ -40,7 +40,7 @@ Future<Uint8List> generatePdf(
       pageFormat: PdfPageFormat.a4,
       build: (pw.Context context) {
         return pw.Container(
-            margin: pw.EdgeInsets.symmetric(vertical: 64),
+            margin: pw.EdgeInsets.symmetric(vertical: 54),
             decoration: pw.BoxDecoration(
               image: pw.DecorationImage(
                 image: pw.MemoryImage(bbpsAssuredList),

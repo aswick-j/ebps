@@ -9,7 +9,6 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/widget/flickr_loader.dart';
-import 'package:ebps/widget/no_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,9 +45,8 @@ class _SearchScreenState extends State<SearchScreen> {
     infiniteScrollController.addListener(() {
       if (infiniteScrollController.position.atEdge) {
         if (infiniteScrollController.position.pixels != 0) {
-          if (_totalPages != _pageNumber) {
+          if (_totalPages >= _pageNumber) {
             MoreLoading = true;
-            _pageNumber = _pageNumber + 1;
             if (_searchController.text.isEmpty) {
               BlocProvider.of<HomeCubit>(context)
                   .searchBiller("", "", _pageNumber);
@@ -120,6 +118,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   BillerSearchResults![BillerSearchResults!.length - 1]
                       .tOTALPAGES!;
             }
+            _pageNumber = _pageNumber + 1;
+
             isBillSerachLoading = false;
             MoreLoading = false;
           }

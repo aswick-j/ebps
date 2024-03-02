@@ -491,6 +491,20 @@ class _createAutopayState extends State<createAutopay> {
                                   textAlign: TextAlign.center,
                                 ),
                               ),
+                            if (selectedDate == todayDate &&
+                                activatesFrom == "Immediately")
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(left: 18.0.w, right: 18.w),
+                                child: Text(
+                                  "Cannot create auto payment if selected/set date is today's date",
+                                  style: TextStyle(
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: CLR_ERROR,
+                                  ),
+                                ),
+                              ),
                             Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 16.w, vertical: 16.h),
@@ -792,7 +806,8 @@ class _createAutopayState extends State<createAutopay> {
                       onPressed: () async {
                         if (selectedAcc != null &&
                             !maxAmountError &&
-                            todayDate != selectedDate) {
+                            !(selectedDate == todayDate &&
+                                activatesFrom == "Immediately")) {
                           Map<String, dynamic> decodedToken =
                               await getDecodedToken();
                           List decodedToken2 =
@@ -832,7 +847,8 @@ class _createAutopayState extends State<createAutopay> {
                       buttonBorderColor: Colors.transparent,
                       buttonColor: selectedAcc != null &&
                               !maxAmountError &&
-                              todayDate != selectedDate
+                              !(selectedDate == todayDate &&
+                                  activatesFrom == "Immediately")
                           ? CLR_PRIMARY
                           : Colors.grey,
                       buttonSizeX: 10.h,

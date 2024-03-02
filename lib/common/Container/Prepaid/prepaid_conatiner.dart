@@ -55,7 +55,10 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
               Column(
                 children: [
                   Text(
-                    "Data",
+                    widget.prepaidPlans!.planAdditionalInfo!.data.toString() ==
+                            '0'
+                        ? "Talktime"
+                        : "Data",
                     style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w400,
@@ -63,7 +66,12 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                     ),
                   ),
                   Text(
-                    widget.prepaidPlans!.planAdditionalInfo!.data.toString(),
+                    widget.prepaidPlans!.planAdditionalInfo!.data.toString() ==
+                            '0'
+                        ? widget.prepaidPlans!.planAdditionalInfo!.talktime
+                            .toString()
+                        : widget.prepaidPlans!.planAdditionalInfo!.data
+                            .toString(),
                     style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.bold,

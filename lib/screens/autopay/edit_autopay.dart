@@ -111,7 +111,9 @@ class _editAutopayState extends State<editAutopay> {
         selectedAcc == 99 ||
         // accError ||
         widget.autopayData!.pAYMENTDATE.toString() == todayDate ||
-        todayDate == selectedDate ||
+        ((widget.autopayData!.pAYMENTDATE == todayDate ||
+                selectedDate == todayDate) &&
+            activatesFrom == "Immediately") ||
         maxAmountError ||
         ((double.parse(widget.autopayData!.mAXIMUMAMOUNT.toString()) ==
                 double.parse(maxAmountController.text.toString())) &&
@@ -444,9 +446,22 @@ class _editAutopayState extends State<editAutopay> {
                                       onChanged: (val) {
                                         setState(() {
                                           limitGroupRadio = 0;
-                                          maxAmountController.text = widget
-                                              .autopayData!.mAXIMUMAMOUNT
-                                              .toStringAsFixed(2);
+                                          if (widget.autopayData!.aMOUNTLIMIT ==
+                                              0) {
+                                            maxAmountController.text = widget
+                                                .autopayData!.mAXIMUMAMOUNT
+                                                .toStringAsFixed(2);
+                                          } else {
+                                            maxAmountController.text =
+                                                (double.parse(widget
+                                                                .lastPaidAmount
+                                                                .toString() !=
+                                                            "null"
+                                                        ? widget.lastPaidAmount
+                                                            .toString()
+                                                        : "10000")
+                                                    .toStringAsFixed(2));
+                                          }
                                         });
                                       },
                                       controlAffinity:
@@ -618,6 +633,22 @@ class _editAutopayState extends State<editAutopay> {
                                       color: Color(0xff808080),
                                     ),
                                     textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              if ((widget.autopayData!.pAYMENTDATE ==
+                                          todayDate ||
+                                      selectedDate == todayDate) &&
+                                  activatesFrom == "Immediately")
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 18.0.w, right: 18.w),
+                                  child: Text(
+                                    "Cannot edit auto payment if selected/set date is today's date",
+                                    style: TextStyle(
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: CLR_ERROR,
+                                    ),
                                   ),
                                 ),
                               Padding(

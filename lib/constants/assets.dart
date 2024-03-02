@@ -49,7 +49,9 @@ const ICON_FASTTAG = "packages/ebps/assets/icon/icon_fastag.svg";
 const ICON_GAS = "packages/ebps/assets/icon/icon_gas.svg";
 const ICON_HEALTH_INSURANCE =
     "packages/ebps/assets/icon/icon_health-insurance.svg";
-const ICON_HOSPITAL = "packages/ebps/assets/icon/icon_hospital-pathology.svg";
+const ICON_HOSPITAL = "packages/ebps/assets/icon/icon_hospital.svg";
+const ICON_HOSPITALANDPATH =
+    "packages/ebps/assets/icon/icon_hospital-pathology.svg";
 const ICON_HOUSING = "packages/ebps/assets/icon/icon_housing-society.svg";
 const ICON_INSURANCE = "packages/ebps/assets/icon/icon_insurance.svg";
 const ICON_LANDLINE_POSTPAID =
@@ -69,6 +71,7 @@ const ICON_MUNICIPAL_SERVICES =
 const ICON_MUNICIPAL_TAXES =
     "packages/ebps/assets/icon/icon_municipal-taxes.svg";
 const ICON_RECDEBOSIT = "packages/ebps/assets/icon/icon_recurring-deposit.svg";
+const ICON_RENTAL = "packages/ebps/assets/icon/icon_rental.svg";
 
 const ICON_SUBSCRIPTION = "packages/ebps/assets/icon/icon_subscription.svg";
 const ICON_WATER = "packages/ebps/assets/icon/icon_water.svg";
@@ -103,6 +106,7 @@ const LOGO_VI = "packages/ebps/assets/logo/logo_vi.svg";
 
 //IMAGE
 
+const IMG_NOPLANS = "packages/ebps/assets/images/image_no_plans_found.dart.svg";
 const IMG_NODATA = "packages/ebps/assets/images/image_no_data.svg";
 const IMG_SERVERDOWN = "packages/ebps/assets/images/image_serverdown.svg";
 const IMG_SESSIONEXPIRED =
@@ -153,8 +157,9 @@ String CATEGORY_ICON(String? CATEGORY_NAME) {
       return ICON_HEALTH_INSURANCE;
 
     case "hospital":
-    case "hospital and pathology":
       return ICON_HOSPITAL;
+    case "hospital and pathology":
+      return ICON_HOSPITALANDPATH;
     case "housing society":
       return ICON_HOUSING;
     case "insurance":
@@ -184,6 +189,8 @@ String CATEGORY_ICON(String? CATEGORY_NAME) {
       return ICON_MUNICIPAL_TAXES;
     case "recurring deposit":
       return ICON_RECDEBOSIT;
+    case "rental":
+      return ICON_RENTAL;
 
     case "subscription fees":
     case "subscription":

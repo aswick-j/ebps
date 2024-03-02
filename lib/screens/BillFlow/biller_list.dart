@@ -55,15 +55,14 @@ class _BillerListState extends State<BillerList> {
     infiniteScrollController.addListener(() {
       if (infiniteScrollController.position.atEdge) {
         if (infiniteScrollController.position.pixels != 0) {
-          if (_totalPages != _pageNumber) {
+          if (_totalPages >= _pageNumber) {
             MoreLoading = true;
-            _pageNumber = _pageNumber + 1;
             if (_searchController.text.isEmpty) {
               BlocProvider.of<HomeCubit>(context)
                   .getAllBiller(widget.id, _pageNumber);
             } else {
               BlocProvider.of<HomeCubit>(context)
-                  .searchBiller("", "", _pageNumber);
+                  .searchBiller("", widget.name, _pageNumber);
             }
           }
         }
@@ -109,6 +108,7 @@ class _BillerListState extends State<BillerList> {
             isAllBiller = false;
             isBillSerachLoading = false;
             MoreLoading = false;
+            _pageNumber = _pageNumber + 1;
           } else if (state is AllbillerListFailed) {
             isAllBiller = false;
             isBillSerachLoading = false;
@@ -140,6 +140,8 @@ class _BillerListState extends State<BillerList> {
                   BillerSearchResults![BillerSearchResults!.length - 1]
                       .tOTALPAGES!;
             }
+            _pageNumber = _pageNumber + 1;
+
             isBillSerachLoading = false;
             MoreLoading = false;
           } else if (state is BillersSearchFailed) {

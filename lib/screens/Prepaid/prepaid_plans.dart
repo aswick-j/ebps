@@ -1,8 +1,6 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Container/Prepaid/prepaid_conatiner.dart';
-import 'package:ebps/common/Text/MyAppText.dart';
-import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getBillerType.dart';
@@ -11,7 +9,6 @@ import 'package:ebps/models/add_biller_model.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
-import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/widget/dot_indicator.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/no_result.dart';
@@ -19,7 +16,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class PrepaidPlans extends StatefulWidget {
   BillersData? billerData;

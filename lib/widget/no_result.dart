@@ -19,10 +19,11 @@ class _noResultState extends State<noResult> {
   List ErrorMessage = [
     "It seems there is a problem fetching the\nbill at the moment. Kindly try again later.",
     "It seems there is a problem fetching the\nplans at the moment. Kindly try again later.",
-    "The bank is experiencing some issues right now. Kindly try again later."
+    "The bank is experiencing some issues right now. Kindly try again later.",
+    "No Plans Found for this Operator.\nPlease Choose a different Operator."
   ];
 
-  List Image = [IMG_NOTFOUND, IMG_NODATA, IMG_SERVERDOWN];
+  List Image = [IMG_NOTFOUND, IMG_NODATA, IMG_SERVERDOWN, IMG_NOPLANS];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -187,7 +187,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                               ),
                                               SizedBox(width: 20.w),
                                               Text(
-                                                "Select Categories",
+                                                "Select Category",
                                                 style: TextStyle(
                                                   fontSize: 16.sp,
                                                   fontWeight: FontWeight.w600,
@@ -345,8 +345,8 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                       borderSide: BorderSide(color: Color(0xff1B438B)),
                     ),
                     border: const UnderlineInputBorder(),
-                    labelText: 'Select Categories',
-                    hintText: "Select Categories"),
+                    labelText: 'Select Category',
+                    hintText: "Select Category"),
               ),
             ),
             if (isHistoryFilterLoading)

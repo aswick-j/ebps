@@ -258,22 +258,113 @@ class MainContainer extends StatelessWidget {
                                       Expanded(
                                         child: MyAppButton(
                                             onPressed: () async {
-                                              goBack(context);
-
-                                              goToData(ctx, oTPPAGEROUTE, {
-                                                "from": 'delete-auto-pay',
-                                                "templateName":
-                                                    "delete-auto-pay",
-                                                "autopayData":
-                                                    getAllAutopayList(
-                                                        customerBillID),
-                                                "context": ctx,
-                                                "data": {
-                                                  "billerName": subtitleText,
-                                                  "cUSTOMERBILLID":
-                                                      customerBillID,
-                                                }
-                                              });
+                                              var todayDate = DateTime.parse(
+                                                      DateTime.now().toString())
+                                                  .day
+                                                  .toString();
+                                              if (todayDate ==
+                                                  getAllAutopayList(
+                                                          customerBillID)!
+                                                      .pAYMENTDATE
+                                                      .toString()) {
+                                                showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return Dialog(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0.r)),
+                                                        child: Container(
+                                                          height: 200.h,
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    12.0.r),
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceAround,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                SvgPicture.asset(
+                                                                    ICON_FAILED,
+                                                                    height:
+                                                                        50.h,
+                                                                    width:
+                                                                        50.w),
+                                                                Text(
+                                                                  "Autopay cannot be deleted as auto pay date is set for today",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        14.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    color: Color(
+                                                                        0xff000000),
+                                                                  ),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                ),
+                                                                Padding(
+                                                                  padding: EdgeInsets.symmetric(
+                                                                      horizontal:
+                                                                          12.0
+                                                                              .w,
+                                                                      vertical:
+                                                                          10.h),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceAround,
+                                                                    children: [
+                                                                      Expanded(
+                                                                        child: MyAppButton(
+                                                                            onPressed: () {
+                                                                              goBack(context);
+                                                                            },
+                                                                            buttonText: "Okay",
+                                                                            buttonTxtColor: BTN_CLR_ACTIVE,
+                                                                            buttonBorderColor: Colors.transparent,
+                                                                            buttonColor: CLR_PRIMARY,
+                                                                            buttonSizeX: 10.h,
+                                                                            buttonSizeY: 40.w,
+                                                                            buttonTextSize: 14.sp,
+                                                                            buttonTextWeight: FontWeight.w500),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    });
+                                              } else {
+                                                goBack(context);
+                                                goToData(ctx, oTPPAGEROUTE, {
+                                                  "from": 'delete-auto-pay',
+                                                  "templateName":
+                                                      "delete-auto-pay",
+                                                  "autopayData":
+                                                      getAllAutopayList(
+                                                          customerBillID),
+                                                  "context": ctx,
+                                                  "data": {
+                                                    "billerName": subtitleText,
+                                                    "cUSTOMERBILLID":
+                                                        customerBillID,
+                                                  }
+                                                });
+                                              }
                                             },
                                             buttonText: "Delete",
                                             buttonTxtColor: BTN_CLR_ACTIVE,

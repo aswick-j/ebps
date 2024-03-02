@@ -808,21 +808,116 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                     MyAppButton(
                                                                         onPressed:
                                                                             () {
-                                                                          //                             goToData(context, otpRoute, {
+                                                                          var todayDate = DateTime.parse(DateTime.now().toString())
+                                                                              .day
+                                                                              .toString();
 
-                                                                          goToData(
-                                                                              context,
-                                                                              oTPPAGEROUTE,
-                                                                              {
-                                                                                "from": 'delete-auto-pay',
-                                                                                "templateName": "delete-auto-pay",
-                                                                                "autopayData": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID),
-                                                                                "context": context,
-                                                                                "data": {
-                                                                                  "billerName": widget.savedBillersData.bILLERNAME,
-                                                                                  "cUSTOMERBILLID": widget.savedBillersData.cUSTOMERBILLID.toString(),
-                                                                                }
-                                                                              });
+                                                                          if (todayDate ==
+                                                                              getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.pAYMENTDATE) {
+                                                                            showModalBottomSheet(
+                                                                                context: context,
+                                                                                shape: RoundedRectangleBorder(
+                                                                                  borderRadius: BorderRadius.vertical(
+                                                                                    top: Radius.circular(16.0.r),
+                                                                                  ),
+                                                                                ),
+                                                                                builder: (context) {
+                                                                                  return Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: <Widget>[
+                                                                                      Padding(
+                                                                                        padding: EdgeInsets.only(top: 15.h, bottom: 15.h, left: 15.w, right: 15.w),
+                                                                                        child: Row(
+                                                                                          children: [
+                                                                                            Icon(
+                                                                                              Icons.warning_rounded,
+                                                                                              color: Color(0xff1b438b),
+                                                                                            ),
+                                                                                            SizedBox(width: 20.w),
+                                                                                            Text(
+                                                                                              "Delete Autopay",
+                                                                                              style: TextStyle(
+                                                                                                fontSize: 16.sp,
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                                color: Color(0xff1b438b),
+                                                                                              ),
+                                                                                              textAlign: TextAlign.left,
+                                                                                            )
+                                                                                          ],
+                                                                                        ),
+                                                                                      ),
+                                                                                      Container(
+                                                                                        decoration: BoxDecoration(
+                                                                                          boxShadow: [
+                                                                                            BoxShadow(color: Colors.grey.withOpacity(0.5), spreadRadius: 0.6, blurRadius: 4, offset: Offset(0, 2)),
+                                                                                          ],
+                                                                                        ),
+                                                                                        child: Divider(
+                                                                                          height: 1.h,
+                                                                                          thickness: 1,
+                                                                                          color: Colors.grey.withOpacity(0.1),
+                                                                                        ),
+                                                                                      ),
+                                                                                      SizedBox(
+                                                                                        height: 10.h,
+                                                                                      ),
+                                                                                      Padding(
+                                                                                        padding: EdgeInsets.only(top: 0.h, bottom: 16.h, left: 16.w, right: 16.w),
+                                                                                        child: Center(
+                                                                                          child: Text(
+                                                                                            "Autopay cannot be deleted as auto pay date is set for today",
+                                                                                            style: TextStyle(
+                                                                                              fontSize: 14.sp,
+                                                                                              fontWeight: FontWeight.w400,
+                                                                                              color: Color(0xff000000),
+                                                                                            ),
+                                                                                            textAlign: TextAlign.center,
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                      Padding(
+                                                                                        padding: EdgeInsets.only(top: 0.h, bottom: 16.h, left: 16.w, right: 16.w),
+                                                                                        child: Row(
+                                                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                                                          children: [
+                                                                                            Expanded(
+                                                                                              child: MyAppButton(
+                                                                                                  onPressed: () {
+                                                                                                    goBack(context);
+                                                                                                  },
+                                                                                                  buttonText: "Okay",
+                                                                                                  buttonTxtColor: BTN_CLR_ACTIVE,
+                                                                                                  buttonBorderColor: Colors.transparent,
+                                                                                                  buttonColor: CLR_PRIMARY,
+                                                                                                  buttonSizeX: 10.h,
+                                                                                                  buttonSizeY: 40.w,
+                                                                                                  buttonTextSize: 14.sp,
+                                                                                                  buttonTextWeight: FontWeight.w500),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                      ),
+                                                                                      SizedBox(
+                                                                                        height: 10.h,
+                                                                                      ),
+                                                                                    ],
+                                                                                  );
+                                                                                });
+                                                                          } else {
+                                                                            goToData(context,
+                                                                                oTPPAGEROUTE, {
+                                                                              "from": 'delete-auto-pay',
+                                                                              "templateName": "delete-auto-pay",
+                                                                              "autopayData": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID),
+                                                                              "context": context,
+                                                                              "data": {
+                                                                                "billerName": widget.savedBillersData.bILLERNAME,
+                                                                                "cUSTOMERBILLID": widget.savedBillersData.cUSTOMERBILLID.toString(),
+                                                                              }
+                                                                            });
+                                                                          }
+                                                                          //                             goToData(context, otpRoute, {
                                                                         },
                                                                         buttonText:
                                                                             "Delete",

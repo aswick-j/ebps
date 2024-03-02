@@ -12,6 +12,7 @@ import 'package:ebps/models/input_signatures_model.dart';
 import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/no_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -283,7 +284,7 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Text(
-                                        value,
+                                        value ?? "No Circles Found",
                                       ),
                                       onTap: () {
                                         setState(() {
@@ -349,8 +350,12 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                           ),
                         if (!isPrepaidPlansLoading &&
                             prepaidPlansData!.length == 0)
-                          Text(
-                              "No Plans Found for this Operator. Please Choose a diffrent Operator")
+                          Center(
+                            child: Container(
+                                width: double.infinity,
+                                height: 350.h,
+                                child: noResult(ErrIndex: 3, ImgIndex: 3)),
+                          )
                       ],
                     )),
                 SizedBox(

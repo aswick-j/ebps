@@ -107,9 +107,8 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
     infiniteScrollController.addListener(() {
       if (infiniteScrollController.position.atEdge) {
         if (infiniteScrollController.position.pixels != 0) {
-          if (_totalPages != _pageNumber) {
+          if (_totalPages >= _pageNumber) {
             MoreLoading = true;
-            _pageNumber = _pageNumber + 1;
             BlocProvider.of<HistoryCubit>(context).getHistoryDetails({
               "startDate": fromDate != null
                   ? fromDate!.toLocal().toIso8601String()
@@ -212,6 +211,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                   }
                   isHistoryLoading = false;
                   MoreLoading = false;
+                  _pageNumber = _pageNumber + 1;
                 });
               } else if (state is HistoryFailed) {
                 setState(() {
