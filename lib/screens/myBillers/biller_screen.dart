@@ -8,6 +8,7 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/models/upcoming_dues_model.dart';
+import 'package:ebps/screens/LottieAnimation.dart';
 import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/services/api_client.dart';
 import 'package:ebps/widget/flickr_loader.dart';
@@ -315,6 +316,12 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                     child: getBillerDataWithUpcomingFirst(savedBillerData)!
                                 .length ==
                             0
+                        // ? LottieAnimation(
+                        //   aniJsonIndex: 0,
+                        //   secondaryIndex: 0,
+                        //   showTitle: false,
+                        //   titleIndex: 0,
+                        // )
                         ? NoDataFound(
                             message: "No Billers Found",
                           )

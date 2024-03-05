@@ -7,6 +7,7 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/billers_model.dart';
+import 'package:ebps/screens/LottieAnimation.dart';
 import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
@@ -207,12 +208,18 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                         if (!isBillSerachLoading &&
                             BillerSearchResults!.isEmpty)
-                          Container(
-                            height: 500.h,
-                            child: NoDataFound(
-                              message: "No Billers Found",
-                            ),
+                          // LottieAnimation(
+                          //   aniJsonIndex: 1,
+                          //   secondaryIndex: 0,
+                          //   showTitle: false,
+                          //   titleIndex: 0,
+                          // ),
+                        Container(
+                          height: 500.h,
+                          child: NoDataFound(
+                            message: "No Billers Found",
                           ),
+                        ),
                         if (!isBillSerachLoading &&
                             BillerSearchResults!.isNotEmpty)
                           Container(
