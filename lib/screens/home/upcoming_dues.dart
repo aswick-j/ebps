@@ -99,7 +99,8 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
     if (upcomingAutoPaymentData!.isNotEmpty) {
       upcomingAutoPaymentData?.forEach((item) {
         final tempUpcomingAutoPayment = {
-          "itemType": "upcomingPayments",
+          "itemType":
+              item.iSACTIVE == 1 ? "upcomingPayments" : "upcomingAutopaused",
           "billName": item.bILLNAME ?? "",
           "billerName": item.bILLERNAME ?? "",
           "dueAmount": item.dUEAMOUNT ?? "",
@@ -324,7 +325,10 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                     buttonText:
                         allUpcomingDues[index]["itemType"] == 'upcomingDue'
                             ? "Pay Now"
-                            : 'Upcoming Auto Payment',
+                            : allUpcomingDues[index]["itemType"] ==
+                                    'upcomingAutopaused'
+                                ? "Upcoming Autopay Paused"
+                                : 'Upcoming Auto Payment',
                     onPressed: () {
                       SavedBillersData savedBillersData;
                       List<SavedBillersData> billerDataTemp = [];
@@ -359,12 +363,18 @@ class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
                     buttonTxtColor:
                         allUpcomingDues[index]["itemType"] == 'upcomingDue'
                             ? Color.fromARGB(255, 255, 255, 255)
-                            : Color(0xff00AB44),
+                            : allUpcomingDues[index]["itemType"] ==
+                                    'upcomingAutopaused'
+                                ? Colors.red
+                                : Color(0xff00AB44),
                     buttonTextWeight: FontWeight.normal,
                     buttonBorderColor:
                         allUpcomingDues[index]["itemType"] == 'upcomingDue'
                             ? null
-                            : Color(0xff00AB44),
+                            : allUpcomingDues[index]["itemType"] ==
+                                    'upcomingAutopaused'
+                                ? Colors.red
+                                : Color(0xff00AB44),
                   );
                 }),
           // if (isUpcomingAutopaymentLoading ||

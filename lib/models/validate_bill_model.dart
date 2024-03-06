@@ -101,9 +101,9 @@ class ValidateBillTransactionData {
     bankRRN = json['BankRRN'];
     bbpsTranlogId = json['BbpsTranlogId'];
     actCode = json['ActCode'];
-    data = json['Data'] != null
-        ? ValidateBillTransactionData.fromJson(json['Data'])
-        : null;
+    data = json['Data'] == null || json['Data'] == ""
+        ? null
+        : ValidateBillTransactionData.fromJson(json['Data']);
 
     extraData = json['ExtraData'];
     ssTxnId = json['SsTxnId'];

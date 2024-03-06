@@ -182,7 +182,8 @@ class _ComplaintListState extends State<ComplaintList> {
                                 "₹ ${NumberFormat('#,##,##0.00').format(double.parse(ComplaintList[index].bILLAMOUNT.toString()))}",
                             statusText: ComplaintList[index].sTATUS,
                             complaintData: ComplaintList[index],
-                            iconPath: LOGO_BBPS,
+                            iconPath: BILLER_LOGO(
+                                ComplaintList[index].bILLERNAME.toString()),
                             containerBorderColor: Color(0xffD1D9E8),
                           );
                         },

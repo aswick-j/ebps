@@ -205,7 +205,7 @@ class MainContainer extends StatelessWidget {
           right: 17.w,
           child: InkWell(
             onTap: () {
-              if (buttonText == "Upcoming Auto Payment") {
+              if (buttonText != "Pay Now") {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {

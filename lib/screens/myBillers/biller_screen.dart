@@ -138,9 +138,9 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
             TempBillData.add(billerData[i]!);
           }
         }
-        TempAutoData.sort((a, b) => a.bILLERNAME.compareTo(b.bILLERNAME));
-        TempDueData.sort((a, b) => a.bILLERNAME.compareTo(b.bILLERNAME));
-        TempBillData.sort((a, b) => a.bILLERNAME.compareTo(b.bILLERNAME));
+        TempAutoData.sort((a, b) => a.bILLERNAME.toLowerCase().compareTo(b.bILLERNAME.toLowerCase()));
+        TempDueData.sort((a, b) => a.bILLERNAME.toLowerCase().compareTo(b.bILLERNAME.toLowerCase()));
+        TempBillData.sort((a, b) => a.bILLERNAME.toLowerCase().compareTo(b.bILLERNAME.toLowerCase()));
         return [...TempAutoData, ...TempDueData, ...TempBillData];
         // return billerData;
       } catch (e) {}

@@ -286,7 +286,9 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                         historyData![index]
                                             .tRANSACTIONSTATUS
                                             .toString()),
-                                    iconPath: LOGO_BBPS,
+                                    iconPath: BILLER_LOGO(historyData![index]
+                                        .bILLERNAME
+                                        .toString()),
                                     containerBorderColor: Color(0xffD1D9E8),
                                   );
                                 } else {

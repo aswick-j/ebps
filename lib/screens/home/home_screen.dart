@@ -83,7 +83,6 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
             //       },
             //       child: SvgPicture.asset(ICON_BELL)),
             IconBadge(
-              iconData: Icons.notifications_none_outlined,
               notificationCount: allautoPayData!.length,
               onTap: () {
                 handleDialog();

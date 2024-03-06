@@ -286,7 +286,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                                       : tnxResponse!.paymentDetails!.failed == true
                                                                           ? "bbps-timeout"
                                                                           : "failed",
-                                                              TransactionDate: DateFormat("dd/MM/yy | hh:mm a").format(DateTime.now()).toString()))),
+                                                              TransactionDate: DateFormat("dd/MM/yyyy | hh:mm a").format(DateTime.now()).toString()))),
                                                   delay: Duration(seconds: 0));
 
                                               final result =
@@ -350,7 +350,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                                 ? 'Transaction Failure'
                                                                 : "Transaction Pending",
                                                         "Equitas - Mobile banking",
-                                                        DateFormat("dd/MM/yy | hh:mm a").format(DateTime.now()).toString(),
+                                                        DateFormat("dd/MM/yyyy | hh:mm a").format(DateTime.now()).toString(),
                                                         tnxResponse!.reason.toString()),
                                               );
                                               // Future.microtask(() =>
@@ -373,7 +373,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                 Padding(
                                   padding: EdgeInsets.only(left: 20.0.w),
                                   child: Text(
-                                    DateFormat("dd/MM/yy | hh:mm a")
+                                    DateFormat("dd/MM/yyyy | hh:mm a")
                                         .format(DateTime.now())
                                         .toString(),
                                     // DateFormat("dd/MM/yy | hh:mm a")

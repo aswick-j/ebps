@@ -224,7 +224,7 @@ class _BillerListState extends State<BillerList> {
                           padding: EdgeInsets.symmetric(horizontal: 10.0.w),
                           child: Row(
                             children: [
-                              const Icon(Icons.menu, color: Color(0xffffffff)),
+                              SvgPicture.asset(ICON_ALL_BILLER),
                               SizedBox(
                                 width: 10.w,
                               ),

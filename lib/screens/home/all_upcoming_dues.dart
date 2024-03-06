@@ -264,7 +264,10 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                         buttonText: widget.allUpcomingDues[index]["itemType"] ==
                                 'upcomingDue'
                             ? 'Pay Now'
-                            : "Upcoming Auto Payment",
+                            : widget.allUpcomingDues[index]["itemType"] ==
+                                    'upcomingAutopaused'
+                                ? "Upcoming Autopay Paused"
+                                : "Upcoming Auto Payment",
                         onPressed: () {
                           SavedBillersData savedBillersData;
                           List<SavedBillersData> billerDataTemp = [];
@@ -306,13 +309,19 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                                     ["itemType"] ==
                                 'upcomingDue'
                             ? Color.fromARGB(255, 255, 255, 255)
-                            : Color(0xff00AB44),
+                            : widget.allUpcomingDues[index]["itemType"] ==
+                                    'upcomingAutopaused'
+                                ? Colors.red
+                                : Color(0xff00AB44),
                         buttonTextWeight: FontWeight.normal,
                         buttonBorderColor: widget.allUpcomingDues[index]
                                     ["itemType"] ==
                                 'upcomingDue'
                             ? null
-                            : Color(0xff00AB44),
+                            : widget.allUpcomingDues[index]["itemType"] ==
+                                    'upcomingAutopaused'
+                                ? Colors.red
+                                : Color(0xff00AB44),
                       );
                     }),
                 SizedBox(

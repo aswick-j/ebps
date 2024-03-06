@@ -385,8 +385,7 @@ class HomeCubit extends Cubit<HomeState> {
       final value = await repository!.validateBill(payload);
 
       logger.d(value,
-          error:
-              "VALIDATE BILL API ERROR ===> lib/bloc/home/fetchValidateBill");
+          error: "VALIDATE BILL API ===> lib/bloc/home/fetchValidateBill");
 
       if (value != null && !value.toString().contains("Invalid token")) {
         final status = value['status'];
@@ -410,6 +409,7 @@ class HomeCubit extends Cubit<HomeState> {
                 : 'Failed to retrieve response'));
       }
     } catch (e) {
+      emit(ValidateBillError(message: 'Failed to retrieve response'));
       // Handle exceptions
     }
   }

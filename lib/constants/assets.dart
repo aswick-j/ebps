@@ -92,6 +92,11 @@ const ICON_COMPLAINTS = "packages/ebps/assets/icon/icon_complaint.svg";
 const ICON_FILTER = "packages/ebps/assets/icon/icon_filter.svg";
 const ICON_ERROR = "packages/ebps/assets/icon/icon_error.svg";
 const ICON_BELL = "packages/ebps/assets/icon/icon_bell.svg";
+const ICON_SELECT_CATEGORY = "packages/ebps/assets/icon/icon_select-cate.svg";
+const ICON_SELECT_BILLER = "packages/ebps/assets/icon/icon_select-biller.svg";
+const ICON_ALL_BILLER = "packages/ebps/assets/icon/icon_allbillers.svg";
+const ICON_NOTI = "packages/ebps/assets/icon/icon_notification.svg";
+const ICON_SEARCH = "packages/ebps/assets/icon/icon_search.svg";
 
 //LOGO
 

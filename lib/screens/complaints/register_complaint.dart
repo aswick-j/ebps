@@ -282,7 +282,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                       children: [
                                         billerDetail(
                                             "Date",
-                                            DateFormat('dd/MM/yy | hh:mm a')
+                                            DateFormat('dd/MM/yyyy | hh:mm a')
                                                 .format(DateTime.parse(
                                                         widget.Date.toString())
                                                     .toLocal()),

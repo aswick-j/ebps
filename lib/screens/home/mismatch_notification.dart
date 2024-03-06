@@ -80,7 +80,8 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(0, 20.h, 0, 20.h),
                           child: SvgPicture.asset(
-                            LOGO_BBPS,
+                            BILLER_LOGO(widget.allautoPayData![index].bILLERNAME
+                                .toString()),
                             height: 35.h,
                             width: 35.w,
                           ),

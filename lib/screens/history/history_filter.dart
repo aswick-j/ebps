@@ -147,6 +147,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                 onChanged: (val) {},
                 onTap: () {
                   showModalBottomSheet(
+                      backgroundColor: Colors.white,
                       elevation: 10,
                       useRootNavigator: true,
                       isScrollControlled: true,
@@ -181,10 +182,8 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                               right: 15.w),
                                           child: Row(
                                             children: [
-                                              Icon(
-                                                Icons.menu_outlined,
-                                                color: Color(0xff1b438b),
-                                              ),
+                                              SvgPicture.asset(
+                                                  ICON_SELECT_CATEGORY),
                                               SizedBox(width: 20.w),
                                               Text(
                                                 "Select Category",
@@ -271,7 +270,19 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                                     13.r),
                                                             child: SvgPicture
                                                                 .asset(
-                                                                    LOGO_BBPS),
+                                                              CATEGORY_ICON(
+                                                                categoriesData![
+                                                                        index]
+                                                                    .cATEGORYNAME
+                                                                    .toString(),
+                                                              ),
+                                                              colorFilter:
+                                                                  ColorFilter.mode(
+                                                                      Colors
+                                                                          .transparent,
+                                                                      BlendMode
+                                                                          .hue),
+                                                            ),
                                                           ),
                                                         ),
                                                         title: Text(
@@ -352,7 +363,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
             if (isHistoryFilterLoading)
               Container(height: 200, width: 200, child: FlickrLoader()),
             if (billerFilterData!.isEmpty) SizedBox(height: 85.h),
-            if (billerFilterData!.isNotEmpty)
+            if (!isHistoryFilterLoading && billerFilterData!.isNotEmpty)
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                 child: TextFormField(
@@ -364,6 +375,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                   onChanged: (val) {},
                   onTap: () {
                     showModalBottomSheet(
+                        backgroundColor: Colors.white,
                         elevation: 10,
                         useRootNavigator: true,
                         isScrollControlled: true,
@@ -398,10 +410,8 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                 right: 15.w),
                                             child: Row(
                                               children: [
-                                                Icon(
-                                                  Icons.menu_outlined,
-                                                  color: Color(0xff1b438b),
-                                                ),
+                                                SvgPicture.asset(
+                                                    ICON_SELECT_BILLER),
                                                 SizedBox(width: 20.w),
                                                 Text(
                                                   "Select Billers",
@@ -497,9 +507,11 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                                   EdgeInsets
                                                                       .all(
                                                                           13.r),
-                                                              child: SvgPicture
-                                                                  .asset(
-                                                                      LOGO_BBPS),
+                                                              child: SvgPicture.asset(BILLER_LOGO(
+                                                                  billerFilterData![
+                                                                          index]
+                                                                      .bILLERNAME
+                                                                      .toString())),
                                                             ),
                                                           ),
                                                           title: Text(

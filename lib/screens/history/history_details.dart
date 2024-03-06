@@ -271,7 +271,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                                 billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
                                                                 trasactionStatus: widget.historyData.tRANSACTIONSTATUS.toString(),
                                                                 status: widget.historyData.tRANSACTIONSTATUS.toString(),
-                                                                TransactionDate: DateFormat('dd/MM/yy | hh:mm a').format(DateTime.parse(widget.historyData.cOMPLETIONDATE.toString()).toLocal())))),
+                                                                TransactionDate: DateFormat('dd/MM/yyyy | hh:mm a').format(DateTime.parse(widget.historyData.cOMPLETIONDATE.toString()).toLocal())))),
                                                     delay: Duration(seconds: 0));
 
                                                 final result =
@@ -332,7 +332,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                                   ? "Transaction Pending"
                                                                   : "Transaction Failure",
                                                           widget.historyData.pAYMENTCHANNEL == 'IB' ? "Equitas - Internet Banking" : "Equitas - Mobile Banking",
-                                                          DateFormat('dd/MM/yy | hh:mm a').format(DateTime.parse(widget.historyData.cOMPLETIONDATE.toString()).toLocal()),
+                                                          DateFormat('dd/MM/yyyy | hh:mm a').format(DateTime.parse(widget.historyData.cOMPLETIONDATE.toString()).toLocal()),
                                                           widget.historyData.tRANSACTIONSTATUS.toString()),
                                                 );
                                                 // Future.microtask(() =>
@@ -355,7 +355,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                   Padding(
                                     padding: EdgeInsets.only(left: 20.0.w),
                                     child: Text(
-                                      DateFormat('dd/MM/yy | hh:mm a').format(
+                                      DateFormat('dd/MM/yyyy | hh:mm a').format(
                                           DateTime.parse(widget
                                                   .historyData.cOMPLETIONDATE
                                                   .toString())

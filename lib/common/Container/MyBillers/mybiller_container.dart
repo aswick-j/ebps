@@ -617,9 +617,17 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                         .cUSTOMERBILLID
                                                         .toString(),
                                                     "lastPaidAmount": widget
-                                                        .savedBillersData
-                                                        .bILLAMOUNT
-                                                        .toString(),
+                                                                .savedBillersData
+                                                                .bILLAMOUNT !=
+                                                            null
+                                                        ? widget
+                                                            .savedBillersData
+                                                            .bILLAMOUNT
+                                                            .toString()
+                                                        : getAllAutopayList(widget
+                                                                .savedBillersData
+                                                                .cUSTOMERBILLID)!
+                                                            .dUEAMOUNT,
                                                     "AutoDateMisMatch": getAllAutopayList(widget
                                                                 .savedBillersData
                                                                 .cUSTOMERBILLID) !=
@@ -1344,8 +1352,16 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                               .savedBillersData.cUSTOMERBILLID
                                               .toString(),
                                           "lastPaidAmount": widget
-                                              .savedBillersData.bILLAMOUNT
-                                              .toString(),
+                                                      .savedBillersData
+                                                      .bILLAMOUNT !=
+                                                  null
+                                              ? widget
+                                                  .savedBillersData.bILLAMOUNT
+                                                  .toString()
+                                              : getAllAutopayList(widget
+                                                      .savedBillersData
+                                                      .cUSTOMERBILLID)!
+                                                  .dUEAMOUNT,
                                           "AutoDateMisMatch": getAllAutopayList(
                                                       widget.savedBillersData
                                                           .cUSTOMERBILLID) !=
@@ -1686,10 +1702,14 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                         .savedBillersData
                                                                         .cUSTOMERBILLID
                                                                         .toString(),
-                                                                    "lastPaidAmount": widget
-                                                                        .savedBillersData
-                                                                        .bILLAMOUNT
-                                                                        .toString(),
+                                                                    "lastPaidAmount": widget.savedBillersData.bILLAMOUNT !=
+                                                                            null
+                                                                        ? widget
+                                                                            .savedBillersData
+                                                                            .bILLAMOUNT
+                                                                            .toString()
+                                                                        : getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!
+                                                                            .dUEAMOUNT,
                                                                     "AutoDateMisMatch": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID) !=
                                                                             null
                                                                         ? getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.rESETDATE ==

@@ -1,16 +1,15 @@
-import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class IconBadge extends StatelessWidget {
-  final IconData iconData;
   final VoidCallback? onTap;
   final int notificationCount;
 
   const IconBadge({
     Key? key,
     this.onTap,
-    required this.iconData,
     this.notificationCount = 0,
   }) : super(key: key);
 
@@ -24,9 +23,12 @@ class IconBadge extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Icon(iconData, color: CLR_PRIMARY),
+            SvgPicture.asset(
+              ICON_NOTI,
+              fit: BoxFit.contain,
+            ),
             Positioned(
-              top: 21.h,
+              top: 20.h,
               right: 5.w,
               child: Container(
                 padding: EdgeInsets.all(1.r),
