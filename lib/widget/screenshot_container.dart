@@ -17,6 +17,7 @@ class ScreenshotContainer extends StatelessWidget {
   final String fromAccount;
   final String billAmount;
   final String status;
+  final String trasactionStatus;
   final String TransactionDate;
   final String channel;
 
@@ -31,6 +32,7 @@ class ScreenshotContainer extends StatelessWidget {
     required this.TransactionID,
     required this.fromAccount,
     required this.status,
+    required this.trasactionStatus,
     required this.TransactionDate,
   });
 
@@ -227,7 +229,7 @@ class ScreenshotContainer extends StatelessWidget {
             if (status.toLowerCase() != "success")
               txnDetails(
                   title: "Reason",
-                  subTitle: getTransactionReason(status),
+                  subTitle: getTransactionReason(trasactionStatus),
                   clipBoard: false),
             txnDetails(
                 title: "Payment Channel",

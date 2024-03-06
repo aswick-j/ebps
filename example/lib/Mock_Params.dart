@@ -497,49 +497,6 @@ var p13 = {
         "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
   }
 };
-var p16 = {
-  "redirectionRequest": {
-    "msgBdy": {
-      "data": {
-        "accounts": [
-          {
-            "avlBal": "549141.0",
-            "entityType": "I",
-            "acctTp": "SA",
-            "crntSts": "8",
-            "acctId": "100048422625",
-            "custRltnsp": "JOF",
-            "prdNm": "1005-RegularSavings",
-            "crntStsDesc": "ACCOUNTOPENREGULAR"
-          },
-          {
-            "avlBal": "6.0",
-            "entityType": "I",
-            "acctTp": "SA",
-            "crntSts": "8",
-            "acctId": "100048451103",
-            "custRltnsp": "JOO",
-            "prdNm": "1030-EasySavingsBC",
-            "crntStsDesc": "ACCOUNTOPENREGULAR"
-          }
-        ],
-        "otpPreference": "SMS",
-        "customer": {
-          "gndr": "M",
-          "mblNb": "918610834309",
-          "dob": "1972-03-21",
-          "custId": "13973745",
-          "emailId": "a_nithyadevis@equitasbank.com"
-        }
-      },
-      "service": "bbps",
-      "IPAddress": "1.1.1.1",
-      "platform": "MB"
-    },
-    "checkSum":
-        "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
-  }
-};
 
 //NAVIN
 var p14 = {
@@ -772,6 +729,84 @@ var p14 = {
         },
         "ipaddress": null
       }
+    },
+    "checkSum":
+        "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
+  }
+};
+
+var p15 = {
+  "redirectionRequest": {
+    "msgBdy": {
+      "data": {
+        "accounts": [
+          {
+            "avlBal": "550045.0",
+            "entityType": "I",
+            "acctTp": "SA",
+            "crntSts": "8",
+            "acctId": "100053044601",
+            "custRltnsp": "SOW",
+            "prdNm": "1005-RegularSavings",
+            "crntStsDesc": "ACCOUNTOPENREGULAR"
+          }
+        ],
+        "otpPreference": "SMS",
+        "customer": {
+          "gndr": "M",
+          "mblNb": "919884576522",
+          "dob": "1992-11-11",
+          "custId": "15137344",
+          "emailId": "divya.sriram@equitasbank.com"
+        }
+      },
+      "service": "bbps",
+      "IPAddress": "1.1.1.1",
+      "platform": "MB"
+    },
+    "checkSum":
+        "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
+  }
+};
+
+var p16 = {
+  "redirectionRequest": {
+    "msgBdy": {
+      "data": {
+        "accounts": [
+          {
+            "avlBal": "549141.0",
+            "entityType": "I",
+            "acctTp": "SA",
+            "crntSts": "8",
+            "acctId": "100048422625",
+            "custRltnsp": "JOF",
+            "prdNm": "1005-RegularSavings",
+            "crntStsDesc": "ACCOUNTOPENREGULAR"
+          },
+          {
+            "avlBal": "6.0",
+            "entityType": "I",
+            "acctTp": "SA",
+            "crntSts": "8",
+            "acctId": "100048451103",
+            "custRltnsp": "JOO",
+            "prdNm": "1030-EasySavingsBC",
+            "crntStsDesc": "ACCOUNTOPENREGULAR"
+          }
+        ],
+        "otpPreference": "SMS",
+        "customer": {
+          "gndr": "M",
+          "mblNb": "918610834309",
+          "dob": "1972-03-21",
+          "custId": "13973745",
+          "emailId": "a_nithyadevis@equitasbank.com"
+        }
+      },
+      "service": "bbps",
+      "IPAddress": "1.1.1.1",
+      "platform": "MB"
     },
     "checkSum":
         "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"

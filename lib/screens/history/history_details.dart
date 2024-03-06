@@ -269,6 +269,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                                 TransactionID: widget.historyData.tRANSACTIONREFERENCEID.toString(),
                                                                 fromAccount: widget.historyData.aCCOUNTNUMBER.toString(),
                                                                 billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
+                                                                trasactionStatus: widget.historyData.tRANSACTIONSTATUS.toString(),
                                                                 status: widget.historyData.tRANSACTIONSTATUS.toString(),
                                                                 TransactionDate: DateFormat('dd/MM/yy | hh:mm a').format(DateTime.parse(widget.historyData.cOMPLETIONDATE.toString()).toLocal())))),
                                                     delay: Duration(seconds: 0));
@@ -327,9 +328,9 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                           "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
                                                           widget.historyData.tRANSACTIONSTATUS.toString().toLowerCase() == "success"
                                                               ? "Transaction Success"
-                                                              : widget.historyData.tRANSACTIONSTATUS.toString().toLowerCase() == "failed"
-                                                                  ? "Transaction Failed"
-                                                                  : "Transaction Pending",
+                                                              : widget.historyData.tRANSACTIONSTATUS.toString().toLowerCase() == "bbps-in-progress" || widget.historyData.tRANSACTIONSTATUS.toString().toLowerCase() == "bbps-timeout"
+                                                                  ? "Transaction Pending"
+                                                                  : "Transaction Failure",
                                                           widget.historyData.pAYMENTCHANNEL == 'IB' ? "Equitas - Internet Banking" : "Equitas - Mobile Banking",
                                                           DateFormat('dd/MM/yy | hh:mm a').format(DateTime.parse(widget.historyData.cOMPLETIONDATE.toString()).toLocal()),
                                                           widget.historyData.tRANSACTIONSTATUS.toString()),
@@ -445,22 +446,21 @@ class _HistoryDetailsState extends State<HistoryDetails> {
 
                         TxnDetails(
                             title: "Status",
-                            subTitle:widget
-                                          .historyData.tRANSACTIONSTATUS
-                                          .toString()
-                                          .toLowerCase() ==
-                                      "success"
-                                  ? "Transaction Success"
-                                  : widget.historyData.tRANSACTIONSTATUS
-                                                  .toString()
-                                                  .toLowerCase() ==
-                                              "bbps-in-progress" ||
-                                          widget.historyData.tRANSACTIONSTATUS
-                                                  .toString()
-                                                  .toLowerCase() ==
-                                              "bbps-timeout"
-                                      ? "Transaction Pending"
-                                      : "Transaction Failure",
+                            subTitle: widget.historyData.tRANSACTIONSTATUS
+                                        .toString()
+                                        .toLowerCase() ==
+                                    "success"
+                                ? "Transaction Success"
+                                : widget.historyData.tRANSACTIONSTATUS
+                                                .toString()
+                                                .toLowerCase() ==
+                                            "bbps-in-progress" ||
+                                        widget.historyData.tRANSACTIONSTATUS
+                                                .toString()
+                                                .toLowerCase() ==
+                                            "bbps-timeout"
+                                    ? "Transaction Pending"
+                                    : "Transaction Failure",
                             clipBoard: false),
                         if (widget.historyData.tRANSACTIONSTATUS
                                 .toString()

@@ -6,6 +6,7 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getBillPaymentDetails.dart';
 import 'package:ebps/helpers/getBillerType.dart';
 import 'package:ebps/helpers/getGradientColors.dart';
+import 'package:ebps/helpers/getTransactionStatusReason.dart';
 import 'package:ebps/helpers/getTransactionStatusText.dart';
 import 'package:ebps/models/add_biller_model.dart';
 import 'package:ebps/models/billers_model.dart';
@@ -56,7 +57,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
   Map<String, dynamic>? paymentDetails;
   Map<String, dynamic>? billerTypeResult;
   ScreenshotController screenshotController = ScreenshotController();
-
   @override
   void initState() {
     super.initState();
@@ -275,9 +275,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                               BillName: widget.isSavedBill ? savedBillerTypeData!.bILLNAME.toString() : billerTypeData!.bILLNAME.toString(),
                                                               ParamName: widget.billerData!["inputSignature"][0].pARAMETERNAME,
                                                               ParamValue: widget.billerData!["inputSignature"][0].pARAMETERVALUE,
-                                                              TransactionID: tnxResponse!.paymentDetails!.bbpsResponse!.data!.txnReferenceId.toString(),
+                                                              TransactionID: tnxResponse!.paymentDetails!.success == true ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.txnReferenceId.toString() : "",
                                                               fromAccount: widget.billerData!['acNo'].toString(),
                                                               billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount']))}",
+                                                              trasactionStatus: tnxResponse!.reason.toString(),
                                                               status: tnxResponse!.paymentDetails!.success == true
                                                                   ? "success"
                                                                   : tnxResponse!.paymentDetails!.failed == true || tnxResponse!.paymentDetails!.success == false
@@ -310,7 +311,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                         widget.billerName
                                                             .toString(),
                                                         widget.isSavedBill
-                                                            ? savedBillerTypeData!.bILLERID
+                                                            ? savedBillerTypeData!
+                                                                .bILLERID
                                                                 .toString()
                                                             : billerTypeData!.bILLERID
                                                                 .toString(),
@@ -318,7 +320,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                             ? savedBillerTypeData!
                                                                 .bILLNAME
                                                                 .toString()
-                                                            : billerTypeData!.bILLNAME
+                                                            : billerTypeData!
+                                                                .bILLNAME
                                                                 .toString(),
                                                         widget
                                                             .billerData!["inputSignature"]
@@ -328,12 +331,14 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                             .billerData!["inputSignature"]
                                                                 [0]
                                                             .pARAMETERVALUE,
-                                                        tnxResponse!
+                                                        tnxResponse!.paymentDetails!.success == true
+                                                            ? tnxResponse!
                                                                 .paymentDetails!
                                                                 .bbpsResponse!
                                                                 .data!
-                                                                .txnReferenceId ??
-                                                            "-",
+                                                                .txnReferenceId
+                                                                .toString()
+                                                            : "-",
                                                         widget.billerData!['acNo']
                                                             .toString(),
                                                         "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount'].toString()))}",
@@ -341,15 +346,12 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                                 true
                                                             ? "Transaction Success"
                                                             : tnxResponse!.paymentDetails!.failed == true ||
-                                                                    tnxResponse!.paymentDetails!.success ==
-                                                                        false
+                                                                    tnxResponse!.paymentDetails!.success == false
                                                                 ? 'Transaction Failure'
                                                                 : "Transaction Pending",
                                                         "Equitas - Mobile banking",
-                                                        DateFormat("dd/MM/yy | hh:mm a")
-                                                            .format(DateTime.now())
-                                                            .toString(),
-                                                        "uu"),
+                                                        DateFormat("dd/MM/yy | hh:mm a").format(DateTime.now()).toString(),
+                                                        tnxResponse!.reason.toString()),
                                               );
                                               // Future.microtask(() =>
                                               //     Navigator.push(
@@ -441,7 +443,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       if (tnxResponse!.paymentDetails!.success != true)
                         TxnDetails(
                             title: "Reason",
-                            subTitle: "Bill Payment Failed from BBPS",
+                            subTitle: getTransactionReason(
+                                tnxResponse!.reason.toString()),
                             clipBoard: false),
                       TxnDetails(
                           title: "Payment Channel",

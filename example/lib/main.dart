@@ -126,13 +126,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   //   // "https://cdn.iconscout.com/icon/free/png-512/free-avatar-378-456330.png?f=webp&w=512",
   //   "https://cdn.iconscout.com/icon/free/png-512/free-avatar-369-456321.png?f=webp&w=512"
   // ];
-  List value = [p6, p7, p13, p16];
-  List Name = ["Thangavel", "Aswick", "Nithiya", "Nithiya"];
+  List value = [p6, p7, p13, p16, p15];
+  List Name = ["Thangavel", "Aswick", "Nithiya", "Nithiya", "Divya"];
   List Img = [
     // "https://cdn.iconscout.com/icon/free/png-512/free-avatar-366-456318.png?f=webp&w=512",
     "https://cdn.iconscout.com/icon/free/png-512/free-avatar-371-456323.png?f=webp&w=512",
     "https://cdn.iconscout.com/icon/free/png-512/free-avatar-370-456322.png?f=webp&w=512",
     "https://cdn.iconscout.com/icon/free/png-512/free-avatar-369-456321.png?f=webp&w=512",
+    "https://cdn.iconscout.com/icon/free/png-512/free-avatar-373-456325.png?f=webp&w=512",
     "https://cdn.iconscout.com/icon/free/png-512/free-avatar-373-456325.png?f=webp&w=512",
   ];
 

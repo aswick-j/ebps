@@ -29,11 +29,13 @@ class confirmDoneData {
   List<TransactionSteps>? transactionSteps;
   String? equitasTransactionId;
   int? insertedTransaction;
+  String? reason;
 
   confirmDoneData(
       {this.paymentDetails,
       this.transactionSteps,
       this.equitasTransactionId,
+      this.reason,
       this.insertedTransaction});
 
   confirmDoneData.fromJson(Map<String, dynamic> json) {
@@ -48,6 +50,7 @@ class confirmDoneData {
     }
     equitasTransactionId = json['equitasTransactionId'];
     insertedTransaction = json['insertedTransaction'];
+    reason = json["reason"];
   }
 
   Map<String, dynamic> toJson() {
@@ -61,6 +64,7 @@ class confirmDoneData {
     }
     data['equitasTransactionId'] = this.equitasTransactionId;
     data['insertedTransaction'] = this.insertedTransaction;
+    data['reason'] = this.reason;
     return data;
   }
 }
