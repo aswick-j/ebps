@@ -71,6 +71,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
   bool isHistoryFilterLoading = false;
   String? categoryID;
   String? billerID;
+  String? CategoryName;
   @override
   void initState() {
     if (widget.billerName != null) {
@@ -87,6 +88,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
     setState(() {
       catController.text = categoryName;
       categoryID = category_ID;
+      CategoryName = categoryName;
     });
 
     billerController.clear();
@@ -232,6 +234,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                         categoriesData![index]
                                                             .cATEGORYNAME
                                                             .toString();
+
                                                     handleBiller(
                                                       categoriesData![index]
                                                           .cATEGORYNAME
@@ -480,12 +483,8 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                                   index]
                                                               .bILLERNAME
                                                               .toString(),
-                                                          categoriesData![index]
-                                                              .iD
-                                                              .toString(),
-                                                          categoriesData![index]
-                                                              .cATEGORYNAME
-                                                              .toString());
+                                                          categoryID,
+                                                          CategoryName);
 
                                                       goBack(context);
                                                     },

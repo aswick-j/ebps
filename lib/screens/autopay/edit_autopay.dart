@@ -686,8 +686,10 @@ class _editAutopayState extends State<editAutopay> {
                                     Icons.keyboard_arrow_down,
                                     color: Colors.grey,
                                   ),
-                                  items: EffectiveFrom.map<
-                                      DropdownMenuItem<String>>((value) {
+                                  items: [
+                                    'Immediately',
+                                    getMonthName(billPayGroupRadio)[0]!,
+                                  ].map<DropdownMenuItem<String>>((value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Text(

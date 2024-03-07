@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
@@ -8,7 +6,6 @@ import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getGradientColors.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getTransactionStatusReason.dart';
-import 'package:ebps/helpers/getTransactionStatusText.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/confirm_done_model.dart';
 import 'package:ebps/models/history_model.dart';
@@ -22,7 +19,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:screenshot/screenshot.dart';
 
 class HistoryDetails extends StatefulWidget {

@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
-import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/ebps.dart';
@@ -17,7 +14,6 @@ import 'package:ebps/widget/icon_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -186,7 +182,7 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
                 ),
                 Center(
                   child: Text(
-                    "V 0.0.28",
+                    "V 0.0.29",
                     style: TextStyle(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w400,
