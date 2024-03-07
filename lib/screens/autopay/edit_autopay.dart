@@ -782,12 +782,13 @@ class _editAutopayState extends State<editAutopay> {
                                   ),
                                 ],
                               ),
-                              if (activatesFrom == getMonthName(99)[0])
+                              if (activatesFrom ==
+                                  getMonthName(billPayGroupRadio)[0]!)
                                 Padding(
                                   padding: EdgeInsets.only(
                                       left: 18.0.w, right: 18.w),
                                   child: Text(
-                                    "Your auto pay will stay inactive and we will resume paying your bills only from ${numberPrefixSetter(selectedDate!)} ${getMonthName(99)[0].split(" ")[0]}, ${getMonthName(99)[0].split(" ")[1]}. If you want us to pay your bills on the  ${numberPrefixSetter(selectedDate!)} of this (current) month, please select Immediately from the dropdown.",
+                                    "Your auto pay will stay inactive and we will resume paying your bills only from ${numberPrefixSetter(selectedDate!)}, ${getMonthName(billPayGroupRadio)[0]!}. If you want us to pay your bills on the  ${numberPrefixSetter(selectedDate!)} of this (current) month, please select Immediately from the dropdown.",
                                     style: TextStyle(
                                       fontSize: 10.sp,
                                       fontWeight: FontWeight.w400,
