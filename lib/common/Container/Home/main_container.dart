@@ -354,6 +354,8 @@ class MainContainer extends StatelessWidget {
                                                   "from": 'delete-auto-pay',
                                                   "templateName":
                                                       "delete-auto-pay",
+                                                  "BillerName": subtitleText,
+                                                  "BillName": titleText,
                                                   "autopayData":
                                                       getAllAutopayList(
                                                           customerBillID),

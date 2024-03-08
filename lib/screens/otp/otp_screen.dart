@@ -7,6 +7,7 @@ import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/helpers/getPopupMsg.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/services/api.dart';
 import 'package:ebps/widget/animated_dialog.dart';
@@ -22,6 +23,8 @@ import 'package:pinput/pinput.dart';
 class OtpScreen extends StatefulWidget {
   AllConfigurationsData? autopayData;
   String? id;
+  String? BillerName;
+  String? BillName;
   String? from;
   String? templateName;
   Map<String, dynamic>? data;
@@ -33,6 +36,8 @@ class OtpScreen extends StatefulWidget {
       required this.ctx,
       this.templateName,
       this.id,
+      this.BillerName,
+      this.BillName,
       this.data});
 
   @override
@@ -58,6 +63,8 @@ class _OtpScreenState extends State<OtpScreen> {
   bool enableReadOnly = false;
   bool showOTPverify = false;
   bool enableRedirect = false;
+  String? BillerName;
+  String? BillName;
 
   handleIntial() {
     if (widget.from == pAYMENTCONFIRMROUTE) {
@@ -89,6 +96,8 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   void initState() {
+    BillerName = widget.BillerName;
+    BillName = widget.BillName;
     handleIntial();
     getAccountDetails();
     super.initState();
@@ -237,24 +246,6 @@ class _OtpScreenState extends State<OtpScreen> {
     }
   }
 
-  List SuccessMsg = [
-    "Your Biller Has Been Deleted Successfully",
-    "Autopay Created Successfully",
-    "Autopay Updated Successfully",
-    "Autopay Deleted Successfully",
-    "Autopay Paused Successfully",
-    "Autopay Resumed Successfully",
-  ];
-
-  List FailedMsg = [
-    "Biller Delete Failed",
-    "Autopay Create Failed",
-    "Autopay Update Failed",
-    "Autopay Delete Failed",
-    "Autopay Pause Failed",
-    "Autopay Resume Failed",
-  ];
-
   @override
   Widget build(BuildContext context) {
     showModalDialog({required int index, required bool Success}) {
@@ -268,7 +259,11 @@ class _OtpScreenState extends State<OtpScreen> {
             ),
             content: AnimatedDialog(
                 showImgIcon: Success ? true : false,
-                title: Success ? SuccessMsg[index] : FailedMsg[index],
+                title: Success
+                    ? getPopupSuccessMsg(
+                        index, BillerName.toString(), BillName.toString())
+                    : getPopupFailedMsg(
+                        index, BillerName.toString(), BillName.toString()),
                 subTitle: "",
                 child: Icon(
                   Icons.check,
@@ -650,9 +645,7 @@ class _OtpScreenState extends State<OtpScreen> {
               LoaderOverlay.of(context).show();
             } else if (state is editAutopaySuccess) {
               LoaderOverlay.of(context).hide();
-              var billerNamE = widget.data!['billerName'];
-              SuccessMsg[2] =
-                  "Auto Pay for $billerNamE Has Been Updated Successfully";
+
               showModalDialog(index: 2, Success: true);
             } else if (state is editAutopayFailed) {
               LoaderOverlay.of(context).hide();

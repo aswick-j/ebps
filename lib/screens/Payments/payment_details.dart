@@ -215,6 +215,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 "from": pAYMENTCONFIRMROUTE,
                 "templateName": "confirm-payment",
                 "context": context,
+                "BillerName": widget.billerName,
+                "BillName": widget.billName,
                 "data": {
                   "billerID": widget.isSavedBill
                       ? widget.savedBillersData!.bILLERID
@@ -294,7 +296,14 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                             "mobile prepaid")
                     ? "Prepaid"
                     : "",
-                planId: widget.planDetails!.billerPlanId,
+                planId: (widget.isSavedBill
+                        ? widget.savedBillersData!.cATEGORYNAME!
+                                .toLowerCase() ==
+                            "mobile prepaid"
+                        : widget.billerData!.cATEGORYNAME!.toLowerCase() ==
+                            "mobile prepaid")
+                    ? widget.planDetails!.billerPlanId
+                    : "",
                 planType: "CURATED",
                 // planType: widget.planDetails!.planAdditionalInfo!.Type,
                 supportPlan: "MANDATORY",

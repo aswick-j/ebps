@@ -142,6 +142,8 @@ class _editAutopayState extends State<editAutopay> {
         "from": "edit-auto-pay",
         "templateName": "edit-auto-pay",
         "context": context,
+        "BillerName": widget.billerName,
+        "BillName": widget.billName,
         "autopayData": widget.autopayData,
         "data": {
           "accountNumber": accID,

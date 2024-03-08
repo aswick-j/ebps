@@ -62,7 +62,6 @@ class EbpsScreen extends StatelessWidget {
     //   print("======");
     //   validateJWT(context);
     // });
-    final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
     return ScreenUtilInit(
       designSize: const Size(360, 690),

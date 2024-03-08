@@ -69,6 +69,8 @@ class _BillerDetailsState extends State<BillerDetails> {
 
   bool isFetchbillLoading = true;
   bool isPaymentInfoLoading = true;
+  bool isAmountByDateLoading = true;
+  bool isBbpsSettingsLoading = true;
 
   bool isUnableToFetchBill = true;
   String DailyLimit = '0';
@@ -212,20 +214,32 @@ class _BillerDetailsState extends State<BillerDetails> {
           }
 
           if (state is AmountByDateLoading) {
+            isAmountByDateLoading = true;
           } else if (state is AmountByDateSuccess) {
+            isAmountByDateLoading = false;
+
             setState(() {
               DailyLimit = state.amountByDate!;
             });
           } else if (state is AmountByDateFailed) {
-          } else if (state is AmountByDateError) {}
+            isAmountByDateLoading = false;
+          } else if (state is AmountByDateError) {
+            isAmountByDateLoading = false;
+          }
 
           if (state is BbpsSettingsLoading) {
+            isBbpsSettingsLoading = true;
           } else if (state is BbpsSettingsSuccess) {
+            isBbpsSettingsLoading = false;
+
             setState(() {
               BbpsSettingInfo = state.BbpsSettingsDetail!.data;
             });
           } else if (state is BbpsSettingsFailed) {
-          } else if (state is BbpsSettingsError) {}
+            isBbpsSettingsLoading = false;
+          } else if (state is BbpsSettingsError) {
+            isBbpsSettingsLoading = false;
+          }
 
           //FETCH BILL
 
@@ -322,13 +336,20 @@ class _BillerDetailsState extends State<BillerDetails> {
                           billerName: widget.billerName.toString(),
                           categoryName: widget.categoryName.toString(),
                         ),
-                        if (isFetchbillLoading)
+                        if (isFetchbillLoading ||
+                            isAmountByDateLoading ||
+                            isAmountByDateLoading ||
+                            isPaymentInfoLoading)
                           Container(
                             height: 200.h,
                             width: 200.w,
                             child: FlickrLoader(),
                           ),
-                        if (!isFetchbillLoading && isUnableToFetchBill)
+                        if ((!isFetchbillLoading &&
+                                !isAmountByDateLoading &&
+                                !isBbpsSettingsLoading &&
+                                !isPaymentInfoLoading) &&
+                            isUnableToFetchBill)
                           Container(
                               width: double.infinity,
                               height: 350.h,
@@ -336,6 +357,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                   ErrIndex: ErrIndex, ImgIndex: ImgIndex)),
                         if (!isFetchbillLoading &&
                             !isUnableToFetchBill &&
+                            !isBbpsSettingsLoading &&
                             !isPaymentInfoLoading)
                           if (((_billerResponseData != null)))
                             Container(
@@ -397,6 +419,8 @@ class _BillerDetailsState extends State<BillerDetails> {
                                 )),
                         if (!isFetchbillLoading &&
                             !isUnableToFetchBill &&
+                            !isBbpsSettingsLoading &&
+                            !isAmountByDateLoading &&
                             !isPaymentInfoLoading)
                           if ((!(_additionalInfo == null ||
                               _additionalInfo!.tag!.isEmpty)))
@@ -488,6 +512,8 @@ class _BillerDetailsState extends State<BillerDetails> {
                             ),
                         if (!isFetchbillLoading &&
                             !isUnableToFetchBill &&
+                            !isAmountByDateLoading &&
+                            !isBbpsSettingsLoading &&
                             !isPaymentInfoLoading)
                           Column(
                             children: [
@@ -640,7 +666,11 @@ class _BillerDetailsState extends State<BillerDetails> {
             ),
           );
         }),
-        bottomSheet: !isFetchbillLoading && !isUnableToFetchBill
+        bottomSheet: !isFetchbillLoading &&
+                !isUnableToFetchBill &&
+                !isPaymentInfoLoading &&
+                !isAmountByDateLoading &&
+                !isBbpsSettingsLoading
             ? Container(
                 decoration: BoxDecoration(
                     border: Border(

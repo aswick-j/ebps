@@ -38,7 +38,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
       child: Center(
         child: Column(children: [
           Container(
-            height: 370.h,
+            height: 380.h,
             margin: EdgeInsets.fromLTRB(0, 120.h, 0, 10.h),
             child: PageView.builder(
               controller: controller,
@@ -54,150 +54,459 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                     width: double.infinity,
                     child: Column(
                       children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 30.h, 0, 20.h),
-                          child: SvgPicture.asset(
-                            ICON_ERROR,
-                            height: 45.h,
-                            width: 45.w,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-                          child: Text(
-                            widget.allautoPayData![index].rESETDATE == 1
-                                ? "Auto Pay Date not in between the Bill Generation and Bill Due date, please update accordingly."
-                                : "Auto Pay Limit lesser than the Bill Due Amount,\ndo you wish to revise it.",
-                            // "Auto Pay ${widget.allautoPayData![index].rESETDATE == 1 ? "Date" : "Limit"} Seems to be Mismatch",
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff000000),
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 20.h, 0, 20.h),
-                          child: SvgPicture.asset(
-                            BILLER_LOGO(widget.allautoPayData![index].bILLERNAME
-                                .toString()),
-                            height: 35.h,
-                            width: 35.w,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 2.0.w),
-                          child: Text(
-                            "${widget.allautoPayData![index].bILLNAME} - ${widget.allautoPayData![index].bILLERNAME}",
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              color: CLR_PRIMARY,
-                            ),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        GridView.count(
-                            shrinkWrap: true,
-                            primary: false,
-                            physics: NeverScrollableScrollPhysics(),
-                            crossAxisSpacing: 10.w,
-                            mainAxisSpacing: 0,
-                            crossAxisCount: 2,
-                            childAspectRatio: 4 / 2,
-                            children: [
-                              Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(2.r),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 60.h,
+                              width: 330.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(12.r),
+                                    topLeft: Radius.circular(12.r)),
+                                color: CLR_ERROR,
+                                border: Border.all(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  width: 1.0,
+                                ),
+                              ),
+                              child: SizedBox(
+                                width: 280.w,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 8.0.w, vertical: 16.0.h),
+                                  child: Text(
+                                    widget.allautoPayData![index].rESETDATE == 1
+                                        ? "Auto Pay Date not in between the Bill Generation and Bill Due date, please update accordingly."
+                                        : "Auto Pay Limit lesser than the Bill Due Amount,\ndo you wish to revise it.",
+                                    // "Auto Pay ${widget.allautoPayData![index].rESETDATE == 1 ? "Date" : "Limit"} Seems to be Mismatch",
+                                    style: TextStyle(
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              8.w, 10.h, 0, 0),
-                                          child: Text(
-                                            widget.allautoPayData![index]
-                                                        .rESETDATE ==
-                                                    1
-                                                ? "Due Date"
-                                                : "Due Amount",
-                                            style: TextStyle(
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0xff808080),
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              8.w, 10.h, 0, 0),
-                                          child: Text(
-                                            widget.allautoPayData![index]
-                                                        .rESETDATE ==
-                                                    1
-                                                ? widget.allautoPayData![index]
-                                                    .dUEDATE
-                                                    .toString()
-                                                : "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allautoPayData![index].dUEAMOUNT.toString()))}",
-                                            style: TextStyle(
-                                              fontSize: 13.sp,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xff1b438b),
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ))
-                                    ],
-                                  )),
-                              Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(2.r),
+                                ),
+                              ),
+                            ),
+                            // Padding(
+                            //   padding: EdgeInsets.fromLTRB(20.w, 30.h, 0, 20.h),
+                            //   child: SvgPicture.asset(
+                            //     ICON_ERROR,
+                            //     height: 25.h,
+                            //     width: 45.w,
+                            //   ),
+                            // ),
+                          ],
+                        ),
+
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(20.w, 20.h, 0, 20.h),
+                              child: SvgPicture.asset(
+                                BILLER_LOGO(widget
+                                    .allautoPayData![index].bILLERNAME
+                                    .toString()),
+                                height: 25.h,
+                                width: 35.w,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 15.w,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 2.0.w),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${widget.allautoPayData![index].bILLNAME}",
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: CLR_BLUE_LITE,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                    maxLines: 1,
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              8.w, 10.h, 0, 0),
-                                          child: Text(
+                                  SizedBox(
+                                    width: 260.w,
+                                    child: Text(
+                                      "${widget.allautoPayData![index].bILLERNAME}",
+                                      style: TextStyle(
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: CLR_PRIMARY,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                      maxLines: 3,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        // SizedBox(
+                        //   height: 10.h,
+                        // ),
+                        Container(
+                            height: 40.h,
+                            width: double.infinity,
+                            margin: EdgeInsets.only(
+                                left: 18.0.w,
+                                right: 18.w,
+                                top: 10.h,
+                                bottom: 10.h),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0.r),
+                              border: Border.all(
+                                color: Color(0xFFD1D9E8),
+                                width: 1.0,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          left: 10.w, right: 20.w),
+                                      width: 35.w,
+                                      height: 30.h,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          gradient: LinearGradient(
+                                              begin: Alignment.bottomRight,
+                                              stops: [
+                                                0.1,
+                                                0.9
+                                              ],
+                                              colors: [
+                                                CLR_BLUE_LITE.withOpacity(.16),
+                                                Colors.transparent
+                                              ])),
+                                      child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Icon(
                                             widget.allautoPayData![index]
                                                         .rESETDATE ==
                                                     1
-                                                ? "Auto Pay Date"
-                                                : "Auto Pay Limit",
-                                            style: TextStyle(
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0xff808080),
-                                            ),
-                                            textAlign: TextAlign.center,
+                                                ? Icons.receipt_long
+                                                : Icons.currency_rupee,
+                                            color: CLR_BLUE_LITE,
                                           )),
-                                      Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              8.w, 10.h, 0, 0),
-                                          child: Text(
+                                    ),
+                                    Text(
+                                      widget.allautoPayData![index].rESETDATE ==
+                                              1
+                                          ? "Bill Generation Date "
+                                          : "Due Amount",
+                                      style: TextStyle(
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xff808080),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 8.0.w),
+                                  child: Text(
+                                    widget.allautoPayData![index].rESETDATE == 1
+                                        ? "10/12/2024"
+                                        : "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allautoPayData![index].dUEAMOUNT.toString()))}",
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff808080),
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              ],
+                            )),
+
+                        Container(
+                            height: 40.h,
+                            width: double.infinity,
+                            margin: EdgeInsets.only(
+                                left: 18.0.w,
+                                right: 18.w,
+                                top: 10.h,
+                                bottom: 10.h),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0.r),
+                              border: Border.all(
+                                color:
+                                    widget.allautoPayData![index].rESETDATE == 1
+                                        ? Color(0xFFD1D9E8)
+                                        : CLR_ERROR,
+                                width: 1.0,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          left: 10.w, right: 20.w),
+                                      width: 35.w,
+                                      height: 30.h,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          gradient: LinearGradient(
+                                              begin: Alignment.bottomRight,
+                                              stops: [
+                                                0.1,
+                                                0.9
+                                              ],
+                                              colors: [
+                                                widget.allautoPayData![index]
+                                                            .rESETDATE ==
+                                                        1
+                                                    ? CLR_BLUE_LITE
+                                                        .withOpacity(.16)
+                                                    : Color.fromARGB(
+                                                            255, 255, 123, 123)
+                                                        .withOpacity(.16),
+                                                Colors.transparent
+                                              ])),
+                                      child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Icon(
                                             widget.allautoPayData![index]
                                                         .rESETDATE ==
                                                     1
-                                                ? '${numberPrefixSetter(widget.allautoPayData![index].pAYMENTDATE.toString())}${" of"}${widget.allautoPayData![index].iSBIMONTHLY == 0 ? " every" : " every two"}${" month"}'
-                                                : "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allautoPayData![index].mAXIMUMAMOUNT.toString()))}",
-                                            style: TextStyle(
-                                              fontSize: 13.sp,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xff1b438b),
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ))
-                                    ],
-                                  ))
-                            ]),
+                                                ? Icons.calendar_month_outlined
+                                                : Icons.account_balance_wallet,
+                                            color: widget.allautoPayData![index]
+                                                        .rESETDATE ==
+                                                    1
+                                                ? CLR_BLUE_LITE
+                                                : CLR_ERROR,
+                                          )),
+                                    ),
+                                    Text(
+                                      widget.allautoPayData![index].rESETDATE ==
+                                              1
+                                          ? "Due Date"
+                                          : "Autopay Limit",
+                                      style: TextStyle(
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xff808080),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 8.0.w),
+                                  child: Text(
+                                    widget.allautoPayData![index].rESETDATE == 1
+                                        ? widget.allautoPayData![index].dUEDATE
+                                            .toString()
+                                        : "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allautoPayData![index].mAXIMUMAMOUNT.toString()))}",
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff808080),
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              ],
+                            )),
+                        Container(
+                            height: 40.h,
+                            width: double.infinity,
+                            margin: EdgeInsets.only(
+                                left: 18.0.w,
+                                right: 18.w,
+                                top: 10.h,
+                                bottom: 10.h),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0.r),
+                              border: Border.all(
+                                color:
+                                    widget.allautoPayData![index].rESETDATE == 1
+                                        ? CLR_ERROR
+                                        : Color(0xFFD1D9E8),
+                                width: 1.0,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          left: 10.w, right: 20.w),
+                                      width: 35.w,
+                                      height: 30.h,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          gradient: LinearGradient(
+                                              begin: Alignment.bottomRight,
+                                              stops: [
+                                                0.1,
+                                                0.9
+                                              ],
+                                              colors: [
+                                                widget.allautoPayData![index]
+                                                            .rESETDATE ==
+                                                        1
+                                                    ? Color.fromARGB(
+                                                            255, 255, 123, 123)
+                                                        .withOpacity(.16)
+                                                    : CLR_PRIMARY
+                                                        .withOpacity(.16),
+                                                Colors.transparent
+                                              ])),
+                                      child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Icon(
+                                            Icons.published_with_changes,
+                                            color: widget.allautoPayData![index]
+                                                        .rESETDATE ==
+                                                    1
+                                                ? CLR_ERROR
+                                                : CLR_BLUE_LITE,
+                                          )),
+                                    ),
+                                    Text(
+                                      "Autopay Date ",
+                                      style: TextStyle(
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xff808080),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 8.0.w),
+                                  child: Text(
+                                    "23rd of Every Month ",
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff808080),
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              ],
+                            )),
+                        // GridView.count(
+                        //     shrinkWrap: true,
+                        //     primary: false,
+                        //     physics: NeverScrollableScrollPhysics(),
+                        //     crossAxisSpacing: 10.w,
+                        //     mainAxisSpacing: 0,
+                        //     crossAxisCount: 2,
+                        //     childAspectRatio: 4 / 2,
+                        //     children: [
+                        //       Container(
+                        //           decoration: BoxDecoration(
+                        //             borderRadius: BorderRadius.circular(2.r),
+                        //           ),
+                        //           child: Column(
+                        //             crossAxisAlignment:
+                        //                 CrossAxisAlignment.center,
+                        //             children: [
+                        //               Padding(
+                        //                   padding: EdgeInsets.fromLTRB(
+                        //                       8.w, 10.h, 0, 0),
+                        //                   child: Text(
+                        //                     widget.allautoPayData![index]
+                        //                                 .rESETDATE ==
+                        //                             1
+                        //                         ? "Due Date"
+                        //                         : "Due Amount",
+                        //                     style: TextStyle(
+                        //                       fontSize: 12.sp,
+                        //                       fontWeight: FontWeight.w400,
+                        //                       color: Color(0xff808080),
+                        //                     ),
+                        //                     textAlign: TextAlign.center,
+                        //                   )),
+                        //               Padding(
+                        //                   padding: EdgeInsets.fromLTRB(
+                        //                       8.w, 10.h, 0, 0),
+                        //                   child: Text(
+                        //                     widget.allautoPayData![index]
+                        //                                 .rESETDATE ==
+                        //                             1
+                        //                         ? widget.allautoPayData![index]
+                        //                             .dUEDATE
+                        //                             .toString()
+                        //                         : "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allautoPayData![index].dUEAMOUNT.toString()))}",
+                        //                     style: TextStyle(
+                        //                       fontSize: 13.sp,
+                        //                       fontWeight: FontWeight.bold,
+                        //                       color: Color(0xff1b438b),
+                        //                     ),
+                        //                     textAlign: TextAlign.left,
+                        //                   ))
+                        //             ],
+                        //           )),
+                        //       Container(
+                        //           decoration: BoxDecoration(
+                        //             borderRadius: BorderRadius.circular(2.r),
+                        //           ),
+                        //           child: Column(
+                        //             crossAxisAlignment:
+                        //                 CrossAxisAlignment.center,
+                        //             children: [
+                        //               Padding(
+                        //                   padding: EdgeInsets.fromLTRB(
+                        //                       8.w, 10.h, 0, 0),
+                        //                   child: Text(
+                        //                     widget.allautoPayData![index]
+                        //                                 .rESETDATE ==
+                        //                             1
+                        //                         ? "Auto Pay Date"
+                        //                         : "Auto Pay Limit",
+                        //                     style: TextStyle(
+                        //                       fontSize: 12.sp,
+                        //                       fontWeight: FontWeight.w400,
+                        //                       color: Color(0xff808080),
+                        //                     ),
+                        //                     textAlign: TextAlign.center,
+                        //                   )),
+                        //               Padding(
+                        //                   padding: EdgeInsets.fromLTRB(
+                        //                       8.w, 10.h, 0, 0),
+                        //                   child: Text(
+                        //                     widget.allautoPayData![index]
+                        //                                 .rESETDATE ==
+                        //                             1
+                        //                         ? '${numberPrefixSetter(widget.allautoPayData![index].pAYMENTDATE.toString())}${" of"}${widget.allautoPayData![index].iSBIMONTHLY == 0 ? " every" : " every two"}${" month"}'
+                        //                         : "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allautoPayData![index].mAXIMUMAMOUNT.toString()))}",
+                        //                     style: TextStyle(
+                        //                       fontSize: 13.sp,
+                        //                       fontWeight: FontWeight.bold,
+                        //                       color: Color(0xff1b438b),
+                        //                     ),
+                        //                     textAlign: TextAlign.left,
+                        //                   ))
+                        //             ],
+                        //           ))
+                        //     ]),
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 12.0.w, vertical: 10.h),

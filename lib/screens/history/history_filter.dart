@@ -16,10 +16,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 class HistoryFilter extends StatefulWidget {
   final String? billerName;
   final String? categoryName;
+  String? billerID;
+  String? categoryID;
+
+  List<CategorieData>? categoriesData;
   final void Function(String?, String?, String?, String?) handleFilterModal;
-  const HistoryFilter(
+  HistoryFilter(
       {super.key,
       required this.handleFilterModal,
+      required this.categoriesData,
+      this.billerID,
+      this.categoryID,
       this.billerName,
       this.categoryName});
 
@@ -41,6 +48,9 @@ class _HistoryFilterState extends State<HistoryFilter> {
         handleFilterModal: widget.handleFilterModal,
         billerName: widget.billerName,
         categoryName: widget.categoryName,
+        billerID: widget.billerID,
+        categoryID: widget.categoryID,
+        categoriesData: widget.categoriesData,
       ),
     );
   }
@@ -48,11 +58,18 @@ class _HistoryFilterState extends State<HistoryFilter> {
 
 class HistoryFilterUI extends StatefulWidget {
   final void Function(String?, String?, String?, String?) handleFilterModal;
+  List<CategorieData>? categoriesData;
+  String? billerID;
+  String? categoryID;
+
   final String? billerName;
   final String? categoryName;
-  const HistoryFilterUI(
+  HistoryFilterUI(
       {super.key,
       required this.handleFilterModal,
+      required this.categoriesData,
+      this.billerID,
+      this.categoryID,
       this.billerName,
       this.categoryName});
 
@@ -64,23 +81,27 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
   var dragController = DraggableScrollableController();
   dynamic catController = TextEditingController();
   dynamic billerController = TextEditingController();
-  List<CategorieData>? categoriesData = [];
 
   List<Data>? billerFilterData = [];
-  bool isCategoryLoading = false;
   bool isHistoryFilterLoading = false;
   String? categoryID;
   String? billerID;
   String? CategoryName;
+
   @override
   void initState() {
     if (widget.billerName != null) {
+      billerID = widget.billerID;
       billerController.text = widget.billerName;
-    }
+      // billerFilterData!.add(data as Data);
+    } else {}
     if (widget.categoryName != null) {
+      categoryID = widget.categoryID;
+
       catController.text = widget.categoryName;
+      BlocProvider.of<HistoryCubit>(context)
+          .billerFilter(widget.categoryID ?? "");
     }
-    BlocProvider.of<HomeCubit>(context).getAllCategories();
     super.initState();
   }
 
@@ -119,22 +140,6 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
               });
             }
           }),
-          BlocListener<HomeCubit, HomeState>(
-            listener: (context, state) {
-              categoriesData = context.read<HomeCubit>().categoriesData;
-
-              // if (state is CategoriesLoading) {
-              //   isCategoryLoading = true;
-              // } else if (state is CategoriesSuccess) {
-              //   categoriesData = state.CategoriesList;
-              //   isCategoryLoading = false;
-              // } else if (state is CategoriesFailed) {
-              //   isCategoryLoading = false;
-              // } else if (state is CategoriesError) {
-              //   isCategoryLoading = false;
-              // }
-            },
-          )
         ],
         child: Column(
           children: [
@@ -223,33 +228,42 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                           child: ListView.builder(
                                             scrollDirection: Axis.vertical,
                                             shrinkWrap: true,
-                                            itemCount: categoriesData!.length,
+                                            itemCount:
+                                                widget.categoriesData!.length,
                                             physics:
                                                 const BouncingScrollPhysics(),
                                             // controller: infiniteScrollController,
                                             itemBuilder: (context, index) {
                                               return GestureDetector(
                                                   onTap: () {
-                                                    catController.text =
-                                                        categoriesData![index]
-                                                            .cATEGORYNAME
-                                                            .toString();
+                                                    catController.text = widget
+                                                        .categoriesData![index]
+                                                        .cATEGORYNAME
+                                                        .toString();
 
                                                     handleBiller(
-                                                      categoriesData![index]
+                                                      widget
+                                                          .categoriesData![
+                                                              index]
                                                           .cATEGORYNAME
                                                           .toString(),
-                                                      categoriesData![index]
+                                                      widget
+                                                          .categoriesData![
+                                                              index]
                                                           .iD
                                                           .toString(),
                                                     );
                                                     widget.handleFilterModal(
                                                         null,
                                                         null,
-                                                        categoriesData![index]
+                                                        widget
+                                                            .categoriesData![
+                                                                index]
                                                             .iD
                                                             .toString(),
-                                                        categoriesData![index]
+                                                        widget
+                                                            .categoriesData![
+                                                                index]
                                                             .cATEGORYNAME
                                                             .toString());
                                                     goBack(context);
@@ -274,7 +288,8 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                             child: SvgPicture
                                                                 .asset(
                                                               CATEGORY_ICON(
-                                                                categoriesData![
+                                                                widget
+                                                                    .categoriesData![
                                                                         index]
                                                                     .cATEGORYNAME
                                                                     .toString(),
@@ -289,7 +304,9 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                           ),
                                                         ),
                                                         title: Text(
-                                                          categoriesData![index]
+                                                          widget
+                                                              .categoriesData![
+                                                                  index]
                                                               .cATEGORYNAME
                                                               .toString(),
                                                           style: TextStyle(
@@ -366,7 +383,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
             if (isHistoryFilterLoading)
               Container(height: 200, width: 200, child: FlickrLoader()),
             if (billerFilterData!.isEmpty) SizedBox(height: 85.h),
-            if (!isHistoryFilterLoading && billerFilterData!.isNotEmpty)
+            if (billerFilterData!.isNotEmpty)
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                 child: TextFormField(
@@ -449,6 +466,17 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                           SizedBox(
                                             height: 10.h,
                                           ),
+                                          if (billerFilterData!.isEmpty)
+                                            Text(
+                                              "No Billers Found for $CategoryName Category Transactions",
+                                              style: TextStyle(
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w400,
+                                                color: Color(0xff000000),
+                                                height: 23 / 14,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
                                           Container(
                                             child: ListView.builder(
                                               scrollDirection: Axis.vertical,
@@ -484,7 +512,10 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                               .bILLERNAME
                                                               .toString(),
                                                           categoryID,
-                                                          CategoryName);
+                                                          CategoryName == null
+                                                              ? widget
+                                                                  .categoryName
+                                                              : CategoryName);
 
                                                       goBack(context);
                                                     },

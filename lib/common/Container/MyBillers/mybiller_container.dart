@@ -488,6 +488,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                                 oTPPAGEROUTE, {
                                                                               "from": "modify-auto-pay",
                                                                               "context": context,
+                                                                              "BillerName": widget.savedBillersData.bILLERNAME,
+                                                                              "BillName": widget.savedBillersData.bILLNAME,
                                                                               "templateName": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "disable-auto-pay" : "enable-auto-pay",
                                                                               "autopayData": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID),
                                                                               "data": {
@@ -919,6 +921,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                               "templateName": "delete-auto-pay",
                                                                               "autopayData": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID),
                                                                               "context": context,
+                                                                              "BillerName": widget.savedBillersData.bILLERNAME,
+                                                                              "BillName": widget.savedBillersData.bILLNAME,
                                                                               "data": {
                                                                                 "billerName": widget.savedBillersData.bILLERNAME,
                                                                                 "cUSTOMERBILLID": widget.savedBillersData.cUSTOMERBILLID.toString(),
@@ -1133,6 +1137,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                                 "from": 'delete-biller',
                                                                                 "templateName": "delete-biller-otp",
                                                                                 "context": context,
+                                                                                "BillerName": widget.savedBillersData.bILLERNAME,
+                                                                                "BillName": widget.savedBillersData.bILLNAME,
                                                                                 "data": {
                                                                                   "billerName": widget.savedBillersData.bILLERNAME,
                                                                                   "cUSTOMERBILLID": widget.savedBillersData.cUSTOMERBILLID.toString(),

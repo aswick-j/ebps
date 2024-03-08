@@ -12,6 +12,7 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getTransactionStatus.dart';
+import 'package:ebps/models/categories_model.dart';
 import 'package:ebps/models/history_model.dart';
 import 'package:ebps/screens/history/history_filter.dart';
 import 'package:ebps/screens/nodataFound.dart';
@@ -85,6 +86,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
   final infiniteScrollController = ScrollController();
 
   List<HistoryData>? historyData = [];
+  List<CategorieData>? categoriesData = [];
 
   bool isCategoryLoading = false;
   bool isHistoryLoading = true;
@@ -100,6 +102,8 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
     }, "", "", _pageNumber, true);
     // BlocProvider.of<HomeCubit>(context).getAllCategories();
     initScrollController(context);
+    BlocProvider.of<HomeCubit>(context).getAllCategories();
+
     super.initState();
   }
 
@@ -225,6 +229,20 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                 });
               }
             }),
+            BlocListener<HomeCubit, HomeState>(
+              listener: (context, state) {
+                if (state is CategoriesLoading) {
+                  isCategoryLoading = true;
+                } else if (state is CategoriesSuccess) {
+                  categoriesData = state.CategoriesList;
+                  isCategoryLoading = false;
+                } else if (state is CategoriesFailed) {
+                  isCategoryLoading = false;
+                } else if (state is CategoriesError) {
+                  isCategoryLoading = false;
+                }
+              },
+            )
           ],
               child: Column(
                 children: [
@@ -254,7 +272,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                         ),
                       ),
                     ),
-                  if (!isHistoryLoading)
+                  if (!isHistoryLoading && !isCategoryLoading)
                     Container(
                       height: showClrFltr ? 500.h : 530.h,
                       child: historyData!.isNotEmpty
@@ -310,7 +328,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                   //       height: 50.h,
                   //       width: double.infinity,
                   //       child: Center(child: FlickrLoader())),
-                  if (isHistoryLoading)
+                  if (isHistoryLoading || isCategoryLoading)
                     Container(
                         height: 500.h,
                         width: double.infinity,
@@ -503,6 +521,9 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                           HistoryFilter(
                               billerName: billerName,
                               categoryName: categoryName,
+                              categoriesData: categoriesData,
+                              billerID: billerID,
+                              categoryID: categoryID,
                               handleFilterModal: handleFilterModal),
                           Padding(
                             padding: EdgeInsets.only(

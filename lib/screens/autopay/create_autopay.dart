@@ -825,6 +825,8 @@ class _createAutopayState extends State<createAutopay> {
                             "from": "create-auto-pay",
                             "templateName": "create-auto-pay",
                             "context": context,
+                            "BillerName": widget.billerName,
+                            "BillName": widget.billName,
                             "data": {
                               "accountNumber": accID,
                               "maximumAmount": maxAmountController.text,

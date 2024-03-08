@@ -290,6 +290,8 @@ class MyRouter {
                   child: OtpScreen(
                       from: args['from'],
                       templateName: args['templateName'],
+                      BillerName: args["BillerName"],
+                      BillName: args["BillName"],
                       data: args['data'],
                       ctx: args['context'],
                       autopayData: args["autopayData"]),
