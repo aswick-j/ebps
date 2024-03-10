@@ -7,6 +7,7 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/NavigationService.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/helpers/getPopupMsg.dart';
 import 'package:ebps/models/edit_bill_modal.dart';
 import 'package:ebps/models/input_signatures_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
@@ -89,9 +90,16 @@ class _EditBillerUIState extends State<EditBillerUI> {
           ),
           content: AnimatedDialog(
               showImgIcon: success ? true : false,
-              title: success
-                  ? "Bill Name Has Been Updated Successfully"
-                  : "Bill Name Update Failed",
+              showRichText: true,
+              RichTextContent: success
+                  ? getPopupSuccessMsg(
+                      7,
+                      widget.savedbillersData.bILLERNAME.toString(),
+                      widget.savedbillersData.bILLNAME.toString())
+                  : getPopupFailedMsg(
+                      7,
+                      widget.savedbillersData.bILLERNAME.toString(),
+                      widget.savedbillersData.bILLERNAME.toString()),
               subTitle: "",
               child: Icon(
                 Icons.close,

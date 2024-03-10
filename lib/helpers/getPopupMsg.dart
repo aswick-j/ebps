@@ -1,37 +1,153 @@
-dynamic getPopupSuccessMsg(int index, String BillerName, String BillName) {
+// ignore_for_file: unnecessary_string_interpolations
+
+import 'package:ebps/constants/colors.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+final TextStyle boldStyle = TextStyle(
+  fontWeight: FontWeight.bold,
+  color: CLR_PRIMARY,
+  fontSize: 15.sp,
+);
+final TextStyle normalStyle = TextStyle(
+  fontWeight: FontWeight.w400,
+  color: CLR_PRIMARY,
+  fontSize: 15.sp,
+);
+TextSpan getPopupSuccessMsg(int index, String BillerName, String BillName) {
   switch (index) {
     case 0:
-      return "$BillName ($BillerName) Has Been Deleted Successfully";
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: " Has Been Deleted Successfully", style: normalStyle),
+        ],
+      );
     case 1:
-      return "Autopay for $BillName ($BillerName) Has Been Created";
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(
+            text: "Autopay for ",
+            style: normalStyle,
+          ),
+          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: " Has Been Created", style: normalStyle),
+        ],
+      );
     case 2:
-      return "Autopay for $BillName ($BillerName) Has Been Updated";
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "Autopay for ", style: normalStyle),
+          TextSpan(text: "$BillName ($BillerName) ", style: boldStyle),
+          TextSpan(text: " Has Been Updated", style: normalStyle),
+        ],
+      );
     case 3:
-      return "Autopay for $BillName ($BillerName) Has Been Deleted";
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "Autopay for ", style: normalStyle),
+          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: " Has Been Deleted", style: normalStyle),
+        ],
+      );
     case 4:
-      return "Autopay for $BillName ($BillerName) Has Been Paused";
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "Autopay for ", style: normalStyle),
+          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: " Has Been Paused", style: normalStyle),
+        ],
+      );
     case 5:
-      return "Autopay for $BillName ($BillerName) Has Been Resumed";
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "Autopay for ", style: normalStyle),
+          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: " Has Been Resumed", style: normalStyle),
+        ],
+      );
+    case 6:
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "Due Deleted Successfully for ", style: normalStyle),
+          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+        ],
+      );
+    case 7:
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "Bill Name for ", style: normalStyle),
+          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: " Has Been Updated", style: normalStyle),
+        ],
+      );
     default:
-      return "Something Went Wrong";
+      return TextSpan(text: "Something Went Wrong", style: normalStyle);
   }
 }
 
-dynamic getPopupFailedMsg(int index, String BillerName, String BillName) {
+TextSpan getPopupFailedMsg(int index, String BillerName, String BillName) {
   switch (index) {
     case 0:
-      return "$BillName ($BillerName) Has Been Updated";
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: " Has Been Updated", style: normalStyle),
+        ],
+      );
     case 1:
-      return "Autopay Create Failed for $BillName ($BillerName) ";
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "Autopay Create Failed for ", style: normalStyle),
+          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          // TextSpan(text: "", style: normalStyle),
+        ],
+      );
     case 2:
-      return "Autopay Update Failed for $BillName ($BillerName) ";
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "Autopay Update Failed for ", style: normalStyle),
+          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+        ],
+      );
     case 3:
-      return "Autopay Delete Failed for $BillName ($BillerName) ";
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "Autopay Delete Failed for ", style: normalStyle),
+          TextSpan(text: "$BillName", style: boldStyle),
+          TextSpan(text: " ($BillerName)", style: normalStyle),
+        ],
+      );
     case 4:
-      return "Autopay Pause Failed for $BillName ($BillerName) ";
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "Autopay Pause Failed for ", style: normalStyle),
+          TextSpan(text: "$BillName", style: boldStyle),
+          TextSpan(text: " ($BillerName)", style: normalStyle),
+        ],
+      );
     case 5:
-      return "Autopay Resume Failed for $BillName ($BillerName) ";
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "Autopay Resume Failed for ", style: normalStyle),
+          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+        ],
+      );
+    case 6:
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "Due Deletion Failed for ", style: normalStyle),
+          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+        ],
+      );
+    case 7:
+      return TextSpan(
+        children: <TextSpan>[
+          TextSpan(text: "Bill Name Update Failed for ", style: normalStyle),
+          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+        ],
+      );
     default:
-      return "Something Went Wrong";
+      return TextSpan(text: "Something Went Wrong", style: normalStyle);
   }
 }

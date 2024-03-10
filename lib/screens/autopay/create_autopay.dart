@@ -12,7 +12,6 @@ import 'package:ebps/helpers/getMonthName.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/numberPrefixSetter.dart';
 import 'package:ebps/models/account_info_model.dart';
-import 'package:ebps/models/edit_bill_modal.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/services/api.dart';
 import 'package:ebps/widget/bbps_logo.dart';
@@ -234,7 +233,12 @@ class _createAutopayState extends State<createAutopay> {
                                     .savedInputSignatures![0].pARAMETERVALUE
                                     .toString()),
                             billDetailsContainer(
-                                title: "Bill Name", subTitle: widget.billName)
+                                title: "Bill Name", subTitle: widget.billName),
+                            billDetailsContainer(
+                                title: "Due Date", subTitle: "01/12/2024"),
+                            billDetailsContainer(
+                                title: "Bill Generation Date",
+                                subTitle: "01/12/2024")
                           ],
                         )),
                     Align(

@@ -377,7 +377,16 @@ class _editAutopayState extends State<editAutopay> {
                                         .pARAMETERVALUE
                                         .toString()),
                               billDetailsContainer(
-                                  title: "Bill Name", subTitle: widget.billName)
+                                  title: "Bill Name",
+                                  subTitle: widget.billName),
+                              billDetailsContainer(
+                                  title: "Due Date",
+                                  subTitle:
+                                      widget.autopayData!.dUEDATE.toString()),
+                              billDetailsContainer(
+                                  title: "Bill Generation Date",
+                                  subTitle:
+                                      widget.autopayData!.dUEDATE.toString())
                             ],
                           )),
                       Align(

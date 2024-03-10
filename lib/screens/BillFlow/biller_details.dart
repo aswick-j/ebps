@@ -25,6 +25,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class BillerDetails extends StatefulWidget {
   int? billID;
@@ -629,7 +630,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    'Payment Amount has to be between ₹ ${paymentInform?.mINLIMIT.toString()} and ₹ ${paymentInform?.mAXLIMIT.toString()}',
+                                    'Payment Amount has to be between ₹ ${NumberFormat('#,##,##0.00').format(double.parse(paymentInform!.mINLIMIT.toString()))} and ₹ ${NumberFormat('#,##,##0.00').format(double.parse(paymentInform!.mAXLIMIT.toString()))}',
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
                                       fontSize: 12.sp,

@@ -8,6 +8,7 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/helpers/getPopupMsg.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/animated_dialog.dart';
@@ -38,6 +39,8 @@ class AllUpcomingDues extends StatefulWidget {
 
 class _AllUpcomingDuesState extends State<AllUpcomingDues> {
   int selectedIndex = 0;
+  String? billerName;
+  String? billName;
 
   handleCustomerBillID(int index) {
     SavedBillersData savedBillersData;
@@ -116,9 +119,12 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
             ),
             content: AnimatedDialog(
                 showImgIcon: success ? true : false,
-                title: success
-                    ? "Due Deleted Successfully"
-                    : "Due Deletion Failed",
+                showRichText: true,
+                RichTextContent: success
+                    ? getPopupSuccessMsg(
+                        6, billerName.toString(), billName.toString())
+                    : getPopupFailedMsg(
+                        6, billerName.toString(), billName.toString()),
                 subTitle: "",
                 child: Icon(
                   Icons.close,
@@ -245,6 +251,12 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                       return MainContainer(
                         ctx: widget.ctx,
                         onDeleteUpPressed: () {
+                          setState(() {
+                            billName =
+                                widget.allUpcomingDues[index]["billName"];
+                            billerName =
+                                widget.allUpcomingDues[index]["billerName"];
+                          });
                           BlocProvider.of<MybillersCubit>(context)
                               .deleteUpcomingDue(handleCustomerBillID(index));
                         },

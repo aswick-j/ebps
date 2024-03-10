@@ -5,20 +5,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AnimatedDialog extends StatefulWidget {
-  final String title;
+  final String? title;
   final String subTitle;
   final Widget child;
   final Color shapeColor;
   final bool showImgIcon;
+  final bool? showRichText;
+  final TextSpan? RichTextContent;
   bool? showSub;
   AnimatedDialog({
     super.key,
-    required this.title,
+    this.title,
     required this.subTitle,
     required this.child,
     required this.showImgIcon,
     this.showSub,
     required this.shapeColor,
+    this.showRichText,
+    this.RichTextContent,
   });
 
   @override
@@ -130,15 +134,21 @@ class _AnimatedDialogState extends State<AnimatedDialog>
                       SizedBox(
                         height: 100.h,
                       ),
-                    Text(
-                      widget.title,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.bold,
-                        color: CLR_PRIMARY,
+                    if (widget.showRichText == true)
+                      RichText(
+                        text: widget.RichTextContent!,
+                        textAlign: TextAlign.center,
                       ),
-                    ),
+                    if (widget.showRichText != true)
+                      Text(
+                        widget.title.toString(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.bold,
+                          color: CLR_PRIMARY,
+                        ),
+                      ),
                     if (widget.showSub == true) SizedBox(height: 10.h),
                     if (widget.showSub == true)
                       Text(

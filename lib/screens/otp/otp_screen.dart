@@ -259,7 +259,8 @@ class _OtpScreenState extends State<OtpScreen> {
             ),
             content: AnimatedDialog(
                 showImgIcon: Success ? true : false,
-                title: Success
+                showRichText: true,
+                RichTextContent: Success
                     ? getPopupSuccessMsg(
                         index, BillerName.toString(), BillName.toString())
                     : getPopupFailedMsg(
