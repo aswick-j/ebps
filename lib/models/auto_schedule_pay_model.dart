@@ -116,6 +116,8 @@ class AllConfigurationsData {
   int? aMOUNTLIMIT;
   String? dUEAMOUNT;
   String? dUEDATE;
+  String? bILLPERIOD;
+  String? bILLDATE;
   int? rESETDATE;
   int? rESETLIMIT;
 
@@ -137,6 +139,8 @@ class AllConfigurationsData {
       this.aMOUNTLIMIT,
       this.dUEAMOUNT,
       this.dUEDATE,
+      this.bILLDATE,
+      this.bILLPERIOD,
       this.rESETDATE,
       this.rESETLIMIT});
 
@@ -158,6 +162,8 @@ class AllConfigurationsData {
     aMOUNTLIMIT = json['AMOUNT_LIMIT'];
     dUEAMOUNT = json['DUE_AMOUNT'];
     dUEDATE = json['DUE_DATE'];
+    bILLPERIOD = json['BILL_PERIOD'];
+    bILLDATE = json['BILL_DATE'];
     rESETDATE = json['RESETDATE'];
     rESETLIMIT = json['RESETLIMIT'];
   }
@@ -181,6 +187,8 @@ class AllConfigurationsData {
     data['AMOUNT_LIMIT'] = this.aMOUNTLIMIT;
     data['DUE_AMOUNT'] = this.dUEAMOUNT;
     data['DUE_DATE'] = this.dUEDATE;
+    data['BILL_DATE'] = this.bILLDATE;
+    data['BILL_PERIOD'] = this.bILLPERIOD;
     data['RESETDATE'] = this.rESETDATE;
     data['RESETLIMIT'] = this.rESETLIMIT;
     return data;

@@ -33,7 +33,7 @@ class createAutopay extends StatefulWidget {
   String customerBillID;
   String? lastPaidAmount;
 
-  List<PARAMETERS>? savedInputSignatures;
+  SavedBillersData? savedBillersdata;
 
   createAutopay(
       {super.key,
@@ -42,7 +42,7 @@ class createAutopay extends StatefulWidget {
       required this.billName,
       required this.customerBillID,
       required this.lastPaidAmount,
-      required this.savedInputSignatures});
+      this.savedBillersdata});
 
   @override
   State<createAutopay> createState() => _createAutopayState();
@@ -226,19 +226,34 @@ class _createAutopayState extends State<createAutopay> {
                               endIndent: 10.w,
                             ),
                             billDetailsContainer(
-                                title: widget
-                                    .savedInputSignatures![0].pARAMETERNAME
+                                title: widget.savedBillersdata!.pARAMETERS![0]
+                                    .pARAMETERNAME
                                     .toString(),
-                                subTitle: widget
-                                    .savedInputSignatures![0].pARAMETERVALUE
+                                subTitle: widget.savedBillersdata!
+                                    .pARAMETERS![0].pARAMETERVALUE
                                     .toString()),
                             billDetailsContainer(
                                 title: "Bill Name", subTitle: widget.billName),
-                            billDetailsContainer(
-                                title: "Due Date", subTitle: "01/12/2024"),
-                            billDetailsContainer(
-                                title: "Bill Generation Date",
-                                subTitle: "01/12/2024")
+                            if (widget.savedBillersdata!.bILLDATE != null)
+                              billDetailsContainer(
+                                  title: "Bill Date",
+                                  subTitle: DateFormat('dd/MM/yyyy').format(
+                                      DateTime.parse(widget
+                                              .savedBillersdata!.bILLDATE!
+                                              .toString()
+                                              .substring(0, 10))
+                                          .toLocal()
+                                          .add(const Duration(days: 1)))),
+                            if (widget.savedBillersdata!.dUEDATE != null)
+                              billDetailsContainer(
+                                  title: "Due Date",
+                                  subTitle: DateFormat('dd/MM/yyyy').format(
+                                      DateTime.parse(widget
+                                              .savedBillersdata!.dUEDATE!
+                                              .toString()
+                                              .substring(0, 10))
+                                          .toLocal()
+                                          .add(const Duration(days: 1)))),
                           ],
                         )),
                     Align(

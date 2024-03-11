@@ -1,10 +1,13 @@
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
+import 'package:ebps/common/Container/Home/home_banners.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/ebps.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
+import 'package:ebps/models/saved_biller_model.dart';
+import 'package:ebps/models/upcoming_dues_model.dart';
 import 'package:ebps/screens/home/bill_categories.dart';
 import 'package:ebps/screens/home/mismatch_notification.dart';
 import 'package:ebps/screens/home/upcoming_dues.dart';
@@ -46,11 +49,78 @@ class HomeScreenUI extends StatefulWidget {
 class _HomeScreenUIState extends State<HomeScreenUI> {
   List<AllConfigurations>? allautoPaymentList = [];
   List<AllConfigurationsData>? allautoPayData = [];
-
+  List<SavedBillersData>? SavedBiller = [];
+  List<Map<String, dynamic>> allUpcomingDues = [];
+  List<UpcomingDuesData>? upcomingDuesData = [];
+  List<UpcomingPaymentsData>? upcomingAutoPaymentData = [];
+  bool isUpcomingDuesLoading = true;
+  bool isUpcomingAutopaymentLoading = true;
+  bool isSavedBillerLoading = true;
   @override
   void initState() {
     super.initState();
     BlocProvider.of<MybillersCubit>(context).getAutopay();
+    BlocProvider.of<MybillersCubit>(context).getAllUpcomingDues();
+    BlocProvider.of<MybillersCubit>(context).getSavedBillers();
+  }
+
+  bool isDataExist(List list, int? value) {
+    var data = list.where((row) => (row["customerBillId"] == value));
+    if (data.isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void generateDuesList() {
+    allUpcomingDues = [];
+    if (upcomingDuesData!.isNotEmpty) {
+      upcomingDuesData?.forEach((item) {
+        final tempUpcoming = {
+          "itemType": "upcomingDue",
+          "billName": item.billName ?? "",
+          "billerName": item.billerName ?? "",
+          "dueAmount": item.dueAmount ?? "",
+          "dueDate": item.dueDate ?? "",
+          "paymentDate": "",
+          "customerBillId": item.customerBillID ?? "-",
+          "categoryName": item.categoryName,
+          "iSACTIVE": "",
+          "billerParams": item.billerParams
+        };
+
+        if (!isDataExist(
+            allUpcomingDues, int.parse(item.customerBillID.toString()))) {
+          allUpcomingDues.add(tempUpcoming);
+        }
+      });
+    }
+
+    if (upcomingAutoPaymentData!.isNotEmpty) {
+      upcomingAutoPaymentData?.forEach((item) {
+        final tempUpcomingAutoPayment = {
+          "itemType":
+              item.iSACTIVE == 1 ? "upcomingPayments" : "upcomingAutopaused",
+          "billName": item.bILLNAME ?? "",
+          "billerName": item.bILLERNAME ?? "",
+          "dueAmount": item.dUEAMOUNT ?? "",
+          "dueDate": item.dUEDATE ?? "",
+          "paymentDate": item.pAYMENTDATE ?? "",
+          "categoryName": item.cATEGORYNAME ?? "",
+          "iSACTIVE": item.iSACTIVE ?? "",
+          "customerBillId": item.cUSTOMERBILLID ?? "",
+          "billerParams": ""
+        };
+
+        if (isDataExist(
+            allUpcomingDues, int.parse(item.cUSTOMERBILLID.toString()))) {
+          allUpcomingDues.removeWhere(
+              (element) => element["customerBillId"] == item.cUSTOMERBILLID);
+        }
+        allUpcomingDues.add(tempUpcomingAutoPayment);
+      });
+    }
   }
 
   @override
@@ -62,9 +132,22 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
         barrierDismissible: false,
         builder: (BuildContext ctx) {
           return MismatchNotification(
-              allautoPayData: allautoPayData, context: dialogContext);
+              allautoPayData: allautoPayData,
+              context: dialogContext,
+              savedBiller: SavedBiller!);
         },
       );
+    }
+
+    handleSlider() async {
+      var notifiValue = await getSharedNotificationValue("NOTIFICATION");
+      if (!isUpcomingAutopaymentLoading &&
+          !isUpcomingDuesLoading &&
+          !isSavedBillerLoading &&
+          notifiValue &&
+          allautoPayData!.isNotEmpty) {
+        handleDialog();
+      }
     }
 
     return Scaffold(
@@ -72,21 +155,16 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
         context: context,
         title: 'Bill Payment',
         actions: [
-          if (allautoPayData!.isNotEmpty)
-            //   GestureDetector(
-            //       onTap: () {
-            //         handleDialog();
-            //       },
-            //       child: SvgPicture.asset(ICON_BELL)),
+          if (!isUpcomingAutopaymentLoading &&
+              !isUpcomingDuesLoading &&
+              !isSavedBillerLoading &&
+              allautoPayData!.isNotEmpty)
             IconBadge(
               notificationCount: allautoPayData!.length,
               onTap: () {
                 handleDialog();
               },
             ),
-          // SizedBox(
-          //   width: 5.w,
-          // ),
           InkWell(
               onTap: () => {goTo(context, sEARCHROUTE)},
               child: Container(
@@ -115,74 +193,168 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
-        child: BlocConsumer<MybillersCubit, MybillersState>(
-          listener: (context, state) async {
-            if (state is AutoPayLoading) {
-            } else if (state is AutopaySuccess) {
-              setState(() {
-                allautoPaymentList = state.autoScheduleData!.allConfigurations!;
+        child: MultiBlocListener(
+            listeners: [
+              BlocListener<MybillersCubit, MybillersState>(
+                listener: (context, state) async {
+                  if (state is UpcomingDuesLoading) {
+                    setState(() {
+                      isUpcomingDuesLoading = true;
+                    });
+                  } else if (state is UpcomingDuesSuccess) {
+                    List<UpcomingDuesData>? tempUpcomingDuesData =
+                        state.upcomingDuesData;
 
-                List<AllConfigurationsData>? autopayData = [];
-                for (int i = 0; i < allautoPaymentList!.length; i++) {
-                  for (int j = 0;
-                      j < allautoPaymentList![i].data!.length;
-                      j++) {
-                    autopayData.add(allautoPaymentList![i].data![j]);
+                    List<UpcomingDuesData>? NullTemp = [];
+                    List<UpcomingDuesData>? DueDateTemp = [];
+                    List<UpcomingDuesData>? ExpiredDueDateTemp = [];
+
+                    bool isDateExpired(DateTime date) {
+                      DateTime currentDate = DateTime.now();
+                      return date.isBefore(currentDate);
+                    }
+
+                    for (var i = 0; i < tempUpcomingDuesData!.length; i++) {
+                      if (tempUpcomingDuesData[i].dueDate == null) {
+                        NullTemp.add(tempUpcomingDuesData[i]);
+                      } else if (isDateExpired(DateTime.parse(
+                          tempUpcomingDuesData[i].dueDate.toString()))) {
+                        ExpiredDueDateTemp.add(tempUpcomingDuesData[i]);
+                      } else {
+                        DueDateTemp.add(tempUpcomingDuesData[i]);
+                      }
+                    }
+
+                    ExpiredDueDateTemp.sort((a, b) =>
+                        DateTime.parse(a.dueDate.toString())
+                            .compareTo(DateTime.parse(b.dueDate.toString())));
+                    DueDateTemp.sort((a, b) =>
+                        DateTime.parse(a.dueDate.toString())
+                            .compareTo(DateTime.parse(b.dueDate.toString())));
+
+                    List<UpcomingDuesData>? sortedData = [
+                      ...DueDateTemp,
+                      ...ExpiredDueDateTemp,
+                      ...NullTemp
+                    ];
+
+                    setState(() {
+                      upcomingDuesData = sortedData;
+                      isUpcomingDuesLoading = false;
+                    });
+                    generateDuesList();
+                    handleSlider();
+                  } else if (state is UpcomingDuesFailed) {
+                    setState(() {
+                      isUpcomingDuesLoading = false;
+                    });
+                  } else if (state is UpcomingDuesError) {
+                    setState(() {
+                      isUpcomingDuesLoading = false;
+                    });
                   }
-                }
+                  if (state is AutoPayLoading) {
+                    isUpcomingAutopaymentLoading = true;
+                  } else if (state is AutopaySuccess) {
+                    if (state.autoScheduleData!.upcomingPayments!.isNotEmpty) {
+                      allautoPaymentList =
+                          state.autoScheduleData!.allConfigurations!;
 
-                List<AllConfigurationsData> newData =
-                    autopayData.where((item) => item.rESETDATE == 1).toList();
+                      upcomingAutoPaymentData =
+                          state.autoScheduleData!.upcomingPayments![0].data;
+                    }
 
-                List<AllConfigurationsData> newData2 =
-                    autopayData.where((item) => item.rESETLIMIT == 1).toList();
+                    generateDuesList();
+                    setState(() {
+                      isUpcomingAutopaymentLoading = false;
 
-                List<AllConfigurationsData> modifiedData = newData2
-                    .map((item) => AllConfigurationsData(
-                        rESETDATE: 0,
-                        rESETLIMIT: item.rESETLIMIT,
-                        aCCOUNTNUMBER: item.aCCOUNTNUMBER,
-                        aCTIVATESFROM: item.aCTIVATESFROM,
-                        aMOUNTLIMIT: item.aMOUNTLIMIT,
-                        bILLERICON: item.bILLERICON,
-                        bILLERID: item.bILLERID,
-                        bILLERNAME: item.bILLERNAME,
-                        bILLNAME: item.bILLNAME,
-                        cUSTOMERBILLID: item.cUSTOMERBILLID,
-                        dUEAMOUNT: item.dUEAMOUNT,
-                        cUSTOMERID: item.cUSTOMERID,
-                        dUEDATE: item.dUEDATE,
-                        iD: item.iD,
-                        iSACTIVE: item.iSACTIVE,
-                        iSBIMONTHLY: item.iSBIMONTHLY,
-                        mAXIMUMAMOUNT: item.mAXIMUMAMOUNT,
-                        pAID: item.pAID,
-                        pAYMENTDATE: item.pAYMENTDATE))
-                    .toList();
+                      List<AllConfigurationsData>? autopayData = [];
+                      for (int i = 0; i < allautoPaymentList!.length; i++) {
+                        for (int j = 0;
+                            j < allautoPaymentList![i].data!.length;
+                            j++) {
+                          autopayData.add(allautoPaymentList![i].data![j]);
+                        }
+                      }
 
-                allautoPayData = [...newData, ...modifiedData];
-              });
-              var notifiValue =
-                  await getSharedNotificationValue("NOTIFICATION");
-              if (notifiValue && allautoPayData!.isNotEmpty) {
-                handleDialog();
-              }
-            } else if (state is AutopayFailed) {
-            } else if (state is AutopayError) {}
-          },
-          builder: (context, state) {
-            return Column(
+                      List<AllConfigurationsData> newData = autopayData
+                          .where((item) => item.rESETDATE == 1)
+                          .toList();
+
+                      List<AllConfigurationsData> newData2 = autopayData
+                          .where((item) => item.rESETLIMIT == 1)
+                          .toList();
+
+                      List<AllConfigurationsData> modifiedData = newData2
+                          .map((item) => AllConfigurationsData(
+                              rESETDATE: 0,
+                              rESETLIMIT: item.rESETLIMIT,
+                              aCCOUNTNUMBER: item.aCCOUNTNUMBER,
+                              aCTIVATESFROM: item.aCTIVATESFROM,
+                              aMOUNTLIMIT: item.aMOUNTLIMIT,
+                              bILLERICON: item.bILLERICON,
+                              bILLERID: item.bILLERID,
+                              bILLERNAME: item.bILLERNAME,
+                              bILLNAME: item.bILLNAME,
+                              cUSTOMERBILLID: item.cUSTOMERBILLID,
+                              dUEAMOUNT: item.dUEAMOUNT,
+                              cUSTOMERID: item.cUSTOMERID,
+                              dUEDATE: item.dUEDATE,
+                              iD: item.iD,
+                              iSACTIVE: item.iSACTIVE,
+                              iSBIMONTHLY: item.iSBIMONTHLY,
+                              mAXIMUMAMOUNT: item.mAXIMUMAMOUNT,
+                              pAID: item.pAID,
+                              pAYMENTDATE: item.pAYMENTDATE))
+                          .toList();
+
+                      allautoPayData = [...newData, ...modifiedData];
+                    });
+                    handleSlider();
+                  } else if (state is AutopayFailed) {
+                    isUpcomingAutopaymentLoading = false;
+                  } else if (state is AutopayError) {
+                    isUpcomingAutopaymentLoading = false;
+                  }
+                  if (state is SavedBillerLoading) {
+                    setState(() {
+                      isSavedBillerLoading = true;
+                    });
+                  } else if (state is SavedBillersSuccess) {
+                    SavedBiller = state.savedBillersData;
+                    setState(() {
+                      isSavedBillerLoading = false;
+                    });
+                    handleSlider();
+                  } else if (state is SavedBillersFailed) {
+                    setState(() {
+                      isSavedBillerLoading = false;
+                    });
+                  } else if (state is SavedBillersError) {
+                    setState(() {
+                      isSavedBillerLoading = false;
+                    });
+                  }
+                },
+              )
+            ],
+            child: Column(
               children: [
-                UpcomingDues(),
-                // HomeBanners(),
-
+                if (!isUpcomingAutopaymentLoading &&
+                    !isUpcomingDuesLoading &&
+                    !isSavedBillerLoading)
+                  UpcomingDues(
+                    allUpcomingDues: allUpcomingDues,
+                    SavedBiller: SavedBiller,
+                    allautoPaymentList: allautoPaymentList,
+                  ),
                 BillCategories(),
                 SizedBox(
                   height: 10.h,
                 ),
                 Center(
                   child: Text(
-                    "V 0.0.29",
+                    "V 0.0.30",
                     style: TextStyle(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w400,
@@ -194,9 +366,7 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
                   height: 10.h,
                 ),
               ],
-            );
-          },
-        ),
+            )),
       ),
     );
   }

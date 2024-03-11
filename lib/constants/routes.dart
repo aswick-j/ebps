@@ -441,7 +441,7 @@ class MyRouter {
                     billName: args["billName"],
                     lastPaidAmount: args["lastPaidAmount"],
                     customerBillID: args["customerBillID"],
-                    savedInputSignatures: args["savedInputSignatures"],
+                    savedBillersdata: args["savedBillersData"],
                   ),
                 ));
 
@@ -460,11 +460,7 @@ class MyRouter {
                   ],
                   // create: (context) => MybillersCubit(repository: apiClient),
                   child: editAutopay(
-                      billerName: args["billerName"],
-                      categoryName: args["categoryName"],
-                      billName: args["billName"],
-                      customerBillID: args["customerBillID"],
-                      lastPaidAmount: args["lastPaidAmount"],
+                      savedBillerData: args["savedBillerData"],
                       AutoDateMisMatch: args["AutoDateMisMatch"],
                       DebitLimitMisMatch: args["DebitLimitMisMatch"],
                       autopayData: args["autopayData"]),

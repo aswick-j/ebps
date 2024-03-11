@@ -13,7 +13,7 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/numberPrefixSetter.dart';
 import 'package:ebps/models/account_info_model.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
-import 'package:ebps/models/edit_bill_modal.dart';
+import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/services/api.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/date_picker_dialog.dart';
@@ -28,25 +28,18 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class editAutopay extends StatefulWidget {
-  String billerName;
-  String categoryName;
-  String billName;
-  String customerBillID;
   AllConfigurationsData? autopayData;
-  String? lastPaidAmount;
   bool AutoDateMisMatch;
   bool DebitLimitMisMatch;
+  SavedBillersData savedBillerData;
 
-  editAutopay(
-      {super.key,
-      required this.billerName,
-      required this.categoryName,
-      required this.billName,
-      required this.customerBillID,
-      required this.AutoDateMisMatch,
-      required this.DebitLimitMisMatch,
-      this.autopayData,
-      required this.lastPaidAmount});
+  editAutopay({
+    super.key,
+    required this.AutoDateMisMatch,
+    required this.DebitLimitMisMatch,
+    this.autopayData,
+    required this.savedBillerData,
+  });
 
   @override
   State<editAutopay> createState() => _editAutopayState();
@@ -59,7 +52,6 @@ class _editAutopayState extends State<editAutopay> {
 
   bool isAccLoading = true;
   String? maximumAmount = "0";
-  List<InputSignaturess>? InputItems = [];
 
   List<AccountsData>? accountInfo = [];
 
@@ -68,10 +60,10 @@ class _editAutopayState extends State<editAutopay> {
   dynamic dateController = TextEditingController();
 
   String? selectedDate = "1";
+  String? lastPaidAmount = "0";
   dynamic selectedAcc = null;
   bool accError = false;
   bool maxAmountError = false;
-  bool isInputItemsLoading = true;
   bool isAutoPayMaxLoading = true;
 
   List<String> EffectiveFrom = <String>[
@@ -99,10 +91,12 @@ class _editAutopayState extends State<editAutopay> {
             widget.autopayData!.aCTIVATESFROM!.substring(1)
         : "Immediately";
     isActive = widget.autopayData?.iSACTIVE;
+    lastPaidAmount = widget.savedBillerData.bILLAMOUNT != null
+        ? widget.savedBillerData.bILLAMOUNT.toString()
+        : widget.autopayData!.dUEAMOUNT.toString();
     BlocProvider.of<HomeCubit>(context).getAccountInfo(myAccounts);
     BlocProvider.of<MybillersCubit>(context).getAutoPayMaxAmount();
-    BlocProvider.of<MybillersCubit>(context)
-        .getEditBillItems(widget.autopayData!.cUSTOMERBILLID);
+
     super.initState();
   }
 
@@ -142,8 +136,8 @@ class _editAutopayState extends State<editAutopay> {
         "from": "edit-auto-pay",
         "templateName": "edit-auto-pay",
         "context": context,
-        "BillerName": widget.billerName,
-        "BillName": widget.billName,
+        "BillerName": widget.savedBillerData.bILLERNAME,
+        "BillName": widget.savedBillerData.bILLNAME,
         "autopayData": widget.autopayData,
         "data": {
           "accountNumber": accID,
@@ -154,8 +148,8 @@ class _editAutopayState extends State<editAutopay> {
               ? null
               : activatesFrom.toLowerCase(),
           "isActive": isActive,
-          "billID": widget.customerBillID,
-          "billerName": widget.billerName,
+          "billID": widget.savedBillerData.cUSTOMERBILLID,
+          "billerName": widget.savedBillerData.bILLERNAME,
           "amountLimit": limitGroupRadio,
         }
       });
@@ -223,16 +217,6 @@ class _editAutopayState extends State<editAutopay> {
               ),
               BlocListener<MybillersCubit, MybillersState>(
                 listener: (context, state) {
-                  if (state is EditBillLoading) {
-                    isInputItemsLoading = true;
-                  } else if (state is EditBillSuccess) {
-                    InputItems = state.EditBillList?.inputSignaturess;
-                    isInputItemsLoading = false;
-                  } else if (state is EditBillFailed) {
-                    isInputItemsLoading = false;
-                  } else if (state is EditBillError) {
-                    isInputItemsLoading = false;
-                  }
                   if (state is FetchAutoPayMaxAmountLoading) {
                     isAutoPayMaxLoading = true;
                   } else if (state is FetchAutoPayMaxAmountSuccess) {
@@ -251,7 +235,7 @@ class _editAutopayState extends State<editAutopay> {
               ),
             ],
             child: SizedBox(
-              child: isAutoPayMaxLoading || isInputItemsLoading
+              child: isAutoPayMaxLoading
                   ? Center(
                       child: Container(
                         height: 500.h,
@@ -345,7 +329,7 @@ class _editAutopayState extends State<editAutopay> {
                                   ),
                                 ),
                                 title: Text(
-                                  widget.billerName,
+                                  widget.savedBillerData.bILLERNAME.toString(),
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,
@@ -354,7 +338,7 @@ class _editAutopayState extends State<editAutopay> {
                                   textAlign: TextAlign.left,
                                 ),
                                 subtitle: Text(
-                                  widget.billName,
+                                  widget.savedBillerData.bILLNAME.toString(),
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
@@ -369,24 +353,37 @@ class _editAutopayState extends State<editAutopay> {
                                 indent: 10.w,
                                 endIndent: 10.w,
                               ),
-                              if (!isInputItemsLoading)
-                                billDetailsContainer(
-                                    title:
-                                        InputItems![0].pARAMETERNAME.toString(),
-                                    subTitle: InputItems![0]
-                                        .pARAMETERVALUE
-                                        .toString()),
+                              billDetailsContainer(
+                                  title: widget.savedBillerData.pARAMETERS![0]
+                                      .pARAMETERNAME
+                                      .toString(),
+                                  subTitle: widget.savedBillerData
+                                      .pARAMETERS![0].pARAMETERVALUE
+                                      .toString()),
                               billDetailsContainer(
                                   title: "Bill Name",
-                                  subTitle: widget.billName),
-                              billDetailsContainer(
-                                  title: "Due Date",
-                                  subTitle:
-                                      widget.autopayData!.dUEDATE.toString()),
-                              billDetailsContainer(
-                                  title: "Bill Generation Date",
-                                  subTitle:
-                                      widget.autopayData!.dUEDATE.toString())
+                                  subTitle: widget.savedBillerData.bILLNAME
+                                      .toString()),
+                              if (widget.savedBillerData!.bILLDATE != null)
+                                billDetailsContainer(
+                                    title: "Bill Date",
+                                    subTitle: DateFormat('dd/MM/yyyy').format(
+                                        DateTime.parse(widget
+                                                .savedBillerData!.bILLDATE!
+                                                .toString()
+                                                .substring(0, 10))
+                                            .toLocal()
+                                            .add(const Duration(days: 1)))),
+                              if (widget.savedBillerData!.dUEDATE != null)
+                                billDetailsContainer(
+                                    title: "Due Date",
+                                    subTitle: DateFormat('dd/MM/yyyy').format(
+                                        DateTime.parse(widget
+                                                .savedBillerData!.dUEDATE!
+                                                .toString()
+                                                .substring(0, 10))
+                                            .toLocal()
+                                            .add(const Duration(days: 1)))),
                             ],
                           )),
                       Align(
@@ -464,11 +461,10 @@ class _editAutopayState extends State<editAutopay> {
                                                 .toStringAsFixed(2);
                                           } else {
                                             maxAmountController.text =
-                                                (double.parse(widget
-                                                                .lastPaidAmount
+                                                (double.parse(lastPaidAmount
                                                                 .toString() !=
                                                             "null"
-                                                        ? widget.lastPaidAmount
+                                                        ? lastPaidAmount
                                                             .toString()
                                                         : "10000")
                                                     .toStringAsFixed(2));
@@ -517,8 +513,8 @@ class _editAutopayState extends State<editAutopay> {
                                               double.parse(
                                                   maximumAmount.toString()) ||
                                           double.parse(val.toString()) <
-                                              double.parse(widget.lastPaidAmount
-                                                  .toString())) {
+                                              double.parse(
+                                                  lastPaidAmount.toString())) {
                                         setState(() {
                                           maxAmountError = true;
                                         });
@@ -569,7 +565,7 @@ class _editAutopayState extends State<editAutopay> {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      'Amount Should be Between  ₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.lastPaidAmount.toString()))} to ₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}',
+                                      'Amount Should be Between  ₹ ${NumberFormat('#,##,##0.00').format(double.parse(lastPaidAmount.toString()))} to ₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}',
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w600,

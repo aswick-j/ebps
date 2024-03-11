@@ -2,6 +2,7 @@ import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/Home/refresh_dues.dart';
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getBillerType.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +99,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xff191919),
+                                color: TXT_CLR_PRIMARY,
                               ),
                               textAlign: TextAlign.left,
                             ),
@@ -269,12 +270,13 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                           .toString(),
                                       style: TextStyle(
                                           fontSize: 14.sp,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0xff808080),
+                                          fontWeight: FontWeight.w500,
+                                          color: TXT_CLR_DEFAULT,
                                           overflow: TextOverflow.ellipsis),
                                       maxLines: 1,
                                     ),
                                   ),
+                                  SizedBox(height: 5.h),
                                   SizedBox(
                                     width: 150.w,
                                     child: Text(

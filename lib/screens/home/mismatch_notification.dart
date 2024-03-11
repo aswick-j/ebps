@@ -18,7 +18,13 @@ class MismatchNotification extends StatefulWidget {
   List<AllConfigurationsData>? allautoPayData;
   List<PARAMETERS> savedinput = [];
   BuildContext context;
-  MismatchNotification({super.key, this.allautoPayData, required this.context});
+  List<SavedBillersData>? savedBiller = [];
+
+  MismatchNotification(
+      {super.key,
+      this.allautoPayData,
+      required this.context,
+      required this.savedBiller});
 
   @override
   State<MismatchNotification> createState() => _MismatchNotificationState();
@@ -28,6 +34,17 @@ class _MismatchNotificationState extends State<MismatchNotification> {
   final controller = PageController(
     keepPage: true,
   );
+
+  getSavedBiller(int index) {
+    List<SavedBillersData>? SavedBillerData = widget.savedBiller!
+        .where((element) =>
+            element.cUSTOMERBILLID.toString().toLowerCase() ==
+            widget.allautoPayData![index].cUSTOMERBILLID
+                .toString()
+                .toLowerCase())
+        .toList();
+    return SavedBillerData[0];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -220,7 +237,19 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                   padding: EdgeInsets.only(right: 8.0.w),
                                   child: Text(
                                     widget.allautoPayData![index].rESETDATE == 1
-                                        ? "10/12/2024"
+                                        ? widget.allautoPayData![index]
+                                                    .bILLDATE !=
+                                                null
+                                            ? DateFormat('dd/MM/yyyy').format(
+                                                DateTime.parse(widget
+                                                        .allautoPayData![index]
+                                                        .bILLDATE!
+                                                        .toString()
+                                                        .substring(0, 10))
+                                                    .toLocal()
+                                                    .add(const Duration(
+                                                        days: 1)))
+                                            : "-"
                                         : "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allautoPayData![index].dUEAMOUNT.toString()))}",
                                     style: TextStyle(
                                       fontSize: 12.sp,
@@ -399,14 +428,19 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(right: 8.0.w),
-                                  child: Text(
-                                    "23rd of Every Month ",
-                                    style: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff808080),
+                                  child: SizedBox(
+                                    width: 110.w,
+                                    child: FittedBox(
+                                      child: Text(
+                                        '${numberPrefixSetter(widget.allautoPayData![index].pAYMENTDATE.toString())}${" of"}${widget.allautoPayData![index].iSBIMONTHLY == 0 ? " every" : " every two"}${" month"}',
+                                        style: TextStyle(
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff808080),
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
-                                    textAlign: TextAlign.center,
                                   ),
                                 )
                               ],
@@ -598,18 +632,8 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                         goBack(context);
                                         goToData(
                                             widget.context, eDITAUTOPAYROUTE, {
-                                          "billerName": widget
-                                              .allautoPayData![index]
-                                              .bILLERNAME,
-                                          "categoryName": "sss",
-                                          "lastPaidAmount": widget
-                                              .allautoPayData![index].dUEAMOUNT,
-                                          "billName": widget
-                                              .allautoPayData![index].bILLNAME,
-                                          "customerBillID": widget
-                                              .allautoPayData![index]
-                                              .cUSTOMERBILLID
-                                              .toString(),
+                                          "savedBillerData":
+                                              getSavedBiller(index),
                                           "AutoDateMisMatch": widget
                                                       .allautoPayData![index]
                                                       .rESETDATE ==

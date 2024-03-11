@@ -54,6 +54,11 @@ class SavedBillersData {
   var bILLAMOUNT;
   String? cATEGORYNAME;
   String? bILLNAME;
+  String? bILLDATE;
+  String? bILLPERIOD;
+  String? dUEDATE;
+  int? dUESTATUS;
+  String? lASTNOTIFICATIONDATE;
   int? uNSAVEDBILL;
   List<PARAMETERS>? pARAMETERS;
 
@@ -81,7 +86,12 @@ class SavedBillersData {
       this.cOMPLETIONDATE,
       this.bILLAMOUNT,
       this.cATEGORYNAME,
+      this.bILLDATE,
+      this.bILLPERIOD,
       this.bILLNAME,
+      this.dUEDATE,
+      this.dUESTATUS,
+      this.lASTNOTIFICATIONDATE,
       this.lASTPAIDDATE,
       this.lASTBILLAMOUNT,
       this.pARAMETERS,
@@ -112,6 +122,11 @@ class SavedBillersData {
     bILLAMOUNT = json['BILL_AMOUNT'];
     cATEGORYNAME = json['CATEGORY_NAME'];
     bILLNAME = json['BILL_NAME'];
+    bILLPERIOD = json['BILL_PERIOD'];
+    bILLDATE = json['BILL_DATE'];
+    dUEDATE = json['DUE_DATE'];
+    dUESTATUS = json['DUE_STATUS'];
+    lASTNOTIFICATIONDATE = json['LAST_NOTIFICATION_DATE'];
     lASTPAIDDATE = json['LAST_PAID_DATE'];
     lASTBILLAMOUNT = json['LAST_BILL_AMOUNT'];
     uNSAVEDBILL = json["UNSAVED_BILL"];
@@ -149,6 +164,11 @@ class SavedBillersData {
     data['BILL_AMOUNT'] = this.bILLAMOUNT;
     data['CATEGORY_NAME'] = this.cATEGORYNAME;
     data['BILL_NAME'] = this.bILLNAME;
+    data['BILL_DATE'] = this.bILLDATE;
+    data['BILL_PERIOD'] = this.bILLPERIOD;
+    data['DUE_DATE'] = this.dUEDATE;
+    data['DUE_STATUS'] = this.dUESTATUS;
+    data['LAST_NOTIFICATION_DATE'] = this.lASTNOTIFICATIONDATE;
     data['LAST_PAID_DATE'] = this.lASTPAIDDATE;
     data['LAST_BILL_AMOUNT'] = this.lASTBILLAMOUNT;
     data['UNSAVED_BILL'] = this.uNSAVEDBILL;

@@ -98,7 +98,7 @@ class MainContainer extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xff191919),
+                      color: TXT_CLR_PRIMARY,
                     ),
                     textAlign: TextAlign.left,
                   ),
@@ -110,8 +110,8 @@ class MainContainer extends StatelessWidget {
                       subtitleText,
                       style: TextStyle(
                           fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xff808080),
+                          fontWeight: FontWeight.w500,
+                          color: TXT_CLR_DEFAULT,
                           overflow: TextOverflow.ellipsis),
                       maxLines: 1,
                     ),

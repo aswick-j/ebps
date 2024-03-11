@@ -216,17 +216,37 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                   children: [
                     SizedBox(
                       width: 209.w,
-                      child: Text(
-                        widget.savedBillersData.bILLERNAME.toString(),
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff191919),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        textAlign: TextAlign.left,
-                        maxLines: 1,
-                        softWrap: false,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.savedBillersData.bILLNAME.toString(),
+                            style: TextStyle(
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.bold,
+                              color: TXT_CLR_PRIMARY,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            textAlign: TextAlign.left,
+                            maxLines: 1,
+                            softWrap: false,
+                          ),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          Text(
+                            widget.savedBillersData.bILLERNAME.toString(),
+                            style: TextStyle(
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w500,
+                              color: TXT_CLR_DEFAULT,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            textAlign: TextAlign.left,
+                            maxLines: 1,
+                            softWrap: false,
+                          ),
+                        ],
                       ),
                     ),
                     GestureDetector(
@@ -605,31 +625,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                 onPressed: () {
                                                   goToData(context,
                                                       eDITAUTOPAYROUTE, {
-                                                    "billerName": widget
-                                                        .savedBillersData
-                                                        .bILLERNAME,
-                                                    "categoryName": widget
-                                                        .savedBillersData
-                                                        .cATEGORYNAME,
-                                                    "billName": widget
-                                                        .savedBillersData
-                                                        .bILLNAME,
-                                                    "customerBillID": widget
-                                                        .savedBillersData
-                                                        .cUSTOMERBILLID
-                                                        .toString(),
-                                                    "lastPaidAmount": widget
-                                                                .savedBillersData
-                                                                .bILLAMOUNT !=
-                                                            null
-                                                        ? widget
-                                                            .savedBillersData
-                                                            .bILLAMOUNT
-                                                            .toString()
-                                                        : getAllAutopayList(widget
-                                                                .savedBillersData
-                                                                .cUSTOMERBILLID)!
-                                                            .dUEAMOUNT,
+                                                    "savedBillerData":
+                                                        widget.savedBillersData,
                                                     "AutoDateMisMatch": getAllAutopayList(widget
                                                                 .savedBillersData
                                                                 .cUSTOMERBILLID) !=
@@ -1348,26 +1345,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                         );
                                       } else {
                                         goToData(context, eDITAUTOPAYROUTE, {
-                                          "billerName": widget
-                                              .savedBillersData.bILLERNAME,
-                                          "categoryName": widget
-                                              .savedBillersData.cATEGORYNAME,
-                                          "billName":
-                                              widget.savedBillersData.bILLNAME,
-                                          "customerBillID": widget
-                                              .savedBillersData.cUSTOMERBILLID
-                                              .toString(),
-                                          "lastPaidAmount": widget
-                                                      .savedBillersData
-                                                      .bILLAMOUNT !=
-                                                  null
-                                              ? widget
-                                                  .savedBillersData.bILLAMOUNT
-                                                  .toString()
-                                              : getAllAutopayList(widget
-                                                      .savedBillersData
-                                                      .cUSTOMERBILLID)!
-                                                  .dUEAMOUNT,
+                                          "savedBillerData":
+                                              widget.savedBillersData,
                                           "AutoDateMisMatch": getAllAutopayList(
                                                       widget.savedBillersData
                                                           .cUSTOMERBILLID) !=
@@ -1695,27 +1674,9 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                   context,
                                                                   eDITAUTOPAYROUTE,
                                                                   {
-                                                                    "billerName": widget
-                                                                        .savedBillersData
-                                                                        .bILLERNAME,
-                                                                    "categoryName": widget
-                                                                        .savedBillersData
-                                                                        .cATEGORYNAME,
-                                                                    "billName": widget
-                                                                        .savedBillersData
-                                                                        .bILLNAME,
-                                                                    "customerBillID": widget
-                                                                        .savedBillersData
-                                                                        .cUSTOMERBILLID
-                                                                        .toString(),
-                                                                    "lastPaidAmount": widget.savedBillersData.bILLAMOUNT !=
-                                                                            null
-                                                                        ? widget
-                                                                            .savedBillersData
-                                                                            .bILLAMOUNT
-                                                                            .toString()
-                                                                        : getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!
-                                                                            .dUEAMOUNT,
+                                                                    "savedBillerData":
+                                                                        widget
+                                                                            .savedBillersData,
                                                                     "AutoDateMisMatch": getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID) !=
                                                                             null
                                                                         ? getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.rESETDATE ==
@@ -1776,8 +1737,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                     "customerBillID": widget
                                         .savedBillersData.cUSTOMERBILLID
                                         .toString(),
-                                    "savedInputSignatures":
-                                        widget.savedBillersData.pARAMETERS,
+                                    "savedBillersData": widget.savedBillersData,
                                   });
                                 }
                               },

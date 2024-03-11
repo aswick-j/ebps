@@ -164,18 +164,6 @@ class AppColorsElite {
   static const profileExpiryContainerColor = Color(0xff16366F);
   static const profileProgressColor = Color(0xFF7793BF);
 
-  static const Color gradient1 = Color(0xFFE79BBA);
-  static const Color gradient2 = Color(0xFF463A8D);
-  static const Color gradient3 = Color(0xFF768EB9);
-  static const Color gradient4 = Color(0xFF1B438B);
-  static const Color gradient5 = Color(0xFF99DDB4);
-  static const Color gradient6 = Color(0xFF31637D);
-  static const Color gradient7 = Color(0xFFCCAA59);
-  static const Color gradient8 = Color(0xFFCE7D1E);
-  static const Color gradient9 = Color(0xFFFFD05F);
-  static const Color gradient10 = Color(0xFFCF1E2F);
-  static const Color gradient11 = Color(0xFF7C121C);
-
   static const Color shadowColor = Color(0x1A000000);
   static Color cardShadow = const Color(0xff000000);
   static Color accountStatusBarColor = const Color(0xff86B799);
