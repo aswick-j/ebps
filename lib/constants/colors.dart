@@ -25,3 +25,15 @@ const TXT_CLR_LITE = Color(0xff808080);
 //button colors
 const BTN_CLR_ACTIVE_BG = Color(0xff1B438B);
 const BTN_CLR_ACTIVE = Color(0xffffffff);
+
+const Color gradient1 = Color(0xFFE79BBA);
+const Color gradient2 = Color(0xFF463A8D);
+const Color gradient3 = Color(0xFF768EB9);
+const Color gradient4 = Color(0xFF1B438B);
+const Color gradient5 = Color(0xFF99DDB4);
+const Color gradient6 = Color(0xFF31637D);
+const Color gradient7 = Color(0xFFCCAA59);
+const Color gradient8 = Color(0xFFCE7D1E);
+const Color gradient9 = Color(0xFFFFD05F);
+const Color gradient10 = Color(0xFFCF1E2F);
+const Color gradient11 = Color(0xFF7C121C);

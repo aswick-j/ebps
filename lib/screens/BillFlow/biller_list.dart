@@ -215,8 +215,8 @@ class _BillerListState extends State<BillerList> {
                             begin: Alignment.topRight,
                             stops: const [0.001, 19],
                             colors: [
-                              Color(0xff768EB9).withOpacity(.7),
-                              Color(0xff463A8D).withOpacity(.7),
+                              gradient3,
+                              gradient2,
                             ],
                           ),
                         ),
