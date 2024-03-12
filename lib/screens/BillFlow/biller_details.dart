@@ -642,6 +642,31 @@ class _BillerDetailsState extends State<BillerDetails> {
                                   ),
                                 ),
                               ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 20.w, bottom: 20.h, right: 20.w),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    children: [
+                                      Image.asset(
+                                        LOGO_BBPS_ASSURED,
+                                        height: 50.h,
+                                        width: 50.w,
+                                      ),
+                                      Text(
+                                        'All billing details are verified by Bharat Billpay',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 10.sp,
+                                          fontWeight: FontWeight.normal,
+                                          color: TXT_CLR_LITE,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                               if (PaymentExactErrMsg.isNotEmpty)
                                 Padding(
                                   padding: EdgeInsets.only(
@@ -727,6 +752,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                         ? widget.savedBillersData!.cATEGORYNAME
                                         : widget.billerData!.cATEGORYNAME,
                                     "isSavedBill": widget.isSavedBill,
+                                    "BbpsSettingInfo": BbpsSettingInfo,
                                     "amount":
                                         double.parse(txtAmountController.text)
                                             .toString(),

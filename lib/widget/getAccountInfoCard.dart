@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 class AccountInfoCard extends StatelessWidget {
   String accountNumber;
-  String balance;
+  dynamic balance;
   int? isSelected;
   int index;
   bool? AccErr;
@@ -81,22 +81,56 @@ class AccountInfoCard extends StatelessWidget {
                   ),
                 if (showAccDetails == true)
                   Padding(
-                    padding: EdgeInsets.fromLTRB(15.0.w, 0, 0, 10.h),
-                    child: Text(
-                      balance != "Unable to fetch balance"
-                          ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(balance))}"
-                          : "-",
-                      style: TextStyle(
-                        fontSize: 13.0.sp,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xff0e2146),
+                    padding: EdgeInsets.fromLTRB(15.0.w, 5.h, 5.w, 9.h),
+                    child: FittedBox(
+                      child: Text(
+                        balance.runtimeType == double ||
+                                balance.runtimeType == int
+                            ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(balance.toString()))}"
+                            : balance.toString(),
+                        style: TextStyle(
+                          fontSize: 13.0.sp,
+                          fontWeight: FontWeight.w600,
+                          color: AccErr == true &&
+                                  isSelected == index &&
+                                  (balance.runtimeType != double ||
+                                      balance.runtimeType == int)
+                              ? CLR_ERROR
+                              : const Color(0xff0e2146),
+                        ),
+                        textAlign: TextAlign.left,
                       ),
-                      textAlign: TextAlign.left,
+                      fit: BoxFit.contain,
                     ),
                   ),
               ],
             ),
           ),
+          if (isSelected == index &&
+              AccErr == true &&
+              balance != "Unable to fetch balance")
+            Positioned(
+              top: 70.h,
+              left: 20.w,
+              right: 0.w,
+              child: Padding(
+                padding: EdgeInsets.only(left: 0.w, top: 10.h, right: 10.w),
+                child: SizedBox(
+                  height: 10.h,
+                  width: 200.w,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                      'Insufficient balance in the account',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: CLR_ERROR,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           if (isSelected == index)
             Positioned(
               top: 0,

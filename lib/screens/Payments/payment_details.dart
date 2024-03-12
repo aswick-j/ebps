@@ -10,6 +10,7 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/logger.dart';
 import 'package:ebps/models/account_info_model.dart';
 import 'package:ebps/models/add_biller_model.dart';
+import 'package:ebps/models/bbps_settings_model.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/confirm_fetch_bill_model.dart';
 import 'package:ebps/models/prepaid_fetch_plans_model.dart';
@@ -20,6 +21,7 @@ import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/getAccountInfoCard.dart';
 import 'package:ebps/widget/get_biller_detail.dart';
 import 'package:ebps/widget/loader_overlay.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,6 +36,7 @@ class PaymentDetails extends StatefulWidget {
   BillersData? billerData;
   SavedBillersData? savedBillersData;
   String? amount;
+  bbpsSettingsData? BbpsSettingInfo;
   List<AddbillerpayloadModel>? inputParameters;
   List<PARAMETERS>? SavedinputParameters;
   Map<String, dynamic>? validateBill;
@@ -51,6 +54,7 @@ class PaymentDetails extends StatefulWidget {
       this.billerData,
       this.inputParameters,
       required this.SavedinputParameters,
+      required this.BbpsSettingInfo,
       this.categoryName,
       this.amount,
       this.validateBill,
@@ -391,16 +395,52 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                   children: [
                                     billerDetail(
                                         widget.isSavedBill
-                                            ? widget.SavedinputParameters![0]
-                                                .pARAMETERNAME
-                                            : widget.inputParameters![0]
-                                                .pARAMETERNAME,
+                                            ? widget.categoryName.toString().toLowerCase() ==
+                                                    "mobile prepaid"
+                                                ? "Mobile Number"
+                                                : widget
+                                                    .SavedinputParameters![0]
+                                                    .pARAMETERNAME
+                                            : widget.categoryName.toString().toLowerCase() ==
+                                                    "mobile prepaid"
+                                                ? "Mobile Number"
+                                                : widget.inputParameters![0]
+                                                    .pARAMETERNAME,
                                         widget.isSavedBill
-                                            ? widget.SavedinputParameters![0]
-                                                .pARAMETERVALUE
-                                            : widget.inputParameters![0]
-                                                .pARAMETERVALUE
-                                                .toString(),
+                                            ? widget.categoryName.toString().toLowerCase() ==
+                                                    "mobile prepaid"
+                                                ? widget.SavedinputParameters!
+                                                    .firstWhere((params) =>
+                                                        params.pARAMETERNAME == null
+                                                            ? params.pARAMETERNAME ==
+                                                                null
+                                                            : params.pARAMETERNAME
+                                                                    .toString()
+                                                                    .toLowerCase() ==
+                                                                "mobile number")
+                                                    .pARAMETERVALUE
+                                                    .toString()
+                                                : widget
+                                                    .SavedinputParameters![0]
+                                                    .pARAMETERVALUE
+                                            : widget.categoryName
+                                                        .toString()
+                                                        .toLowerCase() ==
+                                                    "mobile prepaid"
+                                                ? widget.inputParameters!
+                                                    .firstWhere((params) =>
+                                                        params.pARAMETERNAME == null
+                                                            ? params.pARAMETERNAME ==
+                                                                null
+                                                            : params.pARAMETERNAME
+                                                                    .toString()
+                                                                    .toLowerCase() ==
+                                                                "mobile number")
+                                                    .pARAMETERVALUE
+                                                    .toString()
+                                                : widget.inputParameters![0]
+                                                    .pARAMETERVALUE
+                                                    .toString(),
                                         context),
                                     billerDetail("Bill Name",
                                         widget.billName.toString(), context),
@@ -502,8 +542,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                   accountNumber: accountInfo![index]
                                       .accountNumber
                                       .toString(),
-                                  balance:
-                                      accountInfo![index].balance.toString(),
+                                  balance: accountInfo![index].balance,
                                   onAccSelected: (Date) {
                                     setState(() {
                                       selectedAcc = index;
@@ -529,25 +568,95 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                   isSelected: selectedAcc,
                                 );
                               }),
-                          if (accError)
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: 20.w, top: 10.h, right: 20.w),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Insufficient balance in the account',
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: CLR_ERROR,
-                                  ),
-                                ),
-                              ),
-                            ),
                         ],
                       ),
                     ),
+                  Container(
+                    clipBehavior: Clip.hardEdge,
+                    width: double.infinity,
+                    margin: EdgeInsets.only(
+                        left: 18.0.w, right: 18.w, top: 20.h, bottom: 0.h),
+                    decoration: BoxDecoration(
+                      color: CLR_GREY.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(6.0.r + 2.r),
+                      border: Border.all(
+                        color: Color(0xffD1D9E8),
+                        width: 1.0,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                            padding: EdgeInsets.only(
+                                top: 10.h, left: 14.w, bottom: 0.h),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.info_outline_rounded,
+                                  color: TXT_CLR_PRIMARY,
+                                  size: 15.r,
+                                ),
+                                Text(
+                                  "  Message from Biller",
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: TXT_CLR_PRIMARY,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ],
+                            )),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 5.h, left: 34.w, bottom: 10.h),
+                          child: Text(
+                            "It might take upto 72 hours to complete this transaction based on the biller bank availability in case of any network or technical failure.",
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w500,
+                              color: CLR_BLUE_LITE,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: 20.w, top: 10.h, right: 20.w),
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontSize: 14.0.sp,
+                          color: Colors.black,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                              style: TextStyle(
+                                  fontSize: 11.sp,
+                                  color: TXT_CLR_DEFAULT,
+                                  fontWeight: FontWeight.w500),
+                              text: "By continuing, you agree to accept our "),
+                          TextSpan(
+                            text: "Terms and Conditions.",
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                goToData(context, tERMANDCONDITIONSROUTE, {
+                                  "BbpsSettingInfo": widget.BbpsSettingInfo
+                                });
+                              },
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: TXT_CLR_PRIMARY,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   BbpsLogoContainer(
                     showEquitasLogo: false,
                   ),

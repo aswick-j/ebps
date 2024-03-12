@@ -254,7 +254,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: Color(0xff808080),
+                                      color: TXT_CLR_PRIMARY,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -349,7 +349,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: Color(0xff808080),
+                                      color: TXT_CLR_PRIMARY,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -436,7 +436,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                         style: TextStyle(
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w400,
-                                          color: Color(0xff808080),
+                                          color: TXT_CLR_PRIMARY,
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
@@ -445,102 +445,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                 )
                               ],
                             )),
-                        // GridView.count(
-                        //     shrinkWrap: true,
-                        //     primary: false,
-                        //     physics: NeverScrollableScrollPhysics(),
-                        //     crossAxisSpacing: 10.w,
-                        //     mainAxisSpacing: 0,
-                        //     crossAxisCount: 2,
-                        //     childAspectRatio: 4 / 2,
-                        //     children: [
-                        //       Container(
-                        //           decoration: BoxDecoration(
-                        //             borderRadius: BorderRadius.circular(2.r),
-                        //           ),
-                        //           child: Column(
-                        //             crossAxisAlignment:
-                        //                 CrossAxisAlignment.center,
-                        //             children: [
-                        //               Padding(
-                        //                   padding: EdgeInsets.fromLTRB(
-                        //                       8.w, 10.h, 0, 0),
-                        //                   child: Text(
-                        //                     widget.allautoPayData![index]
-                        //                                 .rESETDATE ==
-                        //                             1
-                        //                         ? "Due Date"
-                        //                         : "Due Amount",
-                        //                     style: TextStyle(
-                        //                       fontSize: 12.sp,
-                        //                       fontWeight: FontWeight.w400,
-                        //                       color: Color(0xff808080),
-                        //                     ),
-                        //                     textAlign: TextAlign.center,
-                        //                   )),
-                        //               Padding(
-                        //                   padding: EdgeInsets.fromLTRB(
-                        //                       8.w, 10.h, 0, 0),
-                        //                   child: Text(
-                        //                     widget.allautoPayData![index]
-                        //                                 .rESETDATE ==
-                        //                             1
-                        //                         ? widget.allautoPayData![index]
-                        //                             .dUEDATE
-                        //                             .toString()
-                        //                         : "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allautoPayData![index].dUEAMOUNT.toString()))}",
-                        //                     style: TextStyle(
-                        //                       fontSize: 13.sp,
-                        //                       fontWeight: FontWeight.bold,
-                        //                       color: Color(0xff1b438b),
-                        //                     ),
-                        //                     textAlign: TextAlign.left,
-                        //                   ))
-                        //             ],
-                        //           )),
-                        //       Container(
-                        //           decoration: BoxDecoration(
-                        //             borderRadius: BorderRadius.circular(2.r),
-                        //           ),
-                        //           child: Column(
-                        //             crossAxisAlignment:
-                        //                 CrossAxisAlignment.center,
-                        //             children: [
-                        //               Padding(
-                        //                   padding: EdgeInsets.fromLTRB(
-                        //                       8.w, 10.h, 0, 0),
-                        //                   child: Text(
-                        //                     widget.allautoPayData![index]
-                        //                                 .rESETDATE ==
-                        //                             1
-                        //                         ? "Auto Pay Date"
-                        //                         : "Auto Pay Limit",
-                        //                     style: TextStyle(
-                        //                       fontSize: 12.sp,
-                        //                       fontWeight: FontWeight.w400,
-                        //                       color: Color(0xff808080),
-                        //                     ),
-                        //                     textAlign: TextAlign.center,
-                        //                   )),
-                        //               Padding(
-                        //                   padding: EdgeInsets.fromLTRB(
-                        //                       8.w, 10.h, 0, 0),
-                        //                   child: Text(
-                        //                     widget.allautoPayData![index]
-                        //                                 .rESETDATE ==
-                        //                             1
-                        //                         ? '${numberPrefixSetter(widget.allautoPayData![index].pAYMENTDATE.toString())}${" of"}${widget.allautoPayData![index].iSBIMONTHLY == 0 ? " every" : " every two"}${" month"}'
-                        //                         : "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allautoPayData![index].mAXIMUMAMOUNT.toString()))}",
-                        //                     style: TextStyle(
-                        //                       fontSize: 13.sp,
-                        //                       fontWeight: FontWeight.bold,
-                        //                       color: Color(0xff1b438b),
-                        //                     ),
-                        //                     textAlign: TextAlign.left,
-                        //                   ))
-                        //             ],
-                        //           ))
-                        //     ]),
+
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 12.0.w, vertical: 10.h),

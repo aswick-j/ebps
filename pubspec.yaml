@@ -32,6 +32,7 @@ dependencies:
   screenshot: ^2.1.0
   encrypt: ^5.0.3
   basic_utils: ^5.7.0
+  flutter_widget_from_html_core: ^0.14.11
 
 dev_dependencies:
   flutter_test:

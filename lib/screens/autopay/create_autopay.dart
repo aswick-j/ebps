@@ -12,6 +12,7 @@ import 'package:ebps/helpers/getMonthName.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/numberPrefixSetter.dart';
 import 'package:ebps/models/account_info_model.dart';
+import 'package:ebps/models/bbps_settings_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/services/api.dart';
 import 'package:ebps/widget/bbps_logo.dart';
@@ -19,6 +20,7 @@ import 'package:ebps/widget/date_picker_dialog.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/getAccountInfoCard.dart';
 import 'package:ebps/widget/loader_overlay.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,6 +71,8 @@ class _createAutopayState extends State<createAutopay> {
   // bool isInputItemsLoading = true;
   // List<InputSignaturess>? InputItems = [];
   bool isMaxAmountLoading = true;
+  bool isBbpsSettingsLoading = true;
+  bbpsSettingsData? BbpsSettingInfo;
 
   // List<String> EffectiveFrom = <String>[
   //   'Immediately',
@@ -79,6 +83,7 @@ class _createAutopayState extends State<createAutopay> {
   @override
   void initState() {
     dateController.text = '1${getDaySuffix("1")}';
+    BlocProvider.of<HomeCubit>(context).getBbpsSettings();
 
     BlocProvider.of<HomeCubit>(context).getAccountInfo(myAccounts);
     BlocProvider.of<MybillersCubit>(context).getAutoPayMaxAmount();
@@ -138,7 +143,25 @@ class _createAutopayState extends State<createAutopay> {
                     setState(() {
                       isAccLoading = false;
                     });
-                  } else if (state is AccountInfoError) {}
+                  } else if (state is AccountInfoError) {
+                    setState(() {
+                      isAccLoading = false;
+                    });
+                  }
+
+                  if (state is BbpsSettingsLoading) {
+                    isBbpsSettingsLoading = true;
+                  } else if (state is BbpsSettingsSuccess) {
+                    isBbpsSettingsLoading = false;
+
+                    setState(() {
+                      BbpsSettingInfo = state.BbpsSettingsDetail!.data;
+                    });
+                  } else if (state is BbpsSettingsFailed) {
+                    isBbpsSettingsLoading = false;
+                  } else if (state is BbpsSettingsError) {
+                    isBbpsSettingsLoading = false;
+                  }
                 },
               ),
               BlocListener<MybillersCubit, MybillersState>(
@@ -170,7 +193,7 @@ class _createAutopayState extends State<createAutopay> {
                 },
               ),
             ],
-            child: isMaxAmountLoading
+            child: isMaxAmountLoading || isBbpsSettingsLoading
                 ? Center(
                     child: Container(
                       height: 500.h,
@@ -739,9 +762,7 @@ class _createAutopayState extends State<createAutopay> {
                                       accountNumber: accountInfo![index]
                                           .accountNumber
                                           .toString(),
-                                      balance: accountInfo![index]
-                                          .balance
-                                          .toString(),
+                                      balance: accountInfo![index].balance,
                                       onAccSelected: (Date) {
                                         setState(() {
                                           selectedAcc = index;
@@ -785,6 +806,40 @@ class _createAutopayState extends State<createAutopay> {
                             ),
                           ],
                         )),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(left: 20.w, top: 10.h, right: 20.w),
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontSize: 14.0.sp,
+                            color: Colors.black,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                                style: TextStyle(
+                                    fontSize: 11.sp,
+                                    color: TXT_CLR_DEFAULT,
+                                    fontWeight: FontWeight.w500),
+                                text:
+                                    "By continuing, you agree to accept our "),
+                            TextSpan(
+                              text: "Terms and Conditions.",
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  goToData(context, tERMANDCONDITIONSROUTE,
+                                      {"BbpsSettingInfo": BbpsSettingInfo});
+                                },
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: TXT_CLR_PRIMARY,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     BbpsLogoContainer(
                       showEquitasLogo: false,
                     ),

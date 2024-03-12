@@ -6,6 +6,7 @@ import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getBillerType.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/add_biller_model.dart';
+import 'package:ebps/models/bbps_settings_model.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
@@ -60,6 +61,9 @@ class _PrepaidPlansState extends State<PrepaidPlans>
   List<PrepaidPlansData>? prepaidPlansData = [];
   List<PrepaidPlansData>? FilteredPlansData = [];
   String? CircleValue;
+  bool isBbpsSettingsLoading = true;
+  bbpsSettingsData? BbpsSettingInfo;
+
   @override
   void initState() {
     super.initState();
@@ -80,6 +84,8 @@ class _PrepaidPlansState extends State<PrepaidPlans>
   }
 
   handleInitial() {
+    BlocProvider.of<HomeCubit>(context).getBbpsSettings();
+
     if (widget.isFetchPlans) {
       BlocProvider.of<HomeCubit>(context)
           .PrepaidFetchPlans(widget.savedBillerData!.bILLERID.toString());
@@ -163,6 +169,7 @@ class _PrepaidPlansState extends State<PrepaidPlans>
         "billerData": widget.billerData,
         "savedBillersData": widget.savedBillerData,
         "inputParameters": widget.inputParameters,
+        "BbpsSettingInfo": BbpsSettingInfo,
         "SavedinputParameters": widget.SavedinputParameters,
         "categoryName": widget.isSavedBill
             ? widget.savedBillerData!.cATEGORYNAME
@@ -211,6 +218,7 @@ class _PrepaidPlansState extends State<PrepaidPlans>
             : widget.billerData!.cATEGORYNAME,
         "isSavedBill": widget.isSavedBill,
         "amount": amount,
+        "BbpsSettingInfo": BbpsSettingInfo,
         "validateBill": validateBill,
         "billerInputSign": billerInputSign,
         "planDetails": planDetails,
@@ -260,6 +268,19 @@ class _PrepaidPlansState extends State<PrepaidPlans>
         ),
         body: BlocConsumer<HomeCubit, HomeState>(
           listener: (context, state) {
+            if (state is BbpsSettingsLoading) {
+              isBbpsSettingsLoading = true;
+            } else if (state is BbpsSettingsSuccess) {
+              isBbpsSettingsLoading = false;
+
+              setState(() {
+                BbpsSettingInfo = state.BbpsSettingsDetail!.data;
+              });
+            } else if (state is BbpsSettingsFailed) {
+              isBbpsSettingsLoading = false;
+            } else if (state is BbpsSettingsError) {
+              isBbpsSettingsLoading = false;
+            }
             if (state is PrepaidFetchPlansLoading) {
               setState(() {
                 isPrepaidPlansLoading = true;

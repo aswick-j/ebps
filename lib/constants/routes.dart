@@ -9,6 +9,7 @@ import 'package:ebps/screens/BillFlow/bill_parameters.dart';
 import 'package:ebps/screens/BillFlow/biller_details.dart';
 import 'package:ebps/screens/BillFlow/biller_list.dart';
 import 'package:ebps/screens/Payments/payment_details.dart';
+import 'package:ebps/screens/Payments/terms_and_conditions.dart';
 import 'package:ebps/screens/Payments/transaction_screen.dart';
 import 'package:ebps/screens/Prepaid/bill_parameters_prepaid.dart';
 import 'package:ebps/screens/Prepaid/prepaid_plans.dart';
@@ -57,6 +58,7 @@ const cREATEAUTOPAYROUTE = '/createAutopayRoute';
 const eDITAUTOPAYROUTE = '/editAutopayRoute';
 const eDITBILLERROUTE = '/editBillerRoute';
 const uPCOMINGDUESROUTE = '/upcomingDuesRoute';
+const tERMANDCONDITIONSROUTE = '/termsAndConditionsRoute';
 
 /// The `MyRouter` class is responsible for generating routes and corresponding page widgets based on
 /// the provided route settings.
@@ -240,6 +242,7 @@ class MyRouter {
                       categoryName: args['categoryName'],
                       isSavedBill: args["isSavedBill"],
                       billerData: args['billerData'],
+                      BbpsSettingInfo: args['BbpsSettingInfo'],
                       savedBillersData: args['savedBillersData'],
                       inputParameters: args['inputParameters'],
                       SavedinputParameters: args['SavedinputParameters'],
@@ -250,6 +253,18 @@ class MyRouter {
                       otherAmount: args["otherAmount"]),
                 ));
 
+//TERMSANDCONDITIONS
+      case tERMANDCONDITIONSROUTE:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => BlocProvider(
+                  create: (context) => HomeCubit(repository: apiClient),
+                  child: TermsAndConditions(
+                    BbpsSettingInfo: args['BbpsSettingInfo'],
+                  ),
+                ));
       //SESSION EXPIRED
 
       case sESSIONEXPIREDROUTE:
