@@ -1,3 +1,4 @@
+import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getNavigators.dart';
@@ -51,55 +52,64 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        bottom: true,
-        left: true,
-        top: true,
-        right: true,
-        maintainBottomViewPadding: true,
-        minimum: EdgeInsets.zero,
-        child: Scaffold(
-            body: Padding(
-              padding: EdgeInsets.only(
-                  left: 16.0.w, top: 8.h, right: 16.w, bottom: 60.h),
-              child: Container(
-                height: 1000.h,
-                child: SingleChildScrollView(
-                    controller: _controller,
-                    child: HtmlWidget(
-                        textStyle: TextStyle(fontSize: 14.sp),
-                        widget.BbpsSettingInfo!.tERMSANDCONDITIONS.toString())),
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0.4,
+          toolbarHeight: 42.0.h,
+          title: Row(
+            children: [
+              Icon(Icons.gavel_sharp, color: CLR_PRIMARY),
+              SizedBox(width: 10.w),
+              Text(
+                'Terms and Conditions',
+                style:
+                    TextStyle(color: CLR_PRIMARY, fontWeight: FontWeight.bold),
               ),
-            ),
-            bottomSheet: Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                      top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
-              child: Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
-                      child: MyAppButton(
-                          onPressed: reachEnd
-                              ? () {
-                                  goBack(context);
-                                }
-                              : () {},
-                          buttonText: "Okay",
-                          buttonTxtColor: BTN_CLR_ACTIVE,
-                          buttonBorderColor: Colors.transparent,
-                          buttonColor: reachEnd ? CLR_PRIMARY : Colors.grey,
-                          buttonSizeX: 10.h,
-                          buttonSizeY: 40.w,
-                          buttonTextSize: 14.sp,
-                          buttonTextWeight: FontWeight.w500),
-                    ),
-                  ],
+            ],
+          ),
+          automaticallyImplyLeading: false,
+        ),
+        body: Padding(
+          padding: EdgeInsets.only(
+              left: 16.0.w, top: 8.h, right: 16.w, bottom: 60.h),
+          child: Container(
+            height: 1000.h,
+            child: SingleChildScrollView(
+                controller: _controller,
+                child: HtmlWidget(
+                    textStyle: TextStyle(fontSize: 14.sp),
+                    widget.BbpsSettingInfo!.tERMSANDCONDITIONS.toString())),
+          ),
+        ),
+        bottomSheet: Container(
+          decoration: BoxDecoration(
+              border:
+                  Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Expanded(
+                  child: MyAppButton(
+                      onPressed: reachEnd
+                          ? () {
+                              goBack(context);
+                            }
+                          : () {},
+                      buttonText: "Okay",
+                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonBorderColor: Colors.transparent,
+                      buttonColor: reachEnd ? CLR_PRIMARY : Colors.grey,
+                      buttonSizeX: 10.h,
+                      buttonSizeY: 40.w,
+                      buttonTextSize: 14.sp,
+                      buttonTextWeight: FontWeight.w500),
                 ),
-              ),
-            )));
+              ],
+            ),
+          ),
+        ));
   }
 }

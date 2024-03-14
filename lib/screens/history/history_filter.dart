@@ -209,14 +209,14 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                             boxShadow: [
                                               BoxShadow(
                                                   color: Colors.grey
-                                                      .withOpacity(0.5),
-                                                  spreadRadius: 0.6,
-                                                  blurRadius: 4,
+                                                      .withOpacity(0.2),
+                                                  spreadRadius: 0.2,
+                                                  blurRadius: 2,
                                                   offset: Offset(0, 2)),
                                             ],
                                           ),
                                           child: Divider(
-                                            height: 1.h,
+                                            height: 0.4.h,
                                             thickness: 1,
                                             color: Colors.grey.withOpacity(0.1),
                                           ),
@@ -450,14 +450,14 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                               boxShadow: [
                                                 BoxShadow(
                                                     color: Colors.grey
-                                                        .withOpacity(0.5),
-                                                    spreadRadius: 0.6,
-                                                    blurRadius: 4,
+                                                        .withOpacity(0.2),
+                                                    spreadRadius: 0.2,
+                                                    blurRadius: 2,
                                                     offset: Offset(0, 2)),
                                               ],
                                             ),
                                             child: Divider(
-                                              height: 1.h,
+                                              height: 0.4.h,
                                               thickness: 1,
                                               color:
                                                   Colors.grey.withOpacity(0.1),

@@ -208,6 +208,7 @@ class MainContainer extends StatelessWidget {
               if (buttonText != "Pay Now") {
                 showDialog(
                     context: context,
+                    barrierDismissible: false,
                     builder: (BuildContext context) {
                       return Dialog(
                         shape: RoundedRectangleBorder(
@@ -269,6 +270,7 @@ class MainContainer extends StatelessWidget {
                                                       .toString()) {
                                                 showDialog(
                                                     context: context,
+                                                    barrierDismissible: false,
                                                     builder:
                                                         (BuildContext context) {
                                                       return Dialog(
@@ -389,6 +391,7 @@ class MainContainer extends StatelessWidget {
                     });
               } else {
                 showDialog(
+                    barrierDismissible: false,
                     context: context,
                     builder: (BuildContext context) {
                       return Dialog(

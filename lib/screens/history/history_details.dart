@@ -500,6 +500,13 @@ class _HistoryDetailsState extends State<HistoryDetails> {
             ),
           ),
         ),
+        // floatingActionButton: FloatingActionButton.extended(
+        //   backgroundColor: CLR_PRIMARY,
+        //   onPressed: () {},
+        //   icon: Icon(Icons.refresh),
+        //   label: Text("Refresh Status"),
+        // ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         bottomSheet: widget.historyData.tRANSACTIONSTATUS != 'success'
             ? null
             : Container(

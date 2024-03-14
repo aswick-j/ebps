@@ -14,6 +14,7 @@ import 'package:ebps/services/api_client.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -51,10 +52,12 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
   List<UpcomingDuesData>? upcomingDuesData = [];
   List<UpcomingPaymentsData>? upcomingPaymentList = [];
   List<AllConfigurations>? allautoPaymentList = [];
+  final searchController = TextEditingController();
 
   bool isUpcomingDuesLoading = true;
   bool isUpcomingAutopaymentLoading = true;
   bool isSavedBillerLoading = true;
+  bool showSearch = false;
 
   @override
   void initState() {
@@ -90,41 +93,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
     getBillerDataWithUpcomingFirst(billerResponseData) {
       try {
         List billerData = billerResponseData!;
-        // List tempUpcomingDuedata;
-        // List tempBillerData;
-        // List<UpcomingPaymentsData>? upcomingReversed =
-        //     upcomingPaymentList!.reversed.toList();
 
-        // List<UpcomingDuesData>? upcomingReversedAgain =
-        //     upcomingDuesData!.reversed.toList();
-
-        // for (var i = 0; i < upcomingReversedAgain.length; i++) {
-        //   tempUpcomingDuedata = billerData
-        //       .where((element) =>
-        //           element.cUSTOMERBILLID ==
-        //           upcomingReversedAgain[i].customerBillID)
-        //       .toList();
-
-        //   for (var j = 0; j < tempUpcomingDuedata.length; j++) {
-        //     billerData.remove(tempUpcomingDuedata[j]);
-        //     billerData.insert(0, tempUpcomingDuedata[j]);
-        //   }
-        // }
-
-        // for (var i = 0; i < upcomingReversed.length; i++) {
-        //   tempBillerData = billerData
-        //       .where((element) =>
-        //           element.cUSTOMERBILLID == upcomingReversed[i].cUSTOMERBILLID)
-        //       .toList();
-        //   for (var j = 0; j < tempBillerData.length; j++) {
-        //     billerData.remove(tempBillerData[j]);
-        //     billerData.insert(0, tempBillerData[j]);
-        //   }
-        // }
-
-        /// The above Dart code is creating three empty lists `TempAutoData`, `TempDueData`, and
-        /// `TempBillData`. It then iterates over the `billerData` list and based on certain conditions,
-        /// it populates these lists with elements from `billerData`.
         List TempAutoData = [];
         List TempDueData = [];
         List TempBillData = [];
@@ -138,9 +107,12 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
             TempBillData.add(billerData[i]!);
           }
         }
-        TempAutoData.sort((a, b) => a.bILLERNAME.toLowerCase().compareTo(b.bILLERNAME.toLowerCase()));
-        TempDueData.sort((a, b) => a.bILLERNAME.toLowerCase().compareTo(b.bILLERNAME.toLowerCase()));
-        TempBillData.sort((a, b) => a.bILLERNAME.toLowerCase().compareTo(b.bILLERNAME.toLowerCase()));
+        TempAutoData.sort((a, b) =>
+            a.bILLERNAME.toLowerCase().compareTo(b.bILLERNAME.toLowerCase()));
+        TempDueData.sort((a, b) =>
+            a.bILLERNAME.toLowerCase().compareTo(b.bILLERNAME.toLowerCase()));
+        TempBillData.sort((a, b) =>
+            a.bILLERNAME.toLowerCase().compareTo(b.bILLERNAME.toLowerCase()));
         return [...TempAutoData, ...TempDueData, ...TempBillData];
         // return billerData;
       } catch (e) {}
@@ -207,7 +179,59 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
     return Scaffold(
       appBar: MyAppBar(
         context: context,
-        title: 'My Billers',
+        title: !showSearch
+            ? 'My Billers'
+            : TextFormField(
+                autofocus: true,
+                controller: searchController,
+                onChanged: (searchTxt) {
+                  List<SavedBillersData>? searchData = [];
+
+                  // searchData =  getBillerDataWithUpcomingFirst(savedBillerData)!!.where((item) {
+                  //   final bILLERNAME =
+                  //       item.bILLERNAME.toString().toLowerCase();
+                  //   final bILLNAME = item.bILLNAME.toString().toLowerCase();
+                  //   final searchLower = searchTxt.toLowerCase();
+                  //   return bILLERNAME.contains(searchLower) ||
+                  //       bILLNAME.contains(searchLower);
+                  // }).toList();
+
+                  // setState(() {
+                  //   billerData = searchData;
+                  // });
+                },
+                onFieldSubmitted: (_) {},
+                keyboardType: TextInputType.text,
+                autocorrect: false,
+                enableSuggestions: false,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^[a-z0-9A-Z. ]*'))
+                ],
+                decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      searchController.clear();
+
+                      setState(() {
+                        showSearch = false;
+                      });
+                    },
+                    child: Icon(
+                      Icons.close_rounded,
+                      size: 26,
+                      color: CLR_PRIMARY,
+                    ),
+                  ),
+                  hintText: "Search a Biller",
+                  hintStyle: TextStyle(color: CLR_GREY),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                ),
+              ),
+        
         onLeadingTap: () => WidgetsBinding.instance.addPostFrameCallback((_) {
           // goToReplace(context, hOMEROUTE);
           Navigator.of(context).pushReplacement(

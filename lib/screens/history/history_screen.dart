@@ -127,17 +127,18 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
     });
   }
 
+  handleFilterModal(biller_id, biller_name, category_ID, category_name) {
+    setState(() {
+      billerID = biller_id;
+      categoryID = category_ID;
+      billerName = biller_name;
+      categoryName = category_name;
+    });
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    handleFilterModal(biller_id, biller_name, category_ID, category_name) {
-      setState(() {
-        billerID = biller_id;
-        categoryID = category_ID;
-        billerName = biller_name;
-        categoryName = category_name;
-      });
-    }
-
     handleFilter() {
       BlocProvider.of<HistoryCubit>(context).getHistoryDetails({
         "startDate": fromDate != null
@@ -390,14 +391,14 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                             decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 0.6,
-                                    blurRadius: 4,
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 0.2,
+                                    blurRadius: 2,
                                     offset: Offset(0, 2)),
                               ],
                             ),
                             child: Divider(
-                              height: 1.h,
+                              height: 0.4.h,
                               thickness: 1,
                               color: Colors.grey.withOpacity(0.1),
                             ),

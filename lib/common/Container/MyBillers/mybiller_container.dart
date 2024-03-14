@@ -564,14 +564,14 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                     decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 0.6,
-                                            blurRadius: 4,
+                                            color: Colors.grey.withOpacity(0.2),
+                                            spreadRadius: 0.2,
+                                            blurRadius: 2,
                                             offset: Offset(0, 2)),
                                       ],
                                     ),
                                     child: Divider(
-                                      height: 1.h,
+                                      height: 0.4.h,
                                       thickness: 1,
                                       color: Colors.grey.withOpacity(0.1),
                                     ),
@@ -725,17 +725,17 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                   color: Colors
                                                                       .grey
                                                                       .withOpacity(
-                                                                          0.5),
+                                                                          0.2),
                                                                   spreadRadius:
-                                                                      0.6,
-                                                                  blurRadius: 4,
+                                                                      0.2,
+                                                                  blurRadius: 2,
                                                                   offset:
                                                                       Offset(0,
                                                                           2)),
                                                             ],
                                                           ),
                                                           child: Divider(
-                                                            height: 1.h,
+                                                            height: 0.4.h,
                                                             thickness: 1,
                                                             color: Colors.grey
                                                                 .withOpacity(
@@ -857,11 +857,11 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                                       Container(
                                                                                         decoration: BoxDecoration(
                                                                                           boxShadow: [
-                                                                                            BoxShadow(color: Colors.grey.withOpacity(0.5), spreadRadius: 0.6, blurRadius: 4, offset: Offset(0, 2)),
+                                                                                            BoxShadow(color: Colors.grey.withOpacity(0.2), spreadRadius: 0.2, blurRadius: 2, offset: Offset(0, 2)),
                                                                                           ],
                                                                                         ),
                                                                                         child: Divider(
-                                                                                          height: 1.h,
+                                                                                          height: 0.4.h,
                                                                                           thickness: 1,
                                                                                           color: Colors.grey.withOpacity(0.1),
                                                                                         ),
@@ -1037,17 +1037,17 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                   color: Colors
                                                                       .grey
                                                                       .withOpacity(
-                                                                          0.5),
+                                                                          0.2),
                                                                   spreadRadius:
-                                                                      0.6,
-                                                                  blurRadius: 4,
+                                                                      0.2,
+                                                                  blurRadius: 2,
                                                                   offset:
                                                                       Offset(0,
                                                                           2)),
                                                             ],
                                                           ),
                                                           child: Divider(
-                                                            height: 1.h,
+                                                            height: 0.4.h,
                                                             thickness: 1,
                                                             color: Colors.grey
                                                                 .withOpacity(
@@ -1465,14 +1465,14 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                 boxShadow: [
                                                   BoxShadow(
                                                       color: Colors.grey
-                                                          .withOpacity(0.5),
-                                                      spreadRadius: 0.6,
-                                                      blurRadius: 4,
+                                                          .withOpacity(0.2),
+                                                      spreadRadius: 0.2,
+                                                      blurRadius: 2,
                                                       offset: Offset(0, 2)),
                                                 ],
                                               ),
                                               child: Divider(
-                                                height: 1.h,
+                                                height: 0.4.h,
                                                 thickness: 1,
                                                 color: Colors.grey
                                                     .withOpacity(0.1),
@@ -1812,7 +1812,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                 ),
             Padding(
               padding:
-                  EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 6.0.h),
+                  EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 3.0.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -1820,8 +1820,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (widget.upcomingDueData != null)
-                        if (!(widget.upcomingDueData!.dueAmount == null &&
-                            widget.upcomingDueData!.dueDate == null))
+                        if (widget.upcomingDueData!.dueDate != null)
                           Row(
                             children: [
                               SvgPicture.asset(ICON_CALENDAR),
@@ -1847,10 +1846,12 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                               ),
                             ],
                           ),
-                      if (widget.upcomingText != "")
-                        SizedBox(
-                          height: 3.h,
-                        ),
+                      // if (widget.upcomingText != "")
+                      //   if (widget.upcomingDueData != null)
+                      //     if (widget.upcomingDueData!.dueDate != null)
+                      //       SizedBox(
+                      //         height: 3.h,
+                      //       ),
                       if (widget.upcomingText != "")
                         Text(
                           widget.upcomingText!,
@@ -1864,8 +1865,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                     ],
                   ),
                   if (widget.upcomingDueData != null)
-                    if (!(widget.upcomingDueData!.dueAmount == null &&
-                        widget.upcomingDueData!.dueDate == null))
+                    if (widget.upcomingDueData!.dueAmount != null)
                       Text(
                         widget.upcomingDueData!.dueAmount != null
                             ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.upcomingDueData!.dueAmount.toString()))}"

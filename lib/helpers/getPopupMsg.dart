@@ -14,12 +14,19 @@ final TextStyle normalStyle = TextStyle(
   color: CLR_PRIMARY,
   fontSize: 15.sp,
 );
+final TextStyle italicNormalStyle = TextStyle(
+  fontWeight: FontWeight.bold,
+  color: CLR_PRIMARY,
+  fontStyle: FontStyle.italic,
+  fontSize: 15.sp,
+);
 TextSpan getPopupSuccessMsg(int index, String BillerName, String BillName) {
   switch (index) {
     case 0:
       return TextSpan(
         children: <TextSpan>[
-          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
           TextSpan(text: " Has Been Deleted Successfully", style: normalStyle),
         ],
       );
@@ -30,7 +37,8 @@ TextSpan getPopupSuccessMsg(int index, String BillerName, String BillName) {
             text: "Autopay for ",
             style: normalStyle,
           ),
-          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
           TextSpan(text: " Has Been Created", style: normalStyle),
         ],
       );
@@ -38,7 +46,8 @@ TextSpan getPopupSuccessMsg(int index, String BillerName, String BillName) {
       return TextSpan(
         children: <TextSpan>[
           TextSpan(text: "Autopay for ", style: normalStyle),
-          TextSpan(text: "$BillName ($BillerName) ", style: boldStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
           TextSpan(text: " Has Been Updated", style: normalStyle),
         ],
       );
@@ -46,7 +55,8 @@ TextSpan getPopupSuccessMsg(int index, String BillerName, String BillName) {
       return TextSpan(
         children: <TextSpan>[
           TextSpan(text: "Autopay for ", style: normalStyle),
-          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
           TextSpan(text: " Has Been Deleted", style: normalStyle),
         ],
       );
@@ -54,7 +64,8 @@ TextSpan getPopupSuccessMsg(int index, String BillerName, String BillName) {
       return TextSpan(
         children: <TextSpan>[
           TextSpan(text: "Autopay for ", style: normalStyle),
-          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
           TextSpan(text: " Has Been Paused", style: normalStyle),
         ],
       );
@@ -62,7 +73,8 @@ TextSpan getPopupSuccessMsg(int index, String BillerName, String BillName) {
       return TextSpan(
         children: <TextSpan>[
           TextSpan(text: "Autopay for ", style: normalStyle),
-          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
           TextSpan(text: " Has Been Resumed", style: normalStyle),
         ],
       );
@@ -70,14 +82,16 @@ TextSpan getPopupSuccessMsg(int index, String BillerName, String BillName) {
       return TextSpan(
         children: <TextSpan>[
           TextSpan(text: "Due Deleted Successfully for ", style: normalStyle),
-          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
         ],
       );
     case 7:
       return TextSpan(
         children: <TextSpan>[
           TextSpan(text: "Bill Name for ", style: normalStyle),
-          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
           TextSpan(text: " Has Been Updated", style: normalStyle),
         ],
       );
@@ -91,7 +105,8 @@ TextSpan getPopupFailedMsg(int index, String BillerName, String BillName) {
     case 0:
       return TextSpan(
         children: <TextSpan>[
-          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
           TextSpan(text: " Has Been Updated", style: normalStyle),
         ],
       );
@@ -99,52 +114,59 @@ TextSpan getPopupFailedMsg(int index, String BillerName, String BillName) {
       return TextSpan(
         children: <TextSpan>[
           TextSpan(text: "Autopay Create Failed for ", style: normalStyle),
-          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
-          // TextSpan(text: "", style: normalStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(
+              text: "($BillerName)",
+              style:
+                  italicNormalStyle), // TextSpan(text: "", style: normalStyle),
         ],
       );
     case 2:
       return TextSpan(
         children: <TextSpan>[
           TextSpan(text: "Autopay Update Failed for ", style: normalStyle),
-          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
         ],
       );
     case 3:
       return TextSpan(
         children: <TextSpan>[
           TextSpan(text: "Autopay Delete Failed for ", style: normalStyle),
-          TextSpan(text: "$BillName", style: boldStyle),
-          TextSpan(text: " ($BillerName)", style: normalStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
         ],
       );
     case 4:
       return TextSpan(
         children: <TextSpan>[
           TextSpan(text: "Autopay Pause Failed for ", style: normalStyle),
-          TextSpan(text: "$BillName", style: boldStyle),
-          TextSpan(text: " ($BillerName)", style: normalStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
         ],
       );
     case 5:
       return TextSpan(
         children: <TextSpan>[
           TextSpan(text: "Autopay Resume Failed for ", style: normalStyle),
-          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
         ],
       );
     case 6:
       return TextSpan(
         children: <TextSpan>[
           TextSpan(text: "Due Deletion Failed for ", style: normalStyle),
-          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
         ],
       );
     case 7:
       return TextSpan(
         children: <TextSpan>[
           TextSpan(text: "Bill Name Update Failed for ", style: normalStyle),
-          TextSpan(text: "$BillName ($BillerName)", style: boldStyle),
+          TextSpan(text: "$BillName ", style: boldStyle),
+          TextSpan(text: "($BillerName)", style: italicNormalStyle),
         ],
       );
     default:

@@ -1,4 +1,3 @@
-import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 List<Color> getStatusGradientColors(transactionStatus) {
@@ -11,8 +10,8 @@ List<Color> getStatusGradientColors(transactionStatus) {
               transactionStatus == 'bbps-in-progress' ||
               transactionStatus == 'pending')
           ? [
-              Color.fromRGBO(115, 59, 89, 1).withOpacity(.7),
-              CLR_ASTRIX.withOpacity(.7),
+              Color.fromARGB(255, 222, 47, 47).withOpacity(.7),
+              Color.fromARGB(255, 181, 103, 39).withOpacity(.7),
             ]
           : [
               Color(0xff982F67).withOpacity(.7),

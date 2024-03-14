@@ -111,6 +111,7 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
   Widget build(BuildContext context) {
     handleDialog({required bool success}) {
       showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(

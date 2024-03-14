@@ -121,7 +121,7 @@ class ScreenshotContainer extends StatelessWidget {
                           ? "success"
                           : status.toLowerCase() == "bbps-in-progress" ||
                                   status.toLowerCase() == "bbps-timeout"
-                              ? "pending "
+                              ? "pending"
                               : "failed"),
                 ),
               ),

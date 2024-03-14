@@ -81,7 +81,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
 
   handleDialog({required bool success}) {
     showDialog(
-      barrierDismissible: true,
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext ctx) {
         return AlertDialog(

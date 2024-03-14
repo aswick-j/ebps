@@ -163,11 +163,15 @@ class HistoryContainer extends StatelessWidget {
                         // ),
                         child: Container(
                             child: statusText == "Pending"
-                                ? SvgPicture.asset(ICON_PENDING)
+                                ? Icon(
+                                    Icons.hourglass_bottom_outlined,
+                                    size: 11.r,
+                                    color: Color.fromARGB(255, 218, 124, 47),
+                                  )
                                 : statusText == "Success"
                                     ? Icon(
-                                        Icons.check_circle_outline_rounded,
-                                        size: 11.sp,
+                                        Icons.check_circle_sharp,
+                                        size: 12.r,
                                         color: CLR_GREEN,
                                       )
                                     : SvgPicture.asset(ICON_FAILED))),
@@ -177,7 +181,7 @@ class HistoryContainer extends StatelessWidget {
                         fontSize: 12.sp,
                         fontWeight: FontWeight.bold,
                         color: statusText == "Pending"
-                            ? CLR_ASTRIX
+                            ? Color.fromARGB(255, 218, 124, 47)
                             : statusText == "Success"
                                 ? CLR_GREEN
                                 : CLR_ERROR,
