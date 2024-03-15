@@ -127,33 +127,23 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
     });
   }
 
-  handleFilterModal(biller_id, biller_name, category_ID, category_name) {
+  handleFilter() {
+    BlocProvider.of<HistoryCubit>(context).getHistoryDetails({
+      "startDate": fromDate != null
+          ? fromDate!.toLocal().toIso8601String()
+          : DateTime(2016).toLocal().toIso8601String(),
+      "endDate": toDate != null
+          ? toDate!.toLocal().toIso8601String()
+          : DateTime.now().toLocal().toIso8601String(),
+    }, categoryID, billerID, _pageNumber, true);
+    goBack(context);
     setState(() {
-      billerID = biller_id;
-      categoryID = category_ID;
-      billerName = biller_name;
-      categoryName = category_name;
+      showClrFltr = true;
     });
-    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    handleFilter() {
-      BlocProvider.of<HistoryCubit>(context).getHistoryDetails({
-        "startDate": fromDate != null
-            ? fromDate!.toLocal().toIso8601String()
-            : DateTime(2016).toLocal().toIso8601String(),
-        "endDate": toDate != null
-            ? toDate!.toLocal().toIso8601String()
-            : DateTime.now().toLocal().toIso8601String(),
-      }, categoryID, billerID, _pageNumber, true);
-      goBack(context);
-      setState(() {
-        showClrFltr = true;
-      });
-    }
-
     return Scaffold(
       appBar: MyAppBar(
         context: context,
@@ -339,265 +329,283 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                   )
                 ],
               ))),
-      floatingActionButton: BlocConsumer<HistoryCubit, HistoryState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
-        builder: (context, state) {
-          return FloatingActionButton(
-            onPressed: () {
-              showModalBottomSheet(
-                  isDismissible: false,
-                  elevation: 10,
-                  isScrollControlled: true,
-                  context: context,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(16.0.r),
-                    ),
-                  ),
-                  builder: (context) {
-                    return StatefulBuilder(
-                        builder: (context, StateSetter setState) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(
-                                top: 15.h,
-                                bottom: 15.h,
-                                left: 15.w,
-                                right: 15.w),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.filter_alt_outlined,
-                                  color: Color(0xff1b438b),
-                                ),
-                                Text(
-                                  "Filters",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xff1b438b),
-                                  ),
-                                  textAlign: TextAlign.left,
-                                )
-                              ],
-                            ),
+      floatingActionButton: historyData!.isEmpty
+          ? null
+          : BlocConsumer<HistoryCubit, HistoryState>(
+              listener: (context, state) {
+                // TODO: implement listener
+              },
+              builder: (context, state) {
+                return FloatingActionButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                        isDismissible: false,
+                        elevation: 10,
+                        isScrollControlled: true,
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(16.0.r),
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    spreadRadius: 0.2,
-                                    blurRadius: 2,
-                                    offset: Offset(0, 2)),
-                              ],
-                            ),
-                            child: Divider(
-                              height: 0.4.h,
-                              thickness: 1,
-                              color: Colors.grey.withOpacity(0.1),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 16.h),
-                            child: TextFormField(
-                              controller: fromdateController,
-                              readOnly: true,
-                              autocorrect: false,
-                              enableSuggestions: false,
-                              keyboardType: TextInputType.text,
-                              onChanged: (val) {},
-                              onTap: () async {
-                                DateTime? pickedDate = await DatePicker(
-                                    context, fromdateController.text, null);
+                        ),
+                        builder: (context) {
+                          return StatefulBuilder(
+                              builder: (context, StateSetter setState) {
+                            void handleFilterModal(biller_id, biller_name,
+                                category_ID, category_name) {
+                              setState(() {
+                                billerID = biller_id;
+                                categoryID = category_ID;
+                                billerName = biller_name;
+                                categoryName = category_name;
+                              });
+                            }
 
-                                if (pickedDate != null) {
-                                  String formattedDate =
-                                      DateFormat('dd-MM-yyyy')
-                                          .format(pickedDate);
-                                  setState(() {
-                                    fromdateController.text = formattedDate;
-                                    todateController.clear();
-                                    fromDate = pickedDate;
-                                    toFirstDate = pickedDate;
-                                  });
-                                }
-                              },
-                              // validator: (inputValue) {},
-                              decoration: InputDecoration(
-                                fillColor:
-                                    const Color(0xffD1D9E8).withOpacity(0.2),
-                                filled: true,
-                                labelStyle:
-                                    const TextStyle(color: Color(0xff1b438b)),
-                                enabledBorder: const UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0xff1B438B)),
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: 15.h,
+                                      bottom: 15.h,
+                                      left: 15.w,
+                                      right: 15.w),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.filter_alt_outlined,
+                                        color: Color(0xff1b438b),
+                                      ),
+                                      Text(
+                                        "Filters",
+                                        style: TextStyle(
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xff1b438b),
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                focusedBorder: const UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0xff1B438B)),
-                                ),
-                                border: const UnderlineInputBorder(),
-                                labelText: 'From Date',
-                                hintText: "From Date",
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 16.h),
-                            child: TextFormField(
-                              controller: todateController,
-                              readOnly: true,
-                              autocorrect: false,
-                              enableSuggestions: false,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              keyboardType: TextInputType.text,
-                              onChanged: (val) {},
-                              onTap: () async {
-                                if (fromdateController.text.isNotEmpty) {
-                                  setState(() {
-                                    showToDateErr = false;
-                                  });
-                                  DateTime? pickedDate = await DatePicker(
-                                      context,
-                                      fromdateController.text,
-                                      toFirstDate);
-                                  if (pickedDate != null) {
-                                    String formattedDate =
-                                        DateFormat('dd-MM-yyyy')
-                                            .format(pickedDate);
-                                    setState(() {
-                                      todateController.text = formattedDate;
-                                      toDate = pickedDate;
-                                    });
-                                  }
-                                } else {
-                                  setState(() {
-                                    showToDateErr = true;
-                                  });
-                                }
-                              },
-                              validator: (inputValue) {
-                                if (fromdateController.text.isEmpty) {
-                                  return "Please select 'From Date' first.";
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                fillColor:
-                                    const Color(0xffD1D9E8).withOpacity(0.2),
-                                filled: true,
-                                errorText: showToDateErr
-                                    ? "Please select From Date first."
-                                    : null,
-                                // errorStyle: TextStyle(color: Colors.green),
-                                labelStyle:
-                                    const TextStyle(color: Color(0xff1b438b)),
-                                enabledBorder: const UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0xff1B438B)),
-                                ),
-                                focusedBorder: const UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0xff1B438B)),
-                                ),
-                                border: const UnderlineInputBorder(),
-                                labelText: 'To Date',
-                                hintText: "To Date",
-                              ),
-                            ),
-                          ),
-                          HistoryFilter(
-                              billerName: billerName,
-                              categoryName: categoryName,
-                              categoriesData: categoriesData,
-                              billerID: billerID,
-                              categoryID: categoryID,
-                              handleFilterModal: handleFilterModal),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                top: 0.h,
-                                bottom: 16.h,
-                                left: 16.w,
-                                right: 16.w),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: MyAppButton(
-                                      onPressed: () {
-                                        goBack(context);
-                                      },
-                                      buttonText: "Cancel",
-                                      buttonTxtColor: CLR_PRIMARY,
-                                      buttonBorderColor: Colors.transparent,
-                                      buttonColor: BTN_CLR_ACTIVE,
-                                      buttonSizeX: 10.h,
-                                      buttonSizeY: 40.w,
-                                      buttonTextSize: 14.sp,
-                                      buttonTextWeight: FontWeight.w500),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          spreadRadius: 0.2,
+                                          blurRadius: 2,
+                                          offset: Offset(0, 2)),
+                                    ],
+                                  ),
+                                  child: Divider(
+                                    height: 0.4.h,
+                                    thickness: 1,
+                                    color: Colors.grey.withOpacity(0.1),
+                                  ),
                                 ),
                                 SizedBox(
-                                  width: 40.w,
+                                  height: 10.h,
                                 ),
-                                Expanded(
-                                  child: MyAppButton(
-                                      onPressed: () {
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.w, vertical: 16.h),
+                                  child: TextFormField(
+                                    controller: fromdateController,
+                                    readOnly: true,
+                                    autocorrect: false,
+                                    enableSuggestions: false,
+                                    keyboardType: TextInputType.text,
+                                    onChanged: (val) {},
+                                    onTap: () async {
+                                      DateTime? pickedDate = await DatePicker(
+                                          context,
+                                          fromdateController.text,
+                                          null);
+
+                                      if (pickedDate != null) {
+                                        String formattedDate =
+                                            DateFormat('dd-MM-yyyy')
+                                                .format(pickedDate);
                                         setState(() {
-                                          _pageNumber = 1;
+                                          fromdateController.text =
+                                              formattedDate;
+                                          todateController.clear();
+                                          fromDate = pickedDate;
+                                          toFirstDate = pickedDate;
                                         });
-                                        if ((fromDate != null &&
-                                                toDate != null) ||
-                                            categoryID != null) {
-                                          handleFilter();
+                                      }
+                                    },
+                                    // validator: (inputValue) {},
+                                    decoration: InputDecoration(
+                                      fillColor: const Color(0xffD1D9E8)
+                                          .withOpacity(0.2),
+                                      filled: true,
+                                      labelStyle: const TextStyle(
+                                          color: Color(0xff1b438b)),
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color(0xff1B438B)),
+                                      ),
+                                      focusedBorder: const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color(0xff1B438B)),
+                                      ),
+                                      border: const UnderlineInputBorder(),
+                                      labelText: 'From Date',
+                                      hintText: "From Date",
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.w, vertical: 16.h),
+                                  child: TextFormField(
+                                    controller: todateController,
+                                    readOnly: true,
+                                    autocorrect: false,
+                                    enableSuggestions: false,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    keyboardType: TextInputType.text,
+                                    onChanged: (val) {},
+                                    onTap: () async {
+                                      if (fromdateController.text.isNotEmpty) {
+                                        setState(() {
+                                          showToDateErr = false;
+                                        });
+                                        DateTime? pickedDate = await DatePicker(
+                                            context,
+                                            fromdateController.text,
+                                            toFirstDate);
+                                        if (pickedDate != null) {
+                                          String formattedDate =
+                                              DateFormat('dd-MM-yyyy')
+                                                  .format(pickedDate);
+                                          setState(() {
+                                            todateController.text =
+                                                formattedDate;
+                                            toDate = pickedDate;
+                                          });
                                         }
-                                      },
-                                      buttonText: "Apply",
-                                      buttonTxtColor: BTN_CLR_ACTIVE,
-                                      buttonBorderColor: Colors.transparent,
-                                      buttonColor: ((fromDate != null &&
-                                                  toDate != null) ||
-                                              categoryID != null)
-                                          ? CLR_PRIMARY
-                                          : Colors.grey,
-                                      buttonSizeX: 10.h,
-                                      buttonSizeY: 40.w,
-                                      buttonTextSize: 14.sp,
-                                      buttonTextWeight: FontWeight.w500),
+                                      } else {
+                                        setState(() {
+                                          showToDateErr = true;
+                                        });
+                                      }
+                                    },
+                                    validator: (inputValue) {
+                                      if (fromdateController.text.isEmpty) {
+                                        return "Please select 'From Date' first.";
+                                      }
+                                      return null;
+                                    },
+                                    decoration: InputDecoration(
+                                      fillColor: const Color(0xffD1D9E8)
+                                          .withOpacity(0.2),
+                                      filled: true,
+                                      errorText: showToDateErr
+                                          ? "Please select From Date first."
+                                          : null,
+                                      // errorStyle: TextStyle(color: Colors.green),
+                                      labelStyle: const TextStyle(
+                                          color: Color(0xff1b438b)),
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color(0xff1B438B)),
+                                      ),
+                                      focusedBorder: const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color(0xff1B438B)),
+                                      ),
+                                      border: const UnderlineInputBorder(),
+                                      labelText: 'To Date',
+                                      hintText: "To Date",
+                                    ),
+                                  ),
+                                ),
+                                HistoryFilter(
+                                    billerName: billerName,
+                                    categoryName: categoryName,
+                                    categoriesData: categoriesData,
+                                    billerID: billerID,
+                                    categoryID: categoryID,
+                                    handleFilterModal: handleFilterModal),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: 0.h,
+                                      bottom: 16.h,
+                                      left: 16.w,
+                                      right: 16.w),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: MyAppButton(
+                                            onPressed: () {
+                                              goBack(context);
+                                            },
+                                            buttonText: "Cancel",
+                                            buttonTxtColor: CLR_PRIMARY,
+                                            buttonBorderColor:
+                                                Colors.transparent,
+                                            buttonColor: BTN_CLR_ACTIVE,
+                                            buttonSizeX: 10.h,
+                                            buttonSizeY: 40.w,
+                                            buttonTextSize: 14.sp,
+                                            buttonTextWeight: FontWeight.w500),
+                                      ),
+                                      SizedBox(
+                                        width: 40.w,
+                                      ),
+                                      Expanded(
+                                        child: MyAppButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                _pageNumber = 1;
+                                              });
+                                              if ((fromDate != null &&
+                                                      toDate != null) ||
+                                                  categoryID != null) {
+                                                handleFilter();
+                                              }
+                                            },
+                                            buttonText: "Apply",
+                                            buttonTxtColor: BTN_CLR_ACTIVE,
+                                            buttonBorderColor:
+                                                Colors.transparent,
+                                            buttonColor: ((fromDate != null &&
+                                                        toDate != null) ||
+                                                    categoryID != null)
+                                                ? CLR_PRIMARY
+                                                : Colors.grey,
+                                            buttonSizeX: 10.h,
+                                            buttonSizeY: 40.w,
+                                            buttonTextSize: 14.sp,
+                                            buttonTextWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
                                 ),
                               ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                        ],
-                      );
-                    });
-                  });
-            },
-            backgroundColor: CLR_PRIMARY,
-            child: Padding(
-              padding: EdgeInsets.only(top: 5.0.h),
-              child: SvgPicture.asset(
-                ICON_FILTER,
-              ),
+                            );
+                          });
+                        });
+                  },
+                  backgroundColor: CLR_PRIMARY,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 5.0.h),
+                    child: SvgPicture.asset(
+                      ICON_FILTER,
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }

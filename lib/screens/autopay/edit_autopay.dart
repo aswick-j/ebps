@@ -69,11 +69,7 @@ class _editAutopayState extends State<editAutopay> {
   bool maxAmountError = false;
   bool isAutoPayMaxLoading = true;
 
-  List<String> EffectiveFrom = <String>[
-    'Immediately',
-    getMonthName(0)[0]!,
-    // getMonthName(0)[1]!
-  ];
+  List<String> EffectiveFrom = <String>['Immediately', getMonthName(0)[0]!];
 
   var todayDate = DateTime.parse(DateTime.now().toString()).day.toString();
 
@@ -106,6 +102,25 @@ class _editAutopayState extends State<editAutopay> {
   }
 
   handleButton() {
+    bool? HandleActivate;
+
+    if (billPayGroupRadio == widget.autopayData!.iSBIMONTHLY) {
+      if ((widget.autopayData!.aCTIVATESFROM ?? "Immediately") ==
+          activatesFrom) {
+        HandleActivate = true;
+      } else {
+        HandleActivate = false;
+      }
+    } else {
+      HandleActivate = false;
+    }
+    // if ((billPayGroupRadio == widget.autopayData!.iSBIMONTHLY ||
+    //     ((widget.autopayData!.aCTIVATESFROM ?? "Immediately") ==
+    //         activatesFrom))) {
+    // } else {
+    //   HandleActivate = false;
+    // }
+
     if (selectedAcc == null ||
         selectedAcc == 99 ||
         // accError ||
@@ -117,7 +132,7 @@ class _editAutopayState extends State<editAutopay> {
         ((double.parse(widget.autopayData!.mAXIMUMAMOUNT.toString()) ==
                 double.parse(maxAmountController.text.toString())) &&
             widget.autopayData!.pAYMENTDATE.toString() == selectedDate &&
-            billPayGroupRadio == widget.autopayData!.iSBIMONTHLY)) {
+            HandleActivate)) {
       return false;
     } else {
       return true;
@@ -711,10 +726,8 @@ class _editAutopayState extends State<editAutopay> {
                                     Icons.keyboard_arrow_down,
                                     color: Colors.grey,
                                   ),
-                                  items: [
-                                    'Immediately',
-                                    getMonthName(billPayGroupRadio)[0]!,
-                                  ].map<DropdownMenuItem<String>>((value) {
+                                  items: EffectiveFrom.map<
+                                      DropdownMenuItem<String>>((value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Text(
@@ -807,13 +820,12 @@ class _editAutopayState extends State<editAutopay> {
                                   ),
                                 ],
                               ),
-                              if (activatesFrom ==
-                                  getMonthName(billPayGroupRadio)[0]!)
+                              if (activatesFrom == getMonthName(0)[0]!)
                                 Padding(
                                   padding: EdgeInsets.only(
                                       left: 18.0.w, right: 18.w),
                                   child: Text(
-                                    "Your auto pay will stay inactive and we will resume paying your bills only from ${numberPrefixSetter(selectedDate!)}, ${getMonthName(billPayGroupRadio)[0]!}. If you want us to pay your bills on the  ${numberPrefixSetter(selectedDate!)} of this (current) month, please select Immediately from the dropdown.",
+                                    "Your auto pay will stay inactive and we will resume paying your bills only from ${numberPrefixSetter(selectedDate!)}, ${getMonthName(0)[0]!}. If you want us to pay your bills on the  ${numberPrefixSetter(selectedDate!)} of this (current) month, please select Immediately from the dropdown.",
                                     style: TextStyle(
                                       fontSize: 10.sp,
                                       fontWeight: FontWeight.w400,

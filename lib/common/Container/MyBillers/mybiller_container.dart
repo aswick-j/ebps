@@ -201,7 +201,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
           ),
           child: Column(children: [
             ListTile(
-              contentPadding: EdgeInsets.only(left: 8.w, right: 15.w, top: 4.h),
+              contentPadding: EdgeInsets.only(
+                  left: 8.w, right: 15.w, top: 5.h, bottom: 4.h),
               leading: Container(
                 width: 45.w,
                 child: Padding(
@@ -1805,7 +1806,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
               if (!(widget.upcomingDueData!.dueAmount == null &&
                   widget.upcomingDueData!.dueDate == null))
                 Divider(
-                  height: 10.h,
+                  height: 0.h,
                   thickness: 1,
                   indent: 10.h,
                   endIndent: 10,
@@ -1846,12 +1847,6 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                               ),
                             ],
                           ),
-                      // if (widget.upcomingText != "")
-                      //   if (widget.upcomingDueData != null)
-                      //     if (widget.upcomingDueData!.dueDate != null)
-                      //       SizedBox(
-                      //         height: 3.h,
-                      //       ),
                       if (widget.upcomingText != "")
                         Text(
                           widget.upcomingText!,
@@ -1861,7 +1856,13 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                             color: widget.upcomingTXT_CLR_DEFAULT,
                           ),
                           textAlign: TextAlign.center,
-                        )
+                        ),
+                      if (widget.upcomingText != "")
+                        if (widget.upcomingDueData != null)
+                          if (widget.upcomingDueData!.dueDate != null)
+                            SizedBox(
+                              height: 3.h,
+                            ),
                     ],
                   ),
                   if (widget.upcomingDueData != null)

@@ -27,6 +27,8 @@ class HistoryError extends HistoryState {
   HistoryError({@required this.message});
 }
 
+//HISTORY FILTER
+
 class billerFilterLoading extends HistoryState {}
 
 class billerFilterSuccess extends HistoryState {
@@ -42,4 +44,42 @@ class billerFilterFailed extends HistoryState {
 class billerFilterError extends HistoryState {
   final String? message;
   billerFilterError({@required this.message});
+}
+
+//TRANSACTION STATUS
+
+class TransactionStatusLoading extends HistoryState {}
+
+class TransactionStatusSuccess extends HistoryState {
+  TransactionStatus? TransactionStatusDetails;
+  TransactionStatusSuccess({@required this.TransactionStatusDetails});
+}
+
+class TransactionStatusFailed extends HistoryState {
+  final String? message;
+  TransactionStatusFailed({@required this.message});
+}
+
+class TransactionStatusError extends HistoryState {
+  final String? message;
+  TransactionStatusError({@required this.message});
+}
+
+//UPDATE TRANSACTION STATUS
+
+class TxnStatusUpdateLoading extends HistoryState {}
+
+class TxnStatusUpdateSuccess extends HistoryState {
+  TransactionStatusUpdateModel? TxnStatusUpdateDetails;
+  TxnStatusUpdateSuccess({@required this.TxnStatusUpdateDetails});
+}
+
+class TxnStatusUpdateFailed extends HistoryState {
+  final String? message;
+  TxnStatusUpdateFailed({@required this.message});
+}
+
+class TxnStatusUpdateError extends HistoryState {
+  final String? message;
+  TxnStatusUpdateError({@required this.message});
 }

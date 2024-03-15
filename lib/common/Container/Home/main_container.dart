@@ -82,8 +82,8 @@ class MainContainer extends StatelessWidget {
             ),
             child: Column(children: [
               ListTile(
-                contentPadding:
-                    EdgeInsets.only(left: 8.w, right: 15.w, top: 4.h),
+                contentPadding: EdgeInsets.only(
+                    left: 8.w, right: 15.w, top: 4.h, bottom: 3.h),
                 leading: Container(
                   width: 45.w,
                   child: Padding(
@@ -137,14 +137,14 @@ class MainContainer extends StatelessWidget {
                 // ),
               ),
               Divider(
-                height: 10.h,
+                height: 0.h,
                 thickness: 1,
                 indent: 10,
                 endIndent: 10,
               ),
               Padding(
                 padding:
-                    EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 6.0.h),
+                    EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 3.0.h),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -160,23 +160,24 @@ class MainContainer extends StatelessWidget {
                           ),
                           textAlign: TextAlign.left,
                         ),
-                        Row(
-                          children: [
-                            SvgPicture.asset(ICON_CALENDAR),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              dateText,
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xff808080),
-                                height: 20 / 12,
+                        if (dateText != "-")
+                          Row(
+                            children: [
+                              SvgPicture.asset(ICON_CALENDAR),
+                              SizedBox(
+                                width: 5,
                               ),
-                            ),
-                          ],
-                        ),
+                              Text(
+                                dateText,
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xff808080),
+                                  height: 20 / 12,
+                                ),
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                     Row(

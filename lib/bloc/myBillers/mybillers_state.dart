@@ -122,6 +122,8 @@ class UpdateBillError extends MybillersState {
   UpdateBillError({@required this.message});
 }
 
+//DELETE DUE
+
 class DeleteUpcomingDueLoading extends MybillersState {}
 
 class DeleteUpcomingDueSuccess extends MybillersState {

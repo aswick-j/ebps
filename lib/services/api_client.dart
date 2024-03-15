@@ -968,6 +968,70 @@ class ApiClient implements Repository {
     }
   }
 
+  //TRANSACTION STATUS
+
+  @override
+  Future getTransactionStatus(id) async {
+    try {
+      var response = await api(
+          method: "get",
+          url: BASE_URL + HISTORY_URL + id,
+          token: true,
+          checkSum: false);
+
+      if (!response.body.toString().contains("<html>")) {
+        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+        return decodedResponse;
+      } else {
+        return {
+          "status": 500,
+          "message": "Something went wrong",
+          "data": "Error"
+        };
+      }
+    } catch (e) {
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
+  }
+
+  //UPDATE TRANSACTION STATUS
+
+  @override
+  Future updateTransactionStatus(dynamic updateTxnStatusPayload) async {
+    try {
+      Map<String, dynamic> body = updateTxnStatusPayload;
+
+      var response = await api(
+          method: "put",
+          url: BASE_URL + HISTORY_URL + 'status',
+          body: body,
+          token: true,
+          checkSum: false);
+
+      if (!response.body.toString().contains("<html>")) {
+        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+        return decodedResponse;
+      } else {
+        return {
+          "status": 500,
+          "message": "Something went wrong",
+          "data": "Error"
+        };
+      }
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
+  }
+
   //BBPS SETTINGS
 
   @override

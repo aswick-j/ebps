@@ -57,6 +57,14 @@ abstract class Repository {
 
   Future getHistory(day) async {}
 
+  //TRANSACTION STATUS
+
+  Future getTransactionStatus(id) async {}
+
+  //UPDATE TRANSACTION STATUS
+
+  Future updateTransactionStatus(payload) async {}
+
   //COMPLAINT_LIST
   Future getComplaints() async {}
 

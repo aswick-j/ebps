@@ -231,7 +231,6 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                   disabledBorder: InputBorder.none,
                 ),
               ),
-        
         onLeadingTap: () => WidgetsBinding.instance.addPostFrameCallback((_) {
           // goToReplace(context, hOMEROUTE);
           Navigator.of(context).pushReplacement(
@@ -405,7 +404,8 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                                           : Color(0xff768eb9),
                                   buttonTextWeight: FontWeight.bold,
                                   buttonBorderColor: showAutopayButtonContent(
-                                    savedBillerData![index],
+                                    getBillerDataWithUpcomingFirst(
+                                        savedBillerData)![index],
                                   )
                                       ? Color(0xff00AB44)
                                       : Color(0xff768eb9),

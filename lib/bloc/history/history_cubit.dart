@@ -3,6 +3,8 @@ import 'package:ebps/helpers/getDateValues.dart';
 import 'package:ebps/helpers/logger.dart';
 import 'package:ebps/models/category_biller_filter_history._model.dart';
 import 'package:ebps/models/history_model.dart';
+import 'package:ebps/models/transaction_status_model.dart';
+import 'package:ebps/models/transaction_status_update_model.dart';
 import 'package:ebps/repository/api_repository.dart';
 
 import 'package:flutter/material.dart';
@@ -121,5 +123,89 @@ class HistoryCubit extends Cubit<HistoryState> {
         }
       }
     } catch (e) {}
+  }
+
+  void getTransactionStatusdetails(id) async {
+    if (!isClosed) {
+      emit(TransactionStatusLoading());
+    }
+    try {
+      final value = await repository!.getTransactionStatus(id);
+
+      logger.d(value,
+          error:
+              "Transaction STATUIS API RESPONSE ===> lib/bloc/history/getTransactionStatusdetails");
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            TransactionStatus? TransactionStatusDetailsResult =
+                TransactionStatus.fromJson(value);
+            if (!isClosed) {
+              emit(TransactionStatusSuccess(
+                  TransactionStatusDetails: TransactionStatusDetailsResult));
+            }
+          } else {
+            if (!isClosed) {
+              emit(TransactionStatusFailed(message: value['message']));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(TransactionStatusError(message: value['message']));
+          }
+        }
+      } else {
+        if (!isClosed) {
+          emit(TransactionStatusFailed(message: value['message']));
+        }
+      }
+    } catch (e) {
+      logger.e(e,
+          error:
+              "TRANSACTION STATUS API ERROR RESPONSE ===> lib/bloc/history/getTransactionStatusdetails");
+    }
+  }
+
+  //UPDATER TXN STATUS
+
+  void updateTxnStatus(payload) async {
+    if (!isClosed) {
+      emit(TxnStatusUpdateLoading());
+    }
+    try {
+      final value = await repository!.updateTransactionStatus(payload);
+      logger.d(value,
+          error:
+              "UPDATE TXN STATUS API RESPONSE ===> lib/bloc/history/updateTxnStatus");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            TransactionStatusUpdateModel TxnStatusDetails =
+                TransactionStatusUpdateModel.fromJson(value);
+            if (!isClosed) {
+              emit(TxnStatusUpdateSuccess(
+                  TxnStatusUpdateDetails: TxnStatusDetails));
+            }
+          } else {
+            if (!isClosed) {
+              emit(TxnStatusUpdateFailed(message: value['message']));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(TxnStatusUpdateError(message: value['message']));
+          }
+        }
+      } else {
+        if (!isClosed) {
+          emit(TxnStatusUpdateFailed(message: value['message']));
+        }
+      }
+    } catch (e) {
+      logger.d(e,
+          error:
+              "UPDATE TXN STATUS API RESPONSE ===> lib/bloc/history/updateTxnStatus");
+    }
   }
 }

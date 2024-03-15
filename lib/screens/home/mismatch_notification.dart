@@ -345,7 +345,11 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                     widget.allautoPayData![index].rESETDATE == 1
                                         ? widget.allautoPayData![index].dUEDATE
                                             .toString()
-                                        : "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allautoPayData![index].mAXIMUMAMOUNT.toString()))}",
+                                        : widget.allautoPayData![index]
+                                                    .mAXIMUMAMOUNT !=
+                                                null
+                                            ? "₹  ${NumberFormat('#,##,##0.00').format(double.parse(widget.allautoPayData![index].mAXIMUMAMOUNT.toString()))}"
+                                            : "₹ 0.00",
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
