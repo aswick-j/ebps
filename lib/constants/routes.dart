@@ -418,7 +418,9 @@ class MyRouter {
           fullscreenDialog: true,
           builder: (_) => BlocProvider(
             create: (context) => ComplaintCubit(repository: apiClient),
-            child: ComplaintDetails(complaintData: args["complaintData"]),
+            child: ComplaintDetails(
+                complaintData: args["complaintData"],
+                handleStatus: args["handleStatus"]),
           ),
         );
 

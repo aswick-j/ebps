@@ -197,24 +197,23 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                 autoDismiss: true,
                 animationDuration: Duration(milliseconds: 300),
                 builder: (context) => ToastCard(
-                  
                   shadowColor: Colors.grey.withOpacity(0.4),
                   leading: Icon(
                     updateTxnStatus == "success"
                         ? Icons.check_circle_outline
                         : updateTxnStatus == "failure"
                             ? Icons.cancel_outlined
-                            : updateTxnStatus != null
-                                ? Icons.error_outlined
+                            : updateTxnStatus == "in_prog"
+                                ? Icons.info_outline
                                 : Icons.help,
                     size: 28.r,
                     color: updateTxnStatus == "success"
                         ? Colors.green
                         : updateTxnStatus == "failure"
                             ? Colors.red
-                            : updateTxnStatus != null
-                                ? Colors.blue
-                                : null,
+                            : updateTxnStatus == "in_prog"
+                                ? Colors.orange
+                                : Colors.blue,
                   ),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,11 +223,9 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                             ? "Hurray !"
                             : updateTxnStatus == "failure"
                                 ? "Oops !"
-                                : updateTxnStatus != null
-                                    ? updateTxnStatus
-                                        .toString()
-                                        .capitalizeByWord()
-                                    : "",
+                                : updateTxnStatus == "in_prog"
+                                    ? "Pending"
+                                    : "Oops !",
                         style: TextStyle(
                           fontSize: 13.sp,
                           fontWeight: FontWeight.bold,
@@ -244,7 +241,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                 ? "Your Payment has been Failed"
                                 : updateTxnStatus != null
                                     ? "Waiting Response from Biller"
-                                    : "",
+                                    : "Something Went Wrong",
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,

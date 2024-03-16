@@ -1032,6 +1032,40 @@ class ApiClient implements Repository {
     }
   }
 
+  //UPDATE COMPLAINT STATUS
+
+  @override
+  Future updateComplaintStatus(dynamic updateCmpStatusPayload) async {
+    try {
+      Map<String, dynamic> body = updateCmpStatusPayload;
+
+      var response = await api(
+          method: "post",
+          url: BASE_URL + COMLPAINT_URL + 'status',
+          body: body,
+          token: true,
+          checkSum: false);
+
+      if (!response.body.toString().contains("<html>")) {
+        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+        return decodedResponse;
+      } else {
+        return {
+          "status": 500,
+          "message": "Something went wrong",
+          "data": "Error"
+        };
+      }
+    } catch (e) {
+      logger.w(e);
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
+  }
+
   //BBPS SETTINGS
 
   @override

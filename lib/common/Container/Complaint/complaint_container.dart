@@ -18,6 +18,7 @@ class ComplaintContainer extends StatefulWidget {
   final String iconPath;
   final Color containerBorderColor;
   ComplaintsData complaintData;
+  final void Function(String?, String?) handleStatus;
 
   ComplaintContainer({
     super.key,
@@ -29,6 +30,7 @@ class ComplaintContainer extends StatefulWidget {
     required this.iconPath,
     required this.containerBorderColor,
     required this.complaintData,
+    required this.handleStatus,
   });
   @override
   State<ComplaintContainer> createState() => _ComplaintContainerState();
@@ -36,8 +38,10 @@ class ComplaintContainer extends StatefulWidget {
 
 class _ComplaintContainerState extends State<ComplaintContainer> {
   handleClick() {
-    goToData(context, cOMPLAINTDETAILSROUTE,
-        {"complaintData": widget.complaintData});
+    goToData(context, cOMPLAINTDETAILSROUTE, {
+      "complaintData": widget.complaintData,
+      "handleStatus": widget.handleStatus
+    });
   }
 
   @override

@@ -63,3 +63,22 @@ class ComplaintSubmitError extends ComplaintState {
   final String? message;
   ComplaintSubmitError({@required this.message});
 }
+
+//UPDATE COMPLAINT STATUS
+
+class CmpStatusUpdateLoading extends ComplaintState {}
+
+class CmpStatusUpdateSuccess extends ComplaintState {
+  ComplaintStatusUpdateModel? CmpStatusUpdateDetails;
+  CmpStatusUpdateSuccess({@required this.CmpStatusUpdateDetails});
+}
+
+class CmpStatusUpdateFailed extends ComplaintState {
+  final String? message;
+  CmpStatusUpdateFailed({@required this.message});
+}
+
+class CmpStatusUpdateError extends ComplaintState {
+  final String? message;
+  CmpStatusUpdateError({@required this.message});
+}

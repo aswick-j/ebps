@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 
 import 'package:ebps/helpers/logger.dart';
+import 'package:ebps/models/complaint_status_model.dart';
 import 'package:ebps/models/complaints_config_model.dart';
 import 'package:ebps/models/complaints_model.dart';
 import 'package:ebps/repository/api_repository.dart';
@@ -129,5 +130,48 @@ class ComplaintCubit extends Cubit<ComplaintState> {
         }
       }
     } catch (e) {}
+  }
+
+  //UPDATER COMPLAINT STATUS
+
+  void updateCmpStatus(payload) async {
+    if (!isClosed) {
+      emit(CmpStatusUpdateLoading());
+    }
+    try {
+      final value = await repository!.updateComplaintStatus(payload);
+      logger.d(value,
+          error:
+              "UPDATE COMPLAINT STATUS API RESPONSE ===> lib/bloc/complaint/updateCmpStatus");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            ComplaintStatusUpdateModel CmpStatusDetails =
+                ComplaintStatusUpdateModel.fromJson(value);
+            if (!isClosed) {
+              emit(CmpStatusUpdateSuccess(
+                  CmpStatusUpdateDetails: CmpStatusDetails));
+            }
+          } else {
+            if (!isClosed) {
+              emit(CmpStatusUpdateFailed(message: value['message']));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(CmpStatusUpdateError(message: value['message']));
+          }
+        }
+      } else {
+        if (!isClosed) {
+          emit(CmpStatusUpdateFailed(message: value['message']));
+        }
+      }
+    } catch (e) {
+      logger.d(e,
+          error:
+              "UPDATE COMPLAINT STATUS API RESPONSE ===> lib/bloc/complaint/updateCmpStatus");
+    }
   }
 }

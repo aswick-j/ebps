@@ -6,7 +6,6 @@ import 'package:ebps/models/history_model.dart';
 import 'package:ebps/models/transaction_status_model.dart';
 import 'package:ebps/models/transaction_status_update_model.dart';
 import 'package:ebps/repository/api_repository.dart';
-
 import 'package:flutter/material.dart';
 
 part 'history_state.dart';

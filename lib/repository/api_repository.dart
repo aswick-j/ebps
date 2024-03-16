@@ -65,6 +65,9 @@ abstract class Repository {
 
   Future updateTransactionStatus(payload) async {}
 
+  //UPDATE COMLAINT STATUS
+  Future updateComplaintStatus(payload) async {}
+
   //COMPLAINT_LIST
   Future getComplaints() async {}
 
