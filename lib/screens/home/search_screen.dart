@@ -8,6 +8,7 @@ import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/screens/nodataFound.dart';
+import 'package:ebps/widget/animated_text_field.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -149,7 +150,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   padding: EdgeInsets.all(8.0.r),
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-                    child: TextField(
+                    child: AnimatedTextField(
                       onChanged: (value) => {
                         _pageNumber = 1,
                         // _searchController.text = value,
@@ -159,6 +160,13 @@ class _SearchScreenState extends State<SearchScreen> {
                               const Duration(milliseconds: 500), handleSearch);
                         })
                       },
+                      animationType: Animationtype.slide,
+                      hintTexts: const [
+                        'Search for DTH',
+                        'Search for Electricity',
+                        'Search for FastTag',
+                        'Search for Mobile Postpaid',
+                      ],
                       keyboardType: TextInputType.text,
                       controller: _searchController,
                       decoration: InputDecoration(

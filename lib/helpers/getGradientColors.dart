@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 List<Color> getStatusGradientColors(transactionStatus) {
   return transactionStatus == 'success'

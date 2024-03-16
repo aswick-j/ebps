@@ -18,18 +18,19 @@ class HistoryContainer extends StatelessWidget {
   final String iconPath;
   final Color containerBorderColor;
   HistoryData historyData;
+  final void Function(String?, int?) handleStatus;
 
-  HistoryContainer({
-    super.key,
-    required this.titleText,
-    required this.subtitleText,
-    required this.dateText,
-    this.statusText,
-    required this.amount,
-    required this.iconPath,
-    required this.containerBorderColor,
-    required this.historyData,
-  });
+  HistoryContainer(
+      {super.key,
+      required this.titleText,
+      required this.subtitleText,
+      required this.dateText,
+      this.statusText,
+      required this.amount,
+      required this.iconPath,
+      required this.containerBorderColor,
+      required this.historyData,
+      required this.handleStatus});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,8 @@ class HistoryContainer extends StatelessWidget {
         "billerName": historyData.bILLERNAME,
         "categoryName": historyData.cATEGORYNAME,
         "isSavedBill": false,
-        "historyData": historyData
+        "historyData": historyData,
+        "handleStatus": handleStatus
       });
     }
 

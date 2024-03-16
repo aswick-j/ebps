@@ -277,6 +277,12 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                               itemBuilder: (context, index) {
                                 if (index < historyData!.length) {
                                   return HistoryContainer(
+                                    handleStatus: (txnStatus, txnID) {
+                                      setState(() {
+                                        historyData![index].tRANSACTIONSTATUS =
+                                            txnStatus;
+                                      });
+                                    },
                                     historyData: historyData![index],
                                     // billerFilterData: billerFilterData,
                                     titleText: 'Paid to',

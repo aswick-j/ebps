@@ -1,8 +1,10 @@
 import 'package:ebps/bloc/splash/splash_cubit.dart';
 import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
+import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/ebps.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/logger.dart';
 import 'package:flutter/cupertino.dart';
@@ -123,20 +125,33 @@ class _splashScreenState extends State<splashScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: 80),
+                      SizedBox(height: 80.h),
                       MyAppText(
                         data: 'Oh no!',
                         size: 14.0,
                         color: CLR_PRIMARY,
                         weight: FontWeight.bold,
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 10.h),
                       MyAppText(
                         data: 'Something went wrong.',
                         size: 14.0,
                         color: CLR_PRIMARY,
                         weight: FontWeight.bold,
                       ),
+                      SizedBox(height: 40.h),
+                      MyAppButton(
+                          onPressed: () {
+                            AppTrigger.instance.goBackCallback!.call();
+                          },
+                          buttonText: "Go Back",
+                          buttonTxtColor: BTN_CLR_ACTIVE,
+                          buttonBorderColor: Colors.transparent,
+                          buttonColor: CLR_PRIMARY,
+                          buttonSizeX: 10.h,
+                          buttonSizeY: 40.w,
+                          buttonTextSize: 14.sp,
+                          buttonTextWeight: FontWeight.w500),
                     ],
                   ),
                 // SizedBox(height: 600),

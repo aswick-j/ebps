@@ -15,7 +15,12 @@ import 'package:intl/intl.dart';
 class BillHistory extends StatefulWidget {
   String? categoryID;
   String? billerID;
-  BillHistory({super.key, required this.billerID, required this.categoryID});
+  dynamic customerBillID;
+  BillHistory(
+      {super.key,
+      required this.billerID,
+      required this.categoryID,
+      required this.customerBillID});
 
   @override
   State<BillHistory> createState() => _BillHistoryState();
@@ -51,7 +56,10 @@ class _BillHistoryState extends State<BillHistory> {
                 isHistoryLoading = true;
               } else if (state is HistorySuccess) {
                 setState(() {
-                  historyData = state.historyData;
+                  historyData = state.historyData!
+                      .where((item) =>
+                          item.cUSTOMERBILLID == widget.customerBillID)
+                      .toList();
                 });
                 isHistoryLoading = false;
               } else if (state is HistoryFailed) {
@@ -75,6 +83,13 @@ class _BillHistoryState extends State<BillHistory> {
                           // controller: infiniteScrollController,
                           itemBuilder: (context, index) {
                             return HistoryContainer(
+                              handleStatus: (txnStatus, txnID) {
+                                print("txnStatus" + txnStatus.toString());
+                                setState(() {
+                                  historyData![index].tRANSACTIONSTATUS =
+                                      txnStatus;
+                                });
+                              },
                               historyData: historyData![index],
                               // billerFilterData: billerFilterData,
                               titleText: 'Paid to',
@@ -104,7 +119,7 @@ class _BillHistoryState extends State<BillHistory> {
                       ),
               if (isHistoryLoading)
                 Container(
-                    height: 500,
+                    height: 500.h,
                     width: double.infinity,
                     child: Center(child: FlickrLoader())),
             ],

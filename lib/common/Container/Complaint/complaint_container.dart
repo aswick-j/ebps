@@ -2,6 +2,7 @@ import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
+import 'package:ebps/helpers/getComplaintStatus.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/complaints_model.dart';
 import 'package:flutter/material.dart';
@@ -149,13 +150,17 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8.0.w, vertical: 3.w),
                             decoration: BoxDecoration(
-                              border: Border.all(color: CLR_ERROR),
+                              border: Border.all(
+                                  color: getComplaintStatusColors(
+                                      widget.statusText.toString())),
                               borderRadius: BorderRadius.circular(12.0.r),
                             ),
                             child: Text(
-                              widget.statusText.toString(),
+                              getComplaintStatusValue(
+                                  widget.statusText.toString()),
                               style: TextStyle(
-                                color: CLR_ERROR,
+                                color: getComplaintStatusColors(
+                                    widget.statusText.toString()),
                                 fontSize: 8.0.sp,
                               ),
                             ),

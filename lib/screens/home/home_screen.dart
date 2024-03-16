@@ -256,10 +256,9 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
                   if (state is AutoPayLoading) {
                     isUpcomingAutopaymentLoading = true;
                   } else if (state is AutopaySuccess) {
+                    allautoPaymentList =
+                        state.autoScheduleData!.allConfigurations!;
                     if (state.autoScheduleData!.upcomingPayments!.isNotEmpty) {
-                      allautoPaymentList =
-                          state.autoScheduleData!.allConfigurations!;
-
                       upcomingAutoPaymentData =
                           state.autoScheduleData!.upcomingPayments![0].data;
                     }

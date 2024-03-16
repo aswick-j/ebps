@@ -1,3 +1,4 @@
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
@@ -589,6 +590,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                           onPressed: () {
                                             goToData(
                                                 context, bILLERHISTORYROUTE, {
+                                                  "customerBillID":widget.savedBillersData.cUSTOMERBILLID,
                                               "categoryID": widget
                                                   .savedBillersData
                                                   .cATEGORYNAME,
@@ -1277,108 +1279,115 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                               .savedBillersData.cUSTOMERBILLID)!
                                           .rESETLIMIT ==
                                       1)
-                                GestureDetector(
-                                    onTap: () {
-                                      if ((getAllAutopayList(widget
-                                                          .savedBillersData
-                                                          .cUSTOMERBILLID) !=
-                                                      null
-                                                  ? getAllAutopayList(widget
-                                                          .savedBillersData
-                                                          .cUSTOMERBILLID)!
-                                                      .pAYMENTDATE
-                                                  : "") ==
-                                              DateTime.now().day.toString() ||
-                                          getAllAutopayList(widget
-                                                      .savedBillersData
-                                                      .cUSTOMERBILLID)!
-                                                  .iSACTIVE ==
-                                              0) {
-                                        showDialog(
-                                          barrierDismissible: true,
-                                          context: context,
-                                          builder: (BuildContext ctx) {
-                                            return AlertDialog(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(12.r),
-                                              ),
-                                              content: AnimatedDialog(
-                                                  showImgIcon: false,
-                                                  title: getAllAutopayList(widget
-                                                                  .savedBillersData
-                                                                  .cUSTOMERBILLID)!
-                                                              .pAYMENTDATE ==
-                                                          DateTime.now()
-                                                              .day
-                                                              .toString()
-                                                      ? " We are unable to edit your autopay as the autopay is scheduled for today"
-                                                      : "We can't edit your Autopay because it's currently paused.",
-                                                  subTitle: "",
-                                                  child: Icon(
-                                                    Icons.close,
-                                                    color: Colors.white,
-                                                  ),
-                                                  showSub: false,
-                                                  shapeColor: CLR_ERROR),
-                                              actions: <Widget>[
-                                                Align(
-                                                  alignment: Alignment.center,
-                                                  child: MyAppButton(
-                                                      onPressed: () {
-                                                        goBack(ctx);
-                                                      },
-                                                      buttonText: "Okay",
-                                                      buttonTxtColor:
-                                                          BTN_CLR_ACTIVE,
-                                                      buttonBorderColor:
-                                                          Colors.transparent,
-                                                      buttonColor: CLR_PRIMARY,
-                                                      buttonSizeX: 10,
-                                                      buttonSizeY: 40,
-                                                      buttonTextSize: 14,
-                                                      buttonTextWeight:
-                                                          FontWeight.w500),
+                                AvatarGlow(
+                                  animate: true,
+                                  glowColor: Colors.red,
+                                  glowRadiusFactor: 0.4,
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        if ((getAllAutopayList(widget
+                                                            .savedBillersData
+                                                            .cUSTOMERBILLID) !=
+                                                        null
+                                                    ? getAllAutopayList(widget
+                                                            .savedBillersData
+                                                            .cUSTOMERBILLID)!
+                                                        .pAYMENTDATE
+                                                    : "") ==
+                                                DateTime.now().day.toString() ||
+                                            getAllAutopayList(widget
+                                                        .savedBillersData
+                                                        .cUSTOMERBILLID)!
+                                                    .iSACTIVE ==
+                                                0) {
+                                          showDialog(
+                                            barrierDismissible: true,
+                                            context: context,
+                                            builder: (BuildContext ctx) {
+                                              return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.r),
                                                 ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      } else {
-                                        goToData(context, eDITAUTOPAYROUTE, {
-                                          "savedBillerData":
-                                              widget.savedBillersData,
-                                          "AutoDateMisMatch": getAllAutopayList(
-                                                      widget.savedBillersData
-                                                          .cUSTOMERBILLID) !=
-                                                  null
-                                              ? getAllAutopayList(widget
-                                                              .savedBillersData
-                                                              .cUSTOMERBILLID)!
-                                                          .rESETDATE ==
-                                                      1
-                                                  ? true
-                                                  : false
-                                              : false,
-                                          "DebitLimitMisMatch": getAllAutopayList(
-                                                      widget.savedBillersData
-                                                          .cUSTOMERBILLID) !=
-                                                  null
-                                              ? getAllAutopayList(widget
-                                                              .savedBillersData
-                                                              .cUSTOMERBILLID)!
-                                                          .rESETLIMIT ==
-                                                      1
-                                                  ? true
-                                                  : false
-                                              : false,
-                                          "autopayData": getAllAutopayList(
-                                              widget.savedBillersData
-                                                  .cUSTOMERBILLID),
-                                        });
-                                      }
-                                    },
-                                    child: SvgPicture.asset(ICON_ERROR)),
+                                                content: AnimatedDialog(
+                                                    showImgIcon: false,
+                                                    title: getAllAutopayList(widget
+                                                                    .savedBillersData
+                                                                    .cUSTOMERBILLID)!
+                                                                .pAYMENTDATE ==
+                                                            DateTime.now()
+                                                                .day
+                                                                .toString()
+                                                        ? " We are unable to edit your autopay as the autopay is scheduled for today"
+                                                        : "We can't edit your Autopay because it's currently paused.",
+                                                    subTitle: "",
+                                                    child: Icon(
+                                                      Icons.close,
+                                                      color: Colors.white,
+                                                    ),
+                                                    showSub: false,
+                                                    shapeColor: CLR_ERROR),
+                                                actions: <Widget>[
+                                                  Align(
+                                                    alignment: Alignment.center,
+                                                    child: MyAppButton(
+                                                        onPressed: () {
+                                                          goBack(ctx);
+                                                        },
+                                                        buttonText: "Okay",
+                                                        buttonTxtColor:
+                                                            BTN_CLR_ACTIVE,
+                                                        buttonBorderColor:
+                                                            Colors.transparent,
+                                                        buttonColor:
+                                                            CLR_PRIMARY,
+                                                        buttonSizeX: 10,
+                                                        buttonSizeY: 40,
+                                                        buttonTextSize: 14,
+                                                        buttonTextWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        } else {
+                                          goToData(context, eDITAUTOPAYROUTE, {
+                                            "savedBillerData":
+                                                widget.savedBillersData,
+                                            "AutoDateMisMatch": getAllAutopayList(
+                                                        widget.savedBillersData
+                                                            .cUSTOMERBILLID) !=
+                                                    null
+                                                ? getAllAutopayList(widget
+                                                                .savedBillersData
+                                                                .cUSTOMERBILLID)!
+                                                            .rESETDATE ==
+                                                        1
+                                                    ? true
+                                                    : false
+                                                : false,
+                                            "DebitLimitMisMatch": getAllAutopayList(
+                                                        widget.savedBillersData
+                                                            .cUSTOMERBILLID) !=
+                                                    null
+                                                ? getAllAutopayList(widget
+                                                                .savedBillersData
+                                                                .cUSTOMERBILLID)!
+                                                            .rESETLIMIT ==
+                                                        1
+                                                    ? true
+                                                    : false
+                                                : false,
+                                            "autopayData": getAllAutopayList(
+                                                widget.savedBillersData
+                                                    .cUSTOMERBILLID),
+                                          });
+                                        }
+                                      },
+                                      child: SvgPicture.asset(ICON_ERROR)),
+                                ),
                             SizedBox(width: 5.w),
                             GestureDetector(
                               onTap: () {

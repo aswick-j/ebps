@@ -2,6 +2,7 @@ import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Container/Home/biller_details_container.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/helpers/getComplaintStatus.dart';
 import 'package:ebps/models/complaints_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,26 +47,30 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 8.0.w, vertical: 4.w),
                     decoration: BoxDecoration(
-                      border: Border.all(color: CLR_ERROR),
+                      border: Border.all(
+                          color: getComplaintStatusColors(subTitle.toString())),
                       borderRadius: BorderRadius.circular(12.0.r),
                     ),
                     child: Text(
-                      subTitle.toString(),
+                      getComplaintStatusValue(subTitle.toString()),
                       style: TextStyle(
-                        color: CLR_ERROR,
+                        color: getComplaintStatusColors(subTitle.toString()),
                         fontSize: 10.0.sp,
                       ),
                     ),
                   ),
                 if (!showStatus)
-                  Text(
-                    subTitle,
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff1b438b),
+                  SizedBox(
+                    width: 280.w,
+                    child: Text(
+                      subTitle,
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff1b438b),
+                      ),
+                      textAlign: TextAlign.left,
                     ),
-                    textAlign: TextAlign.left,
                   ),
               ],
             )

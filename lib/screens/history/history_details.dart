@@ -1,9 +1,13 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:delightful_toast/delight_toast.dart';
+import 'package:delightful_toast/toast/components/toast_card.dart';
 import 'package:ebps/bloc/history/history_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
+import 'package:ebps/helpers/capitalizeByWord.dart';
 import 'package:ebps/helpers/getGradientColors.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getTransactionStatusReason.dart';
@@ -30,14 +34,15 @@ class HistoryDetails extends StatefulWidget {
   String categoryName;
   String billerName;
   HistoryData historyData;
-  HistoryDetails({
-    super.key,
-    required this.billName,
-    required this.billerName,
-    required this.categoryName,
-    required this.isSavedBill,
-    required this.historyData,
-  });
+  final void Function(String?, int?) handleStatus;
+  HistoryDetails(
+      {super.key,
+      required this.billName,
+      required this.billerName,
+      required this.categoryName,
+      required this.isSavedBill,
+      required this.historyData,
+      required this.handleStatus});
 
   @override
   State<HistoryDetails> createState() => _HistoryDetailsState();
@@ -47,7 +52,9 @@ class _HistoryDetailsState extends State<HistoryDetails> {
   confirmDoneData? tnxResponse;
   var billData;
   BillersData? billerTypeData;
-  bool isTransactionStatusLoading = true;
+  bool isTransactionStatusLoading = false;
+  bool isTxnUpdateLoading = false;
+  String? updateTxnStatus;
   Map<String, dynamic>? paymentDetails;
   Map<String, dynamic>? billerTypeResult;
   ScreenshotController screenshotController = ScreenshotController();
@@ -55,7 +62,14 @@ class _HistoryDetailsState extends State<HistoryDetails> {
   // Uint8List? capturedImage;
   @override
   void initState() {
-    if (widget.historyData.tRANSACTIONREFERENCEID != null) {
+    isTransactionStatusLoading =
+        widget.historyData.tRANSACTIONSTATUS.toString() == "bbps-in-progress" ||
+                widget.historyData.tRANSACTIONSTATUS.toString() ==
+                    "bbps-timeout"
+            ? true
+            : false;
+    if (widget.historyData.tRANSACTIONSTATUS.toString() == "bbps-in-progress" ||
+        widget.historyData.tRANSACTIONSTATUS.toString() == "bbps-timeout") {
       BlocProvider.of<HistoryCubit>(context).getTransactionStatusdetails(
           widget.historyData.tRANSACTIONREFERENCEID);
     }
@@ -123,7 +137,10 @@ class _HistoryDetailsState extends State<HistoryDetails> {
   handleTxnApi() {
     Map<String, dynamic> payload = {
       "transactionId": widget.historyData.tRANSACTIONID,
-      "status": widget.historyData.tRANSACTIONSTATUS
+      "status": TransactionStatusData?.response?.data?.txnStatusComplainResp
+              ?.txnList?.txnDetail?.txnStatus
+              ?.toLowerCase() ??
+          widget.historyData.tRANSACTIONSTATUS.toString()
     };
 
     BlocProvider.of<HistoryCubit>(context).updateTxnStatus(payload);
@@ -157,6 +174,93 @@ class _HistoryDetailsState extends State<HistoryDetails> {
               isTransactionStatusLoading = false;
             } else if (state is TransactionStatusError) {
               isTransactionStatusLoading = false;
+            }
+            if (state is TxnStatusUpdateLoading) {
+              isTxnUpdateLoading = true;
+            } else if (state is TxnStatusUpdateSuccess) {
+              isTxnUpdateLoading = false;
+
+              setState(() {
+                updateTxnStatus = TransactionStatusData?.response?.data
+                        ?.txnStatusComplainResp?.txnList?.txnDetail?.txnStatus
+                        ?.toLowerCase() ??
+                    widget.historyData.tRANSACTIONSTATUS.toString();
+              });
+
+              widget.handleStatus(
+                  TransactionStatusData?.response?.data?.txnStatusComplainResp
+                          ?.txnList?.txnDetail?.txnStatus
+                          ?.toLowerCase() ??
+                      widget.historyData.tRANSACTIONSTATUS.toString(),
+                  widget.historyData.tRANSACTIONID);
+              DelightToastBar(
+                autoDismiss: true,
+                animationDuration: Duration(milliseconds: 300),
+                builder: (context) => ToastCard(
+                  
+                  shadowColor: Colors.grey.withOpacity(0.4),
+                  leading: Icon(
+                    updateTxnStatus == "success"
+                        ? Icons.check_circle_outline
+                        : updateTxnStatus == "failure"
+                            ? Icons.cancel_outlined
+                            : updateTxnStatus != null
+                                ? Icons.error_outlined
+                                : Icons.help,
+                    size: 28.r,
+                    color: updateTxnStatus == "success"
+                        ? Colors.green
+                        : updateTxnStatus == "failure"
+                            ? Colors.red
+                            : updateTxnStatus != null
+                                ? Colors.blue
+                                : null,
+                  ),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        updateTxnStatus == "success"
+                            ? "Hurray !"
+                            : updateTxnStatus == "failure"
+                                ? "Oops !"
+                                : updateTxnStatus != null
+                                    ? updateTxnStatus
+                                        .toString()
+                                        .capitalizeByWord()
+                                    : "",
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.bold,
+                          color: TXT_CLR_DEFAULT,
+                        ),
+                        textAlign: TextAlign.left,
+                        maxLines: 2,
+                      ),
+                      Text(
+                        updateTxnStatus == "success"
+                            ? "Your Payment has been Successfull"
+                            : updateTxnStatus == "failure"
+                                ? "Your Payment has been Failed"
+                                : updateTxnStatus != null
+                                    ? "Waiting Response from Biller"
+                                    : "",
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xff1b438b),
+                        ),
+                        textAlign: TextAlign.left,
+                        maxLines: 2,
+                      ),
+                    ],
+                  ),
+                ),
+              ).show(context);
+            } else if (state is TxnStatusUpdateFailed) {
+              isTxnUpdateLoading = false;
+            } else if (state is TxnStatusUpdateError) {
+              isTxnUpdateLoading = false;
             }
           },
           builder: (context, state) {
@@ -474,43 +578,101 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                         .pARAMETERVALUE
                                         .toString(),
                                 clipBoard: false),
-                            if (widget.historyData.tRANSACTIONSTATUS ==
-                                'success')
+                            if (widget.historyData.tRANSACTIONREFERENCEID !=
+                                null)
                               TxnDetails(
                                   title: "Transaction ID",
                                   subTitle: widget
                                       .historyData.tRANSACTIONREFERENCEID
                                       .toString(),
                                   clipBoard: true),
-
-                            TxnDetails(
-                                title: "Status",
-                                subTitle: widget.historyData.tRANSACTIONSTATUS
-                                            .toString()
-                                            .toLowerCase() ==
-                                        "success"
-                                    ? "Transaction Success"
-                                    : widget.historyData.tRANSACTIONSTATUS
-                                                    .toString()
-                                                    .toLowerCase() ==
-                                                "bbps-in-progress" ||
-                                            widget.historyData.tRANSACTIONSTATUS
-                                                    .toString()
-                                                    .toLowerCase() ==
-                                                "bbps-timeout"
-                                        ? "Transaction Pending"
-                                        : "Transaction Failure",
-                                clipBoard: false),
-                            if (widget.historyData.tRANSACTIONSTATUS
-                                    .toString()
-                                    .toLowerCase() !=
-                                "success")
+                            if (isTransactionStatusLoading ||
+                                isTxnUpdateLoading)
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16.0.w, vertical: 8.h),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Status",
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xff808080),
+                                        height: 23 / 14,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    SizedBox(width: 10.w),
+                                    SizedBox(
+                                      width: 250.w,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Checking Transaction Status",
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color(0xff1b438b),
+                                            ),
+                                            textAlign: TextAlign.left,
+                                            maxLines: 2,
+                                          ),
+                                          AnimatedTextKit(
+                                              repeatForever: true,
+                                              isRepeatingAnimation: true,
+                                              animatedTexts: [
+                                                TyperAnimatedText(' . . .',
+                                                    textStyle: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Color(0xff1b438b),
+                                                    ),
+                                                    speed: Duration(
+                                                        milliseconds: 100)),
+                                              ]),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(width: 10.w),
+                                  ],
+                                ),
+                              ),
+                            if (!isTransactionStatusLoading &&
+                                !isTxnUpdateLoading)
                               TxnDetails(
-                                  title: "Reason",
-                                  subTitle: getTransactionReason(widget
-                                      .historyData.tRANSACTIONSTATUS
-                                      .toString()),
+                                  title: "Status",
+                                  subTitle: widget.historyData.tRANSACTIONSTATUS
+                                              .toString()
+                                              .toLowerCase() ==
+                                          "success"
+                                      ? "Transaction Success"
+                                      : widget.historyData.tRANSACTIONSTATUS
+                                                      .toString()
+                                                      .toLowerCase() ==
+                                                  "bbps-in-progress" ||
+                                              widget.historyData
+                                                      .tRANSACTIONSTATUS
+                                                      .toString()
+                                                      .toLowerCase() ==
+                                                  "bbps-timeout"
+                                          ? "Transaction Pending"
+                                          : "Transaction Failure",
                                   clipBoard: false),
+                            if (!isTransactionStatusLoading &&
+                                !isTxnUpdateLoading)
+                              if (widget.historyData.tRANSACTIONSTATUS
+                                      .toString()
+                                      .toLowerCase() !=
+                                  "success")
+                                TxnDetails(
+                                    title: "Reason",
+                                    subTitle: getTransactionReason(widget
+                                        .historyData.tRANSACTIONSTATUS
+                                        .toString()),
+                                    clipBoard: false),
                             TxnDetails(
                                 title: "Payment Channel",
                                 subTitle:

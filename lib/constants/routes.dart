@@ -377,6 +377,7 @@ class MyRouter {
                         create: (_) => MybillersCubit(repository: apiClient)),
                   ],
                   child: BillHistory(
+                      customerBillID: args["customerBillID"],
                       categoryID: args["categoryID"],
                       billerID: args["billerID"]),
                 ));
@@ -395,6 +396,7 @@ class MyRouter {
                       billerName: args['billerName'],
                       categoryName: args["categoryName"],
                       isSavedBill: args["isSavedBill"],
+                      handleStatus: args["handleStatus"],
                       historyData: args["historyData"]),
                 ));
 
