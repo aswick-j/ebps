@@ -149,7 +149,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                     maxLines: 1,
                                   ),
                                   SizedBox(
-                                    width: 260.w,
+                                    width: 255.w,
                                     child: Text(
                                       "${widget.allautoPayData![index].bILLERNAME}",
                                       style: TextStyle(

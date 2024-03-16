@@ -211,7 +211,7 @@ class ScreenshotContainer extends StatelessWidget {
               subTitle: ParamValue,
               clipBoard: false,
             ),
-            if (status == 'success')
+            if (TransactionID != "")
               txnDetails(
                 title: "Transaction ID",
                 subTitle: TransactionID,

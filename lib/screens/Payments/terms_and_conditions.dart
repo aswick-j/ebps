@@ -68,6 +68,16 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
               ),
             ],
           ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  goBack(context);
+                },
+                icon: Icon(
+                  Icons.close_rounded,
+                  color: Colors.grey.withOpacity(0.4),
+                ))
+          ],
           automaticallyImplyLeading: false,
         ),
         body: Padding(

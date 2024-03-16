@@ -642,6 +642,23 @@ class _BillerDetailsState extends State<BillerDetails> {
                                   ),
                                 ),
                               ),
+                              if (PaymentExactErrMsg.isNotEmpty)
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20.w, bottom: 20.h, right: 20.w),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      PaymentExactErrMsg,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.normal,
+                                        color: CLR_ERROR,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               Padding(
                                 padding: EdgeInsets.only(
                                     left: 20.w, bottom: 20.h, right: 20.w),
@@ -667,23 +684,6 @@ class _BillerDetailsState extends State<BillerDetails> {
                                   ),
                                 ),
                               ),
-                              if (PaymentExactErrMsg.isNotEmpty)
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 20.w, bottom: 20.h, right: 20.w),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      PaymentExactErrMsg,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.normal,
-                                        color: CLR_ERROR,
-                                      ),
-                                    ),
-                                  ),
-                                ),
                             ],
                           ),
                       ],

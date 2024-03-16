@@ -353,7 +353,7 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
                 ),
                 Center(
                   child: Text(
-                    "V 0.0.32",
+                    "V 0.0.33",
                     style: TextStyle(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w400,
