@@ -116,6 +116,7 @@ const LOGO_VI = "packages/ebps/assets/logo/logo_vi.svg";
 const IMG_NOPLANS = "packages/ebps/assets/images/image_no_plans_found.dart.svg";
 const IMG_NODATA = "packages/ebps/assets/images/image_no_data.svg";
 const IMG_SERVERDOWN = "packages/ebps/assets/images/image_serverdown.svg";
+const IMG_PENDINGDUES = "packages/ebps/assets/images/image_no_pending_bill.svg";
 const IMG_SESSIONEXPIRED =
     "packages/ebps/assets/images/image_session_expired.svg";
 const IMG_NOTFOUND = "packages/ebps/assets/icon/icon_notFound.svg";

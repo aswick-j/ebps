@@ -232,6 +232,9 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                                 height: 10.h,
                                               ),
                                               RefreshDues(
+                                                  customerBillID: widget
+                                                      .savedBillersData!
+                                                      .cUSTOMERBILLID,
                                                   billerID: widget
                                                       .savedBillersData!
                                                       .bILLERID,

@@ -137,10 +137,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
   handleTxnApi() {
     Map<String, dynamic> payload = {
       "transactionId": widget.historyData.tRANSACTIONID,
-      "status": TransactionStatusData?.response?.data?.txnStatusComplainResp
-              ?.txnList?.txnDetail?.txnStatus
-              ?.toLowerCase() ??
-          widget.historyData.tRANSACTIONSTATUS.toString()
+      "status": updateTxnStatus
     };
 
     BlocProvider.of<HistoryCubit>(context).updateTxnStatus(payload);
@@ -167,6 +164,28 @@ class _HistoryDetailsState extends State<HistoryDetails> {
               setState(() {
                 TransactionStatusData = state
                     .TransactionStatusDetails!.data!.data!.transactionStatus;
+                updateTxnStatus = TransactionStatusData
+                                ?.response
+                                ?.data
+                                ?.txnStatusComplainResp
+                                ?.txnList
+                                ?.txnDetail
+                                ?.txnStatus
+                                ?.toLowerCase() ==
+                            'success' ||
+                        TransactionStatusData
+                                ?.response
+                                ?.data
+                                ?.txnStatusComplainResp
+                                ?.txnList
+                                ?.txnDetail
+                                ?.txnStatus
+                                ?.toLowerCase() ==
+                            'failure'
+                    ? TransactionStatusData?.response?.data
+                        ?.txnStatusComplainResp?.txnList?.txnDetail?.txnStatus
+                        ?.toLowerCase()
+                    : widget.historyData.tRANSACTIONSTATUS.toString();
               });
 
               handleTxnApi();
@@ -181,18 +200,45 @@ class _HistoryDetailsState extends State<HistoryDetails> {
               isTxnUpdateLoading = false;
 
               setState(() {
-                updateTxnStatus = TransactionStatusData?.response?.data
+                updateTxnStatus = TransactionStatusData
+                                ?.response
+                                ?.data
+                                ?.txnStatusComplainResp
+                                ?.txnList
+                                ?.txnDetail
+                                ?.txnStatus
+                                ?.toLowerCase() ==
+                            'success' ||
+                        TransactionStatusData
+                                ?.response
+                                ?.data
+                                ?.txnStatusComplainResp
+                                ?.txnList
+                                ?.txnDetail
+                                ?.txnStatus
+                                ?.toLowerCase() ==
+                            'failure'
+                    ? TransactionStatusData?.response?.data
                         ?.txnStatusComplainResp?.txnList?.txnDetail?.txnStatus
-                        ?.toLowerCase() ??
-                    widget.historyData.tRANSACTIONSTATUS.toString();
+                        ?.toLowerCase()
+                    : TransactionStatusData
+                            ?.response
+                            ?.data
+                            ?.txnStatusComplainResp
+                            ?.txnList
+                            ?.txnDetail
+                            ?.txnStatus
+                            ?.toLowerCase() ??
+                        widget.historyData.tRANSACTIONSTATUS.toString();
               });
 
-              widget.handleStatus(
-                  TransactionStatusData?.response?.data?.txnStatusComplainResp
-                          ?.txnList?.txnDetail?.txnStatus
-                          ?.toLowerCase() ??
-                      widget.historyData.tRANSACTIONSTATUS.toString(),
-                  widget.historyData.tRANSACTIONID);
+              if (updateTxnStatus == "success" ||
+                  updateTxnStatus == "failure") {
+                widget.handleStatus(
+                    updateTxnStatus ??
+                        widget.historyData.tRANSACTIONSTATUS.toString(),
+                    widget.historyData.tRANSACTIONID);
+              }
               DelightToastBar(
                 autoDismiss: true,
                 animationDuration: Duration(milliseconds: 300),
@@ -240,7 +286,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                             : updateTxnStatus == "failure"
                                 ? "Your Payment has been Failed"
                                 : updateTxnStatus != null
-                                    ? "Waiting Response from Biller"
+                                    ? "Waiting Confirmation from Biller"
                                     : "Something Went Wrong",
                         style: TextStyle(
                           fontSize: 12.sp,

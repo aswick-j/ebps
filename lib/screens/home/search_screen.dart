@@ -272,7 +272,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                           width: 45.w,
                                           child: Padding(
                                             padding: EdgeInsets.all(13.r),
-                                            child: SvgPicture.asset(LOGO_BBPS),
+                                            child: SvgPicture.asset(BILLER_LOGO(
+                                                BillerSearchResults![index]
+                                                    .bILLERNAME
+                                                    .toString())),
                                           ),
                                         ),
                                         title: Text(

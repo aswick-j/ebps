@@ -358,7 +358,9 @@ class _editAutopayState extends State<editAutopay> {
                                   width: 50.w,
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0.r),
-                                    child: SvgPicture.asset(LOGO_BBPS),
+                                    child: SvgPicture.asset(BILLER_LOGO(widget
+                                        .savedBillerData.bILLERNAME
+                                        .toString())),
                                   ),
                                 ),
                                 title: Text(
@@ -909,7 +911,7 @@ class _editAutopayState extends State<editAutopay> {
                                         SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
                                       // itemCount: accountInfo!.length,
-                                      childAspectRatio: 5 / 3,
+                                      childAspectRatio: 5 / 3.1,
                                       mainAxisSpacing: 10.0,
                                     ),
                                     itemBuilder: (context, index) {

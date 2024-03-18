@@ -532,7 +532,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
                                 // itemCount: accountInfo!.length,
-                                childAspectRatio: 5 / 3,
+                                childAspectRatio: 5 / 3.1,
                                 mainAxisSpacing: 10.h,
                                 // mainAxisSpacing: 10,
                               ),

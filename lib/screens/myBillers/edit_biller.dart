@@ -209,7 +209,9 @@ class _EditBillerUIState extends State<EditBillerUI> {
                               width: 50.w,
                               child: Padding(
                                 padding: EdgeInsets.all(8.0.r),
-                                child: SvgPicture.asset(LOGO_BBPS),
+                                child: SvgPicture.asset(BILLER_LOGO(widget
+                                    .savedbillersData.bILLERNAME
+                                    .toString())),
                               ),
                             ),
                             title: Text(

@@ -77,35 +77,35 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                     ),
                   ),
                 if (!showStatus)
-                  SizedBox(
-                    width: 280.w,
-                    child: Row(
-                      children: [
-                        Text(
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: showStatus || clipBoard ? null : 270.w,
+                        child: Text(
                           subTitle,
                           style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
                             color: Color(0xff1b438b),
                           ),
                           textAlign: TextAlign.left,
                         ),
-                        if (clipBoard != false) SizedBox(width: 10.w),
-                        if (clipBoard != false)
-                          GestureDetector(
-                              onTap: () {
-                                Clipboard.setData(ClipboardData(text: subTitle))
-                                    .then((_) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              '$title copied to clipboard')));
-                                });
-                              },
-                              child: Icon(Icons.copy,
-                                  color: Color(0xff1b438b), size: 20))
-                      ],
-                    ),
+                      ),
+                      if (clipBoard != false) SizedBox(width: 10.w),
+                      if (clipBoard != false)
+                        GestureDetector(
+                            onTap: () {
+                              Clipboard.setData(ClipboardData(text: subTitle))
+                                  .then((_) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(
+                                            '$title copied to clipboard')));
+                              });
+                            },
+                            child: Icon(Icons.copy,
+                                color: Color(0xff1b438b), size: 20))
+                    ],
                   ),
               ],
             )
@@ -124,85 +124,103 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
           onSearchTap: () => Navigator.pop(context),
         ),
         body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: BlocConsumer<ComplaintCubit, ComplaintState>(
-          listener: (context, state) {
-            if (state is CmpStatusUpdateLoading) {
-              isCmpStatusLoading = true;
-            } else if (state is CmpStatusUpdateSuccess) {
-              widget.handleStatus(state.CmpStatusUpdateDetails!.data.toString(),
-                  widget.complaintData.cOMPLAINTID);
-              isCmpStatusLoading = false;
-            } else if (state is CmpStatusUpdateFailed) {
-              isCmpStatusLoading = false;
-            } else if (state is CmpStatusUpdateError) {
-              isCmpStatusLoading = false;
-            }
-          },
-          builder: (context, state) {
-            return Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(
-                    left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0.r),
-                  border: Border.all(
-                    color: Color(0xFFD1D9E8),
-                    width: 2.0,
-                  ),
-                ),
-                child: !isCmpStatusLoading
-                    ? Column(
-                        children: [
-                          BillerDetailsContainer(
-                              icon: LOGO_BBPS,
-                              billerName:
-                                  widget.complaintData.bILLERNAME.toString(),
-                              categoryName:
-                                  widget.complaintData.cATEGORYNAME.toString()),
-                          CmpDetails(
-                              title: "Status",
-                              subTitle: widget.complaintData.sTATUS.toString(),
-                              showStatus: true),
-                          CmpDetails(
-                              title: "Complaint ID",
-                              subTitle:
-                                  widget.complaintData.cOMPLAINTID.toString(),
-                              clipBoard: true,
-                              showStatus: false),
-                          CmpDetails(
-                              title: "Transaction ID",
-                              clipBoard: true,
-                              subTitle:
-                                  widget.complaintData.tRANSACTIONID.toString(),
-                              showStatus: false),
-                          CmpDetails(
-                              title: "Reason",
-                              subTitle: widget.complaintData.cOMPLAINTREASON
-                                  .toString(),
-                              showStatus: false),
-                          CmpDetails(
-                              title: "Issued Date",
-                              subTitle: DateFormat('dd/MM/yyyy').format(
-                                  DateTime.parse(widget.complaintData.cREATEDON
-                                          .toString())
-                                      .toLocal()),
-                              showStatus: false),
-                          CmpDetails(
-                              title: "Type",
-                              subTitle: "Transaction",
-                              showStatus: false),
-                          CmpDetails(
-                              title: "Description",
-                              subTitle:
-                                  widget.complaintData.dESCRIPTION.toString(),
-                              showStatus: false),
-                        ],
-                      )
-                    : Container(
-                        height: 500.h,
-                        child: FlickrLoader(),
-                      ));
-          },
-        )));
+              listener: (context, state) {
+                if (state is CmpStatusUpdateLoading) {
+                  isCmpStatusLoading = true;
+                } else if (state is CmpStatusUpdateSuccess) {
+                  widget.handleStatus(
+                      state.CmpStatusUpdateDetails!.data.toString(),
+                      widget.complaintData.cOMPLAINTID);
+                  isCmpStatusLoading = false;
+                } else if (state is CmpStatusUpdateFailed) {
+                  isCmpStatusLoading = false;
+                } else if (state is CmpStatusUpdateError) {
+                  isCmpStatusLoading = false;
+                }
+              },
+              builder: (context, state) {
+                return Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.only(
+                        left: 18.0.w, right: 18.w, top: 10.h, bottom: 20.h),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0.r),
+                      border: Border.all(
+                        color: Color(0xFFD1D9E8),
+                        width: 2.0,
+                      ),
+                    ),
+                    child: !isCmpStatusLoading
+                        ? Column(
+                            children: [
+                              BillerDetailsContainer(
+                                  icon: BILLER_LOGO(widget
+                                      .complaintData.bILLERNAME
+                                      .toString()),
+                                  billerName: widget.complaintData.bILLERNAME
+                                      .toString(),
+                                  categoryName: widget
+                                      .complaintData.cATEGORYNAME
+                                      .toString()),
+                              CmpDetails(
+                                  title: "Status",
+                                  subTitle:
+                                      widget.complaintData.sTATUS.toString(),
+                                  showStatus: true),
+                              CmpDetails(
+                                  title: "Assigned to",
+                                  subTitle:
+                                      widget.complaintData.sTATUS.toString(),
+                                  showStatus: false),
+                              if (widget.complaintData.rEMARKS != null)
+                                CmpDetails(
+                                    title: "Remarks",
+                                    subTitle:
+                                        widget.complaintData.rEMARKS.toString(),
+                                    showStatus: false),
+                              CmpDetails(
+                                  title: "Complaint ID",
+                                  subTitle: widget.complaintData.cOMPLAINTID
+                                      .toString(),
+                                  clipBoard: true,
+                                  showStatus: false),
+                              CmpDetails(
+                                  title: "Transaction ID",
+                                  clipBoard: true,
+                                  subTitle: widget.complaintData.tRANSACTIONID
+                                      .toString(),
+                                  showStatus: false),
+                              CmpDetails(
+                                  title: "Reason",
+                                  subTitle: widget.complaintData.cOMPLAINTREASON
+                                      .toString(),
+                                  showStatus: false),
+                              CmpDetails(
+                                  title: "Issued Date",
+                                  subTitle: DateFormat('dd/MM/yyyy').format(
+                                      DateTime.parse(widget
+                                              .complaintData.cREATEDON
+                                              .toString())
+                                          .toLocal()),
+                                  showStatus: false),
+                              CmpDetails(
+                                  title: "Type",
+                                  subTitle: "Transaction",
+                                  showStatus: false),
+                              CmpDetails(
+                                  title: "Description",
+                                  subTitle: widget.complaintData.dESCRIPTION
+                                      .toString(),
+                                  showStatus: false),
+                            ],
+                          )
+                        : Container(
+                            height: 560.h,
+                            child: FlickrLoader(),
+                          ));
+              },
+            )));
   }
 }

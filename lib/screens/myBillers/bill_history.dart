@@ -108,7 +108,8 @@ class _BillHistoryState extends State<BillHistory> {
                                   "₹ ${NumberFormat('#,##,##0.00').format(double.parse(historyData![index].bILLAMOUNT.toString()))}",
                               // '₹ ${historyData![index].bILLAMOUNT.toString()}',
 
-                              iconPath: LOGO_BBPS,
+                              iconPath: BILLER_LOGO(
+                                  historyData![index].bILLERNAME.toString()),
                               containerBorderColor: Color(0xffD1D9E8),
                             );
                           },

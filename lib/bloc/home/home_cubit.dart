@@ -200,6 +200,19 @@ class HomeCubit extends Cubit<HomeState> {
         billName,
       );
 
+      // value = {
+      //   "message":
+      //       "You have no pending bill. Please contact biller for more information.",
+      //   "status": 400,
+      // };
+      // value = {
+      //   "message": "no bill data. Please contact biller for more information.",
+      //   "status": 400,
+      // };
+      // value = {
+      //   "message": "You. Please contact biller for more information.",
+      //   "status": 400,
+      // };
       logger.d(value,
           error: "FETCH BILL API RESPONSE ===> lib/bloc/home/fetchBill");
 
@@ -213,7 +226,7 @@ class HomeCubit extends Cubit<HomeState> {
           logger.e(
               error: "FETCH BILL API ERROR ===> lib/bloc/home/fetchBill",
               value);
-          if (!isClosed) emit(FetchBillFailed(message: value['message']));
+          if (!isClosed) emit(FetchBillFailed(message: value?['message']));
         }
       } else {
         logger.e(

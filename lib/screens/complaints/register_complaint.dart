@@ -265,7 +265,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                           : Column(
                               children: [
                                 BillerDetailsContainer(
-                                    icon: LOGO_BBPS,
+                                    icon: BILLER_LOGO(widget.BillerName),
                                     billerName: widget.BillerName,
                                     categoryName: widget.CategoryName),
                                 Container(
@@ -331,7 +331,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                   child: TextFormField(
                                     inputFormatters: [
                                       FilteringTextInputFormatter.allow(
-                                          RegExp(r'^[a-z0-9A-Z ]*'))
+                                          RegExp(r'^[a-z0-9A-Z.,:?!() ]*'))
                                     ],
                                     onChanged: (s) {
                                       setState(() {
@@ -346,6 +346,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                     maxLines: 3,
                                     controller: txtDescController,
                                     cursorColor: CLR_BLUE_LITE,
+                                    maxLength: 200,
                                     decoration: InputDecoration(
                                         labelText: "Description",
                                         hintText: "Type here...",

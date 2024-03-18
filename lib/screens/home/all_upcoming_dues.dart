@@ -235,7 +235,7 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                 handleDialog(success: false);
 
                 LoaderOverlay.of(context).hide();
-              } else if (state is deleteBillerError) {
+              } else if (state is DeleteUpcomingDueError) {
                 handleDialog(success: false);
 
                 LoaderOverlay.of(context).hide();

@@ -135,7 +135,8 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         BillerDetailsContainer(
-                          icon: LOGO_BBPS,
+                          icon: BILLER_LOGO(
+                              widget.billerData!.bILLERNAME.toString()),
                           billerName: widget.billerData!.bILLERNAME.toString(),
                           categoryName:
                               widget.billerData!.cATEGORYNAME.toString(),

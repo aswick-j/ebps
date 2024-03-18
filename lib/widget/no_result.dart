@@ -8,7 +8,12 @@ import 'package:flutter_svg/svg.dart';
 class noResult extends StatefulWidget {
   final int ErrIndex;
   final int ImgIndex;
-  const noResult({Key? key, required this.ErrIndex, required this.ImgIndex})
+  final int? TitleErrIndex;
+  const noResult(
+      {Key? key,
+      required this.ErrIndex,
+      required this.ImgIndex,
+      this.TitleErrIndex})
       : super(key: key);
 
   @override
@@ -20,10 +25,24 @@ class _noResultState extends State<noResult> {
     "It seems there is a problem fetching the\nbill at the moment. Kindly try again later.",
     "It seems there is a problem fetching the\nplans at the moment. Kindly try again later.",
     "The bank is experiencing some issues right now. Kindly try again later.",
-    "No Plans Found for this Operator.\nPlease Choose a different Operator."
+    "No Plans Found for this Operator.\nPlease Choose a different Operator.",
+    "You have no pending bill.\nPlease contact biller for more information.",
+    "No bill data available at the moment.\nPlease contact biller for more information.",
+    "Something Went Wrong.\nPlease contact bank for more information."
   ];
 
-  List Image = [IMG_NOTFOUND, IMG_NODATA, IMG_SERVERDOWN, IMG_NOPLANS];
+  List TitlExpMsg = [
+    "Oops! ",
+    "Hurray! ",
+  ];
+
+  List Image = [
+    IMG_NOTFOUND,
+    IMG_NODATA,
+    IMG_SERVERDOWN,
+    IMG_NOPLANS,
+    IMG_PENDINGDUES
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,17 +63,18 @@ class _noResultState extends State<noResult> {
                 children: [
                   // SizedBox(height: 80.h),
                   MyAppText(
-                    data: 'Oops!',
-                    size: 18.0.sp,
-                    color: CLR_PRIMARY,
-                    weight: FontWeight.bold,
-                  ),
+                      data: TitlExpMsg[widget.TitleErrIndex ?? 0],
+                      size: 18.0.sp,
+                      color: CLR_PRIMARY,
+                      weight: FontWeight.bold,
+                      maxline: 2),
                   SizedBox(height: 20.h),
                   MyAppText(
                       data: ErrorMessage[widget.ErrIndex],
                       size: 13.0.sp,
                       color: CLR_PRIMARY,
-                      weight: FontWeight.bold,
+                      weight: FontWeight.w500,
+                      maxline: 2,
                       textAlign: TextAlign.justify),
                   // SizedBox(height: 80.h),
                 ],

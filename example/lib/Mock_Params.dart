@@ -812,3 +812,37 @@ var p16 = {
         "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
   }
 };
+
+var p17 = {
+  "redirectionRequest": {
+    "msgBdy": {
+      "data": {
+        "accounts": [
+          {
+            "avlBal": "1708478.0",
+            "entityType": "I",
+            "acctTp": "SA",
+            "crntSts": "8",
+            "acctId": "100048415395",
+            "custRltnsp": "SOW",
+            "prdNm": "1005-RegularSavings",
+            "crntStsDesc": "ACCOUNTOPENREGULAR"
+          },
+        ],
+        "otpPreference": "SMS",
+        "customer": {
+          "gndr": "F",
+          "mblNb": "919600089599",
+          "dob": "1972-03-21",
+          "custId": "13972584",
+          "emailId": "a_nithyadevis@equitasbank.com"
+        }
+      },
+      "service": "bbps",
+      "IPAddress": "1.1.1.1",
+      "platform": "MB"
+    },
+    "checkSum":
+        "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
+  }
+};

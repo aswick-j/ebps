@@ -64,6 +64,7 @@ class _BillerDetailsState extends State<BillerDetails> {
   bool isInsufficient = true;
   int ErrIndex = 0;
   int ImgIndex = 0;
+  int TitleErrIndex = 0;
   AdditionalInfo? _additionalInfo;
   Map<String, dynamic> billerInputSign = {};
   final txtAmountController = TextEditingController();
@@ -297,8 +298,30 @@ class _BillerDetailsState extends State<BillerDetails> {
                 ImgIndex = 2;
                 isUnableToFetchBill = true;
               });
-            } else if (state.message.toString().contains("No Pending Dues")) {
+            } else if (state.message
+                .toString()
+                .toLowerCase()
+                .contains("no pending bill")) {
               setState(() {
+                ErrIndex = 4;
+                ImgIndex = 4;
+                TitleErrIndex = 1;
+                isUnableToFetchBill = true;
+              });
+            } else if (state.message
+                .toString()
+                .toLowerCase()
+                .contains("no bill data")) {
+              setState(() {
+                ErrIndex = 5;
+                ImgIndex = 3;
+
+                isUnableToFetchBill = true;
+              });
+            } else {
+              setState(() {
+                ErrIndex = 6;
+                ImgIndex = 2;
                 isUnableToFetchBill = true;
               });
             }
@@ -355,7 +378,10 @@ class _BillerDetailsState extends State<BillerDetails> {
                               width: double.infinity,
                               height: 350.h,
                               child: noResult(
-                                  ErrIndex: ErrIndex, ImgIndex: ImgIndex)),
+                                ErrIndex: ErrIndex,
+                                ImgIndex: ImgIndex,
+                                TitleErrIndex: TitleErrIndex,
+                              )),
                         if (!isFetchbillLoading &&
                             !isUnableToFetchBill &&
                             !isBbpsSettingsLoading &&

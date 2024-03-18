@@ -753,7 +753,7 @@ class _createAutopayState extends State<createAutopay> {
                                       SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
                                     // itemCount: accountInfo!.length,
-                                    childAspectRatio: 5 / 3,
+                                    childAspectRatio: 5 / 3.1,
                                     mainAxisSpacing: 10.0,
                                   ),
                                   itemBuilder: (context, index) {
