@@ -40,21 +40,24 @@ class ComplaintsData {
   String? cATEGORYNAME;
   String? bILLNAME;
   String? rEMARKS;
+  String? uPDATEDAT;
+  String? aSSIGNED;
 
-  ComplaintsData({
-    this.iD,
-    this.cOMPLAINTID,
-    this.dESCRIPTION,
-    this.cREATEDON,
-    this.tRANSACTIONID,
-    this.sTATUS,
-    this.cOMPLAINTREASON,
-    this.bILLAMOUNT,
-    this.bILLERNAME,
-    this.cATEGORYNAME,
-    this.bILLNAME,
-    this.rEMARKS,
-  });
+  ComplaintsData(
+      {this.iD,
+      this.cOMPLAINTID,
+      this.dESCRIPTION,
+      this.cREATEDON,
+      this.tRANSACTIONID,
+      this.sTATUS,
+      this.cOMPLAINTREASON,
+      this.bILLAMOUNT,
+      this.bILLERNAME,
+      this.cATEGORYNAME,
+      this.bILLNAME,
+      this.rEMARKS,
+      this.aSSIGNED,
+      this.uPDATEDAT});
 
   ComplaintsData.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
@@ -68,6 +71,8 @@ class ComplaintsData {
     cATEGORYNAME = json['CATEGORY_NAME'];
     bILLNAME = json['BILL_NAME'];
     rEMARKS = json['REMARKS'];
+    aSSIGNED = json['ASSIGNED'];
+    uPDATEDAT = json['UPDATED_AT'];
 
     cOMPLAINTREASON = json['COMPLAINT_REASON'];
   }
@@ -85,7 +90,8 @@ class ComplaintsData {
     data['BILL_NAME'] = bILLNAME;
     data['REMARKS'] = rEMARKS;
     data['BILLER_NAME'] = bILLERNAME;
-
+    data['ASSIGNED'] = aSSIGNED;
+    data['UPDATED_AT'] = uPDATEDAT;
     data['COMPLAINT_REASON'] = this.cOMPLAINTREASON;
     return data;
   }

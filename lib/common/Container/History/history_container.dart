@@ -193,8 +193,9 @@ class HistoryContainer extends StatelessWidget {
                     ),
                     SizedBox(width: 10.w),
                     Icon(
+                      size: 18.r,
                       Icons.arrow_forward,
-                      color: TXT_CLR_LITE,
+                      color: CLR_BLUE_LITE,
                     )
                     // IconButton(
                     //   onPressed: () {

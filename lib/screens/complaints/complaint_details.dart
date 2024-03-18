@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 
 class ComplaintDetails extends StatefulWidget {
   ComplaintsData complaintData;
-  final void Function(String?, String?) handleStatus;
+  final void Function(String?, String?, String?, String?) handleStatus;
   ComplaintDetails(
       {super.key, required this.complaintData, required this.handleStatus});
 
@@ -25,12 +25,18 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
   bool isCmpStatusLoading = true;
   @override
   void initState() {
-    Map<String, dynamic> payload = {
-      "type": "transaction",
-      "complaintID": widget.complaintData.cOMPLAINTID.toString(),
-      "currentStatus": widget.complaintData.sTATUS.toString()
-    };
-    BlocProvider.of<ComplaintCubit>(context).updateCmpStatus(payload);
+    if (widget.complaintData.sTATUS.toString().toLowerCase() == "resolved" ||
+        widget.complaintData.sTATUS.toString().toLowerCase() == "unresolved") {
+      isCmpStatusLoading = false;
+    } else {
+      Map<String, dynamic> payload = {
+        "type": "transaction",
+        "complaintID": widget.complaintData.cOMPLAINTID.toString(),
+        "currentStatus": widget.complaintData.sTATUS.toString()
+      };
+      BlocProvider.of<ComplaintCubit>(context).updateCmpStatus(payload);
+    }
+
     super.initState();
   }
 
@@ -131,8 +137,11 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                   isCmpStatusLoading = true;
                 } else if (state is CmpStatusUpdateSuccess) {
                   widget.handleStatus(
-                      state.CmpStatusUpdateDetails!.data.toString(),
-                      widget.complaintData.cOMPLAINTID);
+                      state.CmpStatusUpdateDetails!.data!.complaintStatus
+                          .toString(),
+                      widget.complaintData.cOMPLAINTID,
+                      state.CmpStatusUpdateDetails!.data!.remarks.toString(),
+                      state.CmpStatusUpdateDetails!.data!.assigned.toString());
                   isCmpStatusLoading = false;
                 } else if (state is CmpStatusUpdateFailed) {
                   isCmpStatusLoading = false;
@@ -172,7 +181,7 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                               CmpDetails(
                                   title: "Assigned to",
                                   subTitle:
-                                      widget.complaintData.sTATUS.toString(),
+                                      widget.complaintData.aSSIGNED.toString(),
                                   showStatus: false),
                               if (widget.complaintData.rEMARKS != null)
                                 CmpDetails(

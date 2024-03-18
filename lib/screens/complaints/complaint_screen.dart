@@ -169,9 +169,12 @@ class _ComplaintListState extends State<ComplaintList> {
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           return ComplaintContainer(
-                            handleStatus: (cmpStatus, cmpId) {
+                            handleStatus:
+                                (cmpStatus, cmpId, cmpRemarks, cmpAssigned) {
                               setState(() {
                                 ComplaintList[index].sTATUS = cmpStatus;
+                                ComplaintList[index].rEMARKS = cmpRemarks;
+                                ComplaintList[index].aSSIGNED = cmpAssigned;
                               });
                             },
                             titleText:

@@ -594,33 +594,31 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                             //     subTitle:
                             //         widget.historyData.aPPROVALREFNO.toString(),
                             //     clipBoard: true),
-                            TxnDetails(
-                                title: widget.historyData.cATEGORYNAME
-                                        .toString()
-                                        .toLowerCase()
-                                        .contains("mobile prepaid")
-                                    ? "Mobile Number"
-                                    : widget.historyData.pARAMETERS![0]
-                                        .pARAMETERNAME
-                                        .toString(),
-                                subTitle: widget.historyData.cATEGORYNAME
-                                        .toString()
-                                        .toLowerCase()
-                                        .contains("mobile prepaid")
-                                    ? widget.historyData.pARAMETERS!
-                                        .firstWhere((params) =>
-                                            params.pARAMETERNAME == null
-                                                ? params.pARAMETERNAME == null
-                                                : params.pARAMETERNAME
-                                                        .toString()
-                                                        .toLowerCase() ==
-                                                    "mobile number")
-                                        .pARAMETERVALUE
-                                        .toString()
-                                    : widget.historyData.pARAMETERS![0]
-                                        .pARAMETERVALUE
-                                        .toString(),
-                                clipBoard: false),
+                            if (widget.historyData.pARAMETERS![0].pARAMETERNAME != null ||
+                                widget.historyData.pARAMETERS![0].pARAMETERVALUE !=
+                                    null)
+                              TxnDetails(
+                                  title: widget.historyData.cATEGORYNAME
+                                          .toString()
+                                          .toLowerCase()
+                                          .contains("mobile prepaid")
+                                      ? "Mobile Number"
+                                      : widget.historyData.pARAMETERS![0].pARAMETERNAME
+                                          .toString(),
+                                  subTitle: widget.historyData.cATEGORYNAME
+                                          .toString()
+                                          .toLowerCase()
+                                          .contains("mobile prepaid")
+                                      ? widget.historyData.pARAMETERS!
+                                          .firstWhere((params) =>
+                                              params.pARAMETERNAME == null
+                                                  ? params.pARAMETERNAME == null
+                                                  : params.pARAMETERNAME.toString().toLowerCase() ==
+                                                      "mobile number")
+                                          .pARAMETERVALUE
+                                          .toString()
+                                      : widget.historyData.pARAMETERS![0].pARAMETERVALUE.toString(),
+                                  clipBoard: false),
                             if (widget.historyData.tRANSACTIONREFERENCEID !=
                                 null)
                               TxnDetails(

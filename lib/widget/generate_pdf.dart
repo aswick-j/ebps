@@ -177,10 +177,11 @@ Future<Uint8List> generatePdf(
                           'Biller Id',
                           BillerId,
                         ],
-                        [
-                          ParamName,
-                          ParamValue,
-                        ],
+                        if (ParamName != "null" || ParamValue != "null")
+                          [
+                            ParamName,
+                            ParamValue,
+                          ],
                         [
                           'Transaction Reference Id',
                           TransactionID != "null" ? TransactionID : "-",

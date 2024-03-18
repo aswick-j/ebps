@@ -18,7 +18,7 @@ class ComplaintContainer extends StatefulWidget {
   final String iconPath;
   final Color containerBorderColor;
   ComplaintsData complaintData;
-  final void Function(String?, String?) handleStatus;
+  final void Function(String?, String?, String?, String?) handleStatus;
 
   ComplaintContainer({
     super.key,
@@ -173,7 +173,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                         Icon(
                           Icons.arrow_forward,
                           size: 18.r,
-                          color: TXT_CLR_LITE,
+                          color: CLR_BLUE_LITE,
                         )
                       ]))
                 ],

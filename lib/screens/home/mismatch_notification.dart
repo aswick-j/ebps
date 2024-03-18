@@ -188,6 +188,8 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                // if( widget.allautoPayData![index].rESETDATE ==
+                                //               1 && )
                                 Row(
                                   children: [
                                     Container(

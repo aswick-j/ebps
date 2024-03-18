@@ -206,11 +206,12 @@ class ScreenshotContainer extends StatelessWidget {
               height: 10.h,
               thickness: 1,
             ),
-            txnDetails(
-              title: ParamName,
-              subTitle: ParamValue,
-              clipBoard: false,
-            ),
+            if (ParamName != "null" || ParamValue != "null")
+              txnDetails(
+                title: ParamName,
+                subTitle: ParamValue,
+                clipBoard: false,
+              ),
             if (TransactionID != "")
               txnDetails(
                 title: "Transaction ID",
