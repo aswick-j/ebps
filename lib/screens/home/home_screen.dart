@@ -353,7 +353,9 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
                 ),
                 Center(
                   child: Text(
-                    "V 0.0.34",
+                    ApiConstants.BASE_URL.contains("digiservices.")
+                        ? "Pre-Release - V 1.0.0"
+                        : "UAT - V 0.0.34",
                     style: TextStyle(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w400,

@@ -43,7 +43,7 @@ getSharedValue(key) async {
 
 getSharedBoolValue(key) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getBool(key);
+  return prefs.getString(key);
 }
 
 getSharedNotificationValue(key) async {

@@ -9,6 +9,7 @@
 import 'package:ebps/constants/ebps_theme.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/NavigationService.dart';
+import 'package:ebps/helpers/getBaseurl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,11 +42,22 @@ class AppTrigger {
   // }
 }
 
+class ApiConstants {
+  ApiConstants._();
+  static var BASE_URL = "";
+}
+
 class EbpsScreen extends StatelessWidget {
   String apiData;
   BuildContext ctx;
-  EbpsScreen({Key? key, required this.apiData, required this.ctx})
+  String flavor;
+  EbpsScreen(
+      {Key? key,
+      required this.apiData,
+      required this.ctx,
+      required this.flavor})
       : super(key: key) {
+    ApiConstants.BASE_URL = getBaseUrl(flavor);
     AppTrigger.instance.setGoBackCallback(() {
       Navigator.of(ctx).pop();
     });
@@ -54,6 +66,7 @@ class EbpsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     final router = MyRouter();
     // AppTrigger.instance.setGoBackCallback(() {
     //   Navigator.of(context).pop();
@@ -62,7 +75,6 @@ class EbpsScreen extends StatelessWidget {
     //   print("======");
     //   validateJWT(context);
     // });
-
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,

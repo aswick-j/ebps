@@ -1,5 +1,7 @@
+import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DateDialog extends StatefulWidget {
   final Function(String) onDateSelected;
@@ -23,25 +25,39 @@ class _DateDialogState extends State<DateDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12.0.r))),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            color: TXT_CLR_PRIMARY,
-            padding: EdgeInsets.all(16.0),
+            clipBehavior: Clip.hardEdge,
+            width: double.infinity,
+            // height: height(context) * 0.,
+            margin: EdgeInsets.only(
+                left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
+            decoration: BoxDecoration(
+              color: TXT_CLR_PRIMARY,
+              borderRadius: BorderRadius.circular(6.0.r + 2.r),
+              border: Border.all(
+                color: Color(0xffD1D9E8),
+                width: 1.0,
+              ),
+            ),
+            padding: EdgeInsets.all(12.0.r),
             child: Center(
               child: Text(
                 'Select Date',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18.0,
+                  fontSize: 13.0.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ),
           Container(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.0).r,
             child: GridView.builder(
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -61,8 +77,12 @@ class _DateDialogState extends State<DateDialog> {
                     decoration: BoxDecoration(
                       color: selectedDate == '${index + 1}'
                           ? TXT_CLR_PRIMARY
-                          : Color(0xffD1D9E8).withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(200.0),
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(8.r),
+                      border: Border.all(
+                        color: Color(0xffD1D9E8),
+                        width: 1.0,
+                      ),
                     ),
                     child: Center(
                       child: Text(
@@ -71,7 +91,7 @@ class _DateDialogState extends State<DateDialog> {
                           color: selectedDate == '${index + 1}'
                               ? Colors.white
                               : TXT_CLR_PRIMARY,
-                          fontSize: 16.0,
+                          fontSize: 14.0.sp,
                         ),
                       ),
                     ),
@@ -89,38 +109,70 @@ class _DateDialogState extends State<DateDialog> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    "Cancel",
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xff1b438b),
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
+                Align(
+                  alignment: Alignment.center,
+                  child: MyAppButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      buttonText: "Cancel",
+                      buttonTxtColor: CLR_PRIMARY,
+                      buttonBorderColor: Colors.transparent,
+                      buttonColor: BTN_CLR_ACTIVE,
+                      buttonSizeX: 8.h,
+                      buttonSizeY: 35.w,
+                      buttonTextSize: 12.sp,
+                      buttonTextWeight: FontWeight.w500),
                 ),
-                SizedBox(
-                  width: 20.0,
+                SizedBox(width: 10.w),
+                Align(
+                  alignment: Alignment.center,
+                  child: MyAppButton(
+                      onPressed: () {
+                        widget.onDateSelected(selectedDate);
+                        Navigator.of(context).pop();
+                      },
+                      buttonText: "Okay",
+                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonBorderColor: Colors.transparent,
+                      buttonColor: CLR_PRIMARY,
+                      buttonSizeX: 8.h,
+                      buttonSizeY: 35.w,
+                      buttonTextSize: 12.sp,
+                      buttonTextWeight: FontWeight.w500),
                 ),
-                TextButton(
-                  onPressed: () {
-                    widget.onDateSelected(selectedDate);
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    "Ok",
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xff1b438b),
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
+                // TextButton(
+                //   onPressed: () {
+                //     Navigator.of(context).pop();
+                //   },
+                //   child: Text(
+                //     "Cancel",
+                //     style: TextStyle(
+                //       fontSize: 12.0,
+                //       fontWeight: FontWeight.w400,
+                //       color: Color(0xff1b438b),
+                //     ),
+                //     textAlign: TextAlign.left,
+                //   ),
+                // ),
+                // SizedBox(
+                //   width: 20.0,
+                // ),
+                // TextButton(
+                //   onPressed: () {
+                //     widget.onDateSelected(selectedDate);
+                //     Navigator.of(context).pop();
+                //   },
+                //   child: Text(
+                //     "Ok",
+                //     style: TextStyle(
+                //       fontSize: 12.0,
+                //       fontWeight: FontWeight.w400,
+                //       color: Color(0xff1b438b),
+                //     ),
+                //     textAlign: TextAlign.left,
+                //   ),
+                // ),
               ],
             ),
           )

@@ -44,6 +44,7 @@ class _splashScreenState extends State<splashScreen> {
           if (state is SplashLoading) {
           } else if (state is SplashSuccess) {
             myAccounts = await getDecodedAccounts();
+            isLoginError = false;
 
             WidgetsBinding.instance.addPostFrameCallback((_) {
               // goToReplace(context, hOMEROUTE);
@@ -92,50 +93,52 @@ class _splashScreenState extends State<splashScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 100.h,
-                      width: 100.w,
-                      child: Image.asset(
-                        LOGO_EQUITAS,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 30.w,
-                    ),
-                    Container(
-                      height: 100.h,
-                      width: 100.w,
-                      child: Image.asset(
-                        LOGO_BBPS_FULL_PNG,
-                      ),
-                    ),
-                  ],
-                )
-                    // Image.asset(
-                    //   'packages/ebps/assets/logo/logo_equitas_normal.png',
-                    //   height: 57,
-                    //   width: 164,
-                    // ),
-                    ),
-                if (isLoginError)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: 80.h),
+                      Container(
+                        height: 100.h,
+                        width: 100.w,
+                        child: Image.asset(
+                          LOGO_EQUITAS,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 30.w,
+                      ),
+                      Container(
+                        height: 100.h,
+                        width: 100.w,
+                        child: Image.asset(
+                          LOGO_BBPS_FULL_PNG,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // Image.asset(
+                  //   'packages/ebps/assets/logo/logo_equitas_normal.png',
+                  //   height: 57,
+                  //   width: 164,
+                  // ),
+                ),
+
+                if (isLoginError)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 120.h),
                       MyAppText(
-                        data: 'Oh no!',
-                        size: 14.0,
+                        data: 'Unable to Login BBPS.',
+                        size: 13.0.sp,
                         color: CLR_PRIMARY,
                         weight: FontWeight.bold,
                       ),
                       SizedBox(height: 10.h),
                       MyAppText(
-                        data: 'Something went wrong.',
-                        size: 14.0,
+                        data: 'Please Contact Bank for more information.',
+                        size: 13.0.sp,
                         color: CLR_PRIMARY,
                         weight: FontWeight.bold,
                       ),

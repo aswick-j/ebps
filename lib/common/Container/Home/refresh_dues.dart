@@ -135,7 +135,7 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
             setState(() {
               ErrIndex = 1;
               ErrorMsg =
-                  "It seems there is a problem fetching the\nbill at the moment. Kindly try again later.";
+                  "It seems there is a problem fetching the\nbill at the moment.Kindly try again later.";
             });
           } else if (state.message
               .toString()

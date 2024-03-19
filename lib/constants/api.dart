@@ -1,11 +1,11 @@
 // const String BASE_URL = "http://192.168.192.186:5000/api";
 // ignore_for_file: constant_identifier_names
+import 'package:ebps/ebps.dart';
+
 const String ACCOUNT_INFO_URL = "/payment/account-info";
 const String AUTOPAY_DELETE_URL = "/auto-pay/delete/";
 
-const String BASE_URL = "https://digiservicesuat.equitasbank.com/bbps/api";
-// const String BASE_URL =
-//     "https://digiservicesuat.equitasbank.com/bbpsnew-node-server-uat-new/api";
+String BASE_URL = ApiConstants.BASE_URL;
 
 const String BILLER_URL = "/billers/billers-by-category/";
 const String CATEGORIES_URL = "/categories/";

@@ -9,10 +9,12 @@ class noResult extends StatefulWidget {
   final int ErrIndex;
   final int ImgIndex;
   final int? TitleErrIndex;
+  final double? width;
   const noResult(
       {Key? key,
       required this.ErrIndex,
       required this.ImgIndex,
+      this.width,
       this.TitleErrIndex})
       : super(key: key);
 
@@ -28,7 +30,8 @@ class _noResultState extends State<noResult> {
     "No Plans Found for this Operator.\nPlease Choose a different Operator.",
     "You have no pending bill.\nPlease contact biller for more information.",
     "No bill data available at the moment.\nPlease contact biller for more information.",
-    "Something Went Wrong.\nPlease contact bank for more information."
+    "Something Went Wrong.\nPlease contact bank for more information.",
+    "We're unable to proceed your autopay\nsetup. Kindly try again later."
   ];
 
   List TitlExpMsg = [
@@ -41,7 +44,8 @@ class _noResultState extends State<noResult> {
     IMG_NODATA,
     IMG_SERVERDOWN,
     IMG_NOPLANS,
-    IMG_PENDINGDUES
+    IMG_PENDINGDUES,
+    IMG_SMTWR
   ];
   @override
   Widget build(BuildContext context) {
@@ -50,7 +54,7 @@ class _noResultState extends State<noResult> {
       child: Column(
         children: [
           Container(
-            width: 100.w,
+            width: widget.width ?? 100.w,
             height: 200.h,
             child:
                 SvgPicture.asset(Image[widget.ImgIndex], fit: BoxFit.fitWidth),
@@ -74,7 +78,7 @@ class _noResultState extends State<noResult> {
                       size: 13.0.sp,
                       color: CLR_PRIMARY,
                       weight: FontWeight.w500,
-                      maxline: 2,
+                      maxline: 6,
                       textAlign: TextAlign.justify),
                   // SizedBox(height: 80.h),
                 ],
