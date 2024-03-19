@@ -239,7 +239,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                           Text(
                             widget.savedBillersData.bILLERNAME.toString(),
                             style: TextStyle(
-                              fontSize: 13.sp,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
                               color: TXT_CLR_DEFAULT,
                               overflow: TextOverflow.ellipsis,
@@ -1256,7 +1256,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                               .savedBillersData.pARAMETERS![0].pARAMETERVALUE
                               .toString(),
                       style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
                         color: Color(0xff808080),
                       ),
@@ -1839,15 +1839,16 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
               ),
               // trailing:
             ),
-            if (widget.upcomingDueData != null)
-              if (!(widget.upcomingDueData!.dueAmount == null &&
-                  widget.upcomingDueData!.dueDate == null))
-                Divider(
-                  height: 0.h,
-                  thickness: 1,
-                  indent: 10.h,
-                  endIndent: 10,
-                ),
+            // if (widget.upcomingDueData != null)
+            //   if (!(widget.upcomingDueData!.dueAmount == null &&
+            //       widget.upcomingDueData!.dueDate == null))
+            if (widget.upcomingText != "")
+              Divider(
+                height: 0.h,
+                thickness: 1,
+                indent: 10.h,
+                endIndent: 10,
+              ),
             Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 3.0.h),
@@ -1857,33 +1858,52 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (widget.upcomingDueData != null)
-                        if (widget.upcomingDueData!.dueDate != null)
-                          Row(
-                            children: [
-                              SvgPicture.asset(ICON_CALENDAR),
-                              SizedBox(
-                                width: 5.w,
+                      if (widget.upcomingDueData != null &&
+                          widget.upcomingDueData!.dueDate != null)
+                        Row(
+                          children: [
+                            SvgPicture.asset(ICON_CALENDAR),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              widget.upcomingDueData!.dueDate != null
+                                  ? DateFormat.yMMMMd('en_US').format(
+                                      DateTime.parse(widget
+                                              .upcomingDueData!.dueDate!
+                                              .toString()
+                                              .substring(0, 10))
+                                          .toLocal()
+                                          .add(const Duration(days: 1)))
+                                  : "-",
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xff808080),
+                                height: 20 / 12,
                               ),
-                              Text(
-                                widget.upcomingDueData!.dueDate != null
-                                    ? DateFormat('dd/MM/yyyy').format(
-                                        DateTime.parse(widget
-                                                .upcomingDueData!.dueDate!
-                                                .toString()
-                                                .substring(0, 10))
-                                            .toLocal()
-                                            .add(const Duration(days: 1)))
-                                    : "-",
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xff808080),
-                                  height: 20 / 12,
-                                ),
+                            ),
+                          ],
+                        )
+                      else if (widget.upcomingText == "Upcoming Autopay")
+                        Row(
+                          children: [
+                            Icon(Icons.published_with_changes,
+                                color: Colors.grey, size: 13.r),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              '${numberPrefixSetter(getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.pAYMENTDATE)}${" of"}${getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.iSBIMONTHLY == 0 ? " every" : " every two"}${" month"}',
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xff808080),
+                                height: 20 / 12,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
                       if (widget.upcomingText != "")
                         Text(
                           widget.upcomingText!,

@@ -92,6 +92,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
   bool isHistoryLoading = true;
   bool isHistoryMoreLoading = false;
   bool isHistoryFilterLoading = false;
+  bool isHistoryPageError = false;
   @override
   void initState() {
     _pageNumber = 1;

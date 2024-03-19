@@ -113,7 +113,7 @@ class HistoryContainer extends StatelessWidget {
                         width: 220.w,
                         child: MyAppText(
                           data: subtitleText,
-                          size: 14.0.sp,
+                          size: 13.0.sp,
                           color: TXT_CLR_DEFAULT,
                           weight: FontWeight.w500,
                         ),

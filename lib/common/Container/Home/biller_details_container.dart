@@ -1,3 +1,4 @@
+import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -31,7 +32,7 @@ class BillerDetailsContainer extends StatelessWidget {
         Text(
           billerName,
           style: TextStyle(
-            fontSize: 18.sp,
+            fontSize: 14.sp,
             fontWeight: FontWeight.bold,
             color: Color(0xff1b438b),
           ),
@@ -43,9 +44,9 @@ class BillerDetailsContainer extends StatelessWidget {
         Text(
           categoryName,
           style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.bold,
-            color: Color(0xff808080),
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w500,
+            color: TXT_CLR_DEFAULT,
             height: 26 / 16,
           ),
           textAlign: TextAlign.center,

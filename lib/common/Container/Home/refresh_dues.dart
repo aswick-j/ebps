@@ -162,6 +162,8 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
               .toString()
               .toLowerCase()
               .contains("no bill data")) {
+            BlocProvider.of<MybillersCubit>(context)
+                .deleteUpcomingDue(widget.customerBillID);
             setState(() {
               ErrIndex = 4;
               gotoHome = true;

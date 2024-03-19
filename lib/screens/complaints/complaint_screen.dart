@@ -186,8 +186,9 @@ class _ComplaintListState extends State<ComplaintList> {
                                         .cREATEDON
                                         .toString())
                                     .toLocal()),
-                            amount:
-                                "₹ ${NumberFormat('#,##,##0.00').format(double.parse(ComplaintList[index].bILLAMOUNT.toString()))}",
+                            amount: ComplaintList[index].bILLAMOUNT != null
+                                ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(ComplaintList[index].bILLAMOUNT.toString()))}"
+                                : "-",
                             statusText: ComplaintList[index].sTATUS,
                             complaintData: ComplaintList[index],
                             iconPath: BILLER_LOGO(

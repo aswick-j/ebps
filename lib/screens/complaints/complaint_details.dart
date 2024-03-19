@@ -178,11 +178,12 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                                   subTitle:
                                       widget.complaintData.sTATUS.toString(),
                                   showStatus: true),
-                              CmpDetails(
-                                  title: "Assigned to",
-                                  subTitle:
-                                      widget.complaintData.aSSIGNED.toString(),
-                                  showStatus: false),
+                              if (widget.complaintData.aSSIGNED != null)
+                                CmpDetails(
+                                    title: "Assigned to",
+                                    subTitle: widget.complaintData.aSSIGNED
+                                        .toString(),
+                                    showStatus: false),
                               if (widget.complaintData.rEMARKS != null)
                                 CmpDetails(
                                     title: "Remarks",

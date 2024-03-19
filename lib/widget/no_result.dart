@@ -36,6 +36,8 @@ class _noResultState extends State<noResult> {
     "Something Went Wrong.\nPlease contact bank for more information.",
     "We're unable to proceed your autopay\nsetup. Kindly try again later.",
     "Something Went Wrong. Kindly try again later.",
+    "We're unable to proceed your autopay\nedit. Kindly try again later.",
+    "Unable to Show Saved Bill Details.\nPlease try again later."
   ];
 
   List TitlExpMsg = [

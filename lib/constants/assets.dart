@@ -139,7 +139,7 @@ String CATEGORY_ICON(String? CATEGORY_NAME) {
     case "broadband postpaid":
       return ICON_BROADBAND;
 
-    case "Cable TV":
+    case "cable tv":
       return ICON_CABLE;
 
     case "clubs & associations":
@@ -209,7 +209,7 @@ String CATEGORY_ICON(String? CATEGORY_NAME) {
       return ICON_WATER;
 
     default:
-      return ICON_CABLE;
+      return LOGO_BBPS;
   }
 }
 

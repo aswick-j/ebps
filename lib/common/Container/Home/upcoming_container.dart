@@ -272,7 +272,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                       widget.savedBillersData!.bILLERNAME
                                           .toString(),
                                       style: TextStyle(
-                                          fontSize: 14.sp,
+                                          fontSize: 13.sp,
                                           fontWeight: FontWeight.w500,
                                           color: TXT_CLR_DEFAULT,
                                           overflow: TextOverflow.ellipsis),
@@ -286,7 +286,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                       widget.savedBillersData!.pARAMETERVALUE
                                           .toString(),
                                       style: TextStyle(
-                                          fontSize: 14.sp,
+                                          fontSize: 12.sp,
                                           fontWeight: FontWeight.w400,
                                           color: Color(0xff808080),
                                           overflow: TextOverflow.ellipsis),

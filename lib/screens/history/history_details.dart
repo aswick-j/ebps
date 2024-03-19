@@ -163,7 +163,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
 
               setState(() {
                 TransactionStatusData = state
-                    .TransactionStatusDetails!.data!.data!.transactionStatus;
+                    .TransactionStatusDetails?.data?.data?.transactionStatus;
                 updateTxnStatus = TransactionStatusData
                                 ?.response
                                 ?.data
@@ -251,7 +251,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                             ? Icons.cancel_outlined
                             : updateTxnStatus == "in_prog"
                                 ? Icons.info_outline
-                                : Icons.help,
+                                : Icons.info_outline,
                     size: 28.r,
                     color: updateTxnStatus == "success"
                         ? Colors.green
@@ -259,7 +259,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                             ? Colors.red
                             : updateTxnStatus == "in_prog"
                                 ? Colors.orange
-                                : Colors.blue,
+                                : Colors.orange,
                   ),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
