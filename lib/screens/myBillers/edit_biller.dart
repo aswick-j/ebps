@@ -57,7 +57,8 @@ class _EditBillerUIState extends State<EditBillerUI> {
   List<InputSignaturess>? EditInputItems = [];
   List<InputSignaturesData>? InputSignatureItems = [];
   dynamic billNameController = TextEditingController();
-  final GlobalKey<FormFieldState> _billnameKey = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _editbillnameKey =
+      GlobalKey<FormFieldState>();
 
   bool isEditBillDetailsLoading = true;
   bool isButtonActive = false;
@@ -328,7 +329,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
                           child: TextFormField(
                             maxLength: 20,
                             controller: billNameController,
-                            key: _billnameKey,
+                            key: _editbillnameKey,
                             autocorrect: false,
                             enableSuggestions: false,
                             keyboardType: TextInputType.text,

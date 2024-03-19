@@ -30,7 +30,8 @@ class BillParametersPrepaid extends StatefulWidget {
 }
 
 class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
-  final GlobalKey<FormFieldState> _billnameKey = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _billnameParamKey =
+      GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _MobileNumberKey =
       GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _OperatorKey = GlobalKey<FormFieldState>();
@@ -305,7 +306,7 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                             child: TextFormField(
                               maxLength: 20,
                               controller: billNameController,
-                              key: _billnameKey,
+                              key: _billnameParamKey,
                               autocorrect: false,
                               enableSuggestions: false,
                               keyboardType: TextInputType.text,
@@ -355,7 +356,8 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                             child: Container(
                                 width: double.infinity,
                                 height: 350.h,
-                                child: noResult(ErrIndex: 3, ImgIndex: 3)),
+                                child: noResult(
+                                    showTitle: true, ErrIndex: 3, ImgIndex: 3)),
                           )
                       ],
                     )),

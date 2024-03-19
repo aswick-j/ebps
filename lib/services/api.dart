@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:basic_utils/basic_utils.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:ebps/constants/api.dart';
 import 'package:ebps/constants/routes.dart';
+import 'package:ebps/ebps.dart';
 import 'package:ebps/helpers/NavigationService.dart';
 import 'package:ebps/helpers/logger.dart';
 import 'package:ebps/models/decoded_model.dart';
@@ -87,6 +89,13 @@ api(
     Map<String, dynamic>? body,
     token,
     checkSum}) async {
+  final connectivityResult = await Connectivity().checkConnectivity();
+  if (connectivityResult == ConnectivityResult.none) {
+    InternetCheck.isConnected = false;
+  } else {
+    InternetCheck.isConnected = true;
+  }
+
   late String bodyPayload;
 
   if (url.toString().contains("/auth/redirect") ||

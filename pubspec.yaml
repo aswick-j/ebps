@@ -36,6 +36,7 @@ dependencies:
   avatar_glow: ^3.0.1
   animated_text_kit: ^4.2.2
   delightful_toast: ^1.1.0
+  connectivity_plus: ^5.0.2
 
 dev_dependencies:
   flutter_test:

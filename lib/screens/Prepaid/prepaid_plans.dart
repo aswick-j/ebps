@@ -325,7 +325,8 @@ class _PrepaidPlansState extends State<PrepaidPlans>
                           child: Container(
                               width: double.infinity,
                               height: 350.h,
-                              child: noResult(ErrIndex: 1, ImgIndex: 0)),
+                              child: noResult(
+                                  showTitle: true, ErrIndex: 1, ImgIndex: 0)),
                         ))
                     : Column(
                         children: [

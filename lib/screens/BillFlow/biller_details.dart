@@ -78,6 +78,7 @@ class _BillerDetailsState extends State<BillerDetails> {
   String DailyLimit = '0';
   String PaymentExactErrMsg = "";
   bbpsSettingsData? BbpsSettingInfo;
+  bool isBillerDetailsPageError = false;
 
   void initialFetch() {
     txtAmountController.text = billAmount.toString();
@@ -211,8 +212,10 @@ class _BillerDetailsState extends State<BillerDetails> {
             isPaymentInfoLoading = false;
           } else if (state is PaymentInfoFailed) {
             isPaymentInfoLoading = false;
+            isBillerDetailsPageError = true;
           } else if (state is PaymentInfoError) {
             isPaymentInfoLoading = false;
+            isBillerDetailsPageError = true;
           }
 
           if (state is AmountByDateLoading) {
@@ -225,8 +228,10 @@ class _BillerDetailsState extends State<BillerDetails> {
             });
           } else if (state is AmountByDateFailed) {
             isAmountByDateLoading = false;
+            isBillerDetailsPageError = true;
           } else if (state is AmountByDateError) {
             isAmountByDateLoading = false;
+            isBillerDetailsPageError = true;
           }
 
           if (state is BbpsSettingsLoading) {
@@ -238,8 +243,12 @@ class _BillerDetailsState extends State<BillerDetails> {
               BbpsSettingInfo = state.BbpsSettingsDetail!.data;
             });
           } else if (state is BbpsSettingsFailed) {
+            isBillerDetailsPageError = true;
+
             isBbpsSettingsLoading = false;
           } else if (state is BbpsSettingsError) {
+            isBillerDetailsPageError = true;
+
             isBbpsSettingsLoading = false;
           }
 
@@ -338,387 +347,418 @@ class _BillerDetailsState extends State<BillerDetails> {
           }
         }, builder: (context, state) {
           return SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                    clipBehavior: Clip.hardEdge,
-                    width: double.infinity,
-                    margin: EdgeInsets.only(
-                        left: 18.0.w, right: 18.w, top: 10.h, bottom: 80.h),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                      border: Border.all(
-                        color: Color(0xffD1D9E8),
-                        width: 1.0,
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        BillerDetailsContainer(
-                          icon: BILLER_LOGO(widget.billerName.toString()),
-                          billerName: widget.billerName.toString(),
-                          categoryName: widget.categoryName.toString(),
-                        ),
-                        if (isFetchbillLoading ||
-                            isAmountByDateLoading ||
-                            isAmountByDateLoading ||
-                            isPaymentInfoLoading)
-                          Container(
-                            height: 200.h,
-                            width: 200.w,
-                            child: FlickrLoader(),
+              child: Column(
+            children: [
+              Container(
+                clipBehavior: Clip.hardEdge,
+                width: double.infinity,
+                margin: EdgeInsets.only(
+                    left: 18.0.w, right: 18.w, top: 10.h, bottom: 80.h),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6.0.r + 2.r),
+                  border: Border.all(
+                    color: Color(0xffD1D9E8),
+                    width: 1.0,
+                  ),
+                ),
+                child: !isBillerDetailsPageError
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          BillerDetailsContainer(
+                            icon: BILLER_LOGO(widget.billerName.toString()),
+                            billerName: widget.billerName.toString(),
+                            categoryName: widget.categoryName.toString(),
                           ),
-                        if ((!isFetchbillLoading &&
-                                !isAmountByDateLoading &&
-                                !isBbpsSettingsLoading &&
-                                !isPaymentInfoLoading) &&
-                            isUnableToFetchBill)
-                          Container(
-                              width: double.infinity,
-                              height: 350.h,
-                              child: noResult(
-                                ErrIndex: ErrIndex,
-                                ImgIndex: ImgIndex,
-                                TitleErrIndex: TitleErrIndex,
-                              )),
-                        if (!isFetchbillLoading &&
-                            !isUnableToFetchBill &&
-                            !isBbpsSettingsLoading &&
-                            !isPaymentInfoLoading)
-                          if (((_billerResponseData != null)))
+                          if (isFetchbillLoading ||
+                              isAmountByDateLoading ||
+                              isAmountByDateLoading ||
+                              isPaymentInfoLoading)
+                            Container(
+                              height: 200.h,
+                              width: 200.w,
+                              child: FlickrLoader(),
+                            ),
+                          if ((!isFetchbillLoading &&
+                                  !isAmountByDateLoading &&
+                                  !isBbpsSettingsLoading &&
+                                  !isPaymentInfoLoading) &&
+                              isUnableToFetchBill)
                             Container(
                                 width: double.infinity,
-                                constraints: BoxConstraints(
-                                  minHeight: 100.h,
-                                  maxHeight: 300.h,
-                                ),
-                                color: const Color.fromRGBO(255, 255, 255, 1),
-                                child: GridView.count(
-                                  shrinkWrap: true,
-                                  primary: false,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  crossAxisSpacing: 10.w,
-                                  mainAxisSpacing: 0,
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 4 / 2,
-                                  children: <Widget>[
-                                    if (_billerResponseData != null &&
-                                        _billerResponseData!.billDate != null)
-                                      billerDetail(
-                                          "Bill Date",
-                                          _billerResponseData!.billDate
-                                              .toString(),
-                                          context),
-                                    if (_billerResponseData != null &&
-                                        _billerResponseData!.dueDate != null)
-                                      billerDetail(
-                                          "Due Date",
-                                          _billerResponseData!.dueDate
-                                              .toString(),
-                                          context),
-                                    if (_billerResponseData != null &&
-                                        _billerResponseData!.billNumber != null)
-                                      billerDetail(
-                                          "Bill Number",
-                                          _billerResponseData!.billNumber
-                                              .toString(),
-                                          context),
-                                    if (_billerResponseData != null &&
-                                        _billerResponseData!.billPeriod != null)
-                                      billerDetail(
-                                          "Bill Period",
-                                          _billerResponseData!.billPeriod
-                                              .toString(),
-                                          context),
-                                    if (_billerResponseData != null &&
-                                        _billerResponseData!.customerName !=
-                                            null)
-                                      billerDetail(
-                                          "Customer Name",
-                                          _billerResponseData!.customerName
-                                              .toString(),
-                                          context),
-                                    if (widget.billName != null)
-                                      billerDetail("Bill Name",
-                                          widget.billName.toString(), context),
-                                  ],
+                                height: 350.h,
+                                child: noResult(
+                                  showTitle: true,
+                                  ErrIndex: ErrIndex,
+                                  ImgIndex: ImgIndex,
+                                  TitleErrIndex: TitleErrIndex,
                                 )),
-                        if (!isFetchbillLoading &&
-                            !isUnableToFetchBill &&
-                            !isBbpsSettingsLoading &&
-                            !isAmountByDateLoading &&
-                            !isPaymentInfoLoading)
-                          if ((!(_additionalInfo == null ||
-                              _additionalInfo!.tag!.isEmpty)))
-                            Container(
-                              width: double.infinity,
-                              // height: 300,
-
-                              color: Colors.white,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 20.0.h),
-                                    child: Text(
-                                      "Additional Info",
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xff1b438b),
-                                      ),
-                                      textAlign: TextAlign.left,
-                                    ),
+                          if (!isFetchbillLoading &&
+                              !isUnableToFetchBill &&
+                              !isBbpsSettingsLoading &&
+                              !isPaymentInfoLoading)
+                            if (((_billerResponseData != null)))
+                              Container(
+                                  width: double.infinity,
+                                  constraints: BoxConstraints(
+                                    minHeight: 100.h,
+                                    maxHeight: 300.h,
                                   ),
-                                  GridView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: _additionalInfo!.tag!.length,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement(
-                                        crossAxisCount: 2,
-                                        childAspectRatio: 4 / 2,
-                                        mainAxisSpacing: 10.h,
+                                  color: const Color.fromRGBO(255, 255, 255, 1),
+                                  child: GridView.count(
+                                    shrinkWrap: true,
+                                    primary: false,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    crossAxisSpacing: 10.w,
+                                    mainAxisSpacing: 0,
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 4 / 2,
+                                    children: <Widget>[
+                                      if (_billerResponseData != null &&
+                                          _billerResponseData!.billDate != null)
+                                        billerDetail(
+                                            "Bill Date",
+                                            _billerResponseData!.billDate
+                                                .toString(),
+                                            context),
+                                      if (_billerResponseData != null &&
+                                          _billerResponseData!.dueDate != null)
+                                        billerDetail(
+                                            "Due Date",
+                                            _billerResponseData!.dueDate
+                                                .toString(),
+                                            context),
+                                      if (_billerResponseData != null &&
+                                          _billerResponseData!.billNumber !=
+                                              null)
+                                        billerDetail(
+                                            "Bill Number",
+                                            _billerResponseData!.billNumber
+                                                .toString(),
+                                            context),
+                                      if (_billerResponseData != null &&
+                                          _billerResponseData!.billPeriod !=
+                                              null)
+                                        billerDetail(
+                                            "Bill Period",
+                                            _billerResponseData!.billPeriod
+                                                .toString(),
+                                            context),
+                                      if (_billerResponseData != null &&
+                                          _billerResponseData!.customerName !=
+                                              null)
+                                        billerDetail(
+                                            "Customer Name",
+                                            _billerResponseData!.customerName
+                                                .toString(),
+                                            context),
+                                      if (widget.billName != null)
+                                        billerDetail(
+                                            "Bill Name",
+                                            widget.billName.toString(),
+                                            context),
+                                    ],
+                                  )),
+                          if (!isFetchbillLoading &&
+                              !isUnableToFetchBill &&
+                              !isBbpsSettingsLoading &&
+                              !isAmountByDateLoading &&
+                              !isPaymentInfoLoading)
+                            if ((!(_additionalInfo == null ||
+                                _additionalInfo!.tag!.isEmpty)))
+                              Container(
+                                width: double.infinity,
+                                // height: 300,
+
+                                color: Colors.white,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 20.0.h),
+                                      child: Text(
+                                        "Additional Info",
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xff1b438b),
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                    GridView.builder(
+                                        shrinkWrap: true,
                                         itemCount: _additionalInfo!.tag!.length,
-                                      ),
-                                      itemBuilder: (context, index) {
-                                        return Container(
-                                            // margin: EdgeInsets.all(10),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(2.r),
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Padding(
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                            8.w, 10.h, 8.w, 0),
-                                                    child: Text(
-                                                      _additionalInfo!
-                                                          .tag![index].name
-                                                          .toString(),
-                                                      // "Subscriber ID",
-                                                      style: TextStyle(
-                                                        fontSize: 12.sp,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        color:
-                                                            Color(0xff808080),
-                                                      ),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    )),
-                                                Padding(
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                            8.w, 10.h, 0, 0),
-                                                    child: Text(
-                                                      _additionalInfo!
-                                                          .tag![index].value
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                        fontSize: 13.sp,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color:
-                                                            Color(0xff1b438b),
-                                                      ),
-                                                      textAlign: TextAlign.left,
-                                                    ))
-                                              ],
-                                            ));
-                                      }),
-                                ],
-                              ),
-                            ),
-                        if (!isFetchbillLoading &&
-                            !isUnableToFetchBill &&
-                            !isAmountByDateLoading &&
-                            !isBbpsSettingsLoading &&
-                            !isPaymentInfoLoading)
-                          Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: 16.w,
-                                    right: 16.w,
-                                    top: 16.h,
-                                    bottom: 16.h),
-                                child: TextFormField(
-                                  controller: txtAmountController,
-                                  enabled: validateBill!["amountEditable"],
-                                  // style: !validateBill!["amountEditable"]
-                                  //     ? null
-                                  //     : TextStyle(color: TXT_CLR_LITE),
-                                  onFieldSubmitted: (_) {},
-                                  onChanged: (val) {
-                                    if (val.isNotEmpty &&
-                                        val.length == 1 &&
-                                        val[0] == ".") {
-                                      isInsufficient = true;
-                                    } else {
-                                      setState(() {
-                                        if (val.isEmpty) {
-                                          setState(() {
-                                            isInsufficient = true;
-                                          });
-                                        }
-                                        print(val);
-
-                                        if (validateBill!["fetchBill"]) {
-                                          PaymentExactErrMsg = checkIsExact(
-                                              double.parse(txtAmountController
-                                                      .text.isEmpty
-                                                  ? "0"
-                                                  : txtAmountController.text
-                                                      .toString()),
-                                              double.parse(_billerResponseData!
-                                                  .amount
-                                                  .toString()),
-                                              widget.isSavedBill
-                                                  ? widget.savedBillersData!
-                                                      .pAYMENTEXACTNESS
-                                                  : widget.billerData!
-                                                      .pAYMENTEXACTNESS);
-                                        }
-                                      });
-
-                                      if (txtAmountController.text.isNotEmpty) {
-                                        if (double.parse(
-                                                    txtAmountController.text) <
-                                                double.parse(paymentInform!
-                                                    .mINLIMIT
-                                                    .toString()) ||
-                                            double.parse(
-                                                    txtAmountController.text) >
-                                                double.parse(paymentInform!
-                                                    .mAXLIMIT
-                                                    .toString())) {
-                                          setState(() {
-                                            isInsufficient = true;
-                                          });
-                                        } else {
-                                          setState(() {
-                                            isInsufficient = false;
-                                          });
-                                        }
-                                        setState(() {
-                                          // isInsufficient = true;
-                                        });
-                                      }
-                                    }
-                                  },
-                                  inputFormatters: <TextInputFormatter>[
-                                    LengthLimitingTextInputFormatter(10),
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp(r'^\d*\.?\d{0,2}')),
+                                        physics: NeverScrollableScrollPhysics(),
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement(
+                                          crossAxisCount: 2,
+                                          childAspectRatio: 4 / 2,
+                                          mainAxisSpacing: 10.h,
+                                          itemCount:
+                                              _additionalInfo!.tag!.length,
+                                        ),
+                                        itemBuilder: (context, index) {
+                                          return Container(
+                                              // margin: EdgeInsets.all(10),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(2.r),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Padding(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              8.w,
+                                                              10.h,
+                                                              8.w,
+                                                              0),
+                                                      child: Text(
+                                                        _additionalInfo!
+                                                            .tag![index].name
+                                                            .toString(),
+                                                        // "Subscriber ID",
+                                                        style: TextStyle(
+                                                          fontSize: 12.sp,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color:
+                                                              Color(0xff808080),
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      )),
+                                                  Padding(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              8.w, 10.h, 0, 0),
+                                                      child: Text(
+                                                        _additionalInfo!
+                                                            .tag![index].value
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                          fontSize: 13.sp,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color:
+                                                              Color(0xff1b438b),
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                      ))
+                                                ],
+                                              ));
+                                        }),
                                   ],
-                                  keyboardType:
-                                      const TextInputType.numberWithOptions(
-                                          decimal: true),
-                                  autocorrect: false,
-                                  enableSuggestions: false,
-                                  decoration: InputDecoration(
-                                    hintStyle: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.bold),
-                                    fillColor: validateBill!["amountEditable"]
-                                        ? Color(0xffD1D9E8).withOpacity(0.2)
-                                        : Color(0xffD1D9E8).withOpacity(0.5),
-                                    filled: true,
-                                    labelStyle: TextStyle(
-                                        color: validateBill!["amountEditable"]
-                                            ? Color(0xff1b438b)
-                                            : TXT_CLR_LITE),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xff1B438B)),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xff1B438B)),
-                                    ),
-                                    border: UnderlineInputBorder(),
-                                    labelText: 'Amount',
-                                    prefixText: '₹  ',
-                                  ),
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: 20.w, bottom: 20.h, right: 20.w),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'Payment Amount has to be between ₹ ${NumberFormat('#,##,##0.00').format(double.parse(paymentInform!.mINLIMIT.toString()))} and ₹ ${NumberFormat('#,##,##0.00').format(double.parse(paymentInform!.mAXLIMIT.toString()))}',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.normal,
-                                      color: isInsufficient
-                                          ? CLR_ERROR
-                                          : TXT_CLR_PRIMARY,
+                          if (!isFetchbillLoading &&
+                              !isUnableToFetchBill &&
+                              !isAmountByDateLoading &&
+                              !isBbpsSettingsLoading &&
+                              !isPaymentInfoLoading)
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 16.w,
+                                      right: 16.w,
+                                      top: 16.h,
+                                      bottom: 16.h),
+                                  child: TextFormField(
+                                    controller: txtAmountController,
+                                    enabled: validateBill!["amountEditable"],
+                                    // style: !validateBill!["amountEditable"]
+                                    //     ? null
+                                    //     : TextStyle(color: TXT_CLR_LITE),
+                                    onFieldSubmitted: (_) {},
+                                    onChanged: (val) {
+                                      if (val.isNotEmpty &&
+                                          val.length == 1 &&
+                                          val[0] == ".") {
+                                        isInsufficient = true;
+                                      } else {
+                                        setState(() {
+                                          if (val.isEmpty) {
+                                            setState(() {
+                                              isInsufficient = true;
+                                            });
+                                          }
+                                          print(val);
+
+                                          if (validateBill!["fetchBill"]) {
+                                            PaymentExactErrMsg = checkIsExact(
+                                                double.parse(txtAmountController
+                                                        .text.isEmpty
+                                                    ? "0"
+                                                    : txtAmountController.text
+                                                        .toString()),
+                                                double.parse(
+                                                    _billerResponseData!.amount
+                                                        .toString()),
+                                                widget.isSavedBill
+                                                    ? widget.savedBillersData!
+                                                        .pAYMENTEXACTNESS
+                                                    : widget.billerData!
+                                                        .pAYMENTEXACTNESS);
+                                          }
+                                        });
+
+                                        if (txtAmountController
+                                            .text.isNotEmpty) {
+                                          if (double.parse(txtAmountController
+                                                      .text) <
+                                                  double.parse(paymentInform!
+                                                      .mINLIMIT
+                                                      .toString()) ||
+                                              double.parse(txtAmountController
+                                                      .text) >
+                                                  double.parse(paymentInform!
+                                                      .mAXLIMIT
+                                                      .toString())) {
+                                            setState(() {
+                                              isInsufficient = true;
+                                            });
+                                          } else {
+                                            setState(() {
+                                              isInsufficient = false;
+                                            });
+                                          }
+                                          setState(() {
+                                            // isInsufficient = true;
+                                          });
+                                        }
+                                      }
+                                    },
+                                    inputFormatters: <TextInputFormatter>[
+                                      LengthLimitingTextInputFormatter(10),
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'^\d*\.?\d{0,2}')),
+                                    ],
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                            decimal: true),
+                                    autocorrect: false,
+                                    enableSuggestions: false,
+                                    decoration: InputDecoration(
+                                      hintStyle: TextStyle(
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.bold),
+                                      fillColor: validateBill!["amountEditable"]
+                                          ? Color(0xffD1D9E8).withOpacity(0.2)
+                                          : Color(0xffD1D9E8).withOpacity(0.5),
+                                      filled: true,
+                                      labelStyle: TextStyle(
+                                          color: validateBill!["amountEditable"]
+                                              ? Color(0xff1b438b)
+                                              : TXT_CLR_LITE),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color(0xff1B438B)),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color(0xff1B438B)),
+                                      ),
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Amount',
+                                      prefixText: '₹  ',
                                     ),
                                   ),
                                 ),
-                              ),
-                              if (PaymentExactErrMsg.isNotEmpty)
                                 Padding(
                                   padding: EdgeInsets.only(
                                       left: 20.w, bottom: 20.h, right: 20.w),
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      PaymentExactErrMsg,
-                                      textAlign: TextAlign.left,
+                                      'Payment Amount has to be between ₹ ${NumberFormat('#,##,##0.00').format(double.parse(paymentInform!.mINLIMIT.toString()))} and ₹ ${NumberFormat('#,##,##0.00').format(double.parse(paymentInform!.mAXLIMIT.toString()))}',
+                                      textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.normal,
-                                        color: CLR_ERROR,
+                                        color: isInsufficient
+                                            ? CLR_ERROR
+                                            : TXT_CLR_PRIMARY,
                                       ),
                                     ),
                                   ),
                                 ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: 20.w, bottom: 20.h, right: 20.w),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    children: [
-                                      Image.asset(
-                                        LOGO_BBPS_ASSURED,
-                                        height: 50.h,
-                                        width: 50.w,
-                                      ),
-                                      Text(
-                                        'All billing details are verified by Bharat Billpay',
-                                        textAlign: TextAlign.start,
+                                if (PaymentExactErrMsg.isNotEmpty)
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 20.w, bottom: 20.h, right: 20.w),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        PaymentExactErrMsg,
+                                        textAlign: TextAlign.left,
                                         style: TextStyle(
-                                          fontSize: 10.sp,
+                                          fontSize: 12.sp,
                                           fontWeight: FontWeight.normal,
-                                          color: TXT_CLR_LITE,
+                                          color: CLR_ERROR,
                                         ),
                                       ),
-                                    ],
+                                    ),
+                                  ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20.w, bottom: 20.h, right: 20.w),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      children: [
+                                        Image.asset(
+                                          LOGO_BBPS_ASSURED,
+                                          height: 50.h,
+                                          width: 50.w,
+                                        ),
+                                        Text(
+                                          'All billing details are verified by Bharat Billpay',
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                            fontSize: 10.sp,
+                                            fontWeight: FontWeight.normal,
+                                            color: TXT_CLR_LITE,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          BillerDetailsContainer(
+                            icon: BILLER_LOGO(widget.billerName.toString()),
+                            billerName: widget.billerName.toString(),
+                            categoryName: widget.categoryName.toString(),
                           ),
-                      ],
-                    )),
-              ],
-            ),
-          );
+                          Container(
+                              width: double.infinity,
+                              height: 350.h,
+                              child: noResult(
+                                showTitle: false,
+                                ErrIndex: 8,
+                                ImgIndex: 5,
+                                width: 130.h,
+                              )),
+                        ],
+                      ),
+              ),
+            ],
+          ));
         }),
-        bottomSheet: !isFetchbillLoading &&
+        bottomSheet: !isBillerDetailsPageError &&
+                !isFetchbillLoading &&
                 !isUnableToFetchBill &&
                 !isPaymentInfoLoading &&
                 !isAmountByDateLoading &&

@@ -61,7 +61,6 @@ class _createAutopayState extends State<createAutopay> {
 
   List<AccountsData>? accountInfo = [];
 
-  // final GlobalKey<FormFieldState> _billnameKey = GlobalKey<FormFieldState>();
   dynamic maxAmountController = TextEditingController();
   dynamic dateController = TextEditingController();
 
@@ -887,6 +886,18 @@ class _createAutopayState extends State<createAutopay> {
                       margin: EdgeInsets.only(
                           left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
                       decoration: BoxDecoration(
+                        // gradient: LinearGradient(
+                        //   begin: Alignment.bottomCenter,
+                        //   end: Alignment.topCenter,
+                        //   colors: [
+                        //     CLR_BLUESHADE.withOpacity(0.9),
+                        //     Colors.white,
+                        //   ],
+                        //   stops: const [
+                        //     0,
+                        //     0.2,
+                        //   ],
+                        // ),
                         borderRadius: BorderRadius.circular(6.0.r + 2.r),
                         border: Border.all(
                           color: Color(0xffD1D9E8),
@@ -895,9 +906,11 @@ class _createAutopayState extends State<createAutopay> {
                       ),
                       child: Center(
                         child: Container(
+                            color: Colors.transparent,
                             width: double.infinity,
                             height: 350.h,
                             child: noResult(
+                              showTitle: false,
                               ErrIndex: 7,
                               ImgIndex: 5,
                               width: 130.h,

@@ -590,7 +590,9 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                           onPressed: () {
                                             goToData(
                                                 context, bILLERHISTORYROUTE, {
-                                                  "customerBillID":widget.savedBillersData.cUSTOMERBILLID,
+                                              "customerBillID": widget
+                                                  .savedBillersData
+                                                  .cUSTOMERBILLID,
                                               "categoryID": widget
                                                   .savedBillersData
                                                   .cATEGORYNAME,
@@ -1491,15 +1493,35 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                             SizedBox(
                                               height: 10.h,
                                             ),
-                                            ModalText(
-                                                title: "Last Bill Amount",
-                                                subTitle: widget
-                                                            .savedBillersData
-                                                            .bILLAMOUNT !=
-                                                        null
-                                                    ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.savedBillersData.bILLAMOUNT!.toString()))}"
-                                                    : "-",
-                                                context: context),
+                                            if (widget.savedBillersData
+                                                    .bILLAMOUNT !=
+                                                null)
+                                              ModalText(
+                                                  title: "Last Bill Amount",
+                                                  subTitle: widget
+                                                              .savedBillersData
+                                                              .bILLAMOUNT !=
+                                                          null
+                                                      ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.savedBillersData.bILLAMOUNT!.toString()))}"
+                                                      : "-",
+                                                  context: context),
+                                            if (widget.savedBillersData
+                                                    .lASTPAIDDATE !=
+                                                null)
+                                              ModalText(
+                                                  title: "Last Paid On",
+                                                  subTitle: widget
+                                                              .savedBillersData
+                                                              .lASTPAIDDATE !=
+                                                          null
+                                                      ? DateFormat('dd/MM/yyyy')
+                                                          .format(DateTime.parse(widget
+                                                                  .savedBillersData
+                                                                  .lASTPAIDDATE
+                                                                  .toString())
+                                                              .toLocal())
+                                                      : "-",
+                                                  context: context),
                                             ModalText(
                                                 title: "Due Amount",
                                                 subTitle: widget.upcomingDueData !=
@@ -1510,25 +1532,25 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                     ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.upcomingDueData!.dueAmount.toString()))}"
                                                     : "-",
                                                 context: context),
-                                            ModalText(
-                                                title: "Due Date",
-                                                subTitle: (widget.upcomingDueData !=
-                                                            null &&
-                                                        widget.upcomingDueData!
-                                                                .dueDate !=
-                                                            null)
-                                                    ? DateFormat('dd/MM/yyyy')
-                                                        .format(DateTime.parse(widget
-                                                                .upcomingDueData!
-                                                                .dueDate!
-                                                                .toString()
-                                                                .substring(
-                                                                    0, 10))
-                                                            .toLocal()
-                                                            .add(const Duration(
-                                                                days: 1)))
-                                                    : "-",
-                                                context: context),
+                                            if (widget.upcomingDueData != null &&
+                                                widget.upcomingDueData!.dueDate !=
+                                                    null)
+                                              ModalText(
+                                                  title: "Due Date",
+                                                  subTitle: (widget.upcomingDueData != null &&
+                                                          widget.upcomingDueData!
+                                                                  .dueDate !=
+                                                              null)
+                                                      ? DateFormat('dd/MM/yyyy')
+                                                          .format(DateTime.parse(widget
+                                                                  .upcomingDueData!
+                                                                  .dueDate!
+                                                                  .toString()
+                                                                  .substring(0, 10))
+                                                              .toLocal()
+                                                              .add(const Duration(days: 1)))
+                                                      : "-",
+                                                  context: context),
                                             if (getAllAutopayList(widget
                                                     .savedBillersData
                                                     .cUSTOMERBILLID) !=
@@ -1556,11 +1578,17 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                       0 &&
                                                   widget.upcomingText !=
                                                       'Upcoming Autopay')
-                                                ModalText(
-                                                    title: "Autopay Enables On",
-                                                    subTitle: capitalizeFirstWord(
-                                                        '${(getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.aCTIVATESFROM ?? "-").toString()}'),
-                                                    context: context),
+                                                if (getAllAutopayList(widget
+                                                            .savedBillersData
+                                                            .cUSTOMERBILLID)!
+                                                        .aCTIVATESFROM !=
+                                                    null)
+                                                  ModalText(
+                                                      title:
+                                                          "Autopay Enables On",
+                                                      subTitle: capitalizeFirstWord(
+                                                          '${(getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.aCTIVATESFROM ?? "-").toString()}'),
+                                                      context: context),
                                             ModalText(
                                                 title: "Debit Account",
                                                 subTitle: getAllAutopayList(

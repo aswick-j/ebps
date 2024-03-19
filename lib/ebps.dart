@@ -47,6 +47,11 @@ class ApiConstants {
   static var BASE_URL = "";
 }
 
+class InternetCheck {
+  InternetCheck._();
+  static var isConnected = true;
+}
+
 class EbpsScreen extends StatelessWidget {
   String apiData;
   BuildContext ctx;
