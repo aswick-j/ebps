@@ -50,7 +50,7 @@ class _SearchScreenState extends State<SearchScreen> {
             MoreLoading = true;
             if (_searchController.text.isEmpty) {
               BlocProvider.of<HomeCubit>(context)
-                  .searchBiller("", "", _pageNumber);
+                  .searchBiller("a", "All", _pageNumber);
             } else {
               BlocProvider.of<HomeCubit>(context)
                   .searchBiller(_searchController.text, "All", _pageNumber);
@@ -63,7 +63,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   handleSearch() {
     if (_searchController.text.isEmpty) {
-      BlocProvider.of<HomeCubit>(context).searchBiller("", "", _pageNumber);
+      BlocProvider.of<HomeCubit>(context).searchBiller("a", "All", _pageNumber);
     } else {
       BlocProvider.of<HomeCubit>(context)
           .searchBiller(_searchController.text, "All", _pageNumber);
