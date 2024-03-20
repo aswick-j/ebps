@@ -36,7 +36,8 @@ class BillerCategoriesUI extends StatefulWidget {
   State<BillerCategoriesUI> createState() => _BillerCategoriesUIState();
 }
 
-class _BillerCategoriesUIState extends State<BillerCategoriesUI> {
+class _BillerCategoriesUIState extends State<BillerCategoriesUI>
+    with AutomaticKeepAliveClientMixin {
   //Storing the categories Data
   List<CategorieData>? categoriesData = [];
   List<CategorieData> MoreCategories = [];
@@ -44,7 +45,8 @@ class _BillerCategoriesUIState extends State<BillerCategoriesUI> {
   //Category Loading
 
   bool isCategoryLoading = true;
-
+  @override
+  bool get wantKeepAlive => true;
   @override
   void initState() {
     BlocProvider.of<HomeCubit>(context).getAllCategories();
@@ -53,6 +55,7 @@ class _BillerCategoriesUIState extends State<BillerCategoriesUI> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {
         if (state is CategoriesLoading) {

@@ -159,6 +159,16 @@ class _PrepaidPlansState extends State<PrepaidPlans>
 
   handlePay({String? amount, PrepaidPlansData? planDetails}) {
     List<AddbillerpayloadModel> inputPayloadData = [];
+    handleBillSign(inputParam) {
+      Map<String, dynamic> NewbillerInputSign = {};
+      if (inputParam != null) {
+        for (var element in inputParam!) {
+          NewbillerInputSign[element.pARAMETERNAME.toString()] =
+              element.pARAMETERVALUE.toString();
+        }
+      }
+      return NewbillerInputSign;
+    }
 
     if (widget.isSavedBill) {
       goToData(context, pAYMENTCONFIRMROUTE, {
@@ -220,7 +230,7 @@ class _PrepaidPlansState extends State<PrepaidPlans>
         "amount": amount,
         "BbpsSettingInfo": BbpsSettingInfo,
         "validateBill": validateBill,
-        "billerInputSign": billerInputSign,
+        "billerInputSign": handleBillSign(inputPayloadData),
         "planDetails": planDetails,
         "otherAmount": true
       });

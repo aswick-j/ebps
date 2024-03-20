@@ -53,6 +53,7 @@ class HistoryData {
   String? pARAMETERNAME;
   String? pARAMETERVALUE;
   var aUTOPAYID;
+  int? aUTOPAY;
   int? rOWNUMBER;
   int? tOTALPAGES;
   int? sTARTPOSITION;
@@ -62,36 +63,37 @@ class HistoryData {
 
   HistoryData(
       {this.tRANSACTIONID,
-        this.cUSTOMERID,
-        this.tRANSACTIONREFERENCEID,
-        this.bILLAMOUNT,
-        this.cOMPLETIONDATE,
-        this.tRANSACTIONSTATUS,
-        this.bILLERID,
-        this.pAYMENTCHANNEL,
-        this.pAYMENTMODE,
-        this.aCCOUNTNUMBER,
-        this.mOBILENUMBER,
-        this.cUSTOMERNAME,
-        this.aPPROVALREFNO,
-        this.fEE,
-        this.bILLNUMBER,
-        this.eQUITASTRANSACTIONID,
-        this.bILLERNAME,
-        this.cATEGORYNAME,
-        this.cATEGORYID,
-        this.cUSTOMERBILLID,
-        this.bILLNAME,
-        this.bILLERACCEPTSADHOC,
-        this.pARAMETERNAME,
-        this.pARAMETERVALUE,
-        this.aUTOPAYID,
-        this.rOWNUMBER,
-        this.tOTALPAGES,
-        this.sTARTPOSITION,
-        this.eNDPOSITION,
-        this.pAGESIZE,
-        this.pARAMETERS});
+      this.cUSTOMERID,
+      this.tRANSACTIONREFERENCEID,
+      this.bILLAMOUNT,
+      this.cOMPLETIONDATE,
+      this.tRANSACTIONSTATUS,
+      this.bILLERID,
+      this.pAYMENTCHANNEL,
+      this.pAYMENTMODE,
+      this.aCCOUNTNUMBER,
+      this.mOBILENUMBER,
+      this.cUSTOMERNAME,
+      this.aPPROVALREFNO,
+      this.fEE,
+      this.bILLNUMBER,
+      this.eQUITASTRANSACTIONID,
+      this.bILLERNAME,
+      this.cATEGORYNAME,
+      this.cATEGORYID,
+      this.cUSTOMERBILLID,
+      this.bILLNAME,
+      this.bILLERACCEPTSADHOC,
+      this.pARAMETERNAME,
+      this.pARAMETERVALUE,
+      this.aUTOPAYID,
+      this.aUTOPAY,
+      this.rOWNUMBER,
+      this.tOTALPAGES,
+      this.sTARTPOSITION,
+      this.eNDPOSITION,
+      this.pAGESIZE,
+      this.pARAMETERS});
 
   HistoryData.fromJson(Map<String, dynamic> json) {
     tRANSACTIONID = json['TRANSACTION_ID'];
@@ -119,6 +121,7 @@ class HistoryData {
     pARAMETERNAME = json['PARAMETER_NAME'];
     pARAMETERVALUE = json['PARAMETER_VALUE'];
     aUTOPAYID = json['AUTOPAY_ID'];
+    aUTOPAY = json['AUTO_PAY'];
     rOWNUMBER = json['ROW_NUMBER'];
     tOTALPAGES = json['TOTAL_PAGES'];
     sTARTPOSITION = json['START_POSITION'];
@@ -159,6 +162,7 @@ class HistoryData {
     data['PARAMETER_NAME'] = this.pARAMETERNAME;
     data['PARAMETER_VALUE'] = this.pARAMETERVALUE;
     data['AUTOPAY_ID'] = this.aUTOPAYID;
+    data['AUTO_PAY'] = this.aUTOPAY;
     data['ROW_NUMBER'] = this.rOWNUMBER;
     data['TOTAL_PAGES'] = this.tOTALPAGES;
     data['START_POSITION'] = this.sTARTPOSITION;

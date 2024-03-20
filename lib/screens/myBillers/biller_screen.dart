@@ -8,10 +8,10 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/models/upcoming_dues_model.dart';
-import 'package:ebps/screens/LottieAnimation.dart';
 import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/services/api_client.dart';
 import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/no_result.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -58,7 +58,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
   bool isUpcomingAutopaymentLoading = true;
   bool isSavedBillerLoading = true;
   bool showSearch = false;
-
+  bool isMyBillersPageError = false;
   @override
   void initState() {
     super.initState();
@@ -279,10 +279,13 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                 isUpcomingDuesLoading = false;
               });
             } else if (state is UpcomingDuesFailed) {
+              isMyBillersPageError = true;
               setState(() {
                 isUpcomingDuesLoading = false;
               });
             } else if (state is UpcomingDuesError) {
+              isMyBillersPageError = true;
+
               setState(() {
                 isUpcomingDuesLoading = false;
               });
@@ -302,10 +305,14 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                 isUpcomingAutopaymentLoading = false;
               });
             } else if (state is AutopayFailed) {
+              isMyBillersPageError = true;
+
               setState(() {
                 isUpcomingAutopaymentLoading = false;
               });
             } else if (state is AutopayError) {
+              isMyBillersPageError = true;
+
               setState(() {
                 isUpcomingAutopaymentLoading = false;
               });
@@ -320,112 +327,154 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                 isSavedBillerLoading = false;
               });
             } else if (state is SavedBillersFailed) {
+              isMyBillersPageError = true;
+
               setState(() {
                 isSavedBillerLoading = false;
               });
             } else if (state is SavedBillersError) {
+              isMyBillersPageError = true;
+
               setState(() {
                 isSavedBillerLoading = false;
               });
             }
           },
           builder: (context, state) {
-            return Column(
-              children: [
-                if (!isUpcomingDuesLoading &&
-                    !isUpcomingAutopaymentLoading &&
-                    !isSavedBillerLoading)
-                  Container(
-                    child: getBillerDataWithUpcomingFirst(savedBillerData)!
-                                .length ==
-                            0
-                        // ? LottieAnimation(
-                        //   aniJsonIndex: 0,
-                        //   secondaryIndex: 0,
-                        //   showTitle: false,
-                        //   titleIndex: 0,
-                        // )
-                        ? NoDataFound(
-                            message: "No Billers Found",
-                          )
-                        : ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount:
-                                getBillerDataWithUpcomingFirst(savedBillerData)!
-                                    .length,
-                            physics: const BouncingScrollPhysics(),
-                            // controller: infiniteScrollController,
-                            itemBuilder: (context, index) {
-                              return MyBillersContainer(
-                                  upcomingDueData: getUpcmoingDueList(
-                                      getBillerDataWithUpcomingFirst(savedBillerData)![index]
-                                          .cUSTOMERBILLID),
-                                  buttonText:
-                                      getAllAutopayList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) ==
-                                              0
-                                          ? "Autopay Paused"
-                                          : showAutopayButtonContent(
-                                              getBillerDataWithUpcomingFirst(
-                                                  savedBillerData)![index],
-                                            )
-                                              ? 'Autopay Enabled'
-                                              : "Enable Autopay",
-                                  iconPath: BILLER_LOGO(
-                                      getBillerDataWithUpcomingFirst(savedBillerData)![index]
-                                          .bILLERNAME
-                                          .toString()),
-                                  upcomingText: getupcomingAutoPaymentList(
-                                              getBillerDataWithUpcomingFirst(
-                                                      savedBillerData)![index]
-                                                  .cUSTOMERBILLID) !=
-                                          ''
-                                      ? 'Upcoming Autopay'
-                                      : getUpcmoingDueData(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) !=
-                                              ""
-                                          ? "Upcoming Due"
-                                          : "",
-                                  upcomingTXT_CLR_DEFAULT:
-                                      getupcomingAutoPaymentList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ''
-                                          ? Color(0xff00AB44)
-                                          : getUpcmoingDueData(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ""
-                                              ? CLR_ASTRIX
-                                              : Colors.black,
-                                  showButton: showAutopayBtn(getBillerDataWithUpcomingFirst(savedBillerData)![index]),
-                                  containerBorderColor: Color(0xffD1D9E8),
-                                  buttonColor: Color.fromARGB(255, 255, 255, 255),
-                                  buttonTxtColor: getAllAutopayList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) == 0
-                                      ? Color.fromARGB(255, 171, 39, 30)
-                                      : showAutopayButtonContent(
+            return !isMyBillersPageError
+                ? Column(
+                    children: [
+                      if (!isUpcomingDuesLoading &&
+                          !isUpcomingAutopaymentLoading &&
+                          !isSavedBillerLoading)
+                        Container(
+                          child: getBillerDataWithUpcomingFirst(
+                                          savedBillerData)!
+                                      .length ==
+                                  0
+                              // ? LottieAnimation(
+                              //   aniJsonIndex: 0,
+                              //   secondaryIndex: 0,
+                              //   showTitle: false,
+                              //   titleIndex: 0,
+                              // )
+                              ? NoDataFound(
+                                  message: "No Billers Found",
+                                )
+                              : ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemCount: getBillerDataWithUpcomingFirst(
+                                          savedBillerData)!
+                                      .length,
+                                  physics: const BouncingScrollPhysics(),
+                                  // controller: infiniteScrollController,
+                                  itemBuilder: (context, index) {
+                                    return MyBillersContainer(
+                                        upcomingDueData: getUpcmoingDueList(
+                                            getBillerDataWithUpcomingFirst(
+                                                    savedBillerData)![index]
+                                                .cUSTOMERBILLID),
+                                        buttonText: getAllAutopayList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) ==
+                                                0
+                                            ? "Autopay Paused"
+                                            : showAutopayButtonContent(
+                                                getBillerDataWithUpcomingFirst(
+                                                    savedBillerData)![index],
+                                              )
+                                                ? 'Autopay Enabled'
+                                                : "Enable Autopay",
+                                        iconPath: BILLER_LOGO(getBillerDataWithUpcomingFirst(
+                                                savedBillerData)![index]
+                                            .bILLERNAME
+                                            .toString()),
+                                        upcomingText: getupcomingAutoPaymentList(
+                                                    getBillerDataWithUpcomingFirst(
+                                                            savedBillerData)![index]
+                                                        .cUSTOMERBILLID) !=
+                                                ''
+                                            ? 'Upcoming Autopay'
+                                            : getUpcmoingDueData(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ""
+                                                ? "Upcoming Due"
+                                                : "",
+                                        upcomingTXT_CLR_DEFAULT: getupcomingAutoPaymentList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ''
+                                            ? Color(0xff00AB44)
+                                            : getUpcmoingDueData(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ""
+                                                ? CLR_ASTRIX
+                                                : Colors.black,
+                                        showButton: showAutopayBtn(getBillerDataWithUpcomingFirst(savedBillerData)![index]),
+                                        containerBorderColor: Color(0xffD1D9E8),
+                                        buttonColor: Color.fromARGB(255, 255, 255, 255),
+                                        buttonTxtColor: getAllAutopayList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) == 0
+                                            ? Color.fromARGB(255, 171, 39, 30)
+                                            : showAutopayButtonContent(
+                                                getBillerDataWithUpcomingFirst(
+                                                    savedBillerData)![index],
+                                              )
+                                                ? Color.fromARGB(255, 16, 113, 55)
+                                                : CLR_PRIMARY,
+                                        buttonTextWeight: FontWeight.bold,
+                                        buttonBorderColor: showAutopayButtonContent(
                                           getBillerDataWithUpcomingFirst(
                                               savedBillerData)![index],
                                         )
-                                          ? Color.fromARGB(255, 16, 113, 55)
-                                          : Color(0xff768eb9),
-                                  buttonTextWeight: FontWeight.bold,
-                                  buttonBorderColor: showAutopayButtonContent(
-                                    getBillerDataWithUpcomingFirst(
-                                        savedBillerData)![index],
-                                  )
-                                      ? Color(0xff00AB44)
-                                      : Color(0xff768eb9),
-                                  SavedinputParameters: getBillerDataWithUpcomingFirst(savedBillerData)![index].pARAMETERS,
-                                  savedBillersData: getBillerDataWithUpcomingFirst(savedBillerData)![index],
-                                  allautoPaymentList: allautoPaymentList);
-                            },
+                                            ? Color(0xff00AB44)
+                                            : Color(0xff768eb9),
+                                        SavedinputParameters: getBillerDataWithUpcomingFirst(savedBillerData)![index].pARAMETERS,
+                                        savedBillersData: getBillerDataWithUpcomingFirst(savedBillerData)![index],
+                                        allautoPaymentList: allautoPaymentList);
+                                  },
+                                ),
+                        ),
+                      if (isUpcomingDuesLoading ||
+                          isUpcomingAutopaymentLoading ||
+                          isSavedBillerLoading)
+                        Center(
+                          child: Container(
+                            height: 500.h,
+                            child: FlickrLoader(),
                           ),
-                  ),
-                if (isUpcomingDuesLoading ||
-                    isUpcomingAutopaymentLoading ||
-                    isSavedBillerLoading)
-                  Center(
-                    child: Container(
-                      height: 500.h,
-                      child: FlickrLoader(),
+                        ),
+                    ],
+                  )
+                : Container(
+                    height: MediaQuery.of(context).size.height * 0.7,
+                    width: double.infinity,
+                    clipBehavior: Clip.hardEdge,
+                    margin: EdgeInsets.only(
+                        left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
+                    decoration: BoxDecoration(
+                      // gradient: LinearGradient(
+                      //   begin: Alignment.bottomCenter,
+                      //   end: Alignment.topCenter,
+                      //   colors: [
+                      //     CLR_BLUESHADE.withOpacity(0.9),
+                      //     Colors.white,
+                      //   ],
+                      //   stops: const [
+                      //     0,
+                      //     0.2,
+                      //   ],
+                      // ),
+                      borderRadius: BorderRadius.circular(6.0.r + 2.r),
+                      border: Border.all(
+                        color: Color(0xffD1D9E8),
+                        width: 1.0,
+                      ),
                     ),
-                  ),
-              ],
-            );
+                    child: Center(
+                      child: Container(
+                          color: Colors.transparent,
+                          width: double.infinity,
+                          height: 350.h,
+                          child: noResult(
+                            showTitle: false,
+                            ErrIndex: 10,
+                            ImgIndex: 5,
+                            width: 130.h,
+                          )),
+                    ),
+                  );
           },
         ),
       ),

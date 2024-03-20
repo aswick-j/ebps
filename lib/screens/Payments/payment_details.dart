@@ -119,7 +119,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 : widget.billerData!.cATEGORYNAME!.toLowerCase() ==
                     "mobile prepaid")
             ? "prepaid"
-            : ""
+            : "",
       };
       BlocProvider.of<HomeCubit>(context).fetchValidateBill(payload);
     } else if (widget.validateBill!["billerType"] == "instant" ||
@@ -410,37 +410,30 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                             ? widget.categoryName.toString().toLowerCase() ==
                                                     "mobile prepaid"
                                                 ? widget.SavedinputParameters!
-                                                    .firstWhere((params) =>
-                                                        params.pARAMETERNAME == null
-                                                            ? params.pARAMETERNAME ==
-                                                                null
-                                                            : params.pARAMETERNAME
+                                                    .firstWhere((params) => params.pARAMETERNAME == null
+                                                        ? params.pARAMETERNAME ==
+                                                            null
+                                                        : params.pARAMETERNAME.toString().toLowerCase() ==
+                                                                "mobile number" ||
+                                                            params.pARAMETERNAME
                                                                     .toString()
                                                                     .toLowerCase() ==
-                                                                "mobile number")
+                                                                "customer mobile number")
                                                     .pARAMETERVALUE
                                                     .toString()
                                                 : widget
                                                     .SavedinputParameters![0]
                                                     .pARAMETERVALUE
-                                            : widget.categoryName
-                                                        .toString()
-                                                        .toLowerCase() ==
+                                            : widget.categoryName.toString().toLowerCase() ==
                                                     "mobile prepaid"
                                                 ? widget.inputParameters!
                                                     .firstWhere((params) =>
                                                         params.pARAMETERNAME == null
-                                                            ? params.pARAMETERNAME ==
-                                                                null
-                                                            : params.pARAMETERNAME
-                                                                    .toString()
-                                                                    .toLowerCase() ==
-                                                                "mobile number")
+                                                            ? params.pARAMETERNAME == null
+                                                            : params.pARAMETERNAME.toString().toLowerCase() == "mobile number" || params.pARAMETERNAME.toString().toLowerCase() == "customer mobile number")
                                                     .pARAMETERVALUE
                                                     .toString()
-                                                : widget.inputParameters![0]
-                                                    .pARAMETERVALUE
-                                                    .toString(),
+                                                : widget.inputParameters![0].pARAMETERVALUE.toString(),
                                         context),
                                     billerDetail("Bill Name",
                                         widget.billName.toString(), context),

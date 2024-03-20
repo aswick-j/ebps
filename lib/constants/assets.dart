@@ -213,41 +213,34 @@ String CATEGORY_ICON(String? CATEGORY_NAME) {
   }
 }
 
-String BILLER_LOGO(String BillerName) {
-  switch (BillerName.toLowerCase()) {
-    case "airtel dth":
-    case "airtel postpaid":
-    case "airtel postpaid (fetch and pay)":
-    case "airtel broadband (fetch and pay)":
-    case "airtel broadband":
-    case "npci mobile prepaid 002":
-      return LOGO_AIRTEL;
-    case "bsnl":
-    case "bsnl mobile postpaid":
-      return LOGO_BSNL;
-    case "vi postpaid":
-    case "vi postpaid (fetch and pay)":
-      return LOGO_VI;
-    case "mtnl mumbai dolphin":
-    case "mtnl mumbai test":
-      return LOGO_MTNL;
-    case "jio postpaid":
-    case "jio postpaid (fetch and pay)":
-      return LOGO_JIO;
-    case "meerut institute of technology":
-    case "meerut institute of technology test":
-      return LOGO_MEERUTEDU;
-    case "hdb financial services limited test":
-    case "hdb financial services limited":
-      return LOGO_HDBLOAN;
-    case "tamil nadu electricity board (tneb)":
-    case "ofmedn mobile":
-      return LOGO_TNEB;
-    case "bank of baroda":
-    case "bank of baroda test":
-      return LOGO_BOB;
+bool containsAny(String text, List<String> substrings) {
+  for (var substring in substrings) {
+    if (text.contains(substring)) return true;
+  }
+  return false;
+}
 
-    default:
-      return LOGO_BBPS;
+String BILLER_LOGO(String BillerName) {
+  String BillerNameLow = BillerName.toLowerCase();
+  if (containsAny(BillerNameLow, ["airtel"])) {
+    return LOGO_AIRTEL;
+  } else if (containsAny(BillerNameLow, ["hdfc ", "hdb "])) {
+    return LOGO_HDBLOAN;
+  } else if (containsAny(BillerNameLow, ["bsnl"])) {
+    return LOGO_BSNL;
+  } else if (containsAny(BillerNameLow, ["vi post", "vi pre"])) {
+    return LOGO_VI;
+  } else if (containsAny(BillerNameLow, ["jio"])) {
+    return LOGO_JIO;
+  } else if (containsAny(BillerNameLow, ["mtnl"])) {
+    return LOGO_MTNL;
+  } else if (containsAny(BillerNameLow, ["meerut institute"])) {
+    return LOGO_MEERUTEDU;
+  } else if (containsAny(BillerNameLow, ["tamil nadu electricity", "ofmedn"])) {
+    return LOGO_TNEB;
+  } else if (containsAny(BillerNameLow, ["bank of baroda"])) {
+    return LOGO_BOB;
+  } else {
+    return LOGO_BBPS;
   }
 }

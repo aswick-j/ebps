@@ -449,7 +449,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                                             .pARAMETERNAME
                                                                             .toString()
                                                                         : widget.historyData.pARAMETERS![0].pARAMETERNAME.toString(),
-                                                                    ParamValue: widget.historyData.cATEGORYNAME.toString().toLowerCase().contains("mobile prepaid") ? widget.historyData.pARAMETERS!.firstWhere((params) => params.pARAMETERNAME == null ? params.pARAMETERNAME == null : params.pARAMETERNAME.toString().toLowerCase() == "mobile number").pARAMETERVALUE.toString() : widget.historyData.pARAMETERS![0].pARAMETERVALUE.toString(),
+                                                                    ParamValue: widget.historyData.cATEGORYNAME.toString().toLowerCase().contains("mobile prepaid") ? widget.historyData.pARAMETERS!.firstWhere((params) => params.pARAMETERNAME == null ? params.pARAMETERNAME == null : params.pARAMETERNAME.toString().toLowerCase() == "mobile number" || params.pARAMETERNAME.toString().toLowerCase() == "customer mobile number").pARAMETERVALUE.toString() : widget.historyData.pARAMETERS![0].pARAMETERVALUE.toString(),
                                                                     TransactionID: widget.historyData.tRANSACTIONREFERENCEID.toString(),
                                                                     fromAccount: widget.historyData.aCCOUNTNUMBER.toString(),
                                                                     billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
@@ -603,18 +603,18 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                           .toLowerCase()
                                           .contains("mobile prepaid")
                                       ? "Mobile Number"
-                                      : widget.historyData.pARAMETERS![0].pARAMETERNAME
+                                      : widget.historyData.pARAMETERS![0]
+                                          .pARAMETERNAME
                                           .toString(),
                                   subTitle: widget.historyData.cATEGORYNAME
                                           .toString()
                                           .toLowerCase()
                                           .contains("mobile prepaid")
                                       ? widget.historyData.pARAMETERS!
-                                          .firstWhere((params) =>
-                                              params.pARAMETERNAME == null
-                                                  ? params.pARAMETERNAME == null
-                                                  : params.pARAMETERNAME.toString().toLowerCase() ==
-                                                      "mobile number")
+                                          .firstWhere((params) => params.pARAMETERNAME == null
+                                              ? params.pARAMETERNAME == null
+                                              : params.pARAMETERNAME.toString().toLowerCase() == "mobile number" ||
+                                                  params.pARAMETERNAME.toString().toLowerCase() == "customer mobile number")
                                           .pARAMETERVALUE
                                           .toString()
                                       : widget.historyData.pARAMETERS![0].pARAMETERVALUE.toString(),

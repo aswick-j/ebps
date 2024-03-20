@@ -273,7 +273,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                               shrinkWrap: true,
                               itemCount:
                                   historyData!.length + (MoreLoading ? 1 : 0),
-                              physics: const PageScrollPhysics(),
+                              physics: ClampingScrollPhysics(),
                               controller: infiniteScrollController,
                               itemBuilder: (context, index) {
                                 if (index < historyData!.length) {
@@ -286,7 +286,9 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                     },
                                     historyData: historyData![index],
                                     // billerFilterData: billerFilterData,
-                                    titleText: 'Paid to',
+                                    titleText: historyData![index].aUTOPAY == 0
+                                        ? 'Paid to'
+                                        : 'Auto Payment',
                                     subtitleText: historyData![index]
                                         .bILLERNAME
                                         .toString(),

@@ -435,10 +435,15 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                                 oPTIONAL: inputSignatureItems![i].oPTIONAL,
                                 eRROR: '',
                                 pARAMETERVALUE: inputSignatureItems![i]
-                                            .pARAMETERNAME
-                                            .toString()
-                                            .toLowerCase() ==
-                                        'mobile number'
+                                                .pARAMETERNAME
+                                                .toString()
+                                                .toLowerCase() ==
+                                            'mobile number' ||
+                                        inputSignatureItems![i]
+                                                .pARAMETERNAME
+                                                .toString()
+                                                .toLowerCase() ==
+                                            'customer mobile number'
                                     ? mobileNumberController.text
                                     : inputSignatureItems![i]
                                                 .pARAMETERNAME

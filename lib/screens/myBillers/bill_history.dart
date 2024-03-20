@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ebps/bloc/history/history_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Container/History/history_container.dart';
@@ -28,13 +30,40 @@ class BillHistory extends StatefulWidget {
 
 class _BillHistoryState extends State<BillHistory> {
   List<HistoryData>? historyData = [];
+  late int _pageNumber;
+  late int _totalPages;
+  bool MoreLoading = true;
+  final infiniteScrollController = ScrollController();
+  bool isHistoryMoreLoading = false;
 
   bool isHistoryLoading = true;
   @override
   void initState() {
-    BlocProvider.of<HistoryCubit>(context)
-        .getHistoryDetails('This Month', "", widget.billerID, "-1", false);
+    _pageNumber = 1;
+    _totalPages = 1;
+    BlocProvider.of<HistoryCubit>(context).getHistoryDetails({
+      "startDate": DateTime(2016).toLocal().toIso8601String(),
+      "endDate": DateTime.now().toLocal().toIso8601String(),
+    }, "", widget.billerID, _pageNumber, true);
+    initScrollController(context);
+
     super.initState();
+  }
+
+  void initScrollController(context) {
+    infiniteScrollController.addListener(() {
+      if (infiniteScrollController.position.atEdge) {
+        if (infiniteScrollController.position.pixels != 0) {
+          if (_totalPages >= _pageNumber) {
+            MoreLoading = true;
+            BlocProvider.of<HistoryCubit>(context).getHistoryDetails({
+              "startDate": DateTime(2016).toLocal().toIso8601String(),
+              "endDate": DateTime.now().toLocal().toIso8601String(),
+            }, "", widget.billerID, _pageNumber, true);
+          }
+        }
+      }
+    });
   }
 
   @override
@@ -52,20 +81,48 @@ class _BillHistoryState extends State<BillHistory> {
           listeners: [
             BlocListener<HistoryCubit, HistoryState>(
                 listener: (context, state) {
-              if (state is HistoryLoading) {
+              if (state is HistoryLoading && state.isFirstFetch) {
                 isHistoryLoading = true;
+              }
+              setState(() {
+                isHistoryMoreLoading = true;
+                historyData = [];
+              });
+
+              if (state is HistoryLoading) {
+                setState(() {
+                  historyData = state.prevData;
+                  MoreLoading = true;
+                  if (historyData!.length > 1) {
+                    _totalPages =
+                        historyData![historyData!.length - 1].tOTALPAGES!;
+                  }
+                  isHistoryMoreLoading = true;
+                });
               } else if (state is HistorySuccess) {
                 setState(() {
                   historyData = state.historyData!
                       .where((item) =>
                           item.cUSTOMERBILLID == widget.customerBillID)
                       .toList();
+                  if (historyData!.length > 1) {
+                    _totalPages =
+                        historyData![historyData!.length - 1].tOTALPAGES!;
+                  }
+                  isHistoryLoading = false;
+                  MoreLoading = false;
+                  _pageNumber = _pageNumber + 1;
                 });
-                isHistoryLoading = false;
               } else if (state is HistoryFailed) {
-                isHistoryLoading = false;
+                setState(() {
+                  isHistoryLoading = false;
+                  isHistoryMoreLoading = false;
+                });
               } else if (state is HistoryError) {
-                isHistoryLoading = false;
+                setState(() {
+                  isHistoryLoading = false;
+                  isHistoryMoreLoading = false;
+                });
               }
             })
           ],
@@ -74,47 +131,57 @@ class _BillHistoryState extends State<BillHistory> {
               if (!isHistoryLoading)
                 historyData!.isNotEmpty
                     ? Container(
-                        height: 600.h,
+                        height: 590.h,
                         child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: historyData!.length,
-                          physics: const BouncingScrollPhysics(),
-                          // controller: infiniteScrollController,
-                          itemBuilder: (context, index) {
-                            return HistoryContainer(
-                              handleStatus: (txnStatus, txnID) {
-                                print("txnStatus" + txnStatus.toString());
-                                setState(() {
-                                  historyData![index].tRANSACTIONSTATUS =
-                                      txnStatus;
-                                });
-                              },
-                              historyData: historyData![index],
-                              // billerFilterData: billerFilterData,
-                              titleText: 'Paid to',
-                              subtitleText:
-                                  historyData![index].bILLERNAME.toString(),
-                              dateText: DateFormat('dd/MM/yyyy').format(
-                                  DateTime.parse(historyData![index]
-                                          .cOMPLETIONDATE
-                                          .toString())
-                                      .toLocal()),
-                              statusText: getTransactionStatus(
-                                  historyData![index]
-                                      .tRANSACTIONSTATUS
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount:
+                                historyData!.length + (MoreLoading ? 1 : 0),
+                            physics: const ClampingScrollPhysics(),
+                            controller: infiniteScrollController,
+                            itemBuilder: (context, index) {
+                              if (index < historyData!.length) {
+                                return HistoryContainer(
+                                  handleStatus: (txnStatus, txnID) {
+                                    setState(() {
+                                      historyData![index].tRANSACTIONSTATUS =
+                                          txnStatus;
+                                    });
+                                  },
+                                  historyData: historyData![index],
+                                  // billerFilterData: billerFilterData,
+                                  titleText: historyData![index].aUTOPAY == 0
+                                      ? 'Paid to'
+                                      : 'Auto Pay',
+                                  subtitleText:
+                                      historyData![index].bILLERNAME.toString(),
+                                  dateText: DateFormat('dd/MM/yyyy').format(
+                                      DateTime.parse(historyData![index]
+                                              .cOMPLETIONDATE
+                                              .toString())
+                                          .toLocal()),
+                                  amount:
+                                      "₹ ${NumberFormat('#,##,##0.00').format(double.parse(historyData![index].bILLAMOUNT.toString()))}",
+                                  // '₹ ${historyData![index].bILLAMOUNT.toString()}',
+                                  statusText: getTransactionStatus(
+                                      historyData![index]
+                                          .tRANSACTIONSTATUS
+                                          .toString()),
+                                  iconPath: BILLER_LOGO(historyData![index]
+                                      .bILLERNAME
                                       .toString()),
-                              amount:
-                                  "₹ ${NumberFormat('#,##,##0.00').format(double.parse(historyData![index].bILLAMOUNT.toString()))}",
-                              // '₹ ${historyData![index].bILLAMOUNT.toString()}',
+                                  containerBorderColor: Color(0xffD1D9E8),
+                                );
+                              } else {
+                                Timer(Duration(milliseconds: 30), () {
+                                  infiniteScrollController.jumpTo(
+                                      infiniteScrollController
+                                          .position.maxScrollExtent);
+                                });
 
-                              iconPath: BILLER_LOGO(
-                                  historyData![index].bILLERNAME.toString()),
-                              containerBorderColor: Color(0xffD1D9E8),
-                            );
-                          },
-                        ),
-                      )
+                                return FlickrLoader();
+                              }
+                            }))
                     : NoDataFound(
                         message: "No Transactions Found",
                       ),

@@ -321,24 +321,29 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                ICON_CALENDAR,
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Text(
-                                widget.dateText,
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xff808080),
+                          if (widget.dateText != "-")
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  ICON_CALENDAR,
                                 ),
-                              ),
-                            ],
-                          ),
+                                SizedBox(
+                                  width: 10.w,
+                                ),
+                                Text(
+                                  widget.dateText,
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xff808080),
+                                  ),
+                                ),
+                              ],
+                            )
+                          else
+                            SizedBox(
+                              width: 10.w,
+                            ),
                           MyAppButton(
                               onPressed: () {
                                 widget.onPressed();

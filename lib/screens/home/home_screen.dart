@@ -1,6 +1,6 @@
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
-import 'package:ebps/common/Container/Home/home_banners.dart';
+import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/ebps.dart';
@@ -46,7 +46,8 @@ class HomeScreenUI extends StatefulWidget {
   State<HomeScreenUI> createState() => _HomeScreenUIState();
 }
 
-class _HomeScreenUIState extends State<HomeScreenUI> {
+class _HomeScreenUIState extends State<HomeScreenUI>
+    with AutomaticKeepAliveClientMixin {
   List<AllConfigurations>? allautoPaymentList = [];
   List<AllConfigurationsData>? allautoPayData = [];
   List<SavedBillersData>? SavedBiller = [];
@@ -56,12 +57,20 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
   bool isUpcomingDuesLoading = true;
   bool isUpcomingAutopaymentLoading = true;
   bool isSavedBillerLoading = true;
+  bool isHomeUpcomingError = false;
+  @override
+  bool get wantKeepAlive => true;
+  Future<void> fetchInitialData() async {
+    final myBillersCubit = BlocProvider.of<MybillersCubit>(context);
+    myBillersCubit.getAutopay();
+    myBillersCubit.getAllUpcomingDues();
+    myBillersCubit.getSavedBillers();
+  }
+
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<MybillersCubit>(context).getAutopay();
-    BlocProvider.of<MybillersCubit>(context).getAllUpcomingDues();
-    BlocProvider.of<MybillersCubit>(context).getSavedBillers();
+    fetchInitialData();
   }
 
   bool isDataExist(List list, int? value) {
@@ -125,6 +134,7 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     BuildContext dialogContext = context;
     handleDialog() {
       showDialog(
@@ -247,10 +257,12 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
                   } else if (state is UpcomingDuesFailed) {
                     setState(() {
                       isUpcomingDuesLoading = false;
+                      isHomeUpcomingError = true;
                     });
                   } else if (state is UpcomingDuesError) {
                     setState(() {
                       isUpcomingDuesLoading = false;
+                      isHomeUpcomingError = true;
                     });
                   }
                   if (state is AutoPayLoading) {
@@ -264,56 +276,57 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
                     }
 
                     generateDuesList();
+                    List<AllConfigurationsData>? autopayData = [];
+                    for (int i = 0; i < allautoPaymentList!.length; i++) {
+                      for (int j = 0;
+                          j < allautoPaymentList![i].data!.length;
+                          j++) {
+                        autopayData.add(allautoPaymentList![i].data![j]);
+                      }
+                    }
+
+                    List<AllConfigurationsData> newData = autopayData
+                        .where((item) => item.rESETDATE == 1)
+                        .toList();
+
+                    List<AllConfigurationsData> newData2 = autopayData
+                        .where((item) => item.rESETLIMIT == 1)
+                        .toList();
+
+                    List<AllConfigurationsData> modifiedData = newData2
+                        .map((item) => AllConfigurationsData(
+                            rESETDATE: 0,
+                            rESETLIMIT: item.rESETLIMIT,
+                            aCCOUNTNUMBER: item.aCCOUNTNUMBER,
+                            aCTIVATESFROM: item.aCTIVATESFROM,
+                            aMOUNTLIMIT: item.aMOUNTLIMIT,
+                            bILLERICON: item.bILLERICON,
+                            bILLERID: item.bILLERID,
+                            bILLERNAME: item.bILLERNAME,
+                            bILLNAME: item.bILLNAME,
+                            cUSTOMERBILLID: item.cUSTOMERBILLID,
+                            dUEAMOUNT: item.dUEAMOUNT,
+                            cUSTOMERID: item.cUSTOMERID,
+                            dUEDATE: item.dUEDATE,
+                            iD: item.iD,
+                            iSACTIVE: item.iSACTIVE,
+                            iSBIMONTHLY: item.iSBIMONTHLY,
+                            mAXIMUMAMOUNT: item.mAXIMUMAMOUNT,
+                            pAID: item.pAID,
+                            pAYMENTDATE: item.pAYMENTDATE))
+                        .toList();
+                    allautoPayData = [...newData, ...modifiedData];
+
                     setState(() {
                       isUpcomingAutopaymentLoading = false;
-
-                      List<AllConfigurationsData>? autopayData = [];
-                      for (int i = 0; i < allautoPaymentList!.length; i++) {
-                        for (int j = 0;
-                            j < allautoPaymentList![i].data!.length;
-                            j++) {
-                          autopayData.add(allautoPaymentList![i].data![j]);
-                        }
-                      }
-
-                      List<AllConfigurationsData> newData = autopayData
-                          .where((item) => item.rESETDATE == 1)
-                          .toList();
-
-                      List<AllConfigurationsData> newData2 = autopayData
-                          .where((item) => item.rESETLIMIT == 1)
-                          .toList();
-
-                      List<AllConfigurationsData> modifiedData = newData2
-                          .map((item) => AllConfigurationsData(
-                              rESETDATE: 0,
-                              rESETLIMIT: item.rESETLIMIT,
-                              aCCOUNTNUMBER: item.aCCOUNTNUMBER,
-                              aCTIVATESFROM: item.aCTIVATESFROM,
-                              aMOUNTLIMIT: item.aMOUNTLIMIT,
-                              bILLERICON: item.bILLERICON,
-                              bILLERID: item.bILLERID,
-                              bILLERNAME: item.bILLERNAME,
-                              bILLNAME: item.bILLNAME,
-                              cUSTOMERBILLID: item.cUSTOMERBILLID,
-                              dUEAMOUNT: item.dUEAMOUNT,
-                              cUSTOMERID: item.cUSTOMERID,
-                              dUEDATE: item.dUEDATE,
-                              iD: item.iD,
-                              iSACTIVE: item.iSACTIVE,
-                              iSBIMONTHLY: item.iSBIMONTHLY,
-                              mAXIMUMAMOUNT: item.mAXIMUMAMOUNT,
-                              pAID: item.pAID,
-                              pAYMENTDATE: item.pAYMENTDATE))
-                          .toList();
-
-                      allautoPayData = [...newData, ...modifiedData];
                     });
                     handleSlider();
                   } else if (state is AutopayFailed) {
                     isUpcomingAutopaymentLoading = false;
+                    isHomeUpcomingError = true;
                   } else if (state is AutopayError) {
                     isUpcomingAutopaymentLoading = false;
+                    isHomeUpcomingError = true;
                   }
                   if (state is SavedBillerLoading) {
                     setState(() {
@@ -328,10 +341,12 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
                   } else if (state is SavedBillersFailed) {
                     setState(() {
                       isSavedBillerLoading = false;
+                      isHomeUpcomingError = true;
                     });
                   } else if (state is SavedBillersError) {
                     setState(() {
                       isSavedBillerLoading = false;
+                      isHomeUpcomingError = true;
                     });
                   }
                 },
@@ -339,7 +354,15 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
             ],
             child: Column(
               children: [
-                if (!isUpcomingAutopaymentLoading &&
+                // if (isUpcomingAutopaymentLoading ||
+                //     isUpcomingDuesLoading ||
+                //     isSavedBillerLoading)
+                //   Container(
+                //     height: 500.h,
+                //     child: FlickrLoader(),
+                //   ),
+                if (!isHomeUpcomingError &&
+                    !isUpcomingAutopaymentLoading &&
                     !isUpcomingDuesLoading &&
                     !isSavedBillerLoading)
                   UpcomingDues(
@@ -347,7 +370,71 @@ class _HomeScreenUIState extends State<HomeScreenUI> {
                     SavedBiller: SavedBiller,
                     allautoPaymentList: allautoPaymentList,
                   ),
+
                 BillCategories(),
+                SizedBox(
+                  height: 10.h,
+                ),
+                // if (!isHomeUpcomingError &&
+                //     !isUpcomingAutopaymentLoading &&
+                //     !isUpcomingDuesLoading &&
+                //     !isSavedBillerLoading)
+
+                if (!InternetCheck.isConnected)
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.7,
+                    width: double.infinity,
+                    clipBehavior: Clip.hardEdge,
+                    margin: EdgeInsets.only(
+                        left: 18.0.w, right: 18.w, top: 0.h, bottom: 0.h),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6.0.r + 2.r),
+                      border: Border.all(
+                        color: Color(0xffD1D9E8),
+                        width: 1.0,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 80.h,
+                        ),
+                        Container(
+                            color: Colors.transparent,
+
+                            // width: widget.width ?? 100.w,
+                            // height: 200.h,
+                            child: Icon(Icons.wifi_off_outlined,
+                                size: 200.r, color: CLR_SECONDARY)
+                            // child: SvgPicture.asset(ICON_ERROR, fit: BoxFit.fitWidth),
+                            ),
+                        Padding(
+                            padding: EdgeInsets.all(20.0.r),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 50.h),
+                                MyAppText(
+                                    data: 'Whoops !',
+                                    size: 18.0.sp,
+                                    color: CLR_PRIMARY,
+                                    weight: FontWeight.bold,
+                                    maxline: 2),
+                                SizedBox(height: 10.h),
+                                MyAppText(
+                                    data:
+                                        "You're disconnected.Check your internet connection and try again.",
+                                    size: 13.0.sp,
+                                    color: CLR_PRIMARY,
+                                    weight: FontWeight.w500,
+                                    maxline: 6,
+                                    textAlign: TextAlign.center),
+                              ],
+                            )),
+                      ],
+                    ),
+                  ),
                 SizedBox(
                   height: 10.h,
                 ),

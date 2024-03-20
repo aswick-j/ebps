@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
@@ -31,7 +32,10 @@ class HistoryContainer extends StatelessWidget {
       required this.containerBorderColor,
       required this.historyData,
       required this.handleStatus});
-
+  static const colorizeColors = [
+    CLR_GREEN,
+    CLR_BLUESHADE,
+  ];
   @override
   Widget build(BuildContext context) {
     handleClick() {
@@ -66,16 +70,30 @@ class HistoryContainer extends StatelessWidget {
         margin:
             EdgeInsets.only(left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
         decoration: BoxDecoration(
+          //   image: titleText == "Auto Pay"
+          //       ? DecorationImage(
+          //           image: AssetImage(LOGO_BBPS_ASSURED),
+          //           fit: BoxFit.contain,
+          //           colorFilter: ColorFilter.mode(
+          //               Colors.white.withOpacity(0.9), BlendMode.screen))
+          //       : null,
+
           borderRadius: BorderRadius.circular(8.0.r),
           border: Border.all(
-            color: containerBorderColor,
+            color: titleText == "Auto Payment" && statusText == "Pending"
+                ? Color.fromARGB(255, 218, 124, 47).withOpacity(0.7)
+                : titleText == "Auto Payment" && statusText == "Success"
+                    ? CLR_GREEN.withOpacity(0.7)
+                    : titleText == "Auto Payment" && statusText == "Failed"
+                        ? CLR_ERROR.withOpacity(0.7)
+                        : containerBorderColor,
             width: 2.0,
           ),
         ),
         child: Column(
           children: [
             ListTile(
-              contentPadding: EdgeInsets.only(left: 6.w, right: 6.w, top: 6.h),
+              contentPadding: EdgeInsets.only(left: 6.w, right: 6.w, top: 0.h),
               leading: Container(
                 width: 45.w,
                 child: Padding(
@@ -88,12 +106,63 @@ class HistoryContainer extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    MyAppText(
-                      data: titleText,
-                      size: 14.0.sp,
-                      color: TXT_CLR_LITE,
-                      weight: FontWeight.w500,
-                    ),
+                    if (titleText == "Auto Payment")
+                      AnimatedTextKit(
+                        totalRepeatCount: 100,
+                        animatedTexts: [
+                          ColorizeAnimatedText(
+                            'Auto Payment',
+                            textStyle: TextStyle(
+                              fontSize: 14.sp,
+                            ),
+                            colors: statusText == "Pending"
+                                ? [
+                                    CLR_ORANGE,
+                                    CLR_ORANGESHADE,
+                                  ]
+                                : statusText == "Failed"
+                                    ? [
+                                        CLR_ERROR,
+                                        CLR_REDSHADE,
+                                      ]
+                                    : [
+                                        CLR_GREEN,
+                                        CLR_GREENSHADE,
+                                      ],
+                          ),
+                          ColorizeAnimatedText(
+                            'Paid to',
+                            textStyle: TextStyle(
+                              fontSize: 14.sp,
+                            ),
+                            colors: statusText == "Pending"
+                                ? [
+                                    CLR_ORANGE,
+                                    CLR_ORANGESHADE,
+                                  ]
+                                : statusText == "Failed"
+                                    ? [
+                                        CLR_ERROR,
+                                        CLR_REDSHADE,
+                                      ]
+                                    : [
+                                        CLR_GREEN,
+                                        CLR_GREENSHADE,
+                                      ],
+                          ),
+                        ],
+                        isRepeatingAnimation: true,
+                        onTap: () {
+                          print("Tap Event");
+                        },
+                      ),
+                    if (titleText != "Auto Payment")
+                      MyAppText(
+                        data: titleText,
+                        size: 14.0.sp,
+                        color: TXT_CLR_LITE,
+                        weight: FontWeight.w500,
+                      ),
                     MyAppText(
                       data: amount,
                       size: 14.0.sp,
@@ -112,11 +181,11 @@ class HistoryContainer extends StatelessWidget {
                       SizedBox(
                         width: 220.w,
                         child: MyAppText(
-                          data: subtitleText,
-                          size: 13.0.sp,
-                          color: TXT_CLR_DEFAULT,
-                          weight: FontWeight.w500,
-                        ),
+                            data: subtitleText,
+                            size: 13.0.sp,
+                            color: TXT_CLR_DEFAULT,
+                            weight: FontWeight.w500,
+                            maxline: 1),
                       )
                     ],
                   ),

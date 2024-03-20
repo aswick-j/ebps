@@ -12,6 +12,9 @@ const CLR_GREY = Color(0xFFA4B4D1);
 const CLR_ASTRIX = Color(0xff982F67);
 
 const CLR_BLUESHADE = Color(0xCCACC9FF);
+const CLR_GREENSHADE = Color(0xff99DDB4);
+const CLR_REDSHADE = Color.fromARGB(255, 221, 153, 153);
+const CLR_ORANGESHADE = Color.fromRGBO(221, 198, 153, 1);
 const CLR_ERROR = Color(0xffCF1E2F);
 const CLR_GREEN = Color(0xff008936);
 const CLR_ORANGE = Color(0xFFCE7D1E);
