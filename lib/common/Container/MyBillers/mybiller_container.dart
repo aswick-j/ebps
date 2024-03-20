@@ -1247,9 +1247,13 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                   params.pARAMETERNAME == null
                                       ? params.pARAMETERNAME == null
                                       : params.pARAMETERNAME
-                                              .toString()
-                                              .toLowerCase() ==
-                                          "mobile number")
+                                                  .toString()
+                                                  .toLowerCase() ==
+                                              "mobile number" ||
+                                          params.pARAMETERNAME
+                                                  .toString()
+                                                  .toLowerCase() ==
+                                              "customer mobile number")
                               .pARAMETERVALUE
                               .toString()
                           : widget
