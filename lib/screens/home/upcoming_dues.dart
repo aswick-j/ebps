@@ -33,208 +33,160 @@ class _UpcomingDuesState extends State<UpcomingDues> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => MybillersCubit(repository: apiClient)),
-        BlocProvider(create: (_) => HomeCubit(repository: apiClient)),
-      ],
-      child: UpcomingDuesUI(
-        SavedBiller: widget.SavedBiller,
-        allUpcomingDues: widget.allUpcomingDues,
-        allautoPaymentList: widget.allautoPaymentList,
-      ),
-    );
-  }
-}
-
-class UpcomingDuesUI extends StatefulWidget {
-  List<Map<String, dynamic>> allUpcomingDues;
-  List<SavedBillersData>? SavedBiller;
-  List<AllConfigurations>? allautoPaymentList;
-  UpcomingDuesUI(
-      {super.key,
-      required this.allUpcomingDues,
-      required this.SavedBiller,
-      required this.allautoPaymentList});
-
-  @override
-  State<UpcomingDuesUI> createState() => _UpcomingDuesUIState();
-}
-
-class _UpcomingDuesUIState extends State<UpcomingDuesUI> {
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<MybillersCubit>(context).getAllUpcomingDues();
-    BlocProvider.of<MybillersCubit>(context).getAutopay();
-    BlocProvider.of<MybillersCubit>(context).getSavedBillers();
-  }
-
-  bool isDataExist(List list, int? value) {
-    var data = list.where((row) => (row["customerBillId"] == value));
-    if (data.isNotEmpty) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<HomeCubit, HomeState>(
-          listener: (context, state) {
-            // TODO: implement listener
-          },
-        ),
-      ],
-      child: Column(
-        children: [
-          if (widget.allUpcomingDues.length > 0)
-            Padding(
-              padding: EdgeInsets.only(
-                  left: 18.0.w, right: 18.w, top: 10.h, bottom: 5.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    widget.allUpcomingDues.length > 1
-                        ? 'Upcoming Dues'
-                        : 'Upcoming Due',
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xff1b438b),
-                    ),
-                  ),
-                  if (widget.allUpcomingDues.length > 2)
-                    InkWell(
-                      onTap: () {
-                        goToData(context, uPCOMINGDUESROUTE, {
-                          "allUpcomingDues": widget.allUpcomingDues,
-                          "savedBiller": widget.SavedBiller,
-                          "ctx": context,
-                          "autopayData": widget.allautoPaymentList
-                        });
-                      },
-                      child: Row(
-                        children: [
-                          Text(
-                            'View All',
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xff1b438b),
-                            ),
-                            textHeightBehavior: TextHeightBehavior(
-                                applyHeightToFirstAscent: false),
-                            textAlign: TextAlign.center,
-                            softWrap: false,
-                          ),
-                          Icon(Icons.arrow_forward, color: Color(0xff1b438b)),
-                        ],
+        providers: [
+          BlocProvider(create: (_) => MybillersCubit(repository: apiClient)),
+          BlocProvider(create: (_) => HomeCubit(repository: apiClient)),
+        ],
+        child: Column(
+          children: [
+            if (widget.allUpcomingDues.length > 0)
+              Padding(
+                padding: EdgeInsets.only(
+                    left: 18.0.w, right: 18.w, top: 10.h, bottom: 5.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      widget.allUpcomingDues.length > 1
+                          ? 'Upcoming Dues'
+                          : 'Upcoming Due',
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xff1b438b),
                       ),
                     ),
-                ],
+                    if (widget.allUpcomingDues.length > 2)
+                      InkWell(
+                        onTap: () {
+                          goToData(context, uPCOMINGDUESROUTE, {
+                            "allUpcomingDues": widget.allUpcomingDues,
+                            "savedBiller": widget.SavedBiller,
+                            "ctx": context,
+                            "autopayData": widget.allautoPaymentList
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Text(
+                              'View All',
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xff1b438b),
+                              ),
+                              textHeightBehavior: TextHeightBehavior(
+                                  applyHeightToFirstAscent: false),
+                              textAlign: TextAlign.center,
+                              softWrap: false,
+                            ),
+                            Icon(Icons.arrow_forward, color: Color(0xff1b438b)),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
               ),
-            ),
-          if (widget.allUpcomingDues.isEmpty) HomeBanners(),
-          if (widget.allUpcomingDues.isNotEmpty)
-            ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: widget.allUpcomingDues.isEmpty
-                    ? 0
-                    : widget.allUpcomingDues.length == 1
-                        ? 1
-                        : 2,
-                itemBuilder: (BuildContext context, int index) {
-                  return UpcomingDuesContainer(
-                    savedBillersData: widget.SavedBiller!
-                        .where((element) =>
-                            element.cUSTOMERBILLID.toString().toLowerCase() ==
-                            widget.allUpcomingDues[index]["customerBillId"]
-                                .toString()
-                                .toLowerCase())
-                        .toList()[0],
-                    dateText: widget.allUpcomingDues[index]["dueDate"] != ""
-                        ? DateFormat('dd/MM/yyyy').format(DateTime.parse(widget
-                                .allUpcomingDues[index]["dueDate"]!
-                                .toString()
-                                .substring(0, 10))
-                            .toLocal()
-                            .add(const Duration(days: 1)))
-                        : "-",
-                    buttonText: widget.allUpcomingDues[index]["itemType"] ==
-                            'upcomingDue'
-                        ? "Pay Now"
-                        : widget.allUpcomingDues[index]["itemType"] ==
-                                'upcomingAutopaused'
-                            ? "Upcoming Autopay Paused"
-                            : 'Upcoming Auto Payment',
-                    onPressed: () {
-                      SavedBillersData savedBillersData;
-                      List<SavedBillersData> billerDataTemp = [];
-
-                      billerDataTemp = widget.SavedBiller!
+            if (widget.allUpcomingDues.isEmpty) HomeBanners(),
+            if (widget.allUpcomingDues.isNotEmpty)
+              ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: widget.allUpcomingDues.isEmpty
+                      ? 0
+                      : widget.allUpcomingDues.length == 1
+                          ? 1
+                          : 2,
+                  itemBuilder: (BuildContext context, int index) {
+                    return UpcomingDuesContainer(
+                      savedBillersData: widget.SavedBiller!
                           .where((element) =>
                               element.cUSTOMERBILLID.toString().toLowerCase() ==
                               widget.allUpcomingDues[index]["customerBillId"]
                                   .toString()
                                   .toLowerCase())
-                          .toList();
-                      if (billerDataTemp.isNotEmpty) {
-                        savedBillersData = billerDataTemp[0];
-                        goToData(context, fETCHBILLERDETAILSROUTE, {
-                          "name": widget.allUpcomingDues[index]["billerName"],
-                          "billName": widget.allUpcomingDues[index]["billName"],
-                          "savedBillersData": savedBillersData,
-                          "SavedinputParameters": savedBillersData.pARAMETERS,
-                          "categoryName": savedBillersData.cATEGORYNAME,
-                          "isSavedBill": true,
-                        });
-                      }
-                    },
-                    amount:
-                        "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allUpcomingDues[index]["dueAmount"]!.toString()))}",
-                    iconPath: BILLER_LOGO(
-                        widget.allUpcomingDues[index]["billerName"]),
-                    containerBorderColor: Color(0xffD1D9E8),
-                    buttonColor: widget.allUpcomingDues[index]["itemType"] ==
-                            'upcomingDue'
-                        ? Color(0xFF1B438B)
-                        : Color.fromARGB(255, 255, 255, 255),
-                    buttonTxtColor: widget.allUpcomingDues[index]["itemType"] ==
-                            'upcomingDue'
-                        ? Color.fromARGB(255, 255, 255, 255)
-                        : widget.allUpcomingDues[index]["itemType"] ==
-                                'upcomingAutopaused'
-                            ? Colors.red
-                            : Color(0xff00AB44),
-                    buttonTextWeight: FontWeight.normal,
-                    buttonBorderColor: widget.allUpcomingDues[index]
-                                ["itemType"] ==
-                            'upcomingDue'
-                        ? null
-                        : widget.allUpcomingDues[index]["itemType"] ==
-                                'upcomingAutopaused'
-                            ? Colors.red
-                            : Color(0xff00AB44),
-                  );
-                }),
-          // if (isUpcomingAutopaymentLoading ||
-          //     isUpcomingDuesLoading ||
-          //     isSavedBillerLoading)
-          //   Center(
-          //     child: Container(
-          //       height: 200.h,
-          //       width: 200.w,
-          //       child: FlickrLoader(),
-          //     ),
-          //   ),
-        ],
-      ),
-    );
+                          .toList()[0],
+                      dateText: widget.allUpcomingDues[index]["dueDate"] != ""
+                          ? DateFormat('dd/MM/yyyy').format(DateTime.parse(
+                                  widget.allUpcomingDues[index]["dueDate"]!
+                                      .toString()
+                                      .substring(0, 10))
+                              .toLocal()
+                              .add(const Duration(days: 1)))
+                          : "-",
+                      buttonText: widget.allUpcomingDues[index]["itemType"] ==
+                              'upcomingDue'
+                          ? "Pay Now"
+                          : widget.allUpcomingDues[index]["itemType"] ==
+                                  'upcomingAutopaused'
+                              ? "Upcoming Autopay Paused"
+                              : 'Upcoming Auto Payment',
+                      onPressed: () {
+                        SavedBillersData savedBillersData;
+                        List<SavedBillersData> billerDataTemp = [];
+
+                        billerDataTemp = widget.SavedBiller!
+                            .where((element) =>
+                                element.cUSTOMERBILLID
+                                    .toString()
+                                    .toLowerCase() ==
+                                widget.allUpcomingDues[index]["customerBillId"]
+                                    .toString()
+                                    .toLowerCase())
+                            .toList();
+                        if (billerDataTemp.isNotEmpty) {
+                          savedBillersData = billerDataTemp[0];
+                          goToData(context, fETCHBILLERDETAILSROUTE, {
+                            "name": widget.allUpcomingDues[index]["billerName"],
+                            "billName": widget.allUpcomingDues[index]
+                                ["billName"],
+                            "savedBillersData": savedBillersData,
+                            "SavedinputParameters": savedBillersData.pARAMETERS,
+                            "categoryName": savedBillersData.cATEGORYNAME,
+                            "isSavedBill": true,
+                          });
+                        }
+                      },
+                      amount:
+                          "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allUpcomingDues[index]["dueAmount"]!.toString()))}",
+                      iconPath: BILLER_LOGO(
+                          widget.allUpcomingDues[index]["billerName"]),
+                      containerBorderColor: Color(0xffD1D9E8),
+                      buttonColor: widget.allUpcomingDues[index]["itemType"] ==
+                              'upcomingDue'
+                          ? Color(0xFF1B438B)
+                          : Color.fromARGB(255, 255, 255, 255),
+                      buttonTxtColor: widget.allUpcomingDues[index]
+                                  ["itemType"] ==
+                              'upcomingDue'
+                          ? Color.fromARGB(255, 255, 255, 255)
+                          : widget.allUpcomingDues[index]["itemType"] ==
+                                  'upcomingAutopaused'
+                              ? Colors.red
+                              : Color(0xff00AB44),
+                      buttonTextWeight: FontWeight.normal,
+                      buttonBorderColor: widget.allUpcomingDues[index]
+                                  ["itemType"] ==
+                              'upcomingDue'
+                          ? null
+                          : widget.allUpcomingDues[index]["itemType"] ==
+                                  'upcomingAutopaused'
+                              ? Colors.red
+                              : Color(0xff00AB44),
+                    );
+                  }),
+            // if (isUpcomingAutopaymentLoading ||
+            //     isUpcomingDuesLoading ||
+            //     isSavedBillerLoading)
+            //   Center(
+            //     child: Container(
+            //       height: 200.h,
+            //       width: 200.w,
+            //       child: FlickrLoader(),
+            //     ),
+            //   ),
+          ],
+        ));
   }
 }

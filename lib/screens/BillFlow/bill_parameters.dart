@@ -360,7 +360,9 @@ class _BillParametersState extends State<BillParameters> {
               Expanded(
                 child: MyAppButton(
                     onPressed: () {
-                      if (isButtonActive && isValidBillName) {
+                      if (isButtonActive &&
+                          isValidBillName &&
+                          billNameController.text.length > 3) {
                         submitForm();
                       }
                       // Navigator.of(context).push(MaterialPageRoute(
@@ -369,7 +371,9 @@ class _BillParametersState extends State<BillParameters> {
                     buttonText: "Confirm",
                     buttonTxtColor: BTN_CLR_ACTIVE,
                     buttonBorderColor: Colors.transparent,
-                    buttonColor: isButtonActive && isValidBillName
+                    buttonColor: isButtonActive &&
+                            isValidBillName &&
+                            billNameController.text.length > 3
                         ? CLR_PRIMARY
                         : Colors.grey,
                     buttonSizeX: 10.h,

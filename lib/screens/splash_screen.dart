@@ -130,7 +130,7 @@ class _splashScreenState extends State<splashScreen> {
                     children: [
                       SizedBox(height: 120.h),
                       MyAppText(
-                        data: 'Unable to Login BBPS.',
+                        data: 'Failed to Login BBPS.',
                         size: 13.0.sp,
                         color: CLR_PRIMARY,
                         weight: FontWeight.bold,
@@ -169,6 +169,59 @@ class _splashScreenState extends State<splashScreen> {
           );
         },
       ),
+      // bottomSheet: isLoginError
+      //     ? Container(
+      //         decoration: const BoxDecoration(
+      //             border: Border(
+      //                 top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+      //         child: Padding(
+      //           padding:
+      //               EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
+      //           child: Row(
+      //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //             children: [
+      //               Expanded(
+      //                 child: MyAppButton(
+      //                     onPressed: () {},
+      //                     buttonText: "Go Back",
+      //                     buttonTxtColor: CLR_PRIMARY,
+      //                     buttonBorderColor: Colors.transparent,
+      //                     buttonColor: BTN_CLR_ACTIVE,
+      //                     buttonSizeX: 10.h,
+      //                     buttonSizeY: 40.w,
+      //                     buttonTextSize: 14.sp,
+      //                     buttonTextWeight: FontWeight.w500),
+      //               ),
+      //               SizedBox(
+      //                 width: 40.w,
+      //               ),
+      //               Expanded(
+      //                 child: MyAppButton(
+      //                     onPressed: () {
+      //                       final uri = Uri.parse(widget.apiData.toString());
+      //                       final id = uri.queryParameters['id'];
+      //                       final hash = uri.queryParameters['hash'];
+
+      //                       // logger.i(id);
+      //                       // logger.i(hash);
+
+      //                       BlocProvider.of<SplashCubit>(context)
+      //                           .login(id.toString(), hash.toString());
+      //                     },
+      //                     buttonText: "Retry",
+      //                     buttonTxtColor: BTN_CLR_ACTIVE,
+      //                     buttonBorderColor: Colors.transparent,
+      //                     buttonColor: CLR_PRIMARY,
+      //                     buttonSizeX: 10.h,
+      //                     buttonSizeY: 40.w,
+      //                     buttonTextSize: 14.sp,
+      //                     buttonTextWeight: FontWeight.w500),
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       )
+      //     : null
     );
   }
 }

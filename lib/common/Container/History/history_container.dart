@@ -152,9 +152,7 @@ class HistoryContainer extends StatelessWidget {
                           ),
                         ],
                         isRepeatingAnimation: true,
-                        onTap: () {
-                          print("Tap Event");
-                        },
+                        onTap: () {},
                       ),
                     if (titleText != "Auto Payment")
                       MyAppText(

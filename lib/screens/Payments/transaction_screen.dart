@@ -61,7 +61,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
   void initState() {
     super.initState();
     tnxResponse = confirmDoneData.fromJson(widget.billerData!['res']);
-    print(tnxResponse!);
     // billData = jsonDecode(tnxResponse!.paymentDetails!.tran!.bill.toString());
 
     if (widget.isSavedBill) {

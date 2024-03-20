@@ -150,6 +150,15 @@ class _BillerDetailsState extends State<BillerDetails> {
     super.initState();
   }
 
+  handleDues() {
+    if (widget.isSavedBill) {
+      if (widget.savedBillersData!.cUSTOMERBILLID != null) {
+        BlocProvider.of<MybillersCubit>(context)
+            .deleteUpcomingDue(widget.savedBillersData!.cUSTOMERBILLID);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     handleDialog() {
@@ -311,6 +320,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                 .toString()
                 .toLowerCase()
                 .contains("no pending bill")) {
+              handleDues();
               setState(() {
                 ErrIndex = 4;
                 ImgIndex = 4;
@@ -321,6 +331,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                 .toString()
                 .toLowerCase()
                 .contains("no bill data")) {
+              handleDues();
               setState(() {
                 ErrIndex = 5;
                 ImgIndex = 3;
@@ -601,7 +612,6 @@ class _BillerDetailsState extends State<BillerDetails> {
                                               isInsufficient = true;
                                             });
                                           }
-                                          print(val);
 
                                           if (validateBill!["fetchBill"]) {
                                             PaymentExactErrMsg = checkIsExact(

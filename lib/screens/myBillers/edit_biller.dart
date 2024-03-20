@@ -263,120 +263,119 @@ class _EditBillerUIState extends State<EditBillerUI> {
                         width: 1.0,
                       ),
                     ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16.w, vertical: 16.h),
-                          child: !isEditBillDetailsLoading
-                              ? ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  physics: const BouncingScrollPhysics(),
-                                  itemCount: EditInputItems!.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Padding(
-                                      padding: EdgeInsets.only(top: 8.0.h),
-                                      child: TextFormField(
-                                        controller:
-                                            InputSignatureControllers[index],
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        style: TextStyle(color: TXT_CLR_LITE),
-                                        enabled: true,
-                                        autocorrect: false,
-                                        readOnly: true,
-                                        enableSuggestions: false,
-                                        decoration: InputDecoration(
-                                            labelStyle: const TextStyle(
-                                                color: Color(0xffa2a2a2)),
-                                            fillColor: const Color(0xffD1D9E8)
-                                                .withOpacity(0.2),
-                                            filled: true,
-                                            hintStyle: const TextStyle(
-                                                color: Color(0xffa2a2a2)),
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              borderSide: BorderSide(
+                    child: !isEditBillDetailsLoading
+                        ? Column(
+                            children: [
+                              Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.w, vertical: 16.h),
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: EditInputItems!.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Padding(
+                                        padding: EdgeInsets.only(top: 8.0.h),
+                                        child: TextFormField(
+                                          controller:
+                                              InputSignatureControllers[index],
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
+                                          style: TextStyle(color: TXT_CLR_LITE),
+                                          enabled: true,
+                                          autocorrect: false,
+                                          readOnly: true,
+                                          enableSuggestions: false,
+                                          decoration: InputDecoration(
+                                              labelStyle: const TextStyle(
                                                   color: Color(0xffa2a2a2)),
-                                            ),
-                                            focusedBorder:
-                                                const UnderlineInputBorder(
-                                              borderSide: BorderSide(
+                                              fillColor: const Color(0xffD1D9E8)
+                                                  .withOpacity(0.2),
+                                              filled: true,
+                                              hintStyle: const TextStyle(
                                                   color: Color(0xffa2a2a2)),
-                                            ),
-                                            border:
-                                                const UnderlineInputBorder(),
-                                            labelText: EditInputItems![index]
-                                                .pARAMETERNAME
-                                                .toString()),
-                                      ),
-                                    );
+                                              enabledBorder:
+                                                  const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Color(0xffa2a2a2)),
+                                              ),
+                                              focusedBorder:
+                                                  const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Color(0xffa2a2a2)),
+                                              ),
+                                              border:
+                                                  const UnderlineInputBorder(),
+                                              labelText: EditInputItems![index]
+                                                  .pARAMETERNAME
+                                                  .toString()),
+                                        ),
+                                      );
+                                    },
+                                  )),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16.w, vertical: 16.h),
+                                child: TextFormField(
+                                  maxLength: 20,
+                                  controller: billNameController,
+                                  key: _editbillnameKey,
+                                  autocorrect: false,
+                                  enableSuggestions: false,
+                                  keyboardType: TextInputType.text,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'^[a-z0-9A-Z ]*'))
+                                  ],
+                                  onChanged: (s) {
+                                    if (billNameController.text.isNotEmpty) {
+                                      setState(() {
+                                        isValidBillName = true;
+                                        isButtonActive = true;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        isValidBillName = false;
+                                        isButtonActive = false;
+                                      });
+                                    }
                                   },
-                                )
-                              : Center(
-                                  child: Container(
-                                    height: 200,
-                                    width: 200,
-                                    child: FlickrLoader(),
+                                  validator: (inputValue) {
+                                    if (inputValue!.isEmpty) {
+                                      return "Bill Name Should Not be Empty";
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    fillColor: const Color(0xffD1D9E8)
+                                        .withOpacity(0.2),
+                                    filled: true,
+                                    labelStyle: const TextStyle(
+                                        color: Color(0xff1b438b)),
+                                    enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0xff1B438B)),
+                                    ),
+                                    focusedBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0xff1B438B)),
+                                    ),
+                                    border: const UnderlineInputBorder(),
+                                    labelText: 'Bill Name (Nick Name)',
                                   ),
                                 ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16.w, vertical: 16.h),
-                          child: TextFormField(
-                            maxLength: 20,
-                            controller: billNameController,
-                            key: _editbillnameKey,
-                            autocorrect: false,
-                            enableSuggestions: false,
-                            keyboardType: TextInputType.text,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'^[a-z0-9A-Z ]*'))
+                              ),
                             ],
-                            onChanged: (s) {
-                              if (billNameController.text.isNotEmpty) {
-                                setState(() {
-                                  isValidBillName = true;
-                                  isButtonActive = true;
-                                });
-                              } else {
-                                setState(() {
-                                  isValidBillName = false;
-                                  isButtonActive = false;
-                                });
-                              }
-                            },
-                            validator: (inputValue) {
-                              if (inputValue!.isEmpty) {
-                                return "Bill Name Should Not be Empty";
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              fillColor:
-                                  const Color(0xffD1D9E8).withOpacity(0.2),
-                              filled: true,
-                              labelStyle:
-                                  const TextStyle(color: Color(0xff1b438b)),
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xff1B438B)),
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xff1B438B)),
-                              ),
-                              border: const UnderlineInputBorder(),
-                              labelText: 'Bill Name (Nick Name)',
+                          )
+                        : Center(
+                            child: Container(
+                              height: 200,
+                              width: 200,
+                              child: FlickrLoader(),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
                   ),
                   BbpsLogoContainer(showEquitasLogo: false),
                   SizedBox(
@@ -416,14 +415,18 @@ class _EditBillerUIState extends State<EditBillerUI> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () {
-                        if (isButtonActive && isValidBillName) {
+                        if (isButtonActive &&
+                            isValidBillName &&
+                            billNameController.text.length > 3) {
                           submitForm();
                         }
                       },
                       buttonText: "Update",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: isButtonActive && isValidBillName
+                      buttonColor: isButtonActive &&
+                              isValidBillName &&
+                              billNameController.text.length > 3
                           ? CLR_PRIMARY
                           : Colors.grey,
                       buttonSizeX: 10.h,

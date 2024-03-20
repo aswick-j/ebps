@@ -398,6 +398,7 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                   child: MyAppButton(
                       onPressed: () {
                         if (!isBillNameNotValid &&
+                            billNameController.text.length > 3 &&
                             CircleValue != null &&
                             !isMobileNumberNotValid) {
                           handlePlans() {
@@ -479,6 +480,7 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                       buttonBorderColor: Colors.transparent,
                       buttonColor: !isBillNameNotValid &&
                               CircleValue != null &&
+                              billNameController.text.length > 3 &&
                               !isMobileNumberNotValid
                           ? CLR_PRIMARY
                           : Colors.grey,
