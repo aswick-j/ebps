@@ -41,6 +41,7 @@ billerDetail(pARAMETERNAME, pARAMETERVALUE, context) {
                     ),
                     textAlign: TextAlign.start,
                     maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ))
           ],

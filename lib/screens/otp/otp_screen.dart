@@ -855,7 +855,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 readOnly: enableReadOnly,
                                 focusNode: focusNode,
                                 androidSmsAutofillMethod:
-                                    AndroidSmsAutofillMethod.smsUserConsentApi,
+                                    AndroidSmsAutofillMethod.none,
                                 listenForMultipleSmsOnAndroid: true,
                                 defaultPinTheme: defaultPinTheme,
                                 onChanged: (s) {

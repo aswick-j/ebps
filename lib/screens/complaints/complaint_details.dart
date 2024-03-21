@@ -184,12 +184,6 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                                     subTitle: widget.complaintData.aSSIGNED
                                         .toString(),
                                     showStatus: false),
-                              if (widget.complaintData.rEMARKS != null)
-                                CmpDetails(
-                                    title: "Remarks",
-                                    subTitle:
-                                        widget.complaintData.rEMARKS.toString(),
-                                    showStatus: false),
                               CmpDetails(
                                   title: "Complaint ID",
                                   subTitle: widget.complaintData.cOMPLAINTID
@@ -224,6 +218,12 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                                   subTitle: widget.complaintData.dESCRIPTION
                                       .toString(),
                                   showStatus: false),
+                              if (widget.complaintData.rEMARKS != null)
+                                CmpDetails(
+                                    title: "Remarks",
+                                    subTitle:
+                                        widget.complaintData.rEMARKS.toString(),
+                                    showStatus: false),
                             ],
                           )
                         : Container(
