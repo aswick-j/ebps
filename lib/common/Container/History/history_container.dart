@@ -80,13 +80,7 @@ class HistoryContainer extends StatelessWidget {
 
           borderRadius: BorderRadius.circular(8.0.r),
           border: Border.all(
-            color: titleText == "Auto Payment" && statusText == "Pending"
-                ? Color.fromARGB(255, 218, 124, 47).withOpacity(0.7)
-                : titleText == "Auto Payment" && statusText == "Success"
-                    ? CLR_GREEN.withOpacity(0.7)
-                    : titleText == "Auto Payment" && statusText == "Failed"
-                        ? CLR_ERROR.withOpacity(0.7)
-                        : containerBorderColor,
+            color: containerBorderColor,
             width: 2.0,
           ),
         ),
@@ -107,53 +101,74 @@ class HistoryContainer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     if (titleText == "Auto Payment")
-                      AnimatedTextKit(
-                        totalRepeatCount: 100,
-                        animatedTexts: [
-                          ColorizeAnimatedText(
-                            'Auto Payment',
-                            textStyle: TextStyle(
-                              fontSize: 14.sp,
-                            ),
-                            colors: statusText == "Pending"
-                                ? [
-                                    CLR_ORANGE,
-                                    CLR_ORANGESHADE,
-                                  ]
+                      // AnimatedTextKit(
+                      //   totalRepeatCount: 100,
+                      //   animatedTexts: [
+                      //     ColorizeAnimatedText(
+                      //       'Auto Payment',
+                      //       textStyle: TextStyle(
+                      //         fontSize: 14.sp,
+                      //       ),
+                      //       colors: statusText == "Pending"
+                      //           ? [
+                      //               CLR_ORANGE,
+                      //               CLR_ORANGESHADE,
+                      //             ]
+                      //           : statusText == "Failed"
+                      //               ? [
+                      //                   CLR_ERROR,
+                      //                   CLR_REDSHADE,
+                      //                 ]
+                      //               : [
+                      //                   CLR_GREEN,
+                      //                   CLR_GREENSHADE,
+                      //                 ],
+                      //     ),
+                      //     ColorizeAnimatedText(
+                      //       'Paid to',
+                      //       textStyle: TextStyle(
+                      //           fontSize: 14.sp, fontWeight: FontWeight.bold),
+                      //       colors: statusText == "Pending"
+                      //           ? [
+                      //               CLR_ORANGE,
+                      //               CLR_ORANGESHADE,
+                      //             ]
+                      //           : statusText == "Failed"
+                      //               ? [
+                      //                   CLR_ERROR,
+                      //                   CLR_REDSHADE,
+                      //                 ]
+                      //               : [
+                      //                   CLR_GREEN,
+                      //                   CLR_GREENSHADE,
+                      //                 ],
+                      //     ),
+                      //   ],
+                      //   isRepeatingAnimation: true,
+                      //   onTap: () {},
+                      // ),
+                      if (titleText == "Auto Payment")
+                        // AnimatedTextKit(
+                        //   isRepeatingAnimation: true,
+                        //   animatedTexts: [
+                        //     FadeAnimatedText('do IT!'),
+                        //     FadeAnimatedText('do it RIGHT!!'),
+                        //     FadeAnimatedText('do it RIGHT NOW!!!'),
+                        //   ],
+                        //   onTap: () {
+                        //     print("Tap Event");
+                        //   },
+                        // ),
+                        MyAppText(
+                            data: titleText,
+                            size: 14.0.sp,
+                            color: statusText == "Pending"
+                                ? CLR_ORANGE
                                 : statusText == "Failed"
-                                    ? [
-                                        CLR_ERROR,
-                                        CLR_REDSHADE,
-                                      ]
-                                    : [
-                                        CLR_GREEN,
-                                        CLR_GREENSHADE,
-                                      ],
-                          ),
-                          ColorizeAnimatedText(
-                            'Paid to',
-                            textStyle: TextStyle(
-                              fontSize: 14.sp,
-                            ),
-                            colors: statusText == "Pending"
-                                ? [
-                                    CLR_ORANGE,
-                                    CLR_ORANGESHADE,
-                                  ]
-                                : statusText == "Failed"
-                                    ? [
-                                        CLR_ERROR,
-                                        CLR_REDSHADE,
-                                      ]
-                                    : [
-                                        CLR_GREEN,
-                                        CLR_GREENSHADE,
-                                      ],
-                          ),
-                        ],
-                        isRepeatingAnimation: true,
-                        onTap: () {},
-                      ),
+                                    ? CLR_ERROR
+                                    : CLR_GREEN,
+                            weight: FontWeight.bold,
+                            fntStyle: FontStyle.normal),
                     if (titleText != "Auto Payment")
                       MyAppText(
                         data: titleText,

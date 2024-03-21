@@ -152,7 +152,7 @@ class _BillHistoryState extends State<BillHistory> {
                                   // billerFilterData: billerFilterData,
                                   titleText: historyData![index].aUTOPAY == 0
                                       ? 'Paid to'
-                                      : 'Auto Pay',
+                                      : 'Auto Payment',
                                   subtitleText:
                                       historyData![index].bILLERNAME.toString(),
                                   dateText: DateFormat('dd/MM/yyyy').format(

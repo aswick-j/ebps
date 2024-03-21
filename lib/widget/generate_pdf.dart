@@ -101,30 +101,31 @@ Future<Uint8List> generatePdf(
                     ),
                   ),
                 ),
-                pw.Padding(
-                    padding: const pw.EdgeInsets.only(
-                        left: 20, top: 5.0, bottom: 10.0),
-                    child: pw.Row(children: [
-                      pw.Text(
-                        'Bill Name :',
-                        style: pw.TextStyle(
-                          fontSize: 16.0,
-                          font: font,
-                          fontWeight: pw.FontWeight.bold,
-                          color: PdfColor.fromHex("#1B438B"),
+                if (BillName != "-")
+                  pw.Padding(
+                      padding: const pw.EdgeInsets.only(
+                          left: 20, top: 5.0, bottom: 10.0),
+                      child: pw.Row(children: [
+                        pw.Text(
+                          'Bill Name :',
+                          style: pw.TextStyle(
+                            fontSize: 16.0,
+                            font: font,
+                            fontWeight: pw.FontWeight.bold,
+                            color: PdfColor.fromHex("#1B438B"),
+                          ),
                         ),
-                      ),
-                      pw.SizedBox(width: 10),
-                      pw.Text(
-                        BillName,
-                        style: pw.TextStyle(
-                          fontSize: 16.0,
-                          font: font,
-                          fontWeight: pw.FontWeight.normal,
-                          color: PdfColor.fromHex("#1B438B"),
+                        pw.SizedBox(width: 10),
+                        pw.Text(
+                          BillName,
+                          style: pw.TextStyle(
+                            fontSize: 16.0,
+                            font: font,
+                            fontWeight: pw.FontWeight.normal,
+                            color: PdfColor.fromHex("#1B438B"),
+                          ),
                         ),
-                      ),
-                    ])),
+                      ])),
                 // pw.Padding(
                 //     padding: const pw.EdgeInsets.only(
                 //         left: 20, top: 5.0, bottom: 10.0),

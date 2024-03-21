@@ -323,6 +323,59 @@ class _OtpScreenState extends State<OtpScreen> {
       ),
     );
 
+    handleUnknownDialog() {
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            content: AnimatedDialog(
+                showImgIcon: false,
+                title: "Unable to Process Payment",
+                subTitle:
+                    "We're sorry. We were unable to process your payment. Please try again later.",
+                child: Icon(
+                  Icons.error_outline,
+                  color: Colors.white,
+                ),
+                showSub: true,
+                shapeColor: CLR_ERROR),
+            actions: <Widget>[
+              Align(
+                alignment: Alignment.center,
+                child: MyAppButton(
+                    onPressed: () {
+                      goBack(ctx);
+
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Navigator.of(context).pushAndRemoveUntil(
+                          CupertinoPageRoute(
+                              fullscreenDialog: true,
+                              builder: (context) => BottomNavBar(
+                                    SelectedIndex: 0,
+                                  )),
+                          (Route<dynamic> route) => false,
+                        );
+                      });
+                    },
+                    buttonText: "Okay",
+                    buttonTxtColor: BTN_CLR_ACTIVE,
+                    buttonBorderColor: Colors.transparent,
+                    buttonColor: CLR_PRIMARY,
+                    buttonSizeX: 10,
+                    buttonSizeY: 40,
+                    buttonTextSize: 14,
+                    buttonTextWeight: FontWeight.w500),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     handleDialog() {
       showDialog(
         barrierDismissible: false,
@@ -566,7 +619,9 @@ class _OtpScreenState extends State<OtpScreen> {
               }
 
               if (state.data != null) {
-                if (state.data!["res"]!["paymentDetails"]!["message"]
+                if (state.data!["res"] == null) {
+                  handleUnknownDialog();
+                } else if (state.data!["res"]!["paymentDetails"]!["message"]
                     .toString()
                     .contains("Transaction initiated")) {
                   handleDialog();
@@ -612,7 +667,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   );
                 }
               } else {
-                handleDialog();
+                handleUnknownDialog();
               }
             } else if (state is PayBillError) {}
 

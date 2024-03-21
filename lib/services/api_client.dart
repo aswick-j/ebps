@@ -358,19 +358,11 @@ class ApiClient implements Repository {
 
         //{"message":"Bill Payment failed for a transaction","data":{"paymentDetails":{"created":"2023-02-15T07:09:24.880Z","failed":true},"transactionSteps":[{"description":"Transaction Initiated","flag":true,"pending":false},{"description":"Fund Transfer Initiated by Bank","flag":false,"pending":false},{"description":"Bill processed by Biller","flag":false,"pending":false},{"description":"Bill Payment Completed","flag":false,"pending":false}],"reason":"fund transfer failure","equitasTransactionId":"-"},"status":500}
       } else {
-        return {
-          "status": 500,
-          "message": "Something went wrong",
-          "data": "Error"
-        };
+        return {"status": 500, "message": "Something went wrong", "data": null};
       }
     } catch (e) {
       logger.w(e);
-      return {
-        "status": 500,
-        "message": "Something went wrong",
-        "data": "Error"
-      };
+      return {"status": 500, "message": "Something went wrong", "data": null};
     }
   }
 

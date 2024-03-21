@@ -756,7 +756,15 @@ class _HistoryDetailsState extends State<HistoryDetails> {
         //   label: Text("Refresh Status"),
         // ),
         // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        bottomSheet: widget.historyData.tRANSACTIONSTATUS != 'success'
+        bottomSheet: widget.historyData.tRANSACTIONID == null ||
+                (widget.historyData.tRANSACTIONSTATUS
+                            .toString()
+                            .toLowerCase() ==
+                        "bbps-in-progress" ||
+                    widget.historyData.tRANSACTIONSTATUS
+                            .toString()
+                            .toLowerCase() ==
+                        "bbps-timeout")
             ? null
             : Container(
                 decoration: BoxDecoration(

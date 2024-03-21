@@ -790,8 +790,21 @@ class HomeCubit extends Cubit<HomeState> {
           if (status == 400) {
             emit(PayBillFailed(
               from: "fromConfirmPaymentOtp",
-              message: "Your Account needs to complete KYC",
-              data: const {},
+              message: message,
+              data: {
+                "res": value['data'],
+                "billerID": billerID,
+                "billName": billName,
+                "acNo": acNo,
+                "billAmount": billAmount,
+                "customerBillID": customerBillID,
+                "tnxRefKey": tnxRefKey,
+                "quickPay": quickPay,
+                "inputSignature": inputSignature,
+                "otherAmount": otherAmount,
+                "autopayStatus": autopayStatus,
+                "billerData": billerData,
+              },
             ));
           } else if (status == 200) {
             final paymentDetails = value['data']['paymentDetails'];
@@ -839,9 +852,9 @@ class HomeCubit extends Cubit<HomeState> {
           } else if (status == 500) {
             if (message.toLowerCase().contains("timed out") && data == null) {
               emit(PayBillFailed(
-                from: "fromConfirmPaymentOtp",
-                message: "timeout",
-              ));
+                  from: "fromConfirmPaymentOtp",
+                  message: "timeout",
+                  data: null));
             } else if (!message.toLowerCase().contains("timed out")) {
               emit(PayBillFailed(
                 from: "fromConfirmPaymentOtp",

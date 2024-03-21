@@ -12,6 +12,7 @@ MyAppText(
     maxline,
     lineHeight,
     flowType,
+    fntStyle,
     textAlign}) {
   return Text(
     data ?? '',
@@ -25,6 +26,7 @@ MyAppText(
       height: lineHeight ?? 0,
       fontWeight: weight ?? FontWeight.normal,
       decoration: decorate ?? TextDecoration.none,
+      fontStyle: fntStyle ?? FontStyle.normal,
     ),
   );
 }
