@@ -1402,6 +1402,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                     widget.buttonText.toString() ==
                                         "Autopay Paused") {
                                   showModalBottomSheet(
+                                      isScrollControlled: true,
+
                                       context: context,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.vertical(
@@ -1510,18 +1512,18 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                       : "-",
                                                   context: context),
                                             if (widget.savedBillersData
-                                                    .lASTPAIDDATE !=
+                                                    .cOMPLETIONDATE !=
                                                 null)
                                               ModalText(
                                                   title: "Last Paid On",
                                                   subTitle: widget
                                                               .savedBillersData
-                                                              .lASTPAIDDATE !=
+                                                              .cOMPLETIONDATE !=
                                                           null
                                                       ? DateFormat('dd/MM/yyyy')
                                                           .format(DateTime.parse(widget
                                                                   .savedBillersData
-                                                                  .lASTPAIDDATE
+                                                                  .cOMPLETIONDATE
                                                                   .toString())
                                                               .toLocal())
                                                       : "-",
