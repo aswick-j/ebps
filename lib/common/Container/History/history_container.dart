@@ -167,7 +167,7 @@ class HistoryContainer extends StatelessWidget {
                                 : statusText == "Failed"
                                     ? CLR_ERROR
                                     : CLR_GREEN,
-                            weight: FontWeight.bold,
+                            weight: FontWeight.normal,
                             fntStyle: FontStyle.normal),
                     if (titleText != "Auto Payment")
                       MyAppText(

@@ -176,66 +176,67 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
         ],
       ),
       body: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
           child: MultiBlocListener(
               listeners: [
-            BlocListener<HistoryCubit, HistoryState>(
-                listener: (context, state) {
-              if (state is HistoryLoading && state.isFirstFetch) {
-                isHistoryLoading = true;
-              }
-              setState(() {
-                isHistoryMoreLoading = true;
-                historyData = [];
-              });
+                BlocListener<HistoryCubit, HistoryState>(
+                    listener: (context, state) {
+                  if (state is HistoryLoading && state.isFirstFetch) {
+                    isHistoryLoading = true;
+                  }
+                  setState(() {
+                    isHistoryMoreLoading = true;
+                    historyData = [];
+                  });
 
-              if (state is HistoryLoading) {
-                setState(() {
-                  historyData = state.prevData;
-                  MoreLoading = true;
-                  if (historyData!.length > 1) {
-                    _totalPages =
-                        historyData![historyData!.length - 1].tOTALPAGES!;
+                  if (state is HistoryLoading) {
+                    setState(() {
+                      historyData = state.prevData;
+                      MoreLoading = true;
+                      if (historyData!.length > 1) {
+                        _totalPages =
+                            historyData![historyData!.length - 1].tOTALPAGES!;
+                      }
+                      isHistoryMoreLoading = true;
+                    });
+                  } else if (state is HistorySuccess) {
+                    setState(() {
+                      historyData = state.historyData;
+                      if (historyData!.length > 1) {
+                        _totalPages =
+                            historyData![historyData!.length - 1].tOTALPAGES!;
+                      }
+                      isHistoryLoading = false;
+                      MoreLoading = false;
+                      _pageNumber = _pageNumber + 1;
+                    });
+                  } else if (state is HistoryFailed) {
+                    setState(() {
+                      isHistoryLoading = false;
+                      isHistoryMoreLoading = false;
+                    });
+                  } else if (state is HistoryError) {
+                    setState(() {
+                      isHistoryLoading = false;
+                      isHistoryMoreLoading = false;
+                    });
                   }
-                  isHistoryMoreLoading = true;
-                });
-              } else if (state is HistorySuccess) {
-                setState(() {
-                  historyData = state.historyData;
-                  if (historyData!.length > 1) {
-                    _totalPages =
-                        historyData![historyData!.length - 1].tOTALPAGES!;
-                  }
-                  isHistoryLoading = false;
-                  MoreLoading = false;
-                  _pageNumber = _pageNumber + 1;
-                });
-              } else if (state is HistoryFailed) {
-                setState(() {
-                  isHistoryLoading = false;
-                  isHistoryMoreLoading = false;
-                });
-              } else if (state is HistoryError) {
-                setState(() {
-                  isHistoryLoading = false;
-                  isHistoryMoreLoading = false;
-                });
-              }
-            }),
-            BlocListener<HomeCubit, HomeState>(
-              listener: (context, state) {
-                if (state is CategoriesLoading) {
-                  isCategoryLoading = true;
-                } else if (state is CategoriesSuccess) {
-                  categoriesData = state.CategoriesList;
-                  isCategoryLoading = false;
-                } else if (state is CategoriesFailed) {
-                  isCategoryLoading = false;
-                } else if (state is CategoriesError) {
-                  isCategoryLoading = false;
-                }
-              },
-            )
-          ],
+                }),
+                BlocListener<HomeCubit, HomeState>(
+                  listener: (context, state) {
+                    if (state is CategoriesLoading) {
+                      isCategoryLoading = true;
+                    } else if (state is CategoriesSuccess) {
+                      categoriesData = state.CategoriesList;
+                      isCategoryLoading = false;
+                    } else if (state is CategoriesFailed) {
+                      isCategoryLoading = false;
+                    } else if (state is CategoriesError) {
+                      isCategoryLoading = false;
+                    }
+                  },
+                )
+              ],
               child: Column(
                 children: [
                   if (!isHistoryLoading && showClrFltr)

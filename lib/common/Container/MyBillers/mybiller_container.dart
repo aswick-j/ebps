@@ -1526,35 +1526,66 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                               .toLocal())
                                                       : "-",
                                                   context: context),
-                                            ModalText(
-                                                title: "Due Amount",
-                                                subTitle: widget.upcomingDueData !=
-                                                            null &&
-                                                        widget.upcomingDueData!
-                                                                .dueAmount !=
-                                                            null
-                                                    ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.upcomingDueData!.dueAmount.toString()))}"
-                                                    : "-",
-                                                context: context),
-                                            if (widget.upcomingDueData != null &&
-                                                widget.upcomingDueData!.dueDate !=
+                                            if (widget.upcomingDueData !=
+                                                    null &&
+                                                widget.upcomingDueData!
+                                                        .dueAmount !=
                                                     null)
                                               ModalText(
-                                                  title: "Due Date",
-                                                  subTitle: (widget.upcomingDueData != null &&
+                                                  title: "Due Amount",
+                                                  subTitle: widget.upcomingDueData !=
+                                                              null &&
                                                           widget.upcomingDueData!
-                                                                  .dueDate !=
-                                                              null)
-                                                      ? DateFormat('dd/MM/yyyy')
-                                                          .format(DateTime.parse(widget
-                                                                  .upcomingDueData!
-                                                                  .dueDate!
-                                                                  .toString()
-                                                                  .substring(0, 10))
-                                                              .toLocal()
-                                                              .add(const Duration(days: 1)))
+                                                                  .dueAmount !=
+                                                              null
+                                                      ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.upcomingDueData!.dueAmount.toString()))}"
                                                       : "-",
                                                   context: context),
+                                            if (widget.upcomingDueData !=
+                                                    null &&
+                                                widget.upcomingDueData!
+                                                        .dueDate !=
+                                                    null)
+                                              ModalText(
+                                                context: context,
+                                                title: "Due Date",
+                                                subTitle: (widget.upcomingDueData !=
+                                                            null &&
+                                                        widget.upcomingDueData!
+                                                                .dueDate !=
+                                                            null)
+                                                    ? DateFormat('dd/MM/yyyy')
+                                                        .format(DateTime.parse(widget
+                                                                .upcomingDueData!
+                                                                .dueDate!
+                                                                .toString()
+                                                                .substring(
+                                                                    0, 10))
+                                                            .toLocal()
+                                                            .add(const Duration(
+                                                                days: 1)))
+                                                    : "-",
+                                              ),
+                                            if (getAllAutopayList(widget
+                                                    .savedBillersData
+                                                    .cUSTOMERBILLID) !=
+                                                null)
+                                              if (getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).bILLDATE != null)
+                                                ModalText(
+                                                    title: "Bill Date",
+                                                    subTitle: (getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)
+                                                                .bILLDATE !=
+                                                            null)
+                                                        ? DateFormat('dd/MM/yyyy').format(DateTime.parse(
+                                                                getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)
+                                                                    .bILLDATE
+                                                                    .toString()
+                                                                    .substring(
+                                                                        0, 10))
+                                                            .toLocal()
+                                                            .add(const Duration(days: 1)))
+                                                        : "-",
+                                                    context: context),
                                             if (getAllAutopayList(widget
                                                     .savedBillersData
                                                     .cUSTOMERBILLID) !=
