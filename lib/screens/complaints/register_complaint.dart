@@ -270,33 +270,166 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                     categoryName: widget.CategoryName),
                                 Container(
                                     width: double.infinity,
-                                    height: 75.h,
+                                    height: 80.h,
                                     color: Colors.white,
-                                    child: GridView.count(
+                                    child: ListView(
                                       primary: false,
                                       physics: NeverScrollableScrollPhysics(),
-                                      crossAxisSpacing: 10.h,
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 4 / 2,
-                                      mainAxisSpacing: 10.h,
+                                      // crossAxisSpacing: 10.h,
+                                      // crossAxisCount: 2,
+                                      // childAspectRatio: 4 / 2,
+                                      // mainAxisSpacing: 10.h,
                                       children: [
-                                        billerDetail(
-                                            "Date",
-                                            DateFormat('dd/MM/yyyy | hh:mm a')
-                                                .format(DateTime.parse(
-                                                        widget.Date.toString())
-                                                    .toLocal()),
-                                            context),
-                                        billerDetail("Transaction ID",
-                                            widget.txnRefID, context),
+                                        Container(
+                                            // margin: EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(2.r),
+                                            ),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            24.w,
+                                                            10.h,
+                                                            8.w,
+                                                            10.h),
+                                                    child: SizedBox(
+                                                      width: 70.w,
+                                                      child: Text(
+                                                        "Date",
+                                                        style: TextStyle(
+                                                          fontSize: 12.sp,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color:
+                                                              Color(0xff808080),
+                                                        ),
+                                                        maxLines: 3,
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                      ),
+                                                    )),
+                                                Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(8.w,
+                                                            10.h, 24.w, 10.h),
+                                                    child: SizedBox(
+                                                      width: 130.w,
+                                                      child: Text(
+                                                        DateFormat(
+                                                                'dd/MM/yyyy | hh:mm a')
+                                                            .format(DateTime
+                                                                    .parse(widget
+                                                                            .Date
+                                                                        .toString())
+                                                                .toLocal()),
+                                                        style: TextStyle(
+                                                          fontSize: 12.sp,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color:
+                                                              Color(0xff1b438b),
+                                                        ),
+                                                        maxLines: 3,
+                                                        textAlign:
+                                                            TextAlign.right,
+                                                      ),
+                                                    ))
+                                              ],
+                                            )),
+                                        Container(
+                                            // margin: EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(2.r),
+                                            ),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            24.w,
+                                                            10.h,
+                                                            8.w,
+                                                            10.h),
+                                                    child: SizedBox(
+                                                      width: 110.w,
+                                                      child: Text(
+                                                        "Transaction ID",
+                                                        style: TextStyle(
+                                                          fontSize: 12.sp,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color:
+                                                              Color(0xff808080),
+                                                        ),
+                                                        maxLines: 3,
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                      ),
+                                                    )),
+                                                Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(8.w,
+                                                            10.h, 24.w, 10.h),
+                                                    child: SizedBox(
+                                                      width: 130.w,
+                                                      child: FittedBox(
+                                                        fit: BoxFit.contain,
+                                                        child: Text(
+                                                          widget.txnRefID,
+                                                          style: TextStyle(
+                                                            fontSize: 11.sp,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                                0xff1b438b),
+                                                          ),
+                                                          maxLines: 3,
+                                                          textAlign:
+                                                              TextAlign.right,
+                                                        ),
+                                                      ),
+                                                    ))
+                                              ],
+                                            )),
                                       ],
                                     )),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 28.0.w, vertical: 16.w),
+                                      horizontal: 24.0.w, vertical: 16.w),
                                   child: DropdownButtonFormField<String>(
                                     isExpanded: true,
                                     isDense: true,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0.r),
+                                        ),
+                                      ),
+                                      fillColor:
+                                          Color(0xffD1D9E8).withOpacity(0.2),
+                                      enabledBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(color: CLR_GREY),
+                                      ),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(color: CLR_GREY),
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 10.0.h, horizontal: 10.w),
+                                    ),
                                     hint: const Text('Reason'),
                                     onChanged: (String? newValue) {},
                                     icon: const Icon(
@@ -311,6 +444,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                             value.cOMPLAINTREASONSID.toString(),
                                         child: Text(
                                           value.cOMPLAINTREASON.toString(),
+                                          style: TextStyle(fontSize: 12.sp),
                                         ),
                                         onTap: () {
                                           setState(() {
@@ -327,7 +461,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 28.0.w, vertical: 16.w),
+                                      horizontal: 24.0.w, vertical: 16.w),
                                   child: TextFormField(
                                     inputFormatters: [
                                       FilteringTextInputFormatter.allow(
@@ -350,6 +484,21 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                     decoration: InputDecoration(
                                         labelText: "Description",
                                         hintText: "Type here...",
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0.r),
+                                          ),
+                                        ),
+                                        fillColor:
+                                            Color(0xffD1D9E8).withOpacity(0.2),
+                                        enabledBorder: const OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: CLR_GREY),
+                                        ),
+                                        focusedBorder: const OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: CLR_GREY),
+                                        ),
                                         hintStyle: TextStyle(
                                           fontSize: 12.sp,
                                           color: TXT_CLR_PRIMARY,

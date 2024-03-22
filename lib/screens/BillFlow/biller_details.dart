@@ -410,31 +410,31 @@ class _BillerDetailsState extends State<BillerDetails> {
                               !isPaymentInfoLoading)
                             if (((_billerResponseData != null)))
                               Container(
-                                  width: double.infinity,
-                                  constraints: BoxConstraints(
-                                    minHeight: 100.h,
-                                    maxHeight: 300.h,
-                                  ),
+                                  // width: double.infinity,
+                                  // constraints: BoxConstraints(
+                                  //   minHeight: 100.h,
+                                  //   maxHeight: 300.h,
+                                  // ),
                                   color: const Color.fromRGBO(255, 255, 255, 1),
-                                  child: GridView.count(
+                                  child: ListView(
                                     shrinkWrap: true,
-                                    primary: false,
+                                    // primary: false,
                                     physics: NeverScrollableScrollPhysics(),
-                                    crossAxisSpacing: 10.w,
-                                    mainAxisSpacing: 0,
-                                    crossAxisCount: 2,
-                                    childAspectRatio: 4 / 2,
+                                    // crossAxisSpacing: 10.w,
+                                    // mainAxisSpacing: 0,
+                                    // crossAxisCount: 2,
+                                    // childAspectRatio: 4 / 2,
                                     children: <Widget>[
                                       if (_billerResponseData != null &&
                                           _billerResponseData!.billDate != null)
-                                        billerDetail(
+                                        billerdetail(
                                             "Bill Date",
                                             _billerResponseData!.billDate
                                                 .toString(),
                                             context),
                                       if (_billerResponseData != null &&
                                           _billerResponseData!.dueDate != null)
-                                        billerDetail(
+                                        billerdetail(
                                             "Due Date",
                                             _billerResponseData!.dueDate
                                                 .toString(),
@@ -442,7 +442,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                       if (_billerResponseData != null &&
                                           _billerResponseData!.billNumber !=
                                               null)
-                                        billerDetail(
+                                        billerdetail(
                                             "Bill Number",
                                             _billerResponseData!.billNumber
                                                 .toString(),
@@ -450,7 +450,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                       if (_billerResponseData != null &&
                                           _billerResponseData!.billPeriod !=
                                               null)
-                                        billerDetail(
+                                        billerdetail(
                                             "Bill Period",
                                             _billerResponseData!.billPeriod
                                                 .toString(),
@@ -458,13 +458,13 @@ class _BillerDetailsState extends State<BillerDetails> {
                                       if (_billerResponseData != null &&
                                           _billerResponseData!.customerName !=
                                               null)
-                                        billerDetail(
+                                        billerdetail(
                                             "Customer Name",
                                             _billerResponseData!.customerName
                                                 .toString(),
                                             context),
                                       if (widget.billName != null)
-                                        billerDetail(
+                                        billerdetail(
                                             "Bill Name",
                                             widget.billName.toString(),
                                             context),

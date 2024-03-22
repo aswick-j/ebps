@@ -756,7 +756,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
         //   label: Text("Refresh Status"),
         // ),
         // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        bottomSheet: widget.historyData.tRANSACTIONID == null ||
+        bottomSheet: widget.historyData.tRANSACTIONREFERENCEID == null ||
                 (widget.historyData.tRANSACTIONSTATUS
                             .toString()
                             .toLowerCase() ==

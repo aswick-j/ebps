@@ -383,17 +383,21 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                               widget.inputParameters != null)
                             Container(
                                 width: double.infinity,
-                                height: 75.h,
+                                constraints: BoxConstraints(
+                                  minHeight: 80.h,
+                                  maxHeight: 300.h,
+                                ),
+                                height: 0.h,
                                 color: Colors.white,
-                                child: GridView.count(
+                                child: ListView(
                                   primary: false,
                                   physics: NeverScrollableScrollPhysics(),
-                                  crossAxisSpacing: 10.h,
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 4 / 2,
-                                  mainAxisSpacing: 10.h,
+                                  // crossAxisSpacing: 10.h,
+                                  // crossAxisCount: 2,
+                                  // childAspectRatio: 4 / 2,
+                                  // mainAxisSpacing: 10.h,
                                   children: [
-                                    billerDetail(
+                                    billerdetail(
                                         widget.isSavedBill
                                             ? widget.categoryName.toString().toLowerCase() ==
                                                     "mobile prepaid"
@@ -435,15 +439,18 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                                     .toString()
                                                 : widget.inputParameters![0].pARAMETERVALUE.toString(),
                                         context),
-                                    billerDetail("Bill Name",
+                                    billerdetail("Bill Name",
                                         widget.billName.toString(), context),
                                   ],
                                 )),
-                          Divider(
-                            height: 10.h,
-                            thickness: 1,
-                            indent: 10.w,
-                            endIndent: 10.w,
+                          Padding(
+                            padding: EdgeInsets.only(top: 8.0.h),
+                            child: Divider(
+                              height: 1.h,
+                              thickness: 1,
+                              indent: 10.w,
+                              endIndent: 10.w,
+                            ),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(
