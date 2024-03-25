@@ -161,11 +161,15 @@ class _SearchScreenState extends State<SearchScreen> {
                         })
                       },
                       animationType: Animationtype.slide,
+                      hintLabelText: "Search for ",
                       hintTexts: const [
-                        'Search for DTH',
-                        'Search for Electricity',
-                        'Search for FastTag',
-                        'Search for Mobile Postpaid',
+                        'Credit Card',
+                        'DTH',
+                        'Electricity',
+                        'FastTag',
+                        'Loan',
+                        'Mobile Postpaid',
+                        'Water'
                       ],
                       keyboardType: TextInputType.text,
                       controller: _searchController,

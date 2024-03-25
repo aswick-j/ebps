@@ -13,6 +13,7 @@ class AnimatedTextField extends StatefulWidget {
     super.key,
     this.hintTexts = const [],
     this.controller,
+    this.hintLabelText,
     this.hintTextAlign = TextAlign.start,
     this.hintTextStyle,
     this.animationType = Animationtype.fade,
@@ -108,6 +109,7 @@ class AnimatedTextField extends StatefulWidget {
         enableInteractiveSelection =
             enableInteractiveSelection ?? (!readOnly || !obscureText);
   final List<String> hintTexts;
+  String? hintLabelText;
   final TextMagnifierConfiguration? magnifierConfiguration;
   TextEditingController? controller;
 
@@ -590,9 +592,15 @@ class AnimatedTextFieldState extends State<AnimatedTextField> {
                       builder: (context, text, child) =>
                           text.isNotEmpty || !showHint
                               ? const SizedBox.shrink()
-                              : AnimatedTextKit(
-                                  repeatForever: true,
-                                  animatedTexts: _buildAnimatedTexts(),
+                              : Row(
+                                  children: [
+                                    if (widget.hintLabelText != null)
+                                      Text(widget.hintLabelText.toString()),
+                                    AnimatedTextKit(
+                                      repeatForever: true,
+                                      animatedTexts: _buildAnimatedTexts(),
+                                    ),
+                                  ],
                                 ),
                     ),
                   )),
