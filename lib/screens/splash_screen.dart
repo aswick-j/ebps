@@ -42,6 +42,7 @@ class _splashScreenState extends State<splashScreen> {
       body: BlocConsumer<SplashCubit, SplashState>(
         listener: (context, state) async {
           if (state is SplashLoading) {
+            isLoginError = false;
           } else if (state is SplashSuccess) {
             myAccounts = await getDecodedAccounts();
             isLoginError = false;

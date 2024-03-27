@@ -6,7 +6,7 @@ List RechargeCat = [
   "Broadband Postpaid",
 ];
 List UtilCat = [
-  "ELECTRICITY",
+  "Electricity",
   "Water",
   "LPG Gas",
   "Gas",

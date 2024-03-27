@@ -119,6 +119,7 @@ const IMG_SERVERDOWN = "packages/ebps/assets/images/image_serverdown.svg";
 const IMG_PENDINGDUES = "packages/ebps/assets/images/image_no_pending_bill.svg";
 const IMG_SESSIONEXPIRED =
     "packages/ebps/assets/images/image_session_expired.svg";
+const IMG_NOINTERNET = "packages/ebps/assets/images/image_no_internet.svg";
 const IMG_SMTWR = "packages/ebps/assets/images/image_something_went.svg";
 const IMG_NOTFOUND = "packages/ebps/assets/icon/icon_notFound.svg";
 const SPLASH_BAG = "packages/ebps/assets/images/splash_background.png";

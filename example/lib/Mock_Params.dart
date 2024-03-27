@@ -846,3 +846,118 @@ var p17 = {
         "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
   }
 };
+
+//NITHIYA PRD
+var p19 = {
+  "redirectionRequest": {
+    "msgBdy": {
+      "data": {
+        "accounts": [
+          {
+            "avlBal": "3438.26",
+            "entityType": "I",
+            "acctTp": "SA",
+            "crntSts": "8",
+            "acctId": "100040330398",
+            "custRltnsp": "SOW",
+            "prdNm": "1032-Equitas Eva - Elite-Savings Account",
+            "crntStsDesc": "ACCOUNTOPENREGULAR"
+          },
+        ],
+        "otpPreference": "SMS",
+        "customer": {
+          "gndr": "F",
+          "mblNb": "919600089599",
+          "dob": "1981-12-24",
+          "custId": "12306527",
+          "emailId": "nithyajai81@gmail.com"
+        }
+      },
+      "service": "bbps",
+      "IPAddress": "1.1.1.1",
+      "platform": "MB"
+    },
+    "checkSum":
+        "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
+  }
+};
+
+//DIVIYA PRD
+var p20 = {
+  "redirectionRequest": {
+    "msgBdy": {
+      "data": {
+        "accounts": [
+          {
+            "avlBal": "35633.2",
+            "entityType": "I",
+            "acctTp": "SA",
+            "crntSts": "8",
+            "acctId": "100005536884",
+            "custRltnsp": "JOF",
+            "prdNm": "1031-Equitas Eva-Savings Account",
+            "crntStsDesc": "ACCOUNTOPENREGULAR"
+          },
+          {
+            "avlBal": "141427",
+            "entityType": "I",
+            "acctTp": "SA",
+            "crntSts": "8",
+            "acctId": "100049439847",
+            "custRltnsp": "SOW",
+            "prdNm": "1014-Staff Savings",
+            "crntStsDesc": "ACCOUNTOPENREGULAR"
+          },
+        ],
+        "otpPreference": "SMS",
+        "customer": {
+          "gndr": "F",
+          "mblNb": "919884576522",
+          "dob": "1986-11-07",
+          "custId": "6919912",
+          "emailId": "DIVYASHARMASRIRAM@GMAIL.COM"
+        }
+      },
+      "service": "bbps",
+      "IPAddress": "1.1.1.1",
+      "platform": "MB"
+    },
+    "checkSum":
+        "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
+  }
+};
+
+//VASUKI IBM PRD
+var p21 = {
+  "redirectionRequest": {
+    "msgBdy": {
+      "data": {
+        "accounts": [
+          {
+            "avlBal": "555.46",
+            "entityType": "I",
+            "acctTp": "SA",
+            "crntSts": "8",
+            "acctId": "100052398779",
+            "custRltnsp": "SOW",
+            "prdNm": "1031-EquitasEva-SavingsAccount",
+            "crntStsDesc": "ACCOUNTOPENREGULAR"
+          },
+        ],
+        "otpPreference": "SMS",
+        "customer": {
+          "gndr": "F",
+          "mblNb": "919003211335",
+          "dob": "1983-12-02",
+          "custId": "14965902",
+          "emailId": "tanvasuki@gmail.com"
+        }
+      },
+      "service": "bbps",
+      "IPAddress": "1.1.1.1",
+      "platform": "MB"
+    },
+    "checkSum":
+        "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
+  }
+};

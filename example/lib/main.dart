@@ -52,7 +52,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   final String API_URL =
-      'https://digiservicesuat.equitasbank.com/bbps/api/auth/redirect';
+      'https://digiservicesuat.equitasbank.com/api/auth/redirect';
 
   String API_DATA = '';
   bool isLoading = false;
@@ -126,15 +126,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   //   // "https://cdn.iconscout.com/icon/free/png-512/free-avatar-378-456330.png?f=webp&w=512",
   //   "https://cdn.iconscout.com/icon/free/png-512/free-avatar-369-456321.png?f=webp&w=512"
   // ];
-  List value = [p6, p7, p16, p15, p17];
-  List Name = ["Thangavel", "Aswick", "Nithiya", "Divya", "Nithiya v2"];
+  List value = [p3, p7, p19, p21];
+  List Name = ["Balaji", "Aswick", "Nithiya", "Divya"];
   List Img = [
-    // "https://cdn.iconscout.com/icon/free/png-512/free-avatar-366-456318.png?f=webp&w=512",
-    "https://cdn.iconscout.com/icon/free/png-512/free-avatar-371-456323.png?f=webp&w=512",
+    "https://cdn.iconscout.com/icon/free/png-512/free-avatar-366-456318.png?f=webp&w=512",
+    //"https://cdn.iconscout.com/icon/free/png-512/free-avatar-371-456323.png?f=webp&w=512",
     "https://cdn.iconscout.com/icon/free/png-512/free-avatar-370-456322.png?f=webp&w=512",
-    "https://cdn.iconscout.com/icon/free/png-512/free-avatar-378-456330.png?f=webp&w=512",
+    //"https://cdn.iconscout.com/icon/free/png-512/free-avatar-378-456330.png?f=webp&w=512",
     "https://cdn.iconscout.com/icon/free/png-512/free-avatar-373-456325.png?f=webp&w=512",
     "https://cdn.iconscout.com/icon/free/png-512/free-avatar-369-456321.png?f=webp&w=512",
+    // "https://cdn.iconscout.com/icon/free/png-512/free-avatar-369-456321.png?f=webp&w=512",
   ];
 
   @override

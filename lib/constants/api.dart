@@ -11,6 +11,8 @@ const String BILLER_URL = "/billers/billers-by-category/";
 const String CATEGORIES_URL = "/categories/";
 const String CATEGORY_BILLER_HISTORY_FILTER_URL =
     "/transactions/getcategorybiller";
+const String CHART_URL = '/charts';
+
 const String COMLPAINT_CONFIG_URL = '/complaints/config';
 const String COMLPAINT_URL = "/complaints/";
 const String DELETE_BILLER_URL = "/billers/delete/";
@@ -45,5 +47,4 @@ const String transactionUrl = "/transactions/";
 const String allLocation = "/billers/location";
 const String statesDataUrl = "/billers/states-data/";
 
-const String chartUrl = '/charts';
 const String addNewBillerUrl = "/billers/add-biller";

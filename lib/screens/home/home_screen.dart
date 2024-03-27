@@ -1,6 +1,7 @@
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/ebps.dart';
@@ -17,6 +18,7 @@ import 'package:ebps/widget/icon_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -400,14 +402,19 @@ class _HomeScreenUIState extends State<HomeScreenUI>
                           height: 80.h,
                         ),
                         Container(
-                            color: Colors.transparent,
+                          color: Colors.transparent,
 
-                            // width: widget.width ?? 100.w,
-                            // height: 200.h,
-                            child: Icon(Icons.wifi_off_outlined,
-                                size: 200.r, color: CLR_SECONDARY)
-                            // child: SvgPicture.asset(ICON_ERROR, fit: BoxFit.fitWidth),
-                            ),
+                          width: 150.w,
+                          height: 190.h,
+                          // child: Icon(Icons.wifi_off_outlined,
+                          //     size: 200.r, color: CLR_SECONDARY)
+                          child: SvgPicture.asset(
+                            IMG_NOINTERNET,
+                            fit: BoxFit.fitWidth,
+                            colorFilter:
+                                ColorFilter.mode(CLR_PRIMARY, BlendMode.srcIn),
+                          ),
+                        ),
                         Padding(
                             padding: EdgeInsets.all(20.0.r),
                             child: Column(
