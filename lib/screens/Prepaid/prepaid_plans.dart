@@ -312,6 +312,7 @@ class _PrepaidPlansState extends State<PrepaidPlans>
             } else if (state is PrepaidFetchPlansError) {
               setState(() {
                 isPrepaidPlansLoading = false;
+                isPrepaidPlansError = true;
               });
             }
           },
@@ -338,71 +339,101 @@ class _PrepaidPlansState extends State<PrepaidPlans>
                               child: noResult(
                                   showTitle: true, ErrIndex: 1, ImgIndex: 0)),
                         ))
-                    : Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 8.h),
-                            child: TabBar(
-                              physics: const BouncingScrollPhysics(),
-                              dragStartBehavior: DragStartBehavior.start,
-                              isScrollable: true,
-                              indicatorColor: CLR_PRIMARY,
-                              indicator: DotIndicator(),
-                              labelStyle: TextStyle(
-                                  fontSize: 14.sp, fontWeight: FontWeight.bold),
-                              unselectedLabelColor: CLR_PRIMARY_LITE,
-                              labelColor: CLR_PRIMARY,
-                              controller: _tabController,
-                              tabs: [
-                                for (var item in categoryList)
-                                  Tab(
-                                    text: item,
-                                  ),
-                              ],
-                            ),
-                          ),
-                          Column(
+                    : handlePlans("All")!.isNotEmpty
+                        ? Column(
                             children: [
-                              Container(
-                                height: 540.h,
-                                child: TabBarView(
-                                    physics: const BouncingScrollPhysics(),
-                                    controller: _tabController,
-                                    children: [
-                                      for (var item in categoryList)
-                                        ListView.builder(
-                                          scrollDirection: Axis.vertical,
-                                          shrinkWrap: true,
-                                          itemCount:
-                                              handlePlans(item.toString())!
-                                                  .length,
-                                          physics:
-                                              const BouncingScrollPhysics(),
-                                          itemBuilder: (context, index) {
-                                            return PrepaidPlansContainer(
-                                                onPressed: () {
-                                                  handlePay(
-                                                      amount: handlePlans(item
-                                                                  .toString())![
-                                                              index]
-                                                          .amount
-                                                          .toString(),
-                                                      planDetails: handlePlans(
-                                                              item.toString())![
-                                                          index]);
-                                                },
-                                                billerData: widget.billerData,
-                                                prepaidPlans: handlePlans(
-                                                    item.toString())![index]);
-                                          },
-                                        ),
-                                    ]),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 8.h),
+                                child: TabBar(
+                                  physics: const BouncingScrollPhysics(),
+                                  dragStartBehavior: DragStartBehavior.start,
+                                  isScrollable: true,
+                                  indicatorColor: CLR_PRIMARY,
+                                  indicator: DotIndicator(),
+                                  labelStyle: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold),
+                                  unselectedLabelColor: CLR_PRIMARY_LITE,
+                                  labelColor: CLR_PRIMARY,
+                                  controller: _tabController,
+                                  tabs: [
+                                    for (var item in categoryList)
+                                      Tab(
+                                        text: item,
+                                      ),
+                                  ],
+                                ),
                               ),
-                              SizedBox(height: 10.h)
+                              Column(
+                                children: [
+                                  Container(
+                                    height: 540.h,
+                                    child: TabBarView(
+                                        physics: const BouncingScrollPhysics(),
+                                        controller: _tabController,
+                                        children: [
+                                          for (var item in categoryList)
+                                            ListView.builder(
+                                              scrollDirection: Axis.vertical,
+                                              shrinkWrap: true,
+                                              itemCount:
+                                                  handlePlans(item.toString())!
+                                                      .length,
+                                              physics:
+                                                  const BouncingScrollPhysics(),
+                                              itemBuilder: (context, index) {
+                                                return PrepaidPlansContainer(
+                                                    onPressed: () {
+                                                      handlePay(
+                                                          amount: handlePlans(item
+                                                                      .toString())![
+                                                                  index]
+                                                              .amount
+                                                              .toString(),
+                                                          planDetails:
+                                                              handlePlans(item
+                                                                      .toString())![
+                                                                  index]);
+                                                    },
+                                                    billerData:
+                                                        widget.billerData,
+                                                    prepaidPlans: handlePlans(
+                                                            item.toString())![
+                                                        index]);
+                                              },
+                                            ),
+                                        ]),
+                                  ),
+                                  SizedBox(height: 10.h)
+                                ],
+                              ),
                             ],
-                          ),
-                        ],
-                      )
+                          )
+                        : Container(
+                            height: MediaQuery.of(context).size.height * 0.9,
+                            width: double.infinity,
+                            clipBehavior: Clip.hardEdge,
+                            margin: EdgeInsets.only(
+                                left: 18.0.w,
+                                right: 18.w,
+                                top: 10.h,
+                                bottom: 80.h),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6.0.r + 2.r),
+                              border: Border.all(
+                                color: Color(0xffD1D9E8),
+                                width: 1.0,
+                              ),
+                            ),
+                            child: Center(
+                              child: Container(
+                                  width: double.infinity,
+                                  height: 350.h,
+                                  child: noResult(
+                                      showTitle: true,
+                                      ErrIndex: 3,
+                                      ImgIndex: 3)),
+                            ))
                 : Center(
                     child: Container(
                       height: 450.h,
