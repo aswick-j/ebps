@@ -7,6 +7,7 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getDaySuffix.dart';
+import 'package:ebps/helpers/getDecimalInputs.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/getMonthName.dart';
 import 'package:ebps/helpers/getNavigators.dart';
@@ -558,8 +559,12 @@ class _editAutopayState extends State<editAutopay> {
 
                                         inputFormatters: [
                                           // getInputAmountFormatter(),
+                                          LengthLimitingTextInputFormatter(10),
+                                          DecimalTextInputFormatter(
+                                              decimalRange: 2),
+                                          // getInputAmountFormatter(),
                                           FilteringTextInputFormatter.allow(
-                                              RegExp(r'^[0-9]*'))
+                                              RegExp(r'^[0-9]*[.]{0,1}[0-9]*'))
                                         ],
                                         onChanged: (val) {
                                           if (val.isNotEmpty) {

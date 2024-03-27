@@ -96,7 +96,7 @@ class MainContainer extends StatelessWidget {
                   child: Text(
                     titleText,
                     style: TextStyle(
-                      fontSize: 14.sp,
+                      fontSize: 13.sp,
                       fontWeight: FontWeight.bold,
                       color: TXT_CLR_PRIMARY,
                     ),
@@ -109,7 +109,7 @@ class MainContainer extends StatelessWidget {
                     Text(
                       subtitleText,
                       style: TextStyle(
-                          fontSize: 13.sp,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
                           color: TXT_CLR_DEFAULT,
                           overflow: TextOverflow.ellipsis),
@@ -121,7 +121,7 @@ class MainContainer extends StatelessWidget {
                     Text(
                       subtitleText2,
                       style: TextStyle(
-                        fontSize: 12.sp,
+                        fontSize: 11.sp,
                         fontWeight: FontWeight.w400,
                         color: Color(0xff808080),
                       ),
@@ -399,7 +399,8 @@ class MainContainer extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0.r)),
                         child: Container(
-                          height: 200.h,
+                          height: 180.h,
+                          margin: EdgeInsets.all(20.r),
                           child: Padding(
                             padding: EdgeInsets.all(12.0.r),
                             child: Column(
@@ -407,15 +408,18 @@ class MainContainer extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 SvgPicture.asset(ICON_DELETE_RED,
-                                    height: 50.h, width: 50.w),
-                                Text(
-                                  "Are You Sure You Want To Delete the Due ?",
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff000000),
+                                    height: 40.h, width: 40.w),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 16.0),
+                                  child: Text(
+                                    "Are You Sure You Want To Delete the Due ?",
+                                    style: TextStyle(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff000000),
+                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  textAlign: TextAlign.center,
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
@@ -434,7 +438,7 @@ class MainContainer extends StatelessWidget {
                                             buttonBorderColor: CLR_PRIMARY,
                                             buttonColor: BTN_CLR_ACTIVE,
                                             buttonSizeX: 10.h,
-                                            buttonSizeY: 40.w,
+                                            buttonSizeY: 35.w,
                                             buttonTextSize: 14.sp,
                                             buttonTextWeight: FontWeight.w500),
                                       ),
@@ -453,7 +457,7 @@ class MainContainer extends StatelessWidget {
                                                 Colors.transparent,
                                             buttonColor: CLR_PRIMARY,
                                             buttonSizeX: 10.h,
-                                            buttonSizeY: 40.w,
+                                            buttonSizeY: 35.w,
                                             buttonTextSize: 14.sp,
                                             buttonTextWeight: FontWeight.w500),
                                       ),

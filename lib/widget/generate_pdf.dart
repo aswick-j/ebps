@@ -6,20 +6,21 @@ import 'package:printing/printing.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 Future<Uint8List> generatePdf(
-  PdfPageFormat format,
-  String BillerName,
-  String BillerId,
-  String BillName,
-  String ParamName,
-  String ParamValue,
-  String TransactionID,
-  String fromAccount,
-  String billAmount,
-  String status,
-  String channel,
-  TransactionDate,
-  String txnstatus,
-) async {
+    PdfPageFormat format,
+    String BillerName,
+    String BillerId,
+    String BillName,
+    String ParamName,
+    String ParamValue,
+    String TransactionID,
+    String fromAccount,
+    String billAmount,
+    String status,
+    String channel,
+    TransactionDate,
+    String txnstatus,
+    String customerName,
+    String billNumber) async {
   final pdf = pw.Document(
     version: PdfVersion.pdf_1_5,
     compress: true,
@@ -101,31 +102,30 @@ Future<Uint8List> generatePdf(
                     ),
                   ),
                 ),
-                if (BillName != "-")
-                  pw.Padding(
-                      padding: const pw.EdgeInsets.only(
-                          left: 20, top: 5.0, bottom: 10.0),
-                      child: pw.Row(children: [
-                        pw.Text(
-                          'Bill Name :',
-                          style: pw.TextStyle(
-                            fontSize: 16.0,
-                            font: font,
-                            fontWeight: pw.FontWeight.bold,
-                            color: PdfColor.fromHex("#1B438B"),
-                          ),
+                pw.Padding(
+                    padding: const pw.EdgeInsets.only(
+                        left: 20, top: 5.0, bottom: 10.0),
+                    child: pw.Row(children: [
+                      pw.Text(
+                        'Customer Name :',
+                        style: pw.TextStyle(
+                          fontSize: 13.0,
+                          font: font,
+                          fontWeight: pw.FontWeight.bold,
+                          color: PdfColor.fromHex("#1B438B"),
                         ),
-                        pw.SizedBox(width: 10),
-                        pw.Text(
-                          BillName,
-                          style: pw.TextStyle(
-                            fontSize: 16.0,
-                            font: font,
-                            fontWeight: pw.FontWeight.normal,
-                            color: PdfColor.fromHex("#1B438B"),
-                          ),
+                      ),
+                      pw.SizedBox(width: 10),
+                      pw.Text(
+                        customerName != "-" ? customerName : "NA",
+                        style: pw.TextStyle(
+                          fontSize: 13.0,
+                          font: font,
+                          fontWeight: pw.FontWeight.normal,
+                          color: PdfColor.fromHex("#1B438B"),
                         ),
-                      ])),
+                      ),
+                    ])),
                 // pw.Padding(
                 //     padding: const pw.EdgeInsets.only(
                 //         left: 20, top: 5.0, bottom: 10.0),
@@ -170,14 +170,20 @@ Future<Uint8List> generatePdf(
                       //     pw.BoxDecoration(color: PdfColor.fromHex("f0f7ff")),
 
                       data: <List>[
+                        if (BillName != "-")
+                          [
+                            'Bill Name (Nick Name)',
+                            BillName,
+                          ],
                         [
                           'Name of the Biller',
                           BillerName,
                         ],
-                        [
-                          'Biller Id',
-                          BillerId,
-                        ],
+                        if (billNumber != ParamValue)
+                          [
+                            'Bill Number',
+                            billNumber,
+                          ],
                         if (ParamName != "null" || ParamValue != "null")
                           [
                             ParamName,

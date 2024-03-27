@@ -161,6 +161,19 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
         showActions: true,
         actions: [
           InkWell(
+              onTap: () => {goTo(context, hISTORYCHARTSROUTE)},
+              child: Container(
+                  margin: EdgeInsets.only(right: 15.w),
+                  decoration: ShapeDecoration(
+                    color: Color(0xff4969A2),
+                    shape: CircleBorder(),
+                  ),
+                  child: Container(
+                    width: 30.w,
+                    height: 30.h,
+                    child: Icon(Icons.bar_chart_rounded),
+                  ))),
+          InkWell(
               onTap: () => {goTo(context, cOMPLAINTLISTROUTE)},
               child: Container(
                   margin: EdgeInsets.only(right: 15.w),
@@ -195,7 +208,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                       MoreLoading = true;
                       if (historyData!.length > 1) {
                         _totalPages =
-                            historyData![historyData!.length - 1].tOTALPAGES!;
+                            historyData![historyData!.length - 1].totalPages!;
                       }
                       isHistoryMoreLoading = true;
                     });
@@ -204,7 +217,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                       historyData = state.historyData;
                       if (historyData!.length > 1) {
                         _totalPages =
-                            historyData![historyData!.length - 1].tOTALPAGES!;
+                            historyData![historyData!.length - 1].totalPages!;
                       }
                       isHistoryLoading = false;
                       MoreLoading = false;
@@ -281,32 +294,32 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                   return HistoryContainer(
                                     handleStatus: (txnStatus, txnID) {
                                       setState(() {
-                                        historyData![index].tRANSACTIONSTATUS =
+                                        historyData![index].transactionStatus =
                                             txnStatus;
                                       });
                                     },
                                     historyData: historyData![index],
                                     // billerFilterData: billerFilterData,
-                                    titleText: historyData![index].aUTOPAY == 0
+                                    titleText: historyData![index].autoPay == 0
                                         ? 'Paid to'
                                         : 'Auto Payment',
                                     subtitleText: historyData![index]
-                                        .bILLERNAME
+                                        .billerName
                                         .toString(),
                                     dateText: DateFormat('dd/MM/yyyy').format(
                                         DateTime.parse(historyData![index]
-                                                .cOMPLETIONDATE
+                                                .completionDate
                                                 .toString())
                                             .toLocal()),
                                     amount:
-                                        "₹ ${NumberFormat('#,##,##0.00').format(double.parse(historyData![index].bILLAMOUNT.toString()))}",
+                                        "₹ ${NumberFormat('#,##,##0.00').format(double.parse(historyData![index].billAmount.toString()))}",
                                     // '₹ ${historyData![index].bILLAMOUNT.toString()}',
                                     statusText: getTransactionStatus(
                                         historyData![index]
-                                            .tRANSACTIONSTATUS
+                                            .transactionStatus
                                             .toString()),
                                     iconPath: BILLER_LOGO(historyData![index]
-                                        .bILLERNAME
+                                        .billerName
                                         .toString()),
                                     containerBorderColor: Color(0xffD1D9E8),
                                   );
@@ -334,6 +347,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                         height: 500.h,
                         width: double.infinity,
                         child: Center(child: FlickrLoader())),
+
                   SizedBox(
                     height: 100.h,
                   )

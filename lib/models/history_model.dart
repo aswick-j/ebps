@@ -1,195 +1,237 @@
-class HistoryModel {
+import 'dart:convert';
+
+HistoryModal historyModalFromJson(String str) =>
+    HistoryModal.fromJson(json.decode(str));
+
+String historyModalToJson(HistoryModal data) => json.encode(data.toJson());
+
+class HistoryModal {
   int? status;
   String? message;
   List<HistoryData>? data;
 
-  HistoryModel({this.status, this.message, this.data});
+  HistoryModal({
+    this.status,
+    this.message,
+    this.data,
+  });
 
-  HistoryModel.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    if (json['data'] != null) {
-      data = <HistoryData>[];
-      json['data'].forEach((v) {
-        data!.add(new HistoryData.fromJson(v));
-      });
-    }
-  }
+  factory HistoryModal.fromJson(Map<String, dynamic> json) => HistoryModal(
+        status: json["status"],
+        message: json["message"],
+        data: json["data"] == null
+            ? []
+            : List<HistoryData>.from(
+                json["data"]!.map((x) => HistoryData.fromJson(x))),
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "status": status,
+        "message": message,
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+      };
 }
 
 class HistoryData {
-  int? tRANSACTIONID;
-  String? cUSTOMERID;
-  String? tRANSACTIONREFERENCEID;
-  var bILLAMOUNT;
-  String? cOMPLETIONDATE;
-  String? tRANSACTIONSTATUS;
-  String? bILLERID;
-  String? pAYMENTCHANNEL;
-  String? pAYMENTMODE;
-  String? aCCOUNTNUMBER;
-  String? mOBILENUMBER;
-  String? cUSTOMERNAME;
-  String? aPPROVALREFNO;
-  String? fEE;
-  String? bILLNUMBER;
-  String? eQUITASTRANSACTIONID;
-  String? bILLERNAME;
-  String? cATEGORYNAME;
-  String? cATEGORYID;
-  int? cUSTOMERBILLID;
-  String? bILLNAME;
-  String? bILLERACCEPTSADHOC;
-  String? pARAMETERNAME;
-  String? pARAMETERVALUE;
-  var aUTOPAYID;
-  int? aUTOPAY;
-  int? rOWNUMBER;
-  int? tOTALPAGES;
-  int? sTARTPOSITION;
-  int? eNDPOSITION;
-  int? pAGESIZE;
-  List<PARAMETERS>? pARAMETERS;
+  int? transactionId;
+  String? customerId;
+  String? transactionReferenceId;
+  double? billAmount;
+  DateTime? completionDate;
+  String? transactionStatus;
+  String? billerId;
+  String? paymentChannel;
+  String? paymentMode;
+  String? accountNumber;
+  String? mobileNumber;
+  String? customerName;
+  String? approvalRefNo;
+  String? fee;
+  String? billNumber;
+  String? equitasTransactionId;
+  String? billerName;
+  String? categoryName;
+  String? categoryId;
+  int? customerBillId;
+  String? billName;
+  String? billerAcceptsAdhoc;
+  String? parameterName;
+  String? parameterValue;
+  int? autopayId;
+  int? autoPay;
+  int? rowNumber;
+  int? totalPages;
+  int? startPosition;
+  int? endPosition;
+  int? pageSize;
+  List<HistoryParameter>? parameters;
+  List<TransactionStep>? transactionSteps;
 
-  HistoryData(
-      {this.tRANSACTIONID,
-      this.cUSTOMERID,
-      this.tRANSACTIONREFERENCEID,
-      this.bILLAMOUNT,
-      this.cOMPLETIONDATE,
-      this.tRANSACTIONSTATUS,
-      this.bILLERID,
-      this.pAYMENTCHANNEL,
-      this.pAYMENTMODE,
-      this.aCCOUNTNUMBER,
-      this.mOBILENUMBER,
-      this.cUSTOMERNAME,
-      this.aPPROVALREFNO,
-      this.fEE,
-      this.bILLNUMBER,
-      this.eQUITASTRANSACTIONID,
-      this.bILLERNAME,
-      this.cATEGORYNAME,
-      this.cATEGORYID,
-      this.cUSTOMERBILLID,
-      this.bILLNAME,
-      this.bILLERACCEPTSADHOC,
-      this.pARAMETERNAME,
-      this.pARAMETERVALUE,
-      this.aUTOPAYID,
-      this.aUTOPAY,
-      this.rOWNUMBER,
-      this.tOTALPAGES,
-      this.sTARTPOSITION,
-      this.eNDPOSITION,
-      this.pAGESIZE,
-      this.pARAMETERS});
+  HistoryData({
+    this.transactionId,
+    this.customerId,
+    this.transactionReferenceId,
+    this.billAmount,
+    this.completionDate,
+    this.transactionStatus,
+    this.billerId,
+    this.paymentChannel,
+    this.paymentMode,
+    this.accountNumber,
+    this.mobileNumber,
+    this.customerName,
+    this.approvalRefNo,
+    this.fee,
+    this.billNumber,
+    this.equitasTransactionId,
+    this.billerName,
+    this.categoryName,
+    this.categoryId,
+    this.customerBillId,
+    this.billName,
+    this.billerAcceptsAdhoc,
+    this.parameterName,
+    this.parameterValue,
+    this.autopayId,
+    this.autoPay,
+    this.rowNumber,
+    this.totalPages,
+    this.startPosition,
+    this.endPosition,
+    this.pageSize,
+    this.parameters,
+    this.transactionSteps,
+  });
 
-  HistoryData.fromJson(Map<String, dynamic> json) {
-    tRANSACTIONID = json['TRANSACTION_ID'];
-    cUSTOMERID = json['CUSTOMER_ID'];
-    tRANSACTIONREFERENCEID = json['TRANSACTION_REFERENCE_ID'];
-    bILLAMOUNT = json['BILL_AMOUNT'];
-    cOMPLETIONDATE = json['COMPLETION_DATE'];
-    tRANSACTIONSTATUS = json['TRANSACTION_STATUS'];
-    bILLERID = json['BILLER_ID'];
-    pAYMENTCHANNEL = json['PAYMENT_CHANNEL'];
-    pAYMENTMODE = json['PAYMENT_MODE'];
-    aCCOUNTNUMBER = json['ACCOUNT_NUMBER'];
-    mOBILENUMBER = json['MOBILE_NUMBER'];
-    cUSTOMERNAME = json['CUSTOMER_NAME'];
-    aPPROVALREFNO = json['APPROVAL_REF_NO'];
-    fEE = json['FEE'];
-    bILLNUMBER = json['BILL_NUMBER'];
-    eQUITASTRANSACTIONID = json['EQUITAS_TRANSACTION_ID'];
-    bILLERNAME = json['BILLER_NAME'];
-    cATEGORYNAME = json['CATEGORY_NAME'];
-    cATEGORYID = json['CATEGORY_ID'];
-    cUSTOMERBILLID = json['CUSTOMER_BILL_ID'];
-    bILLNAME = json['BILL_NAME'];
-    bILLERACCEPTSADHOC = json['BILLER_ACCEPTS_ADHOC'];
-    pARAMETERNAME = json['PARAMETER_NAME'];
-    pARAMETERVALUE = json['PARAMETER_VALUE'];
-    aUTOPAYID = json['AUTOPAY_ID'];
-    aUTOPAY = json['AUTO_PAY'];
-    rOWNUMBER = json['ROW_NUMBER'];
-    tOTALPAGES = json['TOTAL_PAGES'];
-    sTARTPOSITION = json['START_POSITION'];
-    eNDPOSITION = json['END_POSITION'];
-    pAGESIZE = json['PAGE_SIZE'];
-    if (json['PARAMETERS'] != null) {
-      pARAMETERS = <PARAMETERS>[];
-      json['PARAMETERS'].forEach((v) {
-        pARAMETERS!.add(new PARAMETERS.fromJson(v));
-      });
-    }
-  }
+  factory HistoryData.fromJson(Map<String, dynamic> json) => HistoryData(
+        transactionId: json["TRANSACTION_ID"],
+        customerId: json["CUSTOMER_ID"],
+        transactionReferenceId: json["TRANSACTION_REFERENCE_ID"],
+        billAmount: json["BILL_AMOUNT"]?.toDouble(),
+        completionDate: json["COMPLETION_DATE"] == null
+            ? null
+            : DateTime.parse(json["COMPLETION_DATE"]),
+        transactionStatus: json["TRANSACTION_STATUS"],
+        billerId: json["BILLER_ID"],
+        paymentChannel: json["PAYMENT_CHANNEL"],
+        paymentMode: json["PAYMENT_MODE"],
+        accountNumber: json["ACCOUNT_NUMBER"],
+        mobileNumber: json["MOBILE_NUMBER"],
+        customerName: json["CUSTOMER_NAME"],
+        approvalRefNo: json["APPROVAL_REF_NO"],
+        fee: json["FEE"],
+        billNumber: json["BILL_NUMBER"],
+        equitasTransactionId: json["EQUITAS_TRANSACTION_ID"],
+        billerName: json["BILLER_NAME"],
+        categoryName: json["CATEGORY_NAME"],
+        categoryId: json["CATEGORY_ID"],
+        customerBillId: json["CUSTOMER_BILL_ID"],
+        billName: json["BILL_NAME"],
+        billerAcceptsAdhoc: json["BILLER_ACCEPTS_ADHOC"],
+        parameterName: json["PARAMETER_NAME"],
+        parameterValue: json["PARAMETER_VALUE"],
+        autopayId: json["AUTOPAY_ID"],
+        autoPay: json["AUTO_PAY"],
+        rowNumber: json["ROW_NUMBER"],
+        totalPages: json["TOTAL_PAGES"],
+        startPosition: json["START_POSITION"],
+        endPosition: json["END_POSITION"],
+        pageSize: json["PAGE_SIZE"],
+        parameters: json["PARAMETERS"] == null
+            ? []
+            : List<HistoryParameter>.from(
+                json["PARAMETERS"]!.map((x) => HistoryParameter.fromJson(x))),
+        transactionSteps: json["TransactionSteps"] == null
+            ? []
+            : List<TransactionStep>.from(json["TransactionSteps"]!
+                .map((x) => TransactionStep.fromJson(x))),
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['TRANSACTION_ID'] = this.tRANSACTIONID;
-    data['CUSTOMER_ID'] = this.cUSTOMERID;
-    data['TRANSACTION_REFERENCE_ID'] = this.tRANSACTIONREFERENCEID;
-    data['BILL_AMOUNT'] = this.bILLAMOUNT;
-    data['COMPLETION_DATE'] = this.cOMPLETIONDATE;
-    data['TRANSACTION_STATUS'] = this.tRANSACTIONSTATUS;
-    data['BILLER_ID'] = this.bILLERID;
-    data['PAYMENT_CHANNEL'] = this.pAYMENTCHANNEL;
-    data['PAYMENT_MODE'] = this.pAYMENTMODE;
-    data['ACCOUNT_NUMBER'] = this.aCCOUNTNUMBER;
-    data['MOBILE_NUMBER'] = this.mOBILENUMBER;
-    data['CUSTOMER_NAME'] = this.cUSTOMERNAME;
-    data['APPROVAL_REF_NO'] = this.aPPROVALREFNO;
-    data['FEE'] = this.fEE;
-    data['BILL_NUMBER'] = this.bILLNUMBER;
-    data['EQUITAS_TRANSACTION_ID'] = this.eQUITASTRANSACTIONID;
-    data['BILLER_NAME'] = this.bILLERNAME;
-    data['CATEGORY_NAME'] = this.cATEGORYNAME;
-    data['CATEGORY_ID'] = this.cATEGORYID;
-    data['CUSTOMER_BILL_ID'] = this.cUSTOMERBILLID;
-    data['BILL_NAME'] = this.bILLNAME;
-    data['BILLER_ACCEPTS_ADHOC'] = this.bILLERACCEPTSADHOC;
-    data['PARAMETER_NAME'] = this.pARAMETERNAME;
-    data['PARAMETER_VALUE'] = this.pARAMETERVALUE;
-    data['AUTOPAY_ID'] = this.aUTOPAYID;
-    data['AUTO_PAY'] = this.aUTOPAY;
-    data['ROW_NUMBER'] = this.rOWNUMBER;
-    data['TOTAL_PAGES'] = this.tOTALPAGES;
-    data['START_POSITION'] = this.sTARTPOSITION;
-    data['END_POSITION'] = this.eNDPOSITION;
-    data['PAGE_SIZE'] = this.pAGESIZE;
-    if (this.pARAMETERS != null) {
-      data['PARAMETERS'] = this.pARAMETERS!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "TRANSACTION_ID": transactionId,
+        "CUSTOMER_ID": customerId,
+        "TRANSACTION_REFERENCE_ID": transactionReferenceId,
+        "BILL_AMOUNT": billAmount,
+        "COMPLETION_DATE": completionDate?.toIso8601String(),
+        "TRANSACTION_STATUS": transactionStatus,
+        "BILLER_ID": billerId,
+        "PAYMENT_CHANNEL": paymentChannel,
+        "PAYMENT_MODE": paymentMode,
+        "ACCOUNT_NUMBER": accountNumber,
+        "MOBILE_NUMBER": mobileNumber,
+        "CUSTOMER_NAME": customerName,
+        "APPROVAL_REF_NO": approvalRefNo,
+        "FEE": fee,
+        "BILL_NUMBER": billNumber,
+        "EQUITAS_TRANSACTION_ID": equitasTransactionId,
+        "BILLER_NAME": billerName,
+        "CATEGORY_NAME": categoryName,
+        "CATEGORY_ID": categoryId,
+        "CUSTOMER_BILL_ID": customerBillId,
+        "BILL_NAME": billName,
+        "BILLER_ACCEPTS_ADHOC": billerAcceptsAdhoc,
+        "PARAMETER_NAME": parameterName,
+        "PARAMETER_VALUE": parameterValue,
+        "AUTOPAY_ID": autopayId,
+        "AUTO_PAY": autoPay,
+        "ROW_NUMBER": rowNumber,
+        "TOTAL_PAGES": totalPages,
+        "START_POSITION": startPosition,
+        "END_POSITION": endPosition,
+        "PAGE_SIZE": pageSize,
+        "PARAMETERS": parameters == null
+            ? []
+            : List<dynamic>.from(parameters!.map((x) => x.toJson())),
+        "TransactionSteps": transactionSteps == null
+            ? []
+            : List<dynamic>.from(transactionSteps!.map((x) => x.toJson())),
+      };
 }
 
-class PARAMETERS {
-  String? pARAMETERNAME;
-  String? pARAMETERVALUE;
+class HistoryParameter {
+  String? parameterName;
+  String? parameterValue;
 
-  PARAMETERS({this.pARAMETERNAME, this.pARAMETERVALUE});
+  HistoryParameter({
+    this.parameterName,
+    this.parameterValue,
+  });
 
-  PARAMETERS.fromJson(Map<String, dynamic> json) {
-    pARAMETERNAME = json['PARAMETER_NAME'];
-    pARAMETERVALUE = json['PARAMETER_VALUE'];
-  }
+  factory HistoryParameter.fromJson(Map<String, dynamic> json) =>
+      HistoryParameter(
+        parameterName: json["PARAMETER_NAME"],
+        parameterValue: json["PARAMETER_VALUE"],
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['PARAMETER_NAME'] = this.pARAMETERNAME;
-    data['PARAMETER_VALUE'] = this.pARAMETERVALUE;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "PARAMETER_NAME": parameterName,
+        "PARAMETER_VALUE": parameterValue,
+      };
+}
+
+class TransactionStep {
+  String? description;
+  bool? flag;
+  bool? pending;
+
+  TransactionStep({
+    this.description,
+    this.flag,
+    this.pending,
+  });
+
+  factory TransactionStep.fromJson(Map<String, dynamic> json) =>
+      TransactionStep(
+        description: json["description"],
+        flag: json["flag"],
+        pending: json["pending"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "description": description,
+        "flag": flag,
+        "pending": pending,
+      };
 }

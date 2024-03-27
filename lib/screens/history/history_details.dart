@@ -63,15 +63,15 @@ class _HistoryDetailsState extends State<HistoryDetails> {
   @override
   void initState() {
     isTransactionStatusLoading =
-        widget.historyData.tRANSACTIONSTATUS.toString() == "bbps-in-progress" ||
-                widget.historyData.tRANSACTIONSTATUS.toString() ==
+        widget.historyData.transactionStatus.toString() == "bbps-in-progress" ||
+                widget.historyData.transactionStatus.toString() ==
                     "bbps-timeout"
             ? true
             : false;
-    if (widget.historyData.tRANSACTIONSTATUS.toString() == "bbps-in-progress" ||
-        widget.historyData.tRANSACTIONSTATUS.toString() == "bbps-timeout") {
+    if (widget.historyData.transactionStatus.toString() == "bbps-in-progress" ||
+        widget.historyData.transactionStatus.toString() == "bbps-timeout") {
       BlocProvider.of<HistoryCubit>(context).getTransactionStatusdetails(
-          widget.historyData.tRANSACTIONREFERENCEID);
+          widget.historyData.transactionReferenceId);
     }
 
     super.initState();
@@ -136,7 +136,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
 
   handleTxnApi() {
     Map<String, dynamic> payload = {
-      "transactionId": widget.historyData.tRANSACTIONID,
+      "transactionId": widget.historyData.transactionId,
       "status": updateTxnStatus
     };
 
@@ -185,7 +185,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                     ? TransactionStatusData?.response?.data
                         ?.txnStatusComplainResp?.txnList?.txnDetail?.txnStatus
                         ?.toLowerCase()
-                    : widget.historyData.tRANSACTIONSTATUS.toString();
+                    : widget.historyData.transactionStatus.toString();
               });
 
               handleTxnApi();
@@ -229,15 +229,15 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                             ?.txnDetail
                             ?.txnStatus
                             ?.toLowerCase() ??
-                        widget.historyData.tRANSACTIONSTATUS.toString();
+                        widget.historyData.transactionStatus.toString();
               });
 
               if (updateTxnStatus == "success" ||
                   updateTxnStatus == "failure") {
                 widget.handleStatus(
                     updateTxnStatus ??
-                        widget.historyData.tRANSACTIONSTATUS.toString(),
-                    widget.historyData.tRANSACTIONID);
+                        widget.historyData.transactionStatus.toString(),
+                    widget.historyData.transactionId);
               }
               DelightToastBar(
                 autoDismiss: true,
@@ -338,17 +338,17 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                   begin: Alignment.topRight,
                                   stops: const [0.001, 19],
                                   colors: getStatusGradientColors(widget
-                                              .historyData.tRANSACTIONSTATUS
+                                              .historyData.transactionStatus
                                               .toString()
                                               .toLowerCase() ==
                                           "success"
                                       ? "success"
-                                      : widget.historyData.tRANSACTIONSTATUS
+                                      : widget.historyData.transactionStatus
                                                       .toString()
                                                       .toLowerCase() ==
                                                   "bbps-in-progress" ||
                                               widget.historyData
-                                                      .tRANSACTIONSTATUS
+                                                      .transactionStatus
                                                       .toString()
                                                       .toLowerCase() ==
                                                   "bbps-timeout"
@@ -361,17 +361,17 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    widget.historyData.tRANSACTIONSTATUS
+                                    widget.historyData.transactionStatus
                                                 .toString()
                                                 .toLowerCase() ==
                                             "success"
                                         ? "Transaction Success"
-                                        : widget.historyData.tRANSACTIONSTATUS
+                                        : widget.historyData.transactionStatus
                                                         .toString()
                                                         .toLowerCase() ==
                                                     "bbps-in-progress" ||
                                                 widget.historyData
-                                                        .tRANSACTIONSTATUS
+                                                        .transactionStatus
                                                         .toString()
                                                         .toLowerCase() ==
                                                     "bbps-timeout"
@@ -407,7 +407,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                               SvgPicture.asset(ICON_ARROW_UP,
                                                   height: 20.h),
                                               Text(
-                                                "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
+                                                "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.billAmount.toString()))}",
                                                 style: TextStyle(
                                                   fontSize: 20.sp,
                                                   fontWeight: FontWeight.w600,
@@ -427,7 +427,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                             context,
                                                             Material(
                                                                 child: ScreenshotContainer(
-                                                                    channel: widget.historyData.pAYMENTCHANNEL == 'IB'
+                                                                    channel: widget.historyData.paymentChannel == 'IB'
                                                                         ? "Equitas - Internet Banking"
                                                                         : "Equitas - Mobile Banking",
                                                                     BillerName: widget
@@ -435,34 +435,34 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                                         .toString(),
                                                                     BillerId: widget
                                                                         .historyData
-                                                                        .bILLERID
+                                                                        .billerId
                                                                         .toString(),
                                                                     BillName: widget
                                                                         .historyData
-                                                                        .bILLNAME
+                                                                        .billName
                                                                         .toString(),
-                                                                    ParamName: widget.historyData.cATEGORYNAME.toString().toLowerCase().contains("mobile prepaid")
+                                                                    ParamName: widget.historyData.categoryName.toString().toLowerCase().contains("mobile prepaid")
                                                                         ? widget
                                                                             .historyData
-                                                                            .pARAMETERS!
-                                                                            .firstWhere((params) => params.pARAMETERNAME == null ? params.pARAMETERNAME == null : params.pARAMETERNAME.toString().toLowerCase() == "mobile number")
-                                                                            .pARAMETERNAME
+                                                                            .parameters!
+                                                                            .firstWhere((params) => params.parameterName == null ? params.parameterValue == null : params.parameterName.toString().toLowerCase() == "mobile number")
+                                                                            .parameterName
                                                                             .toString()
-                                                                        : widget.historyData.pARAMETERS![0].pARAMETERNAME.toString(),
-                                                                    ParamValue: widget.historyData.cATEGORYNAME.toString().toLowerCase().contains("mobile prepaid") ? widget.historyData.pARAMETERS!.firstWhere((params) => params.pARAMETERNAME == null ? params.pARAMETERNAME == null : params.pARAMETERNAME.toString().toLowerCase() == "mobile number" || params.pARAMETERNAME.toString().toLowerCase() == "customer mobile number").pARAMETERVALUE.toString() : widget.historyData.pARAMETERS![0].pARAMETERVALUE.toString(),
-                                                                    TransactionID: widget.historyData.tRANSACTIONREFERENCEID.toString(),
-                                                                    fromAccount: widget.historyData.aCCOUNTNUMBER.toString(),
-                                                                    billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
-                                                                    trasactionStatus: widget.historyData.tRANSACTIONSTATUS.toString(),
-                                                                    status: widget.historyData.tRANSACTIONSTATUS.toString(),
-                                                                    TransactionDate: DateFormat('dd/MM/yyyy | hh:mm a').format(DateTime.parse(widget.historyData.cOMPLETIONDATE.toString()).toLocal())))),
+                                                                        : widget.historyData.parameters![0].parameterName.toString(),
+                                                                    ParamValue: widget.historyData.categoryName.toString().toLowerCase().contains("mobile prepaid") ? widget.historyData.parameters!.firstWhere((params) => params.parameterName == null ? params.parameterName == null : params.parameterName.toString().toLowerCase() == "mobile number" || params.parameterName.toString().toLowerCase() == "customer mobile number").parameterName.toString() : widget.historyData.parameters![0].parameterValue.toString(),
+                                                                    TransactionID: widget.historyData.transactionReferenceId.toString(),
+                                                                    fromAccount: widget.historyData.accountNumber.toString(),
+                                                                    billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.billAmount.toString()))}",
+                                                                    trasactionStatus: widget.historyData.transactionStatus.toString(),
+                                                                    status: widget.historyData.transactionStatus.toString(),
+                                                                    TransactionDate: DateFormat('dd/MM/yyyy | hh:mm a').format(DateTime.parse(widget.historyData.completionDate.toString()).toLocal())))),
                                                         delay: Duration(seconds: 0));
 
                                                     final result =
                                                         await Printing.sharePdf(
                                                       bytes: capturedImage,
                                                       filename:
-                                                          '${widget.historyData.bILLERNAME}.jpeg',
+                                                          '${widget.historyData.billerName}.jpeg',
                                                     );
                                                     if (result) {
                                                       print('Shared');
@@ -475,49 +475,51 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                   onPressed: () {
                                                     Printing.layoutPdf(
                                                       name: widget.historyData
-                                                          .bILLERNAME
+                                                          .billerName
                                                           .toString(),
                                                       onLayout: (PdfPageFormat format) async =>
                                                           generatePdf(
                                                               format,
                                                               widget.billerName
                                                                   .toString(),
-                                                              widget.historyData.bILLERID
+                                                              widget.historyData.billerId
                                                                   .toString(),
                                                               widget.billName
                                                                   .toString(),
-                                                              widget.historyData.cATEGORYNAME.toString().toLowerCase().contains("mobile prepaid")
+                                                              widget.historyData.categoryName.toString().toLowerCase().contains("mobile prepaid")
                                                                   ? widget
                                                                       .historyData
-                                                                      .pARAMETERS!
-                                                                      .firstWhere((params) => params.pARAMETERNAME == null
-                                                                          ? params.pARAMETERNAME ==
+                                                                      .parameters!
+                                                                      .firstWhere((params) => params.parameterName == null
+                                                                          ? params.parameterName ==
                                                                               null
-                                                                          : params.pARAMETERNAME.toString().toLowerCase() ==
+                                                                          : params.parameterName.toString().toLowerCase() ==
                                                                               "mobile number")
-                                                                      .pARAMETERNAME
+                                                                      .parameterName
                                                                       .toString()
-                                                                  : widget.historyData.pARAMETERS![0].pARAMETERNAME
+                                                                  : widget.historyData.parameters![0].parameterName
                                                                       .toString(),
-                                                              widget.historyData.cATEGORYNAME.toString().toLowerCase().contains("mobile prepaid")
+                                                              widget.historyData.categoryName.toString().toLowerCase().contains("mobile prepaid")
                                                                   ? widget
                                                                       .historyData
-                                                                      .pARAMETERS!
-                                                                      .firstWhere((params) => params.pARAMETERNAME == null ? params.pARAMETERNAME == null : params.pARAMETERNAME.toString().toLowerCase() == "mobile number")
-                                                                      .pARAMETERVALUE
+                                                                      .parameters!
+                                                                      .firstWhere((params) => params.parameterName == null ? params.parameterName == null : params.parameterName.toString().toLowerCase() == "mobile number")
+                                                                      .parameterValue
                                                                       .toString()
-                                                                  : widget.historyData.pARAMETERS![0].pARAMETERVALUE.toString(),
-                                                              widget.historyData.tRANSACTIONREFERENCEID.toString(),
-                                                              widget.historyData.aCCOUNTNUMBER.toString(),
-                                                              "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.bILLAMOUNT.toString()))}",
-                                                              widget.historyData.tRANSACTIONSTATUS.toString().toLowerCase() == "success"
+                                                                  : widget.historyData.parameters![0].parameterValue.toString(),
+                                                              widget.historyData.transactionReferenceId.toString(),
+                                                              widget.historyData.accountNumber.toString(),
+                                                              "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.billAmount.toString()))}",
+                                                              widget.historyData.transactionStatus.toString().toLowerCase() == "success"
                                                                   ? "Transaction Success"
-                                                                  : widget.historyData.tRANSACTIONSTATUS.toString().toLowerCase() == "bbps-in-progress" || widget.historyData.tRANSACTIONSTATUS.toString().toLowerCase() == "bbps-timeout"
+                                                                  : widget.historyData.transactionStatus.toString().toLowerCase() == "bbps-in-progress" || widget.historyData.transactionStatus.toString().toLowerCase() == "bbps-timeout"
                                                                       ? "Transaction Pending"
                                                                       : "Transaction Failure",
-                                                              widget.historyData.pAYMENTCHANNEL == 'IB' ? "Equitas - Internet Banking" : "Equitas - Mobile Banking",
-                                                              DateFormat('dd/MM/yyyy | hh:mm a').format(DateTime.parse(widget.historyData.cOMPLETIONDATE.toString()).toLocal()),
-                                                              widget.historyData.tRANSACTIONSTATUS.toString()),
+                                                              widget.historyData.paymentChannel == 'IB' ? "Equitas - Internet Banking" : "Equitas - Mobile Banking",
+                                                              DateFormat('dd/MM/yyyy | hh:mm a').format(DateTime.parse(widget.historyData.completionDate.toString()).toLocal()),
+                                                              widget.historyData.transactionStatus.toString(),
+                                                              widget.historyData.customerName ?? "-",
+                                                              widget.historyData.billNumber ?? "-"),
                                                     );
                                                     // Future.microtask(() =>
                                                     //     Navigator.push(
@@ -543,7 +545,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                           DateFormat('dd/MM/yyyy | hh:mm a')
                                               .format(DateTime.parse(widget
                                                       .historyData
-                                                      .cOMPLETIONDATE
+                                                      .completionDate
                                                       .toString())
                                                   .toLocal()),
                                           // DateFormat("dd/MM/yy | hh:mm a")
@@ -570,8 +572,12 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                             TxnDetails(
                                 title: "Account",
                                 subTitle:
-                                    'Equitas Bank - ${widget.historyData.aCCOUNTNUMBER.toString()}',
+                                    'Equitas Bank - ${widget.historyData.accountNumber.toString()}',
                                 clipBoard: false),
+                            // TxnDetails(
+                            //     title: "Customer Name",
+                            //     subTitle: widget.historyData.customerName.toString(),
+                            //     clipBoard: false),
                             TxnDetails(
                                 title: "Biller Name",
                                 subTitle: widget.billerName,
@@ -594,37 +600,37 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                             //     subTitle:
                             //         widget.historyData.aPPROVALREFNO.toString(),
                             //     clipBoard: true),
-                            if (widget.historyData.pARAMETERS![0].pARAMETERNAME != null ||
-                                widget.historyData.pARAMETERS![0].pARAMETERVALUE !=
+                            if (widget.historyData.parameters![0].parameterName != null ||
+                                widget.historyData.parameters![0].parameterValue !=
                                     null)
                               TxnDetails(
-                                  title: widget.historyData.cATEGORYNAME
+                                  title: widget.historyData.categoryName
                                           .toString()
                                           .toLowerCase()
                                           .contains("mobile prepaid")
                                       ? "Mobile Number"
-                                      : widget.historyData.pARAMETERS![0]
-                                          .pARAMETERNAME
+                                      : widget.historyData.parameters![0]
+                                          .parameterName
                                           .toString(),
-                                  subTitle: widget.historyData.cATEGORYNAME
+                                  subTitle: widget.historyData.categoryName
                                           .toString()
                                           .toLowerCase()
                                           .contains("mobile prepaid")
-                                      ? widget.historyData.pARAMETERS!
-                                          .firstWhere((params) => params.pARAMETERNAME == null
-                                              ? params.pARAMETERNAME == null
-                                              : params.pARAMETERNAME.toString().toLowerCase() == "mobile number" ||
-                                                  params.pARAMETERNAME.toString().toLowerCase() == "customer mobile number")
-                                          .pARAMETERVALUE
+                                      ? widget.historyData.parameters!
+                                          .firstWhere((params) => params.parameterName == null
+                                              ? params.parameterName == null
+                                              : params.parameterName.toString().toLowerCase() == "mobile number" ||
+                                                  params.parameterName.toString().toLowerCase() == "customer mobile number")
+                                          .parameterValue
                                           .toString()
-                                      : widget.historyData.pARAMETERS![0].pARAMETERVALUE.toString(),
+                                      : widget.historyData.parameters![0].parameterValue.toString(),
                                   clipBoard: false),
-                            if (widget.historyData.tRANSACTIONREFERENCEID !=
+                            if (widget.historyData.transactionReferenceId !=
                                 null)
                               TxnDetails(
                                   title: "Transaction ID",
                                   subTitle: widget
-                                      .historyData.tRANSACTIONREFERENCEID
+                                      .historyData.transactionReferenceId
                                       .toString(),
                                   clipBoard: true),
                             if (isTransactionStatusLoading ||
@@ -685,17 +691,17 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                 !isTxnUpdateLoading)
                               TxnDetails(
                                   title: "Status",
-                                  subTitle: widget.historyData.tRANSACTIONSTATUS
+                                  subTitle: widget.historyData.transactionStatus
                                               .toString()
                                               .toLowerCase() ==
                                           "success"
                                       ? "Transaction Success"
-                                      : widget.historyData.tRANSACTIONSTATUS
+                                      : widget.historyData.transactionStatus
                                                       .toString()
                                                       .toLowerCase() ==
                                                   "bbps-in-progress" ||
                                               widget.historyData
-                                                      .tRANSACTIONSTATUS
+                                                      .transactionStatus
                                                       .toString()
                                                       .toLowerCase() ==
                                                   "bbps-timeout"
@@ -704,20 +710,20 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                   clipBoard: false),
                             if (!isTransactionStatusLoading &&
                                 !isTxnUpdateLoading)
-                              if (widget.historyData.tRANSACTIONSTATUS
+                              if (widget.historyData.transactionStatus
                                       .toString()
                                       .toLowerCase() !=
                                   "success")
                                 TxnDetails(
                                     title: "Reason",
                                     subTitle: getTransactionReason(widget
-                                        .historyData.tRANSACTIONSTATUS
+                                        .historyData.transactionStatus
                                         .toString()),
                                     clipBoard: false),
                             TxnDetails(
                                 title: "Payment Channel",
                                 subTitle:
-                                    widget.historyData.pAYMENTCHANNEL == 'IB'
+                                    widget.historyData.paymentChannel == 'IB'
                                         ? "Equitas - Internet Banking"
                                         : "Equitas - Mobile Banking",
                                 clipBoard: false,
@@ -756,12 +762,12 @@ class _HistoryDetailsState extends State<HistoryDetails> {
         //   label: Text("Refresh Status"),
         // ),
         // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        bottomSheet: widget.historyData.tRANSACTIONREFERENCEID == null ||
-                (widget.historyData.tRANSACTIONSTATUS
+        bottomSheet: widget.historyData.transactionReferenceId == null ||
+                (widget.historyData.transactionStatus
                             .toString()
                             .toLowerCase() ==
                         "bbps-in-progress" ||
-                    widget.historyData.tRANSACTIONSTATUS
+                    widget.historyData.transactionStatus
                             .toString()
                             .toLowerCase() ==
                         "bbps-timeout")
@@ -780,14 +786,14 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                         child: MyAppButton(
                             onPressed: () {
                               goToData(context, cOMPLAINTREGISTERROUTE, {
-                                "Date": widget.historyData.cOMPLETIONDATE,
+                                "Date": widget.historyData.completionDate,
                                 "txnRefID": widget
-                                    .historyData.tRANSACTIONREFERENCEID
+                                    .historyData.transactionReferenceId
                                     .toString(),
                                 "BillerName":
-                                    widget.historyData.bILLERNAME.toString(),
+                                    widget.historyData.billerName.toString(),
                                 "CategoryName":
-                                    widget.historyData.cATEGORYNAME.toString(),
+                                    widget.historyData.categoryName.toString(),
                               });
                             },
                             buttonText: "Raise a Complaint",

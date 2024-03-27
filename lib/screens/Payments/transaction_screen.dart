@@ -350,7 +350,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                                 : "Transaction Pending",
                                                         "Equitas - Mobile banking",
                                                         DateFormat("dd/MM/yyyy | hh:mm a").format(DateTime.now()).toString(),
-                                                        tnxResponse!.reason.toString()),
+                                                        tnxResponse!.reason.toString(),
+                                                        "-",
+                                                        "-"),
                                               );
                                               // Future.microtask(() =>
                                               //     Navigator.push(

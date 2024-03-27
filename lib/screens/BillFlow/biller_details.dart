@@ -8,6 +8,7 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getAmountExact.dart';
 import 'package:ebps/helpers/getBillerType.dart';
+import 'package:ebps/helpers/getDecimalInputs.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/logger.dart';
 import 'package:ebps/models/add_biller_model.dart';
@@ -659,8 +660,13 @@ class _BillerDetailsState extends State<BillerDetails> {
                                     },
                                     inputFormatters: <TextInputFormatter>[
                                       LengthLimitingTextInputFormatter(10),
+                                      DecimalTextInputFormatter(
+                                          decimalRange: 2),
+                                      // getInputAmountFormatter(),
                                       FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d*\.?\d{0,2}')),
+                                          RegExp(r'^[0-9]*[.]{0,1}[0-9]*'))
+                                      // FilteringTextInputFormatter.allow(
+                                      //     RegExp(r'^\d*\.?\d{0,2}')),
                                     ],
                                     keyboardType:
                                         const TextInputType.numberWithOptions(

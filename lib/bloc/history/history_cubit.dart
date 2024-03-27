@@ -59,7 +59,7 @@ class HistoryCubit extends Cubit<HistoryState> {
       if (value != null) {
         if (!value.toString().contains("Invalid token")) {
           if (value['status'] == 200) {
-            HistoryModel? historyModel = HistoryModel.fromJson(value);
+            HistoryModal? historyModel = HistoryModal.fromJson(value);
             if (!isClosed) {
               prevHistoryData
                   .addAll(historyModel.data as Iterable<HistoryData>);

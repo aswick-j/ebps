@@ -466,7 +466,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
 
                                       goBack(context);
                                     },
-                                    buttonText: "Later",
+                                    buttonText: "Skip",
                                     buttonTxtColor: CLR_PRIMARY,
                                     buttonBorderColor: CLR_PRIMARY,
                                     buttonColor: BTN_CLR_ACTIVE,
@@ -562,7 +562,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                         });
                                       }
                                     },
-                                    buttonText: "Proceed",
+                                    buttonText: "Modify",
                                     buttonTxtColor: BTN_CLR_ACTIVE,
                                     buttonBorderColor: Colors.transparent,
                                     buttonColor: CLR_PRIMARY,

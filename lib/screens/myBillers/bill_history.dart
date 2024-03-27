@@ -95,7 +95,7 @@ class _BillHistoryState extends State<BillHistory> {
                   MoreLoading = true;
                   if (historyData!.length > 1) {
                     _totalPages =
-                        historyData![historyData!.length - 1].tOTALPAGES!;
+                        historyData![historyData!.length - 1].totalPages!;
                   }
                   isHistoryMoreLoading = true;
                 });
@@ -103,11 +103,11 @@ class _BillHistoryState extends State<BillHistory> {
                 setState(() {
                   historyData = state.historyData!
                       .where((item) =>
-                          item.cUSTOMERBILLID == widget.customerBillID)
+                          item.customerBillId == widget.customerBillID)
                       .toList();
                   if (historyData!.length > 1) {
                     _totalPages =
-                        historyData![historyData!.length - 1].tOTALPAGES!;
+                        historyData![historyData!.length - 1].totalPages!;
                   }
                   isHistoryLoading = false;
                   MoreLoading = false;
@@ -144,31 +144,31 @@ class _BillHistoryState extends State<BillHistory> {
                                 return HistoryContainer(
                                   handleStatus: (txnStatus, txnID) {
                                     setState(() {
-                                      historyData![index].tRANSACTIONSTATUS =
+                                      historyData![index].transactionStatus =
                                           txnStatus;
                                     });
                                   },
                                   historyData: historyData![index],
                                   // billerFilterData: billerFilterData,
-                                  titleText: historyData![index].aUTOPAY == 0
+                                  titleText: historyData![index].autoPay == 0
                                       ? 'Paid to'
                                       : 'Auto Payment',
                                   subtitleText:
-                                      historyData![index].bILLERNAME.toString(),
+                                      historyData![index].billerName.toString(),
                                   dateText: DateFormat('dd/MM/yyyy').format(
                                       DateTime.parse(historyData![index]
-                                              .cOMPLETIONDATE
+                                              .completionDate
                                               .toString())
                                           .toLocal()),
                                   amount:
-                                      "₹ ${NumberFormat('#,##,##0.00').format(double.parse(historyData![index].bILLAMOUNT.toString()))}",
+                                      "₹ ${NumberFormat('#,##,##0.00').format(double.parse(historyData![index].billAmount.toString()))}",
                                   // '₹ ${historyData![index].bILLAMOUNT.toString()}',
                                   statusText: getTransactionStatus(
                                       historyData![index]
-                                          .tRANSACTIONSTATUS
+                                          .transactionStatus
                                           .toString()),
                                   iconPath: BILLER_LOGO(historyData![index]
-                                      .bILLERNAME
+                                      .billerName
                                       .toString()),
                                   containerBorderColor: Color(0xffD1D9E8),
                                 );

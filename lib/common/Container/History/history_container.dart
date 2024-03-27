@@ -1,11 +1,10 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/history_model.dart';
-
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -40,9 +39,9 @@ class HistoryContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     handleClick() {
       goToData(context, hISTORYDETAILSROUTE, {
-        "billName": historyData.bILLNAME ?? "-",
-        "billerName": historyData.bILLERNAME,
-        "categoryName": historyData.cATEGORYNAME,
+        "billName": historyData.billName ?? "-",
+        "billerName": historyData.billerName,
+        "categoryName": historyData.categoryName,
         "isSavedBill": false,
         "historyData": historyData,
         "handleStatus": handleStatus
@@ -86,8 +85,128 @@ class HistoryContainer extends StatelessWidget {
         ),
         child: Column(
           children: [
+            // ListTile(
+            //   contentPadding: EdgeInsets.only(left: 6.w, right: 6.w, top: 0.h),
+            //   leading: Container(
+            //     width: 45.w,
+            //     child: Padding(
+            //       padding: EdgeInsets.all(8.w),
+            //       child: SvgPicture.asset(iconPath),
+            //     ),
+            //   ),
+            //   title: Padding(
+            //     padding: EdgeInsets.only(bottom: 5.h),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         if (titleText == "Auto Payment")
+            //           // AnimatedTextKit(
+            //           //   totalRepeatCount: 100,
+            //           //   animatedTexts: [
+            //           //     ColorizeAnimatedText(
+            //           //       'Auto Payment',
+            //           //       textStyle: TextStyle(
+            //           //         fontSize: 14.sp,
+            //           //       ),
+            //           //       colors: statusText == "Pending"
+            //           //           ? [
+            //           //               CLR_ORANGE,
+            //           //               CLR_ORANGESHADE,
+            //           //             ]
+            //           //           : statusText == "Failed"
+            //           //               ? [
+            //           //                   CLR_ERROR,
+            //           //                   CLR_REDSHADE,
+            //           //                 ]
+            //           //               : [
+            //           //                   CLR_GREEN,
+            //           //                   CLR_GREENSHADE,
+            //           //                 ],
+            //           //     ),
+            //           //     ColorizeAnimatedText(
+            //           //       'Paid to',
+            //           //       textStyle: TextStyle(
+            //           //           fontSize: 14.sp, fontWeight: FontWeight.bold),
+            //           //       colors: statusText == "Pending"
+            //           //           ? [
+            //           //               CLR_ORANGE,
+            //           //               CLR_ORANGESHADE,
+            //           //             ]
+            //           //           : statusText == "Failed"
+            //           //               ? [
+            //           //                   CLR_ERROR,
+            //           //                   CLR_REDSHADE,
+            //           //                 ]
+            //           //               : [
+            //           //                   CLR_GREEN,
+            //           //                   CLR_GREENSHADE,
+            //           //                 ],
+            //           //     ),
+            //           //   ],
+            //           //   isRepeatingAnimation: true,
+            //           //   onTap: () {},
+            //           // ),
+            //           if (titleText == "Auto Payment")
+            //             // AnimatedTextKit(
+            //             //   isRepeatingAnimation: true,
+            //             //   animatedTexts: [
+            //             //     FadeAnimatedText('do IT!'),
+            //             //     FadeAnimatedText('do it RIGHT!!'),
+            //             //     FadeAnimatedText('do it RIGHT NOW!!!'),
+            //             //   ],
+            //             //   onTap: () {
+            //             //     print("Tap Event");
+            //             //   },
+            //             // ),
+            //             MyAppText(
+            //                 data: titleText,
+            //                 size: 14.0.sp,
+            //                 color: statusText == "Pending"
+            //                     ? CLR_ORANGE
+            //                     : statusText == "Failed"
+            //                         ? CLR_ERROR
+            //                         : CLR_GREEN,
+            //                 weight: FontWeight.normal,
+            //                 fntStyle: FontStyle.normal),
+            //         if (titleText != "Auto Payment")
+            //           MyAppText(
+            //             data: titleText,
+            //             size: 14.0.sp,
+            //             color: TXT_CLR_LITE,
+            //             weight: FontWeight.w500,
+            //           ),
+            //         MyAppText(
+            //           data: amount,
+            //           size: 14.0.sp,
+            //           color: CLR_PRIMARY,
+            //           weight: FontWeight.bold,
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            //   subtitle: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           SizedBox(
+            //             width: 220.w,
+            //             child: MyAppText(
+            //                 data: subtitleText,
+            //                 size: 13.0.sp,
+            //                 color: TXT_CLR_DEFAULT,
+            //                 weight: FontWeight.w500,
+            //                 maxline: 1),
+            //           )
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
             ListTile(
-              contentPadding: EdgeInsets.only(left: 6.w, right: 6.w, top: 0.h),
+              contentPadding: EdgeInsets.only(
+                  left: 8.w, right: 15.w, top: 4.h, bottom: 3.h),
               leading: Container(
                 width: 45.w,
                 child: Padding(
@@ -101,84 +220,29 @@ class HistoryContainer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     if (titleText == "Auto Payment")
-                      // AnimatedTextKit(
-                      //   totalRepeatCount: 100,
-                      //   animatedTexts: [
-                      //     ColorizeAnimatedText(
-                      //       'Auto Payment',
-                      //       textStyle: TextStyle(
-                      //         fontSize: 14.sp,
-                      //       ),
-                      //       colors: statusText == "Pending"
-                      //           ? [
-                      //               CLR_ORANGE,
-                      //               CLR_ORANGESHADE,
-                      //             ]
-                      //           : statusText == "Failed"
-                      //               ? [
-                      //                   CLR_ERROR,
-                      //                   CLR_REDSHADE,
-                      //                 ]
-                      //               : [
-                      //                   CLR_GREEN,
-                      //                   CLR_GREENSHADE,
-                      //                 ],
-                      //     ),
-                      //     ColorizeAnimatedText(
-                      //       'Paid to',
-                      //       textStyle: TextStyle(
-                      //           fontSize: 14.sp, fontWeight: FontWeight.bold),
-                      //       colors: statusText == "Pending"
-                      //           ? [
-                      //               CLR_ORANGE,
-                      //               CLR_ORANGESHADE,
-                      //             ]
-                      //           : statusText == "Failed"
-                      //               ? [
-                      //                   CLR_ERROR,
-                      //                   CLR_REDSHADE,
-                      //                 ]
-                      //               : [
-                      //                   CLR_GREEN,
-                      //                   CLR_GREENSHADE,
-                      //                 ],
-                      //     ),
-                      //   ],
-                      //   isRepeatingAnimation: true,
-                      //   onTap: () {},
-                      // ),
-                      if (titleText == "Auto Payment")
-                        // AnimatedTextKit(
-                        //   isRepeatingAnimation: true,
-                        //   animatedTexts: [
-                        //     FadeAnimatedText('do IT!'),
-                        //     FadeAnimatedText('do it RIGHT!!'),
-                        //     FadeAnimatedText('do it RIGHT NOW!!!'),
-                        //   ],
-                        //   onTap: () {
-                        //     print("Tap Event");
-                        //   },
-                        // ),
-                        MyAppText(
-                            data: titleText,
-                            size: 14.0.sp,
-                            color: statusText == "Pending"
-                                ? CLR_ORANGE
-                                : statusText == "Failed"
-                                    ? CLR_ERROR
-                                    : CLR_GREEN,
-                            weight: FontWeight.normal,
-                            fntStyle: FontStyle.normal),
-                    if (titleText != "Auto Payment")
                       MyAppText(
-                        data: titleText,
-                        size: 14.0.sp,
-                        color: TXT_CLR_LITE,
-                        weight: FontWeight.w500,
+                          data: titleText,
+                          size: 13.0.sp,
+                          color: statusText == "Pending"
+                              ? CLR_ORANGE
+                              : statusText == "Failed"
+                                  ? CLR_ERROR
+                                  : CLR_GREEN,
+                          weight: FontWeight.bold,
+                          fntStyle: FontStyle.normal),
+                    if (titleText != "Auto Payment")
+                      Text(
+                        titleText,
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.bold,
+                          color: TXT_CLR_PRIMARY,
+                        ),
+                        textAlign: TextAlign.left,
                       ),
                     MyAppText(
                       data: amount,
-                      size: 14.0.sp,
+                      size: 13.0.sp,
                       color: CLR_PRIMARY,
                       weight: FontWeight.bold,
                     ),
@@ -188,22 +252,60 @@ class HistoryContainer extends StatelessWidget {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 220.w,
-                        child: MyAppText(
-                            data: subtitleText,
-                            size: 13.0.sp,
-                            color: TXT_CLR_DEFAULT,
-                            weight: FontWeight.w500,
-                            maxline: 1),
-                      )
-                    ],
+                  if (historyData.billName != null)
+                    FittedBox(
+                      fit: BoxFit.contain,
+                      child: RichText(
+                        maxLines: 1,
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontSize: 13.0.sp,
+                            color: Colors.black,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                                style: TextStyle(
+                                    fontSize: 13.sp,
+                                    color: TXT_CLR_DEFAULT,
+                                    fontWeight: FontWeight.w500),
+                                text: "${historyData.billName}  "),
+                            if (historyData.customerName != null)
+                              TextSpan(
+                                text: "( ${historyData.customerName} )",
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {},
+                                style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    color: TXT_CLR_PRIMARY,
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  // if (historyData.billName != null ||
+                  //     historyData.customerName != null)
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Text(
+                    historyData.billerName.toString(),
+                    style: TextStyle(
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xff808080),
+                    ),
                   ),
                 ],
               ),
+              // trailing: GestureDetector(
+              //   onTap: () {
+
+              //     // final state = context.<MybillersCubit>().state;
+              //   },
+              //   child: SvgPicture.asset(ICON_DELETE),
+              // ),
             ),
             Divider(
               height: 10.h,
