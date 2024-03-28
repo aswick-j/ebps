@@ -1087,4 +1087,34 @@ class ApiClient implements Repository {
       };
     }
   }
+
+  //CHARTS
+  @override
+  Future getChartData() async {
+    try {
+      var response = await api(
+          method: "get",
+          url: BASE_URL + CHART_URL,
+          token: true,
+          checkSum: false);
+
+      if (!response.body.toString().contains("<html>")) {
+        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+
+        return decodedResponse;
+      } else {
+        return {
+          "status": 500,
+          "message": "Something went wrong",
+          "data": "Error"
+        };
+      }
+    } catch (e) {
+      return {
+        "status": 500,
+        "message": "Something went wrong",
+        "data": "Error"
+      };
+    }
+  }
 }

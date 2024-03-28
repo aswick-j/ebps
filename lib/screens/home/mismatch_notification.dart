@@ -95,7 +95,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                   child: Text(
                                     widget.allautoPayData![index].rESETDATE == 1
                                         ? "Auto Pay Date not in between the Bill Generation and Bill Due date, please update accordingly."
-                                        : "Auto Pay Limit lesser than the Bill Due Amount,\ndo you wish to revise it.",
+                                        : "Alert!! We are unable to execute Auto Pay as your set limit is less than the Last generated Bill amount.",
                                     // "Auto Pay ${widget.allautoPayData![index].rESETDATE == 1 ? "Date" : "Limit"} Seems to be Mismatch",
                                     style: TextStyle(
                                       fontSize: 10.sp,
@@ -225,7 +225,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       widget.allautoPayData![index].rESETDATE ==
                                               1
                                           ? "Bill Generation Date "
-                                          : "Due Amount",
+                                          : "Latest Bill Amount",
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w400,
@@ -331,7 +331,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       widget.allautoPayData![index].rESETDATE ==
                                               1
                                           ? "Due Date"
-                                          : "Autopay Limit",
+                                          : 'Auto Pay - "Set Limit"',
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w400,

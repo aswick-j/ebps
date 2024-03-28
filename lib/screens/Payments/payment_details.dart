@@ -25,6 +25,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class PaymentDetails extends StatefulWidget {
@@ -497,9 +498,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.refresh, color: Colors.grey),
-                          onPressed: () {
+                        GestureDetector(
+                          child: SvgPicture.asset(ICON_REFRESH),
+                          onTap: () {
                             setState(() {
                               selectedAcc = null;
                               accError = false;

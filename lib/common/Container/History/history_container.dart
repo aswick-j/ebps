@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
@@ -33,7 +34,21 @@ class HistoryContainer extends StatelessWidget {
       required this.handleStatus});
   static const colorizeColors = [
     CLR_GREEN,
-    CLR_BLUESHADE,
+    CLR_PRIMARY,
+    CLR_PRIMARY,
+    CLR_GREEN
+  ];
+  static const colorizeColors2 = [
+    CLR_ERROR,
+    CLR_ORANGE,
+    CLR_ORANGE,
+    CLR_ERROR,
+  ];
+  static const colorizeColors3 = [
+    CLR_ORANGE,
+    CLR_ERROR,
+    CLR_ERROR,
+    CLR_ORANGE,
   ];
   @override
   Widget build(BuildContext context) {
@@ -60,6 +75,8 @@ class HistoryContainer extends StatelessWidget {
       return result;
     }
 
+    var colorizeTextStyle =
+        TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold);
     return GestureDetector(
       onTap: () {
         handleClick();
@@ -220,16 +237,32 @@ class HistoryContainer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     if (titleText == "Auto Payment")
-                      MyAppText(
-                          data: titleText,
-                          size: 13.0.sp,
-                          color: statusText == "Pending"
-                              ? CLR_ORANGE
-                              : statusText == "Failed"
-                                  ? CLR_ERROR
-                                  : CLR_GREEN,
-                          weight: FontWeight.bold,
-                          fntStyle: FontStyle.normal),
+                      AnimatedTextKit(
+                        animatedTexts: [
+                          ColorizeAnimatedText(
+                            titleText,
+                            textStyle: colorizeTextStyle,
+                            colors: statusText == "Pending"
+                                ? colorizeColors3
+                                : statusText == "Failed"
+                                    ? colorizeColors2
+                                    : colorizeColors,
+                          ),
+                        ],
+                        repeatForever: true,
+                        isRepeatingAnimation: true,
+                        onTap: () {},
+                      ),
+                    // MyAppText(
+                    //     data: titleText,
+                    //     size: 13.0.sp,
+                    //     color: statusText == "Pending"
+                    //         ? CLR_ORANGE
+                    //         : statusText == "Failed"
+                    //             ? CLR_ERROR
+                    //             : CLR_GREEN,
+                    //     weight: FontWeight.bold,
+                    //     fntStyle: FontStyle.normal),
                     if (titleText != "Auto Payment")
                       Text(
                         titleText,

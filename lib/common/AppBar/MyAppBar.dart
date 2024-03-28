@@ -4,18 +4,23 @@ import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-MyAppBar({
-  @required context,
-  @required title,
-  List<Widget>? actions,
-  backgroundColor,
-  onLeadingTap,
-  showActions,
-  onSearchTap,
-}) {
+MyAppBar(
+    {@required context,
+    @required title,
+    List<Widget>? actions,
+    backgroundColor,
+    onLeadingTap,
+    showActions,
+    onSearchTap,
+    FormField}) {
   return AppBar(
-    title: MyAppText(
-        data: title, color: CLR_PRIMARY, weight: FontWeight.bold, maxline: 1),
+    title: FormField == true
+        ? title
+        : MyAppText(
+            data: title,
+            color: CLR_PRIMARY,
+            weight: FontWeight.bold,
+            maxline: 1),
     toolbarHeight: 62.0.h,
     backgroundColor: Colors.white,
     elevation: 0.0,

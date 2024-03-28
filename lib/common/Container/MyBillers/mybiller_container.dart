@@ -272,8 +272,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                       width: 45.w,
                                       child: Padding(
                                         padding: EdgeInsets.all(8.r),
-                                        child:
-                                            SvgPicture.asset(widget.iconPath),
+                                        child: SvgPicture.asset(
+                                            widget.iconPath),
                                       ),
                                     ),
                                     title: Padding(
@@ -1403,7 +1403,6 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                         "Autopay Paused") {
                                   showModalBottomSheet(
                                       isScrollControlled: true,
-
                                       context: context,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.vertical(

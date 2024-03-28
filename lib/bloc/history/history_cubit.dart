@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:ebps/helpers/getDateValues.dart';
 import 'package:ebps/helpers/logger.dart';
 import 'package:ebps/models/category_biller_filter_history._model.dart';
+import 'package:ebps/models/chart_model.dart';
 import 'package:ebps/models/history_model.dart';
 import 'package:ebps/models/transaction_status_model.dart';
 import 'package:ebps/models/transaction_status_update_model.dart';
@@ -206,5 +207,42 @@ class HistoryCubit extends Cubit<HistoryState> {
           error:
               "UPDATE TXN STATUS API RESPONSE ===> lib/bloc/history/updateTxnStatus");
     }
+  }
+
+  //GET CHARTS
+
+  void getCharts() async {
+    if (!isClosed) {
+      emit(HistoryChartLoading());
+    }
+    try {
+      final value = await repository!.getChartData();
+
+      // logger.d(value,
+      //     error: "GET CHART DATA API RESPONSE ===> lib/bloc/history/getCharts");
+
+      if (value != null) {
+        if (!value.toString().contains("Invalid token")) {
+          if (value['status'] == 200) {
+            ChartModel chartModel = ChartModel.fromJson(value);
+            if (!isClosed) {
+              emit(HistoryChartSuccess(chartModel: chartModel));
+            }
+          } else {
+            if (!isClosed) {
+              emit(HistoryChartFailed(message: value['message']));
+            }
+          }
+        } else {
+          if (!isClosed) {
+            emit(HistoryChartError(message: value['message']));
+          }
+        }
+      } else {
+        if (!isClosed) {
+          emit(HistoryChartFailed(message: value['message']));
+        }
+      }
+    } catch (e) {}
   }
 }

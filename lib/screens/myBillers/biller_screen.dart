@@ -48,6 +48,7 @@ class BillerScreenUI extends StatefulWidget {
 }
 
 class _BillerScreenUIState extends State<BillerScreenUI> {
+  List<SavedBillersData>? savedBillerDataTemp = [];
   List<SavedBillersData>? savedBillerData = [];
   List<UpcomingDuesData>? upcomingDuesData = [];
   List<UpcomingPaymentsData>? upcomingPaymentList = [];
@@ -179,6 +180,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
     return Scaffold(
       appBar: MyAppBar(
         context: context,
+        FormField: showSearch ? true : null,
         title: !showSearch
             ? 'My Billers'
             : TextFormField(
@@ -187,18 +189,17 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                 onChanged: (searchTxt) {
                   List<SavedBillersData>? searchData = [];
 
-                  // searchData =  getBillerDataWithUpcomingFirst(savedBillerData)!!.where((item) {
-                  //   final bILLERNAME =
-                  //       item.bILLERNAME.toString().toLowerCase();
-                  //   final bILLNAME = item.bILLNAME.toString().toLowerCase();
-                  //   final searchLower = searchTxt.toLowerCase();
-                  //   return bILLERNAME.contains(searchLower) ||
-                  //       bILLNAME.contains(searchLower);
-                  // }).toList();
+                  searchData = savedBillerDataTemp!.where((item) {
+                    final bILLERNAME = item.bILLERNAME.toString().toLowerCase();
+                    final bILLNAME = item.bILLNAME.toString().toLowerCase();
+                    final searchLower = searchTxt.toLowerCase();
+                    return bILLERNAME.contains(searchLower) ||
+                        bILLNAME.contains(searchLower);
+                  }).toList();
 
-                  // setState(() {
-                  //   billerData = searchData;
-                  // });
+                  setState(() {
+                    savedBillerData = searchData;
+                  });
                 },
                 onFieldSubmitted: (_) {},
                 keyboardType: TextInputType.text,
@@ -214,6 +215,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
 
                       setState(() {
                         showSearch = false;
+                        savedBillerData = savedBillerDataTemp;
                       });
                     },
                     child: Icon(
@@ -241,27 +243,42 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                     )),
           );
         }),
-        actions: [
-          Tooltip(
-            textStyle: TextStyle(color: Colors.white),
-            decoration: BoxDecoration(
-                color: CLR_BLUE_LITE,
-                borderRadius: BorderRadius.circular(8.0.r)),
-            triggerMode: TooltipTriggerMode.tap,
-            showDuration: Duration(milliseconds: 20000),
-            padding: EdgeInsets.all(20.r),
-            margin: EdgeInsets.symmetric(horizontal: 10.w),
-            message:
-                "Auto Pay is supported only for selected billers and is enabled after you pay a bill atleast once for a  biller or if the biller has an due.",
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.info_outline,
-                color: CLR_PRIMARY,
-              ),
-            ),
-          ),
-        ],
+        actions: showSearch
+            ? null
+            : [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconButton(
+                    splashRadius: 25,
+                    onPressed: () => setState(() {
+                      showSearch = true;
+                    }),
+                    icon: Icon(
+                      Icons.search,
+                      color: CLR_PRIMARY,
+                    ),
+                  ),
+                ),
+                Tooltip(
+                  textStyle: TextStyle(color: Colors.white),
+                  decoration: BoxDecoration(
+                      color: CLR_BLUE_LITE,
+                      borderRadius: BorderRadius.circular(8.0.r)),
+                  triggerMode: TooltipTriggerMode.tap,
+                  showDuration: Duration(milliseconds: 20000),
+                  padding: EdgeInsets.all(20.r),
+                  margin: EdgeInsets.symmetric(horizontal: 10.w),
+                  message:
+                      "Auto Pay is supported only for selected billers and is enabled after you pay a bill atleast once for a  biller or if the biller has an due.",
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.info_outline,
+                      color: CLR_PRIMARY,
+                    ),
+                  ),
+                ),
+              ],
         showActions: true,
       ),
       body: SingleChildScrollView(
@@ -322,6 +339,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                 isSavedBillerLoading = true;
               });
             } else if (state is SavedBillersSuccess) {
+              savedBillerDataTemp = state.savedBillersData;
               savedBillerData = state.savedBillersData;
               setState(() {
                 isSavedBillerLoading = false;

@@ -18,6 +18,7 @@ import 'package:ebps/screens/autopay/edit_autopay.dart';
 import 'package:ebps/screens/complaints/complaint_details.dart';
 import 'package:ebps/screens/complaints/complaint_screen.dart';
 import 'package:ebps/screens/complaints/register_complaint.dart';
+import 'package:ebps/screens/history/history_charts.dart';
 import 'package:ebps/screens/history/history_details.dart';
 import 'package:ebps/screens/history/history_screen.dart';
 import 'package:ebps/screens/home/all_bill_categories.dart';
@@ -49,6 +50,7 @@ const tRANSROUTE = '/transSuccessful';
 const sEARCHROUTE = '/search';
 const bILLERHISTORYROUTE = '/billerHistory';
 const hISTORYROUTE = '/history';
+const hISTORYCHARTSROUTE = '/historycharts';
 const hISTORYDETAILSROUTE = '/historyDetails';
 const rEGISTERCOMPLAINTROUTE = '/regsiterComplaintRoute';
 const cOMPLAINTLISTROUTE = '/complaintListRoute';
@@ -360,6 +362,21 @@ class MyRouter {
                         create: (_) => HomeCubit(repository: apiClient)),
                   ],
                   child: HistoryScreen(),
+                ));
+
+      //HISRTORY CHARTS
+
+      case hISTORYCHARTSROUTE:
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                        create: (_) => HistoryCubit(repository: apiClient)),
+                    BlocProvider(
+                        create: (_) => HomeCubit(repository: apiClient)),
+                  ],
+                  child: HistoryCharts(),
                 ));
 
 //BILL HISTORY

@@ -140,4 +140,8 @@ abstract class Repository {
 //BBPS SETTINGS
 
   Future getBbpsSettings() async {}
+
+//GET CHARTS
+
+  Future getChartData() async {}
 }

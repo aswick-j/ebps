@@ -12,6 +12,7 @@ import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/services/api.dart';
 import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/bbps_logo.dart';
+import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/loader_overlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -797,210 +798,236 @@ class _OtpScreenState extends State<OtpScreen> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 32.0.h),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                          if (!isLoading)
+                            Column(
                               children: [
-                                Text(
-                                  "Enter the OTP we sent to your preferred channel \n by Equitas Bank",
-                                  style: TextStyle(
-                                    fontSize: 11.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff808080),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Reference No :  ",
-                                      style: TextStyle(
-                                        fontSize: 11.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: TXT_CLR_PRIMARY,
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(vertical: 32.0.h),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Enter the OTP we sent to your preferred channel \n by Equitas Bank",
+                                        style: TextStyle(
+                                          fontSize: 11.sp,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff808080),
+                                        ),
+                                        textAlign: TextAlign.center,
                                       ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      REF_NO.toString(),
-                                      style: TextStyle(
-                                        fontSize: 11.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: CLR_ERROR,
+                                      SizedBox(
+                                        height: 15.h,
                                       ),
-                                      textAlign: TextAlign.center,
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Reference No :  ",
+                                            style: TextStyle(
+                                              fontSize: 11.sp,
+                                              fontWeight: FontWeight.w600,
+                                              color: TXT_CLR_PRIMARY,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          Text(
+                                            REF_NO.toString(),
+                                            style: TextStyle(
+                                              fontSize: 11.sp,
+                                              fontWeight: FontWeight.w600,
+                                              color: CLR_ERROR,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5.h, horizontal: 20.w),
+                                  child: SizedBox(
+                                    height: 38.h,
+                                    child: Pinput(
+                                      length: 6,
+                                      obscureText: true,
+                                      obscuringCharacter: "*",
+                                      controller: txtOtpController,
+                                      readOnly: enableReadOnly,
+                                      focusNode: focusNode,
+                                      androidSmsAutofillMethod:
+                                          AndroidSmsAutofillMethod
+                                              .smsUserConsentApi,
+                                      listenForMultipleSmsOnAndroid: false,
+                                      defaultPinTheme: defaultPinTheme,
+                                      onChanged: (s) {
+                                        showRedBorder = false;
+                                        // widget.resetErr();
+                                        if (s.isEmpty) {
+                                          setState(
+                                            () => isBtnDisable = true,
+                                          );
+                                        } else {
+                                          if (s.length < 6) {
+                                            setState(
+                                              () => isBtnDisable = true,
+                                            );
+                                          } else {
+                                            setState(
+                                              () => isBtnDisable = false,
+                                            );
+                                          }
+                                        }
+                                      },
+                                      focusedPinTheme: defaultPinTheme.copyWith(
+                                        width: 52.w,
+                                        height: 52.h,
+                                        decoration: defaultPinTheme.decoration!
+                                            .copyWith(
+                                          border:
+                                              Border.all(color: CLR_PRIMARY),
+                                        ),
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      enabled: true,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp(r'[0-9]')),
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      errorPinTheme: defaultPinTheme.copyWith(
+                                        decoration: BoxDecoration(
+                                          color: CLR_ERROR,
+                                          borderRadius:
+                                              BorderRadius.circular(8.r),
+                                        ),
+                                      ),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 5.h, horizontal: 20.w),
-                            child: SizedBox(
-                              height: 38.h,
-                              child: Pinput(
-                                length: 6,
-                                obscureText: true,
-                                obscuringCharacter: "*",
-                                controller: txtOtpController,
-                                readOnly: enableReadOnly,
-                                focusNode: focusNode,
-                                androidSmsAutofillMethod:
-                                    AndroidSmsAutofillMethod.smsUserConsentApi,
-                                listenForMultipleSmsOnAndroid: false,
-                                defaultPinTheme: defaultPinTheme,
-                                onChanged: (s) {
-                                  showRedBorder = false;
-                                  // widget.resetErr();
-                                  if (s.isEmpty) {
-                                    setState(
-                                      () => isBtnDisable = true,
-                                    );
-                                  } else {
-                                    if (s.length < 6) {
-                                      setState(
-                                        () => isBtnDisable = true,
-                                      );
-                                    } else {
-                                      setState(
-                                        () => isBtnDisable = false,
-                                      );
-                                    }
-                                  }
-                                },
-                                focusedPinTheme: defaultPinTheme.copyWith(
-                                  width: 52.w,
-                                  height: 52.h,
-                                  decoration:
-                                      defaultPinTheme.decoration!.copyWith(
-                                    border: Border.all(color: CLR_PRIMARY),
                                   ),
                                 ),
-                                keyboardType: TextInputType.number,
-                                enabled: true,
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp(r'[0-9]')),
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                errorPinTheme: defaultPinTheme.copyWith(
-                                  decoration: BoxDecoration(
-                                    color: CLR_ERROR,
-                                    borderRadius: BorderRadius.circular(8.r),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Visibility(
-                            visible: showOTPverify,
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 8.0.h),
-                              child: Text(
-                                "OTP verified Successfully",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: CLR_GREEN,
-                                  fontSize: 11.sp,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Visibility(
-                            visible: OTP_ERR_MSG != null,
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 8.0.h),
-                              child: Text(
-                                OTP_ERR_MSG.toString(),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: CLR_ERROR,
-                                  fontSize: 11.sp,
-                                ),
-                              ),
-                            ),
-                          ),
-                          if (showTimer)
-                            Padding(
-                              padding: EdgeInsets.only(top: 24.0.h),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    REF_NO!.isNotEmpty ? "OTP valid for" : '',
-                                    style: TextStyle(
-                                      fontSize: 11.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff808080),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SizedBox(height: 10.h),
-                                  Text(
-                                    REF_NO!.isNotEmpty
-                                        ? " ${secondsRemaining.toString()} seconds"
-                                        : '',
-                                    style: TextStyle(
-                                      fontSize: 11.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: TXT_CLR_PRIMARY,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          if (enableResend)
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 14.0.h),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Didn't recieve the OTP?",
-                                    style: TextStyle(
-                                      fontSize: 11.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff808080),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SizedBox(height: 10.h),
-                                  GestureDetector(
-                                    onTap: () {
-                                      if (enableResend) {
-                                        resendCode();
-                                      }
-                                    },
+                                Visibility(
+                                  visible: showOTPverify,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 8.0.h),
                                     child: Text(
-                                      "Resend OTP",
-                                      style: TextStyle(
-                                        fontSize: 11.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: enableResend
-                                            ? TXT_CLR_PRIMARY
-                                            : Colors.grey,
-                                      ),
+                                      "OTP verified Successfully",
                                       textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: CLR_GREEN,
+                                        fontSize: 11.sp,
+                                      ),
                                     ),
                                   ),
-                                ],
+                                ),
+                                Visibility(
+                                  visible: OTP_ERR_MSG != null,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 8.0.h),
+                                    child: Text(
+                                      OTP_ERR_MSG.toString(),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: CLR_ERROR,
+                                        fontSize: 11.sp,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                if (showTimer)
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 24.0.h),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          REF_NO!.isNotEmpty
+                                              ? "OTP valid for"
+                                              : '',
+                                          style: TextStyle(
+                                            fontSize: 11.sp,
+                                            fontWeight: FontWeight.w400,
+                                            color: Color(0xff808080),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        SizedBox(height: 10.h),
+                                        Text(
+                                          REF_NO!.isNotEmpty
+                                              ? " ${secondsRemaining.toString()} seconds"
+                                              : '',
+                                          style: TextStyle(
+                                            fontSize: 11.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: TXT_CLR_PRIMARY,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                if (enableResend)
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 14.0.h),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Didn't recieve the OTP?",
+                                          style: TextStyle(
+                                            fontSize: 11.sp,
+                                            fontWeight: FontWeight.w400,
+                                            color: Color(0xff808080),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        SizedBox(height: 10.h),
+                                        GestureDetector(
+                                          onTap: () {
+                                            if (enableResend) {
+                                              resendCode();
+                                            }
+                                          },
+                                          child: Text(
+                                            "Resend OTP",
+                                            style: TextStyle(
+                                              fontSize: 11.sp,
+                                              fontWeight: FontWeight.w600,
+                                              color: enableResend
+                                                  ? TXT_CLR_PRIMARY
+                                                  : Colors.grey,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                SizedBox(
+                                  height: 20.h,
+                                )
+                              ],
+                            )
+                          else
+                            Center(
+                              child: Container(
+                                height: 220.h,
+                                child: FlickrLoader(),
                               ),
-                            ),
-                          SizedBox(
-                            height: 20.h,
-                          )
+                            )
                         ],
                       )),
                   SizedBox(
@@ -1017,36 +1044,40 @@ class _OtpScreenState extends State<OtpScreen> {
             );
           },
         ),
-        bottomSheet: Container(
-          decoration: BoxDecoration(
-              border:
-                  Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: MyAppButton(
-                      onPressed: () {
-                        // BlocProvider.of<HomeCubit>(context).validateOTP(0000);
-                        if (!isBtnDisable) {
-                          handleSubmit();
-                        }
-                      },
-                      buttonText: "Verify",
-                      buttonTxtColor: BTN_CLR_ACTIVE,
-                      buttonBorderColor: Colors.transparent,
-                      buttonColor: isBtnDisable ? Colors.grey : CLR_PRIMARY,
-                      buttonSizeX: 10.h,
-                      buttonSizeY: 40.w,
-                      buttonTextSize: 14.sp,
-                      buttonTextWeight: FontWeight.w500),
+        bottomSheet: !isLoading
+            ? Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: MyAppButton(
+                            onPressed: () {
+                              // BlocProvider.of<HomeCubit>(context).validateOTP(0000);
+                              if (!isBtnDisable) {
+                                handleSubmit();
+                              }
+                            },
+                            buttonText: "Verify",
+                            buttonTxtColor: BTN_CLR_ACTIVE,
+                            buttonBorderColor: Colors.transparent,
+                            buttonColor:
+                                isBtnDisable ? Colors.grey : CLR_PRIMARY,
+                            buttonSizeX: 10.h,
+                            buttonSizeY: 40.w,
+                            buttonTextSize: 14.sp,
+                            buttonTextWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
-        ),
+              )
+            : null,
       ),
     );
   }

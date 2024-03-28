@@ -77,6 +77,18 @@ class _HistoryDetailsState extends State<HistoryDetails> {
     super.initState();
   }
 
+  var colorizeTextStyle = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+    color: Color(0xff1b438b),
+  );
+
+  static const colorizeColors = [
+    Colors.red,
+    Colors.orange,
+    Colors.orange,
+    Colors.red,
+  ];
   Widget TxnDetails(
       {String title = "",
       String subTitle = "",
@@ -651,21 +663,32 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                       ),
                                       textAlign: TextAlign.left,
                                     ),
-                                    SizedBox(width: 10.w),
+                                    SizedBox(height: 5.h),
                                     SizedBox(
                                       width: 250.w,
                                       child: Row(
                                         children: [
-                                          Text(
-                                            "Checking Transaction Status",
-                                            style: TextStyle(
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: Color(0xff1b438b),
-                                            ),
-                                            textAlign: TextAlign.left,
-                                            maxLines: 2,
+                                          AnimatedTextKit(
+                                            repeatForever: true,
+                                            isRepeatingAnimation: true,
+                                            animatedTexts: [
+                                              ColorizeAnimatedText(
+                                                'Checking Transaction Status',
+                                                textStyle: colorizeTextStyle,
+                                                colors: colorizeColors,
+                                              ),
+                                            ],
                                           ),
+                                          // Text(
+                                          //   "Checking Transaction Status",
+                                          //   style: TextStyle(
+                                          //     fontSize: 14.sp,
+                                          //     fontWeight: FontWeight.w500,
+                                          //     color: Color(0xff1b438b),
+                                          //   ),
+                                          //   textAlign: TextAlign.left,
+                                          //   maxLines: 2,
+                                          // ),
                                           AnimatedTextKit(
                                               repeatForever: true,
                                               isRepeatingAnimation: true,
@@ -675,7 +698,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                       fontSize: 14.sp,
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      color: Color(0xff1b438b),
+                                                      color: Colors.orange,
                                                     ),
                                                     speed: Duration(
                                                         milliseconds: 100)),

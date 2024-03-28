@@ -83,3 +83,22 @@ class TxnStatusUpdateError extends HistoryState {
   final String? message;
   TxnStatusUpdateError({@required this.message});
 }
+
+//GET CHARTS
+
+class HistoryChartLoading extends HistoryState {}
+
+class HistoryChartSuccess extends HistoryState {
+  ChartModel? chartModel;
+  HistoryChartSuccess({@required this.chartModel});
+}
+
+class HistoryChartFailed extends HistoryState {
+  final String? message;
+  HistoryChartFailed({@required this.message});
+}
+
+class HistoryChartError extends HistoryState {
+  final String? message;
+  HistoryChartError({@required this.message});
+}

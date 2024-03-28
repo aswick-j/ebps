@@ -372,17 +372,19 @@ class _editAutopayState extends State<editAutopay> {
                                         widget.savedBillerData.bILLERNAME
                                             .toString(),
                                         style: TextStyle(
-                                          fontSize: 14.sp,
+                                          fontSize: 13.sp,
                                           fontWeight: FontWeight.w500,
                                           color: Color(0xff191919),
                                         ),
                                         textAlign: TextAlign.left,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                       subtitle: Text(
                                         widget.savedBillerData.bILLNAME
                                             .toString(),
                                         style: TextStyle(
-                                          fontSize: 14.sp,
+                                          fontSize: 13.sp,
                                           fontWeight: FontWeight.w400,
                                           color: Color(0xff808080),
                                         ),
@@ -411,7 +413,7 @@ class _editAutopayState extends State<editAutopay> {
                                         null)
                                       billDetailsContainer(
                                           title: "Bill Date",
-                                          subTitle: DateFormat('dd/MM/yyyy')
+                                          subTitle: DateFormat.yMMMMd('en_US')
                                               .format(DateTime.parse(widget
                                                       .savedBillerData!
                                                       .bILLDATE!
@@ -423,7 +425,7 @@ class _editAutopayState extends State<editAutopay> {
                                     if (widget.savedBillerData!.dUEDATE != null)
                                       billDetailsContainer(
                                           title: "Due Date",
-                                          subTitle: DateFormat('dd/MM/yyyy')
+                                          subTitle: DateFormat.yMMMMd('en_US')
                                               .format(DateTime.parse(widget
                                                       .savedBillerData!.dUEDATE!
                                                       .toString()
@@ -528,7 +530,7 @@ class _editAutopayState extends State<editAutopay> {
                                                 ListTileControlAffinity
                                                     .trailing,
                                             title: Text(
-                                              "Set Bill Limit",
+                                              "Your Custom Limit",
                                               style: TextStyle(
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.w500,
@@ -915,10 +917,10 @@ class _editAutopayState extends State<editAutopay> {
                                             ),
                                             textAlign: TextAlign.center,
                                           ),
-                                          IconButton(
-                                            icon: const Icon(Icons.refresh,
-                                                color: Colors.grey),
-                                            onPressed: () {
+                                          GestureDetector(
+                                            child:
+                                                SvgPicture.asset(ICON_REFRESH),
+                                            onTap: () {
                                               setState(() {
                                                 selectedAcc = null;
                                                 accError = false;
@@ -984,6 +986,7 @@ class _editAutopayState extends State<editAutopay> {
                                           },
                                         ),
                                       ),
+
                                     // if (accError)
                                     //   Padding(
                                     //     padding: EdgeInsets.only(

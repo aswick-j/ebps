@@ -233,16 +233,18 @@ class _createAutopayState extends State<createAutopay> {
                                     title: Text(
                                       widget.billerName,
                                       style: TextStyle(
-                                        fontSize: 14.sp,
+                                        fontSize: 13.sp,
                                         fontWeight: FontWeight.w500,
                                         color: Color(0xff191919),
                                       ),
                                       textAlign: TextAlign.left,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     subtitle: Text(
                                       widget.billName,
                                       style: TextStyle(
-                                        fontSize: 14.sp,
+                                        fontSize: 13.sp,
                                         fontWeight: FontWeight.w400,
                                         color: Color(0xff808080),
                                       ),
@@ -268,7 +270,7 @@ class _createAutopayState extends State<createAutopay> {
                                   if (widget.savedBillersdata!.bILLDATE != null)
                                     billDetailsContainer(
                                         title: "Bill Date",
-                                        subTitle: DateFormat('dd/MM/yyyy')
+                                        subTitle: DateFormat.yMMMMd('en_US')
                                             .format(DateTime.parse(widget
                                                     .savedBillersdata!.bILLDATE!
                                                     .toString()
@@ -278,7 +280,7 @@ class _createAutopayState extends State<createAutopay> {
                                   if (widget.savedBillersdata!.dUEDATE != null)
                                     billDetailsContainer(
                                         title: "Due Date",
-                                        subTitle: DateFormat('dd/MM/yyyy')
+                                        subTitle: DateFormat.yMMMMd('en_US')
                                             .format(DateTime.parse(widget
                                                     .savedBillersdata!.dUEDATE!
                                                     .toString()
@@ -382,7 +384,7 @@ class _createAutopayState extends State<createAutopay> {
                                           controlAffinity:
                                               ListTileControlAffinity.trailing,
                                           title: Text(
-                                            "Set Bill Limit",
+                                            "Your Custom Limit",
                                             style: TextStyle(
                                               fontSize: 12.sp,
                                               fontWeight: FontWeight.w500,
@@ -752,10 +754,9 @@ class _createAutopayState extends State<createAutopay> {
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
-                                        IconButton(
-                                          icon: const Icon(Icons.refresh,
-                                              color: Colors.grey),
-                                          onPressed: () {
+                                        GestureDetector(
+                                          child: SvgPicture.asset(ICON_REFRESH),
+                                          onTap: () {
                                             setState(() {
                                               selectedAcc = null;
                                               accError = false;
