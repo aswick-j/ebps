@@ -10,6 +10,7 @@ import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
+import 'package:ebps/ebps.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getTransactionStatus.dart';
 import 'package:ebps/models/categories_model.dart';
@@ -160,19 +161,20 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
         }),
         showActions: true,
         actions: [
-          InkWell(
-              onTap: () => {goTo(context, hISTORYCHARTSROUTE)},
-              child: Container(
-                  margin: EdgeInsets.only(right: 15.w),
-                  decoration: ShapeDecoration(
-                    color: Color(0xff4969A2),
-                    shape: CircleBorder(),
-                  ),
-                  child: Container(
-                    width: 30.w,
-                    height: 30.h,
-                    child: Icon(Icons.bar_chart_rounded),
-                  ))),
+          if (ApiConstants.BASE_URL.toString().contains("digiservicesuat"))
+            InkWell(
+                onTap: () => {goTo(context, hISTORYCHARTSROUTE)},
+                child: Container(
+                    margin: EdgeInsets.only(right: 15.w),
+                    decoration: ShapeDecoration(
+                      color: Color(0xff4969A2),
+                      shape: CircleBorder(),
+                    ),
+                    child: Container(
+                      width: 30.w,
+                      height: 30.h,
+                      child: Icon(Icons.bar_chart_rounded),
+                    ))),
           InkWell(
               onTap: () => {goTo(context, cOMPLAINTLISTROUTE)},
               child: Container(
