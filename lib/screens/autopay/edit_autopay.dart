@@ -21,6 +21,7 @@ import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/date_picker_dialog.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/getAccountInfoCard.dart';
+import 'package:ebps/widget/get_biller_detail.dart';
 import 'package:ebps/widget/loader_overlay.dart';
 import 'package:ebps/widget/no_result.dart';
 import 'package:flutter/gestures.dart';
@@ -397,60 +398,106 @@ class _editAutopayState extends State<editAutopay> {
                                       indent: 10.w,
                                       endIndent: 10.w,
                                     ),
-                                    billDetailsContainer(
-                                        title: widget.savedBillerData
-                                            .pARAMETERS![0].pARAMETERNAME
+                                    billerdetail(
+                                        widget.savedBillerData.pARAMETERS![0]
+                                            .pARAMETERNAME
                                             .toString(),
-                                        subTitle: widget.savedBillerData
-                                            .pARAMETERS![0].pARAMETERVALUE
-                                            .toString()),
-                                    billDetailsContainer(
-                                        title: "Bill Name",
-                                        subTitle: widget
-                                            .savedBillerData.bILLNAME
-                                            .toString()),
+                                        widget.savedBillerData.pARAMETERS![0]
+                                            .pARAMETERVALUE
+                                            .toString(),
+                                        context),
+                                    billerdetail(
+                                        "Bill Name",
+                                        widget.savedBillerData.bILLNAME
+                                            .toString(),
+                                        context),
                                     if (widget.savedBillerData!.bILLDATE !=
                                         null)
-                                      billDetailsContainer(
-                                          title: "Bill Date",
-                                          subTitle: DateFormat.yMMMMd('en_US')
-                                              .format(DateTime.parse(widget
+                                      billerdetail(
+                                          "Bill Date",
+                                          DateFormat.yMMMMd('en_US').format(
+                                              DateTime.parse(widget
                                                       .savedBillerData!
                                                       .bILLDATE!
                                                       .toString()
                                                       .substring(0, 10))
                                                   .toLocal()
-                                                  .add(const Duration(
-                                                      days: 1)))),
+                                                  .add(
+                                                      const Duration(days: 1))),
+                                          context),
                                     if (widget.savedBillerData!.dUEDATE != null)
-                                      billDetailsContainer(
-                                          title: "Due Date",
-                                          subTitle: DateFormat.yMMMMd('en_US')
-                                              .format(DateTime.parse(widget
+                                      billerdetail(
+                                          "Due Date",
+                                          DateFormat.yMMMMd('en_US').format(
+                                              DateTime.parse(widget
                                                       .savedBillerData!.dUEDATE!
                                                       .toString()
                                                       .substring(0, 10))
                                                   .toLocal()
-                                                  .add(const Duration(
-                                                      days: 1)))),
+                                                  .add(
+                                                      const Duration(days: 1))),
+                                          context),
                                   ],
                                 )),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.only(left: 18.0.w, right: 18.w),
-                                child: Text(
-                                  "Limit: ₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}",
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xff1b438b),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
+                            // Align(
+                            //   alignment: Alignment.centerLeft,
+                            //   child: Padding(
+                            //     padding: EdgeInsets.only(
+                            //         left: 20.w, right: 18.w, bottom: 10.h),
+                            //     child: RichText(
+                            //       text: TextSpan(
+                            //         style: TextStyle(
+                            //           fontSize: 14.0.sp,
+                            //           color: Colors.black,
+                            //         ),
+                            //         children: <TextSpan>[
+                            //           TextSpan(
+                            //             style: TextStyle(
+                            //                 fontSize: 12.sp,
+                            //                 color: TXT_CLR_DEFAULT,
+                            //                 fontWeight: FontWeight.bold),
+                            //             text:
+                            //                 "Maximum Limit for Auto Payment: ",
+                            //           ),
+                            //           TextSpan(
+                            //             text:
+                            //                 "₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}",
+                            //             recognizer: TapGestureRecognizer()
+                            //               ..onTap = () {},
+                            //             style: TextStyle(
+                            //                 decoration: TextDecoration.none,
+                            //                 color: CLR_GREEN,
+                            //                 fontSize: 12.sp,
+                            //                 fontWeight: FontWeight.bold),
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    left: 24.w, right: 24.w, bottom: 10.h),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Maximum Limit for Auto Payment: ",
+                                      style: TextStyle(
+                                          fontSize: 11.sp,
+                                          color: TXT_CLR_DEFAULT,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      "₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}",
+                                      style: TextStyle(
+                                          fontSize: 11.sp,
+                                          color: CLR_GREEN,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                )),
                             Container(
                                 clipBehavior: Clip.hardEdge,
                                 width: double.infinity,
@@ -622,21 +669,63 @@ class _editAutopayState extends State<editAutopay> {
                                       ),
                                     ),
                                     if (maxAmountError)
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 20.w, top: 0.h, right: 20.w),
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            'Amount Should be Between  ₹ ${NumberFormat('#,##,##0.00').format(double.parse(lastPaidAmount.toString()))} to ₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}',
-                                            style: TextStyle(
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: CLR_ERROR,
+                                      if (double.parse(
+                                              maxAmountController.text.length >
+                                                      0
+                                                  ? maxAmountController.text
+                                                  : "0".toString()) >
+                                          double.parse(
+                                              maximumAmount.toString()))
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 20.w,
+                                              top: 0.h,
+                                              right: 20.w),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              'Entered Amount Should be not More than of ₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}',
+                                              style: TextStyle(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w600,
+                                                color: CLR_ERROR,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      else
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 20.w,
+                                              top: 0.h,
+                                              right: 20.w),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              'Entered Amount is less than Latest or Last Bill Amount of ₹ ${NumberFormat('#,##,##0.00').format(double.parse(lastPaidAmount.toString()))}',
+                                              style: TextStyle(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w600,
+                                                color: CLR_ERROR,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
+                                    // Padding(
+                                    //   padding: EdgeInsets.only(
+                                    //       left: 20.w, top: 0.h, right: 20.w),
+                                    //   child: Align(
+                                    //     alignment: Alignment.centerLeft,
+                                    //     child: Text(
+                                    //       'Amount Should be Between  ₹ ${NumberFormat('#,##,##0.00').format(double.parse(lastPaidAmount.toString()))} to ₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}',
+                                    //       style: TextStyle(
+                                    //         fontSize: 12.sp,
+                                    //         fontWeight: FontWeight.w600,
+                                    //         color: CLR_ERROR,
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                     Padding(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 16.w, vertical: 16.h),
@@ -697,7 +786,9 @@ class _editAutopayState extends State<editAutopay> {
                                     if (selectedDate == "30")
                                       Padding(
                                         padding: EdgeInsets.only(
-                                            left: 18.0.w, right: 18.w),
+                                            left: 18.0.w,
+                                            right: 18.w,
+                                            bottom: 10.h),
                                         child: Text(
                                           "In the month of February, payment will be done on 1st of March",
                                           style: TextStyle(
@@ -705,7 +796,7 @@ class _editAutopayState extends State<editAutopay> {
                                             fontWeight: FontWeight.w400,
                                             color: Color(0xff808080),
                                           ),
-                                          textAlign: TextAlign.center,
+                                          textAlign: TextAlign.left,
                                         ),
                                       ),
                                     if ((widget.autopayData!.pAYMENTDATE ==
@@ -799,7 +890,7 @@ class _editAutopayState extends State<editAutopay> {
                                         child: Text(
                                           "We Pay Your Bills Once ",
                                           style: TextStyle(
-                                            fontSize: 14.sp,
+                                            fontSize: 13.sp,
                                             fontWeight: FontWeight.w400,
                                             color: Color(0xff808080),
                                           ),
@@ -940,51 +1031,68 @@ class _editAutopayState extends State<editAutopay> {
                                           child: FlickrLoader(),
                                         ),
                                       ),
-                                    if (!isAccLoading && myAccounts!.length > 0)
+                                    if (!isAccLoading)
                                       Container(
                                         width: double.infinity,
                                         color: Colors.white,
-                                        child: GridView.builder(
-                                          shrinkWrap: true,
-                                          itemCount: accountInfo!.length,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            // itemCount: accountInfo!.length,
-                                            childAspectRatio: 5 / 3.1,
-                                            mainAxisSpacing: 10.0,
-                                          ),
-                                          itemBuilder: (context, index) {
-                                            return AccountInfoCard(
-                                              showAccDetails: true,
-                                              accountNumber: accountInfo![index]
-                                                  .accountNumber
-                                                  .toString(),
-                                              balance:
-                                                  accountInfo![index].balance,
-                                              onAccSelected: (Date) {
-                                                setState(() {
-                                                  selectedAcc = index;
-                                                });
-                                                // if (accountInfo![index].balance ==
-                                                //     "Unable to fetch balance") {
-                                                //   setState(() {
-                                                //     accError = true;
-                                                //   });
-                                                // } else {
-                                                //   setState(() {
-                                                //     accError = false;
-                                                //   });
-                                                // }
-                                              },
-                                              index: index,
-                                              AccErr: accError,
-                                              isSelected: selectedAcc,
-                                            );
-                                          },
-                                        ),
+                                        child: myAccounts!.isNotEmpty
+                                            ? GridView.builder(
+                                                shrinkWrap: true,
+                                                itemCount: accountInfo!.length,
+                                                physics:
+                                                    NeverScrollableScrollPhysics(),
+                                                gridDelegate:
+                                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2,
+                                                  // itemCount: accountInfo!.length,
+                                                  childAspectRatio: 5 / 3.1,
+                                                  mainAxisSpacing: 10.0,
+                                                ),
+                                                itemBuilder: (context, index) {
+                                                  return AccountInfoCard(
+                                                    showAccDetails: true,
+                                                    accountNumber:
+                                                        accountInfo![index]
+                                                            .accountNumber
+                                                            .toString(),
+                                                    balance: accountInfo![index]
+                                                        .balance,
+                                                    onAccSelected: (Date) {
+                                                      setState(() {
+                                                        selectedAcc = index;
+                                                      });
+                                                      // if (accountInfo![index].balance ==
+                                                      //     "Unable to fetch balance") {
+                                                      //   setState(() {
+                                                      //     accError = true;
+                                                      //   });
+                                                      // } else {
+                                                      //   setState(() {
+                                                      //     accError = false;
+                                                      //   });
+                                                      // }
+                                                    },
+                                                    index: index,
+                                                    AccErr: accError,
+                                                    isSelected: selectedAcc,
+                                                  );
+                                                },
+                                              )
+                                            : SizedBox(
+                                                height: 60.h,
+                                                child: Center(
+                                                  child: Text(
+                                                    "No Accounts Available",
+                                                    style: TextStyle(
+                                                      fontSize: 12.sp,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: CLR_GREY,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                              ),
                                       ),
 
                                     // if (accError)

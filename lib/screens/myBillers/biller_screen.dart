@@ -246,17 +246,14 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
         actions: showSearch
             ? null
             : [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: IconButton(
-                    splashRadius: 25,
-                    onPressed: () => setState(() {
-                      showSearch = true;
-                    }),
-                    icon: Icon(
-                      Icons.search,
-                      color: CLR_PRIMARY,
-                    ),
+                IconButton(
+                  splashRadius: 25,
+                  onPressed: () => setState(() {
+                    showSearch = true;
+                  }),
+                  icon: Icon(
+                    Icons.search,
+                    color: CLR_PRIMARY,
                   ),
                 ),
                 Tooltip(

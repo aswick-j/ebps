@@ -519,58 +519,73 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                         child: FlickrLoader(),
                       ),
                     ),
-                  if (!isAccLoading && myAccounts!.isNotEmpty)
+                  if (!isAccLoading)
                     Container(
                       width: double.infinity,
                       color: Colors.white,
-                      child: Column(
-                        children: [
-                          GridView.builder(
-                              shrinkWrap: true,
-                              itemCount: accountInfo!.length,
-                              physics: NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                // itemCount: accountInfo!.length,
-                                childAspectRatio: 5 / 3.1,
-                                mainAxisSpacing: 10.h,
-                                // mainAxisSpacing: 10,
+                      child: myAccounts!.isNotEmpty
+                          ? Column(
+                              children: [
+                                GridView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: accountInfo!.length,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      // itemCount: accountInfo!.length,
+                                      childAspectRatio: 5 / 3.1,
+                                      mainAxisSpacing: 10.h,
+                                      // mainAxisSpacing: 10,
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      return AccountInfoCard(
+                                        showAccDetails: true,
+                                        accountNumber: accountInfo![index]
+                                            .accountNumber
+                                            .toString(),
+                                        balance: accountInfo![index].balance,
+                                        onAccSelected: (Date) {
+                                          setState(() {
+                                            selectedAcc = index;
+                                          });
+                                          if (accountInfo![index].balance ==
+                                                  "Unable to fetch balance" ||
+                                              double.parse(accountInfo![index]
+                                                      .balance
+                                                      .toString()) <
+                                                  double.parse(widget.amount
+                                                      .toString())) {
+                                            setState(() {
+                                              accError = true;
+                                            });
+                                          } else {
+                                            setState(() {
+                                              accError = false;
+                                            });
+                                          }
+                                        },
+                                        AccErr: accError,
+                                        index: index,
+                                        isSelected: selectedAcc,
+                                      );
+                                    }),
+                              ],
+                            )
+                          : SizedBox(
+                              height: 60.h,
+                              child: Center(
+                                child: Text(
+                                  "No Accounts Available",
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: CLR_GREY,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                              itemBuilder: (context, index) {
-                                return AccountInfoCard(
-                                  showAccDetails: true,
-                                  accountNumber: accountInfo![index]
-                                      .accountNumber
-                                      .toString(),
-                                  balance: accountInfo![index].balance,
-                                  onAccSelected: (Date) {
-                                    setState(() {
-                                      selectedAcc = index;
-                                    });
-                                    if (accountInfo![index].balance ==
-                                            "Unable to fetch balance" ||
-                                        double.parse(accountInfo![index]
-                                                .balance
-                                                .toString()) <
-                                            double.parse(
-                                                widget.amount.toString())) {
-                                      setState(() {
-                                        accError = true;
-                                      });
-                                    } else {
-                                      setState(() {
-                                        accError = false;
-                                      });
-                                    }
-                                  },
-                                  AccErr: accError,
-                                  index: index,
-                                  isSelected: selectedAcc,
-                                );
-                              }),
-                        ],
-                      ),
+                            ),
                     ),
                   Container(
                     clipBehavior: Clip.hardEdge,

@@ -22,7 +22,7 @@ class _billDetailsContainerState extends State<billDetailsContainer> {
           Text(
             widget.title,
             style: TextStyle(
-              fontSize: 14.sp,
+              fontSize: 13.sp,
               fontWeight: FontWeight.w400,
               color: Color(0xff808080),
               height: 23 / 14,
@@ -35,7 +35,7 @@ class _billDetailsContainerState extends State<billDetailsContainer> {
               Text(
                 widget.subTitle,
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 13.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xff1b438b),
                 ),

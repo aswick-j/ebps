@@ -43,6 +43,7 @@ const ICON_BROADBAND = "packages/ebps/assets/icon/icon_broadband-postpaid.svg";
 const ICON_CABLE = "packages/ebps/assets/icon/icon_cable-tv.svg";
 const ICON_CLUBS = "packages/ebps/assets/icon/icon_clubs-associations.svg";
 const ICON_CREDIT_CARD = "packages/ebps/assets/icon/icon_credit-card.svg";
+const ICON_DONATION = "packages/ebps/assets/icon/icon_donation.svg";
 const ICON_DTH = "packages/ebps/assets/icon/icon_dth.svg";
 const ICON_EDUCATION = "packages/ebps/assets/icon/icon_education-fees.svg";
 const ICON_ELECTRICITY = "packages/ebps/assets/icon/icon_electricity.svg";
@@ -148,6 +149,9 @@ String CATEGORY_ICON(String? CATEGORY_NAME) {
       return ICON_CLUBS;
     case "credit card":
       return ICON_CREDIT_CARD;
+
+    case "donation":
+      return ICON_DONATION;
 
     case "dth":
       return ICON_DTH;

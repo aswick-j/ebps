@@ -22,12 +22,58 @@ class _HistoryChartsState extends State<HistoryCharts> {
   List<_ChartDataFilter> chartFilterdata = [];
 
   bool isColumnchart = false;
+  DateTimeRange? dateRange;
 
   @override
   void initState() {
     BlocProvider.of<HistoryCubit>(context).getCharts();
-
     super.initState();
+  }
+
+  void chartFilter() {
+    List<ChartData> ChartDataPast = chartdata!
+        .where((item) => DateTime.parse(item.cOMPLETIONDATE.toString())
+            .isBefore(
+                DateTime.parse(DateFormat('y-MM-d').format(dateRange!.end))))
+        .toList();
+    // List<ChartData> ChartDataFuture = ChartDataPast.where((item) =>
+    //         DateTime.parse(item.cOMPLETIONDATE.toString()).isAfter(
+    //             DateTime.parse(DateFormat('y-MM-d').format(dateRange!.start))))
+    //     .toList();
+  }
+
+  Future pickDateRange() async {
+    DateTimeRange? newDateRange = await showDateRangePicker(
+      saveText: "Select",
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      context: context,
+      initialDateRange: dateRange,
+      firstDate: DateTime(2016),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: CLR_PRIMARY,
+              onPrimary: Colors.white,
+              onSurface: CLR_SECONDARY,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: Colors.white,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    setState(() {
+      dateRange = newDateRange ?? dateRange;
+      if (dateRange != null) {
+        chartFilter();
+      }
+    });
   }
 
   void getChartData() {
@@ -69,7 +115,7 @@ class _HistoryChartsState extends State<HistoryCharts> {
     return Scaffold(
       appBar: MyAppBar(
         context: context,
-        title: 'Charts',
+        title: 'Transactions Summary',
         onLeadingTap: () => goBack(context),
         showActions: false,
         actions: [],
@@ -200,14 +246,28 @@ class _HistoryChartsState extends State<HistoryCharts> {
           );
         },
       )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            isColumnchart = !isColumnchart;
-          });
-        },
-        backgroundColor: CLR_PRIMARY,
-        child: Icon(isColumnchart ? Icons.pie_chart : Icons.bar_chart),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: "calDate",
+            onPressed: pickDateRange,
+            backgroundColor: CLR_PRIMARY,
+            child: Icon(Icons.calendar_month_outlined),
+          ),
+          SizedBox(
+            width: 20.w,
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              setState(() {
+                isColumnchart = !isColumnchart;
+              });
+            },
+            backgroundColor: CLR_PRIMARY,
+            child: Icon(isColumnchart ? Icons.pie_chart : Icons.bar_chart),
+          ),
+        ],
       ),
     );
   }
