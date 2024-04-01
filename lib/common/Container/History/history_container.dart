@@ -34,8 +34,8 @@ class HistoryContainer extends StatelessWidget {
       required this.handleStatus});
   static const colorizeColors = [
     CLR_GREEN,
-    CLR_PRIMARY,
-    CLR_PRIMARY,
+    Colors.lightGreen,
+    Colors.lightGreen,
     CLR_GREEN
   ];
   static const colorizeColors2 = [
