@@ -272,8 +272,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                       width: 45.w,
                                       child: Padding(
                                         padding: EdgeInsets.all(8.r),
-                                        child: SvgPicture.asset(
-                                            widget.iconPath),
+                                        child:
+                                            SvgPicture.asset(widget.iconPath),
                                       ),
                                     ),
                                     title: Padding(
@@ -293,7 +293,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                       .bILLERNAME
                                                       .toString(),
                                                   style: TextStyle(
-                                                      fontSize: 16.sp,
+                                                      fontSize: 14.sp,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Color(0xff191919),
@@ -310,7 +310,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                       .pARAMETERVALUE
                                                       .toString(),
                                                   style: TextStyle(
-                                                    fontSize: 14.sp,
+                                                    fontSize: 12.sp,
                                                     fontWeight: FontWeight.w400,
                                                     color: Color(0xff808080),
                                                   ),
@@ -1436,7 +1436,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                       .bILLERNAME
                                                       .toString(),
                                                   style: TextStyle(
-                                                    fontSize: 16.sp,
+                                                    fontSize: 14.sp,
                                                     fontWeight: FontWeight.bold,
                                                     color: Color(0xff191919),
                                                     overflow:
@@ -1455,7 +1455,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                         .pARAMETERVALUE
                                                         .toString(),
                                                     style: TextStyle(
-                                                      fontSize: 14.sp,
+                                                      fontSize: 12.sp,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                       color: Color(0xff808080),
@@ -2022,12 +2022,22 @@ Widget ModalMenu(
           onPressed();
         },
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SvgPicture.asset(iconPath!),
+            Container(
+              width: 20.w,
+              child: SvgPicture.asset(iconPath!),
+            ),
+            // SvgPicture.asset(iconPath!,
+            //     height: 15.h, width: 15.w, fit: BoxFit.contain),
             SizedBox(
               width: 15.w,
             ),
-            Text(title.toString())
+            Text(
+              title.toString(),
+              style: TextStyle(color: CLR_PRIMARY, fontSize: 14.sp),
+            )
           ],
         ),
       ));

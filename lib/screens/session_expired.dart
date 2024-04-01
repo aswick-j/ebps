@@ -56,21 +56,21 @@ class _SessionExpiredState extends State<SessionExpired> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 80),
+              SizedBox(height: 80.h),
               MyAppText(
-                data: 'Oh!',
-                size: 14.0,
+                data: 'Oh !',
+                size: 13.0.sp,
                 color: CLR_PRIMARY,
                 weight: FontWeight.bold,
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10.h),
               MyAppText(
-                data: 'Your Session is Expired. Please log in again',
-                size: 14.0,
+                data: 'Your Session is Expired. Please log in again.',
+                size: 13.0.sp,
                 color: CLR_PRIMARY,
                 weight: FontWeight.bold,
               ),
-              SizedBox(height: 80),
+              SizedBox(height: 40.h),
               MyAppButton(
                   onPressed: () {
                     AppTrigger.instance.goBackCallback!.call();
@@ -81,7 +81,7 @@ class _SessionExpiredState extends State<SessionExpired> {
                   buttonColor: CLR_PRIMARY,
                   buttonSizeX: 10.h,
                   buttonSizeY: 40.w,
-                  buttonTextSize: 14.sp,
+                  buttonTextSize: 12.sp,
                   buttonTextWeight: FontWeight.w500),
             ],
           )

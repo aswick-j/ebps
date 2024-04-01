@@ -168,7 +168,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                                         .bILLNAME
                                                         .toString(),
                                                     style: TextStyle(
-                                                      fontSize: 16.sp,
+                                                      fontSize: 14.sp,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Color(0xff191919),
@@ -185,7 +185,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                                           .bILLERNAME
                                                           .toString(),
                                                       style: TextStyle(
-                                                        fontSize: 14.sp,
+                                                        fontSize: 13.sp,
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         color:
@@ -200,7 +200,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                                           .pARAMETERVALUE
                                                           .toString(),
                                                       style: TextStyle(
-                                                        fontSize: 14.sp,
+                                                        fontSize: 12.sp,
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         color:
