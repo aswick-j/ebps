@@ -3,6 +3,8 @@ import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Container/Complaint/complaint_container.dart';
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/constants/colors.dart';
+import 'package:ebps/ebps.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/complaints_model.dart';
 import 'package:ebps/screens/nodataFound.dart';
@@ -65,7 +67,27 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
       appBar: MyAppBar(
         context: context,
         title: 'Raised Complaints',
-        actions: [],
+        actions: [
+          Tooltip(
+            textStyle: TextStyle(color: Colors.white, fontSize: 10.sp),
+            decoration: BoxDecoration(
+                color: CLR_BLUE_LITE,
+                borderRadius: BorderRadius.circular(8.0.r)),
+            triggerMode: TooltipTriggerMode.longPress,
+            showDuration: Duration(milliseconds: 20000),
+            margin: EdgeInsets.symmetric(horizontal: 10.w),
+            message: ApiConstants.BASE_URL.contains("digiservices.")
+                ? "V 1.0.0"
+                : "UAT - V 0.0.34",
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.info_outline,
+                // color: CLR_PRIMARY,
+              ),
+            ),
+          ),
+        ],
         onLeadingTap: () => Navigator.pop(context),
         showActions: true,
         onSearchTap: () => Navigator.pop(context),
