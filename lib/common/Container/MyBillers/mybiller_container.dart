@@ -11,6 +11,7 @@ import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/models/upcoming_dues_model.dart';
 import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/custom_switch.dart';
+import 'package:ebps/widget/marquee_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -288,20 +289,24 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  widget.savedBillersData
-                                                      .bILLERNAME
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Color(0xff191919),
-                                                      overflow: TextOverflow
-                                                          .ellipsis),
-                                                  textAlign: TextAlign.left,
-                                                  maxLines: 1,
-                                                  softWrap: false,
+                                                MarqueeWidget(
+                                                  direction: Axis.horizontal,
+                                                  child: Text(
+                                                    widget.savedBillersData
+                                                        .bILLERNAME
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color:
+                                                            Color(0xff191919),
+                                                        overflow: TextOverflow
+                                                            .ellipsis),
+                                                    textAlign: TextAlign.left,
+                                                    maxLines: 1,
+                                                    softWrap: false,
+                                                  ),
                                                 ),
                                                 Text(
                                                   widget

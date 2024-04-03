@@ -107,7 +107,7 @@ Future<Uint8List> generatePdf(
                         left: 20, top: 5.0, bottom: 10.0),
                     child: pw.Row(children: [
                       pw.Text(
-                        'Customer Name :',
+                        'Bill Name (Nick Name) :',
                         style: pw.TextStyle(
                           fontSize: 13.0,
                           font: font,
@@ -117,7 +117,7 @@ Future<Uint8List> generatePdf(
                       ),
                       pw.SizedBox(width: 10),
                       pw.Text(
-                        customerName != "-" ? customerName : "NA",
+                        BillName != "-" ? BillName : "NA",
                         style: pw.TextStyle(
                           fontSize: 13.0,
                           font: font,
@@ -170,16 +170,16 @@ Future<Uint8List> generatePdf(
                       //     pw.BoxDecoration(color: PdfColor.fromHex("f0f7ff")),
 
                       data: <List>[
-                        if (BillName != "-")
-                          [
-                            'Bill Name (Nick Name)',
-                            BillName,
-                          ],
+                        // if (customerName != "-")
+                        [
+                          'Consumer Name',
+                          customerName != "-" ? customerName : "NA",
+                        ],
                         [
                           'Name of the Biller',
                           BillerName,
                         ],
-                        if (billNumber != ParamValue)
+                        if (billNumber != "null" && billNumber != "-")
                           [
                             'Bill Number',
                             billNumber,

@@ -5,6 +5,7 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getBillerType.dart';
 import 'package:ebps/models/saved_biller_model.dart';
+import 'package:ebps/widget/marquee_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -94,14 +95,37 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              widget.savedBillersData!.bILLNAME.toString(),
-                              style: TextStyle(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.bold,
-                                color: TXT_CLR_PRIMARY,
+                            SizedBox(
+                              width: 210.w,
+                              child: MarqueeWidget(
+                                direction: Axis.horizontal,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      widget.savedBillersData!.bILLNAME
+                                          .toString(),
+                                      style: TextStyle(
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: TXT_CLR_PRIMARY,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    SizedBox(
+                                      width: 5.w,
+                                    ),
+                                    // Text(
+                                    //   "( ${widget.savedBillersData!.bILLNAME.toString()} )",
+                                    //   style: TextStyle(
+                                    //     fontSize: 10.sp,
+                                    //     fontWeight: FontWeight.bold,
+                                    //     color: CLR_BLUE_LITE,
+                                    //   ),
+                                    //   textAlign: TextAlign.left,
+                                    // ),
+                                  ],
+                                ),
                               ),
-                              textAlign: TextAlign.left,
                             ),
                             GestureDetector(
                                 onTap: () {

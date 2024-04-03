@@ -166,8 +166,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         'Credit Card',
                         'DTH',
                         'Electricity',
-                        'FastTag',
-                        'Loan',
+                        'Fastag',
+                        'LPG Gas',
                         'Mobile Postpaid',
                         'Water'
                       ],
@@ -218,13 +218,27 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                           ),
                         if (!isBillSerachLoading &&
-                            BillerSearchResults!.isEmpty)
+                            BillerSearchResults!.isEmpty &&
+                            _searchController.text.isNotEmpty)
                           // LottieAnimation(
                           //   aniJsonIndex: 1,
                           //   secondaryIndex: 0,
                           //   showTitle: false,
                           //   titleIndex: 0,
                           // ),
+                          Container(
+                            height: 500.h,
+                            child: NoDataFound(
+                              showRichText: true,
+                              message1: _searchController.text,
+                              message2:
+                                  "Try checking for typos or using complete words.",
+                              message: "No Billers Found for ",
+                            ),
+                          ),
+                        if (!isBillSerachLoading &&
+                            BillerSearchResults!.isEmpty &&
+                            _searchController.text.isEmpty)
                           Container(
                             height: 500.h,
                             child: NoDataFound(

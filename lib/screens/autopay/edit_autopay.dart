@@ -741,6 +741,8 @@ class _editAutopayState extends State<editAutopay> {
                                         //   FilteringTextInputFormatter.allow(
                                         //       RegExp(r'^[a-z0-9A-Z ]*'))
                                         // ],
+                                        style: TextStyle(fontSize: 13.sp),
+
                                         onChanged: (val) {},
                                         onTap: () {
                                           showDialog(
@@ -765,7 +767,8 @@ class _editAutopayState extends State<editAutopay> {
                                             fillColor: const Color(0xffD1D9E8)
                                                 .withOpacity(0.2),
                                             filled: true,
-                                            labelStyle: const TextStyle(
+                                            labelStyle: TextStyle(
+                                                fontSize: 15.sp,
                                                 color: Color(0xff1b438b)),
                                             enabledBorder:
                                                 const UnderlineInputBorder(

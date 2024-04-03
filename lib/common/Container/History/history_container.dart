@@ -5,7 +5,7 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/history_model.dart';
-import 'package:flutter/gestures.dart';
+import 'package:ebps/widget/marquee_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -285,38 +285,69 @@ class HistoryContainer extends StatelessWidget {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (historyData.billName != null)
-                    FittedBox(
-                      fit: BoxFit.contain,
-                      child: RichText(
-                        maxLines: 1,
-                        text: TextSpan(
+                  MarqueeWidget(
+                    direction: Axis.horizontal,
+                    // reverse: true,
+                    child: Row(
+                      children: [
+                        Text(
+                          historyData.billName == null
+                              ? "NA"
+                              : historyData.billName.toString(),
                           style: TextStyle(
-                            fontSize: 13.0.sp,
-                            color: Colors.black,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.bold,
+                            color: TXT_CLR_DEFAULT,
                           ),
-                          children: <TextSpan>[
-                            TextSpan(
-                                style: TextStyle(
-                                    fontSize: 13.sp,
-                                    color: TXT_CLR_DEFAULT,
-                                    fontWeight: FontWeight.w500),
-                                text: "${historyData.billName}  "),
-                            if (historyData.customerName != null)
-                              TextSpan(
-                                text: "( ${historyData.customerName} )",
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {},
-                                style: TextStyle(
-                                    decoration: TextDecoration.none,
-                                    color: TXT_CLR_PRIMARY,
-                                    fontSize: 11.sp,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                          ],
+                          textAlign: TextAlign.left,
                         ),
-                      ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        if (historyData.customerName != null)
+                          Text(
+                            "( ${historyData.customerName.toString()} )",
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.bold,
+                              color: CLR_BLUE_LITE,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                      ],
                     ),
+                  ),
+                  // FittedBox(
+                  //   fit: BoxFit.contain,
+                  //   child: RichText(
+                  //     maxLines: 1,
+                  //     text: TextSpan(
+                  //       style: TextStyle(
+                  //         fontSize: 13.0.sp,
+                  //         color: Colors.black,
+                  //       ),
+                  //       children: <TextSpan>[
+                  //         TextSpan(
+                  //             style: TextStyle(
+                  //                 fontSize: 13.sp,
+                  //                 color: TXT_CLR_DEFAULT,
+                  //                 fontWeight: FontWeight.w500),
+                  //             text: "${historyData.billName}  "),
+                  //         if (historyData.customerName != null)
+                  //           TextSpan(
+                  //             text: "( ${historyData.customerName} )",
+                  //             recognizer: TapGestureRecognizer()
+                  //               ..onTap = () {},
+                  //             style: TextStyle(
+                  //                 decoration: TextDecoration.none,
+                  //                 color: TXT_CLR_PRIMARY,
+                  //                 fontSize: 11.sp,
+                  //                 fontWeight: FontWeight.w500),
+                  //           ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   // if (historyData.billName != null ||
                   //     historyData.customerName != null)
                   SizedBox(

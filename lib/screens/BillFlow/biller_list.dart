@@ -187,6 +187,20 @@ class _BillerListState extends State<BillerList> {
                 ),
               ),
             ),
+            // Container(
+            // clipBehavior: Clip.hardEdge,
+            // width: double.infinity,
+            // // height: height(context) * 0.,
+            // margin: EdgeInsets.only(
+            //     left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
+            // decoration: BoxDecoration(
+            //   borderRadius: BorderRadius.circular(6.0.r + 2.r),
+            //   border: Border.all(
+            //     color: Color(0xffD1D9E8),
+            //     width: 1.0,
+            //   ),
+            // ),
+            // child:Text("")),
             Container(
                 clipBehavior: Clip.hardEdge,
                 width: double.infinity,
@@ -262,7 +276,11 @@ class _BillerListState extends State<BillerList> {
                       Container(
                         height: 500.h,
                         child: NoDataFound(
-                          message: "No Billers Found",
+                          showRichText: true,
+                          message1: _searchController.text,
+                          message2:
+                              "Try checking for typos or using complete words.",
+                          message: "No Billers Found for ",
                         ),
                       ),
                     if ((!isAllBiller && Allbiller!.isNotEmpty) ||

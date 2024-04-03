@@ -364,82 +364,100 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                           !isSavedBillerLoading)
                         Container(
                           child: getBillerDataWithUpcomingFirst(
-                                          savedBillerData)!
-                                      .length ==
-                                  0
-                              // ? LottieAnimation(
-                              //   aniJsonIndex: 0,
-                              //   secondaryIndex: 0,
-                              //   showTitle: false,
-                              //   titleIndex: 0,
-                              // )
+                                              savedBillerData)!
+                                          .length ==
+                                      0 &&
+                                  searchController.text.isEmpty
                               ? NoDataFound(
                                   message: "No Billers Found",
                                 )
-                              : ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  itemCount: getBillerDataWithUpcomingFirst(
-                                          savedBillerData)!
-                                      .length,
-                                  physics: const BouncingScrollPhysics(),
-                                  // controller: infiniteScrollController,
-                                  itemBuilder: (context, index) {
-                                    return MyBillersContainer(
-                                        upcomingDueData: getUpcmoingDueList(
-                                            getBillerDataWithUpcomingFirst(
-                                                    savedBillerData)![index]
-                                                .cUSTOMERBILLID),
-                                        buttonText: getAllAutopayList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) ==
-                                                0
-                                            ? "Autopay Paused"
-                                            : showAutopayButtonContent(
+                              : getBillerDataWithUpcomingFirst(savedBillerData)!
+                                              .length ==
+                                          0 &&
+                                      searchController.text.isNotEmpty
+                                  // ? LottieAnimation(
+                                  //   aniJsonIndex: 0,
+                                  //   secondaryIndex: 0,
+                                  //   showTitle: false,
+                                  //   titleIndex: 0,
+                                  // )
+                                  ? Container(
+                                      height: 500.h,
+                                      child: NoDataFound(
+                                        showRichText: true,
+                                        message1: searchController.text,
+                                        message2:
+                                            "Try checking for typos or using complete words.",
+                                        message: "No Billers Found for ",
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      itemCount: getBillerDataWithUpcomingFirst(
+                                              savedBillerData)!
+                                          .length,
+                                      physics: const BouncingScrollPhysics(),
+                                      // controller: infiniteScrollController,
+                                      itemBuilder: (context, index) {
+                                        return MyBillersContainer(
+                                            upcomingDueData: getUpcmoingDueList(
                                                 getBillerDataWithUpcomingFirst(
-                                                    savedBillerData)![index],
-                                              )
-                                                ? 'Autopay Enabled'
-                                                : "Enable Autopay",
-                                        iconPath: BILLER_LOGO(getBillerDataWithUpcomingFirst(
-                                                savedBillerData)![index]
-                                            .bILLERNAME
-                                            .toString()),
-                                        upcomingText: getupcomingAutoPaymentList(
+                                                        savedBillerData)![index]
+                                                    .cUSTOMERBILLID),
+                                            buttonText:
+                                                getAllAutopayList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) ==
+                                                        0
+                                                    ? "Autopay Paused"
+                                                    : showAutopayButtonContent(
+                                                        getBillerDataWithUpcomingFirst(
+                                                                savedBillerData)![
+                                                            index],
+                                                      )
+                                                        ? 'Autopay Enabled'
+                                                        : "Enable Autopay",
+                                            iconPath: BILLER_LOGO(
+                                                getBillerDataWithUpcomingFirst(
+                                                        savedBillerData)![index]
+                                                    .bILLERNAME
+                                                    .toString()),
+                                            upcomingText: getupcomingAutoPaymentList(
+                                                        getBillerDataWithUpcomingFirst(savedBillerData)![index]
+                                                            .cUSTOMERBILLID) !=
+                                                    ''
+                                                ? 'Upcoming Autopay'
+                                                : getUpcmoingDueData(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ""
+                                                    ? "Upcoming Due"
+                                                    : "",
+                                            upcomingTXT_CLR_DEFAULT: getupcomingAutoPaymentList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ''
+                                                ? Color(0xff00AB44)
+                                                : getUpcmoingDueData(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ""
+                                                    ? CLR_ASTRIX
+                                                    : Colors.black,
+                                            showButton: showAutopayBtn(getBillerDataWithUpcomingFirst(savedBillerData)![index]),
+                                            containerBorderColor: Color(0xffD1D9E8),
+                                            buttonColor: Color.fromARGB(255, 255, 255, 255),
+                                            buttonTxtColor: getAllAutopayList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) == 0
+                                                ? Color.fromARGB(255, 171, 39, 30)
+                                                : showAutopayButtonContent(
                                                     getBillerDataWithUpcomingFirst(
-                                                            savedBillerData)![index]
-                                                        .cUSTOMERBILLID) !=
-                                                ''
-                                            ? 'Upcoming Autopay'
-                                            : getUpcmoingDueData(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ""
-                                                ? "Upcoming Due"
-                                                : "",
-                                        upcomingTXT_CLR_DEFAULT: getupcomingAutoPaymentList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ''
-                                            ? Color(0xff00AB44)
-                                            : getUpcmoingDueData(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ""
-                                                ? CLR_ASTRIX
-                                                : Colors.black,
-                                        showButton: showAutopayBtn(getBillerDataWithUpcomingFirst(savedBillerData)![index]),
-                                        containerBorderColor: Color(0xffD1D9E8),
-                                        buttonColor: Color.fromARGB(255, 255, 255, 255),
-                                        buttonTxtColor: getAllAutopayList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) == 0
-                                            ? Color.fromARGB(255, 171, 39, 30)
-                                            : showAutopayButtonContent(
-                                                getBillerDataWithUpcomingFirst(
-                                                    savedBillerData)![index],
-                                              )
-                                                ? Color.fromARGB(255, 16, 113, 55)
-                                                : CLR_PRIMARY,
-                                        buttonTextWeight: FontWeight.bold,
-                                        buttonBorderColor: showAutopayButtonContent(
-                                          getBillerDataWithUpcomingFirst(
-                                              savedBillerData)![index],
-                                        )
-                                            ? Color(0xff00AB44)
-                                            : Color(0xff768eb9),
-                                        SavedinputParameters: getBillerDataWithUpcomingFirst(savedBillerData)![index].pARAMETERS,
-                                        savedBillersData: getBillerDataWithUpcomingFirst(savedBillerData)![index],
-                                        allautoPaymentList: allautoPaymentList);
-                                  },
-                                ),
+                                                            savedBillerData)![
+                                                        index],
+                                                  )
+                                                    ? Color.fromARGB(255, 16, 113, 55)
+                                                    : CLR_PRIMARY,
+                                            buttonTextWeight: FontWeight.bold,
+                                            buttonBorderColor: showAutopayButtonContent(
+                                              getBillerDataWithUpcomingFirst(
+                                                  savedBillerData)![index],
+                                            )
+                                                ? Color(0xff00AB44)
+                                                : Color(0xff768eb9),
+                                            SavedinputParameters: getBillerDataWithUpcomingFirst(savedBillerData)![index].pARAMETERS,
+                                            savedBillersData: getBillerDataWithUpcomingFirst(savedBillerData)![index],
+                                            allautoPaymentList: allautoPaymentList);
+                                      },
+                                    ),
                         ),
                       if (isUpcomingDuesLoading ||
                           isUpcomingAutopaymentLoading ||

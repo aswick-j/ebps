@@ -4,11 +4,12 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
+import 'package:ebps/widget/marquee_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-class MainContainer extends StatelessWidget {
+class MainContainer extends StatefulWidget {
   final String titleText;
   final String subtitleText;
   final String subtitleText2;
@@ -49,13 +50,18 @@ class MainContainer extends StatelessWidget {
   });
 
   @override
+  State<MainContainer> createState() => _MainContainerState();
+}
+
+class _MainContainerState extends State<MainContainer> {
+  @override
   Widget build(BuildContext context) {
     getAllAutopayList(customerBILLID) {
       try {
         List<AllConfigurationsData>? autopayDATA = [];
-        for (int i = 0; i < autopayData!.length; i++) {
-          for (int j = 0; j < autopayData![i].data!.length; j++) {
-            autopayDATA.add(autopayData![i].data![j]);
+        for (int i = 0; i < widget.autopayData!.length; i++) {
+          for (int j = 0; j < widget.autopayData![i].data!.length; j++) {
+            autopayDATA.add(widget.autopayData![i].data![j]);
           }
         }
 
@@ -88,26 +94,46 @@ class MainContainer extends StatelessWidget {
                   width: 45.w,
                   child: Padding(
                     padding: EdgeInsets.all(8.w),
-                    child: SvgPicture.asset(iconPath),
+                    child: SvgPicture.asset(widget.iconPath),
                   ),
                 ),
                 title: Padding(
                   padding: EdgeInsets.only(bottom: 5.h),
-                  child: Text(
-                    titleText,
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.bold,
-                      color: TXT_CLR_PRIMARY,
+                  child: MarqueeWidget(
+                    direction: Axis.horizontal,
+                    // reverse: true,
+                    child: Row(
+                      children: [
+                        Text(
+                          widget.titleText,
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.bold,
+                            color: TXT_CLR_PRIMARY,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        // Text(
+                        //   "( ${widget.titleText} )",
+                        //   style: TextStyle(
+                        //     fontSize: 10.sp,
+                        //     fontWeight: FontWeight.bold,
+                        //     color: CLR_BLUE_LITE,
+                        //   ),
+                        //   textAlign: TextAlign.left,
+                        // ),
+                      ],
                     ),
-                    textAlign: TextAlign.left,
                   ),
                 ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      subtitleText,
+                      widget.subtitleText,
                       style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
@@ -119,7 +145,7 @@ class MainContainer extends StatelessWidget {
                       height: 5.h,
                     ),
                     Text(
-                      subtitleText2,
+                      widget.subtitleText2,
                       style: TextStyle(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w400,
@@ -152,7 +178,7 @@ class MainContainer extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          amount,
+                          widget.amount,
                           style: TextStyle(
                             fontSize: 13.sp,
                             fontWeight: FontWeight.bold,
@@ -160,7 +186,7 @@ class MainContainer extends StatelessWidget {
                           ),
                           textAlign: TextAlign.left,
                         ),
-                        if (dateText != "-")
+                        if (widget.dateText != "-")
                           Row(
                             children: [
                               SvgPicture.asset(ICON_CALENDAR),
@@ -168,7 +194,7 @@ class MainContainer extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                dateText,
+                                widget.dateText,
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w400,
@@ -184,12 +210,12 @@ class MainContainer extends StatelessWidget {
                       children: [
                         MyAppButton(
                             onPressed: () {
-                              onPressed();
+                              widget.onPressed();
                             },
-                            buttonText: buttonText,
-                            buttonTxtColor: buttonTxtColor,
-                            buttonBorderColor: buttonBorderColor,
-                            buttonColor: buttonColor,
+                            buttonText: widget.buttonText,
+                            buttonTxtColor: widget.buttonTxtColor,
+                            buttonBorderColor: widget.buttonBorderColor,
+                            buttonColor: widget.buttonColor,
                             buttonSizeX: 10.h,
                             buttonSizeY: 27.w,
                             buttonTextSize: 10.sp,
@@ -206,7 +232,7 @@ class MainContainer extends StatelessWidget {
           right: 17.w,
           child: InkWell(
             onTap: () {
-              if (buttonText != "Pay Now") {
+              if (widget.buttonText != "Pay Now") {
                 showDialog(
                     context: context,
                     barrierDismissible: false,
@@ -265,8 +291,8 @@ class MainContainer extends StatelessWidget {
                                                   .day
                                                   .toString();
                                               if (todayDate ==
-                                                  getAllAutopayList(
-                                                          customerBillID)!
+                                                  getAllAutopayList(widget
+                                                          .customerBillID)!
                                                       .pAYMENTDATE
                                                       .toString()) {
                                                 showDialog(
@@ -353,20 +379,23 @@ class MainContainer extends StatelessWidget {
                                                     });
                                               } else {
                                                 goBack(context);
-                                                goToData(ctx, oTPPAGEROUTE, {
+                                                goToData(
+                                                    widget.ctx, oTPPAGEROUTE, {
                                                   "from": 'delete-auto-pay',
                                                   "templateName":
                                                       "delete-auto-pay",
-                                                  "BillerName": subtitleText,
-                                                  "BillName": titleText,
+                                                  "BillerName":
+                                                      widget.subtitleText,
+                                                  "BillName": widget.titleText,
                                                   "autopayData":
-                                                      getAllAutopayList(
-                                                          customerBillID),
-                                                  "context": ctx,
+                                                      getAllAutopayList(widget
+                                                          .customerBillID),
+                                                  "context": widget.ctx,
                                                   "data": {
-                                                    "billerName": subtitleText,
+                                                    "billerName":
+                                                        widget.subtitleText,
                                                     "cUSTOMERBILLID":
-                                                        customerBillID,
+                                                        widget.customerBillID,
                                                   }
                                                 });
                                               }
@@ -448,7 +477,7 @@ class MainContainer extends StatelessWidget {
                                       Expanded(
                                         child: MyAppButton(
                                             onPressed: () async {
-                                              onDeleteUpPressed();
+                                              widget.onDeleteUpPressed();
                                               goBack(context);
                                             },
                                             buttonText: "Delete",

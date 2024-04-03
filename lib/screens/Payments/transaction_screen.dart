@@ -351,8 +351,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                         "Equitas - Mobile banking",
                                                         DateFormat("dd/MM/yyyy | hh:mm a").format(DateTime.now()).toString(),
                                                         tnxResponse!.reason.toString(),
-                                                        "-",
-                                                        "-"),
+                                                        tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse!.customerName.toString(),
+                                                        tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse!.billNumber.toString()),
                                               );
                                               // Future.microtask(() =>
                                               //     Navigator.push(
