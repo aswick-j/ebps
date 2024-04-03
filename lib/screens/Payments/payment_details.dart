@@ -147,38 +147,41 @@ class _PaymentDetailsState extends State<PaymentDetails> {
         barrierDismissible: true,
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            content: AnimatedDialog(
-                showImgIcon: false,
-                title: "Unable to Process Payment",
-                subTitle:
-                    "We're sorry.We were unable to process your payment.Please try again later",
-                showSub: true,
-                shapeColor: CLR_ERROR,
-                child: Icon(
-                  Icons.close_rounded,
-                  color: Colors.white,
-                )),
-            actions: <Widget>[
-              Align(
-                alignment: Alignment.center,
-                child: MyAppButton(
-                    onPressed: () {
-                      goBack(context);
-                    },
-                    buttonText: "Okay",
-                    buttonTxtColor: BTN_CLR_ACTIVE,
-                    buttonBorderColor: Colors.transparent,
-                    buttonColor: CLR_PRIMARY,
-                    buttonSizeX: 10,
-                    buttonSizeY: 40,
-                    buttonTextSize: 14,
-                    buttonTextWeight: FontWeight.w500),
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
               ),
-            ],
+              content: AnimatedDialog(
+                  showImgIcon: false,
+                  title: "Unable to Process Payment",
+                  subTitle:
+                      "We're sorry.We were unable to process your payment.Please try again later",
+                  showSub: true,
+                  shapeColor: CLR_ERROR,
+                  child: Icon(
+                    Icons.close_rounded,
+                    color: Colors.white,
+                  )),
+              actions: <Widget>[
+                Align(
+                  alignment: Alignment.center,
+                  child: MyAppButton(
+                      onPressed: () {
+                        goBack(context);
+                      },
+                      buttonText: "Okay",
+                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonBorderColor: Colors.transparent,
+                      buttonColor: CLR_PRIMARY,
+                      buttonSizeX: 10,
+                      buttonSizeY: 40,
+                      buttonTextSize: 14,
+                      buttonTextWeight: FontWeight.w500),
+                ),
+              ],
+            ),
           );
         },
       );

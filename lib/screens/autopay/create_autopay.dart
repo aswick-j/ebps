@@ -2,7 +2,6 @@ import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
-import 'package:ebps/common/Container/MyBillers/bill_details_container.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
@@ -60,7 +59,7 @@ class _createAutopayState extends State<createAutopay> {
 
   bool isAccLoading = true;
   String? maximumAmount = "0";
-
+  bool isMaxAmountEmpty = false;
   List<AccountsData>? accountInfo = [];
 
   dynamic maxAmountController = TextEditingController();
@@ -228,7 +227,8 @@ class _createAutopayState extends State<createAutopay> {
                                       width: 50.w,
                                       child: Padding(
                                         padding: EdgeInsets.all(8.0.r),
-                                        child: SvgPicture.asset(LOGO_BBPS),
+                                        child: SvgPicture.asset(BILLER_LOGO(
+                                            widget.billerName.toString())),
                                       ),
                                     ),
                                     title: Text(
@@ -243,7 +243,7 @@ class _createAutopayState extends State<createAutopay> {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     subtitle: Text(
-                                      widget.billName,
+                                      widget.categoryName,
                                       style: TextStyle(
                                         fontSize: 13.sp,
                                         fontWeight: FontWeight.w400,
@@ -450,6 +450,16 @@ class _createAutopayState extends State<createAutopay> {
                                       onChanged: (val) {
                                         if (val.isNotEmpty) {
                                           if (double.parse(val.toString()) >
+                                              double.parse("0.00".toString())) {
+                                            setState(() {
+                                              isMaxAmountEmpty = false;
+                                            });
+                                          } else {
+                                            isMaxAmountEmpty = true;
+                                          }
+                                          // isMaxAmountEmpty = false;
+
+                                          if (double.parse(val.toString()) >
                                                   double.parse(maximumAmount
                                                       .toString()) ||
                                               double.parse(val.toString()) <
@@ -466,13 +476,14 @@ class _createAutopayState extends State<createAutopay> {
                                           }
                                         } else {
                                           setState(() {
+                                            isMaxAmountEmpty = true;
                                             maxAmountError = true;
                                           });
                                         }
                                       },
                                       validator: (inputValue) {
                                         if (inputValue!.isEmpty) {
-                                          return "Bill Name Should Not be Empty";
+                                          return "";
                                         }
                                       },
                                       decoration: InputDecoration(
@@ -501,7 +512,23 @@ class _createAutopayState extends State<createAutopay> {
                                     ),
                                   ),
                                   if (maxAmountError)
-                                    if (double.parse(
+                                    if (isMaxAmountEmpty)
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 20.w, top: 0.h, right: 20.w),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            'Maximum Amount Can\'t be Empty or Zero.',
+                                            style: TextStyle(
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w600,
+                                              color: CLR_ERROR,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    else if (double.parse(
                                             maxAmountController.text.length > 0
                                                 ? maxAmountController.text
                                                 : "0".toString()) >
@@ -1039,7 +1066,7 @@ class _createAutopayState extends State<createAutopay> {
                         child: MyAppButton(
                             onPressed: () async {
                               if (selectedAcc != null &&
-                                  !maxAmountError &&
+                                  !isMaxAmountEmpty &&
                                   !(selectedDate == todayDate &&
                                       activatesFrom == "Immediately")) {
                                 Map<String, dynamic> decodedToken =
@@ -1083,7 +1110,7 @@ class _createAutopayState extends State<createAutopay> {
                             buttonTxtColor: BTN_CLR_ACTIVE,
                             buttonBorderColor: Colors.transparent,
                             buttonColor: selectedAcc != null &&
-                                    !maxAmountError &&
+                                    !isMaxAmountEmpty &&
                                     !(selectedDate == todayDate &&
                                         activatesFrom == "Immediately")
                                 ? CLR_PRIMARY

@@ -254,53 +254,56 @@ class _OtpScreenState extends State<OtpScreen> {
         barrierDismissible: false,
         context: context,
         builder: (BuildContext ctx) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            content: AnimatedDialog(
-                showImgIcon: Success ? true : false,
-                showRichText: true,
-                RichTextContent: Success
-                    ? getPopupSuccessMsg(
-                        index, BillerName.toString(), BillName.toString())
-                    : getPopupFailedMsg(
-                        index, BillerName.toString(), BillName.toString()),
-                subTitle: "",
-                child: Icon(
-                  Icons.check,
-                  color: Colors.white,
-                ),
-                showSub: false,
-                shapeColor: Success ? CLR_GREEN : CLR_ERROR),
-            actions: <Widget>[
-              Align(
-                alignment: Alignment.center,
-                child: MyAppButton(
-                    onPressed: () {
-                      goBack(ctx);
-
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        Navigator.of(context).pushAndRemoveUntil(
-                          CupertinoPageRoute(
-                              fullscreenDialog: true,
-                              builder: (context) => BottomNavBar(
-                                    SelectedIndex: 1,
-                                  )),
-                          (Route<dynamic> route) => false,
-                        );
-                      });
-                    },
-                    buttonText: "Okay",
-                    buttonTxtColor: BTN_CLR_ACTIVE,
-                    buttonBorderColor: Colors.transparent,
-                    buttonColor: CLR_PRIMARY,
-                    buttonSizeX: 10,
-                    buttonSizeY: 40,
-                    buttonTextSize: 14,
-                    buttonTextWeight: FontWeight.w500),
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
               ),
-            ],
+              content: AnimatedDialog(
+                  showImgIcon: Success ? true : false,
+                  showRichText: true,
+                  RichTextContent: Success
+                      ? getPopupSuccessMsg(
+                          index, BillerName.toString(), BillName.toString())
+                      : getPopupFailedMsg(
+                          index, BillerName.toString(), BillName.toString()),
+                  subTitle: "",
+                  child: Icon(
+                    Icons.check,
+                    color: Colors.white,
+                  ),
+                  showSub: false,
+                  shapeColor: Success ? CLR_GREEN : CLR_ERROR),
+              actions: <Widget>[
+                Align(
+                  alignment: Alignment.center,
+                  child: MyAppButton(
+                      onPressed: () {
+                        goBack(ctx);
+
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            CupertinoPageRoute(
+                                fullscreenDialog: true,
+                                builder: (context) => BottomNavBar(
+                                      SelectedIndex: 1,
+                                    )),
+                            (Route<dynamic> route) => false,
+                          );
+                        });
+                      },
+                      buttonText: "Okay",
+                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonBorderColor: Colors.transparent,
+                      buttonColor: CLR_PRIMARY,
+                      buttonSizeX: 10,
+                      buttonSizeY: 40,
+                      buttonTextSize: 14,
+                      buttonTextWeight: FontWeight.w500),
+                ),
+              ],
+            ),
           );
         },
       );
@@ -329,49 +332,52 @@ class _OtpScreenState extends State<OtpScreen> {
         barrierDismissible: false,
         context: context,
         builder: (BuildContext ctx) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            content: AnimatedDialog(
-                showImgIcon: false,
-                title: "Unable to Process Payment",
-                subTitle:
-                    "We're sorry. We were unable to process your payment. Please try again later.",
-                child: Icon(
-                  Icons.error_outline,
-                  color: Colors.white,
-                ),
-                showSub: true,
-                shapeColor: CLR_ERROR),
-            actions: <Widget>[
-              Align(
-                alignment: Alignment.center,
-                child: MyAppButton(
-                    onPressed: () {
-                      goBack(ctx);
-
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        Navigator.of(context).pushAndRemoveUntil(
-                          CupertinoPageRoute(
-                              fullscreenDialog: true,
-                              builder: (context) => BottomNavBar(
-                                    SelectedIndex: 0,
-                                  )),
-                          (Route<dynamic> route) => false,
-                        );
-                      });
-                    },
-                    buttonText: "Okay",
-                    buttonTxtColor: BTN_CLR_ACTIVE,
-                    buttonBorderColor: Colors.transparent,
-                    buttonColor: CLR_PRIMARY,
-                    buttonSizeX: 10,
-                    buttonSizeY: 40,
-                    buttonTextSize: 14,
-                    buttonTextWeight: FontWeight.w500),
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
               ),
-            ],
+              content: AnimatedDialog(
+                  showImgIcon: false,
+                  title: "Unable to Process Payment",
+                  subTitle:
+                      "We're sorry. We were unable to process your payment. Please try again later.",
+                  child: Icon(
+                    Icons.error_outline,
+                    color: Colors.white,
+                  ),
+                  showSub: true,
+                  shapeColor: CLR_ERROR),
+              actions: <Widget>[
+                Align(
+                  alignment: Alignment.center,
+                  child: MyAppButton(
+                      onPressed: () {
+                        goBack(ctx);
+
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            CupertinoPageRoute(
+                                fullscreenDialog: true,
+                                builder: (context) => BottomNavBar(
+                                      SelectedIndex: 0,
+                                    )),
+                            (Route<dynamic> route) => false,
+                          );
+                        });
+                      },
+                      buttonText: "Okay",
+                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonBorderColor: Colors.transparent,
+                      buttonColor: CLR_PRIMARY,
+                      buttonSizeX: 10,
+                      buttonSizeY: 40,
+                      buttonTextSize: 14,
+                      buttonTextWeight: FontWeight.w500),
+                ),
+              ],
+            ),
           );
         },
       );
@@ -382,48 +388,52 @@ class _OtpScreenState extends State<OtpScreen> {
         barrierDismissible: false,
         context: context,
         builder: (BuildContext ctx) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            content: AnimatedDialog(
-                showImgIcon: false,
-                title: "Your Payment is Pending",
-                subTitle: "Please, Visit History Section For More Information",
-                child: Icon(
-                  Icons.error_outline,
-                  color: Colors.white,
-                ),
-                showSub: true,
-                shapeColor: Colors.orange),
-            actions: <Widget>[
-              Align(
-                alignment: Alignment.center,
-                child: MyAppButton(
-                    onPressed: () {
-                      goBack(ctx);
-
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        Navigator.of(context).pushAndRemoveUntil(
-                          CupertinoPageRoute(
-                              fullscreenDialog: true,
-                              builder: (context) => BottomNavBar(
-                                    SelectedIndex: 2,
-                                  )),
-                          (Route<dynamic> route) => false,
-                        );
-                      });
-                    },
-                    buttonText: "Okay",
-                    buttonTxtColor: BTN_CLR_ACTIVE,
-                    buttonBorderColor: Colors.transparent,
-                    buttonColor: CLR_PRIMARY,
-                    buttonSizeX: 10,
-                    buttonSizeY: 40,
-                    buttonTextSize: 14,
-                    buttonTextWeight: FontWeight.w500),
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
               ),
-            ],
+              content: AnimatedDialog(
+                  showImgIcon: false,
+                  title: "Your Payment is Pending",
+                  subTitle:
+                      "Please, Visit History Section For More Information",
+                  child: Icon(
+                    Icons.error_outline,
+                    color: Colors.white,
+                  ),
+                  showSub: true,
+                  shapeColor: Colors.orange),
+              actions: <Widget>[
+                Align(
+                  alignment: Alignment.center,
+                  child: MyAppButton(
+                      onPressed: () {
+                        goBack(ctx);
+
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            CupertinoPageRoute(
+                                fullscreenDialog: true,
+                                builder: (context) => BottomNavBar(
+                                      SelectedIndex: 2,
+                                    )),
+                            (Route<dynamic> route) => false,
+                          );
+                        });
+                      },
+                      buttonText: "Okay",
+                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonBorderColor: Colors.transparent,
+                      buttonColor: CLR_PRIMARY,
+                      buttonSizeX: 10,
+                      buttonSizeY: 40,
+                      buttonTextSize: 14,
+                      buttonTextWeight: FontWeight.w500),
+                ),
+              ],
+            ),
           );
         },
       );
@@ -497,48 +507,51 @@ class _OtpScreenState extends State<OtpScreen> {
                   barrierDismissible: false,
                   context: context,
                   builder: (BuildContext ctx) {
-                    return AlertDialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      content: AnimatedDialog(
-                          showImgIcon: false,
-                          title: state.message.toString(),
-                          subTitle: "",
-                          child: Icon(
-                            Icons.error_outline,
-                            color: Colors.white,
-                          ),
-                          showSub: false,
-                          shapeColor: Colors.orange),
-                      actions: <Widget>[
-                        Align(
-                          alignment: Alignment.center,
-                          child: MyAppButton(
-                              onPressed: () {
-                                goBack(ctx);
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((_) {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                    CupertinoPageRoute(
-                                        fullscreenDialog: true,
-                                        builder: (context) => BottomNavBar(
-                                              SelectedIndex: 0,
-                                            )),
-                                    (Route<dynamic> route) => false,
-                                  );
-                                });
-                              },
-                              buttonText: "Okay",
-                              buttonTxtColor: BTN_CLR_ACTIVE,
-                              buttonBorderColor: Colors.transparent,
-                              buttonColor: CLR_PRIMARY,
-                              buttonSizeX: 10,
-                              buttonSizeY: 40,
-                              buttonTextSize: 14,
-                              buttonTextWeight: FontWeight.w500),
+                    return WillPopScope(
+                      onWillPop: () async => false,
+                      child: AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
                         ),
-                      ],
+                        content: AnimatedDialog(
+                            showImgIcon: false,
+                            title: state.message.toString(),
+                            subTitle: "",
+                            child: Icon(
+                              Icons.error_outline,
+                              color: Colors.white,
+                            ),
+                            showSub: false,
+                            shapeColor: Colors.orange),
+                        actions: <Widget>[
+                          Align(
+                            alignment: Alignment.center,
+                            child: MyAppButton(
+                                onPressed: () {
+                                  goBack(ctx);
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                      CupertinoPageRoute(
+                                          fullscreenDialog: true,
+                                          builder: (context) => BottomNavBar(
+                                                SelectedIndex: 0,
+                                              )),
+                                      (Route<dynamic> route) => false,
+                                    );
+                                  });
+                                },
+                                buttonText: "Okay",
+                                buttonTxtColor: BTN_CLR_ACTIVE,
+                                buttonBorderColor: Colors.transparent,
+                                buttonColor: CLR_PRIMARY,
+                                buttonSizeX: 10,
+                                buttonSizeY: 40,
+                                buttonTextSize: 14,
+                                buttonTextWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
                     );
                   },
                 );
@@ -569,38 +582,41 @@ class _OtpScreenState extends State<OtpScreen> {
                 barrierDismissible: false,
                 context: context,
                 builder: (BuildContext context) {
-                  return AlertDialog(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    content: AnimatedDialog(
-                        showImgIcon: true,
-                        title: "Your Payment Has Been Successful.",
-                        subTitle: "",
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white,
-                        ),
-                        shapeColor: CLR_GREEN),
-                    actions: <Widget>[
-                      Align(
-                        alignment: Alignment.center,
-                        child: MyAppButton(
-                            onPressed: () {
-                              goBack(context);
-
-                              handleRedirect();
-                            },
-                            buttonText: "Okay",
-                            buttonTxtColor: BTN_CLR_ACTIVE,
-                            buttonBorderColor: Colors.transparent,
-                            buttonColor: CLR_PRIMARY,
-                            buttonSizeX: 10.h,
-                            buttonSizeY: 40.w,
-                            buttonTextSize: 14.sp,
-                            buttonTextWeight: FontWeight.w500),
+                  return WillPopScope(
+                    onWillPop: () async => false,
+                    child: AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
                       ),
-                    ],
+                      content: AnimatedDialog(
+                          showImgIcon: true,
+                          title: "Your Payment Has Been Successful.",
+                          subTitle: "",
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                          ),
+                          shapeColor: CLR_GREEN),
+                      actions: <Widget>[
+                        Align(
+                          alignment: Alignment.center,
+                          child: MyAppButton(
+                              onPressed: () {
+                                goBack(context);
+
+                                handleRedirect();
+                              },
+                              buttonText: "Okay",
+                              buttonTxtColor: BTN_CLR_ACTIVE,
+                              buttonBorderColor: Colors.transparent,
+                              buttonColor: CLR_PRIMARY,
+                              buttonSizeX: 10.h,
+                              buttonSizeY: 40.w,
+                              buttonTextSize: 14.sp,
+                              buttonTextWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
                   );
                 },
               );
@@ -631,38 +647,41 @@ class _OtpScreenState extends State<OtpScreen> {
                     barrierDismissible: false,
                     context: context,
                     builder: (BuildContext context) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        content: AnimatedDialog(
-                            showImgIcon: false,
-                            title: "Your Payment Has Been Failed.",
-                            subTitle: "",
-                            child: Icon(
-                              Icons.close_rounded,
-                              color: Colors.white,
-                            ),
-                            shapeColor: CLR_ERROR),
-                        actions: <Widget>[
-                          Align(
-                            alignment: Alignment.center,
-                            child: MyAppButton(
-                                onPressed: () {
-                                  goBack(context);
-
-                                  handleRedirect();
-                                },
-                                buttonText: "Okay",
-                                buttonTxtColor: BTN_CLR_ACTIVE,
-                                buttonBorderColor: Colors.transparent,
-                                buttonColor: CLR_PRIMARY,
-                                buttonSizeX: 10,
-                                buttonSizeY: 40,
-                                buttonTextSize: 14,
-                                buttonTextWeight: FontWeight.w500),
+                      return WillPopScope(
+                        onWillPop: () async => false,
+                        child: AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.r),
                           ),
-                        ],
+                          content: AnimatedDialog(
+                              showImgIcon: false,
+                              title: "Your Payment Has Been Failed.",
+                              subTitle: "",
+                              child: Icon(
+                                Icons.close_rounded,
+                                color: Colors.white,
+                              ),
+                              shapeColor: CLR_ERROR),
+                          actions: <Widget>[
+                            Align(
+                              alignment: Alignment.center,
+                              child: MyAppButton(
+                                  onPressed: () {
+                                    goBack(context);
+
+                                    handleRedirect();
+                                  },
+                                  buttonText: "Okay",
+                                  buttonTxtColor: BTN_CLR_ACTIVE,
+                                  buttonBorderColor: Colors.transparent,
+                                  buttonColor: CLR_PRIMARY,
+                                  buttonSizeX: 10,
+                                  buttonSizeY: 40,
+                                  buttonTextSize: 14,
+                                  buttonTextWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
                       );
                     },
                   );

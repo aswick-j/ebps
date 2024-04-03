@@ -2,7 +2,6 @@ import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
-import 'package:ebps/common/Container/MyBillers/bill_details_container.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
@@ -69,6 +68,8 @@ class _editAutopayState extends State<editAutopay> {
   dynamic selectedAcc = null;
   bool accError = false;
   bool maxAmountError = false;
+  bool isMaxAmountEmpty = false;
+
   bool isAutoPayMaxLoading = true;
   bool isEditAutoPayPageError = false;
   List<String> EffectiveFrom = <String>['Immediately', getMonthName(0)[0]!];
@@ -87,14 +88,17 @@ class _editAutopayState extends State<editAutopay> {
     maxAmountController.text =
         double.parse(widget.autopayData!.mAXIMUMAMOUNT.toString())
             .toStringAsFixed(2);
+
     activatesFrom = widget.autopayData!.aCTIVATESFROM != null
         ? widget.autopayData!.aCTIVATESFROM![0].toUpperCase() +
             widget.autopayData!.aCTIVATESFROM!.substring(1)
         : "Immediately";
     isActive = widget.autopayData?.iSACTIVE;
-    lastPaidAmount = widget.savedBillerData.bILLAMOUNT != null
-        ? widget.savedBillerData.bILLAMOUNT.toString()
-        : widget.autopayData!.dUEAMOUNT.toString();
+    lastPaidAmount = widget.autopayData!.dUEAMOUNT != null
+        ? widget.autopayData!.dUEAMOUNT.toString()
+        : widget.savedBillerData.bILLAMOUNT != null
+            ? widget.savedBillerData.bILLAMOUNT.toString()
+            : "1";
     BlocProvider.of<HomeCubit>(context).getBbpsSettings();
 
     BlocProvider.of<HomeCubit>(context).getAccountInfo(myAccounts);
@@ -130,7 +134,7 @@ class _editAutopayState extends State<editAutopay> {
         ((widget.autopayData!.pAYMENTDATE == todayDate ||
                 selectedDate == todayDate) &&
             activatesFrom == "Immediately") ||
-        maxAmountError ||
+        isMaxAmountEmpty ||
         ((double.parse(widget.autopayData!.mAXIMUMAMOUNT.toString()) ==
                 double.parse(maxAmountController.text.toString())) &&
             widget.autopayData!.pAYMENTDATE.toString() == selectedDate &&
@@ -260,6 +264,21 @@ class _editAutopayState extends State<editAutopay> {
                     setState(() {
                       maximumAmount =
                           state.fetchAutoPayMaxAmountModel!.data.toString();
+                      if (widget.autopayData!.mAXIMUMAMOUNT != null &&
+                          widget.autopayData!.aMOUNTLIMIT.toString() == "0") {
+                        if (double.parse(maxAmountController.text.toString()) >
+                                double.parse(maximumAmount.toString()) ||
+                            double.parse(maxAmountController.text.toString()) <
+                                double.parse(lastPaidAmount.toString())) {
+                          setState(() {
+                            maxAmountError = true;
+                          });
+                        } else {
+                          setState(() {
+                            maxAmountError = false;
+                          });
+                        }
+                      }
                     });
                   } else if (state is FetchAutoPayMaxAmountFailed) {
                     isAutoPayMaxLoading = false;
@@ -382,7 +401,7 @@ class _editAutopayState extends State<editAutopay> {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       subtitle: Text(
-                                        widget.savedBillerData.bILLNAME
+                                        widget.savedBillerData.cATEGORYNAME
                                             .toString(),
                                         style: TextStyle(
                                           fontSize: 13.sp,
@@ -411,32 +430,39 @@ class _editAutopayState extends State<editAutopay> {
                                         widget.savedBillerData.bILLNAME
                                             .toString(),
                                         context),
-                                    if (widget.savedBillerData!.bILLDATE !=
-                                        null)
-                                      billerdetail(
-                                          "Bill Date",
-                                          DateFormat.yMMMMd('en_US').format(
-                                              DateTime.parse(widget
-                                                      .savedBillerData!
-                                                      .bILLDATE!
-                                                      .toString()
-                                                      .substring(0, 10))
-                                                  .toLocal()
-                                                  .add(
-                                                      const Duration(days: 1))),
-                                          context),
-                                    if (widget.savedBillerData!.dUEDATE != null)
-                                      billerdetail(
-                                          "Due Date",
-                                          DateFormat.yMMMMd('en_US').format(
-                                              DateTime.parse(widget
-                                                      .savedBillerData!.dUEDATE!
-                                                      .toString()
-                                                      .substring(0, 10))
-                                                  .toLocal()
-                                                  .add(
-                                                      const Duration(days: 1))),
-                                          context),
+                                    if (widget.savedBillerData.dUESTATUS
+                                            .toString() !=
+                                        "0")
+                                      Column(children: [
+                                        if (widget.savedBillerData!.bILLDATE !=
+                                            null)
+                                          billerdetail(
+                                              "Bill Date",
+                                              DateFormat.yMMMMd('en_US').format(
+                                                  DateTime.parse(widget
+                                                          .savedBillerData!
+                                                          .bILLDATE!
+                                                          .toString()
+                                                          .substring(0, 10))
+                                                      .toLocal()
+                                                      .add(const Duration(
+                                                          days: 1))),
+                                              context),
+                                        if (widget.savedBillerData!.dUEDATE !=
+                                            null)
+                                          billerdetail(
+                                              "Due Date",
+                                              DateFormat.yMMMMd('en_US').format(
+                                                  DateTime.parse(widget
+                                                          .savedBillerData!
+                                                          .dUEDATE!
+                                                          .toString()
+                                                          .substring(0, 10))
+                                                      .toLocal()
+                                                      .add(const Duration(
+                                                          days: 1))),
+                                              context),
+                                      ]),
                                   ],
                                 )),
                             // Align(
@@ -572,6 +598,32 @@ class _editAutopayState extends State<editAutopay> {
                                                       .toStringAsFixed(2));
                                                 }
                                               });
+                                              if (widget.autopayData!
+                                                      .mAXIMUMAMOUNT !=
+                                                  null) {
+                                                if (double.parse(
+                                                            maxAmountController
+                                                                .text
+                                                                .toString()) >
+                                                        double.parse(
+                                                            maximumAmount
+                                                                .toString()) ||
+                                                    double.parse(
+                                                            maxAmountController
+                                                                .text
+                                                                .toString()) <
+                                                        double.parse(
+                                                            lastPaidAmount
+                                                                .toString())) {
+                                                  setState(() {
+                                                    maxAmountError = true;
+                                                  });
+                                                } else {
+                                                  setState(() {
+                                                    maxAmountError = false;
+                                                  });
+                                                }
+                                              }
                                             },
                                             controlAffinity:
                                                 ListTileControlAffinity
@@ -618,6 +670,15 @@ class _editAutopayState extends State<editAutopay> {
                                         onChanged: (val) {
                                           if (val.isNotEmpty) {
                                             if (double.parse(val.toString()) >
+                                                double.parse(
+                                                    "0.00".toString())) {
+                                              setState(() {
+                                                isMaxAmountEmpty = false;
+                                              });
+                                            } else {
+                                              isMaxAmountEmpty = true;
+                                            }
+                                            if (double.parse(val.toString()) >
                                                     double.parse(maximumAmount
                                                         .toString()) ||
                                                 double.parse(val.toString()) <
@@ -633,6 +694,8 @@ class _editAutopayState extends State<editAutopay> {
                                             }
                                           } else {
                                             setState(() {
+                                              isMaxAmountEmpty = true;
+
                                               maxAmountError = true;
                                             });
                                           }
@@ -669,7 +732,25 @@ class _editAutopayState extends State<editAutopay> {
                                       ),
                                     ),
                                     if (maxAmountError)
-                                      if (double.parse(
+                                      if (isMaxAmountEmpty)
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 20.w,
+                                              top: 0.h,
+                                              right: 20.w),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              'Maximum Amount Can\'t be Empty or Zero.',
+                                              style: TextStyle(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w600,
+                                                color: CLR_ERROR,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      else if (double.parse(
                                               maxAmountController.text.length >
                                                       0
                                                   ? maxAmountController.text

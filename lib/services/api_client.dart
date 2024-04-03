@@ -848,11 +848,11 @@ class ApiClient implements Repository {
             token: true,
             checkSum: false);
       } else {
-        response = await api(
-            method: "get",
-            url: BASE_URL + UPDATE_UPCOMING_URL,
-            token: true,
-            checkSum: false);
+        // response = await api(
+        //     method: "get",
+        //     url: BASE_URL + UPDATE_UPCOMING_URL,
+        //     token: true,
+        //     checkSum: false);
       }
 
       if (!response.body.toString().contains("<html>")) {

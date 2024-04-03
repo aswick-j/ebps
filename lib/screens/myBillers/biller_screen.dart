@@ -381,16 +381,13 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                                   //   showTitle: false,
                                   //   titleIndex: 0,
                                   // )
-                                  ? Container(
-                                      height: 500.h,
-                                      child: NoDataFound(
-                                        showRichText: true,
-                                        message1: searchController.text,
-                                        message2:
-                                            "Try checking for typos or using complete words.",
-                                        message: "No Billers Found for ",
-                                      ),
-                                    )
+                                  ? NoDataFound(
+                                    showRichText: true,
+                                    message1: searchController.text,
+                                    message2:
+                                        "Try checking for typos or using complete words.",
+                                    message: "No Billers Found for ",
+                                  )
                                   : ListView.builder(
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,

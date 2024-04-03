@@ -71,6 +71,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
     return result;
   }
 
+  var todayDate = DateTime.parse(DateTime.now().toString()).day.toString();
+
   getAllAutopayList(customerBILLID) {
     try {
       List<AllConfigurationsData>? autopayData = [];
@@ -102,65 +104,68 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
           barrierDismissible: true,
           context: context,
           builder: (context) {
-            return AlertDialog(
-                actions: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: MyAppButton(
-                        onPressed: () {
-                          goBack(context);
-                        },
-                        buttonText: "Cancel",
-                        buttonTxtColor: BTN_CLR_ACTIVE,
-                        buttonBorderColor: Colors.transparent,
-                        buttonColor: CLR_PRIMARY,
-                        buttonSizeX: 10.h,
-                        buttonSizeY: 40.w,
-                        buttonTextSize: 14.sp,
-                        buttonTextWeight: FontWeight.w500),
+            return WillPopScope(
+              onWillPop: () async => false,
+              child: AlertDialog(
+                  actions: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: MyAppButton(
+                          onPressed: () {
+                            goBack(context);
+                          },
+                          buttonText: "Cancel",
+                          buttonTxtColor: BTN_CLR_ACTIVE,
+                          buttonBorderColor: Colors.transparent,
+                          buttonColor: CLR_PRIMARY,
+                          buttonSizeX: 10.h,
+                          buttonSizeY: 40.w,
+                          buttonTextSize: 14.sp,
+                          buttonTextWeight: FontWeight.w500),
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: MyAppButton(
+                          onPressed: () {
+                            goBack(context);
+                          },
+                          buttonText: "Delete",
+                          buttonTxtColor: BTN_CLR_ACTIVE,
+                          buttonBorderColor: Colors.transparent,
+                          buttonColor: CLR_PRIMARY,
+                          buttonSizeX: 10.h,
+                          buttonSizeY: 40.w,
+                          buttonTextSize: 14.sp,
+                          buttonTextWeight: FontWeight.w500),
+                    ),
+                  ],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: MyAppButton(
-                        onPressed: () {
-                          goBack(context);
-                        },
-                        buttonText: "Delete",
-                        buttonTxtColor: BTN_CLR_ACTIVE,
-                        buttonBorderColor: Colors.transparent,
-                        buttonColor: CLR_PRIMARY,
-                        buttonSizeX: 10.h,
-                        buttonSizeY: 40.w,
-                        buttonTextSize: 14.sp,
-                        buttonTextWeight: FontWeight.w500),
-                  ),
-                ],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                elevation: 3,
-                content: SingleChildScrollView(
-                  padding: EdgeInsets.all(20.r),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                          height: 50.h,
-                          width: 50.w,
-                          child: SvgPicture.asset(ICON_SUCCESS)),
-                      Text(
-                        "Are You Sure You Want To Delete",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xff000000),
-                        ),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
-                ));
+                  elevation: 3,
+                  content: SingleChildScrollView(
+                    padding: EdgeInsets.all(20.r),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                            height: 50.h,
+                            width: 50.w,
+                            child: SvgPicture.asset(ICON_SUCCESS)),
+                        Text(
+                          "Are You Sure You Want To Delete",
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xff000000),
+                          ),
+                          textAlign: TextAlign.center,
+                        )
+                      ],
+                    ),
+                  )),
+            );
           });
     }
 
@@ -284,7 +289,10 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           SizedBox(
-                                            width: 200.w,
+                                            width: widget.upcomingText ==
+                                                    'Upcoming Autopay'
+                                                ? 200.w
+                                                : 250.w,
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -825,10 +833,6 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                     MyAppButton(
                                                                         onPressed:
                                                                             () {
-                                                                          var todayDate = DateTime.parse(DateTime.now().toString())
-                                                                              .day
-                                                                              .toString();
-
                                                                           if (todayDate ==
                                                                               getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.pAYMENTDATE) {
                                                                             showModalBottomSheet(
@@ -1186,10 +1190,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                     if (getAllAutopayList(widget
                                             .savedBillersData.cUSTOMERBILLID) !=
                                         null)
-                                      if (getAllAutopayList(widget
-                                                  .savedBillersData
-                                                  .cUSTOMERBILLID)!
-                                              .iSACTIVE ==
+                                      if (getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.iSACTIVE ==
                                           0)
                                         Padding(
                                             padding: EdgeInsets.symmetric(
@@ -1205,6 +1206,30 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                 ),
                                               ),
                                             )),
+                                      // else if (getAllAutopayList(widget
+                                      //                 .savedBillersData
+                                      //                 .cUSTOMERBILLID)!
+                                      //             .iSACTIVE ==
+                                      //         1 &&
+                                      //     getAllAutopayList(widget
+                                      //                 .savedBillersData
+                                      //                 .cUSTOMERBILLID)!
+                                      //             .pAYMENTDATE ==
+                                      //         todayDate)
+                                      //   Padding(
+                                      //       padding: EdgeInsets.symmetric(
+                                      //           horizontal: 24.0.w,
+                                      //           vertical: 8.h),
+                                      //       child: Center(
+                                      //         child: Text(
+                                      //           "Autopay Edit Disabled as autopay scheduled for today",
+                                      //           style: TextStyle(
+                                      //             fontSize: 10.sp,
+                                      //             fontWeight: FontWeight.w400,
+                                      //             color: Color(0xff808080),
+                                      //           ),
+                                      //         ),
+                                      //       )),
                                   Padding(
                                     padding: EdgeInsets.only(
                                         top: 48.0.h, bottom: 16.h),
@@ -1315,51 +1340,56 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                             barrierDismissible: true,
                                             context: context,
                                             builder: (BuildContext ctx) {
-                                              return AlertDialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12.r),
-                                                ),
-                                                content: AnimatedDialog(
-                                                    showImgIcon: false,
-                                                    title: getAllAutopayList(widget
-                                                                    .savedBillersData
-                                                                    .cUSTOMERBILLID)!
-                                                                .pAYMENTDATE ==
-                                                            DateTime.now()
-                                                                .day
-                                                                .toString()
-                                                        ? " We are unable to edit your autopay as the autopay is scheduled for today"
-                                                        : "We can't edit your Autopay because it's currently paused.",
-                                                    subTitle: "",
-                                                    child: Icon(
-                                                      Icons.close,
-                                                      color: Colors.white,
-                                                    ),
-                                                    showSub: false,
-                                                    shapeColor: CLR_ERROR),
-                                                actions: <Widget>[
-                                                  Align(
-                                                    alignment: Alignment.center,
-                                                    child: MyAppButton(
-                                                        onPressed: () {
-                                                          goBack(ctx);
-                                                        },
-                                                        buttonText: "Okay",
-                                                        buttonTxtColor:
-                                                            BTN_CLR_ACTIVE,
-                                                        buttonBorderColor:
-                                                            Colors.transparent,
-                                                        buttonColor:
-                                                            CLR_PRIMARY,
-                                                        buttonSizeX: 10,
-                                                        buttonSizeY: 40,
-                                                        buttonTextSize: 14,
-                                                        buttonTextWeight:
-                                                            FontWeight.w500),
+                                              return WillPopScope(
+                                                onWillPop: () async => false,
+                                                child: AlertDialog(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12.r),
                                                   ),
-                                                ],
+                                                  content: AnimatedDialog(
+                                                      showImgIcon: false,
+                                                      title: getAllAutopayList(widget
+                                                                      .savedBillersData
+                                                                      .cUSTOMERBILLID)!
+                                                                  .pAYMENTDATE ==
+                                                              DateTime.now()
+                                                                  .day
+                                                                  .toString()
+                                                          ? " We are unable to edit your autopay as the autopay is scheduled for today"
+                                                          : "We can't edit your Autopay because it's currently paused.",
+                                                      subTitle: "",
+                                                      child: Icon(
+                                                        Icons.close,
+                                                        color: Colors.white,
+                                                      ),
+                                                      showSub: false,
+                                                      shapeColor: CLR_ERROR),
+                                                  actions: <Widget>[
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: MyAppButton(
+                                                          onPressed: () {
+                                                            goBack(ctx);
+                                                          },
+                                                          buttonText: "Okay",
+                                                          buttonTxtColor:
+                                                              BTN_CLR_ACTIVE,
+                                                          buttonBorderColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          buttonColor:
+                                                              CLR_PRIMARY,
+                                                          buttonSizeX: 10,
+                                                          buttonSizeY: 40,
+                                                          buttonTextSize: 14,
+                                                          buttonTextWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                  ],
+                                                ),
                                               );
                                             },
                                           );
@@ -1708,43 +1738,47 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                 builder:
                                                                     (BuildContext
                                                                         ctx) {
-                                                                  return AlertDialog(
-                                                                    shape:
-                                                                        RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              12.r),
-                                                                    ),
-                                                                    content: AnimatedDialog(
-                                                                        showImgIcon: false,
-                                                                        title: getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.pAYMENTDATE == DateTime.now().day.toString() ? " We are unable to edit your autopay as the autopay is scheduled for today" : "We can't edit your Autopay because it's currently paused.",
-                                                                        subTitle: "",
-                                                                        child: Icon(
-                                                                          Icons
-                                                                              .close,
-                                                                          color:
-                                                                              Colors.white,
-                                                                        ),
-                                                                        showSub: false,
-                                                                        shapeColor: CLR_ERROR),
-                                                                    actions: <Widget>[
-                                                                      Align(
-                                                                        alignment:
-                                                                            Alignment.center,
-                                                                        child: MyAppButton(
-                                                                            onPressed: () {
-                                                                              goBack(ctx);
-                                                                            },
-                                                                            buttonText: "Okay",
-                                                                            buttonTxtColor: BTN_CLR_ACTIVE,
-                                                                            buttonBorderColor: Colors.transparent,
-                                                                            buttonColor: CLR_PRIMARY,
-                                                                            buttonSizeX: 10,
-                                                                            buttonSizeY: 40,
-                                                                            buttonTextSize: 14,
-                                                                            buttonTextWeight: FontWeight.w500),
+                                                                  return WillPopScope(
+                                                                    onWillPop:
+                                                                        () async =>
+                                                                            false,
+                                                                    child:
+                                                                        AlertDialog(
+                                                                      shape:
+                                                                          RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(12.r),
                                                                       ),
-                                                                    ],
+                                                                      content: AnimatedDialog(
+                                                                          showImgIcon: false,
+                                                                          title: getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.pAYMENTDATE == DateTime.now().day.toString() ? " We are unable to edit your autopay as the autopay is scheduled for today" : "We can't edit your Autopay because it's currently paused.",
+                                                                          subTitle: "",
+                                                                          child: Icon(
+                                                                            Icons.close,
+                                                                            color:
+                                                                                Colors.white,
+                                                                          ),
+                                                                          showSub: false,
+                                                                          shapeColor: CLR_ERROR),
+                                                                      actions: <Widget>[
+                                                                        Align(
+                                                                          alignment:
+                                                                              Alignment.center,
+                                                                          child: MyAppButton(
+                                                                              onPressed: () {
+                                                                                goBack(ctx);
+                                                                              },
+                                                                              buttonText: "Okay",
+                                                                              buttonTxtColor: BTN_CLR_ACTIVE,
+                                                                              buttonBorderColor: Colors.transparent,
+                                                                              buttonColor: CLR_PRIMARY,
+                                                                              buttonSizeX: 10,
+                                                                              buttonSizeY: 40,
+                                                                              buttonTextSize: 14,
+                                                                              buttonTextWeight: FontWeight.w500),
+                                                                        ),
+                                                                      ],
+                                                                    ),
                                                                   );
                                                                 },
                                                               );
@@ -1804,13 +1838,17 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                         widget.savedBillersData.bILLERNAME,
                                     "categoryName":
                                         widget.savedBillersData.cATEGORYNAME,
-                                    "lastPaidAmount":
-                                        widget.savedBillersData.bILLAMOUNT !=
+                                    "lastPaidAmount": widget.upcomingDueData !=
+                                                null &&
+                                            widget.upcomingDueData!.dueAmount !=
+                                                null
+                                        ? widget.upcomingDueData!.dueAmount
+                                            .toString()
+                                        : widget.savedBillersData.bILLAMOUNT !=
                                                 null
                                             ? widget.savedBillersData.bILLAMOUNT
                                                 .toString()
-                                            : widget.upcomingDueData!.dueAmount
-                                                .toString(),
+                                            : "50000",
                                     "billName":
                                         widget.savedBillersData.bILLNAME,
                                     "customerBillID": widget

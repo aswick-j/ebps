@@ -70,130 +70,133 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
         barrierDismissible: false,
         context: context,
         builder: (context) {
-          return AlertDialog(
-              // actions: [
-              //   Align(
-              //     alignment: Alignment.center,
-              //     child: MyAppButton(
-              //         onPressed: () {
-              //           goBack(context);
-              //         },
-              //         buttonText: "Okay",
-              //         buttonTxtColor: BTN_CLR_ACTIVE,
-              //         buttonBorderColor: Colors.transparent,
-              //         buttonColor: CLR_PRIMARY,
-              //         buttonSizeX: 10.h,
-              //         buttonSizeY: 40.w,
-              //         buttonTextSize: 14.sp,
-              //         buttonTextWeight: FontWeight.w500),
-              //   ),
-              // ],
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              elevation: 3,
-              content: SingleChildScrollView(
-                padding: EdgeInsets.all(0.r),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                        height: 50.h,
-                        width: 50.w,
-                        child: SvgPicture.asset(
-                            success ? ICON_SUCCESS : ICON_FAILED)),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Text(
-                      success
-                          ? "Your Complaint Has Been Registered Successfully"
-                          : ComplaintMSG.toString(),
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w700,
-                        color: CLR_PRIMARY,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    if (success)
-                      Container(
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 0.w, vertical: 16.h),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                            color: Color(0xffE8ECF3),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(16.0.r),
-                            child: Column(children: [
-                              Text(
-                                "For future detail track complaint ID",
-                                style: TextStyle(
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: TXT_CLR_PRIMARY,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    REG_CMP_ID.toString(),
-                                    style: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff1b438b),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                  GestureDetector(
-                                      onTap: () {
-                                        Clipboard.setData(ClipboardData(
-                                                text: REG_CMP_ID.toString()))
-                                            .then((_) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
-                                                  content: Text(
-                                                      'Complaint ID copied to clipboard')));
-                                        });
-                                      },
-                                      child: Icon(Icons.copy,
-                                          color: Color(0xff1b438b), size: 20))
-                                ],
-                              )
-                            ]),
-                          )),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: MyAppButton(
-                          onPressed: () {
-                            goBack(context);
-                            goBack(ctx);
-                          },
-                          buttonText: "Okay",
-                          buttonTxtColor: BTN_CLR_ACTIVE,
-                          buttonBorderColor: Colors.transparent,
-                          buttonColor: CLR_PRIMARY,
-                          buttonSizeX: 10.h,
-                          buttonSizeY: 40.w,
-                          buttonTextSize: 14.sp,
-                          buttonTextWeight: FontWeight.w500),
-                    ),
-                  ],
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: AlertDialog(
+                // actions: [
+                //   Align(
+                //     alignment: Alignment.center,
+                //     child: MyAppButton(
+                //         onPressed: () {
+                //           goBack(context);
+                //         },
+                //         buttonText: "Okay",
+                //         buttonTxtColor: BTN_CLR_ACTIVE,
+                //         buttonBorderColor: Colors.transparent,
+                //         buttonColor: CLR_PRIMARY,
+                //         buttonSizeX: 10.h,
+                //         buttonSizeY: 40.w,
+                //         buttonTextSize: 14.sp,
+                //         buttonTextWeight: FontWeight.w500),
+                //   ),
+                // ],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
-              ));
+                elevation: 3,
+                content: SingleChildScrollView(
+                  padding: EdgeInsets.all(0.r),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                          height: 50.h,
+                          width: 50.w,
+                          child: SvgPicture.asset(
+                              success ? ICON_SUCCESS : ICON_FAILED)),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Text(
+                        success
+                            ? "Your Complaint Has Been Registered Successfully"
+                            : ComplaintMSG.toString(),
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w700,
+                          color: CLR_PRIMARY,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      if (success)
+                        Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 0.w, vertical: 16.h),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6.0.r + 2.r),
+                              color: Color(0xffE8ECF3),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(16.0.r),
+                              child: Column(children: [
+                                Text(
+                                  "For future detail track complaint ID",
+                                  style: TextStyle(
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: TXT_CLR_PRIMARY,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      REG_CMP_ID.toString(),
+                                      style: TextStyle(
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xff1b438b),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(
+                                      width: 5.w,
+                                    ),
+                                    GestureDetector(
+                                        onTap: () {
+                                          Clipboard.setData(ClipboardData(
+                                                  text: REG_CMP_ID.toString()))
+                                              .then((_) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                        'Complaint ID copied to clipboard')));
+                                          });
+                                        },
+                                        child: Icon(Icons.copy,
+                                            color: Color(0xff1b438b), size: 20))
+                                  ],
+                                )
+                              ]),
+                            )),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: MyAppButton(
+                            onPressed: () {
+                              goBack(context);
+                              goBack(ctx);
+                            },
+                            buttonText: "Okay",
+                            buttonTxtColor: BTN_CLR_ACTIVE,
+                            buttonBorderColor: Colors.transparent,
+                            buttonColor: CLR_PRIMARY,
+                            buttonSizeX: 10.h,
+                            buttonSizeY: 40.w,
+                            buttonTextSize: 14.sp,
+                            buttonTextWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                )),
+          );
         });
   }
 

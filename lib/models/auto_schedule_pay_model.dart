@@ -118,6 +118,7 @@ class AllConfigurationsData {
   String? dUEDATE;
   String? bILLPERIOD;
   String? bILLDATE;
+  int? dUESTATUS;
   int? rESETDATE;
   int? rESETLIMIT;
 
@@ -142,6 +143,7 @@ class AllConfigurationsData {
       this.bILLDATE,
       this.bILLPERIOD,
       this.rESETDATE,
+      this.dUESTATUS,
       this.rESETLIMIT});
 
   AllConfigurationsData.fromJson(Map<String, dynamic> json) {
@@ -164,6 +166,7 @@ class AllConfigurationsData {
     dUEDATE = json['DUE_DATE'];
     bILLPERIOD = json['BILL_PERIOD'];
     bILLDATE = json['BILL_DATE'];
+    dUESTATUS = json['DUE_STATUS'];
     rESETDATE = json['RESETDATE'];
     rESETLIMIT = json['RESETLIMIT'];
   }
@@ -189,6 +192,7 @@ class AllConfigurationsData {
     data['DUE_DATE'] = this.dUEDATE;
     data['BILL_DATE'] = this.bILLDATE;
     data['BILL_PERIOD'] = this.bILLPERIOD;
+    data['DUE_STATUS'] = this.dUESTATUS;
     data['RESETDATE'] = this.rESETDATE;
     data['RESETLIMIT'] = this.rESETLIMIT;
     return data;
