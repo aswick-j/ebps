@@ -337,7 +337,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                                 .data!
                                                                 .txnReferenceId
                                                                 .toString()
-                                                            : "-",
+                                                            : "null",
                                                         widget.billerData!['acNo']
                                                             .toString(),
                                                         "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount'].toString()))}",
@@ -351,8 +351,16 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                         "Equitas - Mobile banking",
                                                         DateFormat("dd/MM/yyyy | hh:mm a").format(DateTime.now()).toString(),
                                                         tnxResponse!.reason.toString(),
-                                                        tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse != null ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse!.customerName.toString() : "NA",
-                                                        tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse != null ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse!.billNumber.toString() : "NA"),
+                                                        tnxResponse!.paymentDetails!.bbpsResponse != null
+                                                            ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse != null
+                                                                ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse!.customerName.toString()
+                                                                : "NA"
+                                                            : "NA",
+                                                        tnxResponse!.paymentDetails!.bbpsResponse != null
+                                                            ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse != null
+                                                                ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse!.billNumber.toString()
+                                                                : "NA"
+                                                            : "NA"),
                                               );
                                               // Future.microtask(() =>
                                               //     Navigator.push(
