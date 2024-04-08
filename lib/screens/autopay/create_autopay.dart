@@ -74,6 +74,7 @@ class _createAutopayState extends State<createAutopay> {
   bool isMaxAmountLoading = true;
   bool isBbpsSettingsLoading = true;
   bbpsSettingsData? BbpsSettingInfo;
+  final FocusNode MaxiFocusNode = FocusNode();
 
   // List<String> EffectiveFrom = <String>[
   //   'Immediately',
@@ -92,6 +93,12 @@ class _createAutopayState extends State<createAutopay> {
   }
 
   var todayDate = DateTime.parse(DateTime.now().toString()).day.toString();
+
+  @override
+  void dispose() {
+    MaxiFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -384,6 +391,8 @@ class _createAutopayState extends State<createAutopay> {
                                           groupValue: limitGroupRadio,
                                           activeColor: TXT_CLR_PRIMARY,
                                           onChanged: (val) {
+                                            MaxiFocusNode.requestFocus();
+
                                             setState(() {
                                               limitGroupRadio = 0;
                                               final dataAmount = (double.parse(
@@ -429,6 +438,7 @@ class _createAutopayState extends State<createAutopay> {
                                     child: TextFormField(
                                       // maxLength: 20,
                                       controller: maxAmountController,
+                                      focusNode: MaxiFocusNode,
                                       // key: _billnameKey,
                                       autocorrect: false,
                                       readOnly:

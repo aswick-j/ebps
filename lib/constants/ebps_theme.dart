@@ -19,5 +19,17 @@ TextTheme myTextTheme = TextTheme(
 
 ThemeData ebpsTheme = ThemeData(
     fontFamily: GoogleFonts.poppins().fontFamily,
-    scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
+    scaffoldBackgroundColor: AppColorsNonElite.CLR_BACKGROUND,
+    appBarTheme: AppBarTheme(
+      iconTheme: IconThemeData(color: Colors.black),
+      color: AppColorsNonElite.CLR_BACKGROUND, //<-- SEE HERE
+    ),
+    textTheme: myTextTheme);
+ThemeData DarkTheme = ThemeData(
+    fontFamily: GoogleFonts.poppins().fontFamily,
+    scaffoldBackgroundColor: AppColorsElite.CLR_BACKGROUND,
+    appBarTheme: AppBarTheme(
+      iconTheme: IconThemeData(color: Colors.white),
+      color: AppColorsElite.CLR_BACKGROUND, //<-- SEE HERE
+    ),
     textTheme: myTextTheme);

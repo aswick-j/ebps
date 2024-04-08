@@ -170,11 +170,8 @@ Future<Uint8List> generatePdf(
                       //     pw.BoxDecoration(color: PdfColor.fromHex("f0f7ff")),
 
                       data: <List>[
-                        // if (customerName != "-")
-                        [
-                          'Consumer Name',
-                          customerName != "-" ? customerName : "NA",
-                        ],
+                        if (customerName != "-")
+                          ['Consumer Name', customerName],
                         [
                           'Name of the Biller',
                           BillerName,

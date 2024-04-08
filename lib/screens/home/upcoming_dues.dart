@@ -115,6 +115,10 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                               .toLocal()
                               .add(const Duration(days: 1)))
                           : "-",
+                      dueStatus:
+                          widget.allUpcomingDues[index]["dueStatus"] != ""
+                              ? widget.allUpcomingDues[index]["dueStatus"]
+                              : 0,
                       buttonText: widget.allUpcomingDues[index]["itemType"] ==
                               'upcomingDue'
                           ? "Pay Now"

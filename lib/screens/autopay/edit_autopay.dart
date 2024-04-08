@@ -77,6 +77,7 @@ class _editAutopayState extends State<editAutopay> {
   var todayDate = DateTime.parse(DateTime.now().toString()).day.toString();
 
   int? isActive = 0;
+  final FocusNode MaxiFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -180,6 +181,12 @@ class _editAutopayState extends State<editAutopay> {
         }
       });
     }
+  }
+
+  @override
+  void dispose() {
+    MaxiFocusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -577,6 +584,8 @@ class _editAutopayState extends State<editAutopay> {
                                             groupValue: limitGroupRadio,
                                             activeColor: TXT_CLR_PRIMARY,
                                             onChanged: (val) {
+                                              MaxiFocusNode.requestFocus();
+
                                               setState(() {
                                                 limitGroupRadio = 0;
                                                 if (widget.autopayData!
@@ -646,6 +655,7 @@ class _editAutopayState extends State<editAutopay> {
                                           horizontal: 16.w, vertical: 16.h),
                                       child: TextFormField(
                                         // maxLength: 20,
+                                        focusNode: MaxiFocusNode,
                                         controller: maxAmountController,
                                         // key: _billnameKey,
                                         autocorrect: false,

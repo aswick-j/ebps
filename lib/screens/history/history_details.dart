@@ -586,10 +586,13 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                 subTitle:
                                     'Equitas Bank - ${widget.historyData.accountNumber.toString()}',
                                 clipBoard: false),
-                            // TxnDetails(
-                            //     title: "Customer Name",
-                            //     subTitle: widget.historyData.customerName.toString(),
-                            //     clipBoard: false),
+                            if (widget.historyData.customerName != null &&
+                                widget.historyData.customerName != "NA")
+                              TxnDetails(
+                                  title: "Consumer Name",
+                                  subTitle: widget.historyData.customerName
+                                      .toString(),
+                                  clipBoard: false),
                             TxnDetails(
                                 title: "Biller Name",
                                 subTitle: widget.billerName,

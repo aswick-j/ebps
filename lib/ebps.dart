@@ -47,6 +47,11 @@ class ApiConstants {
   static var BASE_URL = "";
 }
 
+class IsCustomerElite {
+  IsCustomerElite._();
+  static var isCustomerElite = false;
+}
+
 class InternetCheck {
   InternetCheck._();
   static var isConnected = true;
@@ -89,6 +94,8 @@ class EbpsScreen extends StatelessWidget {
 
         title: "Bill Payment",
         theme: ebpsTheme,
+        // darkTheme: DarkTheme,
+        // themeMode: ThemeMode.dark,
         // theme: ThemeData(
         //   fontFamily: GoogleFonts.poppins().fontFamily,
         //   scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),

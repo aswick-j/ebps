@@ -243,6 +243,8 @@ class UpcomingPaymentsData {
   String? bILLERID;
   String? bILLERICON;
   String? bILLERNAME;
+  int? dUESTATUS;
+  String? bILLDATE;
 
   UpcomingPaymentsData(
       {this.iD,
@@ -261,6 +263,8 @@ class UpcomingPaymentsData {
       this.bILLNAME,
       this.bILLERID,
       this.bILLERICON,
+      this.dUESTATUS,
+      this.bILLDATE,
       this.bILLERNAME});
 
   UpcomingPaymentsData.fromJson(Map<String, dynamic> json) {
@@ -281,6 +285,8 @@ class UpcomingPaymentsData {
     bILLERID = json['BILLER_ID'];
     bILLERICON = json['BILLER_ICON'];
     bILLERNAME = json['BILLER_NAME'];
+    dUESTATUS = json['DUE_STATUS'];
+    bILLDATE = json['BILL_DATE'];
   }
 
   Map<String, dynamic> toJson() {
@@ -302,6 +308,8 @@ class UpcomingPaymentsData {
     data['BILLER_ID'] = this.bILLERID;
     data['BILLER_ICON'] = this.bILLERICON;
     data['BILLER_NAME'] = this.bILLERNAME;
+    data['BILL_DATE'] = this.bILLDATE;
+    data['DUE_STATUS'] = this.dUESTATUS;
     return data;
   }
 }

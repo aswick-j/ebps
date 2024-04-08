@@ -17,6 +17,7 @@ class MainContainer extends StatefulWidget {
   final String buttonText;
   final String amount;
   final String iconPath;
+  final int dueStatus;
   final Color containerBorderColor;
   final Color buttonColor;
   final Color buttonTxtColor;
@@ -46,6 +47,7 @@ class MainContainer extends StatefulWidget {
     required this.buttonBorderColor,
     required this.buttonTextWeight,
     required this.onPressed,
+    required this.dueStatus,
     required this.onDeleteUpPressed,
   });
 
@@ -174,38 +176,43 @@ class _MainContainerState extends State<MainContainer> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.amount,
-                          style: TextStyle(
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xff1b438b),
+                    if (widget.dueStatus != 0)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.amount,
+                            style: TextStyle(
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff1b438b),
+                            ),
+                            textAlign: TextAlign.left,
                           ),
-                          textAlign: TextAlign.left,
-                        ),
-                        if (widget.dateText != "-")
-                          Row(
-                            children: [
-                              SvgPicture.asset(ICON_CALENDAR),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                widget.dateText,
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xff808080),
-                                  height: 20 / 12,
+                          if (widget.dateText != "-")
+                            Row(
+                              children: [
+                                SvgPicture.asset(ICON_CALENDAR),
+                                SizedBox(
+                                  width: 5,
                                 ),
-                              ),
-                            ],
-                          ),
-                      ],
-                    ),
+                                Text(
+                                  widget.dateText,
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xff808080),
+                                    height: 20 / 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                        ],
+                      )
+                    else
+                      SizedBox(
+                        width: 10.w,
+                      ),
                     Row(
                       children: [
                         MyAppButton(

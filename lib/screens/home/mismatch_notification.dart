@@ -95,7 +95,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                   child: Text(
                                     widget.allautoPayData![index].rESETDATE == 1
                                         ? "Auto Pay Date not in between the Bill Generation and Bill Due date, please update accordingly."
-                                        : "Alert!! We are unable to execute Auto Pay as your set limit is less than the Last generated Bill amount.",
+                                        : "Alert!! We are unable to execute Auto Pay as your set limit is less than the last generated bill amount.",
                                     // "Auto Pay ${widget.allautoPayData![index].rESETDATE == 1 ? "Date" : "Limit"} Seems to be Mismatch",
                                     style: TextStyle(
                                       fontSize: 10.sp,

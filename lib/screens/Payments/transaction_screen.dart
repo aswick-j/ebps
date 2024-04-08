@@ -411,6 +411,22 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           subTitle:
                               'EQUITAS BANK - ${widget.billerData!['acNo']}',
                           clipBoard: false),
+                      if (tnxResponse!.paymentDetails!.bbpsResponse != null &&
+                          tnxResponse!.paymentDetails!.bbpsResponse!.data!
+                                  .billerResponse !=
+                              null &&
+                          tnxResponse!.paymentDetails!.bbpsResponse!.data!
+                                  .billerResponse!.customerName !=
+                              null &&
+                          tnxResponse!.paymentDetails!.bbpsResponse!.data!
+                                  .billerResponse!.customerName !=
+                              "NA")
+                        TxnDetails(
+                            title: "Consumer Name",
+                            subTitle: tnxResponse!.paymentDetails!.bbpsResponse!
+                                .data!.billerResponse!.customerName
+                                .toString(),
+                            clipBoard: false),
                       TxnDetails(
                           title: "Biller Name",
                           subTitle: widget.billerName,

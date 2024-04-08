@@ -1,4 +1,3 @@
-import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
@@ -269,6 +268,10 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                             ["billerName"],
                         subtitleText2: handleInputParams(index),
                         customerBillID: handleCustomerBillID(index),
+                        dueStatus:
+                            widget.allUpcomingDues[index]["dueStatus"] != ""
+                                ? widget.allUpcomingDues[index]["dueStatus"]
+                                : 0,
                         dateText: widget.allUpcomingDues[index]["dueDate"] != ""
                             ? DateFormat('dd/MM/yyyy').format(DateTime.parse(
                                     widget.allUpcomingDues[index]["dueDate"]!

@@ -24,6 +24,7 @@ class UpcomingDuesContainer extends StatefulWidget {
   final FontWeight buttonTextWeight;
   final Color? buttonBorderColor;
   final VoidCallback onPressed;
+  final int dueStatus;
 
   UpcomingDuesContainer(
       {super.key,
@@ -37,6 +38,7 @@ class UpcomingDuesContainer extends StatefulWidget {
       required this.buttonBorderColor,
       required this.buttonTextWeight,
       required this.savedBillersData,
+      required this.dueStatus,
       required this.onPressed});
 
   @override
