@@ -268,6 +268,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                       context,
                                                       Material(
                                                           child: ScreenshotContainer(
+                                                              ConsumerName: tnxResponse!.paymentDetails!.bbpsResponse != null
+                                                                  ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse != null
+                                                                      ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse!.customerName.toString()
+                                                                      : "NA"
+                                                                  : "NA",
                                                               channel: "Equitas - Mobile Banking",
                                                               BillerName: widget.billerName.toString(),
                                                               BillerId: widget.isSavedBill ? savedBillerTypeData!.bILLERID.toString() : billerTypeData!.bILLERID.toString(),

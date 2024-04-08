@@ -467,6 +467,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                                     billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.billAmount.toString()))}",
                                                                     trasactionStatus: widget.historyData.transactionStatus.toString(),
                                                                     status: widget.historyData.transactionStatus.toString(),
+                                                                    ConsumerName: widget.historyData.customerName.toString(),
                                                                     TransactionDate: DateFormat('dd/MM/yyyy | hh:mm a').format(DateTime.parse(widget.historyData.completionDate.toString()).toLocal())))),
                                                         delay: Duration(seconds: 0));
 

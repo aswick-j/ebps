@@ -102,30 +102,30 @@ Future<Uint8List> generatePdf(
                     ),
                   ),
                 ),
-                pw.Padding(
-                    padding: const pw.EdgeInsets.only(
-                        left: 20, top: 5.0, bottom: 10.0),
-                    child: pw.Row(children: [
-                      pw.Text(
-                        'Bill Name (Nick Name) :',
-                        style: pw.TextStyle(
-                          fontSize: 13.0,
-                          font: font,
-                          fontWeight: pw.FontWeight.bold,
-                          color: PdfColor.fromHex("#1B438B"),
-                        ),
-                      ),
-                      pw.SizedBox(width: 10),
-                      pw.Text(
-                        BillName != "-" ? BillName : "NA",
-                        style: pw.TextStyle(
-                          fontSize: 13.0,
-                          font: font,
-                          fontWeight: pw.FontWeight.normal,
-                          color: PdfColor.fromHex("#1B438B"),
-                        ),
-                      ),
-                    ])),
+                // pw.Padding(
+                //     padding: const pw.EdgeInsets.only(
+                //         left: 20, top: 5.0, bottom: 10.0),
+                //     child: pw.Row(children: [
+                //       pw.Text(
+                //         'Bill Name (Nick Name) :',
+                //         style: pw.TextStyle(
+                //           fontSize: 13.0,
+                //           font: font,
+                //           fontWeight: pw.FontWeight.bold,
+                //           color: PdfColor.fromHex("#1B438B"),
+                //         ),
+                //       ),
+                //       pw.SizedBox(width: 10),
+                //       pw.Text(
+                //         BillName != "-" ? BillName : "NA",
+                //         style: pw.TextStyle(
+                //           fontSize: 13.0,
+                //           font: font,
+                //           fontWeight: pw.FontWeight.normal,
+                //           color: PdfColor.fromHex("#1B438B"),
+                //         ),
+                //       ),
+                //     ])),
                 // pw.Padding(
                 //     padding: const pw.EdgeInsets.only(
                 //         left: 20, top: 5.0, bottom: 10.0),
@@ -170,12 +170,12 @@ Future<Uint8List> generatePdf(
                       //     pw.BoxDecoration(color: PdfColor.fromHex("f0f7ff")),
 
                       data: <List>[
-                        if (customerName != "-")
-                          ['Consumer Name', customerName],
                         [
                           'Name of the Biller',
                           BillerName,
                         ],
+                        if (customerName != "-")
+                          ['Consumer Name', customerName],
                         if (billNumber != "null" && billNumber != "-")
                           [
                             'Bill Number',

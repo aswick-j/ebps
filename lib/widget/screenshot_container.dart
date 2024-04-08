@@ -20,6 +20,7 @@ class ScreenshotContainer extends StatelessWidget {
   final String trasactionStatus;
   final String TransactionDate;
   final String channel;
+  final String ConsumerName;
 
   const ScreenshotContainer({
     required this.BillerName,
@@ -34,6 +35,7 @@ class ScreenshotContainer extends StatelessWidget {
     required this.status,
     required this.trasactionStatus,
     required this.TransactionDate,
+    required this.ConsumerName,
   });
 
   Widget txnDetails({
@@ -197,6 +199,14 @@ class ScreenshotContainer extends StatelessWidget {
               subTitle: 'EQUITAS BANK - $fromAccount',
               clipBoard: false,
             ),
+            if (ConsumerName != null &&
+                ConsumerName != "NA" &&
+                ConsumerName != "null" &&
+                ConsumerName != "-")
+              txnDetails(
+                  title: "Consumer Name",
+                  subTitle: ConsumerName.toString(),
+                  clipBoard: false),
             txnDetails(
               title: "Biller Name",
               subTitle: BillerName,
@@ -237,15 +247,15 @@ class ScreenshotContainer extends StatelessWidget {
                 subTitle: channel,
                 clipBoard: false,
                 showLogo: true),
-            Center(
-              child: Container(
-                height: 80.h,
-                width: 80.w,
-                child: Image.asset(
-                  LOGO_EQUITAS,
-                ),
-              ),
-            ),
+            // Center(
+            //   child: Container(
+            //     height: 80.h,
+            //     width: 80.w,
+            //     child: Image.asset(
+            //       LOGO_EQUITAS,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
