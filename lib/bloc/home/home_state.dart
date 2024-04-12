@@ -142,25 +142,6 @@ class ValidateBillError extends HomeState {
   ValidateBillError({@required this.message});
 }
 
-//CONFIRM FETCH BILL
-
-class ConfirmFetchBillLoading extends HomeState {}
-
-class ConfirmFetchBillSuccess extends HomeState {
-  final ConfirmFetchBillData? ConfirmFetchBillResponse;
-  ConfirmFetchBillSuccess({@required this.ConfirmFetchBillResponse});
-}
-
-class ConfirmFetchBillFailed extends HomeState {
-  final String? message;
-  ConfirmFetchBillFailed({@required this.message});
-}
-
-class ConfirmFetchBillError extends HomeState {
-  final String? message;
-  ConfirmFetchBillError({@required this.message});
-}
-
 //GEN - OTP
 
 class OtpInitial extends HomeState {}
@@ -170,17 +151,22 @@ class OtpLoading extends HomeState {}
 class OtpSuccess extends HomeState {
   final String? refrenceNumber;
   final String? message;
+
   OtpSuccess({@required this.refrenceNumber, @required this.message});
 }
 
 class OtpFailed extends HomeState {
   final String? message;
-  OtpFailed({@required this.message});
+  final bool? limitReached;
+
+  OtpFailed({@required this.message, this.limitReached});
 }
 
 class OtpError extends HomeState {
   final String? message;
-  OtpError({@required this.message});
+  final bool? limitReached;
+
+  OtpError({@required this.message, this.limitReached});
 }
 
 //VALIDATE -OTP

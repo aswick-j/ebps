@@ -4,6 +4,7 @@ import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
+import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -49,6 +51,7 @@ class _OtpScreenState extends State<OtpScreen> {
   final txtOtpController = TextEditingController();
   final focusNode = FocusNode();
   String? OTP_ERR_MSG;
+  bool? limitReached = false;
   bool showRedBorder = false;
   String? customerID;
   bool isLoading = true;
@@ -468,12 +471,15 @@ class _OtpScreenState extends State<OtpScreen> {
               setState(() {
                 isLoading = false;
                 OTP_ERR_MSG = state.message;
+                limitReached = state.limitReached;
                 showRedBorder = true;
               });
             } else if (state is OtpError) {
               setState(() {
                 isLoading = false;
                 OTP_ERR_MSG = state.message;
+                limitReached = state.limitReached;
+
                 showRedBorder = true;
               });
               // goToUntil(context, hOMEROUTE);
@@ -767,6 +773,30 @@ class _OtpScreenState extends State<OtpScreen> {
             return SingleChildScrollView(
               child: Column(
                 children: [
+                  // Padding(
+                  //   padding: EdgeInsets.only(
+                  //       left: 18.0.w, right: 20.w, top: 0.h, bottom: 0.h),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.end,
+                  //     children: [
+                  //       Text(
+                  //         "Editing the Autopay",
+                  //         style: TextStyle(
+                  //           fontSize: 8.sp,
+                  //           fontWeight: FontWeight.w400,
+                  //           color: Color(0xff808080),
+                  //         ),
+                  //         textAlign: TextAlign.center,
+                  //       ),
+                  //       SizedBox(width: 4),
+                  //       Icon(
+                  //         Icons.info_outline_rounded,
+                  //         size: 9.r,
+                  //         color: Color(0xff808080),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Container(
                       clipBehavior: Clip.hardEdge,
                       width: double.infinity,
@@ -817,7 +847,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               ),
                             ),
                           ),
-                          if (!isLoading)
+                          if (!isLoading && limitReached != true)
                             Column(
                               children: [
                                 Padding(
@@ -1039,6 +1069,38 @@ class _OtpScreenState extends State<OtpScreen> {
                                   height: 20.h,
                                 )
                               ],
+                            )
+                          else if (!isLoading && limitReached == true)
+                            Container(
+                              alignment: Alignment.center,
+                              height: 220.h,
+                              margin: EdgeInsets.only(
+                                  left: 18.0.w,
+                                  right: 18.w,
+                                  top: 0.h,
+                                  bottom: 0.h),
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Center(
+                                      child: SvgPicture.asset(
+                                        IMG_SMTWR,
+                                        height: 60.h,
+                                        width: 60.w,
+                                      ),
+                                    ),
+                                    Text(
+                                      OTP_ERR_MSG.toString(),
+                                      style: TextStyle(
+                                        fontSize: 11.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xff808080),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             )
                           else
                             Center(

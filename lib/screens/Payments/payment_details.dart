@@ -12,7 +12,7 @@ import 'package:ebps/models/account_info_model.dart';
 import 'package:ebps/models/add_biller_model.dart';
 import 'package:ebps/models/bbps_settings_model.dart';
 import 'package:ebps/models/billers_model.dart';
-import 'package:ebps/models/confirm_fetch_bill_model.dart';
+import 'package:ebps/models/fetch_bill_model.dart';
 import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/animated_dialog.dart';
@@ -44,6 +44,8 @@ class PaymentDetails extends StatefulWidget {
   Map<String, dynamic>? billerInputSign;
   PrepaidPlansData? planDetails;
   bool otherAmount;
+  billerResponseData? fetchBillerResponse;
+
   PaymentDetails(
       {Key? key,
       required this.billID,
@@ -60,6 +62,7 @@ class PaymentDetails extends StatefulWidget {
       this.amount,
       this.validateBill,
       this.billerInputSign,
+      this.fetchBillerResponse,
       this.planDetails})
       : super(key: key);
 
@@ -72,7 +75,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   bool isValidateBillLoading = false;
   bool isFetchbillLoading = false;
   List<AccountsData>? accountInfo = [];
-  ConfirmFetchBillData? confirmbillerResData;
+  billerResponseData? fetchbillerResData;
   dynamic selectedAcc;
   bool accError = false;
 
@@ -124,9 +127,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
       };
       BlocProvider.of<HomeCubit>(context).fetchValidateBill(payload);
     } else if (widget.validateBill!["billerType"] == "instant" ||
-        widget.validateBill!["billerType"] == "adhoc" ||
-        widget.validateBill!["billerType"] == "billFetch") {
-      BlocProvider.of<HomeCubit>(context).confirmFetchBill(
+        widget.validateBill!["billerType"] == "adhoc") {
+      BlocProvider.of<HomeCubit>(context).fetchBill(
         billerID: widget.isSavedBill
             ? widget.savedBillersData!.bILLERID
             : widget.billerData!.bILLERID,
@@ -137,6 +139,34 @@ class _PaymentDetailsState extends State<PaymentDetails> {
         billerParams: widget.billerInputSign,
         billName: widget.billName,
       );
+    } else {
+      goToData(context, oTPPAGEROUTE, {
+        "from": pAYMENTCONFIRMROUTE,
+        "templateName": "confirm-payment",
+        "context": context,
+        "BillerName": widget.billerName,
+        "BillName": widget.billName,
+        "data": {
+          "billerID": widget.isSavedBill
+              ? widget.savedBillersData!.bILLERID
+              : widget.billerData!.bILLERID,
+          "billerName": widget.billerName,
+          "billName": widget.billName,
+          "categoryName": widget.categoryName,
+          "acNo": accountInfo![selectedAcc].accountNumber,
+          "billAmount": widget.amount.toString(),
+          "customerBillID": widget.fetchBillerResponse!.customerbillId,
+          "tnxRefKey": widget.fetchBillerResponse!.txnRefKey,
+          "quickPay": widget.validateBill!["quickPay"],
+          "inputSignature": widget.inputParameters,
+          "SavedinputParameters": widget.SavedinputParameters,
+          "otherAmount": widget.otherAmount,
+          "autoPayStatus": '',
+          "billerData": widget.billerData,
+          "savedBillersData": widget.savedBillersData,
+          "isSavedBill": widget.isSavedBill
+        }
+      });
     }
   }
 
@@ -208,12 +238,12 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               isAccLoading = false;
             }
 
-            if (state is ConfirmFetchBillLoading) {
+            if (state is FetchBillLoading) {
               LoaderOverlay.of(context).show();
 
               isFetchbillLoading = true;
-            } else if (state is ConfirmFetchBillSuccess) {
-              confirmbillerResData = state.ConfirmFetchBillResponse;
+            } else if (state is FetchBillSuccess) {
+              fetchbillerResData = state.fetchBillResponse;
               //  _otherAmount = !(!widget.billerData!.pAYMENTEXACTNESS!.isNotEmpty ||
               //             widget.billerData!.pAYMENTEXACTNESS == "Exact" ||
               //             userAmount == billAmount);
@@ -234,8 +264,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                   "categoryName": widget.categoryName,
                   "acNo": accountInfo![selectedAcc].accountNumber,
                   "billAmount": widget.amount.toString(),
-                  "customerBillID": confirmbillerResData!.customerbillId,
-                  "tnxRefKey": confirmbillerResData!.txnRefKey,
+                  "customerBillID": fetchbillerResData!.customerbillId,
+                  "tnxRefKey": fetchbillerResData!.txnRefKey,
                   "quickPay": widget.validateBill!["quickPay"],
                   "inputSignature": widget.inputParameters,
                   "SavedinputParameters": widget.SavedinputParameters,
@@ -266,12 +296,12 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               //     .push(MaterialPageRoute(builder: (context) => OtpScreen()));
               isFetchbillLoading = false;
               LoaderOverlay.of(context).hide();
-            } else if (state is ConfirmFetchBillFailed) {
+            } else if (state is FetchBillFailed) {
               handleDialog();
               LoaderOverlay.of(context).hide();
 
               isFetchbillLoading = false;
-            } else if (state is ConfirmFetchBillError) {
+            } else if (state is FetchBillError) {
               handleDialog();
               LoaderOverlay.of(context).hide();
 
@@ -286,7 +316,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
             } else if (state is ValidateBillSuccess) {
               logger.d("VALIDATE  API SUCCESS ===>");
 
-              BlocProvider.of<HomeCubit>(context).confirmFetchBill(
+              BlocProvider.of<HomeCubit>(context).fetchBill(
                 billerID: widget.isSavedBill
                     ? widget.savedBillersData!.bILLERID
                     : widget.billerData!.bILLERID,

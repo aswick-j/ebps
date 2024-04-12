@@ -4,7 +4,6 @@ import 'package:ebps/models/amount_by_date_model.dart';
 import 'package:ebps/models/bbps_settings_model.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/categories_model.dart';
-import 'package:ebps/models/confirm_fetch_bill_model.dart';
 import 'package:ebps/models/fetch_bill_model.dart';
 import 'package:ebps/models/input_signatures_model.dart';
 import 'package:ebps/models/otp_model.dart';
@@ -184,6 +183,10 @@ class HomeCubit extends Cubit<HomeState> {
     bool? validateBill,
     Map<String, dynamic>? billerParams,
     String? billName,
+    dynamic forChannel,
+    String? planId,
+    String? planType,
+    String? supportPlan,
   }) async {
     if (isClosed) return;
 
@@ -427,63 +430,6 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  //CONFIR FETCH BILL
-  void confirmFetchBill({
-    String? billerID,
-    bool? quickPay,
-    String? quickPayAmount,
-    String? adHocBillValidationRefKey,
-    bool? validateBill,
-    Map<String, dynamic>? billerParams,
-    String? billName,
-    dynamic forChannel,
-    String? planId,
-    String? planType,
-    String? supportPlan,
-  }) async {
-    if (isClosed) return;
-
-    emit(ConfirmFetchBillLoading());
-
-    try {
-      final value = await repository!.fetchBill(
-        validateBill,
-        billerID,
-        billerParams,
-        quickPay,
-        quickPayAmount,
-        adHocBillValidationRefKey,
-        billName,
-      );
-
-      logger.d(
-        value,
-        error:
-            "GET CONFIRM FETCH API RESPONSE ===> lib/bloc/home/confirmFetchBill",
-      );
-
-      if (value != null && !value.toString().contains("Invalid token")) {
-        final status = value['status'];
-        final message = value['message'];
-
-        if (status == 200) {
-          final confirmFetchBillModel = ConfirmFetchBillModel.fromJson(value);
-          emit(ConfirmFetchBillSuccess(
-              ConfirmFetchBillResponse: confirmFetchBillModel.data));
-        } else {
-          emit(ConfirmFetchBillFailed(message: message));
-        }
-      } else {
-        emit(ConfirmFetchBillError(
-            message: value != null
-                ? value['message']
-                : 'Failed to retrieve response'));
-      }
-    } catch (e) {
-      // Handle exceptions
-    }
-  }
-
   //GENERATE OTP
 
   void generateOtp({templateName, billerName}) async {
@@ -508,12 +454,16 @@ class HomeCubit extends Cubit<HomeState> {
             }
           } else {
             if (!isClosed) {
-              emit(OtpFailed(message: value['message']));
+              emit(OtpFailed(
+                  message: value['message'],
+                  limitReached: value["limitReached"] ?? false));
             }
           }
         } else {
           if (!isClosed) {
-            emit(OtpError(message: value['message']));
+            emit(OtpError(
+                message: value['message'],
+                limitReached: value["limitReached"] ?? false));
           }
         }
       } else {

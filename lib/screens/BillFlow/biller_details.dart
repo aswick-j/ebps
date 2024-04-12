@@ -57,6 +57,7 @@ class BillerDetails extends StatefulWidget {
 
 class _BillerDetailsState extends State<BillerDetails> {
   BillerResponse? _billerResponseData;
+  billerResponseData? fetchBillerResponseData;
   int? _customerBIllID;
   int billAmount = 0;
   String? checkBillAmount = "0";
@@ -267,6 +268,7 @@ class _BillerDetailsState extends State<BillerDetails> {
           if (state is FetchBillLoading) {
             isFetchbillLoading = true;
           } else if (state is FetchBillSuccess) {
+            fetchBillerResponseData = state.fetchBillResponse;
             _billerResponseData =
                 state.fetchBillResponse!.data!.data!.billerResponse;
             _customerBIllID = state.fetchBillResponse!.customerbillId;
@@ -838,6 +840,8 @@ class _BillerDetailsState extends State<BillerDetails> {
                                         : widget.billerData!.bILLERNAME,
                                     "billName": widget.billName,
                                     "billerData": widget.billerData,
+                                    "fetchBillerResponse":
+                                        fetchBillerResponseData,
                                     "savedBillersData": widget.savedBillersData,
                                     "inputParameters": widget.inputParameters,
                                     "SavedinputParameters":

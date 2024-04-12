@@ -241,6 +241,7 @@ class MyRouter {
                       billID: args['billID'],
                       billerName: args['name'],
                       billName: args['billName'],
+                      fetchBillerResponse: args['fetchBillerResponse'],
                       categoryName: args['categoryName'],
                       isSavedBill: args["isSavedBill"],
                       billerData: args['billerData'],
