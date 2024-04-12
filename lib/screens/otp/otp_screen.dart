@@ -8,6 +8,7 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/helpers/getOTPInfoMsg.dart';
 import 'package:ebps/helpers/getPopupMsg.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/services/api.dart';
@@ -16,11 +17,14 @@ import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/loader_overlay.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -273,7 +277,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           index, BillerName.toString(), BillName.toString()),
                   subTitle: "",
                   child: Icon(
-                    Icons.check,
+                    Icons.close,
                     color: Colors.white,
                   ),
                   showSub: false,
@@ -385,6 +389,54 @@ class _OtpScreenState extends State<OtpScreen> {
         },
       );
     }
+
+    List<Widget> tabInfoItems = [
+      Container(
+        clipBehavior: Clip.hardEdge,
+        width: double.infinity,
+        margin:
+            EdgeInsets.only(left: 18.0.w, right: 18.w, top: 20.h, bottom: 0.h),
+        decoration: BoxDecoration(
+          color: CLR_GREY.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(6.0.r + 2.r),
+          border: Border.all(
+            color: Color(0xffD1D9E8),
+            width: 1.0,
+          ),
+        ),
+        child: Column(
+          children: [
+            Padding(
+                padding: EdgeInsets.only(
+                    top: 10.h, left: 14.w, bottom: 10.h, right: 10.w),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.info_outline_rounded,
+                      color: TXT_CLR_PRIMARY,
+                      size: 15.r,
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(top: 0.h, left: 5.w, bottom: 0.h),
+                      child: SizedBox(
+                        width: 260.w,
+                        child: RichText(
+                          maxLines: 5,
+                          text: getOTPInfoMsg(
+                              widget.templateName.toString(),
+                              widget.data!['billAmount'].toString(),
+                              widget.BillerName.toString(),
+                              widget.BillName.toString()),
+                        ),
+                      ),
+                    )
+                  ],
+                )),
+          ],
+        ),
+      ),
+    ];
 
     handleDialog() {
       showDialog(
@@ -771,6 +823,7 @@ class _OtpScreenState extends State<OtpScreen> {
           },
           builder: (context, state) {
             return SingleChildScrollView(
+              // physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
                   // Padding(
@@ -1089,6 +1142,9 @@ class _OtpScreenState extends State<OtpScreen> {
                                         width: 60.w,
                                       ),
                                     ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
                                     Text(
                                       OTP_ERR_MSG.toString(),
                                       style: TextStyle(
@@ -1111,15 +1167,25 @@ class _OtpScreenState extends State<OtpScreen> {
                             )
                         ],
                       )),
-                  SizedBox(
-                    height: 100.h,
-                  ),
+                  // SizedBox(
+                  //   height: 100.h,
+                  // ),
+                  if (!isLoading && limitReached == false)
+                    ...tabInfoItems
+                        .animate(interval: 600.ms)
+                        .fadeIn(duration: 900.ms, delay: 300.ms)
+                        .shimmer(
+                            blendMode: BlendMode.srcOver, color: Colors.white12)
+                        .move(
+                            begin: const Offset(-16, 0),
+                            curve: Curves.easeOutQuad),
+
                   BbpsLogoContainer(
                     showEquitasLogo: false,
                   ),
-                  // SizedBox(
-                  //   height: 70.h,
-                  // )
+                  SizedBox(
+                    height: 70.h,
+                  )
                 ],
               ),
             );
