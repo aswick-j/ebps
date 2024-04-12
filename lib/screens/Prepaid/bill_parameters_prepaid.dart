@@ -332,6 +332,10 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                                 return null;
                               },
                               decoration: InputDecoration(
+                                counterStyle: TextStyle(
+                                    color: billNameController.text.length <= 3
+                                        ? CLR_ERROR
+                                        : null),
                                 fillColor:
                                     const Color(0xffD1D9E8).withOpacity(0.2),
                                 filled: true,
