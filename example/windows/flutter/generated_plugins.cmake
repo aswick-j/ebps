@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   ebps
+  printing
   smart_auth
 )
 

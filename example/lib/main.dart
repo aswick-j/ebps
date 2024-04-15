@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:crypto/crypto.dart';
+import 'package:ebps/widget/centralized_grid_view.dart';
 import 'package:ebps_example/Mock_Params.dart';
 import 'package:ebps_example/PluginScreen.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +60,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   Future<void> fetchData(val) async {
     try {
       isLoading = true;
-      final checkSUm = val['redirectionRequest']!['checkSum'];
+      String jsonString = json.encode(val['redirectionRequest']!['msgBdy']);
+      //MB HASHING KEY
+      String hashKey = "ahsdfjkhaklsdf657";
+      String dataToHash = "$jsonString$hashKey";
+
+      Digest sha512Digest = sha512.convert(utf8.encode(dataToHash));
+      String sha512HashHex = sha512Digest.toString();
+      // final checkSUm = val['redirectionRequest']!['checkSum'];
+      final checkSUm = sha512HashHex;
+      print(sha512HashHex);
       final response = await http.post(
         Uri.parse(API_URL),
         body: json.encode(val['redirectionRequest']!['msgBdy']),
@@ -97,25 +108,34 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   late Timer _timer;
   final List<Color> _colors = [
-    Color.fromARGB(255, 161, 173, 255).withOpacity(0.2),
-    Color.fromARGB(255, 161, 249, 255).withOpacity(0.2),
-    Color.fromARGB(255, 161, 173, 255).withOpacity(0.2),
-    Color.fromARGB(255, 202, 255, 171).withOpacity(0.2),
-    Color.fromARGB(255, 255, 253, 155).withOpacity(0.2),
-    Color.fromARGB(255, 153, 255, 153).withOpacity(0.2),
-    Color.fromARGB(255, 150, 150, 255).withOpacity(0.2),
-    Color.fromARGB(255, 212, 151, 255).withOpacity(0.2),
-    Color.fromARGB(255, 223, 147, 255).withOpacity(0.5),
+    const Color.fromARGB(255, 161, 173, 255).withOpacity(0.2),
+    const Color.fromARGB(255, 161, 249, 255).withOpacity(0.2),
+    const Color.fromARGB(255, 161, 173, 255).withOpacity(0.2),
+    const Color.fromARGB(255, 202, 255, 171).withOpacity(0.2),
+    const Color.fromARGB(255, 255, 253, 155).withOpacity(0.2),
+    const Color.fromARGB(255, 153, 255, 153).withOpacity(0.2),
+    const Color.fromARGB(255, 150, 150, 255).withOpacity(0.2),
+    const Color.fromARGB(255, 212, 151, 255).withOpacity(0.2),
+    const Color.fromARGB(255, 223, 147, 255).withOpacity(0.5),
   ];
   double _animationValue = 0.0;
 
-  List value = [p8, p6, p7, p6];
-  List Name = ["Balaji", "Thangavel", "Aswick", "Swetha"];
+  // List value = [p13, p13];
+  // List Name = ["Dhivya", "Nithiya"];
+  // List Img = [
+  //   // "https://cdn.iconscout.com/icon/free/png-512/free-avatar-378-456330.png?f=webp&w=512",
+  //   "https://cdn.iconscout.com/icon/free/png-512/free-avatar-369-456321.png?f=webp&w=512"
+  // ];
+  List value = [p3, p7, p19, p21];
+  List Name = ["Balaji", "Aswick", "Nithiya", "Divya"];
   List Img = [
     "https://cdn.iconscout.com/icon/free/png-512/free-avatar-366-456318.png?f=webp&w=512",
-    "https://cdn.iconscout.com/icon/free/png-512/free-avatar-371-456323.png?f=webp&w=512",
+    //"https://cdn.iconscout.com/icon/free/png-512/free-avatar-371-456323.png?f=webp&w=512",
     "https://cdn.iconscout.com/icon/free/png-512/free-avatar-370-456322.png?f=webp&w=512",
-    "https://cdn.iconscout.com/icon/free/png-512/free-avatar-378-456330.png?f=webp&w=512"
+    //"https://cdn.iconscout.com/icon/free/png-512/free-avatar-378-456330.png?f=webp&w=512",
+    "https://cdn.iconscout.com/icon/free/png-512/free-avatar-373-456325.png?f=webp&w=512",
+    "https://cdn.iconscout.com/icon/free/png-512/free-avatar-369-456321.png?f=webp&w=512",
+    // "https://cdn.iconscout.com/icon/free/png-512/free-avatar-369-456321.png?f=webp&w=512",
   ];
 
   @override
@@ -157,10 +177,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 GridView.builder(
                   shrinkWrap: true,
                   itemCount: value.length,
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate:
+                      SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement(
                     crossAxisCount: 2,
                     mainAxisSpacing: 0,
+                    itemCount: value.length,
                   ),
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
