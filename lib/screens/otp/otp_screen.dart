@@ -1135,6 +1135,9 @@ class _OtpScreenState extends State<OtpScreen> {
                               child: Center(
                                 child: Column(
                                   children: [
+                                    SizedBox(
+                                      height: 50.h,
+                                    ),
                                     Center(
                                       child: SvgPicture.asset(
                                         IMG_SMTWR,
@@ -1143,7 +1146,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                       ),
                                     ),
                                     SizedBox(
-                                      height: 10.h,
+                                      height: 30.h,
                                     ),
                                     Text(
                                       OTP_ERR_MSG.toString(),

@@ -38,6 +38,7 @@ dependencies:
   delightful_toast: ^1.1.0
   connectivity_plus: ^5.0.2
   syncfusion_flutter_charts: 20.4.44
+  flutter_animate: ^4.5.0
 
 dev_dependencies:
   flutter_test:

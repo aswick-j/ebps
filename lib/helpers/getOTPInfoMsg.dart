@@ -30,10 +30,10 @@ TextSpan getOTPInfoMsg(
           TextSpan(style: normalStyle, text: "OTP to Payment "),
           TextSpan(
             text:
-                "₹ ${NumberFormat('#,##,##0.00').format(double.parse(Amount.toString()))}",
+                " ₹ ${NumberFormat('#,##,##0.00').format(double.parse(Amount.toString()))}",
             style: boldStyle,
           ),
-          TextSpan(style: normalStyle, text: " for. "),
+          TextSpan(style: normalStyle, text: " for "),
           TextSpan(
             text: BillName,
             style: boldStyle,
