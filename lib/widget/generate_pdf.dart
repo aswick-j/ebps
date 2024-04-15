@@ -174,9 +174,11 @@ Future<Uint8List> generatePdf(
                           'Name of the Biller',
                           BillerName,
                         ],
-                        if (customerName != "-")
+                        if (customerName != "-" && customerName != "NA")
                           ['Consumer Name', customerName],
-                        if (billNumber != "null" && billNumber != "-")
+                        if (billNumber != "null" &&
+                            billNumber != "-" &&
+                            billNumber != "NA")
                           [
                             'Bill Number',
                             billNumber,
