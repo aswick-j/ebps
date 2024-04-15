@@ -304,7 +304,8 @@ class HistoryContainer extends StatelessWidget {
                         SizedBox(
                           width: 5.w,
                         ),
-                        if (historyData.customerName != null)
+                        if (historyData.customerName != null &&
+                            historyData.customerName != "NA")
                           Text(
                             "( ${historyData.customerName.toString()} )",
                             style: TextStyle(

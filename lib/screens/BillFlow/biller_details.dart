@@ -471,6 +471,28 @@ class _BillerDetailsState extends State<BillerDetails> {
                                             "Bill Name",
                                             widget.billName.toString(),
                                             context),
+                                      if ((!(_billerResponseData == null ||
+                                          _billerResponseData!.tag!.isEmpty)))
+                                        ListView.builder(
+                                            itemCount: _billerResponseData!
+                                                .tag!.length,
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemBuilder: (context, index) =>
+                                                Column(
+                                                  children: [
+                                                    billerdetail(
+                                                      _billerResponseData!
+                                                          .tag![index].name
+                                                          .toString(),
+                                                      _billerResponseData!
+                                                          .tag![index].value
+                                                          .toString(),
+                                                      context,
+                                                    ),
+                                                  ],
+                                                )),
                                     ],
                                   )),
                           if (!isFetchbillLoading &&
