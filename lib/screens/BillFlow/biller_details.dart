@@ -462,7 +462,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                           _billerResponseData!.customerName !=
                                               null)
                                         billerdetail(
-                                            "Customer Name",
+                                            "Consumer Name",
                                             _billerResponseData!.customerName
                                                 .toString(),
                                             context),
