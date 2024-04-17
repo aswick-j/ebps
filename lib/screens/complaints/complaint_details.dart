@@ -1,7 +1,10 @@
+import 'package:delightful_toast/delight_toast.dart';
+import 'package:delightful_toast/toast/components/toast_card.dart';
 import 'package:ebps/bloc/complaint/complaint_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Container/Home/biller_details_container.dart';
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getComplaintStatus.dart';
 import 'package:ebps/models/complaints_model.dart';
 import 'package:ebps/widget/flickr_loader.dart';
@@ -120,6 +123,42 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
       );
     }
 
+    void showToast() {
+      return DelightToastBar(
+        autoDismiss: true,
+        animationDuration: Duration(milliseconds: 300),
+        builder: (context) => ToastCard(
+          shadowColor: Colors.grey.withOpacity(0.4),
+          leading: Icon(Icons.cancel_outlined, size: 28.r, color: Colors.red),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Oops !",
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.bold,
+                  color: TXT_CLR_DEFAULT,
+                ),
+                textAlign: TextAlign.left,
+                maxLines: 2,
+              ),
+              Text(
+                "Unable to Refresh the Complaint Status. Please try again.",
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xff1b438b),
+                ),
+                textAlign: TextAlign.left,
+                maxLines: 2,
+              ),
+            ],
+          ),
+        ),
+      ).show(context);
+    }
+
     return Scaffold(
         appBar: MyAppBar(
           context: context,
@@ -136,17 +175,25 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                 if (state is CmpStatusUpdateLoading) {
                   isCmpStatusLoading = true;
                 } else if (state is CmpStatusUpdateSuccess) {
-                  widget.handleStatus(
-                      state.CmpStatusUpdateDetails!.data!.complaintStatus
-                          .toString(),
-                      widget.complaintData.cOMPLAINTID,
-                      state.CmpStatusUpdateDetails!.data!.remarks.toString(),
-                      state.CmpStatusUpdateDetails!.data!.assigned.toString());
+                  if (state.CmpStatusUpdateDetails?.data?.responseReason !=
+                      "Complaint not found") {
+                    widget.handleStatus(
+                        state.CmpStatusUpdateDetails!.data!.complaintStatus
+                            .toString(),
+                        widget.complaintData.cOMPLAINTID,
+                        state.CmpStatusUpdateDetails!.data!.remarks.toString(),
+                        state.CmpStatusUpdateDetails!.data!.assigned
+                            .toString());
+                  } else {
+                    showToast();
+                  }
                   isCmpStatusLoading = false;
                 } else if (state is CmpStatusUpdateFailed) {
                   isCmpStatusLoading = false;
+                  showToast();
                 } else if (state is CmpStatusUpdateError) {
                   isCmpStatusLoading = false;
+                  showToast();
                 }
               },
               builder: (context, state) {
@@ -211,7 +258,7 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                                   showStatus: false),
                               CmpDetails(
                                   title: "Type",
-                                  subTitle: "Transaction",
+                                  subTitle: "Transaction - Based",
                                   showStatus: false),
                               CmpDetails(
                                   title: "Description",

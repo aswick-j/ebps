@@ -16,8 +16,13 @@ const CLR_GREENSHADE = Color(0xff99DDB4);
 const CLR_REDSHADE = Color.fromARGB(255, 221, 153, 153);
 const CLR_ORANGESHADE = Color.fromRGBO(221, 198, 153, 1);
 const CLR_ERROR = Color(0xffCF1E2F);
+const CLR_ERROR_SHADE = Color(0xffE27882);
 const CLR_GREEN = Color(0xff008936);
 const CLR_ORANGE = Color(0xFFCE7D1E);
+const CLR_ORANGE_SHADE2 = Color.fromARGB(255, 224, 129, 20);
+
+const CLR_ERR_BG = Color(0xffF5D2D5);
+
 const CLR_BLUE_LITE = Color(0xFF768EB9);
 
 //primary text colors

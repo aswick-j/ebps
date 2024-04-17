@@ -6,10 +6,10 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getDaySuffix.dart';
-import 'package:ebps/helpers/getDecimalInputs.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/getMonthName.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/helpers/getNearstHundered.dart';
 import 'package:ebps/helpers/numberPrefixSetter.dart';
 import 'package:ebps/models/account_info_model.dart';
 import 'package:ebps/models/bbps_settings_model.dart';
@@ -413,8 +413,10 @@ class _createAutopayState extends State<createAutopay> {
                                                               : "10000") *
                                                           0.3))
                                                   .toStringAsFixed(2);
-                                              maxAmountController.text =
-                                                  dataAmount;
+                                              maxAmountController
+                                                  .text = NearestHunderer(
+                                                      double.parse(dataAmount))
+                                                  .toStringAsFixed(0);
                                             });
                                           },
                                           controlAffinity:
@@ -450,12 +452,15 @@ class _createAutopayState extends State<createAutopay> {
                                               : null),
                                       keyboardType: TextInputType.number,
                                       inputFormatters: [
-                                        LengthLimitingTextInputFormatter(10),
-                                        DecimalTextInputFormatter(
-                                            decimalRange: 2),
-                                        // getInputAmountFormatter(),
+                                        LengthLimitingTextInputFormatter(6),
+                                        // DecimalTextInputFormatter(
+                                        //     decimalRange: 2),
+                                        // // getInputAmountFormatter(),
+                                        // FilteringTextInputFormatter.allow(
+                                        //     RegExp(r'^[0-9]*[.]{0,1}[0-9]*'))
+
                                         FilteringTextInputFormatter.allow(
-                                            RegExp(r'^[0-9]*[.]{0,1}[0-9]*'))
+                                            RegExp(r'^[0-9]*'))
                                       ],
                                       onChanged: (val) {
                                         if (val.isNotEmpty) {
@@ -516,9 +521,11 @@ class _createAutopayState extends State<createAutopay> {
                                                 color: Color(0xff1B438B)),
                                           ),
                                           border: const UnderlineInputBorder(),
-                                          labelText: 'Maximum Amount',
+                                          labelText: limitGroupRadio == 1
+                                              ? 'Maximum Amount'
+                                              : "Enter amount to be set as Limit",
                                           prefixText: '₹  ',
-                                          hintText: "Enter maximum amount"),
+                                          hintText: "Maximum amount"),
                                     ),
                                   ),
                                   if (maxAmountError)
@@ -569,7 +576,7 @@ class _createAutopayState extends State<createAutopay> {
                                             style: TextStyle(
                                               fontSize: 12.sp,
                                               fontWeight: FontWeight.w600,
-                                              color: CLR_ERROR,
+                                              color: CLR_ORANGE,
                                             ),
                                           ),
                                         ),
@@ -1077,6 +1084,12 @@ class _createAutopayState extends State<createAutopay> {
                             onPressed: () async {
                               if (selectedAcc != null &&
                                   !isMaxAmountEmpty &&
+                                  !((double.parse(
+                                          maxAmountController.text.length > 0
+                                              ? maxAmountController.text
+                                              : "0".toString()) >
+                                      double.parse(
+                                          maximumAmount.toString()))) &&
                                   !(selectedDate == todayDate &&
                                       activatesFrom == "Immediately")) {
                                 Map<String, dynamic> decodedToken =
@@ -1121,6 +1134,12 @@ class _createAutopayState extends State<createAutopay> {
                             buttonBorderColor: Colors.transparent,
                             buttonColor: selectedAcc != null &&
                                     !isMaxAmountEmpty &&
+                                    !((double.parse(
+                                            maxAmountController.text.length > 0
+                                                ? maxAmountController.text
+                                                : "0".toString()) >
+                                        double.parse(
+                                            maximumAmount.toString()))) &&
                                     !(selectedDate == todayDate &&
                                         activatesFrom == "Immediately")
                                 ? CLR_PRIMARY

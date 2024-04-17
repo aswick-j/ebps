@@ -88,7 +88,7 @@ class _editAutopayState extends State<editAutopay> {
     billPayGroupRadio = widget.autopayData!.iSBIMONTHLY ?? 0;
     maxAmountController.text =
         double.parse(widget.autopayData!.mAXIMUMAMOUNT.toString())
-            .toStringAsFixed(2);
+            .toStringAsFixed(0);
 
     activatesFrom = widget.autopayData!.aCTIVATESFROM != null
         ? widget.autopayData!.aCTIVATESFROM![0].toUpperCase() +
@@ -130,6 +130,10 @@ class _editAutopayState extends State<editAutopay> {
 
     if (selectedAcc == null ||
         selectedAcc == 99 ||
+        ((double.parse(maxAmountController.text.length > 0
+                ? maxAmountController.text
+                : "0".toString()) >
+            double.parse(maximumAmount.toString()))) ||
         // accError ||
         widget.autopayData!.pAYMENTDATE.toString() == todayDate ||
         ((widget.autopayData!.pAYMENTDATE == todayDate ||
@@ -594,7 +598,7 @@ class _editAutopayState extends State<editAutopay> {
                                                   maxAmountController.text =
                                                       widget.autopayData!
                                                           .mAXIMUMAMOUNT
-                                                          .toStringAsFixed(2);
+                                                          .toStringAsFixed(0);
                                                 } else {
                                                   maxAmountController
                                                       .text = (double.parse(
@@ -604,7 +608,7 @@ class _editAutopayState extends State<editAutopay> {
                                                               ? lastPaidAmount
                                                                   .toString()
                                                               : "10000")
-                                                      .toStringAsFixed(2));
+                                                      .toStringAsFixed(0));
                                                 }
                                               });
                                               if (widget.autopayData!
@@ -670,12 +674,12 @@ class _editAutopayState extends State<editAutopay> {
 
                                         inputFormatters: [
                                           // getInputAmountFormatter(),
-                                          LengthLimitingTextInputFormatter(10),
-                                          DecimalTextInputFormatter(
-                                              decimalRange: 2),
+                                          LengthLimitingTextInputFormatter(6),
+                                          // DecimalTextInputFormatter(
+                                          //     decimalRange: 2),
                                           // getInputAmountFormatter(),
                                           FilteringTextInputFormatter.allow(
-                                              RegExp(r'^[0-9]*[.]{0,1}[0-9]*'))
+                                              RegExp(r'^[0-9]*'))
                                         ],
                                         onChanged: (val) {
                                           if (val.isNotEmpty) {
@@ -736,9 +740,11 @@ class _editAutopayState extends State<editAutopay> {
                                             ),
                                             border:
                                                 const UnderlineInputBorder(),
-                                            labelText: 'Maximum Amount',
+                                            labelText: limitGroupRadio == 1
+                                                ? 'Maximum Amount'
+                                                : "Enter amount to be set as Limit",
                                             prefixText: '₹  ',
-                                            hintText: "Enter maximum amount"),
+                                            hintText: "Maximum amount"),
                                       ),
                                     ),
                                     if (maxAmountError)
@@ -797,7 +803,7 @@ class _editAutopayState extends State<editAutopay> {
                                               style: TextStyle(
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.w600,
-                                                color: CLR_ERROR,
+                                                color: CLR_ORANGE,
                                               ),
                                             ),
                                           ),
