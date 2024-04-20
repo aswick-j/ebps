@@ -350,7 +350,7 @@ class _BillParametersState extends State<BillParameters> {
                       goBack(context);
                     },
                     buttonText: "Cancel",
-                    buttonTxtColor: CLR_PRIMARY,
+                    buttonTxtColor: AppColors.CLR_PRIMARY,
                     buttonBorderColor: Colors.transparent,
                     buttonColor: BTN_CLR_ACTIVE,
                     buttonSizeX: 10.h,
@@ -378,7 +378,7 @@ class _BillParametersState extends State<BillParameters> {
                     buttonColor: isButtonActive &&
                             isValidBillName &&
                             billNameController.text.length > 3
-                        ? CLR_PRIMARY
+                        ? AppColors.CLR_PRIMARY
                         : Colors.grey,
                     buttonSizeX: 10.h,
                     buttonSizeY: 40.w,

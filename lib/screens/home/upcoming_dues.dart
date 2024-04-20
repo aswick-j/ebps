@@ -3,6 +3,7 @@ import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/Container/Home/home_banners.dart';
 import 'package:ebps/common/Container/Home/upcoming_container.dart';
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
@@ -53,7 +54,7 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                       style: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xff1b438b),
+                        color: AppColors.CLR_PRIMARY,
                       ),
                     ),
                     if (widget.allUpcomingDues.length > 2)
@@ -73,14 +74,15 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xff1b438b),
+                                color: AppColors.CLR_PRIMARY,
                               ),
                               textHeightBehavior: TextHeightBehavior(
                                   applyHeightToFirstAscent: false),
                               textAlign: TextAlign.center,
                               softWrap: false,
                             ),
-                            Icon(Icons.arrow_forward, color: Color(0xff1b438b)),
+                            Icon(Icons.arrow_forward,
+                                color: AppColors.CLR_PRIMARY, size: 20.r),
                           ],
                         ),
                       ),
@@ -159,12 +161,12 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                       containerBorderColor: Color(0xffD1D9E8),
                       buttonColor: widget.allUpcomingDues[index]["itemType"] ==
                               'upcomingDue'
-                          ? Color(0xFF1B438B)
+                          ? AppColors.CLR_PRIMARY
                           : Color.fromARGB(255, 255, 255, 255),
                       buttonTxtColor: widget.allUpcomingDues[index]
                                   ["itemType"] ==
                               'upcomingDue'
-                          ? Color.fromARGB(255, 255, 255, 255)
+                          ? AppColors.BTN_CLR_ACTIVE
                           : widget.allUpcomingDues[index]["itemType"] ==
                                   'upcomingAutopaused'
                               ? Colors.red

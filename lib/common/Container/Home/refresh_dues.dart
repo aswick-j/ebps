@@ -333,9 +333,9 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                               goBack(context);
                             },
                             buttonText: "Close",
-                            buttonTxtColor: CLR_PRIMARY,
+                            buttonTxtColor: AppColors.BTN_CLR_ACTIVE_BG,
                             buttonBorderColor: Color(0xff768EB9),
-                            buttonColor: Colors.white,
+                            buttonColor: AppColors.BTN_CLR_ACTIVE,
                             buttonSizeX: 10.h,
                             buttonSizeY: 37.w,
                             buttonTextSize: 14.sp,
@@ -402,9 +402,9 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                             }
                           },
                           buttonText: "Close",
-                          buttonTxtColor: CLR_PRIMARY,
+                          buttonTxtColor: AppColors.CLR_PRIMARY,
                           buttonBorderColor: Color(0xff768EB9),
-                          buttonColor: Colors.white,
+                          buttonColor: AppColors.BTN_CLR_ACTIVE_BG,
                           buttonSizeX: 10.h,
                           buttonSizeY: 37.w,
                           buttonTextSize: 14.sp,

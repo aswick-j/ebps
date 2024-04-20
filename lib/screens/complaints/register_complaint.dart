@@ -83,7 +83,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                 //         buttonText: "Okay",
                 //         buttonTxtColor: BTN_CLR_ACTIVE,
                 //         buttonBorderColor: Colors.transparent,
-                //         buttonColor: CLR_PRIMARY,
+                //         buttonColor: AppColors.CLR_PRIMARY,
                 //         buttonSizeX: 10.h,
                 //         buttonSizeY: 40.w,
                 //         buttonTextSize: 14.sp,
@@ -115,7 +115,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w700,
-                          color: CLR_PRIMARY,
+                          color: AppColors.CLR_PRIMARY,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -187,7 +187,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                             buttonText: "Okay",
                             buttonTxtColor: BTN_CLR_ACTIVE,
                             buttonBorderColor: Colors.transparent,
-                            buttonColor: CLR_PRIMARY,
+                            buttonColor: AppColors.CLR_PRIMARY,
                             buttonSizeX: 10.h,
                             buttonSizeY: 40.w,
                             buttonTextSize: 14.sp,
@@ -550,7 +550,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                       buttonColor: cmp_reason != null &&
                               cmp_reasonID != null &&
                               !cmpNotValid
-                          ? CLR_PRIMARY
+                          ? AppColors.CLR_PRIMARY
                           : Colors.grey,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,

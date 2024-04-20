@@ -90,7 +90,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                     MyAppText(
                       data: widget.amount,
                       size: 14.0.sp,
-                      color: CLR_PRIMARY,
+                      color: AppColors.CLR_PRIMARY,
                       weight: FontWeight.bold,
                     ),
                   ],

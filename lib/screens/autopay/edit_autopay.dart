@@ -218,7 +218,7 @@ class _editAutopayState extends State<editAutopay> {
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(
                     Icons.info_outline,
-                    color: CLR_PRIMARY,
+                    color: AppColors.CLR_PRIMARY,
                   ),
                 ),
               ),
@@ -1304,7 +1304,7 @@ class _editAutopayState extends State<editAutopay> {
                               goBack(context);
                             },
                             buttonText: "Cancel",
-                            buttonTxtColor: CLR_PRIMARY,
+                            buttonTxtColor: AppColors.CLR_PRIMARY,
                             buttonBorderColor: Colors.transparent,
                             buttonColor: BTN_CLR_ACTIVE,
                             buttonSizeX: 10.h,
@@ -1323,8 +1323,9 @@ class _editAutopayState extends State<editAutopay> {
                             buttonText: "Update",
                             buttonTxtColor: BTN_CLR_ACTIVE,
                             buttonBorderColor: Colors.transparent,
-                            buttonColor:
-                                handleButton() ? CLR_PRIMARY : Colors.grey,
+                            buttonColor: handleButton()
+                                ? AppColors.CLR_PRIMARY
+                                : Colors.grey,
                             buttonSizeX: 10.h,
                             buttonSizeY: 40.w,
                             buttonTextSize: 14.sp,

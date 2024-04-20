@@ -2,6 +2,7 @@ import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Container/Home/categories_container.dart';
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getBillerCategory.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/categories_model.dart';
@@ -87,6 +88,7 @@ class _AllBillCategoriesState extends State<AllBillCategories> {
     }
 
     return Scaffold(
+      backgroundColor: AppColors.CLR_BACKGROUND,
       appBar: MyAppBar(
         context: context,
         title: 'Bill Categories',
@@ -110,7 +112,7 @@ class _AllBillCategoriesState extends State<AllBillCategories> {
           child: Theme(
             data: ThemeData(splashColor: Colors.white),
             child: BottomNavigationBar(
-              backgroundColor: Colors.white,
+              backgroundColor: AppColors.CLR_BACKGROUND,
               showUnselectedLabels: true,
               onTap: _onItemTapped,
               elevation: 0,

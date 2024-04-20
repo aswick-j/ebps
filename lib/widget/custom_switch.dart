@@ -41,11 +41,11 @@ class _CustomSwitchState extends State<CustomSwitch>
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24.0.r),
             border: Border.all(
-              color: CLR_PRIMARY,
+              color: AppColors.CLR_PRIMARY,
               width: 2.0,
             ),
             color: _circleAnimation!.value == Alignment.centerLeft
-                ? CLR_PRIMARY
+                ? AppColors.CLR_PRIMARY
                 : Colors.white,
           ),
           child: Padding(
@@ -66,12 +66,12 @@ class _CustomSwitchState extends State<CustomSwitch>
                     shape: BoxShape.circle,
                     color: _circleAnimation!.value == Alignment.centerLeft
                         ? Colors.white
-                        : CLR_PRIMARY),
+                        : AppColors.CLR_PRIMARY),
                 child: _circleAnimation!.value == Alignment.centerLeft
                     ? Icon(
                         Icons.check,
                         size: 13.r,
-                        color: CLR_PRIMARY,
+                        color: AppColors.CLR_PRIMARY,
                       )
                     : Icon(Icons.close, size: 13.r, color: Colors.white),
               ),

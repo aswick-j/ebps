@@ -116,7 +116,7 @@ class _DateDialogState extends State<DateDialog> {
                         Navigator.of(context).pop();
                       },
                       buttonText: "Cancel",
-                      buttonTxtColor: CLR_PRIMARY,
+                      buttonTxtColor: AppColors.CLR_PRIMARY,
                       buttonBorderColor: Colors.transparent,
                       buttonColor: BTN_CLR_ACTIVE,
                       buttonSizeX: 8.h,
@@ -135,7 +135,7 @@ class _DateDialogState extends State<DateDialog> {
                       buttonText: "Okay",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
+                      buttonColor: AppColors.CLR_PRIMARY,
                       buttonSizeX: 8.h,
                       buttonSizeY: 35.w,
                       buttonTextSize: 12.sp,

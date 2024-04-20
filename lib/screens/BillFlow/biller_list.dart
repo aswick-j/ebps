@@ -168,7 +168,7 @@ class _BillerListState extends State<BillerList> {
                   textAlign: TextAlign.left,
                   controller: _searchController,
                   decoration: InputDecoration(
-                    fillColor: CLR_PRIMARY_LITE.withOpacity(0.2),
+                    fillColor: AppColors.CLR_PRIMARY_LITE.withOpacity(0.2),
                     filled: true,
                     isDense: true,
                     contentPadding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 0.h),

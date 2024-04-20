@@ -155,7 +155,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.bold,
-                                        color: CLR_PRIMARY,
+                                        color: AppColors.CLR_PRIMARY,
                                       ),
                                       textAlign: TextAlign.left,
                                       maxLines: 3,
@@ -406,7 +406,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                     ? Color.fromARGB(
                                                             255, 255, 123, 123)
                                                         .withOpacity(.16)
-                                                    : CLR_PRIMARY
+                                                    : AppColors.CLR_PRIMARY
                                                         .withOpacity(.16),
                                                 Colors.transparent
                                               ])),
@@ -467,8 +467,8 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       goBack(context);
                                     },
                                     buttonText: "Skip",
-                                    buttonTxtColor: CLR_PRIMARY,
-                                    buttonBorderColor: CLR_PRIMARY,
+                                    buttonTxtColor: AppColors.CLR_PRIMARY,
+                                    buttonBorderColor: AppColors.CLR_PRIMARY,
                                     buttonColor: BTN_CLR_ACTIVE,
                                     buttonSizeX: 10.h,
                                     buttonSizeY: 40.w,
@@ -531,8 +531,8 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                             BTN_CLR_ACTIVE,
                                                         buttonBorderColor:
                                                             Colors.transparent,
-                                                        buttonColor:
-                                                            CLR_PRIMARY,
+                                                        buttonColor: AppColors
+                                                            .CLR_PRIMARY,
                                                         buttonSizeX: 10,
                                                         buttonSizeY: 40,
                                                         buttonTextSize: 14,
@@ -570,7 +570,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                     buttonText: "Modify",
                                     buttonTxtColor: BTN_CLR_ACTIVE,
                                     buttonBorderColor: Colors.transparent,
-                                    buttonColor: CLR_PRIMARY,
+                                    buttonColor: AppColors.CLR_PRIMARY,
                                     buttonSizeX: 10.h,
                                     buttonSizeY: 40.w,
                                     buttonTextSize: 14.sp,

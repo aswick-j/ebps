@@ -84,7 +84,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
               child: Icon(
                 Icons.info_outline,
                 color: Colors.transparent,
-                // color: CLR_PRIMARY,
+                // color: AppColors.CLR_PRIMARY,
               ),
             ),
           ),

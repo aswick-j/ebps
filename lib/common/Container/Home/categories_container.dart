@@ -1,4 +1,5 @@
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/categories_model.dart';
@@ -26,6 +27,7 @@ class CategoriesContainer extends StatelessWidget {
       margin:
           EdgeInsets.only(left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
       decoration: BoxDecoration(
+        color: AppColors.CLR_BACKGROUND,
         borderRadius: BorderRadius.circular(8.0.r),
         border: Border.all(
           color: Color(0xFFD1D9E8),
@@ -42,7 +44,7 @@ class CategoriesContainer extends StatelessWidget {
               style: TextStyle(
                 fontSize: 15.w,
                 fontWeight: FontWeight.w600,
-                color: Color(0xff1b438b),
+                color: AppColors.TXT_CLR_PRIMARY,
                 height: 25 / 15,
               ),
               textAlign: TextAlign.left,
@@ -50,7 +52,7 @@ class CategoriesContainer extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            color: Colors.white,
+            color: AppColors.CLR_BACKGROUND,
             child: GridView.builder(
                 shrinkWrap: true,
                 itemCount: categoriesCount,
@@ -86,7 +88,7 @@ class CategoriesContainer extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w400,
-                                  color: Color(0xff4c4c4c),
+                                  color: AppColors.TXT_CLR_GREY,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -118,7 +120,7 @@ class CategoriesContainer extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: Color(0xff4c4c4c),
+                                      color: AppColors.TXT_CLR_GREY,
                                     ),
                                     textAlign: TextAlign.center,
                                   )),

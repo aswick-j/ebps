@@ -1,4 +1,5 @@
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/constants/colors.dart';
 import 'package:ebps/screens/history/history_screen.dart';
 import 'package:ebps/screens/home/home_screen.dart';
 import 'package:ebps/screens/myBillers/biller_screen.dart';
@@ -66,12 +67,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
             child: Theme(
               data: ThemeData(splashColor: Colors.white),
               child: BottomNavigationBar(
-                backgroundColor: Colors.white,
+                backgroundColor: AppColors.CLR_BACKGROUND,
                 showUnselectedLabels: true,
                 onTap: _onItemTapped,
                 elevation: 0,
                 type: BottomNavigationBarType.fixed,
-                selectedItemColor: Color(0xff1b438b),
+                selectedItemColor: AppColors.CLR_PRIMARY,
                 unselectedItemColor: Color(0xffa4b4d1),
                 currentIndex: selectedIndex,
                 items: [

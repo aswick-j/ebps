@@ -303,7 +303,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       buttonText: "Okay",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
+                      buttonColor: AppColors.CLR_PRIMARY,
                       buttonSizeX: 10,
                       buttonSizeY: 40,
                       buttonTextSize: 14,
@@ -377,7 +377,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       buttonText: "Okay",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
+                      buttonColor: AppColors.CLR_PRIMARY,
                       buttonSizeX: 10,
                       buttonSizeY: 40,
                       buttonTextSize: 14,
@@ -481,7 +481,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       buttonText: "Okay",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
+                      buttonColor: AppColors.CLR_PRIMARY,
                       buttonSizeX: 10,
                       buttonSizeY: 40,
                       buttonTextSize: 14,
@@ -602,7 +602,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 buttonText: "Okay",
                                 buttonTxtColor: BTN_CLR_ACTIVE,
                                 buttonBorderColor: Colors.transparent,
-                                buttonColor: CLR_PRIMARY,
+                                buttonColor: AppColors.CLR_PRIMARY,
                                 buttonSizeX: 10,
                                 buttonSizeY: 40,
                                 buttonTextSize: 14,
@@ -667,7 +667,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               buttonText: "Okay",
                               buttonTxtColor: BTN_CLR_ACTIVE,
                               buttonBorderColor: Colors.transparent,
-                              buttonColor: CLR_PRIMARY,
+                              buttonColor: AppColors.CLR_PRIMARY,
                               buttonSizeX: 10.h,
                               buttonSizeY: 40.w,
                               buttonTextSize: 14.sp,
@@ -732,7 +732,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                   buttonText: "Okay",
                                   buttonTxtColor: BTN_CLR_ACTIVE,
                                   buttonBorderColor: Colors.transparent,
-                                  buttonColor: CLR_PRIMARY,
+                                  buttonColor: AppColors.CLR_PRIMARY,
                                   buttonSizeX: 10,
                                   buttonSizeY: 40,
                                   buttonTextSize: 14,
@@ -993,8 +993,8 @@ class _OtpScreenState extends State<OtpScreen> {
                                         height: 52.h,
                                         decoration: defaultPinTheme.decoration!
                                             .copyWith(
-                                          border:
-                                              Border.all(color: CLR_PRIMARY),
+                                          border: Border.all(
+                                              color: AppColors.CLR_PRIMARY),
                                         ),
                                       ),
                                       keyboardType: TextInputType.number,
@@ -1216,8 +1216,9 @@ class _OtpScreenState extends State<OtpScreen> {
                             buttonText: "Verify",
                             buttonTxtColor: BTN_CLR_ACTIVE,
                             buttonBorderColor: Colors.transparent,
-                            buttonColor:
-                                isBtnDisable ? Colors.grey : CLR_PRIMARY,
+                            buttonColor: isBtnDisable
+                                ? Colors.grey
+                                : AppColors.CLR_PRIMARY,
                             buttonSizeX: 10.h,
                             buttonSizeY: 40.w,
                             buttonTextSize: 14.sp,

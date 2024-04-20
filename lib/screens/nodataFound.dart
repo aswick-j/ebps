@@ -48,7 +48,7 @@ class _NoDataFoundState extends State<NoDataFound> {
                 // MyAppText(
                 //   data: 'Oh!',
                 //   size: 14.0,
-                //   color: CLR_PRIMARY,
+                //   color: AppColors.CLR_PRIMARY,
                 //   weight: FontWeight.bold,
                 // ),
                 SizedBox(height: 20),
@@ -93,7 +93,7 @@ class _NoDataFoundState extends State<NoDataFound> {
                   MyAppText(
                     data: widget.message,
                     size: 14.0,
-                    color: CLR_PRIMARY,
+                    color: AppColors.CLR_PRIMARY,
                     weight: FontWeight.bold,
                   ),
                 SizedBox(height: 80),

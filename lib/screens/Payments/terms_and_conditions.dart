@@ -59,12 +59,12 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
           toolbarHeight: 42.0.h,
           title: Row(
             children: [
-              Icon(Icons.gavel_sharp, color: CLR_PRIMARY),
+              Icon(Icons.gavel_sharp, color: AppColors.CLR_PRIMARY),
               SizedBox(width: 10.w),
               Text(
                 'Terms and Conditions',
-                style:
-                    TextStyle(color: CLR_PRIMARY, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: AppColors.CLR_PRIMARY, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -111,7 +111,8 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                       buttonText: "Okay",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: reachEnd ? CLR_PRIMARY : Colors.grey,
+                      buttonColor:
+                          reachEnd ? AppColors.CLR_PRIMARY : Colors.grey,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,
                       buttonTextSize: 14.sp,

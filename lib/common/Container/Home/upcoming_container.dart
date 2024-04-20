@@ -71,7 +71,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
 
           margin: EdgeInsets.only(
               left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-
+          color: AppColors.CLR_BACKGROUND,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0.r),
             side: BorderSide(
@@ -109,7 +109,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                       style: TextStyle(
                                         fontSize: 13.sp,
                                         fontWeight: FontWeight.bold,
-                                        color: TXT_CLR_PRIMARY,
+                                        color: AppColors.TXT_CLR_PRIMARY,
                                       ),
                                       textAlign: TextAlign.left,
                                     ),
@@ -159,6 +159,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                   showModalBottomSheet(
                                       isDismissible: false,
                                       context: context,
+                                      backgroundColor: AppColors.CLR_BACKGROUND,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.vertical(
                                           top: Radius.circular(16.0.r),
@@ -197,7 +198,8 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                                       fontSize: 14.sp,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: Color(0xff191919),
+                                                      color: AppColors
+                                                          .TXT_CLR_DEFAULT,
                                                     ),
                                                     textAlign: TextAlign.left,
                                                   ),
@@ -240,8 +242,8 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                                 decoration: BoxDecoration(
                                                   boxShadow: [
                                                     BoxShadow(
-                                                        color: Colors.grey
-                                                            .withOpacity(0.2),
+                                                        color: AppColors
+                                                            .CLR_DIVIDER_LITE,
                                                         spreadRadius: 0.2,
                                                         blurRadius: 2,
                                                         offset: Offset(0, 2)),
@@ -250,8 +252,8 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                                 child: Divider(
                                                   height: 0.4.h,
                                                   thickness: 1,
-                                                  color: Colors.grey
-                                                      .withOpacity(0.1),
+                                                  color: AppColors
+                                                      .CLR_DIVIDER_LITE,
                                                 ),
                                               ),
                                               SizedBox(
@@ -300,7 +302,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                       style: TextStyle(
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w500,
-                                          color: TXT_CLR_DEFAULT,
+                                          color: AppColors.TXT_CLR_DEFAULT,
                                           overflow: TextOverflow.ellipsis),
                                       maxLines: 1,
                                     ),
@@ -326,7 +328,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xff1b438b),
+                                  color: AppColors.TXT_CLR_PRIMARY,
                                 ),
                                 textAlign: TextAlign.left,
                               ),
@@ -336,6 +338,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                       ),
                     ),
                     Divider(
+                      color: AppColors.CLR_DIVIDER_LITE,
                       height: 1.h,
                       thickness: 1,
                       indent: 10.w,

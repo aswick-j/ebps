@@ -103,41 +103,41 @@ api(
     bodyPayload = json.encode(body);
   } else if (method!.toLowerCase().contains("put") ||
       method.toLowerCase().contains("post")) {
-    // bodyPayload = json.encode(body);
+    bodyPayload = json.encode(body);
 
-    var publicKey = await getSharedValue(ENCRYPTION_KEY);
+    // var publicKey = await getSharedValue(ENCRYPTION_KEY);
 
-    final rsaencryption = encrypt.Encrypter(
-      encrypt.RSA(
-          publicKey: CryptoUtils.rsaPublicKeyFromPem(publicKey),
-          encoding: encrypt.RSAEncoding.OAEP),
-    );
+    // final rsaencryption = encrypt.Encrypter(
+    //   encrypt.RSA(
+    //       publicKey: CryptoUtils.rsaPublicKeyFromPem(publicKey),
+    //       encoding: encrypt.RSAEncoding.OAEP),
+    // );
 
-    List<String> splitByLength(String value, int length) {
-      List<String> SplitDatas = [];
+    // List<String> splitByLength(String value, int length) {
+    //   List<String> SplitDatas = [];
 
-      for (int i = 0; i < value.length; i += length) {
-        int offset = i + length;
-        SplitDatas.add(
-            value.substring(i, offset >= value.length ? value.length : offset));
-      }
-      return SplitDatas;
-    }
+    //   for (int i = 0; i < value.length; i += length) {
+    //     int offset = i + length;
+    //     SplitDatas.add(
+    //         value.substring(i, offset >= value.length ? value.length : offset));
+    //   }
+    //   return SplitDatas;
+    // }
 
-    final data = splitByLength(jsonEncode(body), 64);
+    // final data = splitByLength(jsonEncode(body), 64);
 
-    final iv = encrypt.IV.fromUtf8("1234567890123456");
+    // final iv = encrypt.IV.fromUtf8("1234567890123456");
 
-    List<String> newChunks = [];
-    for (var chunk in data) {
-      final encryptedChunk = rsaencryption.encrypt(chunk, iv: iv).base64;
-      newChunks.add(encryptedChunk);
-    }
+    // List<String> newChunks = [];
+    // for (var chunk in data) {
+    //   final encryptedChunk = rsaencryption.encrypt(chunk, iv: iv).base64;
+    //   newChunks.add(encryptedChunk);
+    // }
 
-    final chunksstring = newChunks.join("");
+    // final chunksstring = newChunks.join("");
 
-    bodyPayload =
-        json.encode({"encryptedData": chunksstring, "fromMobile": true});
+    // bodyPayload =
+    //     json.encode({"encryptedData": chunksstring, "fromMobile": true});
   }
   try {
     if (token == true) {

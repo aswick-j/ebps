@@ -304,7 +304,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                               }
                                             },
                                             icon: Icon(Icons.share_outlined,
-                                                color: CLR_PRIMARY)),
+                                                color: AppColors.CLR_PRIMARY)),
                                         IconButton(
                                             onPressed: () {
                                               Printing.layoutPdf(
@@ -376,7 +376,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                             },
                                             icon: Icon(
                                                 Icons.file_download_outlined,
-                                                color: CLR_PRIMARY)),
+                                                color: AppColors.CLR_PRIMARY)),
                                       ],
                                     ),
                                   ],
@@ -516,7 +516,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
       //                     buttonText: "Raise a Complaint",
       //                     buttonTxtColor: BTN_CLR_ACTIVE,
       //                     buttonBorderColor: Colors.transparent,
-      //                     buttonColor: CLR_PRIMARY,
+      //                     buttonColor: AppColors.CLR_PRIMARY,
       //                     buttonSizeX: 10.h,
       //                     buttonSizeY: 40.w,
       //                     buttonTextSize: 14.sp,

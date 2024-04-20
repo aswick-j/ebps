@@ -193,7 +193,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                     buttonText: "Okay",
                     buttonTxtColor: BTN_CLR_ACTIVE,
                     buttonBorderColor: Colors.transparent,
-                    buttonColor: CLR_PRIMARY,
+                    buttonColor: AppColors.CLR_PRIMARY,
                     buttonSizeX: 10,
                     buttonSizeY: 40,
                     buttonTextSize: 14,
@@ -831,7 +831,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                               goBack(context);
                             },
                             buttonText: "Cancel",
-                            buttonTxtColor: CLR_PRIMARY,
+                            buttonTxtColor: AppColors.CLR_PRIMARY,
                             buttonBorderColor: Colors.transparent,
                             buttonColor: BTN_CLR_ACTIVE,
                             buttonSizeX: 10.h,
@@ -894,7 +894,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                             buttonColor:
                                 isInsufficient || PaymentExactErrMsg.isNotEmpty
                                     ? Colors.grey
-                                    : CLR_PRIMARY,
+                                    : AppColors.CLR_PRIMARY,
                             buttonSizeX: 10.h,
                             buttonSizeY: 40.w,
                             buttonTextSize: 14.sp,
@@ -922,7 +922,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                             buttonText: "Go Back",
                             buttonTxtColor: BTN_CLR_ACTIVE,
                             buttonBorderColor: Colors.transparent,
-                            buttonColor: CLR_PRIMARY,
+                            buttonColor: AppColors.CLR_PRIMARY,
                             buttonSizeX: 10,
                             buttonSizeY: 40,
                             buttonTextSize: 14,

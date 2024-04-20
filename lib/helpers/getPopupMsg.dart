@@ -6,17 +6,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final TextStyle boldStyle = TextStyle(
   fontWeight: FontWeight.bold,
-  color: CLR_PRIMARY,
+  color: AppColors.CLR_PRIMARY,
   fontSize: 15.sp,
 );
 final TextStyle normalStyle = TextStyle(
   fontWeight: FontWeight.w400,
-  color: CLR_PRIMARY,
+  color: AppColors.CLR_PRIMARY,
   fontSize: 15.sp,
 );
 final TextStyle italicNormalStyle = TextStyle(
   fontWeight: FontWeight.bold,
-  color: CLR_PRIMARY,
+  color: AppColors.CLR_PRIMARY,
   fontStyle: FontStyle.italic,
   fontSize: 15.sp,
 );

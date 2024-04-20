@@ -279,8 +279,10 @@ class _MainContainerState extends State<MainContainer> {
                                               goBack(context);
                                             },
                                             buttonText: "Cancel",
-                                            buttonTxtColor: CLR_PRIMARY,
-                                            buttonBorderColor: CLR_PRIMARY,
+                                            buttonTxtColor:
+                                                AppColors.CLR_PRIMARY,
+                                            buttonBorderColor:
+                                                AppColors.CLR_PRIMARY,
                                             buttonColor: BTN_CLR_ACTIVE,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 40.w,
@@ -369,7 +371,7 @@ class _MainContainerState extends State<MainContainer> {
                                                                             buttonText: "Okay",
                                                                             buttonTxtColor: BTN_CLR_ACTIVE,
                                                                             buttonBorderColor: Colors.transparent,
-                                                                            buttonColor: CLR_PRIMARY,
+                                                                            buttonColor: AppColors.CLR_PRIMARY,
                                                                             buttonSizeX: 10.h,
                                                                             buttonSizeY: 40.w,
                                                                             buttonTextSize: 14.sp,
@@ -411,7 +413,7 @@ class _MainContainerState extends State<MainContainer> {
                                             buttonTxtColor: BTN_CLR_ACTIVE,
                                             buttonBorderColor:
                                                 Colors.transparent,
-                                            buttonColor: CLR_PRIMARY,
+                                            buttonColor: AppColors.CLR_PRIMARY,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 40.w,
                                             buttonTextSize: 14.sp,
@@ -470,8 +472,10 @@ class _MainContainerState extends State<MainContainer> {
                                               goBack(context);
                                             },
                                             buttonText: "Cancel",
-                                            buttonTxtColor: CLR_PRIMARY,
-                                            buttonBorderColor: CLR_PRIMARY,
+                                            buttonTxtColor:
+                                                AppColors.CLR_PRIMARY,
+                                            buttonBorderColor:
+                                                AppColors.CLR_PRIMARY,
                                             buttonColor: BTN_CLR_ACTIVE,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 35.w,
@@ -491,7 +495,7 @@ class _MainContainerState extends State<MainContainer> {
                                             buttonTxtColor: BTN_CLR_ACTIVE,
                                             buttonBorderColor:
                                                 Colors.transparent,
-                                            buttonColor: CLR_PRIMARY,
+                                            buttonColor: AppColors.CLR_PRIMARY,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 35.w,
                                             buttonTextSize: 14.sp,

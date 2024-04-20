@@ -150,7 +150,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                         style: TextStyle(
                           fontSize: 10.sp,
                           fontWeight: FontWeight.w400,
-                          color: CLR_SECONDARY,
+                          color: AppColors.CLR_SECONDARY,
                         ),
                         maxLines: isShowMore ? 10 : 2,
                         textAlign: TextAlign.justify,
@@ -189,7 +189,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                     buttonText: "Pay",
                     buttonTxtColor: BTN_CLR_ACTIVE,
                     buttonBorderColor: Colors.transparent,
-                    buttonColor: CLR_PRIMARY,
+                    buttonColor: AppColors.CLR_PRIMARY,
                     buttonSizeX: 10.h,
                     buttonSizeY: 30.w,
                     buttonTextSize: 14.sp,

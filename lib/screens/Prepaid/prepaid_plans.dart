@@ -348,13 +348,14 @@ class _PrepaidPlansState extends State<PrepaidPlans>
                                   physics: const BouncingScrollPhysics(),
                                   dragStartBehavior: DragStartBehavior.start,
                                   isScrollable: true,
-                                  indicatorColor: CLR_PRIMARY,
+                                  indicatorColor: AppColors.CLR_PRIMARY,
                                   indicator: DotIndicator(),
                                   labelStyle: TextStyle(
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.bold),
-                                  unselectedLabelColor: CLR_PRIMARY_LITE,
-                                  labelColor: CLR_PRIMARY,
+                                  unselectedLabelColor:
+                                      AppColors.CLR_PRIMARY_LITE,
+                                  labelColor: AppColors.CLR_PRIMARY,
                                   controller: _tabController,
                                   tabs: [
                                     for (var item in categoryList)

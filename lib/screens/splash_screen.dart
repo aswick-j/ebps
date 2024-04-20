@@ -6,7 +6,6 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/ebps.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
-import 'package:ebps/helpers/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -133,14 +132,14 @@ class _splashScreenState extends State<splashScreen> {
                       MyAppText(
                         data: 'Failed to Login BBPS.',
                         size: 13.0.sp,
-                        color: CLR_PRIMARY,
+                        color: AppColors.CLR_PRIMARY,
                         weight: FontWeight.bold,
                       ),
                       SizedBox(height: 10.h),
                       MyAppText(
                         data: 'Please Contact Bank for more information.',
                         size: 13.0.sp,
-                        color: CLR_PRIMARY,
+                        color: AppColors.CLR_PRIMARY,
                         weight: FontWeight.bold,
                       ),
                       SizedBox(height: 40.h),
@@ -151,7 +150,7 @@ class _splashScreenState extends State<splashScreen> {
                           buttonText: "Go Back",
                           buttonTxtColor: BTN_CLR_ACTIVE,
                           buttonBorderColor: Colors.transparent,
-                          buttonColor: CLR_PRIMARY,
+                          buttonColor: AppColors.CLR_PRIMARY,
                           buttonSizeX: 10.h,
                           buttonSizeY: 40.w,
                           buttonTextSize: 14.sp,
@@ -162,7 +161,7 @@ class _splashScreenState extends State<splashScreen> {
                 // MyAppText(
                 //   data: 'UAT v1.0',
                 //   size: 12.0,
-                //   color: CLR_PRIMARY,
+                //   color: AppColors.CLR_PRIMARY,
                 //   weight: FontWeight.w800,
                 // ),
               ],
@@ -185,7 +184,7 @@ class _splashScreenState extends State<splashScreen> {
       //                 child: MyAppButton(
       //                     onPressed: () {},
       //                     buttonText: "Go Back",
-      //                     buttonTxtColor: CLR_PRIMARY,
+      //                     buttonTxtColor: AppColors.CLR_PRIMARY,
       //                     buttonBorderColor: Colors.transparent,
       //                     buttonColor: BTN_CLR_ACTIVE,
       //                     buttonSizeX: 10.h,
@@ -212,7 +211,7 @@ class _splashScreenState extends State<splashScreen> {
       //                     buttonText: "Retry",
       //                     buttonTxtColor: BTN_CLR_ACTIVE,
       //                     buttonBorderColor: Colors.transparent,
-      //                     buttonColor: CLR_PRIMARY,
+      //                     buttonColor: AppColors.CLR_PRIMARY,
       //                     buttonSizeX: 10.h,
       //                     buttonSizeY: 40.w,
       //                     buttonTextSize: 14.sp,

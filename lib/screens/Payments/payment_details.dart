@@ -204,7 +204,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       buttonText: "Okay",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
+                      buttonColor: AppColors.CLR_PRIMARY,
                       buttonSizeX: 10,
                       buttonSizeY: 40,
                       buttonTextSize: 14,
@@ -219,6 +219,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
     return LoaderOverlay(
       child: Scaffold(
+          backgroundColor: AppColors.CLR_BACKGROUND,
           appBar: MyAppBar(
             context: context,
             title: widget.billerName.toString(),
@@ -736,7 +737,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                         buttonTxtColor: BTN_CLR_ACTIVE,
                         buttonBorderColor: Colors.transparent,
                         buttonColor: selectedAcc != null && !accError
-                            ? CLR_PRIMARY
+                            ? AppColors.CLR_PRIMARY
                             : Colors.grey,
                         buttonSizeX: 10.h,
                         buttonSizeY: 40.w,

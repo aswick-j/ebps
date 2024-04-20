@@ -155,7 +155,7 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                       buttonText: "Okay",
                       buttonTxtColor: BTN_CLR_ACTIVE,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
+                      buttonColor: AppColors.CLR_PRIMARY,
                       buttonSizeX: 10,
                       buttonSizeY: 40,
                       buttonTextSize: 14,

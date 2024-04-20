@@ -79,7 +79,7 @@ class _noResultState extends State<noResult> {
                                 MyAppText(
                                     data: TitlExpMsg[widget.TitleErrIndex ?? 0],
                                     size: 18.0.sp,
-                                    color: CLR_PRIMARY,
+                                    color: AppColors.CLR_PRIMARY,
                                     weight: FontWeight.bold,
                                     maxline: 2),
                               SizedBox(height: 20.h),
@@ -88,7 +88,7 @@ class _noResultState extends State<noResult> {
                                 child: MyAppText(
                                     data: ErrorMessage[widget.ErrIndex],
                                     size: 13.0.sp,
-                                    color: CLR_PRIMARY,
+                                    color: AppColors.CLR_PRIMARY,
                                     weight: FontWeight.w500,
                                     maxline: 6,
                                     textAlign: TextAlign.justify),
@@ -106,12 +106,12 @@ class _noResultState extends State<noResult> {
                         width: 150.w,
                         height: 190.h,
                         // child: Icon(Icons.wifi_off_outlined,
-                        //     size: 200.r, color: CLR_SECONDARY)
+                        //     size: 200.r, color: AppColors.CLR_SECONDARY)
                         child: SvgPicture.asset(
                           IMG_NOINTERNET,
                           fit: BoxFit.fitWidth,
-                          colorFilter:
-                              ColorFilter.mode(CLR_PRIMARY, BlendMode.srcIn),
+                          colorFilter: ColorFilter.mode(
+                              AppColors.CLR_PRIMARY, BlendMode.srcIn),
                         ),
                       ),
                       Padding(
@@ -124,7 +124,7 @@ class _noResultState extends State<noResult> {
                               MyAppText(
                                   data: 'Whoops !',
                                   size: 18.0.sp,
-                                  color: CLR_PRIMARY,
+                                  color: AppColors.CLR_PRIMARY,
                                   weight: FontWeight.bold,
                                   maxline: 2),
                               SizedBox(height: 10.h),
@@ -132,7 +132,7 @@ class _noResultState extends State<noResult> {
                                   data:
                                       "You're disconnected.Check your internet connection and try again.",
                                   size: 13.0.sp,
-                                  color: CLR_PRIMARY,
+                                  color: AppColors.CLR_PRIMARY,
                                   weight: FontWeight.w500,
                                   maxline: 6,
                                   textAlign: TextAlign.center),

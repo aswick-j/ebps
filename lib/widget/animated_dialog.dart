@@ -146,7 +146,7 @@ class _AnimatedDialogState extends State<AnimatedDialog>
                         style: TextStyle(
                           fontSize: 15.sp,
                           fontWeight: FontWeight.bold,
-                          color: CLR_PRIMARY,
+                          color: AppColors.CLR_PRIMARY,
                         ),
                       ),
                     if (widget.showSub == true) SizedBox(height: 10.h),

@@ -274,7 +274,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                           child: MyAppText(
                             data: "Clear Filters",
                             size: 14.0.sp,
-                            color: CLR_PRIMARY,
+                            color: AppColors.CLR_PRIMARY,
                             weight: FontWeight.bold,
                           ),
                         ),
@@ -573,7 +573,8 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                               goBack(context);
                                             },
                                             buttonText: "Cancel",
-                                            buttonTxtColor: CLR_PRIMARY,
+                                            buttonTxtColor:
+                                                AppColors.CLR_PRIMARY,
                                             buttonBorderColor:
                                                 Colors.transparent,
                                             buttonColor: BTN_CLR_ACTIVE,
@@ -604,7 +605,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                             buttonColor: ((fromDate != null &&
                                                         toDate != null) ||
                                                     categoryID != null)
-                                                ? CLR_PRIMARY
+                                                ? AppColors.CLR_PRIMARY
                                                 : Colors.grey,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 40.w,
@@ -622,7 +623,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                           });
                         });
                   },
-                  backgroundColor: CLR_PRIMARY,
+                  backgroundColor: AppColors.CLR_PRIMARY,
                   child: Padding(
                     padding: EdgeInsets.only(top: 5.0.h),
                     child: SvgPicture.asset(

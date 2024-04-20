@@ -213,7 +213,7 @@
 //                     buttonText: "Verify",
 //                     buttonTxtColor: BTN_CLR_ACTIVE,
 //                     buttonBorderColor: Colors.transparent,
-//                     buttonColor: CLR_PRIMARY,
+//                     buttonColor: AppColors.AppColors.CLR_PRIMARY,
 //                     buttonSizeX: 10,
 //                     buttonSizeY: 40,
 //                     buttonTextSize: 14,

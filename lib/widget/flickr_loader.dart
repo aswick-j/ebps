@@ -20,7 +20,7 @@ class FlickrLoader extends StatelessWidget {
       ),
     );
     // return Center(
-    //   child: CircularProgressIndicator(color: CLR_PRIMARY),
+    //   child: CircularProgressIndicator(color: AppColors.CLR_PRIMARY),
     // );
   }
 }

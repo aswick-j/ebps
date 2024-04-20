@@ -131,7 +131,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
                     buttonText: "Okay",
                     buttonTxtColor: BTN_CLR_ACTIVE,
                     buttonBorderColor: Colors.transparent,
-                    buttonColor: CLR_PRIMARY,
+                    buttonColor: AppColors.CLR_PRIMARY,
                     buttonSizeX: 10,
                     buttonSizeY: 40,
                     buttonTextSize: 14,
@@ -453,7 +453,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
                         goBack(context);
                       },
                       buttonText: "Cancel",
-                      buttonTxtColor: CLR_PRIMARY,
+                      buttonTxtColor: AppColors.CLR_PRIMARY,
                       buttonBorderColor: Colors.transparent,
                       buttonColor: BTN_CLR_ACTIVE,
                       buttonSizeX: 10.h,
@@ -479,7 +479,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
                       buttonColor: isButtonActive &&
                               isValidBillName &&
                               billNameController.text.length > 3
-                          ? CLR_PRIMARY
+                          ? AppColors.CLR_PRIMARY
                           : Colors.grey,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,

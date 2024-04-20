@@ -60,7 +60,7 @@ class _HomeBannersState extends State<HomeBanners>
                 MyAppText(
                   data: "Recharge and Pay bills\nsafely from home !",
                   size: 12.0.sp,
-                  color: CLR_PRIMARY,
+                  color: AppColors.CLR_PRIMARY,
                   weight: FontWeight.bold,
                 ),
                 SizedBox(
@@ -70,7 +70,7 @@ class _HomeBannersState extends State<HomeBanners>
                     data:
                         "Help your family and friends make\nsafe payments with Equitas Bharat Bill Pay",
                     size: 7.0.sp,
-                    color: CLR_PRIMARY,
+                    color: AppColors.CLR_PRIMARY,
                     weight: FontWeight.w500,
                     maxline: 3),
               ],

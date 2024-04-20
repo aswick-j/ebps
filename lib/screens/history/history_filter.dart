@@ -340,7 +340,8 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                       goBack(context);
                                                     },
                                                     buttonText: "Cancel",
-                                                    buttonTxtColor: CLR_PRIMARY,
+                                                    buttonTxtColor:
+                                                        AppColors.CLR_PRIMARY,
                                                     buttonBorderColor:
                                                         Colors.transparent,
                                                     buttonColor: BTN_CLR_ACTIVE,
@@ -582,7 +583,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                       },
                                                       buttonText: "Cancel",
                                                       buttonTxtColor:
-                                                          CLR_PRIMARY,
+                                                          AppColors.CLR_PRIMARY,
                                                       buttonBorderColor:
                                                           Colors.transparent,
                                                       buttonColor:
