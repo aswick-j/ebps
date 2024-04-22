@@ -3,7 +3,9 @@ import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/Home/refresh_dues.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/helpers/checkDateExpiry.dart';
 import 'package:ebps/helpers/getBillerType.dart';
+import 'package:ebps/helpers/getDateBetweenTwoDates.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/marquee_widget.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +27,12 @@ class UpcomingDuesContainer extends StatefulWidget {
   final Color? buttonBorderColor;
   final VoidCallback onPressed;
   final int dueStatus;
+  final dynamic dueDate;
 
   UpcomingDuesContainer(
       {super.key,
       required this.dateText,
+      required this.dueDate,
       required this.buttonText,
       required this.amount,
       required this.iconPath,
@@ -375,6 +379,16 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                             SizedBox(
                               width: 10.w,
                             ),
+                          if (widget.dueDate != "-")
+                            if (checkDateExpiry(widget.dueDate.toString()))
+                              Text(
+                                "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: CLR_ERROR,
+                                ),
+                              ),
                           MyAppButton(
                               onPressed: () {
                                 widget.onPressed();

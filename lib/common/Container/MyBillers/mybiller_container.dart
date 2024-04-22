@@ -3,6 +3,8 @@ import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
+import 'package:ebps/helpers/checkDateExpiry.dart';
+import 'package:ebps/helpers/getDateBetweenTwoDates.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/numberPrefixSetter.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
@@ -1190,7 +1192,10 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                     if (getAllAutopayList(widget
                                             .savedBillersData.cUSTOMERBILLID) !=
                                         null)
-                                      if (getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.iSACTIVE ==
+                                      if (getAllAutopayList(widget
+                                                  .savedBillersData
+                                                  .cUSTOMERBILLID)!
+                                              .iSACTIVE ==
                                           0)
                                         Padding(
                                             padding: EdgeInsets.symmetric(
@@ -1206,30 +1211,30 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                 ),
                                               ),
                                             )),
-                                      // else if (getAllAutopayList(widget
-                                      //                 .savedBillersData
-                                      //                 .cUSTOMERBILLID)!
-                                      //             .iSACTIVE ==
-                                      //         1 &&
-                                      //     getAllAutopayList(widget
-                                      //                 .savedBillersData
-                                      //                 .cUSTOMERBILLID)!
-                                      //             .pAYMENTDATE ==
-                                      //         todayDate)
-                                      //   Padding(
-                                      //       padding: EdgeInsets.symmetric(
-                                      //           horizontal: 24.0.w,
-                                      //           vertical: 8.h),
-                                      //       child: Center(
-                                      //         child: Text(
-                                      //           "Autopay Edit Disabled as autopay scheduled for today",
-                                      //           style: TextStyle(
-                                      //             fontSize: 10.sp,
-                                      //             fontWeight: FontWeight.w400,
-                                      //             color: Color(0xff808080),
-                                      //           ),
-                                      //         ),
-                                      //       )),
+                                  // else if (getAllAutopayList(widget
+                                  //                 .savedBillersData
+                                  //                 .cUSTOMERBILLID)!
+                                  //             .iSACTIVE ==
+                                  //         1 &&
+                                  //     getAllAutopayList(widget
+                                  //                 .savedBillersData
+                                  //                 .cUSTOMERBILLID)!
+                                  //             .pAYMENTDATE ==
+                                  //         todayDate)
+                                  //   Padding(
+                                  //       padding: EdgeInsets.symmetric(
+                                  //           horizontal: 24.0.w,
+                                  //           vertical: 8.h),
+                                  //       child: Center(
+                                  //         child: Text(
+                                  //           "Autopay Edit Disabled as autopay scheduled for today",
+                                  //           style: TextStyle(
+                                  //             fontSize: 10.sp,
+                                  //             fontWeight: FontWeight.w400,
+                                  //             color: Color(0xff808080),
+                                  //           ),
+                                  //         ),
+                                  //       )),
                                   Padding(
                                     padding: EdgeInsets.only(
                                         top: 48.0.h, bottom: 16.h),
@@ -1985,11 +1990,29 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                         ),
                       if (widget.upcomingText != "")
                         Text(
-                          widget.upcomingText!,
+                          widget.upcomingText!.toLowerCase() ==
+                                      "upcoming due" &&
+                                  (widget.upcomingDueData != null &&
+                                      widget.upcomingDueData!.dueDate !=
+                                          null) &&
+                                  checkDateExpiry(widget  
+                                      .upcomingDueData!.dueDate!
+                                      .toString())
+                              ? "Overdue by ${daysBetween((DateTime.parse(widget.upcomingDueData!.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.upcomingDueData!.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())== 1?"Day":"Days"}"
+                              : widget.upcomingText!,
                           style: TextStyle(
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w600,
-                            color: widget.upcomingTXT_CLR_DEFAULT,
+                            color: widget.upcomingText!.toLowerCase() ==
+                                        "upcoming due" &&
+                                    (widget.upcomingDueData != null &&
+                                        widget.upcomingDueData!.dueDate !=
+                                            null) &&
+                                    checkDateExpiry(widget
+                                        .upcomingDueData!.dueDate!
+                                        .toString())
+                                ? CLR_ERROR
+                                : widget.upcomingTXT_CLR_DEFAULT,
                           ),
                           textAlign: TextAlign.center,
                         ),

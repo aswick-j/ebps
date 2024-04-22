@@ -2,6 +2,8 @@ import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
+import 'package:ebps/helpers/checkDateExpiry.dart';
+import 'package:ebps/helpers/getDateBetweenTwoDates.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/widget/marquee_widget.dart';
@@ -28,9 +30,11 @@ class MainContainer extends StatefulWidget {
   final String customerBillID;
   final BuildContext ctx;
   final List<AllConfigurations>? autopayData;
+  final dynamic dueDate;
 
   const MainContainer({
     super.key,
+    required this.dueDate,
     required this.titleText,
     required this.autopayData,
     required this.subtitleText,
@@ -213,6 +217,25 @@ class _MainContainerState extends State<MainContainer> {
                       SizedBox(
                         width: 10.w,
                       ),
+                    if (widget.dueDate != "-")
+                      if (checkDateExpiry(widget.dueDate.toString()))
+                        Container(
+                            decoration: BoxDecoration(
+                                color: Colors.red.shade100,
+                                border: Border.all(
+                                  color: Colors.red.shade400,
+                                ),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Padding(
+                              padding: EdgeInsets.all(4.0.r),
+                              child: Text(
+                                "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
+                                style: TextStyle(
+                                    fontSize: 7.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.red),
+                              ),
+                            )),
                     Row(
                       children: [
                         MyAppButton(

@@ -115,6 +115,11 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                               .toLocal()
                               .add(const Duration(days: 1)))
                           : "-",
+                      dueDate: widget.allUpcomingDues[index]["dueDate"] != ""
+                          ? DateTime.parse(widget.allUpcomingDues[index]
+                                  ["dueDate"]!
+                              .toString())
+                          : "-",
                       dueStatus:
                           widget.allUpcomingDues[index]["dueStatus"] != ""
                               ? widget.allUpcomingDues[index]["dueStatus"]
