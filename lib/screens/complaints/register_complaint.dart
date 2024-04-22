@@ -20,7 +20,7 @@ class RegisterComplaint extends StatefulWidget {
   String txnRefID;
   String BillerName;
   String CategoryName;
-  String Date;
+  dynamic Date;
   RegisterComplaint({
     super.key,
     required this.txnRefID,
