@@ -165,6 +165,7 @@ class _HomeScreenUIState extends State<HomeScreenUI>
     }
 
     return Scaffold(
+      backgroundColor: AppColors.CLR_BACKGROUND,
       appBar: MyAppBar(
         context: context,
         title: 'Bill Payment',
@@ -179,6 +180,30 @@ class _HomeScreenUIState extends State<HomeScreenUI>
                 handleDialog();
               },
             ),
+          InkWell(
+              onTap: () => {
+                    setState(() {
+                      IsCustomerElite.isCustomerElite =
+                          !IsCustomerElite.isCustomerElite;
+                    }),
+                    print(IsCustomerElite.isCustomerElite)
+                  },
+              child: Container(
+                  margin: EdgeInsets.only(right: 15.w),
+                  // width: 40.w,
+                  // height: 40.h,
+                  decoration: ShapeDecoration(
+                    color: AppColors.CLR_SECONDARY,
+                    shape: CircleBorder(),
+                  ),
+                  child: Container(
+                    width: 30.w,
+                    height: 30.h,
+                    child: Icon(
+                      Icons.change_circle_outlined,
+                      color: AppColors.CLR_BACKGROUND,
+                    ),
+                  ))),
           InkWell(
               onTap: () => {goTo(context, sEARCHROUTE)},
               child: Container(

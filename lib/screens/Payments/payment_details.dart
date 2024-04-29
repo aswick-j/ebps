@@ -219,6 +219,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
     return LoaderOverlay(
       child: Scaffold(
+          backgroundColor: AppColors.CLR_BACKGROUND,
           appBar: MyAppBar(
             context: context,
             title: widget.billerName.toString(),
@@ -371,7 +372,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6.0.r + 2.r),
                         border: Border.all(
-                          color: Color(0xffD1D9E8),
+                          color: AppColors.CLR_CON_BORDER,
                           width: 1.0,
                         ),
                       ),
@@ -387,8 +388,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                 begin: Alignment.topRight,
                                 stops: const [0.001, 19],
                                 colors: [
-                                  Color(0xff768EB9).withOpacity(.7),
-                                  Color(0xff463A8D).withOpacity(.7),
+                                  AppColors.CLR_GRD_1.withOpacity(.7),
+                                  AppColors.CLR_GRD_2.withOpacity(.7),
                                 ],
                               ),
                             ),
@@ -422,7 +423,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                   maxHeight: 300.h,
                                 ),
                                 height: 0.h,
-                                color: Colors.white,
+                                // color: Colors.white,
                                 child: ListView(
                                   primary: false,
                                   physics: NeverScrollableScrollPhysics(),
@@ -480,6 +481,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                           Padding(
                             padding: EdgeInsets.only(top: 8.0.h),
                             child: Divider(
+                              color: AppColors.CLR_DIVIDER_LITE,
                               height: 1.h,
                               thickness: 1,
                               indent: 10.w,
@@ -497,7 +499,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w600,
-                                    color: Color(0xff808080),
+                                    color: AppColors.TXT_CLR_GREY,
                                   ),
                                   textAlign: TextAlign.left,
                                 ),
@@ -507,7 +509,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w600,
-                                    color: Color(0xff1b438b),
+                                    color: AppColors.TXT_CLR_PRIMARY,
                                   ),
                                   textAlign: TextAlign.left,
                                 )
@@ -527,7 +529,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xff1b438b),
+                            color: AppColors.TXT_CLR_PRIMARY,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -555,7 +557,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                   if (!isAccLoading)
                     Container(
                       width: double.infinity,
-                      color: Colors.white,
+                      // color: Colors.white,
                       child: myAccounts!.isNotEmpty
                           ? Column(
                               children: [
@@ -613,7 +615,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                   style: TextStyle(
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
-                                    color: CLR_GREY,
+                                    color: AppColors.CLR_GREY,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -626,10 +628,10 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     margin: EdgeInsets.only(
                         left: 18.0.w, right: 18.w, top: 20.h, bottom: 0.h),
                     decoration: BoxDecoration(
-                      color: CLR_GREY.withOpacity(0.1),
+                      color: AppColors.CLR_GREY.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(6.0.r + 2.r),
                       border: Border.all(
-                        color: Color(0xffD1D9E8),
+                        color: AppColors.CLR_CON_BORDER,
                         width: 1.0,
                       ),
                     ),
@@ -642,7 +644,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                               children: [
                                 Icon(
                                   Icons.info_outline_rounded,
-                                  color: TXT_CLR_PRIMARY,
+                                  color: AppColors.TXT_CLR_PRIMARY,
                                   size: 15.r,
                                 ),
                                 Text(
@@ -650,7 +652,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                   style: TextStyle(
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
-                                    color: TXT_CLR_PRIMARY,
+                                    color: AppColors.TXT_CLR_PRIMARY,
                                   ),
                                   textAlign: TextAlign.left,
                                 ),
@@ -679,13 +681,13 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       text: TextSpan(
                         style: TextStyle(
                           fontSize: 14.0.sp,
-                          color: Colors.black,
+                          color: AppColors.TXT_CLR_DEFAULT,
                         ),
                         children: <TextSpan>[
                           TextSpan(
                               style: TextStyle(
                                   fontSize: 11.sp,
-                                  color: TXT_CLR_DEFAULT,
+                                  color: AppColors.TXT_CLR_DEFAULT,
                                   fontWeight: FontWeight.w500),
                               text: "By continuing, you agree to accept our "),
                           TextSpan(
@@ -698,7 +700,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                               },
                             style: TextStyle(
                                 decoration: TextDecoration.underline,
-                                color: TXT_CLR_PRIMARY,
+                                color: AppColors.TXT_CLR_PRIMARY,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w700),
                           ),
@@ -719,7 +721,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
           bottomSheet: Container(
             decoration: BoxDecoration(
                 border: Border(
-                    top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+                    top: BorderSide(
+                        color: AppColors.CLR_CON_BORDER_LITE, width: 1))),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
               child: Row(
@@ -733,11 +736,13 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                           }
                         },
                         buttonText: "Proceed to Pay",
-                        buttonTxtColor: BTN_CLR_ACTIVE,
+                        buttonTxtColor: selectedAcc != null && !accError
+                            ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                            : AppColors.BTN_CLR_DISABLE_TEXT,
                         buttonBorderColor: Colors.transparent,
                         buttonColor: selectedAcc != null && !accError
-                            ? CLR_PRIMARY
-                            : Colors.grey,
+                            ? AppColors.BTN_CLR_ACTIVE_ALTER
+                            : AppColors.BTN_CLR_DISABLE,
                         buttonSizeX: 10.h,
                         buttonSizeY: 40.w,
                         buttonTextSize: 14.sp,

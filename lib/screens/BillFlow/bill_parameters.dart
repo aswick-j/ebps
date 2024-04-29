@@ -112,6 +112,7 @@ class _BillParametersState extends State<BillParameters> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.CLR_BACKGROUND,
       appBar: MyAppBar(
         context: context,
         title: widget.billerData!.bILLERNAME,
@@ -146,7 +147,7 @@ class _BillParametersState extends State<BillParameters> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6.0.r + 2.r),
                     border: Border.all(
-                      color: const Color(0xffD1D9E8),
+                      color: AppColors.CLR_CON_BORDER,
                       width: 1.0,
                     ),
                   ),
@@ -183,6 +184,8 @@ class _BillParametersState extends State<BillParameters> {
                                   return Padding(
                                     padding: EdgeInsets.only(top: 8.0.h),
                                     child: TextFormField(
+                                      style: TextStyle(
+                                          color: AppColors.TXT_CLR_DEFAULT),
                                       autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
                                       enabled: true,
@@ -236,21 +239,22 @@ class _BillParametersState extends State<BillParameters> {
                                         return null;
                                       },
                                       decoration: InputDecoration(
-                                          labelStyle: const TextStyle(
-                                              color: Color(0xff1b438b)),
-                                          fillColor: const Color(0xffD1D9E8)
-                                              .withOpacity(0.2),
+                                          errorStyle: TextStyle(
+                                              color: AppColors.CLR_ERROR),
+                                          labelStyle: TextStyle(
+                                              color: AppColors.CLR_PRIMARY),
+                                          fillColor: AppColors.CLR_INPUT_FILL,
                                           filled: true,
                                           errorMaxLines: 5,
-                                          enabledBorder:
-                                              const UnderlineInputBorder(
+                                          enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Color(0xff1B438B)),
+                                                color:
+                                                    AppColors.TXT_CLR_PRIMARY),
                                           ),
-                                          focusedBorder:
-                                              const UnderlineInputBorder(
+                                          focusedBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Color(0xff1B438B)),
+                                                color:
+                                                    AppColors.TXT_CLR_PRIMARY),
                                           ),
                                           border: const UnderlineInputBorder(),
                                           labelText: inputSignatureItems![index]
@@ -279,6 +283,7 @@ class _BillParametersState extends State<BillParameters> {
                         padding: EdgeInsets.symmetric(
                             horizontal: 16.w, vertical: 16.h),
                         child: TextFormField(
+                          style: TextStyle(color: AppColors.TXT_CLR_DEFAULT),
                           maxLength: 20,
                           controller: billNameController,
                           key: _billnameKey,
@@ -309,17 +314,18 @@ class _BillParametersState extends State<BillParameters> {
                           decoration: InputDecoration(
                             counterStyle: TextStyle(
                                 color: billNameController.text.length <= 3
-                                    ? CLR_ERROR
+                                    ? AppColors.CLR_ERROR
                                     : null),
-                            fillColor: const Color(0xffD1D9E8).withOpacity(0.2),
+                            fillColor: AppColors.CLR_INPUT_FILL,
                             filled: true,
-                            labelStyle:
-                                const TextStyle(color: Color(0xff1b438b)),
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xff1B438B)),
+                            labelStyle: TextStyle(color: AppColors.CLR_PRIMARY),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: AppColors.TXT_CLR_PRIMARY),
                             ),
-                            focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xff1B438B)),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: AppColors.TXT_CLR_PRIMARY),
                             ),
                             border: const UnderlineInputBorder(),
                             labelText: 'Bill Name (Nick Name)',
@@ -336,7 +342,8 @@ class _BillParametersState extends State<BillParameters> {
         );
       }),
       bottomSheet: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
+            color: AppColors.CLR_BACKGROUND,
             border:
                 Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
         child: Padding(
@@ -350,9 +357,9 @@ class _BillParametersState extends State<BillParameters> {
                       goBack(context);
                     },
                     buttonText: "Cancel",
-                    buttonTxtColor: CLR_PRIMARY,
-                    buttonBorderColor: Colors.transparent,
-                    buttonColor: BTN_CLR_ACTIVE,
+                    buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                    buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
+                    buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER_C,
                     buttonSizeX: 10.h,
                     buttonSizeY: 40.w,
                     buttonTextSize: 14.sp,
@@ -373,13 +380,17 @@ class _BillParametersState extends State<BillParameters> {
                       //     builder: (context) => const BillerDetails()));
                     },
                     buttonText: "Confirm",
-                    buttonTxtColor: BTN_CLR_ACTIVE,
+                    buttonTxtColor: isButtonActive &&
+                            isValidBillName &&
+                            billNameController.text.length > 3
+                        ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                        : AppColors.BTN_CLR_DISABLE_TEXT,
                     buttonBorderColor: Colors.transparent,
                     buttonColor: isButtonActive &&
                             isValidBillName &&
                             billNameController.text.length > 3
-                        ? CLR_PRIMARY
-                        : Colors.grey,
+                        ? AppColors.BTN_CLR_ACTIVE_ALTER
+                        : AppColors.BTN_CLR_DISABLE,
                     buttonSizeX: 10.h,
                     buttonSizeY: 40.w,
                     buttonTextSize: 14.sp,

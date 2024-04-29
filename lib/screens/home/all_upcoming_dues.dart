@@ -170,6 +170,7 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
 
     return LoaderOverlay(
       child: Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
           context: context,
           title: 'Upcoming Dues',
@@ -194,29 +195,43 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
             child: Theme(
               data: ThemeData(splashColor: Colors.white),
               child: BottomNavigationBar(
-                backgroundColor: Colors.white,
+                backgroundColor: AppColors.CLR_BACKGROUND,
                 showUnselectedLabels: true,
                 onTap: _onItemTapped,
                 elevation: 0,
                 type: BottomNavigationBarType.fixed,
-                selectedItemColor: Color(0xff1b438b),
+                selectedItemColor: AppColors.CLR_PRIMARY,
                 unselectedItemColor: Color(0xffa4b4d1),
                 currentIndex: selectedIndex,
                 items: [
                   BottomNavigationBarItem(
                     icon: SvgPicture.asset(ICON_HOME_INACTIVE),
                     label: "Home",
-                    activeIcon: SvgPicture.asset(ICON_HOME),
+                    activeIcon: SvgPicture.asset(
+                      ICON_HOME,
+                      colorFilter: ColorFilter.mode(
+                          AppColors.CLR_PRIMARY, BlendMode.srcIn),
+                    ),
                   ),
                   BottomNavigationBarItem(
-                    icon: SvgPicture.asset(ICON_BILLERS_INACTIVE),
+                    icon: SvgPicture.asset(
+                      ICON_BILLERS_INACTIVE,
+                    ),
                     label: "Billers",
-                    activeIcon: SvgPicture.asset(ICON_BILLERS),
+                    activeIcon: SvgPicture.asset(
+                      ICON_BILLERS,
+                      colorFilter: ColorFilter.mode(
+                          AppColors.CLR_PRIMARY, BlendMode.srcIn),
+                    ),
                   ),
                   BottomNavigationBarItem(
                     icon: SvgPicture.asset(ICON_HISTORY_INACTIVE),
                     label: "History",
-                    activeIcon: SvgPicture.asset(ICON_HISTORY),
+                    activeIcon: SvgPicture.asset(
+                      ICON_HISTORY,
+                      colorFilter: ColorFilter.mode(
+                          AppColors.CLR_PRIMARY, BlendMode.srcIn),
+                    ),
                   ),
                 ],
               ),
@@ -323,16 +338,16 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                             : "-",
                         iconPath: BILLER_LOGO(
                             widget.allUpcomingDues[index]["billerName"]),
-                        containerBorderColor: Color(0xffD1D9E8),
+                        containerBorderColor: AppColors.CLR_CON_BORDER,
                         buttonColor: widget.allUpcomingDues[index]
                                     ["itemType"] ==
                                 'upcomingDue'
-                            ? Color(0xFF1B438B)
+                            ? AppColors.BTN_CLR_ACTIVE_BG
                             : Color.fromARGB(255, 255, 255, 255),
                         buttonTxtColor: widget.allUpcomingDues[index]
                                     ["itemType"] ==
                                 'upcomingDue'
-                            ? Color.fromARGB(255, 255, 255, 255)
+                            ? AppColors.BTN_CLR_ACTIVE_TEXT
                             : widget.allUpcomingDues[index]["itemType"] ==
                                     'upcomingAutopaused'
                                 ? Colors.red

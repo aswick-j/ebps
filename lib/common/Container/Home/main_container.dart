@@ -88,7 +88,7 @@ class _MainContainerState extends State<MainContainer> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0.r),
               border: Border.all(
-                color: Color(0xFFD1D9E8),
+                color: AppColors.CLR_CON_BORDER,
                 width: 2.0,
               ),
             ),
@@ -115,7 +115,7 @@ class _MainContainerState extends State<MainContainer> {
                           style: TextStyle(
                             fontSize: 13.sp,
                             fontWeight: FontWeight.bold,
-                            color: TXT_CLR_PRIMARY,
+                            color: AppColors.TXT_CLR_PRIMARY,
                           ),
                           textAlign: TextAlign.left,
                         ),
@@ -143,7 +143,7 @@ class _MainContainerState extends State<MainContainer> {
                       style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
-                          color: TXT_CLR_DEFAULT,
+                          color: AppColors.TXT_CLR_DEFAULT,
                           overflow: TextOverflow.ellipsis),
                       maxLines: 1,
                     ),
@@ -155,7 +155,7 @@ class _MainContainerState extends State<MainContainer> {
                       style: TextStyle(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w400,
-                        color: Color(0xff808080),
+                        color: AppColors.TXT_CLR_LITE,
                       ),
                     ),
                   ],
@@ -169,11 +169,11 @@ class _MainContainerState extends State<MainContainer> {
                 // ),
               ),
               Divider(
-                height: 0.h,
-                thickness: 1,
-                indent: 10,
-                endIndent: 10,
-              ),
+                  height: 0.h,
+                  thickness: 1,
+                  indent: 10,
+                  endIndent: 10,
+                  color: AppColors.CLR_DIVIDER_LITE),
               Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 3.0.h),
@@ -189,14 +189,18 @@ class _MainContainerState extends State<MainContainer> {
                             style: TextStyle(
                               fontSize: 13.sp,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xff1b438b),
+                              color: AppColors.TXT_CLR_PRIMARY,
                             ),
                             textAlign: TextAlign.left,
                           ),
                           if (widget.dateText != "-")
                             Row(
                               children: [
-                                SvgPicture.asset(ICON_CALENDAR),
+                                SvgPicture.asset(
+                                  ICON_CALENDAR,
+                                  colorFilter: ColorFilter.mode(
+                                      AppColors.TXT_CLR_LITE, BlendMode.srcIn),
+                                ),
                                 SizedBox(
                                   width: 5,
                                 ),
@@ -205,7 +209,7 @@ class _MainContainerState extends State<MainContainer> {
                                   style: TextStyle(
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w400,
-                                    color: Color(0xff808080),
+                                    color: AppColors.TXT_CLR_LITE,
                                     height: 20 / 12,
                                   ),
                                 ),
@@ -532,12 +536,18 @@ class _MainContainerState extends State<MainContainer> {
               }
             },
             child: CircleAvatar(
-              backgroundColor: Color(0xFFD1D9E8),
+              backgroundColor: AppColors.CLR_CON_BORDER,
               radius: 13.5.r,
               child: CircleAvatar(
-                backgroundColor: Colors.white,
+                backgroundColor: AppColors.CLR_BACKGROUND,
                 radius: 12.r,
-                child: SvgPicture.asset(ICON_DELETE, height: 12.h, width: 12.w),
+                child: SvgPicture.asset(
+                  ICON_DELETE,
+                  height: 12.h,
+                  width: 12.w,
+                  colorFilter:
+                      ColorFilter.mode(AppColors.TXT_CLR_LITE, BlendMode.srcIn),
+                ),
               ),
             ),
           ),

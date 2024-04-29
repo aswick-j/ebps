@@ -178,6 +178,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
     }
 
     return Scaffold(
+      backgroundColor: AppColors.CLR_BACKGROUND,
       appBar: MyAppBar(
         context: context,
         FormField: showSearch ? true : null,
@@ -221,7 +222,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                     child: Icon(
                       Icons.close_rounded,
                       size: 26,
-                      color: CLR_PRIMARY,
+                      color: AppColors.CLR_PRIMARY,
                     ),
                   ),
                   hintText: "Search a Biller",
@@ -253,7 +254,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                   }),
                   icon: Icon(
                     Icons.search,
-                    color: CLR_PRIMARY,
+                    color: AppColors.CLR_PRIMARY,
                   ),
                 ),
                 Tooltip(
@@ -271,7 +272,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
                       Icons.info_outline,
-                      color: CLR_PRIMARY,
+                      color: AppColors.CLR_PRIMARY,
                     ),
                   ),
                 ),
@@ -382,12 +383,12 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                                   //   titleIndex: 0,
                                   // )
                                   ? NoDataFound(
-                                    showRichText: true,
-                                    message1: searchController.text,
-                                    message2:
-                                        "Try checking for typos or using complete words.",
-                                    message: "No Billers Found for ",
-                                  )
+                                      showRichText: true,
+                                      message1: searchController.text,
+                                      message2:
+                                          "Try checking for typos or using complete words.",
+                                      message: "No Billers Found for ",
+                                    )
                                   : ListView.builder(
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,

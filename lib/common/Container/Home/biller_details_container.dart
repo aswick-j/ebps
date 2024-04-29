@@ -34,7 +34,7 @@ class BillerDetailsContainer extends StatelessWidget {
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.bold,
-            color: Color(0xff1b438b),
+            color: AppColors.CLR_PRIMARY,
           ),
           textAlign: TextAlign.center,
         ),
@@ -46,7 +46,7 @@ class BillerDetailsContainer extends StatelessWidget {
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.w500,
-            color: TXT_CLR_DEFAULT,
+            color: AppColors.TXT_CLR_DEFAULT,
             height: 26 / 16,
           ),
           textAlign: TextAlign.center,

@@ -228,7 +228,11 @@ class HistoryContainer extends StatelessWidget {
                 width: 45.w,
                 child: Padding(
                   padding: EdgeInsets.all(8.w),
-                  child: SvgPicture.asset(iconPath),
+                  child: SvgPicture.asset(
+                    iconPath,
+                    // colorFilter: ColorFilter.mode(
+                    //     AppColors.CLR_ICON, BlendMode.srcIn)
+                  ),
                 ),
               ),
               title: Padding(
@@ -269,14 +273,14 @@ class HistoryContainer extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 13.sp,
                           fontWeight: FontWeight.bold,
-                          color: TXT_CLR_PRIMARY,
+                          color: AppColors.TXT_CLR_PRIMARY,
                         ),
                         textAlign: TextAlign.left,
                       ),
                     MyAppText(
                       data: amount,
                       size: 13.0.sp,
-                      color: CLR_PRIMARY,
+                      color: AppColors.CLR_ICON,
                       weight: FontWeight.bold,
                     ),
                   ],
@@ -297,7 +301,7 @@ class HistoryContainer extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.bold,
-                            color: TXT_CLR_DEFAULT,
+                            color: AppColors.TXT_CLR_DEFAULT,
                           ),
                           textAlign: TextAlign.left,
                         ),
@@ -359,7 +363,7 @@ class HistoryContainer extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 11.sp,
                       fontWeight: FontWeight.w400,
-                      color: Color(0xff808080),
+                      color: AppColors.TXT_CLR_LITE,
                     ),
                   ),
                 ],
@@ -373,6 +377,7 @@ class HistoryContainer extends StatelessWidget {
               // ),
             ),
             Divider(
+              color: AppColors.CLR_DIVIDER_LITE,
               height: 10.h,
               thickness: 1,
               indent: 10.w,
@@ -385,14 +390,16 @@ class HistoryContainer extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      SvgPicture.asset(ICON_CALENDAR),
+                      SvgPicture.asset(ICON_CALENDAR,
+                          colorFilter: ColorFilter.mode(
+                              AppColors.TXT_CLR_LITE, BlendMode.srcIn)),
                       SizedBox(
                         width: 5.h,
                       ),
                       MyAppText(
                         data: dateText,
                         size: 12.0.sp,
-                        color: TXT_CLR_LITE,
+                        color: AppColors.TXT_CLR_LITE,
                         weight: FontWeight.w400,
                       ),
                     ],
@@ -423,7 +430,7 @@ class HistoryContainer extends StatelessWidget {
                                     ? Icon(
                                         Icons.check_circle_sharp,
                                         size: 12.r,
-                                        color: CLR_GREEN,
+                                        color: AppColors.CLR_GREEN,
                                       )
                                     : SvgPicture.asset(ICON_FAILED))),
                     Text(
@@ -434,8 +441,8 @@ class HistoryContainer extends StatelessWidget {
                         color: statusText == "Pending"
                             ? Color.fromARGB(255, 218, 124, 47)
                             : statusText == "Success"
-                                ? CLR_GREEN
-                                : CLR_ERROR,
+                                ? AppColors.CLR_GREEN
+                                : AppColors.CLR_ERROR,
                         height: 20 / 12,
                       ),
                       textAlign: TextAlign.left,

@@ -204,7 +204,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0.r),
             border: Border.all(
-              color: Color(0xFFD1D9E8),
+              color: AppColors.CLR_CON_BORDER,
               width: 2.0,
             ),
           ),
@@ -234,7 +234,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                             style: TextStyle(
                               fontSize: 13.sp,
                               fontWeight: FontWeight.bold,
-                              color: TXT_CLR_PRIMARY,
+                              color: AppColors.TXT_CLR_PRIMARY,
                               overflow: TextOverflow.ellipsis,
                             ),
                             textAlign: TextAlign.left,
@@ -249,7 +249,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
-                              color: TXT_CLR_DEFAULT,
+                              color: AppColors.TXT_CLR_DEFAULT,
                               overflow: TextOverflow.ellipsis,
                             ),
                             textAlign: TextAlign.left,
@@ -1262,7 +1262,11 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                               );
                             });
                       },
-                      child: SvgPicture.asset(ICON_THREEMENU),
+                      child: SvgPicture.asset(
+                        ICON_THREEMENU,
+                        colorFilter: ColorFilter.mode(
+                            AppColors.CLR_ICON, BlendMode.srcIn),
+                      ),
                     ),
                   ],
                 ),
@@ -1297,7 +1301,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
-                        color: Color(0xff808080),
+                        color: AppColors.TXT_CLR_GREY,
                       ),
                       maxLines: 1,
                     ),
@@ -1928,6 +1932,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
             //       widget.upcomingDueData!.dueDate == null))
             if (widget.upcomingText != "")
               Divider(
+                color: AppColors.CLR_DIVIDER_LITE,
                 height: 0.h,
                 thickness: 1,
                 indent: 10.h,
@@ -1946,7 +1951,9 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                           widget.upcomingDueData!.dueDate != null)
                         Row(
                           children: [
-                            SvgPicture.asset(ICON_CALENDAR),
+                            SvgPicture.asset(ICON_CALENDAR,
+                                colorFilter: ColorFilter.mode(
+                                    AppColors.TXT_CLR_LITE, BlendMode.srcIn)),
                             SizedBox(
                               width: 5.w,
                             ),
@@ -1963,7 +1970,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                               style: TextStyle(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w400,
-                                color: Color(0xff808080),
+                                color: AppColors.TXT_CLR_LITE,
                                 height: 20 / 12,
                               ),
                             ),
@@ -1995,10 +2002,10 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                   (widget.upcomingDueData != null &&
                                       widget.upcomingDueData!.dueDate !=
                                           null) &&
-                                  checkDateExpiry(widget  
+                                  checkDateExpiry(widget
                                       .upcomingDueData!.dueDate!
                                       .toString())
-                              ? "Overdue by ${daysBetween((DateTime.parse(widget.upcomingDueData!.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.upcomingDueData!.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())== 1?"Day":"Days"}"
+                              ? "Overdue by ${daysBetween((DateTime.parse(widget.upcomingDueData!.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.upcomingDueData!.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}"
                               : widget.upcomingText!,
                           style: TextStyle(
                             fontSize: 10.sp,
@@ -2011,7 +2018,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                     checkDateExpiry(widget
                                         .upcomingDueData!.dueDate!
                                         .toString())
-                                ? CLR_ERROR
+                                ? AppColors.CLR_ERROR
                                 : widget.upcomingTXT_CLR_DEFAULT,
                           ),
                           textAlign: TextAlign.center,
@@ -2033,7 +2040,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xff1b438b),
+                          color: AppColors.CLR_ICON,
                           height: 26 / 16,
                         ),
                         textAlign: TextAlign.left,

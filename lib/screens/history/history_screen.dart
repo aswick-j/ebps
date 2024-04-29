@@ -147,6 +147,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.CLR_BACKGROUND,
       appBar: MyAppBar(
         context: context,
         title: 'History',
@@ -274,7 +275,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                           child: MyAppText(
                             data: "Clear Filters",
                             size: 14.0.sp,
-                            color: CLR_PRIMARY,
+                            color: AppColors.CLR_PRIMARY,
                             weight: FontWeight.bold,
                           ),
                         ),
@@ -323,7 +324,8 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                     iconPath: BILLER_LOGO(historyData![index]
                                         .billerName
                                         .toString()),
-                                    containerBorderColor: Color(0xffD1D9E8),
+                                    containerBorderColor:
+                                        AppColors.CLR_CON_BORDER,
                                   );
                                 } else {
                                   Timer(Duration(milliseconds: 30), () {

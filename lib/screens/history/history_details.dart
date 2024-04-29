@@ -104,7 +104,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
             style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
-              color: Color(0xff808080),
+              color: AppColors.TXT_CLR_LITE,
               height: 23 / 14,
             ),
             textAlign: TextAlign.left,
@@ -122,7 +122,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xff1b438b),
+                    color: AppColors.TXT_CLR_PRIMARY,
                   ),
                   textAlign: TextAlign.left,
                   maxLines: 2,
@@ -158,6 +158,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
           context: context,
           title: 'Payment Details',
@@ -334,7 +335,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(6.0.r + 2.r),
                           border: Border.all(
-                            color: Color(0xffD1D9E8),
+                            color: AppColors.CLR_CON_BORDER,
                             width: 1.0,
                           ),
                         ),
@@ -423,7 +424,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                 style: TextStyle(
                                                   fontSize: 20.sp,
                                                   fontWeight: FontWeight.w600,
-                                                  color: Color(0xff1b438b),
+                                                  color: AppColors.CLR_ICON,
                                                   height: 33 / 20,
                                                 ),
                                                 textAlign: TextAlign.left,
@@ -483,7 +484,8 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                   },
                                                   icon: Icon(
                                                       Icons.share_outlined,
-                                                      color: CLR_PRIMARY)),
+                                                      color: AppColors
+                                                          .CLR_PRIMARY)),
                                               IconButton(
                                                   onPressed: () {
                                                     Printing.layoutPdf(
@@ -544,7 +546,8 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                   icon: Icon(
                                                       Icons
                                                           .file_download_outlined,
-                                                      color: CLR_PRIMARY)),
+                                                      color: AppColors
+                                                          .CLR_PRIMARY)),
                                             ],
                                           ),
                                         ],
@@ -570,7 +573,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                           style: TextStyle(
                                             fontSize: 14.sp,
                                             fontWeight: FontWeight.w400,
-                                            color: Color(0xff808080),
+                                            color: AppColors.TXT_CLR_LITE,
                                           ),
                                           textAlign: TextAlign.left,
                                         ),
@@ -579,6 +582,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                   )),
                             ),
                             Divider(
+                              color: AppColors.CLR_DIVIDER_LITE,
                               height: 10.h,
                               thickness: 1,
                             ),

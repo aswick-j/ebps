@@ -18,11 +18,11 @@ MyAppBar(
         ? title
         : MyAppText(
             data: title,
-            color: CLR_PRIMARY,
+            color: AppColors.CLR_PRIMARY,
             weight: FontWeight.bold,
             maxline: 1),
     toolbarHeight: 62.0.h,
-    backgroundColor: Colors.white,
+    backgroundColor: AppColors.CLR_BACKGROUND,
     elevation: 0.0,
     leading: IconButton(
       onPressed: onLeadingTap ?? () => Navigator.pop(context),

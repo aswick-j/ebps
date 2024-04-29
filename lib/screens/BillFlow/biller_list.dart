@@ -82,6 +82,7 @@ class _BillerListState extends State<BillerList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
           context: context,
           title: widget.name,
@@ -168,15 +169,16 @@ class _BillerListState extends State<BillerList> {
                   textAlign: TextAlign.left,
                   controller: _searchController,
                   decoration: InputDecoration(
-                    fillColor: CLR_PRIMARY_LITE.withOpacity(0.2),
+                    fillColor: AppColors.CLR_PRIMARY_LITE.withOpacity(0.2),
                     filled: true,
                     isDense: true,
+                    hintStyle: TextStyle(color: AppColors.TXT_CLR_LITE),
                     contentPadding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 0.h),
                     hintText: 'Search by Biller',
                     suffixIcon: IconButton(
                       icon: Icon(Icons.search),
                       iconSize: 25.r,
-                      color: CLR_BLUE_LITE,
+                      color: AppColors.CLR_BLUE_LITE,
                       onPressed: () => (),
                     ),
                     border: OutlineInputBorder(
@@ -210,7 +212,7 @@ class _BillerListState extends State<BillerList> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6.0.r + 2.r),
                   border: Border.all(
-                    color: Color(0xffD1D9E8),
+                    color: AppColors.CLR_CON_BORDER,
                     width: 1.0,
                   ),
                 ),
@@ -229,8 +231,8 @@ class _BillerListState extends State<BillerList> {
                             begin: Alignment.topRight,
                             stops: const [0.001, 19],
                             colors: [
-                              Color(0xff768EB9).withOpacity(.7),
-                              Color(0xff463A8D).withOpacity(.7),
+                              AppColors.CLR_GRD_1.withOpacity(.7),
+                              AppColors.CLR_GRD_2.withOpacity(.7),
                             ],
                           ),
                         ),
@@ -358,7 +360,7 @@ class _BillerListState extends State<BillerList> {
                                       style: TextStyle(
                                         fontSize: 13.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: Color(0xff4c4c4c),
+                                        color: AppColors.TXT_CLR_GREY,
                                       ),
                                       textAlign: TextAlign.left,
                                     )),

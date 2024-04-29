@@ -72,7 +72,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
         return Card(
           // width: double.infinity,
           elevation: 0.0,
-
+          color: AppColors.CLR_BACKGROUND,
           margin: EdgeInsets.only(
               left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
 
@@ -113,7 +113,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                       style: TextStyle(
                                         fontSize: 13.sp,
                                         fontWeight: FontWeight.bold,
-                                        color: TXT_CLR_PRIMARY,
+                                        color: AppColors.TXT_CLR_PRIMARY,
                                       ),
                                       textAlign: TextAlign.left,
                                     ),
@@ -304,7 +304,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                       style: TextStyle(
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w500,
-                                          color: TXT_CLR_DEFAULT,
+                                          color: AppColors.TXT_CLR_DEFAULT,
                                           overflow: TextOverflow.ellipsis),
                                       maxLines: 1,
                                     ),
@@ -318,7 +318,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                       style: TextStyle(
                                           fontSize: 11.sp,
                                           fontWeight: FontWeight.w400,
-                                          color: Color(0xff808080),
+                                          color: AppColors.TXT_CLR_LITE,
                                           overflow: TextOverflow.ellipsis),
                                       maxLines: 1,
                                     ),
@@ -330,7 +330,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xff1b438b),
+                                  color: AppColors.TXT_CLR_PRIMARY,
                                 ),
                                 textAlign: TextAlign.left,
                               ),
@@ -344,6 +344,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                       thickness: 1,
                       indent: 10.w,
                       endIndent: 10.w,
+                      color: AppColors.CLR_DIVIDER_LITE,
                     ),
                     Padding(
                       padding:
@@ -357,6 +358,9 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                 children: [
                                   SvgPicture.asset(
                                     ICON_CALENDAR,
+                                    colorFilter: ColorFilter.mode(
+                                        AppColors.TXT_CLR_LITE,
+                                        BlendMode.srcIn),
                                   ),
                                   SizedBox(
                                     width: 10.w,
@@ -366,7 +370,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: Color(0xff808080),
+                                      color: AppColors.TXT_CLR_LITE,
                                     ),
                                   ),
                                 ],

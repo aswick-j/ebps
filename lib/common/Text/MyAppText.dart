@@ -21,7 +21,7 @@ MyAppText(
     textAlign: align ?? TextAlign.left,
     maxLines: maxline ?? 2,
     style: TextStyle(
-      color: color ?? CLR_PRIMARY,
+      color: color ?? AppColors.CLR_PRIMARY,
       fontSize: size ?? 23.sp,
       height: lineHeight ?? 0,
       fontWeight: weight ?? FontWeight.normal,
