@@ -338,7 +338,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
                                                         AppColors.TXT_CLR_LITE),
                                                 fillColor: AppColors
                                                     .TXT_CLR_GREY
-                                                    .withOpacity(0.2),
+                                                    .withOpacity(0.1),
                                                 filled: true,
                                                 hintStyle: TextStyle(
                                                     color:

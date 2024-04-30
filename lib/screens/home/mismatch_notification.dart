@@ -85,7 +85,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                 borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(10.5.r),
                                     topLeft: Radius.circular(10.5.r)),
-                                color: CLR_ERROR,
+                                color: AppColors.CLR_ERROR,
                                 border: Border.all(
                                   color: Color.fromARGB(255, 255, 255, 255),
                                   width: 1.0,

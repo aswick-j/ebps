@@ -122,7 +122,7 @@ class AppColors {
       isElite ? Color(0xff94afd8) : Color(0xff808080);
 
   static Color get TXT_CLR_LITE_V2 =>
-      isElite ? Color(0xffD1D9E8) : Color(0xff808080);
+      isElite ? Color(0xffD1D9E8) : Color(0xff313131);
 
   static Color get TXT_CLR_GREY =>
       isElite ? Color(0xffD1D9E8) : Color(0xff4c4c4c);

@@ -597,7 +597,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                       color: Colors.grey.withOpacity(0.1),
                                     ),
                                   ),
-SizedBox(
+                                  SizedBox(
                                     height: 10.h,
                                   ),
                                   Column(
@@ -1311,7 +1311,7 @@ SizedBox(
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
-                        color: AppColors.TXT_CLR_GREY,
+                        color: AppColors.TXT_CLR_LITE,
                       ),
                       maxLines: 1,
                     ),
@@ -1369,6 +1369,11 @@ SizedBox(
                                                         .CLR_BACKGROUND,
                                                     shape:
                                                         RoundedRectangleBorder(
+                                                      side: BorderSide(
+                                                          color: AppColors
+                                                              .BTN_CLR_ACTIVE_BORDER
+                                                              .withOpacity(
+                                                                  0.1)),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               12.r),
@@ -1390,7 +1395,8 @@ SizedBox(
                                                           color: Colors.white,
                                                         ),
                                                         showSub: false,
-                                                        shapeColor: CLR_ERROR),
+                                                        shapeColor: AppColors
+                                                            .CLR_ERROR),
                                                     actions: <Widget>[
                                                       Align(
                                                         alignment:
