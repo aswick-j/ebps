@@ -64,6 +64,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.CLR_BACKGROUND,
       appBar: MyAppBar(
         context: context,
         title: 'Raised Complaints',

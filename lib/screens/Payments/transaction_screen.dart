@@ -105,7 +105,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
             style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
-              color: Color(0xff808080),
+              color: AppColors.TXT_CLR_LITE,
               height: 23 / 14,
             ),
             textAlign: TextAlign.left,
@@ -121,7 +121,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xff1b438b),
+                  color: AppColors.CLR_PRIMARY,
                 ),
                 textAlign: TextAlign.left,
               ),
@@ -146,6 +146,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.CLR_BACKGROUND,
       appBar: MyAppBar(
         context: context,
         title: 'Go to Home',

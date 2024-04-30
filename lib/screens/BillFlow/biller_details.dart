@@ -699,8 +699,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                           fontSize: 16.sp,
                                           fontWeight: FontWeight.bold),
                                       fillColor: validateBill!["amountEditable"]
-                                          ? AppColors.TXT_CLR_LITE
-                                              .withOpacity(0.1)
+                                          ? AppColors.CLR_INPUT_FILL
                                           : AppColors.TXT_CLR_GREY
                                               .withOpacity(0.2),
                                       filled: true,

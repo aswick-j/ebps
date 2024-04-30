@@ -169,7 +169,7 @@ class _BillerListState extends State<BillerList> {
                   textAlign: TextAlign.left,
                   controller: _searchController,
                   decoration: InputDecoration(
-                    fillColor: AppColors.CLR_PRIMARY_LITE.withOpacity(0.2),
+                    fillColor: AppColors.CLR_INPUT_FILL,
                     filled: true,
                     isDense: true,
                     hintStyle: TextStyle(color: AppColors.TXT_CLR_LITE),

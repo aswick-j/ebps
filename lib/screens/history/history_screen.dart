@@ -181,7 +181,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
               child: Container(
                   margin: EdgeInsets.only(right: 15.w),
                   decoration: ShapeDecoration(
-                    color: Color(0xff4969A2),
+                    color: AppColors.CLR_SECONDARY,
                     shape: CircleBorder(),
                   ),
                   child: Container(

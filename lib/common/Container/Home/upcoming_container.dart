@@ -163,6 +163,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                   showModalBottomSheet(
                                       isDismissible: false,
                                       context: context,
+                                      backgroundColor: AppColors.CLR_BACKGROUND,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.vertical(
                                           top: Radius.circular(16.0.r),
@@ -201,7 +202,8 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                                       fontSize: 14.sp,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: Color(0xff191919),
+                                                      color: AppColors
+                                                          .TXT_CLR_BLACK_W,
                                                     ),
                                                     textAlign: TextAlign.left,
                                                   ),
@@ -218,8 +220,8 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                                         fontSize: 13.sp,
                                                         fontWeight:
                                                             FontWeight.w400,
-                                                        color:
-                                                            Color(0xff808080),
+                                                        color: AppColors
+                                                            .TXT_CLR_LITE_V2,
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -233,8 +235,8 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                                         fontSize: 12.sp,
                                                         fontWeight:
                                                             FontWeight.w400,
-                                                        color:
-                                                            Color(0xff808080),
+                                                        color: AppColors
+                                                            .TXT_CLR_LITE,
                                                       ),
                                                     ),
                                                   ],
@@ -378,21 +380,26 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                             else
                               SizedBox(
                                 width: 10.w,
-                              )
-                          else
-                            SizedBox(
-                              width: 10.w,
-                            ),
+                              ),
                           if (widget.dueDate != "-")
                             if (checkDateExpiry(widget.dueDate.toString()))
-                              Text(
-                                "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: CLR_ERROR,
-                                ),
-                              ),
+                              Container(
+                                  decoration: BoxDecoration(
+                                      // color: Colors.red.shade100,
+                                      border: Border.all(
+                                        color: Colors.red.shade400,
+                                      ),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(4.0.r),
+                                    child: Text(
+                                      "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
+                                      style: TextStyle(
+                                          fontSize: 7.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.CLR_ERROR),
+                                    ),
+                                  )),
                           MyAppButton(
                               onPressed: () {
                                 widget.onPressed();

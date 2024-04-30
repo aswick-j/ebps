@@ -88,7 +88,7 @@ class CategoriesContainer extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w400,
-                                  color: AppColors.TXT_CLR_LITE,
+                                  color: AppColors.TXT_CLR_LITE_V2,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -122,7 +122,7 @@ class CategoriesContainer extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: AppColors.TXT_CLR_LITE,
+                                      color: AppColors.TXT_CLR_LITE_V2,
                                     ),
                                     textAlign: TextAlign.center,
                                   )),

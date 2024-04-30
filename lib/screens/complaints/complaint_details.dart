@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:delightful_toast/delight_toast.dart';
 import 'package:delightful_toast/toast/components/toast_card.dart';
 import 'package:ebps/bloc/complaint/complaint_cubit.dart';
@@ -46,10 +47,7 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
   @override
   Widget build(BuildContext context) {
     Widget CmpDetails(
-        {String title = "",
-        String subTitle = "",
-        required bool showStatus,
-        clipBoard = false}) {
+        {String title = "", String subTitle = "", clipBoard = false}) {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
         child: Column(
@@ -60,7 +58,7 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
               style: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w400,
-                color: Color(0xff808080),
+                color: AppColors.TXT_CLR_LITE,
                 height: 23 / 14,
               ),
               textAlign: TextAlign.left,
@@ -68,60 +66,55 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
             SizedBox(height: 5.h),
             Row(
               children: [
-                if (showStatus)
-                  Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 8.0.w, vertical: 4.w),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: getComplaintStatusColors(subTitle.toString())),
-                      borderRadius: BorderRadius.circular(12.0.r),
-                    ),
-                    child: Text(
-                      getComplaintStatusValue(subTitle.toString()),
-                      style: TextStyle(
-                        color: getComplaintStatusColors(subTitle.toString()),
-                        fontSize: 10.0.sp,
-                      ),
-                    ),
-                  ),
-                if (!showStatus)
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: showStatus || clipBoard ? null : 270.w,
-                        child: Text(
-                          subTitle,
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xff1b438b),
-                          ),
-                          textAlign: TextAlign.left,
+                Row(
+                  children: [
+                    SizedBox(
+                      width: clipBoard ? null : 270.w,
+                      child: Text(
+                        subTitle,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.CLR_PRIMARY,
                         ),
+                        textAlign: TextAlign.left,
                       ),
-                      if (clipBoard != false) SizedBox(width: 10.w),
-                      if (clipBoard != false)
-                        GestureDetector(
-                            onTap: () {
-                              Clipboard.setData(ClipboardData(text: subTitle))
-                                  .then((_) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content: Text(
-                                            '$title copied to clipboard')));
-                              });
-                            },
-                            child: Icon(Icons.copy,
-                                color: Color(0xff1b438b), size: 20))
-                    ],
-                  ),
+                    ),
+                    if (clipBoard != false) SizedBox(width: 10.w),
+                    if (clipBoard != false)
+                      GestureDetector(
+                          onTap: () {
+                            Clipboard.setData(ClipboardData(text: subTitle))
+                                .then((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
+                                          Text('$title copied to clipboard')));
+                            });
+                          },
+                          child: Icon(Icons.copy,
+                              color: AppColors.CLR_PRIMARY, size: 20))
+                  ],
+                ),
               ],
             )
           ],
         ),
       );
     }
+
+    var colorizeTextStyle = TextStyle(
+      fontSize: 14.sp,
+      fontWeight: FontWeight.w500,
+      color: Color(0xff1b438b),
+    );
+
+    const colorizeColors = [
+      Colors.red,
+      Colors.orange,
+      Colors.orange,
+      Colors.red,
+    ];
 
     void showToast() {
       return DelightToastBar(
@@ -160,6 +153,7 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
     }
 
     return Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
           context: context,
           title: 'Complaint Details',
@@ -204,79 +198,170 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0.r),
                       border: Border.all(
-                        color: Color(0xFFD1D9E8),
+                        color: AppColors.CLR_CON_BORDER,
                         width: 2.0,
                       ),
                     ),
-                    child: !isCmpStatusLoading
-                        ? Column(
+                    child: Column(
+                      children: [
+                        BillerDetailsContainer(
+                            icon: BILLER_LOGO(
+                                widget.complaintData.bILLERNAME.toString()),
+                            billerName:
+                                widget.complaintData.bILLERNAME.toString(),
+                            categoryName:
+                                widget.complaintData.cATEGORYNAME.toString()),
+
+                        // CmpDetails(
+                        //     title: "Status",
+                        //     subTitle:
+                        //         widget.complaintData.sTATUS.toString(),
+                        //     showStatus: true),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.0.w, vertical: 8.h),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              BillerDetailsContainer(
-                                  icon: BILLER_LOGO(widget
-                                      .complaintData.bILLERNAME
-                                      .toString()),
-                                  billerName: widget.complaintData.bILLERNAME
-                                      .toString(),
-                                  categoryName: widget
-                                      .complaintData.cATEGORYNAME
-                                      .toString()),
-                              CmpDetails(
-                                  title: "Status",
-                                  subTitle:
-                                      widget.complaintData.sTATUS.toString(),
-                                  showStatus: true),
-                              if (widget.complaintData.aSSIGNED != null)
-                                CmpDetails(
-                                    title: "Assigned to",
-                                    subTitle: widget.complaintData.aSSIGNED
-                                        .toString(),
-                                    showStatus: false),
-                              CmpDetails(
-                                  title: "Complaint ID",
-                                  subTitle: widget.complaintData.cOMPLAINTID
-                                      .toString(),
-                                  clipBoard: true,
-                                  showStatus: false),
-                              CmpDetails(
-                                  title: "Transaction ID",
-                                  clipBoard: true,
-                                  subTitle: widget.complaintData.tRANSACTIONID
-                                      .toString(),
-                                  showStatus: false),
-                              CmpDetails(
-                                  title: "Reason",
-                                  subTitle: widget.complaintData.cOMPLAINTREASON
-                                      .toString(),
-                                  showStatus: false),
-                              CmpDetails(
-                                  title: "Issued Date",
-                                  subTitle: DateFormat('dd/MM/yyyy').format(
-                                      DateTime.parse(widget
-                                              .complaintData.cREATEDON
-                                              .toString())
-                                          .toLocal()),
-                                  showStatus: false),
-                              CmpDetails(
-                                  title: "Type",
-                                  subTitle: "Transaction - Based",
-                                  showStatus: false),
-                              CmpDetails(
-                                  title: "Description",
-                                  subTitle: widget.complaintData.dESCRIPTION
-                                      .toString(),
-                                  showStatus: false),
-                              if (widget.complaintData.rEMARKS != null)
-                                CmpDetails(
-                                    title: "Remarks",
-                                    subTitle:
-                                        widget.complaintData.rEMARKS.toString(),
-                                    showStatus: false),
+                              Text(
+                                "Status",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.TXT_CLR_LITE,
+                                  height: 23 / 14,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              SizedBox(height: 5.h),
+                              Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            !isCmpStatusLoading ? null : 270.w,
+                                        child: !isCmpStatusLoading
+                                            ? Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 8.0.w,
+                                                    vertical: 4.w),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color:
+                                                          getComplaintStatusColors(
+                                                              widget
+                                                                  .complaintData
+                                                                  .sTATUS
+                                                                  .toString())),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0.r),
+                                                ),
+                                                child: Text(
+                                                  getComplaintStatusValue(widget
+                                                      .complaintData.sTATUS
+                                                      .toString()),
+                                                  style: TextStyle(
+                                                    color:
+                                                        getComplaintStatusColors(
+                                                            widget.complaintData
+                                                                .sTATUS
+                                                                .toString()),
+                                                    fontSize: 10.0.sp,
+                                                  ),
+                                                ),
+                                              )
+                                            : Row(
+                                                children: [
+                                                  AnimatedTextKit(
+                                                    repeatForever: true,
+                                                    isRepeatingAnimation: true,
+                                                    animatedTexts: [
+                                                      ColorizeAnimatedText(
+                                                        'Checking Complaint Status',
+                                                        textStyle:
+                                                            colorizeTextStyle,
+                                                        colors: colorizeColors,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  AnimatedTextKit(
+                                                      repeatForever: true,
+                                                      isRepeatingAnimation:
+                                                          true,
+                                                      animatedTexts: [
+                                                        TyperAnimatedText(
+                                                            ' . . .',
+                                                            textStyle:
+                                                                TextStyle(
+                                                              fontSize: 14.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color:
+                                                                  Colors.orange,
+                                                            ),
+                                                            speed: Duration(
+                                                                milliseconds:
+                                                                    100)),
+                                                      ]),
+                                                ],
+                                              ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
                             ],
-                          )
-                        : Container(
-                            height: 560.h,
-                            child: FlickrLoader(),
-                          ));
+                          ),
+                        ),
+                        CmpDetails(
+                          title: "Assigned to",
+                          subTitle: widget.complaintData.aSSIGNED.toString(),
+                        ),
+                        CmpDetails(
+                          title: "Complaint ID",
+                          subTitle: widget.complaintData.cOMPLAINTID.toString(),
+                          clipBoard: true,
+                        ),
+                        CmpDetails(
+                          title: "Transaction ID",
+                          clipBoard: true,
+                          subTitle:
+                              widget.complaintData.tRANSACTIONID.toString(),
+                        ),
+                        CmpDetails(
+                          title: "Reason",
+                          subTitle:
+                              widget.complaintData.cOMPLAINTREASON.toString(),
+                        ),
+                        CmpDetails(
+                          title: "Issued Date",
+                          subTitle: DateFormat('dd/MM/yyyy').format(
+                              DateTime.parse(
+                                      widget.complaintData.cREATEDON.toString())
+                                  .toLocal()),
+                        ),
+                        CmpDetails(
+                          title: "Type",
+                          subTitle: "Transaction - Based",
+                        ),
+                        CmpDetails(
+                          title: "Description",
+                          subTitle: widget.complaintData.dESCRIPTION.toString(),
+                        ),
+                        if (widget.complaintData.rEMARKS != null)
+                          CmpDetails(
+                            title: "Remarks",
+                            subTitle: widget.complaintData.rEMARKS.toString(),
+                          ),
+                      ],
+                    ));
+                // : Container(
+                //     height: 560.h,
+                //     child: FlickrLoader(),
+                //   ));
               },
             )));
   }

@@ -167,15 +167,15 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                       buttonColor: widget.allUpcomingDues[index]["itemType"] ==
                               'upcomingDue'
                           ? AppColors.BTN_CLR_ACTIVE_BG
-                          : AppColors.BTN_CLR_ACTIVE_TEXT,
+                          : AppColors.BTN_CLR_ALTER_BG,
                       buttonTxtColor: widget.allUpcomingDues[index]
                                   ["itemType"] ==
                               'upcomingDue'
                           ? AppColors.BTN_CLR_ACTIVE_TEXT
                           : widget.allUpcomingDues[index]["itemType"] ==
                                   'upcomingAutopaused'
-                              ? Colors.red
-                              : Color(0xff00AB44),
+                              ? AppColors.CLR_ERROR
+                              : AppColors.CLR_GREEN,
                       buttonTextWeight: FontWeight.normal,
                       buttonBorderColor: widget.allUpcomingDues[index]
                                   ["itemType"] ==
@@ -183,8 +183,8 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                           ? null
                           : widget.allUpcomingDues[index]["itemType"] ==
                                   'upcomingAutopaused'
-                              ? Colors.red
-                              : Color(0xff00AB44),
+                              ? AppColors.CLR_ERROR
+                              : AppColors.CLR_GREEN,
                     );
                   }),
             // if (isUpcomingAutopaymentLoading ||

@@ -57,7 +57,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0.r),
           border: Border.all(
-            color: widget.containerBorderColor,
+            color: AppColors.CLR_CON_BORDER,
             width: 2.0,
           ),
         ),
@@ -83,14 +83,14 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                         // data: "Jio Telecom Services",
                         data: widget.titleText,
                         size: 13.0.sp,
-                        color: TXT_CLR_DEFAULT,
+                        color: AppColors.TXT_CLR_BLACK_W,
                         weight: FontWeight.w500,
                       ),
                     ),
                     MyAppText(
                       data: widget.amount,
                       size: 14.0.sp,
-                      color: CLR_PRIMARY,
+                      color: AppColors.TXT_CLR_PRIMARY,
                       weight: FontWeight.bold,
                     ),
                   ],
@@ -102,7 +102,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                   MyAppText(
                     data: "Complaint ID",
                     size: 12.sp,
-                    color: Color(0xff7d7d7d),
+                    color: AppColors.TXT_CLR_LITE,
                     weight: FontWeight.w400,
                   ),
                   Row(
@@ -111,7 +111,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                       MyAppText(
                         data: widget.subtitleText,
                         size: 12.0.sp,
-                        color: TXT_CLR_PRIMARY,
+                        color: AppColors.TXT_CLR_PRIMARY,
                         weight: FontWeight.w700,
                       ),
                     ],
@@ -120,6 +120,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
               ),
             ),
             Divider(
+              color: AppColors.CLR_CON_BORDER,
               height: 10.h,
               thickness: 1,
               indent: 10.w,
@@ -132,14 +133,18 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                 children: [
                   Row(
                     children: [
-                      SvgPicture.asset(ICON_CALENDAR),
+                      SvgPicture.asset(
+                        ICON_CALENDAR,
+                        colorFilter: ColorFilter.mode(
+                            AppColors.CLR_ICON, BlendMode.srcIn),
+                      ),
                       SizedBox(
                         width: 5.h,
                       ),
                       MyAppText(
                         data: widget.dateText,
                         size: 12.0.sp,
-                        color: TXT_CLR_LITE,
+                        color: AppColors.TXT_CLR_LITE,
                         weight: FontWeight.w400,
                       ),
                     ],

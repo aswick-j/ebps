@@ -231,15 +231,13 @@ class _MainContainerState extends State<MainContainer> {
                                 ),
                                 borderRadius: BorderRadius.circular(20)),
                             child: Padding(
-                              padding: EdgeInsets.all(4.0.r),
-                              child: Text(
-                                "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
-                                style: TextStyle(
-                                    fontSize: 7.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.red),
-                              ),
-                            )),
+                                padding: EdgeInsets.all(4.0.r),
+                                child: Text(
+                                    "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
+                                    style: TextStyle(
+                                        fontSize: 7.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.CLR_ERROR)))),
                     Row(
                       children: [
                         MyAppButton(

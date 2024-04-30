@@ -25,6 +25,7 @@ class _DateDialogState extends State<DateDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: AppColors.CLR_BACKGROUND,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12.0.r))),
       child: Column(
@@ -37,10 +38,10 @@ class _DateDialogState extends State<DateDialog> {
             margin: EdgeInsets.only(
                 left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
             decoration: BoxDecoration(
-              color: TXT_CLR_PRIMARY,
+              color: AppColors.TXT_CLR_PRIMARY,
               borderRadius: BorderRadius.circular(6.0.r + 2.r),
               border: Border.all(
-                color: Color(0xffD1D9E8),
+                color: AppColors.CLR_CON_BORDER,
                 width: 1.0,
               ),
             ),
@@ -49,7 +50,7 @@ class _DateDialogState extends State<DateDialog> {
               child: Text(
                 'Select Date',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                   fontSize: 13.0.sp,
                   fontWeight: FontWeight.bold,
                 ),
@@ -76,11 +77,11 @@ class _DateDialogState extends State<DateDialog> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: selectedDate == '${index + 1}'
-                          ? TXT_CLR_PRIMARY
+                          ? AppColors.TXT_CLR_PRIMARY
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(8.r),
                       border: Border.all(
-                        color: Color(0xffD1D9E8),
+                        color: AppColors.CLR_CON_BORDER,
                         width: 1.0,
                       ),
                     ),
@@ -89,8 +90,8 @@ class _DateDialogState extends State<DateDialog> {
                         '${index + 1}',
                         style: TextStyle(
                           color: selectedDate == '${index + 1}'
-                              ? Colors.white
-                              : TXT_CLR_PRIMARY,
+                              ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                              : AppColors.TXT_CLR_PRIMARY,
                           fontSize: 14.0.sp,
                         ),
                       ),
@@ -101,6 +102,7 @@ class _DateDialogState extends State<DateDialog> {
             ),
           ),
           Divider(
+            color: AppColors.CLR_DIVIDER_LITE,
             height: 10.0,
             thickness: 1,
           ),
@@ -116,9 +118,9 @@ class _DateDialogState extends State<DateDialog> {
                         Navigator.of(context).pop();
                       },
                       buttonText: "Cancel",
-                      buttonTxtColor: CLR_PRIMARY,
-                      buttonBorderColor: Colors.transparent,
-                      buttonColor: BTN_CLR_ACTIVE,
+                      buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                      buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
+                      buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER_C,
                       buttonSizeX: 8.h,
                       buttonSizeY: 35.w,
                       buttonTextSize: 12.sp,
@@ -133,9 +135,9 @@ class _DateDialogState extends State<DateDialog> {
                         Navigator.of(context).pop();
                       },
                       buttonText: "Okay",
-                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
+                      buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                       buttonSizeX: 8.h,
                       buttonSizeY: 35.w,
                       buttonTextSize: 12.sp,

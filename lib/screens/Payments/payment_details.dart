@@ -720,6 +720,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
           }),
           bottomSheet: Container(
             decoration: BoxDecoration(
+                color: AppColors.CLR_BACKGROUND,
                 border: Border(
                     top: BorderSide(
                         color: AppColors.CLR_CON_BORDER_LITE, width: 1))),

@@ -65,7 +65,11 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                   margin: EdgeInsets.symmetric(horizontal: 5.w),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.0.r),
-                    color: Colors.white,
+                    color: AppColors.CLR_BACKGROUND,
+                    border: Border.all(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      width: 1.0,
+                    ),
                   ),
                   child: Container(
                     width: double.infinity,
@@ -76,11 +80,11 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                           children: [
                             Container(
                               height: 60.h,
-                              width: 330.w,
+                              width: 328.w,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(12.r),
-                                    topLeft: Radius.circular(12.r)),
+                                    topRight: Radius.circular(10.5.r),
+                                    topLeft: Radius.circular(10.5.r)),
                                 color: CLR_ERROR,
                                 border: Border.all(
                                   color: Color.fromARGB(255, 255, 255, 255),
@@ -155,7 +159,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.bold,
-                                        color: CLR_PRIMARY,
+                                        color: AppColors.CLR_PRIMARY,
                                       ),
                                       textAlign: TextAlign.left,
                                       maxLines: 3,
@@ -181,7 +185,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.0.r),
                               border: Border.all(
-                                color: Color(0xFFD1D9E8),
+                                color: AppColors.CLR_CONTAINER_BG,
                                 width: 1.0,
                               ),
                             ),
@@ -229,7 +233,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: Color(0xff808080),
+                                        color: AppColors.TXT_CLR_LITE,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
@@ -256,7 +260,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: TXT_CLR_PRIMARY,
+                                      color: AppColors.TXT_CLR_PRIMARY,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -278,7 +282,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                 color:
                                     widget.allautoPayData![index].rESETDATE == 1
                                         ? Color(0xFFD1D9E8)
-                                        : CLR_ERROR,
+                                        : AppColors.CLR_ERROR,
                                 width: 1.0,
                               ),
                             ),
@@ -324,7 +328,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                         .rESETDATE ==
                                                     1
                                                 ? CLR_BLUE_LITE
-                                                : CLR_ERROR,
+                                                : AppColors.CLR_ERROR,
                                           )),
                                     ),
                                     Text(
@@ -335,7 +339,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: Color(0xff808080),
+                                        color: AppColors.TXT_CLR_LITE,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
@@ -355,7 +359,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: TXT_CLR_PRIMARY,
+                                      color: AppColors.TXT_CLR_PRIMARY,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -375,7 +379,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                               border: Border.all(
                                 color:
                                     widget.allautoPayData![index].rESETDATE == 1
-                                        ? CLR_ERROR
+                                        ? AppColors.CLR_ERROR
                                         : Color(0xFFD1D9E8),
                                 width: 1.0,
                               ),
@@ -406,7 +410,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                     ? Color.fromARGB(
                                                             255, 255, 123, 123)
                                                         .withOpacity(.16)
-                                                    : CLR_PRIMARY
+                                                    : AppColors.CLR_PRIMARY
                                                         .withOpacity(.16),
                                                 Colors.transparent
                                               ])),
@@ -417,7 +421,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                             color: widget.allautoPayData![index]
                                                         .rESETDATE ==
                                                     1
-                                                ? CLR_ERROR
+                                                ? AppColors.CLR_ERROR
                                                 : CLR_BLUE_LITE,
                                           )),
                                     ),
@@ -426,7 +430,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: Color(0xff808080),
+                                        color: AppColors.TXT_CLR_LITE,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
@@ -442,7 +446,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                         style: TextStyle(
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w400,
-                                          color: TXT_CLR_PRIMARY,
+                                          color: AppColors.TXT_CLR_PRIMARY,
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
@@ -467,9 +471,12 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       goBack(context);
                                     },
                                     buttonText: "Skip",
-                                    buttonTxtColor: CLR_PRIMARY,
-                                    buttonBorderColor: CLR_PRIMARY,
-                                    buttonColor: BTN_CLR_ACTIVE,
+                                    buttonTxtColor:
+                                        AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                                    buttonBorderColor:
+                                        AppColors.BTN_CLR_ACTIVE_BORDER,
+                                    buttonColor:
+                                        AppColors.BTN_CLR_ACTIVE_ALTER_C,
                                     buttonSizeX: 10.h,
                                     buttonSizeY: 40.w,
                                     buttonTextSize: 14.sp,
@@ -527,12 +534,12 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                           goBack(ctx);
                                                         },
                                                         buttonText: "Okay",
-                                                        buttonTxtColor:
-                                                            BTN_CLR_ACTIVE,
-                                                        buttonBorderColor:
-                                                            Colors.transparent,
-                                                        buttonColor:
-                                                            CLR_PRIMARY,
+                                                        buttonTxtColor: AppColors
+                                                            .BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                                                        buttonBorderColor: AppColors
+                                                            .BTN_CLR_ACTIVE_BORDER,
+                                                        buttonColor: AppColors
+                                                            .BTN_CLR_ACTIVE_ALTER_C,
                                                         buttonSizeX: 10,
                                                         buttonSizeY: 40,
                                                         buttonTextSize: 14,
@@ -568,9 +575,10 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       }
                                     },
                                     buttonText: "Modify",
-                                    buttonTxtColor: BTN_CLR_ACTIVE,
+                                    buttonTxtColor:
+                                        AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                                     buttonBorderColor: Colors.transparent,
-                                    buttonColor: CLR_PRIMARY,
+                                    buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                                     buttonSizeX: 10.h,
                                     buttonSizeY: 40.w,
                                     buttonTextSize: 14.sp,

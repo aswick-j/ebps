@@ -1,4 +1,5 @@
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getTransactionStatusReason.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
@@ -37,6 +38,7 @@ Future<Uint8List> generatePdf(
   Uint8List equitasFooterList = equitasFooterbytes.buffer.asUint8List();
 
   final PdfColor primaryColor = PdfColor.fromHex('#a9bbdb');
+  final PdfColor BackgroundColor = PdfColor.fromHex(AppColors.CLR_PDF_BG);
   pdf.addPage(pw.Page(
       pageFormat: PdfPageFormat.a4,
       build: (pw.Context context) {

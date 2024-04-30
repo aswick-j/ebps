@@ -31,9 +31,9 @@ class _SessionExpiredState extends State<SessionExpired> {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: const [
-            CLR_BLUESHADE,
-            Colors.white,
+          colors: [
+            AppColors.CLR_BLUESHADE,
+            AppColors.CLR_BACKGROUND,
           ],
           stops: const [
             0,
@@ -60,14 +60,14 @@ class _SessionExpiredState extends State<SessionExpired> {
               MyAppText(
                 data: 'Oh !',
                 size: 13.0.sp,
-                color: CLR_PRIMARY,
+                color: AppColors.CLR_PRIMARY,
                 weight: FontWeight.bold,
               ),
               SizedBox(height: 10.h),
               MyAppText(
                 data: 'Your Session is Expired. Please log in again.',
                 size: 13.0.sp,
-                color: CLR_PRIMARY,
+                color: AppColors.CLR_PRIMARY,
                 weight: FontWeight.bold,
               ),
               SizedBox(height: 40.h),

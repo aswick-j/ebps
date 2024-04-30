@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
@@ -65,8 +67,10 @@ class _noResultState extends State<noResult> {
                       Container(
                         width: widget.width ?? 100.w,
                         height: 200.h,
-                        child: SvgPicture.asset(Image[widget.ImgIndex],
-                            fit: BoxFit.fitWidth),
+                        child: SvgPicture.asset(
+                          Image[widget.ImgIndex],
+                          fit: BoxFit.fitWidth,
+                        ),
                       ),
                       Padding(
                           padding: EdgeInsets.all(20.0.r),
@@ -79,7 +83,7 @@ class _noResultState extends State<noResult> {
                                 MyAppText(
                                     data: TitlExpMsg[widget.TitleErrIndex ?? 0],
                                     size: 18.0.sp,
-                                    color: CLR_PRIMARY,
+                                    color: AppColors.CLR_PRIMARY,
                                     weight: FontWeight.bold,
                                     maxline: 2),
                               SizedBox(height: 20.h),
@@ -88,7 +92,7 @@ class _noResultState extends State<noResult> {
                                 child: MyAppText(
                                     data: ErrorMessage[widget.ErrIndex],
                                     size: 13.0.sp,
-                                    color: CLR_PRIMARY,
+                                    color: AppColors.CLR_PRIMARY,
                                     weight: FontWeight.w500,
                                     maxline: 6,
                                     textAlign: TextAlign.justify),

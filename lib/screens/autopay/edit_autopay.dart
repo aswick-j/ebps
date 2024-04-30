@@ -197,6 +197,7 @@ class _editAutopayState extends State<editAutopay> {
   Widget build(BuildContext context) {
     return LoaderOverlay(
       child: Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
             context: context,
             title: "Edit Autopay",
@@ -218,7 +219,7 @@ class _editAutopayState extends State<editAutopay> {
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(
                     Icons.info_outline,
-                    color: CLR_PRIMARY,
+                    color: AppColors.CLR_ICON,
                   ),
                 ),
               ),
@@ -323,7 +324,7 @@ class _editAutopayState extends State<editAutopay> {
                                   decoration: BoxDecoration(
                                       borderRadius:
                                           BorderRadius.circular(6.0.r + 2.r),
-                                      color: CLR_ERROR
+                                      color: AppColors.CLR_ERROR
                                       // border: Border.all(
                                       //   color: Color(0xffD1D9E8),
                                       //   width: 1.0,
@@ -353,7 +354,7 @@ class _editAutopayState extends State<editAutopay> {
                                   decoration: BoxDecoration(
                                       borderRadius:
                                           BorderRadius.circular(6.0.r + 2.r),
-                                      color: CLR_ERROR
+                                      color: AppColors.CLR_ERROR
                                       // border: Border.all(
                                       //   color: Color(0xffD1D9E8),
                                       //   width: 1.0,
@@ -383,7 +384,7 @@ class _editAutopayState extends State<editAutopay> {
                                   borderRadius:
                                       BorderRadius.circular(6.0.r + 2.r),
                                   border: Border.all(
-                                    color: Color(0xffD1D9E8),
+                                    color: AppColors.CLR_CON_BORDER,
                                     width: 1.0,
                                   ),
                                 ),
@@ -405,7 +406,7 @@ class _editAutopayState extends State<editAutopay> {
                                         style: TextStyle(
                                           fontSize: 13.sp,
                                           fontWeight: FontWeight.w500,
-                                          color: Color(0xff191919),
+                                          color: AppColors.TXT_CLR_BLACK_W,
                                         ),
                                         textAlign: TextAlign.left,
                                         maxLines: 1,
@@ -417,12 +418,13 @@ class _editAutopayState extends State<editAutopay> {
                                         style: TextStyle(
                                           fontSize: 13.sp,
                                           fontWeight: FontWeight.w400,
-                                          color: Color(0xff808080),
+                                          color: AppColors.TXT_CLR_LITE,
                                         ),
                                         textAlign: TextAlign.left,
                                       ),
                                     ),
                                     Divider(
+                                      color: AppColors.CLR_DIVIDER_LITE,
                                       height: 10.h,
                                       thickness: 1,
                                       indent: 10.w,
@@ -523,14 +525,14 @@ class _editAutopayState extends State<editAutopay> {
                                       "Maximum Limit for Auto Payment: ",
                                       style: TextStyle(
                                           fontSize: 11.sp,
-                                          color: TXT_CLR_DEFAULT,
+                                          color: AppColors.TXT_CLR_DEFAULT,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
                                       "₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}",
                                       style: TextStyle(
                                           fontSize: 11.sp,
-                                          color: CLR_GREEN,
+                                          color: AppColors.CLR_GREEN,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],

@@ -280,7 +280,7 @@ class HistoryContainer extends StatelessWidget {
                     MyAppText(
                       data: amount,
                       size: 13.0.sp,
-                      color: AppColors.CLR_ICON,
+                      color: AppColors.TXT_CLR_PRIMARY,
                       weight: FontWeight.bold,
                     ),
                   ],
@@ -301,7 +301,7 @@ class HistoryContainer extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.TXT_CLR_DEFAULT,
+                            color: AppColors.TXT_CLR_SECONDARY,
                           ),
                           textAlign: TextAlign.left,
                         ),

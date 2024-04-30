@@ -254,7 +254,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                   }),
                   icon: Icon(
                     Icons.search,
-                    color: AppColors.CLR_PRIMARY,
+                    color: AppColors.CLR_ICON,
                   ),
                 ),
                 Tooltip(
@@ -272,7 +272,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
                       Icons.info_outline,
-                      color: AppColors.CLR_PRIMARY,
+                      color: AppColors.CLR_ICON,
                     ),
                   ),
                 ),

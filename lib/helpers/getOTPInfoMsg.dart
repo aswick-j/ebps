@@ -10,12 +10,12 @@ final TextStyle normalStyle = TextStyle(
     fontWeight: FontWeight.w500);
 final TextStyle boldStyle = TextStyle(
     decoration: TextDecoration.none,
-    color: CLR_PRIMARY,
+    color: AppColors.CLR_PRIMARY,
     fontSize: 10.sp,
     fontWeight: FontWeight.bold);
 final TextStyle italicNormalStyle = TextStyle(
   fontWeight: FontWeight.bold,
-  color: CLR_PRIMARY,
+  color: AppColors.CLR_PRIMARY,
   fontStyle: FontStyle.italic,
   fontSize: 10.sp,
 );
@@ -26,6 +26,7 @@ TextSpan getOTPInfoMsg(
   switch (otpFor) {
     case "confirm-payment":
       return TextSpan(
+        style: TextStyle(color: AppColors.TXT_CLR_PRIMARY),
         children: <TextSpan>[
           TextSpan(style: normalStyle, text: "OTP to Payment "),
           TextSpan(

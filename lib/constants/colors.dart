@@ -64,7 +64,7 @@ class AppColors {
       isElite ? Color(0xff94AFD8) : Color(0xff94AFD8);
 
   static Color get CLR_SECONDARY =>
-      isElite ? Color(0xffD1D9E8) : Color(0xff4969A2);
+      isElite ? Color(0xff1B438B) : Color(0xff4969A2);
 
   static Color get CLR_GREY => isElite ? Color(0xffD1D9E8) : Color(0xFFA4B4D1);
 
@@ -72,7 +72,7 @@ class AppColors {
       isElite ? Color(0xffD1D9E8) : Color(0xff982F67);
 
   static Color get CLR_BLUESHADE =>
-      isElite ? Color(0xffD1D9E8) : Color(0xCCACC9FF);
+      isElite ? Color(0xff1B438B) : Color(0xCCACC9FF);
 
   static Color get CLR_GREENSHADE =>
       isElite ? Color(0xffD1D9E8) : Color(0xff99DDB4);
@@ -88,7 +88,7 @@ class AppColors {
   static Color get CLR_GREEN => isElite ? Color(0xff00AB44) : Color(0xff008936);
 
   static Color get CLR_ORANGE =>
-      isElite ? Color(0xffD1D9E8) : Color(0xFFCE7D1E);
+      isElite ? Color(0xFFCE7D1E) : Color(0xFFCE7D1E);
 
   static Color get CLR_BLUE_LITE =>
       isElite ? Color(0xffD1D9E8) : Color(0xFF768EB9);
@@ -110,17 +110,30 @@ class AppColors {
   static Color get TXT_CLR_DEFAULT =>
       isElite ? Color(0xff94afd8) : Color(0xff191919);
 
+  static Color get TXT_CLR_BLACK =>
+      isElite ? Color(0xCCACC9FF) : Color(0xff191919);
+  static Color get TXT_CLR_BLACK_W =>
+      isElite ? Color(0xfff3f4f7) : Color(0xff191919);
+
   static Color get TXT_CLR_PRIMARY =>
       isElite ? Color(0xffD1D9E8) : Color(0xff1B438B);
 
   static Color get TXT_CLR_LITE =>
       isElite ? Color(0xff94afd8) : Color(0xff808080);
 
+  static Color get TXT_CLR_LITE_V2 =>
+      isElite ? Color(0xffD1D9E8) : Color(0xff808080);
+
   static Color get TXT_CLR_GREY =>
       isElite ? Color(0xffD1D9E8) : Color(0xff4c4c4c);
 
+  static Color get TXT_CLR_SECONDARY =>
+      isElite ? Color(0xffD1D9E8) : Color(0xff313131);
+
 //DIVIDER
 
+  static Color get CLR_DIVIDER =>
+      isElite ? Color(0xff0B1B38) : Colors.grey.withOpacity(0.2);
   static Color get CLR_DIVIDER_LITE =>
       isElite ? Color(0xff94AFD8) : Color(0xffD1D9E8);
 
@@ -128,6 +141,8 @@ class AppColors {
 
   static Color get BTN_CLR_ACTIVE_BG =>
       isElite ? Color(0xff94AFD8) : Color(0xff1B438B);
+  static Color get BTN_CLR_ALTER_BG =>
+      isElite ? Color(0xff0E2146) : Colors.white;
   static Color get BTN_CLR_ACTIVE_TEXT =>
       isElite ? Color(0xff1B438B) : Colors.white;
 
@@ -148,6 +163,9 @@ class AppColors {
   static Color get BTN_CLR_DISABLE => isElite ? Colors.grey : Colors.grey;
   static Color get BTN_CLR_DISABLE_TEXT =>
       isElite ? Colors.white : Colors.white;
+
+  //PDF COLOR BY HEX
+  static String get CLR_PDF_BG => isElite ? " #a9bbdb" : " #a9bbdb";
 
   //INPUT FILED
 

@@ -148,6 +148,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
   Widget build(BuildContext context) {
     return LoaderOverlay(
       child: Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
           context: context,
           title: "Edit Biller",
@@ -262,7 +263,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6.0.r + 2.r),
                         border: Border.all(
-                          color: Color(0xffD1D9E8),
+                          color: AppColors.CLR_CON_BORDER,
                           width: 1.0,
                         ),
                       ),
@@ -283,7 +284,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xff191919),
+                                color: AppColors.TXT_CLR_BLACK_W,
                               ),
                               textAlign: TextAlign.left,
                             ),
@@ -292,12 +293,13 @@ class _EditBillerUIState extends State<EditBillerUI> {
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w400,
-                                color: Color(0xff808080),
+                                color: AppColors.TXT_CLR_LITE,
                               ),
                               textAlign: TextAlign.left,
                             ),
                           ),
                           Divider(
+                            color: AppColors.CLR_DIVIDER_LITE,
                             height: 10.h,
                             thickness: 1,
                             indent: 10.w,
@@ -324,30 +326,34 @@ class _EditBillerUIState extends State<EditBillerUI> {
                                                     index],
                                             autovalidateMode: AutovalidateMode
                                                 .onUserInteraction,
-                                            style:
-                                                TextStyle(color: TXT_CLR_LITE),
+                                            style: TextStyle(
+                                                color: AppColors.TXT_CLR_LITE),
                                             enabled: true,
                                             autocorrect: false,
                                             readOnly: true,
                                             enableSuggestions: false,
                                             decoration: InputDecoration(
-                                                labelStyle: const TextStyle(
-                                                    color: Color(0xffa2a2a2)),
-                                                fillColor:
-                                                    const Color(0xffD1D9E8)
-                                                        .withOpacity(0.2),
+                                                labelStyle: TextStyle(
+                                                    color:
+                                                        AppColors.TXT_CLR_LITE),
+                                                fillColor: AppColors
+                                                    .TXT_CLR_GREY
+                                                    .withOpacity(0.2),
                                                 filled: true,
-                                                hintStyle: const TextStyle(
-                                                    color: Color(0xffa2a2a2)),
+                                                hintStyle: TextStyle(
+                                                    color:
+                                                        AppColors.TXT_CLR_LITE),
                                                 enabledBorder:
-                                                    const UnderlineInputBorder(
+                                                    UnderlineInputBorder(
                                                   borderSide: BorderSide(
-                                                      color: Color(0xffa2a2a2)),
+                                                      color: AppColors
+                                                          .TXT_CLR_LITE),
                                                 ),
                                                 focusedBorder:
-                                                    const UnderlineInputBorder(
+                                                    UnderlineInputBorder(
                                                   borderSide: BorderSide(
-                                                      color: Color(0xffa2a2a2)),
+                                                      color: AppColors
+                                                          .TXT_CLR_LITE),
                                                 ),
                                                 border:
                                                     const UnderlineInputBorder(),
@@ -366,6 +372,8 @@ class _EditBillerUIState extends State<EditBillerUI> {
                                     maxLength: 20,
                                     controller: billNameController,
                                     key: _editbillnameKey,
+                                    style: TextStyle(
+                                        color: AppColors.TXT_CLR_DEFAULT),
                                     autocorrect: false,
                                     enableSuggestions: false,
                                     keyboardType: TextInputType.text,
@@ -397,20 +405,19 @@ class _EditBillerUIState extends State<EditBillerUI> {
                                           color:
                                               billNameController.text.length <=
                                                       3
-                                                  ? CLR_ERROR
-                                                  : null),
-                                      fillColor: const Color(0xffD1D9E8)
-                                          .withOpacity(0.2),
+                                                  ? AppColors.CLR_ERROR
+                                                  : AppColors.TXT_CLR_DEFAULT),
+                                      fillColor: AppColors.CLR_INPUT_FILL,
                                       filled: true,
-                                      labelStyle: const TextStyle(
-                                          color: Color(0xff1b438b)),
-                                      enabledBorder: const UnderlineInputBorder(
+                                      labelStyle: TextStyle(
+                                          color: AppColors.TXT_CLR_PRIMARY),
+                                      enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Color(0xff1B438B)),
+                                            color: AppColors.TXT_CLR_PRIMARY),
                                       ),
-                                      focusedBorder: const UnderlineInputBorder(
+                                      focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Color(0xff1B438B)),
+                                            color: AppColors.TXT_CLR_PRIMARY),
                                       ),
                                       border: const UnderlineInputBorder(),
                                       labelText: 'Bill Name (Nick Name)',
@@ -439,9 +446,11 @@ class _EditBillerUIState extends State<EditBillerUI> {
           ),
         ),
         bottomSheet: Container(
-          decoration: const BoxDecoration(
-              border:
-                  Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+          decoration: BoxDecoration(
+              color: AppColors.CLR_BACKGROUND,
+              border: Border(
+                  top: BorderSide(
+                      color: AppColors.CLR_CON_BORDER_LITE, width: 1))),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
             child: Row(
@@ -453,9 +462,9 @@ class _EditBillerUIState extends State<EditBillerUI> {
                         goBack(context);
                       },
                       buttonText: "Cancel",
-                      buttonTxtColor: CLR_PRIMARY,
-                      buttonBorderColor: Colors.transparent,
-                      buttonColor: BTN_CLR_ACTIVE,
+                      buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                      buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
+                      buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER_C,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,
                       buttonTextSize: 14.sp,
@@ -474,13 +483,17 @@ class _EditBillerUIState extends State<EditBillerUI> {
                         }
                       },
                       buttonText: "Update",
-                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonTxtColor: isButtonActive &&
+                              isValidBillName &&
+                              billNameController.text.length > 3
+                          ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                          : AppColors.BTN_CLR_DISABLE_TEXT,
                       buttonBorderColor: Colors.transparent,
                       buttonColor: isButtonActive &&
                               isValidBillName &&
                               billNameController.text.length > 3
-                          ? CLR_PRIMARY
-                          : Colors.grey,
+                          ? AppColors.BTN_CLR_ACTIVE_ALTER
+                          : AppColors.BTN_CLR_DISABLE,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,
                       buttonTextSize: 14.sp,

@@ -201,7 +201,7 @@ class _HomeScreenUIState extends State<HomeScreenUI>
                     height: 30.h,
                     child: Icon(
                       Icons.change_circle_outlined,
-                      color: AppColors.CLR_BACKGROUND,
+                      color: Colors.white,
                     ),
                   ))),
           InkWell(
@@ -211,7 +211,7 @@ class _HomeScreenUIState extends State<HomeScreenUI>
                   // width: 40.w,
                   // height: 40.h,
                   decoration: ShapeDecoration(
-                    color: CLR_SECONDARY,
+                    color: AppColors.CLR_SECONDARY,
                     shape: CircleBorder(),
                   ),
                   child: Container(

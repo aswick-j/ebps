@@ -311,7 +311,7 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
-                            color: Color(0xff808080),
+                            color: AppColors.TXT_CLR_LITE,
                           ),
                           textAlign: TextAlign.left,
                         ),
@@ -323,7 +323,7 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                           style: TextStyle(
                             fontSize: 24.sp,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xff1b438b),
+                            color: AppColors.TXT_CLR_PRIMARY,
                           ),
                           textAlign: TextAlign.left,
                         ),
@@ -376,7 +376,7 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xff1b438b),
+                                color: AppColors.TXT_CLR_PRIMARY,
                               ),
                               textAlign: TextAlign.center,
                             ),

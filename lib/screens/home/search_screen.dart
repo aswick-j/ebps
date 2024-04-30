@@ -79,6 +79,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
             context: context,
             title: "Search",
@@ -151,6 +152,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                     child: AnimatedTextField(
+                      hintTextStyle: TextStyle(color: AppColors.TXT_CLR_LITE),
                       onChanged: (value) => {
                         _pageNumber = 1,
                         // _searchController.text = value,
@@ -174,7 +176,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       keyboardType: TextInputType.text,
                       controller: _searchController,
                       decoration: InputDecoration(
-                        fillColor: CLR_PRIMARY_LITE.withOpacity(0.2),
+                        fillColor: AppColors.CLR_INPUT_FILL,
                         filled: true,
                         isDense: true,
                         contentPadding:
@@ -202,7 +204,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6.0.r + 2.r),
                       border: Border.all(
-                        color: Color(0xffD1D9E8),
+                        color: AppColors.CLR_CON_BORDER,
                         width: 1.0,
                       ),
                     ),
@@ -304,7 +306,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           style: TextStyle(
                                             fontSize: 13.sp,
                                             fontWeight: FontWeight.w400,
-                                            color: const Color(0xff4c4c4c),
+                                            color: AppColors.TXT_CLR_GREY,
                                           ),
                                           textAlign: TextAlign.left,
                                         )),

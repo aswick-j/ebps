@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
@@ -263,6 +265,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                       onTap: () {
                         showModalBottomSheet(
                             context: context,
+                            backgroundColor: AppColors.CLR_BACKGROUND,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.vertical(
                                 top: Radius.circular(16.0.r),
@@ -309,8 +312,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                         fontSize: 14.sp,
                                                         fontWeight:
                                                             FontWeight.bold,
-                                                        color:
-                                                            Color(0xff191919),
+                                                        color: AppColors
+                                                            .TXT_CLR_BLACK_W,
                                                         overflow: TextOverflow
                                                             .ellipsis),
                                                     textAlign: TextAlign.left,
@@ -327,7 +330,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                   style: TextStyle(
                                                     fontSize: 12.sp,
                                                     fontWeight: FontWeight.w400,
-                                                    color: Color(0xff808080),
+                                                    color:
+                                                        AppColors.TXT_CLR_LITE,
                                                   ),
                                                 ),
                                               ],
@@ -593,7 +597,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                       color: Colors.grey.withOpacity(0.1),
                                     ),
                                   ),
-                                  SizedBox(
+SizedBox(
                                     height: 10.h,
                                   ),
                                   Column(
@@ -994,6 +998,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                             onPressed: () {
                                               showModalBottomSheet(
                                                   context: context,
+                                                  backgroundColor:
+                                                      AppColors.CLR_BACKGROUND,
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.vertical(
@@ -1021,8 +1027,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                               Icon(
                                                                 Icons
                                                                     .delete_sweep_outlined,
-                                                                color: Color(
-                                                                    0xff1b438b),
+                                                                color: AppColors
+                                                                    .CLR_ICON,
                                                               ),
                                                               SizedBox(
                                                                   width: 20.w),
@@ -1035,8 +1041,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600,
-                                                                  color: Color(
-                                                                      0xff1b438b),
+                                                                  color: AppColors
+                                                                      .CLR_PRIMARY,
                                                                 ),
                                                                 textAlign:
                                                                     TextAlign
@@ -1088,8 +1094,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w400,
-                                                                color: Color(
-                                                                    0xff000000),
+                                                                color: AppColors
+                                                                    .TXT_CLR_DEFAULT,
                                                               ),
                                                               textAlign:
                                                                   TextAlign
@@ -1119,13 +1125,14 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                         },
                                                                         buttonText:
                                                                             "Cancel",
-                                                                        buttonTxtColor:
-                                                                            CLR_PRIMARY,
+                                                                        buttonTxtColor: AppColors
+                                                                            .BTN_CLR_ACTIVE_ALTER_TEXT_C,
                                                                         buttonBorderColor:
-                                                                            Colors
-                                                                                .transparent,
+                                                                            AppColors
+                                                                                .BTN_CLR_ACTIVE_BORDER,
                                                                         buttonColor:
-                                                                            BTN_CLR_ACTIVE,
+                                                                            AppColors
+                                                                                .BTN_CLR_ACTIVE_ALTER_C,
                                                                         buttonSizeX: 10
                                                                             .h,
                                                                         buttonSizeY: 40
@@ -1160,13 +1167,14 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                         },
                                                                         buttonText:
                                                                             "Delete",
-                                                                        buttonTxtColor:
-                                                                            BTN_CLR_ACTIVE,
+                                                                        buttonTxtColor: AppColors
+                                                                            .BTN_CLR_ACTIVE_ALTER_TEXT,
                                                                         buttonBorderColor:
                                                                             Colors
                                                                                 .transparent,
                                                                         buttonColor:
-                                                                            CLR_PRIMARY,
+                                                                            AppColors
+                                                                                .BTN_CLR_ACTIVE_ALTER,
                                                                         buttonSizeX: 10
                                                                             .h,
                                                                         buttonSizeY: 40
@@ -1247,10 +1255,12 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                               goBack(context);
                                             },
                                             buttonText: "Cancel",
-                                            buttonTxtColor: CLR_PRIMARY,
+                                            buttonTxtColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_TEXT,
                                             buttonBorderColor:
-                                                Color(0xff768EB9),
-                                            buttonColor: widget.buttonColor,
+                                                AppColors.BTN_CLR_ACTIVE_BORDER,
+                                            buttonColor:
+                                                AppColors.BTN_CLR_ACTIVE_ALTER,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 37.w,
                                             buttonTextSize: 14.sp,
@@ -1351,53 +1361,61 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                             builder: (BuildContext ctx) {
                                               return WillPopScope(
                                                 onWillPop: () async => false,
-                                                child: AlertDialog(
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12.r),
-                                                  ),
-                                                  content: AnimatedDialog(
-                                                      showImgIcon: false,
-                                                      title: getAllAutopayList(widget
-                                                                      .savedBillersData
-                                                                      .cUSTOMERBILLID)!
-                                                                  .pAYMENTDATE ==
-                                                              DateTime.now()
-                                                                  .day
-                                                                  .toString()
-                                                          ? " We are unable to edit your autopay as the autopay is scheduled for today"
-                                                          : "We can't edit your Autopay because it's currently paused.",
-                                                      subTitle: "",
-                                                      child: Icon(
-                                                        Icons.close,
-                                                        color: Colors.white,
-                                                      ),
-                                                      showSub: false,
-                                                      shapeColor: CLR_ERROR),
-                                                  actions: <Widget>[
-                                                    Align(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: MyAppButton(
-                                                          onPressed: () {
-                                                            goBack(ctx);
-                                                          },
-                                                          buttonText: "Okay",
-                                                          buttonTxtColor:
-                                                              BTN_CLR_ACTIVE,
-                                                          buttonBorderColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          buttonColor:
-                                                              CLR_PRIMARY,
-                                                          buttonSizeX: 10,
-                                                          buttonSizeY: 40,
-                                                          buttonTextSize: 14,
-                                                          buttonTextWeight:
-                                                              FontWeight.w500),
+                                                child: BackdropFilter(
+                                                  filter: ImageFilter.blur(
+                                                      sigmaX: 2, sigmaY: 2),
+                                                  child: AlertDialog(
+                                                    backgroundColor: AppColors
+                                                        .CLR_BACKGROUND,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.r),
                                                     ),
-                                                  ],
+                                                    content: AnimatedDialog(
+                                                        showImgIcon: false,
+                                                        title: getAllAutopayList(widget
+                                                                        .savedBillersData
+                                                                        .cUSTOMERBILLID)!
+                                                                    .pAYMENTDATE ==
+                                                                DateTime.now()
+                                                                    .day
+                                                                    .toString()
+                                                            ? " We are unable to edit your autopay as the autopay is scheduled for today"
+                                                            : "We can't edit your Autopay because it's currently paused.",
+                                                        subTitle: "",
+                                                        child: Icon(
+                                                          Icons.close,
+                                                          color: Colors.white,
+                                                        ),
+                                                        showSub: false,
+                                                        shapeColor: CLR_ERROR),
+                                                    actions: <Widget>[
+                                                      Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: MyAppButton(
+                                                            onPressed: () {
+                                                              goBack(ctx);
+                                                            },
+                                                            buttonText: "Okay",
+                                                            buttonTxtColor:
+                                                                BTN_CLR_ACTIVE,
+                                                            buttonBorderColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            buttonColor:
+                                                                CLR_PRIMARY,
+                                                            buttonSizeX: 10,
+                                                            buttonSizeY: 40,
+                                                            buttonTextSize: 14,
+                                                            buttonTextWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               );
                                             },
@@ -1448,6 +1466,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                   showModalBottomSheet(
                                       isScrollControlled: true,
                                       context: context,
+                                      backgroundColor: AppColors.CLR_BACKGROUND,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.vertical(
                                           top: Radius.circular(16.0.r),
@@ -1482,7 +1501,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                   style: TextStyle(
                                                     fontSize: 14.sp,
                                                     fontWeight: FontWeight.bold,
-                                                    color: Color(0xff191919),
+                                                    color: AppColors
+                                                        .TXT_CLR_BLACK_W,
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                   ),
@@ -1502,7 +1522,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                       fontSize: 12.sp,
                                                       fontWeight:
                                                           FontWeight.w400,
-                                                      color: Color(0xff808080),
+                                                      color: AppColors
+                                                          .TXT_CLR_LITE,
                                                     ),
                                                   ),
                                                   // SizedBox(
@@ -1698,12 +1719,12 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                           goBack(context);
                                                         },
                                                         buttonText: "Cancel",
-                                                        buttonTxtColor:
-                                                            CLR_PRIMARY,
-                                                        buttonBorderColor:
-                                                            Colors.transparent,
-                                                        buttonColor:
-                                                            BTN_CLR_ACTIVE,
+                                                        buttonTxtColor: AppColors
+                                                            .BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                                                        buttonBorderColor: AppColors
+                                                            .BTN_CLR_ACTIVE_BORDER,
+                                                        buttonColor: AppColors
+                                                            .BTN_CLR_ACTIVE_ALTER_C,
                                                         buttonSizeX: 10.h,
                                                         buttonSizeY: 40.w,
                                                         buttonTextSize: 14.sp,
@@ -1778,9 +1799,9 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                                 goBack(ctx);
                                                                               },
                                                                               buttonText: "Okay",
-                                                                              buttonTxtColor: BTN_CLR_ACTIVE,
+                                                                              buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                                                                               buttonBorderColor: Colors.transparent,
-                                                                              buttonColor: CLR_PRIMARY,
+                                                                              buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                                                                               buttonSizeX: 10,
                                                                               buttonSizeY: 40,
                                                                               buttonTextSize: 14,
@@ -1822,13 +1843,13 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                           },
                                                           buttonText:
                                                               "Edit Autopay",
-                                                          buttonTxtColor:
-                                                              BTN_CLR_ACTIVE,
+                                                          buttonTxtColor: AppColors
+                                                              .BTN_CLR_ACTIVE_ALTER_TEXT,
                                                           buttonBorderColor:
                                                               Colors
                                                                   .transparent,
-                                                          buttonColor:
-                                                              CLR_PRIMARY,
+                                                          buttonColor: AppColors
+                                                              .BTN_CLR_ACTIVE_ALTER,
                                                           buttonSizeX: 10.h,
                                                           buttonSizeY: 40.w,
                                                           buttonTextSize: 14.sp,
@@ -2065,7 +2086,7 @@ Widget ModalText(
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.w400,
-            color: Color(0xff808080),
+            color: AppColors.TXT_CLR_LITE,
           ),
           textAlign: TextAlign.left,
         ),
@@ -2074,7 +2095,7 @@ Widget ModalText(
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.bold,
-            color: Color(0xff1b438b),
+            color: AppColors.TXT_CLR_PRIMARY,
           ),
           textAlign: TextAlign.left,
         )
@@ -2100,7 +2121,11 @@ Widget ModalMenu(
           children: [
             Container(
               width: 20.w,
-              child: SvgPicture.asset(iconPath!),
+              child: SvgPicture.asset(
+                iconPath!,
+                colorFilter:
+                    ColorFilter.mode(AppColors.CLR_ICON, BlendMode.srcIn),
+              ),
             ),
             // SvgPicture.asset(iconPath!,
             //     height: 15.h, width: 15.w, fit: BoxFit.contain),
@@ -2109,7 +2134,7 @@ Widget ModalMenu(
             ),
             Text(
               title.toString(),
-              style: TextStyle(color: CLR_PRIMARY, fontSize: 14.sp),
+              style: TextStyle(color: AppColors.CLR_PRIMARY, fontSize: 14.sp),
             )
           ],
         ),
