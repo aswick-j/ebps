@@ -204,6 +204,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
   Widget build(BuildContext context) {
     return LoaderOverlay(
       child: Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
           context: context,
           title: 'Raise a Complaint',
@@ -259,7 +260,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6.0.r + 2.r),
                         border: Border.all(
-                          color: Color(0xffD1D9E8),
+                          color: AppColors.CLR_CON_BORDER,
                           width: 1.0,
                         ),
                       ),
@@ -274,7 +275,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                 Container(
                                     width: double.infinity,
                                     height: 80.h,
-                                    color: Colors.white,
+                                    // color: Colors.white,
                                     child: ListView(
                                       primary: false,
                                       physics: NeverScrollableScrollPhysics(),
@@ -311,8 +312,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                                           fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.w400,
-                                                          color:
-                                                              Color(0xff808080),
+                                                          color: AppColors
+                                                              .TXT_CLR_LITE,
                                                         ),
                                                         maxLines: 3,
                                                         textAlign:
@@ -337,8 +338,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                                           fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.w500,
-                                                          color:
-                                                              Color(0xff1b438b),
+                                                          color: AppColors
+                                                              .TXT_CLR_PRIMARY,
                                                         ),
                                                         maxLines: 3,
                                                         textAlign:
@@ -375,8 +376,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                                           fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.w400,
-                                                          color:
-                                                              Color(0xff808080),
+                                                          color: AppColors
+                                                              .TXT_CLR_LITE,
                                                         ),
                                                         maxLines: 3,
                                                         textAlign:
@@ -397,8 +398,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                                             fontSize: 11.sp,
                                                             fontWeight:
                                                                 FontWeight.w500,
-                                                            color: Color(
-                                                                0xff1b438b),
+                                                            color: AppColors
+                                                                .TXT_CLR_PRIMARY,
                                                           ),
                                                           maxLines: 3,
                                                           textAlign:
@@ -414,6 +415,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 24.0.w, vertical: 16.w),
                                   child: DropdownButtonFormField<String>(
+                                    dropdownColor:
+                                        AppColors.BTN_CLR_ACTIVE_TEXT,
                                     isExpanded: true,
                                     isDense: true,
                                     decoration: InputDecoration(
@@ -422,22 +425,27 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                           Radius.circular(12.0.r),
                                         ),
                                       ),
-                                      fillColor:
-                                          Color(0xffD1D9E8).withOpacity(0.2),
-                                      enabledBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(color: CLR_GREY),
+                                      fillColor: AppColors.CLR_INPUT_FILL,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: AppColors.CLR_GREY),
                                       ),
-                                      focusedBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(color: CLR_GREY),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: AppColors.CLR_GREY),
                                       ),
                                       contentPadding: EdgeInsets.symmetric(
                                           vertical: 10.0.h, horizontal: 10.w),
                                     ),
-                                    hint: const Text('Reason'),
+                                    hint: Text(
+                                      'Reason',
+                                      style: TextStyle(
+                                          color: AppColors.TXT_CLR_DEFAULT),
+                                    ),
                                     onChanged: (String? newValue) {},
-                                    icon: const Icon(
+                                    icon: Icon(
                                       Icons.keyboard_arrow_down,
-                                      color: Colors.grey,
+                                      color: AppColors.CLR_GREY,
                                     ),
                                     items: complaint_reasons!.map<
                                             DropdownMenuItem<String>>(
@@ -447,7 +455,9 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                             value.cOMPLAINTREASONSID.toString(),
                                         child: Text(
                                           value.cOMPLAINTREASON.toString(),
-                                          style: TextStyle(fontSize: 12.sp),
+                                          style: TextStyle(
+                                              fontSize: 12.sp,
+                                              color: AppColors.TXT_CLR_DEFAULT),
                                         ),
                                         onTap: () {
                                           setState(() {
@@ -492,8 +502,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                             Radius.circular(12.0.r),
                                           ),
                                         ),
-                                        fillColor:
-                                            Color(0xffD1D9E8).withOpacity(0.2),
+                                        fillColor: AppColors.CLR_INPUT_FILL,
                                         enabledBorder: const OutlineInputBorder(
                                           borderSide:
                                               BorderSide(color: CLR_GREY),
@@ -502,15 +511,17 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                           borderSide:
                                               BorderSide(color: CLR_GREY),
                                         ),
+                                        counterStyle: TextStyle(
+                                            color: AppColors.TXT_CLR_DEFAULT),
                                         hintStyle: TextStyle(
                                           fontSize: 12.sp,
-                                          color: TXT_CLR_PRIMARY,
+                                          color: AppColors.TXT_CLR_PRIMARY,
                                         ),
                                         alignLabelWithHint: true,
                                         floatingLabelBehavior:
                                             FloatingLabelBehavior.always,
                                         labelStyle: TextStyle(
-                                            color: const Color(0xFF424242))),
+                                            color: AppColors.TXT_CLR_GREY)),
                                   ),
                                 ),
                               ],
@@ -527,8 +538,10 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
             })),
         bottomSheet: Container(
           decoration: BoxDecoration(
-              border:
-                  Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+              color: AppColors.CLR_BACKGROUND,
+              border: Border(
+                  top: BorderSide(
+                      color: AppColors.CLR_CON_BORDER_LITE, width: 1))),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
             child: Row(
@@ -545,13 +558,17 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                         }
                       },
                       buttonText: "Submit",
-                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonTxtColor: cmp_reason != null &&
+                              cmp_reasonID != null &&
+                              !cmpNotValid
+                          ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                          : AppColors.BTN_CLR_DISABLE_TEXT,
                       buttonBorderColor: Colors.transparent,
                       buttonColor: cmp_reason != null &&
                               cmp_reasonID != null &&
                               !cmpNotValid
-                          ? CLR_PRIMARY
-                          : Colors.grey,
+                          ? AppColors.BTN_CLR_ACTIVE_ALTER
+                          : AppColors.BTN_CLR_DISABLE,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,
                       buttonTextSize: 14.sp,

@@ -138,7 +138,8 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                             content: Text('$title copied to clipboard')));
                       });
                     },
-                    child: Icon(Icons.copy, color: Color(0xff1b438b), size: 20))
+                    child: Icon(Icons.copy,
+                        color: AppColors.CLR_PRIMARY, size: 20))
             ],
           )
         ],
@@ -805,8 +806,10 @@ class _HistoryDetailsState extends State<HistoryDetails> {
             ? null
             : Container(
                 decoration: BoxDecoration(
+                    color: AppColors.CLR_BACKGROUND,
                     border: Border(
-                        top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+                        top: BorderSide(
+                            color: AppColors.CLR_CON_BORDER_LITE, width: 1))),
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
@@ -828,9 +831,9 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                               });
                             },
                             buttonText: "Raise a Complaint",
-                            buttonTxtColor: BTN_CLR_ACTIVE,
+                            buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                             buttonBorderColor: Colors.transparent,
-                            buttonColor: CLR_PRIMARY,
+                            buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                             buttonSizeX: 10.h,
                             buttonSizeY: 40.w,
                             buttonTextSize: 14.sp,

@@ -168,6 +168,7 @@ class _BillerListState extends State<BillerList> {
                   keyboardType: TextInputType.text,
                   textAlign: TextAlign.left,
                   controller: _searchController,
+                  style: TextStyle(color: AppColors.TXT_CLR_LITE),
                   decoration: InputDecoration(
                     fillColor: AppColors.CLR_INPUT_FILL,
                     filled: true,

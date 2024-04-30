@@ -186,6 +186,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
             ? 'My Billers'
             : TextFormField(
                 autofocus: true,
+                style:TextStyle(color:AppColors.TXT_CLR_LITE),
                 controller: searchController,
                 onChanged: (searchTxt) {
                   List<SavedBillersData>? searchData = [];
@@ -226,7 +227,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                     ),
                   ),
                   hintText: "Search a Biller",
-                  hintStyle: TextStyle(color: CLR_GREY),
+                  hintStyle: TextStyle(color: AppColors.TXT_CLR_LITE),
                   border: InputBorder.none,
                   focusedBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,

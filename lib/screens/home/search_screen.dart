@@ -175,12 +175,14 @@ class _SearchScreenState extends State<SearchScreen> {
                       ],
                       keyboardType: TextInputType.text,
                       controller: _searchController,
+                      style: TextStyle(color: AppColors.TXT_CLR_LITE),
                       decoration: InputDecoration(
                         fillColor: AppColors.CLR_INPUT_FILL,
                         filled: true,
                         isDense: true,
                         contentPadding:
                             EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 0),
+                        hintStyle: TextStyle(color: AppColors.TXT_CLR_LITE),
                         hintText: 'Search by Biller',
                         suffixIcon: IconButton(
                           icon: Icon(Icons.search),
