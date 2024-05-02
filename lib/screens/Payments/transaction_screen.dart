@@ -114,14 +114,14 @@ class _TransactionScreenState extends State<TransactionScreen> {
           Row(
             children: [
               if (showLogo == true)
-                Image.asset(LOGO_EQUITAS_E, height: 40.h, width: 40.w),
+                Image.asset(LOGO_EQUITAS_PNG, height: 40.h, width: 40.w),
               if (showLogo == true) SizedBox(width: 10.w),
               Text(
                 subTitle,
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.CLR_PRIMARY,
+                  color: AppColors.TXT_CLR_PRIMARY,
                 ),
                 textAlign: TextAlign.left,
               ),
@@ -135,7 +135,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             content: Text('$title copied to clipboard')));
                       });
                     },
-                    child: Icon(Icons.copy, color: Color(0xff1b438b), size: 20))
+                    child: Icon(Icons.copy, color: AppColors.CLR_ICON, size: 20))
             ],
           )
         ],
@@ -179,7 +179,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6.0.r + 2.r),
                     border: Border.all(
-                      color: Color(0xffD1D9E8),
+                      color: AppColors.CLR_CON_BORDER,
                       width: 1.0,
                     ),
                   ),
@@ -253,7 +253,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                           style: TextStyle(
                                             fontSize: 20.sp,
                                             fontWeight: FontWeight.w600,
-                                            color: Color(0xff1b438b),
+                                            color: AppColors.CLR_PRIMARY,
                                             height: 33 / 20,
                                           ),
                                           textAlign: TextAlign.left,
@@ -305,7 +305,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                               }
                                             },
                                             icon: Icon(Icons.share_outlined,
-                                                color: CLR_PRIMARY)),
+                                                color: AppColors.CLR_ICON)),
                                         IconButton(
                                             onPressed: () {
                                               Printing.layoutPdf(
@@ -377,7 +377,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                             },
                                             icon: Icon(
                                                 Icons.file_download_outlined,
-                                                color: CLR_PRIMARY)),
+                                                color: AppColors.CLR_ICON)),
                                       ],
                                     ),
                                   ],
@@ -400,7 +400,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                     style: TextStyle(
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: Color(0xff808080),
+                                      color: AppColors.TXT_CLR_LITE,
                                     ),
                                     textAlign: TextAlign.left,
                                   ),

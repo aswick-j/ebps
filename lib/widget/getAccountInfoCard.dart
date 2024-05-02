@@ -42,7 +42,7 @@ class AccountInfoCard extends StatelessWidget {
                 color: isSelected == index && AccErr == true
                     ? CLR_ERROR
                     : isSelected == index
-                        ? Colors.green
+                        ? AppColors.CLR_GREEN
                         : AppColors.CLR_CON_BORDER,
                 width: 1.0,
               ),
@@ -60,7 +60,7 @@ class AccountInfoCard extends StatelessWidget {
                       color: isSelected == index && AccErr == true
                           ? AppColors.CLR_ERROR
                           : isSelected == index
-                              ? Colors.green
+                              ? AppColors.CLR_GREEN
                               : AppColors.TXT_CLR_GREY,
                     ),
                     textAlign: TextAlign.center,
@@ -74,7 +74,7 @@ class AccountInfoCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 10.0.sp,
                         fontWeight: FontWeight.w400,
-                        color: AppColors.TXT_CLR_GREY,
+                        color: AppColors.TXT_CLR_LITE_V3,
                       ),
                       textAlign: TextAlign.center,
                     ),

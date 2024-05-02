@@ -113,7 +113,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
           Row(
             children: [
               if (showLogo == true)
-                Image.asset(LOGO_EQUITAS_E, height: 40.h, width: 40.w),
+                Image.asset(LOGO_EQUITAS_PNG, height: 40.h, width: 40.w),
               if (showLogo == true) SizedBox(width: 10.w),
               SizedBox(
                 width: showLogo == true || clipBoard != false ? null : 250.w,
@@ -135,11 +135,17 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                       Clipboard.setData(ClipboardData(text: subTitle))
                           .then((_) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('$title copied to clipboard')));
+                          content: Text(
+                            '$title copied to clipboard',
+                            style:
+                                TextStyle(color: AppColors.CLR_BACKGROUND,fontWeight: FontWeight.bold),
+                          ),
+                          backgroundColor: AppColors.CLR_PRIMARY,
+                        ));
                       });
                     },
-                    child: Icon(Icons.copy,
-                        color: AppColors.CLR_PRIMARY, size: 20))
+                    child:
+                        Icon(Icons.copy, color: AppColors.CLR_ICON, size: 20))
             ],
           )
         ],
@@ -425,7 +431,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                 style: TextStyle(
                                                   fontSize: 20.sp,
                                                   fontWeight: FontWeight.w600,
-                                                  color: AppColors.CLR_ICON,
+                                                  color: AppColors.CLR_PRIMARY,
                                                   height: 33 / 20,
                                                 ),
                                                 textAlign: TextAlign.left,
@@ -485,8 +491,8 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                   },
                                                   icon: Icon(
                                                       Icons.share_outlined,
-                                                      color: AppColors
-                                                          .CLR_PRIMARY)),
+                                                      color:
+                                                          AppColors.CLR_ICON)),
                                               IconButton(
                                                   onPressed: () {
                                                     Printing.layoutPdf(
@@ -547,8 +553,8 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                   icon: Icon(
                                                       Icons
                                                           .file_download_outlined,
-                                                      color: AppColors
-                                                          .CLR_PRIMARY)),
+                                                      color:
+                                                          AppColors.CLR_ICON)),
                                             ],
                                           ),
                                         ],

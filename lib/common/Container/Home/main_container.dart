@@ -225,7 +225,7 @@ class _MainContainerState extends State<MainContainer> {
                       if (checkDateExpiry(widget.dueDate.toString()))
                         Container(
                             decoration: BoxDecoration(
-                                color: Colors.red.shade100,
+                                // color: Colors.red.shade100,
                                 border: Border.all(
                                   color: Colors.red.shade400,
                                 ),
@@ -270,6 +270,7 @@ class _MainContainerState extends State<MainContainer> {
                     barrierDismissible: false,
                     builder: (BuildContext context) {
                       return Dialog(
+                        backgroundColor: AppColors.CLR_BACKGROUND,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0.r)),
                         child: Container(
@@ -287,7 +288,7 @@ class _MainContainerState extends State<MainContainer> {
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
-                                    color: Color(0xff000000),
+                                    color: AppColors.TXT_CLR_BLACK,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),

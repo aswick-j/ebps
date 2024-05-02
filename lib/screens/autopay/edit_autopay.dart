@@ -549,7 +549,7 @@ class _editAutopayState extends State<editAutopay> {
                                   borderRadius:
                                       BorderRadius.circular(6.0.r + 2.r),
                                   border: Border.all(
-                                    color: Color(0xffD1D9E8),
+                                    color: AppColors.CLR_CON_BORDER,
                                     width: 1.0,
                                   ),
                                 ),
@@ -569,16 +569,29 @@ class _editAutopayState extends State<editAutopay> {
                                                 maxAmountError = false;
                                               });
                                             },
-                                            activeColor: TXT_CLR_PRIMARY,
+                                            activeColor:
+                                                AppColors.TXT_CLR_PRIMARY,
                                             controlAffinity:
                                                 ListTileControlAffinity
                                                     .trailing,
+                                            fillColor: MaterialStateProperty
+                                                .resolveWith(
+                                              (states) {
+                                                if (states.contains(
+                                                    MaterialState.selected)) {
+                                                  return AppColors
+                                                      .TXT_CLR_PRIMARY;
+                                                }
+                                                return AppColors.TXT_CLR_LITE;
+                                              },
+                                            ),
                                             title: Text(
                                               "Default Limit",
                                               style: TextStyle(
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.w500,
-                                                color: Color(0xff313131),
+                                                color:
+                                                    AppColors.TXT_CLR_SECONDARY,
                                               ),
                                               textAlign: TextAlign.center,
                                             ),
@@ -588,7 +601,19 @@ class _editAutopayState extends State<editAutopay> {
                                           child: RadioListTile(
                                             value: 0,
                                             groupValue: limitGroupRadio,
-                                            activeColor: TXT_CLR_PRIMARY,
+                                            activeColor:
+                                                AppColors.TXT_CLR_PRIMARY,
+                                            fillColor: MaterialStateProperty
+                                                .resolveWith(
+                                              (states) {
+                                                if (states.contains(
+                                                    MaterialState.selected)) {
+                                                  return AppColors
+                                                      .TXT_CLR_PRIMARY;
+                                                }
+                                                return AppColors.TXT_CLR_LITE;
+                                              },
+                                            ),
                                             onChanged: (val) {
                                               MaxiFocusNode.requestFocus();
 
@@ -648,7 +673,8 @@ class _editAutopayState extends State<editAutopay> {
                                               style: TextStyle(
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.w500,
-                                                color: Color(0xff313131),
+                                                color:
+                                                    AppColors.TXT_CLR_SECONDARY,
                                               ),
                                               textAlign: TextAlign.center,
                                             ),
@@ -671,8 +697,8 @@ class _editAutopayState extends State<editAutopay> {
                                         keyboardType: TextInputType.number,
                                         style: TextStyle(
                                             color: limitGroupRadio == 1
-                                                ? TXT_CLR_LITE
-                                                : null),
+                                                ? AppColors.TXT_CLR_LITE
+                                                : AppColors.TXT_CLR_BLACK),
 
                                         inputFormatters: [
                                           // getInputAmountFormatter(),
@@ -722,23 +748,29 @@ class _editAutopayState extends State<editAutopay> {
                                           }
                                         },
                                         decoration: InputDecoration(
-                                            fillColor: const Color(0xffD1D9E8)
-                                                .withOpacity(0.2),
+                                            fillColor: AppColors.CLR_INPUT_FILL,
                                             filled: true,
+                                            prefixStyle: TextStyle(
+                                                color:
+                                                    AppColors.TXT_CLR_DEFAULT),
                                             labelStyle: TextStyle(
                                                 color: limitGroupRadio == 1
-                                                    ? TXT_CLR_LITE
-                                                    : TXT_CLR_PRIMARY),
+                                                    ? AppColors.TXT_CLR_LITE
+                                                    : AppColors
+                                                        .TXT_CLR_PRIMARY),
                                             enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: limitGroupRadio == 1
-                                                      ? TXT_CLR_LITE
-                                                      : Color(0xff1B438B)),
+                                                      ? AppColors.TXT_CLR_LITE
+                                                      : AppColors
+                                                          .TXT_CLR_PRIMARY),
                                             ),
-                                            focusedBorder:
-                                                const UnderlineInputBorder(
+                                            focusedBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
-                                                  color: Color(0xff1B438B)),
+                                                  color: limitGroupRadio == 1
+                                                      ? AppColors.TXT_CLR_LITE
+                                                      : AppColors
+                                                          .TXT_CLR_PRIMARY),
                                             ),
                                             border:
                                                 const UnderlineInputBorder(),
@@ -763,7 +795,7 @@ class _editAutopayState extends State<editAutopay> {
                                               style: TextStyle(
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.w600,
-                                                color: CLR_ERROR,
+                                                color: AppColors.CLR_ERROR,
                                               ),
                                             ),
                                           ),
@@ -787,7 +819,7 @@ class _editAutopayState extends State<editAutopay> {
                                               style: TextStyle(
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.w600,
-                                                color: CLR_ERROR,
+                                                color: AppColors.CLR_ERROR,
                                               ),
                                             ),
                                           ),
@@ -805,7 +837,7 @@ class _editAutopayState extends State<editAutopay> {
                                               style: TextStyle(
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.w600,
-                                                color: CLR_ORANGE,
+                                                color: AppColors.CLR_ORANGE,
                                               ),
                                             ),
                                           ),
@@ -840,7 +872,9 @@ class _editAutopayState extends State<editAutopay> {
                                         //   FilteringTextInputFormatter.allow(
                                         //       RegExp(r'^[a-z0-9A-Z ]*'))
                                         // ],
-                                        style: TextStyle(fontSize: 13.sp),
+                                        style: TextStyle(
+                                            fontSize: 13.sp,
+                                            color: AppColors.TXT_CLR_BLACK),
 
                                         onChanged: (val) {},
                                         onTap: () {
@@ -863,21 +897,21 @@ class _editAutopayState extends State<editAutopay> {
                                         },
                                         validator: (inputValue) {},
                                         decoration: InputDecoration(
-                                            fillColor: const Color(0xffD1D9E8)
-                                                .withOpacity(0.2),
+                                            fillColor: AppColors.CLR_INPUT_FILL,
                                             filled: true,
                                             labelStyle: TextStyle(
                                                 fontSize: 15.sp,
-                                                color: Color(0xff1b438b)),
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
+                                                color:
+                                                    AppColors.TXT_CLR_PRIMARY),
+                                            enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
-                                                  color: Color(0xff1B438B)),
+                                                  color: AppColors
+                                                      .TXT_CLR_PRIMARY),
                                             ),
-                                            focusedBorder:
-                                                const UnderlineInputBorder(
+                                            focusedBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
-                                                  color: Color(0xff1B438B)),
+                                                  color: AppColors
+                                                      .TXT_CLR_PRIMARY),
                                             ),
                                             border:
                                                 const UnderlineInputBorder(),
@@ -896,7 +930,7 @@ class _editAutopayState extends State<editAutopay> {
                                           style: TextStyle(
                                             fontSize: 10.sp,
                                             fontWeight: FontWeight.w400,
-                                            color: Color(0xff808080),
+                                            color: AppColors.TXT_CLR_LITE,
                                           ),
                                           textAlign: TextAlign.left,
                                         ),
@@ -913,7 +947,7 @@ class _editAutopayState extends State<editAutopay> {
                                           style: TextStyle(
                                             fontSize: 10.sp,
                                             fontWeight: FontWeight.w600,
-                                            color: CLR_ERROR,
+                                            color: AppColors.CLR_ERROR,
                                           ),
                                         ),
                                       ),
@@ -921,41 +955,44 @@ class _editAutopayState extends State<editAutopay> {
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 16.w, vertical: 16.h),
                                       child: DropdownButtonFormField<String>(
+                                        dropdownColor:
+                                            AppColors.BTN_CLR_ACTIVE_TEXT,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0.r)),
                                         isExpanded: true,
                                         isDense: true,
                                         value: activatesFrom,
                                         decoration: InputDecoration(
                                           border: const UnderlineInputBorder(),
                                           filled: true,
-                                          fillColor: Color(0xffD1D9E8)
-                                              .withOpacity(0.2),
-                                          enabledBorder:
-                                              const UnderlineInputBorder(
+                                          fillColor: AppColors.CLR_INPUT_FILL,
+                                          enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Color(0xff1B438B)),
+                                                color:
+                                                    AppColors.TXT_CLR_PRIMARY),
                                           ),
-                                          focusedBorder:
-                                              const UnderlineInputBorder(
+                                          focusedBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Color(0xff1B438B)),
+                                                color:
+                                                    AppColors.TXT_CLR_PRIMARY),
                                           ),
                                           contentPadding: EdgeInsets.symmetric(
                                               vertical: 10.0.h,
                                               horizontal: 10.w),
                                           labelText:
                                               'Changes To Be Reflected From',
-                                          labelStyle: const TextStyle(
-                                              color: Color(0xff1b438b)),
+                                          labelStyle: TextStyle(
+                                              color: AppColors.TXT_CLR_PRIMARY),
                                           hintText:
                                               'Changes To Be Reflected From',
-                                          hintStyle: const TextStyle(
-                                              color: Color(0xff1b438b)),
+                                          hintStyle: TextStyle(
+                                              color: AppColors.TXT_CLR_PRIMARY),
                                         ),
                                         // hint: Text('Changes To Be Reflected From'),
                                         onChanged: (String? newValue) {},
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.keyboard_arrow_down,
-                                          color: Colors.grey,
+                                          color: AppColors.CLR_GREY,
                                         ),
                                         items: EffectiveFrom.map<
                                             DropdownMenuItem<String>>((value) {
@@ -963,6 +1000,10 @@ class _editAutopayState extends State<editAutopay> {
                                             value: value,
                                             child: Text(
                                               value,
+                                              style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                  color: AppColors
+                                                      .TXT_CLR_DEFAULT),
                                             ),
                                             onTap: () {
                                               setState(() {
@@ -994,7 +1035,7 @@ class _editAutopayState extends State<editAutopay> {
                                           style: TextStyle(
                                             fontSize: 13.sp,
                                             fontWeight: FontWeight.w400,
-                                            color: Color(0xff808080),
+                                            color: AppColors.TXT_CLR_LITE,
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
@@ -1006,7 +1047,19 @@ class _editAutopayState extends State<editAutopay> {
                                           child: RadioListTile(
                                             value: 0,
                                             groupValue: billPayGroupRadio,
-                                            activeColor: TXT_CLR_PRIMARY,
+                                            activeColor:
+                                                AppColors.TXT_CLR_PRIMARY,
+                                            fillColor: MaterialStateProperty
+                                                .resolveWith(
+                                              (states) {
+                                                if (states.contains(
+                                                    MaterialState.selected)) {
+                                                  return AppColors
+                                                      .TXT_CLR_PRIMARY;
+                                                }
+                                                return AppColors.TXT_CLR_LITE;
+                                              },
+                                            ),
                                             onChanged: (val) {
                                               setState(() {
                                                 billPayGroupRadio = 0;
@@ -1021,7 +1074,8 @@ class _editAutopayState extends State<editAutopay> {
                                               style: TextStyle(
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.w500,
-                                                color: Color(0xff313131),
+                                                color:
+                                                    AppColors.TXT_CLR_SECONDARY,
                                               ),
                                               textAlign: TextAlign.center,
                                             ),
@@ -1030,6 +1084,19 @@ class _editAutopayState extends State<editAutopay> {
                                         Flexible(
                                           child: RadioListTile(
                                             value: 1,
+                                            activeColor:
+                                                AppColors.TXT_CLR_PRIMARY,
+                                            fillColor: MaterialStateProperty
+                                                .resolveWith(
+                                              (states) {
+                                                if (states.contains(
+                                                    MaterialState.selected)) {
+                                                  return AppColors
+                                                      .TXT_CLR_PRIMARY;
+                                                }
+                                                return AppColors.TXT_CLR_LITE;
+                                              },
+                                            ),
                                             groupValue: billPayGroupRadio,
                                             onChanged: (val) {
                                               setState(() {
@@ -1037,7 +1104,6 @@ class _editAutopayState extends State<editAutopay> {
                                                 activatesFrom = "Immediately";
                                               });
                                             },
-                                            activeColor: TXT_CLR_PRIMARY,
                                             controlAffinity:
                                                 ListTileControlAffinity
                                                     .trailing,
@@ -1046,7 +1112,8 @@ class _editAutopayState extends State<editAutopay> {
                                               style: TextStyle(
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.w500,
-                                                color: Color(0xff313131),
+                                                color:
+                                                    AppColors.TXT_CLR_SECONDARY,
                                               ),
                                               textAlign: TextAlign.center,
                                             ),
@@ -1063,7 +1130,7 @@ class _editAutopayState extends State<editAutopay> {
                                           style: TextStyle(
                                             fontSize: 10.sp,
                                             fontWeight: FontWeight.w400,
-                                            color: Color(0xff808080),
+                                            color: AppColors.TXT_CLR_LITE,
                                           ),
                                           textAlign: TextAlign.left,
                                         ),
@@ -1085,7 +1152,7 @@ class _editAutopayState extends State<editAutopay> {
                                   borderRadius:
                                       BorderRadius.circular(6.0.r + 2.r),
                                   border: Border.all(
-                                    color: Color(0xffD1D9E8),
+                                    color: AppColors.CLR_CON_BORDER,
                                     width: 1.0,
                                   ),
                                 ),
@@ -1106,7 +1173,7 @@ class _editAutopayState extends State<editAutopay> {
                                             style: TextStyle(
                                               fontSize: 14.sp,
                                               fontWeight: FontWeight.w600,
-                                              color: Color(0xff1b438b),
+                                              color: AppColors.TXT_CLR_PRIMARY,
                                             ),
                                             textAlign: TextAlign.center,
                                           ),
@@ -1136,7 +1203,7 @@ class _editAutopayState extends State<editAutopay> {
                                     if (!isAccLoading)
                                       Container(
                                         width: double.infinity,
-                                        color: Colors.white,
+                                        // color: Colors.white,
                                         child: myAccounts!.isNotEmpty
                                             ? GridView.builder(
                                                 shrinkWrap: true,
@@ -1189,7 +1256,7 @@ class _editAutopayState extends State<editAutopay> {
                                                       fontSize: 12.sp,
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      color: CLR_GREY,
+                                                      color: AppColors.CLR_GREY,
                                                     ),
                                                     textAlign: TextAlign.center,
                                                   ),
@@ -1225,13 +1292,13 @@ class _editAutopayState extends State<editAutopay> {
                                 text: TextSpan(
                                   style: TextStyle(
                                     fontSize: 14.0.sp,
-                                    color: Colors.black,
+                                    color: AppColors.TXT_CLR_DEFAULT,
                                   ),
                                   children: <TextSpan>[
                                     TextSpan(
                                         style: TextStyle(
                                             fontSize: 11.sp,
-                                            color: TXT_CLR_DEFAULT,
+                                            color: AppColors.TXT_CLR_DEFAULT,
                                             fontWeight: FontWeight.w500),
                                         text:
                                             "By continuing, you agree to accept our "),
@@ -1246,7 +1313,7 @@ class _editAutopayState extends State<editAutopay> {
                                         },
                                       style: TextStyle(
                                           decoration: TextDecoration.underline,
-                                          color: TXT_CLR_PRIMARY,
+                                          color: AppColors.TXT_CLR_PRIMARY,
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w700),
                                     ),

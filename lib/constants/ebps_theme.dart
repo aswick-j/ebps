@@ -30,6 +30,7 @@ TextTheme myTextTheme = TextTheme(
 ThemeData ebpsTheme = ThemeData(
     fontFamily: GoogleFonts.poppins().fontFamily,
     scaffoldBackgroundColor: AppColors.CLR_BACKGROUND,
+    unselectedWidgetColor: AppColors.TXT_CLR_GREY,
     appBarTheme: AppBarTheme(
       iconTheme: IconThemeData(color: Colors.black),
       color: AppColors.CLR_BACKGROUND, //<-- SEE HERE
@@ -39,6 +40,7 @@ ThemeData ebpsTheme = ThemeData(
 ThemeData DarkTheme = ThemeData(
     fontFamily: GoogleFonts.poppins().fontFamily,
     scaffoldBackgroundColor: AppColors.CLR_BACKGROUND,
+    unselectedWidgetColor: AppColors.TXT_CLR_GREY,
     appBarTheme: AppBarTheme(
       iconTheme: IconThemeData(color: Colors.white),
       color: AppColors.CLR_BACKGROUND, //<-- SEE HERE

@@ -376,10 +376,6 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                     ),
                                   ),
                                 ],
-                              )
-                            else
-                              SizedBox(
-                                width: 10.w,
                               ),
                           if (widget.dueDate != "-")
                             if (checkDateExpiry(widget.dueDate.toString()))

@@ -61,7 +61,7 @@ class AppColors {
   static Color get CLR_PRIMARY => isElite ? Colors.white : Color(0xff1B438B);
 
   static Color get CLR_PRIMARY_LITE =>
-      isElite ? Color(0xff94AFD8) : Color(0xff94AFD8);
+      isElite ? Color(0xffD1D9E8) : Color(0xff4969A2);
 
   static Color get CLR_SECONDARY =>
       isElite ? Color(0xff1B438B) : Color(0xff4969A2);
@@ -123,6 +123,9 @@ class AppColors {
 
   static Color get TXT_CLR_LITE_V2 =>
       isElite ? Color(0xffD1D9E8) : Color(0xff313131);
+
+  static Color get TXT_CLR_LITE_V3 =>
+      isElite ? Color(0xff94AFD8) : Color(0xff313131);
 
   static Color get TXT_CLR_GREY =>
       isElite ? Color(0xffD1D9E8) : Color(0xff4c4c4c);

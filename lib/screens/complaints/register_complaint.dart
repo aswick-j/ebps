@@ -437,6 +437,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                       contentPadding: EdgeInsets.symmetric(
                                           vertical: 10.0.h, horizontal: 10.w),
                                     ),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0.r)),
                                     hint: Text(
                                       'Reason',
                                       style: TextStyle(
@@ -527,7 +529,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                               ],
                             )),
                   SizedBox(
-                    height: 50.h,
+                    height: 10.h,
                   ),
                   BbpsLogoContainer(showEquitasLogo: false),
                   SizedBox(

@@ -244,7 +244,7 @@ class _createAutopayState extends State<createAutopay> {
                                       style: TextStyle(
                                         fontSize: 13.sp,
                                         fontWeight: FontWeight.w500,
-                                        color: AppColors.TXT_CLR_DEFAULT,
+                                        color: AppColors.TXT_CLR_BLACK_W,
                                       ),
                                       textAlign: TextAlign.left,
                                       maxLines: 1,
@@ -377,6 +377,17 @@ class _createAutopayState extends State<createAutopay> {
                                               AppColors.TXT_CLR_PRIMARY,
                                           controlAffinity:
                                               ListTileControlAffinity.trailing,
+                                          fillColor:
+                                              MaterialStateProperty.resolveWith(
+                                            (states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return AppColors
+                                                    .TXT_CLR_PRIMARY;
+                                              }
+                                              return AppColors.TXT_CLR_LITE;
+                                            },
+                                          ),
                                           title: Text(
                                             "Default Limit",
                                             style: TextStyle(
@@ -395,6 +406,17 @@ class _createAutopayState extends State<createAutopay> {
                                           groupValue: limitGroupRadio,
                                           activeColor:
                                               AppColors.TXT_CLR_PRIMARY,
+                                          fillColor:
+                                              MaterialStateProperty.resolveWith(
+                                            (states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return AppColors
+                                                    .TXT_CLR_PRIMARY;
+                                              }
+                                              return AppColors.TXT_CLR_LITE;
+                                            },
+                                          ),
                                           onChanged: (val) {
                                             MaxiFocusNode.requestFocus();
 
@@ -700,6 +722,11 @@ class _createAutopayState extends State<createAutopay> {
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 16.w, vertical: 16.h),
                                     child: DropdownButtonFormField<String>(
+                                      dropdownColor:
+                                          AppColors.BTN_CLR_ACTIVE_TEXT,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0.r)),
+
                                       isExpanded: true,
                                       isDense: true,
                                       value: activatesFrom,
@@ -730,10 +757,10 @@ class _createAutopayState extends State<createAutopay> {
                                       onChanged: (String? newValue) {},
                                       icon: Icon(
                                         Icons.keyboard_arrow_down,
-                                        color: AppColors.BTN_CLR_DISABLE,
+                                        color: AppColors.CLR_GREY,
                                       ),
-                                      style: TextStyle(
-                                          color: AppColors.TXT_CLR_BLACK),
+                                      // style: TextStyle(
+                                      //     color: AppColors.TXT_CLR_DEFAULT),
                                       items: [
                                         'Immediately',
                                         getMonthName(billPayGroupRadio)[0]!,
@@ -743,6 +770,10 @@ class _createAutopayState extends State<createAutopay> {
                                           value: value,
                                           child: Text(
                                             value,
+                                            style: TextStyle(
+                                                fontSize: 12.sp,
+                                                color:
+                                                    AppColors.TXT_CLR_DEFAULT),
                                           ),
                                           onTap: () {
                                             setState(() {
@@ -777,6 +808,17 @@ class _createAutopayState extends State<createAutopay> {
                                           groupValue: billPayGroupRadio,
                                           activeColor:
                                               AppColors.TXT_CLR_PRIMARY,
+                                          fillColor:
+                                              MaterialStateProperty.resolveWith(
+                                            (states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return AppColors
+                                                    .TXT_CLR_PRIMARY;
+                                              }
+                                              return AppColors.TXT_CLR_LITE;
+                                            },
+                                          ),
                                           onChanged: (val) {
                                             setState(() {
                                               billPayGroupRadio = 0;
@@ -809,6 +851,17 @@ class _createAutopayState extends State<createAutopay> {
                                           },
                                           activeColor:
                                               AppColors.TXT_CLR_PRIMARY,
+                                          fillColor:
+                                              MaterialStateProperty.resolveWith(
+                                            (states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return AppColors
+                                                    .TXT_CLR_PRIMARY;
+                                              }
+                                              return AppColors.TXT_CLR_LITE;
+                                            },
+                                          ),
                                           controlAffinity:
                                               ListTileControlAffinity.trailing,
                                           title: Text(
