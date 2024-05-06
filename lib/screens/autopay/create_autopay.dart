@@ -2,6 +2,7 @@ import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
@@ -212,32 +213,30 @@ class _createAutopayState extends State<createAutopay> {
                           ),
                         )
                       : Column(children: [
-                          Container(
-                              clipBehavior: Clip.hardEdge,
-                              width: double.infinity,
-                              margin: EdgeInsets.only(
-                                  left: 18.0.w,
-                                  right: 18.w,
-                                  top: 10.h,
-                                  bottom: 15.h),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(6.0.r + 2.r),
-                                border: Border.all(
-                                  color: AppColors.CLR_CON_BORDER,
-                                  width: 1.0,
-                                ),
-                              ),
+                          ReusableContainer(
+                              bottomMargin: 15.h,
                               child: Column(
                                 children: [
                                   ListTile(
                                     leading: Container(
-                                      width: 50.w,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0.r),
-                                        child: SvgPicture.asset(BILLER_LOGO(
-                                            widget.billerName.toString())),
-                                      ),
+                                      height: 40.h,
+                                      padding: EdgeInsets.all(9.r),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(80.r),
+                                          gradient: LinearGradient(
+                                              begin: Alignment.bottomRight,
+                                              stops: [
+                                                0.1,
+                                                0.9
+                                              ],
+                                              colors: [
+                                                CLR_BLUE_LITE.withOpacity(.16),
+                                                Colors.transparent
+                                              ])),
+                                      width: 45.w,
+                                      child: SvgPicture.asset(BILLER_LOGO(
+                                          widget.billerName.toString())),
                                     ),
                                     title: Text(
                                       widget.billerName,
@@ -261,11 +260,9 @@ class _createAutopayState extends State<createAutopay> {
                                     ),
                                   ),
                                   Divider(
-                                    color: AppColors.CLR_DIVIDER_LITE,
+                                    color: AppColors.CLR_CON_BORDER,
                                     height: 10.h,
-                                    thickness: 1,
-                                    indent: 10.w,
-                                    endIndent: 10.w,
+                                    thickness: 0.5,
                                   ),
                                   billerdetail(
                                       widget.savedBillersdata!.pARAMETERS![0]
@@ -341,22 +338,8 @@ class _createAutopayState extends State<createAutopay> {
                           //     ),
                           //   ),
                           // ),
-                          Container(
-                              clipBehavior: Clip.hardEdge,
-                              width: double.infinity,
-                              margin: EdgeInsets.only(
-                                  left: 18.0.w,
-                                  right: 18.w,
-                                  top: 5.h,
-                                  bottom: 10.h),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(6.0.r + 2.r),
-                                border: Border.all(
-                                  color: AppColors.CLR_CON_BORDER,
-                                  width: 1.0,
-                                ),
-                              ),
+                          ReusableContainer(
+                              topMargin: 5.h,
                               child: Column(
                                 children: [
                                   Row(
@@ -896,147 +879,131 @@ class _createAutopayState extends State<createAutopay> {
                                   )
                                 ],
                               )),
-                          Container(
-                              clipBehavior: Clip.hardEdge,
-                              width: double.infinity,
-                              margin: EdgeInsets.only(
-                                  left: 18.0.w,
-                                  right: 18.w,
-                                  top: 5.h,
-                                  bottom: 10.h),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(6.0.r + 2.r),
-                                border: Border.all(
-                                  color: AppColors.CLR_CON_BORDER,
-                                  width: 1.0,
+                          ReusableContainer(
+                              child: Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 18.0.w,
+                                    right: 18.w,
+                                    top: 18.h,
+                                    bottom: 0.h),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Select Account Number",
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.TXT_CLR_PRIMARY,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    GestureDetector(
+                                      child: SvgPicture.asset(ICON_REFRESH),
+                                      onTap: () {
+                                        setState(() {
+                                          selectedAcc = null;
+                                          accError = false;
+                                        });
+                                        BlocProvider.of<HomeCubit>(context)
+                                            .getAccountInfo(myAccounts);
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 18.0.w,
-                                        right: 18.w,
-                                        top: 18.h,
-                                        bottom: 0.h),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Select Account Number",
-                                          style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColors.TXT_CLR_PRIMARY,
+                              if (isAccLoading)
+                                Center(
+                                  child: Container(
+                                    height: 100.h,
+                                    child: FlickrLoader(),
+                                  ),
+                                ),
+                              if (!isAccLoading)
+                                Container(
+                                  width: double.infinity,
+                                  // color: Colors.white,
+                                  child: myAccounts!.isNotEmpty
+                                      ? GridView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: accountInfo!.length,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            // itemCount: accountInfo!.length,
+                                            childAspectRatio: 5 / 3.1,
+                                            mainAxisSpacing: 10.0,
                                           ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        GestureDetector(
-                                          child: SvgPicture.asset(ICON_REFRESH),
-                                          onTap: () {
-                                            setState(() {
-                                              selectedAcc = null;
-                                              accError = false;
-                                            });
-                                            BlocProvider.of<HomeCubit>(context)
-                                                .getAccountInfo(myAccounts);
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  if (isAccLoading)
-                                    Center(
-                                      child: Container(
-                                        height: 100.h,
-                                        child: FlickrLoader(),
-                                      ),
-                                    ),
-                                  if (!isAccLoading)
-                                    Container(
-                                      width: double.infinity,
-                                      // color: Colors.white,
-                                      child: myAccounts!.isNotEmpty
-                                          ? GridView.builder(
-                                              shrinkWrap: true,
-                                              itemCount: accountInfo!.length,
-                                              physics:
-                                                  NeverScrollableScrollPhysics(),
-                                              gridDelegate:
-                                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2,
-                                                // itemCount: accountInfo!.length,
-                                                childAspectRatio: 5 / 3.1,
-                                                mainAxisSpacing: 10.0,
-                                              ),
-                                              itemBuilder: (context, index) {
-                                                return AccountInfoCard(
-                                                  showAccDetails: true,
-                                                  accountNumber:
-                                                      accountInfo![index]
-                                                          .accountNumber
-                                                          .toString(),
-                                                  balance: accountInfo![index]
-                                                      .balance,
-                                                  onAccSelected: (Date) {
-                                                    setState(() {
-                                                      selectedAcc = index;
-                                                    });
-                                                    // if (accountInfo![index].balance ==
-                                                    //     "Unable to fetch balance") {
-                                                    //   setState(() {
-                                                    //     accError = true;
-                                                    //   });
-                                                    // } else {
-                                                    //   setState(() {
-                                                    //     accError = false;
-                                                    //   });
-                                                    // }
-                                                  },
-                                                  index: index,
-                                                  AccErr: accError,
-                                                  isSelected: selectedAcc,
-                                                );
+                                          itemBuilder: (context, index) {
+                                            return AccountInfoCard(
+                                              showAccDetails: true,
+                                              accountNumber: accountInfo![index]
+                                                  .accountNumber
+                                                  .toString(),
+                                              balance:
+                                                  accountInfo![index].balance,
+                                              onAccSelected: (Date) {
+                                                setState(() {
+                                                  selectedAcc = index;
+                                                });
+                                                // if (accountInfo![index].balance ==
+                                                //     "Unable to fetch balance") {
+                                                //   setState(() {
+                                                //     accError = true;
+                                                //   });
+                                                // } else {
+                                                //   setState(() {
+                                                //     accError = false;
+                                                //   });
+                                                // }
                                               },
-                                            )
-                                          : SizedBox(
-                                              height: 60.h,
-                                              child: Center(
-                                                child: Text(
-                                                  "No Accounts Available",
-                                                  style: TextStyle(
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.CLR_GREY,
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
+                                              index: index,
+                                              AccErr: accError,
+                                              isSelected: selectedAcc,
+                                            );
+                                          },
+                                        )
+                                      : SizedBox(
+                                          height: 60.h,
+                                          child: Center(
+                                            child: Text(
+                                              "No Accounts Available",
+                                              style: TextStyle(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.CLR_GREY,
                                               ),
+                                              textAlign: TextAlign.center,
                                             ),
-                                    ),
-                                  // if (accError)
-                                  //   Padding(
-                                  //     padding: EdgeInsets.only(
-                                  //         left: 20.w, top: 10.h, right: 20.w),
-                                  //     child: Align(
-                                  //       alignment: Alignment.centerLeft,
-                                  //       child: Text(
-                                  //         'Insufficient balance in the account',
-                                  //         style: TextStyle(
-                                  //           fontSize: 12.sp,
-                                  //           fontWeight: FontWeight.w600,
-                                  //           color: CLR_ERROR,
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                ],
-                              )),
+                                          ),
+                                        ),
+                                ),
+                              // if (accError)
+                              //   Padding(
+                              //     padding: EdgeInsets.only(
+                              //         left: 20.w, top: 10.h, right: 20.w),
+                              //     child: Align(
+                              //       alignment: Alignment.centerLeft,
+                              //       child: Text(
+                              //         'Insufficient balance in the account',
+                              //         style: TextStyle(
+                              //           fontSize: 12.sp,
+                              //           fontWeight: FontWeight.w600,
+                              //           color: CLR_ERROR,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                            ],
+                          )),
                           Padding(
                             padding: EdgeInsets.only(
                                 left: 20.w, top: 10.h, right: 20.w),
@@ -1102,7 +1069,7 @@ class _createAutopayState extends State<createAutopay> {
                         borderRadius: BorderRadius.circular(6.0.r + 2.r),
                         border: Border.all(
                           color: AppColors.CLR_CON_BORDER,
-                          width: 1.0,
+                          width: 0.50,
                         ),
                       ),
                       child: Center(

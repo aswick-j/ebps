@@ -3,6 +3,7 @@ import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/Home/biller_details_container.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
@@ -364,18 +365,8 @@ class _BillerDetailsState extends State<BillerDetails> {
           return SingleChildScrollView(
               child: Column(
             children: [
-              Container(
-                clipBehavior: Clip.hardEdge,
-                width: double.infinity,
-                margin: EdgeInsets.only(
-                    left: 18.0.w, right: 18.w, top: 10.h, bottom: 80.h),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                  border: Border.all(
-                    color: AppColors.CLR_CON_BORDER,
-                    width: 1.0,
-                  ),
-                ),
+              ReusableContainer(
+                bottomMargin: 80.h,
                 child: !isBillerDetailsPageError
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -818,7 +809,8 @@ class _BillerDetailsState extends State<BillerDetails> {
                     color: AppColors.CLR_BACKGROUND,
                     border: Border(
                         top: BorderSide(
-                            color: AppColors.CLR_CON_BORDER_LITE, width: 1))),
+                            color: AppColors.CLR_CON_BORDER_LITE,
+                            width: 0.50))),
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
@@ -913,7 +905,8 @@ class _BillerDetailsState extends State<BillerDetails> {
                     color: AppColors.CLR_BACKGROUND,
                     border: Border(
                         top: BorderSide(
-                            color: AppColors.CLR_CON_BORDER_LITE, width: 1))),
+                            color: AppColors.CLR_CON_BORDER_LITE,
+                            width: 0.50))),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),

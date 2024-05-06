@@ -75,6 +75,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 selectedItemColor: AppColors.CLR_PRIMARY,
                 unselectedItemColor: Color(0xffa4b4d1),
                 currentIndex: selectedIndex,
+                selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+                unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
                 items: [
                   BottomNavigationBarItem(
                     icon: SvgPicture.asset(ICON_HOME_INACTIVE),

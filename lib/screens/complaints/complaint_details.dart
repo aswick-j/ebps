@@ -4,6 +4,7 @@ import 'package:delightful_toast/toast/components/toast_card.dart';
 import 'package:ebps/bloc/complaint/complaint_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Container/Home/biller_details_container.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getComplaintStatus.dart';
@@ -191,17 +192,8 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                 }
               },
               builder: (context, state) {
-                return Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.only(
-                        left: 18.0.w, right: 18.w, top: 10.h, bottom: 20.h),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0.r),
-                      border: Border.all(
-                        color: AppColors.CLR_CON_BORDER,
-                        width: 2.0,
-                      ),
-                    ),
+                return ReusableContainer(
+                    bottomMargin: 20.h,
                     child: Column(
                       children: [
                         BillerDetailsContainer(
@@ -244,32 +236,46 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                                         child: !isCmpStatusLoading
                                             ? Container(
                                                 padding: EdgeInsets.symmetric(
-                                                    horizontal: 8.0.w,
+                                                    horizontal: 16.0.w,
                                                     vertical: 4.w),
+
                                                 decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color:
-                                                          getComplaintStatusColors(
-                                                              widget
-                                                                  .complaintData
-                                                                  .sTATUS
-                                                                  .toString())),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12.0.r),
-                                                ),
+                                                    // border: Border.all(
+                                                    //     color: widget.buttonTxtColor
+                                                    //         .withOpacity(0.5)),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.r),
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        getComplaintStatusColors(
+                                                                widget
+                                                                    .complaintData
+                                                                    .sTATUS
+                                                                    .toString())
+                                                            .withOpacity(0.5),
+                                                        // Color(0xff0373c4),
+                                                        Color.fromARGB(
+                                                            255, 212, 223, 231)
+                                                      ],
+                                                      begin: Alignment
+                                                          .bottomCenter,
+                                                      end: Alignment.topCenter,
+                                                    )),
+                                                // decoration: BoxDecoration(
+                                                //   border:
+                                                //       Border.all(color: widget.buttonTxtColor),
+                                                //   borderRadius: BorderRadius.circular(12.0.r),
+                                                // ),
                                                 child: Text(
                                                   getComplaintStatusValue(widget
                                                       .complaintData.sTATUS
                                                       .toString()),
                                                   style: TextStyle(
-                                                    color:
-                                                        getComplaintStatusColors(
-                                                            widget.complaintData
-                                                                .sTATUS
-                                                                .toString()),
-                                                    fontSize: 10.0.sp,
-                                                  ),
+                                                      color: Colors.white,
+                                                      fontSize: 9.0.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                               )
                                             : Row(

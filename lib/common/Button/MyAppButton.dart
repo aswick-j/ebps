@@ -17,7 +17,7 @@ MyAppButton({
     style: ElevatedButton.styleFrom(
       shape: StadiumBorder(
         side: BorderSide(
-          width: 0.4,
+          width: 1,
           color: buttonBorderColor ?? Colors.transparent,
           style: BorderStyle.solid,
         ),

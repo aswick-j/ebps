@@ -1,6 +1,7 @@
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getBillPaymentDetails.dart';
@@ -103,7 +104,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
           Text(
             title,
             style: TextStyle(
-              fontSize: 14.sp,
+              fontSize: 13.sp,
               fontWeight: FontWeight.w400,
               color: AppColors.TXT_CLR_LITE,
               height: 23 / 14,
@@ -119,7 +120,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
               Text(
                 subTitle,
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 13.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.TXT_CLR_PRIMARY,
                 ),
@@ -135,7 +136,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             content: Text('$title copied to clipboard')));
                       });
                     },
-                    child: Icon(Icons.copy, color: AppColors.CLR_ICON, size: 20))
+                    child:
+                        Icon(Icons.copy, color: AppColors.CLR_ICON, size: 20))
             ],
           )
         ],
@@ -171,319 +173,303 @@ class _TransactionScreenState extends State<TransactionScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                  clipBehavior: Clip.hardEdge,
-                  width: double.infinity,
-                  margin: EdgeInsets.only(
-                      left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                    border: Border.all(
-                      color: AppColors.CLR_CON_BORDER,
-                      width: 1.0,
-                    ),
-                  ),
+              ReusableContainer(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        height: 33.0.h,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topRight,
-                            stops: const [0.001, 19],
-                            colors: getStatusGradientColors(tnxResponse!
-                                        .paymentDetails!.success ==
-                                    true
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    height: 33.0.h,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        stops: const [0.001, 19],
+                        colors: getStatusGradientColors(
+                            tnxResponse!.paymentDetails!.success == true
                                 ? "success"
                                 : tnxResponse!.paymentDetails!.failed == true ||
                                         tnxResponse!.paymentDetails!.success ==
                                             false
                                     ? 'failed'
                                     : "pending"),
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              getTransactionStatusText(
-                                  tnxResponse!.paymentDetails!.success == true
-                                      ? "success"
-                                      : tnxResponse!.paymentDetails!.failed ==
-                                                  true ||
-                                              tnxResponse!.paymentDetails!
-                                                      .success ==
-                                                  false
-                                          ? 'failed'
-                                          : "pending"),
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xffffffff),
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
                       ),
-                      ListTile(
-                        contentPadding:
-                            EdgeInsets.only(left: 30.w, right: 6.w, top: 6.h),
-                        title: Padding(
-                            padding: EdgeInsets.only(bottom: 5.h),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        SvgPicture.asset(ICON_ARROW_UP,
-                                            height: 20.h),
-                                        Text(
-                                          "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount'].toString()))}",
-                                          style: TextStyle(
-                                            fontSize: 20.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColors.CLR_PRIMARY,
-                                            height: 33 / 20,
-                                          ),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                            onPressed: () async {
-                                              Uint8List? capturedImage = await screenshotController.captureFromWidget(
-                                                  InheritedTheme.captureAll(
-                                                      context,
-                                                      Material(
-                                                          child: ScreenshotContainer(
-                                                              ConsumerName: tnxResponse!.paymentDetails!.bbpsResponse != null
-                                                                  ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse != null
-                                                                      ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse!.customerName.toString()
-                                                                      : "NA"
-                                                                  : "NA",
-                                                              channel: "Equitas - Mobile Banking",
-                                                              BillerName: widget.billerName.toString(),
-                                                              BillerId: widget.isSavedBill ? savedBillerTypeData!.bILLERID.toString() : billerTypeData!.bILLERID.toString(),
-                                                              BillName: widget.isSavedBill ? savedBillerTypeData!.bILLNAME.toString() : billerTypeData!.bILLNAME.toString(),
-                                                              ParamName: widget.billerData!["inputSignature"][0].pARAMETERNAME,
-                                                              ParamValue: widget.billerData!["inputSignature"][0].pARAMETERVALUE,
-                                                              TransactionID: tnxResponse!.paymentDetails!.success == true ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.txnReferenceId.toString() : "",
-                                                              fromAccount: widget.billerData!['acNo'].toString(),
-                                                              billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount']))}",
-                                                              trasactionStatus: tnxResponse!.reason.toString(),
-                                                              status: tnxResponse!.paymentDetails!.success == true
-                                                                  ? "success"
-                                                                  : tnxResponse!.paymentDetails!.failed == true || tnxResponse!.paymentDetails!.success == false
-                                                                      ? "failed"
-                                                                      : tnxResponse!.paymentDetails!.failed == true
-                                                                          ? "bbps-timeout"
-                                                                          : "failed",
-                                                              TransactionDate: DateFormat("dd/MM/yyyy | hh:mm a").format(DateTime.now()).toString()))),
-                                                  delay: Duration(seconds: 0));
-
-                                              final result =
-                                                  await Printing.sharePdf(
-                                                bytes: capturedImage,
-                                                filename:
-                                                    '${widget.billerName}.jpeg',
-                                              );
-                                              if (result) {
-                                                print('Shared');
-                                              }
-                                            },
-                                            icon: Icon(Icons.share_outlined,
-                                                color: AppColors.CLR_ICON)),
-                                        IconButton(
-                                            onPressed: () {
-                                              Printing.layoutPdf(
-                                                name: widget.billerName,
-                                                onLayout: (PdfPageFormat format) async =>
-                                                    generatePdf(
-                                                        format,
-                                                        widget.billerName
-                                                            .toString(),
-                                                        widget.isSavedBill
-                                                            ? savedBillerTypeData!
-                                                                .bILLERID
-                                                                .toString()
-                                                            : billerTypeData!.bILLERID
-                                                                .toString(),
-                                                        widget.isSavedBill
-                                                            ? savedBillerTypeData!
-                                                                .bILLNAME
-                                                                .toString()
-                                                            : billerTypeData!
-                                                                .bILLNAME
-                                                                .toString(),
-                                                        widget
-                                                            .billerData!["inputSignature"]
-                                                                [0]
-                                                            .pARAMETERNAME,
-                                                        widget
-                                                            .billerData!["inputSignature"]
-                                                                [0]
-                                                            .pARAMETERVALUE,
-                                                        tnxResponse!.paymentDetails!.success == true
-                                                            ? tnxResponse!
-                                                                .paymentDetails!
-                                                                .bbpsResponse!
-                                                                .data!
-                                                                .txnReferenceId
-                                                                .toString()
-                                                            : "null",
-                                                        widget.billerData!['acNo']
-                                                            .toString(),
-                                                        "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount'].toString()))}",
-                                                        tnxResponse!.paymentDetails!.success ==
-                                                                true
-                                                            ? "Transaction Success"
-                                                            : tnxResponse!.paymentDetails!.failed == true ||
-                                                                    tnxResponse!.paymentDetails!.success == false
-                                                                ? 'Transaction Failure'
-                                                                : "Transaction Pending",
-                                                        "Equitas - Mobile banking",
-                                                        DateFormat("dd/MM/yyyy | hh:mm a").format(DateTime.now()).toString(),
-                                                        tnxResponse!.reason.toString(),
-                                                        tnxResponse!.paymentDetails!.bbpsResponse != null
-                                                            ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse != null
-                                                                ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse!.customerName.toString()
-                                                                : "NA"
-                                                            : "NA",
-                                                        tnxResponse!.paymentDetails!.bbpsResponse != null
-                                                            ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse != null
-                                                                ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse!.billNumber.toString()
-                                                                : "NA"
-                                                            : "NA"),
-                                              );
-                                              // Future.microtask(() =>
-                                              //     Navigator.push(
-                                              //         context,
-                                              //         MaterialPageRoute(
-                                              //             builder: (context) =>
-                                              //                 pdfReciept())));
-                                            },
-                                            icon: Icon(
-                                                Icons.file_download_outlined,
-                                                color: AppColors.CLR_ICON)),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 20.0.w),
-                                  child: Text(
-                                    DateFormat("dd/MM/yyyy | hh:mm a")
-                                        .format(DateTime.now())
-                                        .toString(),
-                                    // DateFormat("dd/MM/yy | hh:mm a")
-                                    //     .format(widget.historyData.cOMPLETIONDATE.toString())
-                                    //   ,
-                                    // widget.historyData.cOMPLETIONDATE
-                                    //     .toString(),
-                                    // "01/08/2023 | 12:48 PM",
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.TXT_CLR_LITE,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                )
-                              ],
-                            )),
-                      ),
-                      Divider(
-                        height: 10.h,
-                        thickness: 1,
-                      ),
-                      TxnDetails(
-                          title: "Account",
-                          subTitle:
-                              'EQUITAS BANK - ${widget.billerData!['acNo']}',
-                          clipBoard: false),
-                      if (tnxResponse!.paymentDetails!.bbpsResponse != null &&
-                          tnxResponse!.paymentDetails!.bbpsResponse!.data!
-                                  .billerResponse !=
-                              null &&
-                          tnxResponse!.paymentDetails!.bbpsResponse!.data!
-                                  .billerResponse!.customerName !=
-                              null &&
-                          tnxResponse!.paymentDetails!.bbpsResponse!.data!
-                                  .billerResponse!.customerName !=
-                              "NA")
-                        TxnDetails(
-                            title: "Consumer Name",
-                            subTitle: tnxResponse!.paymentDetails!.bbpsResponse!
-                                .data!.billerResponse!.customerName
-                                .toString(),
-                            clipBoard: false),
-                      TxnDetails(
-                          title: "Biller Name",
-                          subTitle: widget.billerName,
-                          clipBoard: false),
-                      // TxnDetails(
-                      //     title: "Payee Note",
-                      //     subTitle: "Nil",
-                      //     clipBoard: false),
-                      Divider(
-                        height: 10,
-                        thickness: 1,
-                      ),
-
-                      TxnDetails(
-                          title: widget
-                              .billerData!["inputSignature"][0].pARAMETERNAME,
-                          subTitle: widget
-                              .billerData!["inputSignature"][0].pARAMETERVALUE,
-                          clipBoard: false),
-                      // if (widget.historyData.tRANSACTIONSTATUS == 'success')
-                      if (tnxResponse!.paymentDetails!.success == true)
-                        TxnDetails(
-                            title: "Transaction ID",
-                            subTitle: tnxResponse!.paymentDetails!.bbpsResponse!
-                                .data!.txnReferenceId
-                                .toString(),
-                            clipBoard: true),
-
-                      TxnDetails(
-                          title: "Status",
-                          subTitle: tnxResponse!.paymentDetails!.success == true
-                              ? "Transaction Success"
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          getTransactionStatusText(tnxResponse!
+                                      .paymentDetails!.success ==
+                                  true
+                              ? "success"
                               : tnxResponse!.paymentDetails!.failed == true ||
                                       tnxResponse!.paymentDetails!.success ==
                                           false
-                                  ? 'Transaction Failure'
-                                  : "Transaction pending",
-                          clipBoard: false),
-                      if (tnxResponse!.paymentDetails!.success != true)
-                        TxnDetails(
-                            title: "Reason",
-                            subTitle: getTransactionReason(
-                                tnxResponse!.reason.toString()),
-                            clipBoard: false),
-                      TxnDetails(
-                          title: "Payment Channel",
-                          subTitle: "Equitas - Mobile Banking",
-                          clipBoard: false,
-                          showLogo: true),
-                    ],
-                  )),
+                                  ? 'failed'
+                                  : "pending"),
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xffffffff),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding:
+                        EdgeInsets.only(left: 30.w, right: 6.w, top: 6.h),
+                    title: Padding(
+                        padding: EdgeInsets.only(bottom: 5.h),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    SvgPicture.asset(ICON_ARROW_UP,
+                                        height: 20.h),
+                                    Text(
+                                      "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount'].toString()))}",
+                                      style: TextStyle(
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.CLR_PRIMARY,
+                                        height: 33 / 20,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                        onPressed: () async {
+                                          Uint8List? capturedImage = await screenshotController.captureFromWidget(
+                                              InheritedTheme.captureAll(
+                                                  context,
+                                                  Material(
+                                                      child: ScreenshotContainer(
+                                                          ConsumerName: tnxResponse!.paymentDetails!.bbpsResponse != null
+                                                              ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse != null
+                                                                  ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse!.customerName.toString()
+                                                                  : "NA"
+                                                              : "NA",
+                                                          channel: "Equitas - Mobile Banking",
+                                                          BillerName: widget.billerName.toString(),
+                                                          BillerId: widget.isSavedBill ? savedBillerTypeData!.bILLERID.toString() : billerTypeData!.bILLERID.toString(),
+                                                          BillName: widget.isSavedBill ? savedBillerTypeData!.bILLNAME.toString() : billerTypeData!.bILLNAME.toString(),
+                                                          ParamName: widget.billerData!["inputSignature"][0].pARAMETERNAME,
+                                                          ParamValue: widget.billerData!["inputSignature"][0].pARAMETERVALUE,
+                                                          TransactionID: tnxResponse!.paymentDetails!.success == true ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.txnReferenceId.toString() : "",
+                                                          fromAccount: widget.billerData!['acNo'].toString(),
+                                                          billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount']))}",
+                                                          trasactionStatus: tnxResponse!.reason.toString(),
+                                                          status: tnxResponse!.paymentDetails!.success == true
+                                                              ? "success"
+                                                              : tnxResponse!.paymentDetails!.failed == true || tnxResponse!.paymentDetails!.success == false
+                                                                  ? "failed"
+                                                                  : tnxResponse!.paymentDetails!.failed == true
+                                                                      ? "bbps-timeout"
+                                                                      : "failed",
+                                                          TransactionDate: DateFormat("dd/MM/yyyy | hh:mm a").format(DateTime.now()).toString()))),
+                                              delay: Duration(seconds: 0));
+
+                                          final result =
+                                              await Printing.sharePdf(
+                                            bytes: capturedImage,
+                                            filename:
+                                                '${widget.billerName}.jpeg',
+                                          );
+                                          if (result) {
+                                            print('Shared');
+                                          }
+                                        },
+                                        icon: Icon(Icons.share_outlined,
+                                            color: AppColors.CLR_ICON)),
+                                    IconButton(
+                                        onPressed: () {
+                                          Printing.layoutPdf(
+                                            name: widget.billerName,
+                                            onLayout: (PdfPageFormat format) async =>
+                                                generatePdf(
+                                                    format,
+                                                    widget.billerName
+                                                        .toString(),
+                                                    widget.isSavedBill
+                                                        ? savedBillerTypeData!
+                                                            .bILLERID
+                                                            .toString()
+                                                        : billerTypeData!.bILLERID
+                                                            .toString(),
+                                                    widget.isSavedBill
+                                                        ? savedBillerTypeData!
+                                                            .bILLNAME
+                                                            .toString()
+                                                        : billerTypeData!.bILLNAME
+                                                            .toString(),
+                                                    widget
+                                                        .billerData!["inputSignature"]
+                                                            [0]
+                                                        .pARAMETERNAME,
+                                                    widget
+                                                        .billerData!["inputSignature"]
+                                                            [0]
+                                                        .pARAMETERVALUE,
+                                                    tnxResponse!.paymentDetails!.success == true
+                                                        ? tnxResponse!
+                                                            .paymentDetails!
+                                                            .bbpsResponse!
+                                                            .data!
+                                                            .txnReferenceId
+                                                            .toString()
+                                                        : "null",
+                                                    widget.billerData!['acNo']
+                                                        .toString(),
+                                                    "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount'].toString()))}",
+                                                    tnxResponse!.paymentDetails!
+                                                                .success ==
+                                                            true
+                                                        ? "Transaction Success"
+                                                        : tnxResponse!.paymentDetails!.failed == true || tnxResponse!.paymentDetails!.success == false
+                                                            ? 'Transaction Failure'
+                                                            : "Transaction Pending",
+                                                    "Equitas - Mobile banking",
+                                                    DateFormat("dd/MM/yyyy | hh:mm a").format(DateTime.now()).toString(),
+                                                    tnxResponse!.reason.toString(),
+                                                    tnxResponse!.paymentDetails!.bbpsResponse != null
+                                                        ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse != null
+                                                            ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse!.customerName.toString()
+                                                            : "NA"
+                                                        : "NA",
+                                                    tnxResponse!.paymentDetails!.bbpsResponse != null
+                                                        ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse != null
+                                                            ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse!.billNumber.toString()
+                                                            : "NA"
+                                                        : "NA"),
+                                          );
+                                          // Future.microtask(() =>
+                                          //     Navigator.push(
+                                          //         context,
+                                          //         MaterialPageRoute(
+                                          //             builder: (context) =>
+                                          //                 pdfReciept())));
+                                        },
+                                        icon: Icon(Icons.file_download_outlined,
+                                            color: AppColors.CLR_ICON)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 20.0.w),
+                              child: Text(
+                                DateFormat("dd/MM/yyyy | hh:mm a")
+                                    .format(DateTime.now())
+                                    .toString(),
+                                // DateFormat("dd/MM/yy | hh:mm a")
+                                //     .format(widget.historyData.cOMPLETIONDATE.toString())
+                                //   ,
+                                // widget.historyData.cOMPLETIONDATE
+                                //     .toString(),
+                                // "01/08/2023 | 12:48 PM",
+                                style: TextStyle(
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.TXT_CLR_LITE,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            )
+                          ],
+                        )),
+                  ),
+                  Divider(
+                    height: 10.h,
+                    color: AppColors.CLR_CON_BORDER,
+                    thickness: 0.50,
+                  ),
+                  TxnDetails(
+                      title: "Account",
+                      subTitle: 'EQUITAS BANK - ${widget.billerData!['acNo']}',
+                      clipBoard: false),
+                  if (tnxResponse!.paymentDetails!.bbpsResponse != null &&
+                      tnxResponse!
+                              .paymentDetails!.bbpsResponse!.data!.billerResponse !=
+                          null &&
+                      tnxResponse!.paymentDetails!.bbpsResponse!.data!
+                              .billerResponse!.customerName !=
+                          null &&
+                      tnxResponse!.paymentDetails!.bbpsResponse!.data!
+                              .billerResponse!.customerName !=
+                          "NA")
+                    TxnDetails(
+                        title: "Consumer Name",
+                        subTitle: tnxResponse!.paymentDetails!.bbpsResponse!
+                            .data!.billerResponse!.customerName
+                            .toString(),
+                        clipBoard: false),
+                  TxnDetails(
+                      title: "Biller Name",
+                      subTitle: widget.billerName,
+                      clipBoard: false),
+                  // TxnDetails(
+                  //     title: "Payee Note",
+                  //     subTitle: "Nil",
+                  //     clipBoard: false),
+                  Divider(
+                    height: 10.h,
+                    color: AppColors.CLR_CON_BORDER,
+                    thickness: 0.50,
+                  ),
+
+                  TxnDetails(
+                      title:
+                          widget.billerData!["inputSignature"][0].pARAMETERNAME,
+                      subTitle: widget
+                          .billerData!["inputSignature"][0].pARAMETERVALUE,
+                      clipBoard: false),
+                  // if (widget.historyData.tRANSACTIONSTATUS == 'success')
+                  if (tnxResponse!.paymentDetails!.success == true)
+                    TxnDetails(
+                        title: "Transaction ID",
+                        subTitle: tnxResponse!
+                            .paymentDetails!.bbpsResponse!.data!.txnReferenceId
+                            .toString(),
+                        clipBoard: true),
+
+                  TxnDetails(
+                      title: "Status",
+                      subTitle: tnxResponse!.paymentDetails!.success == true
+                          ? "Transaction Success"
+                          : tnxResponse!.paymentDetails!.failed == true ||
+                                  tnxResponse!.paymentDetails!.success == false
+                              ? 'Transaction Failure'
+                              : "Transaction pending",
+                      clipBoard: false),
+                  if (tnxResponse!.paymentDetails!.success != true)
+                    TxnDetails(
+                        title: "Reason",
+                        subTitle: getTransactionReason(
+                            tnxResponse!.reason.toString()),
+                        clipBoard: false),
+                  TxnDetails(
+                      title: "Payment Channel",
+                      subTitle: "Equitas - Mobile Banking",
+                      clipBoard: false,
+                      showLogo: true),
+                ],
+              )),
               BbpsLogoContainer(showEquitasLogo: true),
               SizedBox(
                 height: 70.h,

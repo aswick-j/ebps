@@ -42,7 +42,7 @@ class _DateDialogState extends State<DateDialog> {
               borderRadius: BorderRadius.circular(6.0.r + 2.r),
               border: Border.all(
                 color: AppColors.CLR_CON_BORDER,
-                width: 1.0,
+                width: 0.50,
               ),
             ),
             padding: EdgeInsets.all(12.0.r),
@@ -82,7 +82,7 @@ class _DateDialogState extends State<DateDialog> {
                       borderRadius: BorderRadius.circular(8.r),
                       border: Border.all(
                         color: AppColors.CLR_CON_BORDER,
-                        width: 1.0,
+                        width: 0.50,
                       ),
                     ),
                     child: Center(

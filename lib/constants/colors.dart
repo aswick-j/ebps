@@ -86,6 +86,8 @@ class AppColors {
   static Color get CLR_ERROR => isElite ? Color(0xffD94B59) : Color(0xffCF1E2F);
 
   static Color get CLR_GREEN => isElite ? Color(0xff00AB44) : Color(0xff008936);
+  static Color get CLR_DARKGREEN =>
+      isElite ? Color.fromARGB(255, 0, 85, 34) : Color(0xff008936);
 
   static Color get CLR_ORANGE =>
       isElite ? Color(0xFFCE7D1E) : Color(0xFFCE7D1E);
@@ -96,7 +98,7 @@ class AppColors {
 //CONTAINER
 
   static Color get CLR_CON_BORDER =>
-      isElite ? Color(0xff94AFD8) : Color(0xffD1D9E8);
+      isElite ? Color(0xff94AFD8) : Color(0xFF94AFD8);
 
   static Color get CLR_CON_BORDER_LITE =>
       isElite ? Color(0xff94AFD8) : Color(0xffE8ECF3);
@@ -145,7 +147,7 @@ class AppColors {
   static Color get BTN_CLR_ACTIVE_BG =>
       isElite ? Color(0xff94AFD8) : Color(0xff1B438B);
   static Color get BTN_CLR_ALTER_BG =>
-      isElite ? Color(0xff0E2146) : Colors.white;
+      isElite ? Color(0xFF94AFD8) : Colors.white;
   static Color get BTN_CLR_ACTIVE_TEXT =>
       isElite ? Color(0xff1B438B) : Colors.white;
 
@@ -153,7 +155,7 @@ class AppColors {
       isElite ? Color(0xff0E2146) : Color(0xffffffff);
 
   static Color get BTN_CLR_ACTIVE_BORDER =>
-      isElite ? Color(0xffD1D9E8) : Colors.transparent;
+      isElite ? Color(0xffD1D9E8) : Color(0xFF94AFD8);
 
   static Color get BTN_CLR_ACTIVE_ALTER =>
       isElite ? Color(0xffD1D9E8) : Color(0xff1B438B);

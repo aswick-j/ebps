@@ -2,6 +2,7 @@ import 'package:ebps/bloc/complaint/complaint_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/Home/biller_details_container.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getNavigators.dart';
@@ -252,18 +253,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                      clipBehavior: Clip.hardEdge,
-                      width: double.infinity,
-                      margin: EdgeInsets.only(
-                          left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                        border: Border.all(
-                          color: AppColors.CLR_CON_BORDER,
-                          width: 1.0,
-                        ),
-                      ),
+                  ReusableContainer(
                       child: isComplaintConfigLoading
                           ? const Text("Loading")
                           : Column(

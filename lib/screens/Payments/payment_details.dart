@@ -2,6 +2,7 @@ import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/Home/biller_details_container.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
@@ -364,160 +365,144 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                      clipBehavior: Clip.hardEdge,
-                      width: double.infinity,
-                      margin: EdgeInsets.only(
-                          left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                        border: Border.all(
-                          color: AppColors.CLR_CON_BORDER,
-                          width: 1.0,
+                  ReusableContainer(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        height: 33.0.h,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topRight,
+                            stops: const [0.001, 19],
+                            colors: [
+                              AppColors.CLR_GRD_1.withOpacity(.7),
+                              AppColors.CLR_GRD_2.withOpacity(.7),
+                            ],
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Payment Details",
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xffffffff),
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
+                      BillerDetailsContainer(
+                        icon: BILLER_LOGO(widget.billerName.toString()),
+                        billerName: widget.billerName.toString(),
+                        categoryName: widget.categoryName.toString(),
+                      ),
+                      if (widget.SavedinputParameters != null ||
+                          widget.inputParameters != null)
+                        Container(
                             width: double.infinity,
-                            alignment: Alignment.center,
-                            height: 33.0.h,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topRight,
-                                stops: const [0.001, 19],
-                                colors: [
-                                  AppColors.CLR_GRD_1.withOpacity(.7),
-                                  AppColors.CLR_GRD_2.withOpacity(.7),
-                                ],
+                            constraints: BoxConstraints(
+                              minHeight: 80.h,
+                              maxHeight: 300.h,
+                            ),
+                            height: 0.h,
+                            // color: Colors.white,
+                            child: ListView(
+                              primary: false,
+                              physics: NeverScrollableScrollPhysics(),
+                              // crossAxisSpacing: 10.h,
+                              // crossAxisCount: 2,
+                              // childAspectRatio: 4 / 2,
+                              // mainAxisSpacing: 10.h,
+                              children: [
+                                billerdetail(
+                                    widget.isSavedBill
+                                        ? widget.categoryName.toString().toLowerCase() ==
+                                                "mobile prepaid"
+                                            ? "Mobile Number"
+                                            : widget.SavedinputParameters![0]
+                                                .pARAMETERNAME
+                                        : widget.categoryName.toString().toLowerCase() ==
+                                                "mobile prepaid"
+                                            ? "Mobile Number"
+                                            : widget.inputParameters![0]
+                                                .pARAMETERNAME,
+                                    widget.isSavedBill
+                                        ? widget.categoryName.toString().toLowerCase() ==
+                                                "mobile prepaid"
+                                            ? widget.SavedinputParameters!
+                                                .firstWhere((params) => params.pARAMETERNAME == null
+                                                    ? params.pARAMETERNAME ==
+                                                        null
+                                                    : params.pARAMETERNAME.toString().toLowerCase() ==
+                                                            "mobile number" ||
+                                                        params.pARAMETERNAME
+                                                                .toString()
+                                                                .toLowerCase() ==
+                                                            "customer mobile number")
+                                                .pARAMETERVALUE
+                                                .toString()
+                                            : widget.SavedinputParameters![0]
+                                                .pARAMETERVALUE
+                                        : widget.categoryName.toString().toLowerCase() ==
+                                                "mobile prepaid"
+                                            ? widget.inputParameters!
+                                                .firstWhere((params) => params.pARAMETERNAME == null
+                                                    ? params.pARAMETERNAME == null
+                                                    : params.pARAMETERNAME.toString().toLowerCase() == "mobile number" || params.pARAMETERNAME.toString().toLowerCase() == "customer mobile number")
+                                                .pARAMETERVALUE
+                                                .toString()
+                                            : widget.inputParameters![0].pARAMETERVALUE.toString(),
+                                    context),
+                                billerdetail("Bill Name",
+                                    widget.billName.toString(), context),
+                              ],
+                            )),
+                      Padding(
+                        padding: EdgeInsets.only(top: 8.0.h),
+                        child: Divider(
+                          color: AppColors.CLR_CON_BORDER,
+                          height: 0.1.h,
+                          thickness: 0.50,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.0.w, vertical: 10.h),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Amount",
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.CLR_PRIMARY_LITE,
                               ),
+                              textAlign: TextAlign.left,
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Payment Details",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xffffffff),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                          BillerDetailsContainer(
-                            icon: BILLER_LOGO(widget.billerName.toString()),
-                            billerName: widget.billerName.toString(),
-                            categoryName: widget.categoryName.toString(),
-                          ),
-                          if (widget.SavedinputParameters != null ||
-                              widget.inputParameters != null)
-                            Container(
-                                width: double.infinity,
-                                constraints: BoxConstraints(
-                                  minHeight: 80.h,
-                                  maxHeight: 300.h,
-                                ),
-                                height: 0.h,
-                                // color: Colors.white,
-                                child: ListView(
-                                  primary: false,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  // crossAxisSpacing: 10.h,
-                                  // crossAxisCount: 2,
-                                  // childAspectRatio: 4 / 2,
-                                  // mainAxisSpacing: 10.h,
-                                  children: [
-                                    billerdetail(
-                                        widget.isSavedBill
-                                            ? widget.categoryName.toString().toLowerCase() ==
-                                                    "mobile prepaid"
-                                                ? "Mobile Number"
-                                                : widget
-                                                    .SavedinputParameters![0]
-                                                    .pARAMETERNAME
-                                            : widget.categoryName.toString().toLowerCase() ==
-                                                    "mobile prepaid"
-                                                ? "Mobile Number"
-                                                : widget.inputParameters![0]
-                                                    .pARAMETERNAME,
-                                        widget.isSavedBill
-                                            ? widget.categoryName.toString().toLowerCase() ==
-                                                    "mobile prepaid"
-                                                ? widget.SavedinputParameters!
-                                                    .firstWhere((params) => params.pARAMETERNAME == null
-                                                        ? params.pARAMETERNAME ==
-                                                            null
-                                                        : params.pARAMETERNAME.toString().toLowerCase() ==
-                                                                "mobile number" ||
-                                                            params.pARAMETERNAME
-                                                                    .toString()
-                                                                    .toLowerCase() ==
-                                                                "customer mobile number")
-                                                    .pARAMETERVALUE
-                                                    .toString()
-                                                : widget
-                                                    .SavedinputParameters![0]
-                                                    .pARAMETERVALUE
-                                            : widget.categoryName.toString().toLowerCase() ==
-                                                    "mobile prepaid"
-                                                ? widget.inputParameters!
-                                                    .firstWhere((params) =>
-                                                        params.pARAMETERNAME == null
-                                                            ? params.pARAMETERNAME == null
-                                                            : params.pARAMETERNAME.toString().toLowerCase() == "mobile number" || params.pARAMETERNAME.toString().toLowerCase() == "customer mobile number")
-                                                    .pARAMETERVALUE
-                                                    .toString()
-                                                : widget.inputParameters![0].pARAMETERVALUE.toString(),
-                                        context),
-                                    billerdetail("Bill Name",
-                                        widget.billName.toString(), context),
-                                  ],
-                                )),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8.0.h),
-                            child: Divider(
-                              color: AppColors.CLR_DIVIDER_LITE,
-                              height: 1.h,
-                              thickness: 1,
-                              indent: 10.w,
-                              endIndent: 10.w,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.0.w, vertical: 15.h),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Amount",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.TXT_CLR_GREY,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                                Text(
-                                  "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.amount.toString()))}",
-                                  // "₹ ${widget.amount}",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.TXT_CLR_PRIMARY,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      )),
+                            Text(
+                              "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.amount.toString()))}",
+                              // "₹ ${widget.amount}",
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.TXT_CLR_PRIMARY,
+                              ),
+                              textAlign: TextAlign.left,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
                   Padding(
                     padding: EdgeInsets.only(
                         left: 18.0.w, right: 18.w, top: 18.w, bottom: 5.w),
@@ -632,7 +617,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       borderRadius: BorderRadius.circular(6.0.r + 2.r),
                       border: Border.all(
                         color: AppColors.CLR_CON_BORDER,
-                        width: 1.0,
+                        width: 0.50,
                       ),
                     ),
                     child: Column(

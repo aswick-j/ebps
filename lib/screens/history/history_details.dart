@@ -4,6 +4,7 @@ import 'package:delightful_toast/toast/components/toast_card.dart';
 import 'package:ebps/bloc/history/history_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
@@ -102,7 +103,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
           Text(
             title,
             style: TextStyle(
-              fontSize: 14.sp,
+              fontSize: 13.sp,
               fontWeight: FontWeight.w400,
               color: AppColors.TXT_CLR_LITE,
               height: 23 / 14,
@@ -120,7 +121,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                 child: Text(
                   subTitle,
                   style: TextStyle(
-                    fontSize: 14.sp,
+                    fontSize: 13.sp,
                     fontWeight: FontWeight.w500,
                     color: AppColors.TXT_CLR_PRIMARY,
                   ),
@@ -137,8 +138,9 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
                             '$title copied to clipboard',
-                            style:
-                                TextStyle(color: AppColors.CLR_BACKGROUND,fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                color: AppColors.CLR_BACKGROUND,
+                                fontWeight: FontWeight.bold),
                           ),
                           backgroundColor: AppColors.CLR_PRIMARY,
                         ));
@@ -334,18 +336,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                        clipBehavior: Clip.hardEdge,
-                        width: double.infinity,
-                        margin: EdgeInsets.only(
-                            left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                          border: Border.all(
-                            color: AppColors.CLR_CON_BORDER,
-                            width: 1.0,
-                          ),
-                        ),
+                     ReusableContainer(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -578,7 +569,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                           //     .toString(),
                                           // "01/08/2023 | 12:48 PM",
                                           style: TextStyle(
-                                            fontSize: 14.sp,
+                                            fontSize: 13.sp,
                                             fontWeight: FontWeight.w400,
                                             color: AppColors.TXT_CLR_LITE,
                                           ),
@@ -589,9 +580,9 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                   )),
                             ),
                             Divider(
-                              color: AppColors.CLR_DIVIDER_LITE,
+                              color: AppColors.CLR_CON_BORDER,
                               height: 10.h,
-                              thickness: 1,
+                              thickness: 0.50,
                             ),
                             TxnDetails(
                                 title: "Account",
@@ -614,8 +605,9 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                             //     subTitle: "Nil",
                             //     clipBoard: false),
                             Divider(
-                              height: 10,
-                              thickness: 1,
+                              color: AppColors.CLR_CON_BORDER,
+                              height: 10.h,
+                              thickness: 0.50,
                             ),
                             // TxnDetails(
                             //     title: "From Account",

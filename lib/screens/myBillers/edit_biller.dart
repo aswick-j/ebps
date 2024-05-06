@@ -3,6 +3,7 @@ import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/MyBillers/bill_details_container.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/NavigationService.dart';
@@ -255,18 +256,8 @@ class _EditBillerUIState extends State<EditBillerUI> {
                   //         //         widget.savedbillersData.bILLERNAME.toString())
                   //       ],
                   //     )),
-                  Container(
-                      clipBehavior: Clip.hardEdge,
-                      width: double.infinity,
-                      margin: EdgeInsets.only(
-                          left: 18.0.w, right: 18.w, top: 10.h, bottom: 15.h),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                        border: Border.all(
-                          color: AppColors.CLR_CON_BORDER,
-                          width: 1.0,
-                        ),
-                      ),
+                  ReusableContainer(
+                      bottomMargin: 15.h,
                       child: Column(
                         children: [
                           ListTile(
@@ -299,11 +290,9 @@ class _EditBillerUIState extends State<EditBillerUI> {
                             ),
                           ),
                           Divider(
-                            color: AppColors.CLR_DIVIDER_LITE,
+                            color: AppColors.CLR_CON_BORDER,
                             height: 10.h,
-                            thickness: 1,
-                            indent: 10.w,
-                            endIndent: 10.w,
+                            thickness: 0.50,
                           ),
                           if (!isEditBillDetailsLoading)
                             Column(
@@ -450,7 +439,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
               color: AppColors.CLR_BACKGROUND,
               border: Border(
                   top: BorderSide(
-                      color: AppColors.CLR_CON_BORDER_LITE, width: 1))),
+                      color: AppColors.CLR_CON_BORDER_LITE, width: 0.50))),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
             child: Row(

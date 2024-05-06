@@ -110,7 +110,7 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                                   .toLowerCase())
                           .toList()[0],
                       dateText: widget.allUpcomingDues[index]["dueDate"] != ""
-                          ? DateFormat('dd/MM/yyyy').format(DateTime.parse(
+                          ? DateFormat('MMM dd, yyyy').format(DateTime.parse(
                                   widget.allUpcomingDues[index]["dueDate"]!
                                       .toString()
                                       .substring(0, 10))
@@ -166,12 +166,12 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                       containerBorderColor: AppColors.CLR_CON_BORDER,
                       buttonColor: widget.allUpcomingDues[index]["itemType"] ==
                               'upcomingDue'
-                          ? AppColors.BTN_CLR_ACTIVE_BG
-                          : AppColors.BTN_CLR_ALTER_BG,
+                          ? AppColors.CLR_PRIMARY
+                          : AppColors.CLR_GREEN,
                       buttonTxtColor: widget.allUpcomingDues[index]
                                   ["itemType"] ==
                               'upcomingDue'
-                          ? AppColors.BTN_CLR_ACTIVE_TEXT
+                          ? AppColors.CLR_PRIMARY
                           : widget.allUpcomingDues[index]["itemType"] ==
                                   'upcomingAutopaused'
                               ? AppColors.CLR_ERROR

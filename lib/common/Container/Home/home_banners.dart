@@ -1,3 +1,4 @@
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
@@ -31,17 +32,7 @@ class _HomeBannersState extends State<HomeBanners>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin:
-          EdgeInsets.only(left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0.r),
-        border: Border.all(
-          color: AppColors.CLR_CON_BORDER,
-          width: 2.0,
-        ),
-      ),
+    return ReusableContainer(
       child: Container(
         margin:
             EdgeInsets.only(left: 18.0.w, right: 18.w, top: 0.h, bottom: 0.h),

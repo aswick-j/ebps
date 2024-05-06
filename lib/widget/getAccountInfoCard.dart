@@ -44,7 +44,7 @@ class AccountInfoCard extends StatelessWidget {
                     : isSelected == index
                         ? AppColors.CLR_GREEN
                         : AppColors.CLR_CON_BORDER,
-                width: 1.0,
+                width: 0.50,
               ),
             ),
             child: Column(
@@ -74,7 +74,7 @@ class AccountInfoCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 10.0.sp,
                         fontWeight: FontWeight.w400,
-                        color: AppColors.TXT_CLR_LITE_V3,
+                        color: AppColors.CLR_PRIMARY_LITE,
                       ),
                       textAlign: TextAlign.center,
                     ),

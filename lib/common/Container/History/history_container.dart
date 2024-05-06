@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:ebps/common/Container/ImageTile.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
@@ -97,7 +98,7 @@ class HistoryContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0.r),
           border: Border.all(
             color: containerBorderColor,
-            width: 2.0,
+            width: 0.50,
           ),
         ),
         child: Column(
@@ -224,17 +225,8 @@ class HistoryContainer extends StatelessWidget {
             ListTile(
               contentPadding: EdgeInsets.only(
                   left: 8.w, right: 15.w, top: 4.h, bottom: 3.h),
-              leading: Container(
-                width: 45.w,
-                child: Padding(
-                  padding: EdgeInsets.all(8.w),
-                  child: SvgPicture.asset(
-                    iconPath,
-                    // colorFilter: ColorFilter.mode(
-                    //     AppColors.CLR_ICON, BlendMode.srcIn)
-                  ),
-                ),
-              ),
+              leading: ImageTileContainer(iconPath: iconPath),
+
               title: Padding(
                 padding: EdgeInsets.only(bottom: 5.h),
                 child: Row(
@@ -300,7 +292,7 @@ class HistoryContainer extends StatelessWidget {
                               : historyData.billName.toString(),
                           style: TextStyle(
                             fontSize: 12.sp,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.normal,
                             color: AppColors.TXT_CLR_SECONDARY,
                           ),
                           textAlign: TextAlign.left,
@@ -378,10 +370,10 @@ class HistoryContainer extends StatelessWidget {
             ),
             Divider(
               color: AppColors.CLR_DIVIDER_LITE,
-              height: 10.h,
-              thickness: 1,
-              indent: 10.w,
-              endIndent: 10.w,
+              height: 1.h,
+              thickness: 0.50,
+              // indent: 10.w,
+              // endIndent: 10.w,
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 5.h),
@@ -392,14 +384,14 @@ class HistoryContainer extends StatelessWidget {
                     children: [
                       SvgPicture.asset(ICON_CALENDAR,
                           colorFilter: ColorFilter.mode(
-                              AppColors.TXT_CLR_LITE, BlendMode.srcIn)),
+                              AppColors.CLR_PRIMARY_LITE, BlendMode.srcIn)),
                       SizedBox(
                         width: 5.h,
                       ),
                       MyAppText(
                         data: dateText,
-                        size: 12.0.sp,
-                        color: AppColors.TXT_CLR_LITE,
+                        size: 11.0.sp,
+                        color: AppColors.CLR_PRIMARY_LITE,
                         weight: FontWeight.w400,
                       ),
                     ],
@@ -427,10 +419,9 @@ class HistoryContainer extends StatelessWidget {
                                     color: Color.fromARGB(255, 218, 124, 47),
                                   )
                                 : statusText == "Success"
-                                    ? Icon(
-                                        Icons.check_circle_sharp,
-                                        size: 12.r,
-                                        color: AppColors.CLR_GREEN,
+                                    ? SvgPicture.asset(
+                                        ICON_SUCCESS,
+                                        height: 10.h,
                                       )
                                     : SvgPicture.asset(ICON_FAILED))),
                     Text(
@@ -450,7 +441,7 @@ class HistoryContainer extends StatelessWidget {
                     SizedBox(width: 10.w),
                     Icon(
                       size: 18.r,
-                      Icons.arrow_forward,
+                      Icons.arrow_forward_rounded,
                       color: CLR_BLUE_LITE,
                     )
                     // IconButton(

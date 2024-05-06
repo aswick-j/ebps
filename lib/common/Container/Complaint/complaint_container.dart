@@ -1,3 +1,5 @@
+import 'package:ebps/common/Container/ImageTile.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
@@ -50,28 +52,12 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
       onTap: () {
         handleClick();
       },
-      child: Container(
-        width: double.infinity,
-        margin:
-            EdgeInsets.only(left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0.r),
-          border: Border.all(
-            color: AppColors.CLR_CON_BORDER,
-            width: 2.0,
-          ),
-        ),
+      child: ReusableContainer(
         child: Column(
           children: [
             ListTile(
               contentPadding: EdgeInsets.only(left: 6.w, right: 6.w, top: 6.h),
-              leading: Container(
-                width: 45.w,
-                child: Padding(
-                  padding: EdgeInsets.all(8.w),
-                  child: SvgPicture.asset(widget.iconPath),
-                ),
-              ),
+              leading: ImageTileContainer(iconPath: widget.iconPath),
               title: Padding(
                 padding: EdgeInsets.only(bottom: 3.h),
                 child: Row(
@@ -121,10 +107,10 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
             ),
             Divider(
               color: AppColors.CLR_CON_BORDER,
-              height: 10.h,
-              thickness: 1,
-              indent: 10.w,
-              endIndent: 10.w,
+              height: 1.h,
+              thickness: 0.50,
+              // indent: 10.w,
+              // endIndent: 10.w,
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 5.h),
@@ -157,21 +143,36 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                         if (widget.statusText != null)
                           Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 8.0.w, vertical: 3.w),
+                                horizontal: 16.0.w, vertical: 4.w),
+                            margin: EdgeInsets.symmetric(vertical: 4.h),
                             decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: getComplaintStatusColors(
-                                      widget.statusText.toString())),
-                              borderRadius: BorderRadius.circular(12.0.r),
-                            ),
+                                // border: Border.all(
+                                //     color: widget.buttonTxtColor
+                                //         .withOpacity(0.5)),
+                                borderRadius: BorderRadius.circular(10.r),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    getComplaintStatusColors(
+                                            widget.statusText.toString())
+                                        .withOpacity(0.5),
+                                    // Color(0xff0373c4),
+                                    Color.fromARGB(255, 212, 223, 231)
+                                  ],
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                )),
+                            // decoration: BoxDecoration(
+                            //   border:
+                            //       Border.all(color: widget.buttonTxtColor),
+                            //   borderRadius: BorderRadius.circular(12.0.r),
+                            // ),
                             child: Text(
                               getComplaintStatusValue(
                                   widget.statusText.toString()),
                               style: TextStyle(
-                                color: getComplaintStatusColors(
-                                    widget.statusText.toString()),
-                                fontSize: 8.0.sp,
-                              ),
+                                  color: Colors.white,
+                                  fontSize: 9.0.sp,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                         SizedBox(width: 10.w),

@@ -1,3 +1,4 @@
+import 'package:ebps/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -50,11 +51,11 @@ Color getComplaintStatusColors(String statusID) {
   switch (statusID) {
     case "ASSIGNED":
       {
-        return Colors.blue;
+        return AppColors.CLR_PRIMARY_LITE;
       }
     case "ESCALATED":
       {
-        return Colors.red;
+        return AppColors.CLR_ERROR;
       }
     case "RE_ASSIGNED":
       {
@@ -74,7 +75,7 @@ Color getComplaintStatusColors(String statusID) {
       }
     case "RESOLVED":
       {
-        return Colors.green;
+        return AppColors.CLR_GREEN;
       }
     case "UNRESOLVED":
       {

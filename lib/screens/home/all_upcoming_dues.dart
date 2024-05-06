@@ -343,11 +343,11 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                                     ["itemType"] ==
                                 'upcomingDue'
                             ? AppColors.BTN_CLR_ACTIVE_BG
-                            : AppColors.BTN_CLR_ALTER_BG,
+                            : AppColors.CLR_GREEN,
                         buttonTxtColor: widget.allUpcomingDues[index]
                                     ["itemType"] ==
                                 'upcomingDue'
-                            ? AppColors.BTN_CLR_ACTIVE_TEXT
+                            ? AppColors.CLR_PRIMARY
                             : widget.allUpcomingDues[index]["itemType"] ==
                                     'upcomingAutopaused'
                                 ? AppColors.CLR_ERROR
@@ -359,8 +359,8 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                             ? null
                             : widget.allUpcomingDues[index]["itemType"] ==
                                     'upcomingAutopaused'
-                                ? AppColors.CLR_ERROR
-                                : AppColors.CLR_GREEN,
+                                ? Colors.red
+                                : Color(0xff00AB44),
                       );
                     }),
                 SizedBox(

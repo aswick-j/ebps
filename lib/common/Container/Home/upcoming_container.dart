@@ -1,6 +1,7 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/Home/refresh_dues.dart';
+import 'package:ebps/common/Container/ImageTile.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/checkDateExpiry.dart';
@@ -80,7 +81,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
             borderRadius: BorderRadius.circular(8.0.r),
             side: BorderSide(
               color: widget.containerBorderColor,
-              width: 2.0,
+              width: 0.50,
             ),
           ),
           child: !isFetchbillLoading
@@ -89,13 +90,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                     ListTile(
                       contentPadding:
                           EdgeInsets.only(left: 8.w, right: 15.w, top: 4.h),
-                      leading: Container(
-                        width: 45.w,
-                        child: Padding(
-                          padding: EdgeInsets.all(8.w),
-                          child: SvgPicture.asset(widget.iconPath),
-                        ),
-                      ),
+                      leading: ImageTileContainer(iconPath: widget.iconPath),
                       title: Padding(
                         padding: EdgeInsets.only(bottom: 5.h),
                         child: Row(
@@ -182,15 +177,8 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                                     left: 8.w,
                                                     right: 15.w,
                                                     top: 4.h),
-                                                leading: Container(
-                                                  width: 45.w,
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.all(8.r),
-                                                    child: SvgPicture.asset(
-                                                        widget.iconPath),
-                                                  ),
-                                                ),
+                                                leading: ImageTileContainer(
+                                                    iconPath: widget.iconPath),
                                                 title: Padding(
                                                   padding: EdgeInsets.only(
                                                       bottom: 5.h),
@@ -330,8 +318,8 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                               Text(
                                 widget.amount,
                                 style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w600,
                                   color: AppColors.TXT_CLR_PRIMARY,
                                 ),
                                 textAlign: TextAlign.left,
@@ -343,10 +331,10 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                     ),
                     Divider(
                       height: 1.h,
-                      thickness: 1,
-                      indent: 10.w,
-                      endIndent: 10.w,
-                      color: AppColors.CLR_DIVIDER_LITE,
+                      thickness: 0.50,
+                      // indent: 10.w,
+                      // endIndent: 10.w,
+                      color: AppColors.CLR_CON_BORDER,
                     ),
                     Padding(
                       padding:
@@ -361,7 +349,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                   SvgPicture.asset(
                                     ICON_CALENDAR,
                                     colorFilter: ColorFilter.mode(
-                                        AppColors.TXT_CLR_LITE,
+                                        AppColors.CLR_PRIMARY_LITE,
                                         BlendMode.srcIn),
                                   ),
                                   SizedBox(
@@ -372,42 +360,86 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: AppColors.TXT_CLR_LITE,
+                                      color: AppColors.CLR_PRIMARY_LITE,
                                     ),
                                   ),
                                 ],
-                              ),
-                          if (widget.dueDate != "-")
-                            if (checkDateExpiry(widget.dueDate.toString()))
-                              Container(
-                                  decoration: BoxDecoration(
-                                      // color: Colors.red.shade100,
-                                      border: Border.all(
-                                        color: Colors.red.shade400,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(4.0.r),
-                                    child: Text(
-                                      "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
-                                      style: TextStyle(
-                                          fontSize: 7.sp,
-                                          fontWeight: FontWeight.w600,
-                                          color: AppColors.CLR_ERROR),
-                                    ),
+                              )
+                            else
+                              SizedBox(
+                                width: 10.w,
+                              )
+                          else
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                          // if (widget.dueDate != "-")
+                          //   if (checkDateExpiry(widget.dueDate.toString()))
+                          //     Container(
+                          //         decoration: BoxDecoration(
+                          //             // color: Colors.red.shade100,
+                          //             border: Border.all(
+                          //               color: Colors.red.shade400,
+                          //             ),
+                          //             borderRadius: BorderRadius.circular(20)),
+                          //         child: Padding(
+                          //           padding: EdgeInsets.all(4.0.r),
+                          //           child: Text(
+                          //             "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
+                          //             style: TextStyle(
+                          //                 fontSize: 7.sp,
+                          //                 fontWeight: FontWeight.w600,
+                          //                 color: AppColors.CLR_ERROR),
+                          //           ),
+                          //         )),
+                          GestureDetector(
+                            onTap: () {
+                              widget.onPressed();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8.0.w, vertical: 4.w),
+                              margin: EdgeInsets.symmetric(vertical: 8.h),
+                              decoration: BoxDecoration(
+                                  // border: Border.all(
+                                  //     color: widget.buttonTxtColor
+                                  //         .withOpacity(0.5)),
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      widget.buttonTxtColor.withOpacity(0.5),
+                                      // Color(0xff0373c4),
+                                      Color.fromARGB(255, 212, 223, 231)
+                                    ],
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
                                   )),
-                          MyAppButton(
-                              onPressed: () {
-                                widget.onPressed();
-                              },
-                              buttonText: widget.buttonText,
-                              buttonTxtColor: widget.buttonTxtColor,
-                              buttonBorderColor: widget.buttonBorderColor,
-                              buttonColor: widget.buttonColor,
-                              buttonSizeX: 10.h,
-                              buttonSizeY: 25.w,
-                              buttonTextSize: 10.sp,
-                              buttonTextWeight: FontWeight.w500),
+                              // decoration: BoxDecoration(
+                              //   border:
+                              //       Border.all(color: widget.buttonTxtColor),
+                              //   borderRadius: BorderRadius.circular(12.0.r),
+                              // ),
+                              child: Text(
+                                widget.buttonText.toString(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 9.0.sp,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                          // MyAppButton(
+                          //     onPressed: () {
+                          //       widget.onPressed();
+                          //     },
+                          //     buttonText: widget.buttonText,
+                          //     buttonTxtColor: widget.buttonTxtColor,
+                          //     buttonBorderColor: widget.buttonBorderColor,
+                          //     buttonColor: widget.buttonColor,
+                          //     buttonSizeX: 10.h,
+                          //     buttonSizeY: 25.w,
+                          //     buttonTextSize: 8.sp,
+                          //     buttonTextWeight: FontWeight.w500),
                         ],
                       ),
                     ),

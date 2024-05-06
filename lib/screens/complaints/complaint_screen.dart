@@ -219,7 +219,7 @@ class _ComplaintListState extends State<ComplaintList> {
                                 ComplaintList[index].bILLERNAME.toString(),
                             subtitleText:
                                 ComplaintList[index].cOMPLAINTID.toString(),
-                            dateText: DateFormat('dd/MM/yyyy').format(
+                            dateText: DateFormat('MMM dd, yyyy').format(
                                 DateTime.parse(ComplaintList[index]
                                         .cREATEDON
                                         .toString())

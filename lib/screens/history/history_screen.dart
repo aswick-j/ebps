@@ -333,7 +333,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                     subtitleText: historyData![index]
                                         .billerName
                                         .toString(),
-                                    dateText: DateFormat('dd/MM/yyyy').format(
+                                    dateText: DateFormat('MMM dd, yyyy').format(
                                         DateTime.parse(historyData![index]
                                                 .completionDate
                                                 .toString())

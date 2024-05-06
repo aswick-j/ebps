@@ -401,7 +401,7 @@ class _OtpScreenState extends State<OtpScreen> {
           borderRadius: BorderRadius.circular(6.0.r + 2.r),
           border: Border.all(
             color: AppColors.CLR_CON_BORDER,
-            width: 1.0,
+            width: 0.50,
           ),
         ),
         child: Column(
@@ -560,7 +560,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   enableResend = false;
                   showResend = false;
                   showGenerateOtpSuccessMsg = false;
-                  secondsRemaining = 20;
+                  secondsRemaining = 180;
                 });
                 showDialog(
                   barrierDismissible: false,
@@ -860,7 +860,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         borderRadius: BorderRadius.circular(6.0.r + 2.r),
                         border: Border.all(
                           color: AppColors.CLR_CON_BORDER,
-                          width: 1.0,
+                          width: 0.50,
                         ),
                       ),
                       child: Column(
@@ -1071,7 +1071,11 @@ class _OtpScreenState extends State<OtpScreen> {
                                           style: TextStyle(
                                             fontSize: 11.sp,
                                             fontWeight: FontWeight.w600,
-                                            color: AppColors.TXT_CLR_PRIMARY,
+                                            color: secondsRemaining > 60
+                                                ? AppColors.CLR_GREEN
+                                                : secondsRemaining > 30
+                                                    ? AppColors.CLR_ORANGE
+                                                    : AppColors.CLR_ERROR,
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
