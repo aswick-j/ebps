@@ -297,7 +297,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                         style: TextStyle(
                           fontSize: 13.sp,
                           fontWeight: FontWeight.bold,
-                          color: TXT_CLR_DEFAULT,
+                          color: AppColors.TXT_CLR_DEFAULT,
                         ),
                         textAlign: TextAlign.left,
                         maxLines: 2,
@@ -336,444 +336,430 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     ReusableContainer(
+                    ReusableContainer(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              alignment: Alignment.center,
-                              height: 33.0.h,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topRight,
-                                  stops: const [0.001, 19],
-                                  colors: getStatusGradientColors(widget
-                                              .historyData.transactionStatus
-                                              .toString()
-                                              .toLowerCase() ==
-                                          "success"
-                                      ? "success"
-                                      : widget.historyData.transactionStatus
-                                                      .toString()
-                                                      .toLowerCase() ==
-                                                  "bbps-in-progress" ||
-                                              widget.historyData
-                                                      .transactionStatus
-                                                      .toString()
-                                                      .toLowerCase() ==
-                                                  "bbps-timeout"
-                                          ? "pending"
-                                          : "failed"),
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    widget.historyData.transactionStatus
-                                                .toString()
-                                                .toLowerCase() ==
-                                            "success"
-                                        ? "Transaction Success"
-                                        : widget.historyData.transactionStatus
-                                                        .toString()
-                                                        .toLowerCase() ==
-                                                    "bbps-in-progress" ||
-                                                widget.historyData
-                                                        .transactionStatus
-                                                        .toString()
-                                                        .toLowerCase() ==
-                                                    "bbps-timeout"
-                                            ? "Transaction Pending "
-                                            : "Transaction Failure",
-                                    style: TextStyle(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color(0xffffffff),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                          height: 33.0.h,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topRight,
+                              stops: const [0.001, 19],
+                              colors: getStatusGradientColors(widget
+                                          .historyData.transactionStatus
+                                          .toString()
+                                          .toLowerCase() ==
+                                      "success"
+                                  ? "success"
+                                  : widget.historyData.transactionStatus
+                                                  .toString()
+                                                  .toLowerCase() ==
+                                              "bbps-in-progress" ||
+                                          widget.historyData.transactionStatus
+                                                  .toString()
+                                                  .toLowerCase() ==
+                                              "bbps-timeout"
+                                      ? "pending"
+                                      : "failed"),
                             ),
-                            ListTile(
-                              contentPadding: EdgeInsets.only(
-                                  left: 30.w, right: 6.w, top: 6.h),
-                              title: Padding(
-                                  padding: EdgeInsets.only(bottom: 5.h),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.historyData.transactionStatus
+                                            .toString()
+                                            .toLowerCase() ==
+                                        "success"
+                                    ? "Transaction Success"
+                                    : widget.historyData.transactionStatus
+                                                    .toString()
+                                                    .toLowerCase() ==
+                                                "bbps-in-progress" ||
+                                            widget.historyData.transactionStatus
+                                                    .toString()
+                                                    .toLowerCase() ==
+                                                "bbps-timeout"
+                                        ? "Transaction Pending "
+                                        : "Transaction Failure",
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xffffffff),
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                        ListTile(
+                          contentPadding:
+                              EdgeInsets.only(left: 30.w, right: 6.w, top: 6.h),
+                          title: Padding(
+                              padding: EdgeInsets.only(bottom: 5.h),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              SvgPicture.asset(ICON_ARROW_UP,
-                                                  height: 20.h),
-                                              Text(
-                                                "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.billAmount.toString()))}",
-                                                style: TextStyle(
-                                                  fontSize: 20.sp,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: AppColors.CLR_PRIMARY,
-                                                  height: 33 / 20,
-                                                ),
-                                                textAlign: TextAlign.left,
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              IconButton(
-                                                  onPressed: () async {
-                                                    Uint8List? capturedImage = await screenshotController.captureFromWidget(
-                                                        InheritedTheme.captureAll(
-                                                            context,
-                                                            Material(
-                                                                child: ScreenshotContainer(
-                                                                    channel: widget.historyData.paymentChannel == 'IB'
-                                                                        ? "Equitas - Internet Banking"
-                                                                        : "Equitas - Mobile Banking",
-                                                                    BillerName: widget
-                                                                        .billerName
-                                                                        .toString(),
-                                                                    BillerId: widget
-                                                                        .historyData
-                                                                        .billerId
-                                                                        .toString(),
-                                                                    BillName: widget
-                                                                        .historyData
-                                                                        .billName
-                                                                        .toString(),
-                                                                    ParamName: widget.historyData.categoryName.toString().toLowerCase().contains("mobile prepaid")
-                                                                        ? widget
-                                                                            .historyData
-                                                                            .parameters!
-                                                                            .firstWhere((params) => params.parameterName == null ? params.parameterValue == null : params.parameterName.toString().toLowerCase() == "mobile number")
-                                                                            .parameterName
-                                                                            .toString()
-                                                                        : widget.historyData.parameters![0].parameterName.toString(),
-                                                                    ParamValue: widget.historyData.categoryName.toString().toLowerCase().contains("mobile prepaid") ? widget.historyData.parameters!.firstWhere((params) => params.parameterName == null ? params.parameterName == null : params.parameterName.toString().toLowerCase() == "mobile number" || params.parameterName.toString().toLowerCase() == "customer mobile number").parameterName.toString() : widget.historyData.parameters![0].parameterValue.toString(),
-                                                                    TransactionID: widget.historyData.transactionReferenceId.toString(),
-                                                                    fromAccount: widget.historyData.accountNumber.toString(),
-                                                                    billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.billAmount.toString()))}",
-                                                                    trasactionStatus: widget.historyData.transactionStatus.toString(),
-                                                                    status: widget.historyData.transactionStatus.toString(),
-                                                                    ConsumerName: widget.historyData.customerName.toString(),
-                                                                    TransactionDate: DateFormat('dd/MM/yyyy | hh:mm a').format(DateTime.parse(widget.historyData.completionDate.toString()).toLocal())))),
-                                                        delay: Duration(seconds: 0));
-
-                                                    final result =
-                                                        await Printing.sharePdf(
-                                                      bytes: capturedImage,
-                                                      filename:
-                                                          '${widget.historyData.billerName}.jpeg',
-                                                    );
-                                                    if (result) {
-                                                      print('Shared');
-                                                    }
-                                                  },
-                                                  icon: Icon(
-                                                      Icons.share_outlined,
-                                                      color:
-                                                          AppColors.CLR_ICON)),
-                                              IconButton(
-                                                  onPressed: () {
-                                                    Printing.layoutPdf(
-                                                      name: widget.historyData
-                                                          .billerName
-                                                          .toString(),
-                                                      onLayout: (PdfPageFormat format) async =>
-                                                          generatePdf(
-                                                              format,
-                                                              widget.billerName
-                                                                  .toString(),
-                                                              widget.historyData.billerId
-                                                                  .toString(),
-                                                              widget.billName
-                                                                  .toString(),
-                                                              widget.historyData.categoryName.toString().toLowerCase().contains("mobile prepaid")
-                                                                  ? widget
-                                                                      .historyData
-                                                                      .parameters!
-                                                                      .firstWhere((params) => params.parameterName == null
-                                                                          ? params.parameterName ==
-                                                                              null
-                                                                          : params.parameterName.toString().toLowerCase() ==
-                                                                              "mobile number")
-                                                                      .parameterName
-                                                                      .toString()
-                                                                  : widget.historyData.parameters![0].parameterName
-                                                                      .toString(),
-                                                              widget.historyData.categoryName.toString().toLowerCase().contains("mobile prepaid")
-                                                                  ? widget
-                                                                      .historyData
-                                                                      .parameters!
-                                                                      .firstWhere((params) => params.parameterName == null ? params.parameterName == null : params.parameterName.toString().toLowerCase() == "mobile number")
-                                                                      .parameterValue
-                                                                      .toString()
-                                                                  : widget.historyData.parameters![0].parameterValue.toString(),
-                                                              widget.historyData.transactionReferenceId.toString(),
-                                                              widget.historyData.accountNumber.toString(),
-                                                              "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.billAmount.toString()))}",
-                                                              widget.historyData.transactionStatus.toString().toLowerCase() == "success"
-                                                                  ? "Transaction Success"
-                                                                  : widget.historyData.transactionStatus.toString().toLowerCase() == "bbps-in-progress" || widget.historyData.transactionStatus.toString().toLowerCase() == "bbps-timeout"
-                                                                      ? "Transaction Pending"
-                                                                      : "Transaction Failure",
-                                                              widget.historyData.paymentChannel == 'IB' ? "Equitas - Internet Banking" : "Equitas - Mobile Banking",
-                                                              DateFormat('dd/MM/yyyy | hh:mm a').format(DateTime.parse(widget.historyData.completionDate.toString()).toLocal()),
-                                                              widget.historyData.transactionStatus.toString(),
-                                                              widget.historyData.customerName ?? "-",
-                                                              widget.historyData.billNumber ?? "-"),
-                                                    );
-                                                    // Future.microtask(() =>
-                                                    //     Navigator.push(
-                                                    //         context,
-                                                    //         MaterialPageRoute(
-                                                    //             builder: (context) =>
-                                                    //                 pdfReciept())));
-                                                  },
-                                                  icon: Icon(
-                                                      Icons
-                                                          .file_download_outlined,
-                                                      color:
-                                                          AppColors.CLR_ICON)),
-                                            ],
+                                          SvgPicture.asset(ICON_ARROW_UP,
+                                              height: 20.h),
+                                          Text(
+                                            "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.billAmount.toString()))}",
+                                            style: TextStyle(
+                                              fontSize: 20.sp,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.CLR_PRIMARY,
+                                              height: 33 / 20,
+                                            ),
+                                            textAlign: TextAlign.left,
                                           ),
                                         ],
                                       ),
-                                      SizedBox(
-                                        height: 5.h,
+                                      Row(
+                                        children: [
+                                          IconButton(
+                                              onPressed: () async {
+                                                Uint8List? capturedImage = await screenshotController.captureFromWidget(
+                                                    InheritedTheme.captureAll(
+                                                        context,
+                                                        Material(
+                                                            child: ScreenshotContainer(
+                                                                channel: widget.historyData.paymentChannel == 'IB'
+                                                                    ? "Equitas - Internet Banking"
+                                                                    : "Equitas - Mobile Banking",
+                                                                BillerName: widget
+                                                                    .billerName
+                                                                    .toString(),
+                                                                BillerId: widget
+                                                                    .historyData
+                                                                    .billerId
+                                                                    .toString(),
+                                                                BillName: widget
+                                                                    .historyData
+                                                                    .billName
+                                                                    .toString(),
+                                                                ParamName: widget
+                                                                        .historyData
+                                                                        .categoryName
+                                                                        .toString()
+                                                                        .toLowerCase()
+                                                                        .contains("mobile prepaid")
+                                                                    ? widget.historyData.parameters!.firstWhere((params) => params.parameterName == null ? params.parameterValue == null : params.parameterName.toString().toLowerCase() == "mobile number").parameterName.toString()
+                                                                    : widget.historyData.parameters![0].parameterName.toString(),
+                                                                ParamValue: widget.historyData.categoryName.toString().toLowerCase().contains("mobile prepaid") ? widget.historyData.parameters!.firstWhere((params) => params.parameterName == null ? params.parameterName == null : params.parameterName.toString().toLowerCase() == "mobile number" || params.parameterName.toString().toLowerCase() == "customer mobile number").parameterName.toString() : widget.historyData.parameters![0].parameterValue.toString(),
+                                                                TransactionID: widget.historyData.transactionReferenceId.toString(),
+                                                                fromAccount: widget.historyData.accountNumber.toString(),
+                                                                billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.billAmount.toString()))}",
+                                                                trasactionStatus: widget.historyData.transactionStatus.toString(),
+                                                                status: widget.historyData.transactionStatus.toString(),
+                                                                ConsumerName: widget.historyData.customerName.toString(),
+                                                                TransactionDate: DateFormat('dd/MM/yyyy | hh:mm a').format(DateTime.parse(widget.historyData.completionDate.toString()).toLocal())))),
+                                                    delay: Duration(seconds: 0));
+
+                                                final result =
+                                                    await Printing.sharePdf(
+                                                  bytes: capturedImage,
+                                                  filename:
+                                                      '${widget.historyData.billerName}.jpeg',
+                                                );
+                                                if (result) {
+                                                  print('Shared');
+                                                }
+                                              },
+                                              icon: Icon(Icons.share_outlined,
+                                                  color: AppColors.CLR_ICON)),
+                                          IconButton(
+                                              onPressed: () {
+                                                Printing.layoutPdf(
+                                                  name: widget
+                                                      .historyData.billerName
+                                                      .toString(),
+                                                  onLayout: (PdfPageFormat format) async =>
+                                                      generatePdf(
+                                                          format,
+                                                          widget.billerName
+                                                              .toString(),
+                                                          widget.historyData
+                                                              .billerId
+                                                              .toString(),
+                                                          widget.billName
+                                                              .toString(),
+                                                          widget.historyData.categoryName.toString().toLowerCase().contains("mobile prepaid")
+                                                              ? widget
+                                                                  .historyData
+                                                                  .parameters!
+                                                                  .firstWhere((params) => params.parameterName == null
+                                                                      ? params.parameterName ==
+                                                                          null
+                                                                      : params.parameterName.toString().toLowerCase() ==
+                                                                          "mobile number")
+                                                                  .parameterName
+                                                                  .toString()
+                                                              : widget.historyData.parameters![0].parameterName
+                                                                  .toString(),
+                                                          widget.historyData.categoryName.toString().toLowerCase().contains("mobile prepaid")
+                                                              ? widget
+                                                                  .historyData
+                                                                  .parameters!
+                                                                  .firstWhere((params) => params.parameterName == null ? params.parameterName == null : params.parameterName.toString().toLowerCase() == "mobile number")
+                                                                  .parameterValue
+                                                                  .toString()
+                                                              : widget.historyData.parameters![0].parameterValue.toString(),
+                                                          widget.historyData.transactionReferenceId.toString(),
+                                                          widget.historyData.accountNumber.toString(),
+                                                          "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.historyData.billAmount.toString()))}",
+                                                          widget.historyData.transactionStatus.toString().toLowerCase() == "success"
+                                                              ? "Transaction Success"
+                                                              : widget.historyData.transactionStatus.toString().toLowerCase() == "bbps-in-progress" || widget.historyData.transactionStatus.toString().toLowerCase() == "bbps-timeout"
+                                                                  ? "Transaction Pending"
+                                                                  : "Transaction Failure",
+                                                          widget.historyData.paymentChannel == 'IB' ? "Equitas - Internet Banking" : "Equitas - Mobile Banking",
+                                                          DateFormat('dd/MM/yyyy | hh:mm a').format(DateTime.parse(widget.historyData.completionDate.toString()).toLocal()),
+                                                          widget.historyData.transactionStatus.toString(),
+                                                          widget.historyData.customerName ?? "-",
+                                                          widget.historyData.billNumber ?? "-"),
+                                                );
+                                                // Future.microtask(() =>
+                                                //     Navigator.push(
+                                                //         context,
+                                                //         MaterialPageRoute(
+                                                //             builder: (context) =>
+                                                //                 pdfReciept())));
+                                              },
+                                              icon: Icon(
+                                                  Icons.file_download_outlined,
+                                                  color: AppColors.CLR_ICON)),
+                                        ],
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 20.0.w),
-                                        child: Text(
-                                          DateFormat('dd/MM/yyyy | hh:mm a')
-                                              .format(DateTime.parse(widget
-                                                      .historyData
-                                                      .completionDate
-                                                      .toString())
-                                                  .toLocal()),
-                                          // DateFormat("dd/MM/yy | hh:mm a")
-                                          //     .format(widget.historyData.cOMPLETIONDATE.toString())
-                                          //   ,
-                                          // widget.historyData.cOMPLETIONDATE
-                                          //     .toString(),
-                                          // "01/08/2023 | 12:48 PM",
-                                          style: TextStyle(
-                                            fontSize: 13.sp,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.TXT_CLR_LITE,
-                                          ),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      )
                                     ],
-                                  )),
-                            ),
-                            Divider(
-                              color: AppColors.CLR_CON_BORDER,
-                              height: 10.h,
-                              thickness: 0.50,
-                            ),
-                            TxnDetails(
-                                title: "Account",
-                                subTitle:
-                                    'Equitas Bank - ${widget.historyData.accountNumber.toString()}',
-                                clipBoard: false),
-                            if (widget.historyData.customerName != null &&
-                                widget.historyData.customerName != "NA")
-                              TxnDetails(
-                                  title: "Consumer Name",
-                                  subTitle: widget.historyData.customerName
-                                      .toString(),
-                                  clipBoard: false),
-                            TxnDetails(
-                                title: "Biller Name",
-                                subTitle: widget.billerName,
-                                clipBoard: false),
-                            // TxnDetails(
-                            //     title: "Payee Note",
-                            //     subTitle: "Nil",
-                            //     clipBoard: false),
-                            Divider(
-                              color: AppColors.CLR_CON_BORDER,
-                              height: 10.h,
-                              thickness: 0.50,
-                            ),
-                            // TxnDetails(
-                            //     title: "From Account",
-                            //     subTitle:
-                            //         widget.historyData.aCCOUNTNUMBER.toString(),
-                            //     clipBoard: false),
-                            // TxnDetails(
-                            //     title: "Bank Reference Number ",
-                            //     subTitle:
-                            //         widget.historyData.aPPROVALREFNO.toString(),
-                            //     clipBoard: true),
-                            if (widget.historyData.parameters![0].parameterName != null ||
-                                widget.historyData.parameters![0].parameterValue !=
-                                    null)
-                              TxnDetails(
-                                  title: widget.historyData.categoryName
-                                          .toString()
-                                          .toLowerCase()
-                                          .contains("mobile prepaid")
-                                      ? "Mobile Number"
-                                      : widget.historyData.parameters![0]
-                                          .parameterName
-                                          .toString(),
-                                  subTitle: widget.historyData.categoryName
-                                          .toString()
-                                          .toLowerCase()
-                                          .contains("mobile prepaid")
-                                      ? widget.historyData.parameters!
-                                          .firstWhere((params) => params.parameterName == null
-                                              ? params.parameterName == null
-                                              : params.parameterName.toString().toLowerCase() == "mobile number" ||
-                                                  params.parameterName.toString().toLowerCase() == "customer mobile number")
-                                          .parameterValue
-                                          .toString()
-                                      : widget.historyData.parameters![0].parameterValue.toString(),
-                                  clipBoard: false),
-                            if (widget.historyData.transactionReferenceId !=
-                                null)
-                              TxnDetails(
-                                  title: "Transaction ID",
-                                  subTitle: widget
-                                      .historyData.transactionReferenceId
-                                      .toString(),
-                                  clipBoard: true),
-                            if (isTransactionStatusLoading ||
-                                isTxnUpdateLoading)
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16.0.w, vertical: 8.h),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Status",
+                                  ),
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 20.0.w),
+                                    child: Text(
+                                      DateFormat('dd/MM/yyyy | hh:mm a').format(
+                                          DateTime.parse(widget
+                                                  .historyData.completionDate
+                                                  .toString())
+                                              .toLocal()),
+                                      // DateFormat("dd/MM/yy | hh:mm a")
+                                      //     .format(widget.historyData.cOMPLETIONDATE.toString())
+                                      //   ,
+                                      // widget.historyData.cOMPLETIONDATE
+                                      //     .toString(),
+                                      // "01/08/2023 | 12:48 PM",
                                       style: TextStyle(
-                                        fontSize: 14.sp,
+                                        fontSize: 13.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: Color(0xff808080),
-                                        height: 23 / 14,
+                                        color: AppColors.TXT_CLR_LITE,
                                       ),
                                       textAlign: TextAlign.left,
                                     ),
-                                    SizedBox(height: 5.h),
-                                    SizedBox(
-                                      width: 250.w,
-                                      child: Row(
-                                        children: [
-                                          AnimatedTextKit(
-                                            repeatForever: true,
-                                            isRepeatingAnimation: true,
-                                            animatedTexts: [
-                                              ColorizeAnimatedText(
-                                                'Checking Transaction Status',
-                                                textStyle: colorizeTextStyle,
-                                                colors: colorizeColors,
-                                              ),
-                                            ],
+                                  )
+                                ],
+                              )),
+                        ),
+                        Divider(
+                          color: AppColors.CLR_CON_BORDER,
+                          height: 10.h,
+                          thickness: 0.50,
+                        ),
+                        TxnDetails(
+                            title: "Account",
+                            subTitle:
+                                'Equitas Bank - ${widget.historyData.accountNumber.toString()}',
+                            clipBoard: false),
+                        if (widget.historyData.customerName != null &&
+                            widget.historyData.customerName != "NA")
+                          TxnDetails(
+                              title: "Consumer Name",
+                              subTitle:
+                                  widget.historyData.customerName.toString(),
+                              clipBoard: false),
+                        TxnDetails(
+                            title: "Biller Name",
+                            subTitle: widget.billerName,
+                            clipBoard: false),
+                        // TxnDetails(
+                        //     title: "Payee Note",
+                        //     subTitle: "Nil",
+                        //     clipBoard: false),
+                        Divider(
+                          color: AppColors.CLR_CON_BORDER,
+                          height: 10.h,
+                          thickness: 0.50,
+                        ),
+                        // TxnDetails(
+                        //     title: "From Account",
+                        //     subTitle:
+                        //         widget.historyData.aCCOUNTNUMBER.toString(),
+                        //     clipBoard: false),
+                        // TxnDetails(
+                        //     title: "Bank Reference Number ",
+                        //     subTitle:
+                        //         widget.historyData.aPPROVALREFNO.toString(),
+                        //     clipBoard: true),
+                        if (widget.historyData.parameters![0].parameterName != null ||
+                            widget.historyData.parameters![0].parameterValue !=
+                                null)
+                          TxnDetails(
+                              title: widget.historyData.categoryName
+                                      .toString()
+                                      .toLowerCase()
+                                      .contains("mobile prepaid")
+                                  ? "Mobile Number"
+                                  : widget.historyData.parameters![0].parameterName
+                                      .toString(),
+                              subTitle: widget.historyData.categoryName
+                                      .toString()
+                                      .toLowerCase()
+                                      .contains("mobile prepaid")
+                                  ? widget.historyData.parameters!
+                                      .firstWhere((params) => params.parameterName == null
+                                          ? params.parameterName == null
+                                          : params.parameterName.toString().toLowerCase() == "mobile number" ||
+                                              params.parameterName.toString().toLowerCase() ==
+                                                  "customer mobile number")
+                                      .parameterValue
+                                      .toString()
+                                  : widget.historyData.parameters![0].parameterValue.toString(),
+                              clipBoard: false),
+                        if (widget.historyData.transactionReferenceId != null)
+                          TxnDetails(
+                              title: "Transaction ID",
+                              subTitle: widget
+                                  .historyData.transactionReferenceId
+                                  .toString(),
+                              clipBoard: true),
+                        if (isTransactionStatusLoading || isTxnUpdateLoading)
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.0.w, vertical: 8.h),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Status",
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xff808080),
+                                    height: 23 / 14,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                                SizedBox(height: 5.h),
+                                SizedBox(
+                                  width: 250.w,
+                                  child: Row(
+                                    children: [
+                                      AnimatedTextKit(
+                                        repeatForever: true,
+                                        isRepeatingAnimation: true,
+                                        animatedTexts: [
+                                          ColorizeAnimatedText(
+                                            'Checking Transaction Status',
+                                            textStyle: colorizeTextStyle,
+                                            colors: colorizeColors,
                                           ),
-                                          // Text(
-                                          //   "Checking Transaction Status",
-                                          //   style: TextStyle(
-                                          //     fontSize: 14.sp,
-                                          //     fontWeight: FontWeight.w500,
-                                          //     color: Color(0xff1b438b),
-                                          //   ),
-                                          //   textAlign: TextAlign.left,
-                                          //   maxLines: 2,
-                                          // ),
-                                          AnimatedTextKit(
-                                              repeatForever: true,
-                                              isRepeatingAnimation: true,
-                                              animatedTexts: [
-                                                TyperAnimatedText(' . . .',
-                                                    textStyle: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.orange,
-                                                    ),
-                                                    speed: Duration(
-                                                        milliseconds: 100)),
-                                              ]),
                                         ],
                                       ),
-                                    ),
-                                    SizedBox(width: 10.w),
-                                  ],
+                                      // Text(
+                                      //   "Checking Transaction Status",
+                                      //   style: TextStyle(
+                                      //     fontSize: 14.sp,
+                                      //     fontWeight: FontWeight.w500,
+                                      //     color: Color(0xff1b438b),
+                                      //   ),
+                                      //   textAlign: TextAlign.left,
+                                      //   maxLines: 2,
+                                      // ),
+                                      AnimatedTextKit(
+                                          repeatForever: true,
+                                          isRepeatingAnimation: true,
+                                          animatedTexts: [
+                                            TyperAnimatedText(' . . .',
+                                                textStyle: TextStyle(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.orange,
+                                                ),
+                                                speed: Duration(
+                                                    milliseconds: 100)),
+                                          ]),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            if (!isTransactionStatusLoading &&
-                                !isTxnUpdateLoading)
-                              TxnDetails(
-                                  title: "Status",
-                                  subTitle: widget.historyData.transactionStatus
-                                              .toString()
-                                              .toLowerCase() ==
-                                          "success"
-                                      ? "Transaction Success"
-                                      : widget.historyData.transactionStatus
-                                                      .toString()
-                                                      .toLowerCase() ==
-                                                  "bbps-in-progress" ||
-                                              widget.historyData
-                                                      .transactionStatus
-                                                      .toString()
-                                                      .toLowerCase() ==
-                                                  "bbps-timeout"
-                                          ? "Transaction Pending"
-                                          : "Transaction Failure",
-                                  clipBoard: false),
-                            if (!isTransactionStatusLoading &&
-                                !isTxnUpdateLoading)
-                              if (widget.historyData.transactionStatus
-                                      .toString()
-                                      .toLowerCase() !=
-                                  "success")
-                                TxnDetails(
-                                    title: "Reason",
-                                    subTitle: getTransactionReason(widget
-                                        .historyData.transactionStatus
-                                        .toString()),
-                                    clipBoard: false),
+                                SizedBox(width: 10.w),
+                              ],
+                            ),
+                          ),
+                        if (!isTransactionStatusLoading && !isTxnUpdateLoading)
+                          TxnDetails(
+                              title: "Status",
+                              subTitle: widget.historyData.transactionStatus
+                                          .toString()
+                                          .toLowerCase() ==
+                                      "success"
+                                  ? "Transaction Success"
+                                  : widget.historyData.transactionStatus
+                                                  .toString()
+                                                  .toLowerCase() ==
+                                              "bbps-in-progress" ||
+                                          widget.historyData.transactionStatus
+                                                  .toString()
+                                                  .toLowerCase() ==
+                                              "bbps-timeout"
+                                      ? "Transaction Pending"
+                                      : "Transaction Failure",
+                              clipBoard: false),
+                        if (!isTransactionStatusLoading && !isTxnUpdateLoading)
+                          if (widget.historyData.transactionStatus
+                                  .toString()
+                                  .toLowerCase() !=
+                              "success")
                             TxnDetails(
-                                title: "Payment Channel",
-                                subTitle:
-                                    widget.historyData.paymentChannel == 'IB'
-                                        ? "Equitas - Internet Banking"
-                                        : "Equitas - Mobile Banking",
-                                clipBoard: false,
-                                showLogo: true),
-                            // if (widget.historyData.tRANSACTIONSTATUS == 'success')
-                            //   TxnDetails(
-                            //       title: "Payee Note",
-                            //       subTitle: "Nil",
-                            //       clipBoard: false),
-                            // Divider(
-                            //   height: 10,
-                            //   thickness: 1,
-                            // ),
-                            // TxnDetails(
-                            //     title: "Transfer Type",
-                            //     subTitle: "Equitas Digital Banking",
-                            //     clipBoard: false,
-                            //     showLogo: true),
-                          ],
-                        )),
+                                title: "Reason",
+                                subTitle: getTransactionReason(widget
+                                    .historyData.transactionStatus
+                                    .toString()),
+                                clipBoard: false),
+                        TxnDetails(
+                            title: "Payment Channel",
+                            subTitle: widget.historyData.paymentChannel == 'IB'
+                                ? "Equitas - Internet Banking"
+                                : "Equitas - Mobile Banking",
+                            clipBoard: false,
+                            showLogo: true),
+                        // if (widget.historyData.tRANSACTIONSTATUS == 'success')
+                        //   TxnDetails(
+                        //       title: "Payee Note",
+                        //       subTitle: "Nil",
+                        //       clipBoard: false),
+                        // Divider(
+                        //   height: 10,
+                        //   thickness: 1,
+                        // ),
+                        // TxnDetails(
+                        //     title: "Transfer Type",
+                        //     subTitle: "Equitas Digital Banking",
+                        //     clipBoard: false,
+                        //     showLogo: true),
+                      ],
+                    )),
                     // if (widget.historyData.tRANSACTIONSTATUS != 'success')
                     BbpsLogoContainer(showEquitasLogo: true),
                     SizedBox(

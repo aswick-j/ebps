@@ -133,16 +133,18 @@ class _PaymentDetailsState extends State<PaymentDetails> {
     } else if (widget.validateBill!["billerType"] == "instant" ||
         widget.validateBill!["billerType"] == "adhoc") {
       BlocProvider.of<HomeCubit>(context).fetchBill(
-        billerID: widget.isSavedBill
-            ? widget.savedBillersData!.bILLERID
-            : widget.billerData!.bILLERID,
-        quickPay: widget.validateBill!["quickPay"],
-        quickPayAmount: widget.amount.toString(),
-        adHocBillValidationRefKey: "",
-        validateBill: widget.validateBill!["validateBill"],
-        billerParams: widget.billerInputSign,
-        billName: widget.billName,
-      );
+          billerID: widget.isSavedBill
+              ? widget.savedBillersData!.bILLERID
+              : widget.billerData!.bILLERID,
+          quickPay: widget.validateBill!["quickPay"],
+          quickPayAmount: widget.amount.toString(),
+          adHocBillValidationRefKey: "",
+          validateBill: widget.validateBill!["validateBill"],
+          billerParams: widget.billerInputSign,
+          billName: widget.billName,
+          customerBillId: widget.isSavedBill
+              ? widget.savedBillersData!.cUSTOMERBILLID
+              : null);
     } else {
       goToData(context, oTPPAGEROUTE, {
         "from": pAYMENTCONFIRMROUTE,
@@ -192,12 +194,12 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                           goBack(context);
                         },
                         buttonText: "Okay",
-                        buttonTxtColor: BTN_CLR_ACTIVE,
+                        buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                         buttonBorderColor: Colors.transparent,
-                        buttonColor: CLR_PRIMARY,
-                        buttonSizeX: 10,
-                        buttonSizeY: 40,
-                        buttonTextSize: 14,
+                        buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
+                        buttonSizeX: 10.h,
+                        buttonSizeY: 40.w,
+                        buttonTextSize: 14.sp,
                         buttonTextWeight: FontWeight.w500),
                   ),
                 ],
@@ -208,7 +210,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     subTitle:
                         "We're sorry.We were unable to process your payment.Please try again later",
                     showSub: true,
-                    shapeColor: CLR_ERROR,
+                    shapeColor: AppColors.CLR_ERROR,
                     child: Icon(
                       Icons.close_rounded,
                       color: Colors.white,
@@ -328,6 +330,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 validateBill: widget.validateBill!["validateBill"],
                 billerParams: widget.billerInputSign,
                 billName: widget.billName,
+                customerBillId: widget.isSavedBill
+                    ? widget.savedBillersData!.cUSTOMERBILLID
+                    : null,
                 forChannel: (widget.isSavedBill
                         ? widget.savedBillersData!.cATEGORYNAME!
                                 .toLowerCase() ==
@@ -651,7 +656,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                             style: TextStyle(
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w500,
-                              color: CLR_BLUE_LITE,
+                              color: AppColors.CLR_BLUE_LITE,
                             ),
                             textAlign: TextAlign.left,
                           ),

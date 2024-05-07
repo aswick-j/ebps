@@ -188,7 +188,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         suffixIcon: IconButton(
                           icon: Icon(Icons.search),
                           iconSize: 25.r,
-                          color: CLR_BLUE_LITE,
+                          color: AppColors.CLR_BLUE_LITE,
                           onPressed: () => (),
                         ),
                         border: OutlineInputBorder(

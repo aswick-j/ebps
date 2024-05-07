@@ -286,12 +286,12 @@ class _OtpScreenState extends State<OtpScreen> {
                           });
                         },
                         buttonText: "Okay",
-                        buttonTxtColor: BTN_CLR_ACTIVE,
+                        buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                         buttonBorderColor: Colors.transparent,
-                        buttonColor: CLR_PRIMARY,
-                        buttonSizeX: 10,
-                        buttonSizeY: 40,
-                        buttonTextSize: 14,
+                        buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
+                        buttonSizeX: 10.h,
+                        buttonSizeY: 40.w,
+                        buttonTextSize: 14.sp,
                         buttonTextWeight: FontWeight.w500),
                   ),
                 ],
@@ -305,7 +305,8 @@ class _OtpScreenState extends State<OtpScreen> {
                             index, BillerName.toString(), BillName.toString()),
                     subTitle: "",
                     showSub: false,
-                    shapeColor: Success ? CLR_GREEN : CLR_ERROR,
+                    shapeColor:
+                        Success ? AppColors.CLR_GREEN : AppColors.CLR_ERROR,
                     child: Icon(
                       Icons.close,
                       color: Colors.white,
@@ -361,12 +362,12 @@ class _OtpScreenState extends State<OtpScreen> {
                           });
                         },
                         buttonText: "Okay",
-                        buttonTxtColor: BTN_CLR_ACTIVE,
+                        buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                         buttonBorderColor: Colors.transparent,
-                        buttonColor: CLR_PRIMARY,
-                        buttonSizeX: 10,
-                        buttonSizeY: 40,
-                        buttonTextSize: 14,
+                        buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
+                        buttonSizeX: 10.h,
+                        buttonSizeY: 40.w,
+                        buttonTextSize: 14.sp,
                         buttonTextWeight: FontWeight.w500),
                   ),
                 ],
@@ -376,7 +377,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     subTitle:
                         "We're sorry. We were unable to process your payment. Please try again later.",
                     showSub: true,
-                    shapeColor: CLR_ERROR,
+                    shapeColor: AppColors.CLR_ERROR,
                     child: Icon(
                       Icons.error_outline,
                       color: Colors.white,
@@ -393,7 +394,7 @@ class _OtpScreenState extends State<OtpScreen> {
         margin:
             EdgeInsets.only(left: 18.0.w, right: 18.w, top: 20.h, bottom: 0.h),
         decoration: BoxDecoration(
-          color: CLR_GREY.withOpacity(0.1),
+          color: AppColors.CLR_GREY.withOpacity(0.1),
           borderRadius: BorderRadius.circular(6.0.r + 2.r),
           border: Border.all(
             color: AppColors.CLR_CON_BORDER,
@@ -462,12 +463,12 @@ class _OtpScreenState extends State<OtpScreen> {
                           });
                         },
                         buttonText: "Okay",
-                        buttonTxtColor: BTN_CLR_ACTIVE,
+                        buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                         buttonBorderColor: Colors.transparent,
-                        buttonColor: CLR_PRIMARY,
-                        buttonSizeX: 10,
-                        buttonSizeY: 40,
-                        buttonTextSize: 14,
+                        buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
+                        buttonSizeX: 10.h,
+                        buttonSizeY: 40.w,
+                        buttonTextSize: 14.sp,
                         buttonTextWeight: FontWeight.w500),
                   ),
                 ],
@@ -582,12 +583,13 @@ class _OtpScreenState extends State<OtpScreen> {
                                     });
                                   },
                                   buttonText: "Okay",
-                                  buttonTxtColor: BTN_CLR_ACTIVE,
+                                  buttonTxtColor:
+                                      AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                                   buttonBorderColor: Colors.transparent,
-                                  buttonColor: CLR_PRIMARY,
-                                  buttonSizeX: 10,
-                                  buttonSizeY: 40,
-                                  buttonTextSize: 14,
+                                  buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
+                                  buttonSizeX: 10.h,
+                                  buttonSizeY: 40.w,
+                                  buttonTextSize: 14.sp,
                                   buttonTextWeight: FontWeight.w500),
                             ),
                           ],
@@ -645,9 +647,10 @@ class _OtpScreenState extends State<OtpScreen> {
                                   handleRedirect();
                                 },
                                 buttonText: "Okay",
-                                buttonTxtColor: BTN_CLR_ACTIVE,
+                                buttonTxtColor:
+                                    AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                                 buttonBorderColor: Colors.transparent,
-                                buttonColor: CLR_PRIMARY,
+                                buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                                 buttonSizeX: 10.h,
                                 buttonSizeY: 40.w,
                                 buttonTextSize: 14.sp,
@@ -658,7 +661,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             showImgIcon: true,
                             title: "Your Payment Has Been Successful.",
                             subTitle: "",
-                            shapeColor: CLR_GREEN,
+                            shapeColor: AppColors.CLR_GREEN,
                             child: Icon(
                               Icons.check,
                               color: Colors.white,
@@ -707,12 +710,14 @@ class _OtpScreenState extends State<OtpScreen> {
                                         handleRedirect();
                                       },
                                       buttonText: "Okay",
-                                      buttonTxtColor: BTN_CLR_ACTIVE,
+                                      buttonTxtColor:
+                                          AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                                       buttonBorderColor: Colors.transparent,
-                                      buttonColor: CLR_PRIMARY,
-                                      buttonSizeX: 10,
-                                      buttonSizeY: 40,
-                                      buttonTextSize: 14,
+                                      buttonColor:
+                                          AppColors.BTN_CLR_ACTIVE_ALTER,
+                                      buttonSizeX: 10.h,
+                                      buttonSizeY: 40.w,
+                                      buttonTextSize: 14.sp,
                                       buttonTextWeight: FontWeight.w500),
                                 ),
                               ],
@@ -720,7 +725,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                   showImgIcon: false,
                                   title: "Your Payment Has Been Failed.",
                                   subTitle: "",
-                                  shapeColor: CLR_ERROR,
+                                  shapeColor: AppColors.CLR_ERROR,
                                   child: Icon(
                                     Icons.close_rounded,
                                     color: Colors.white,

@@ -115,7 +115,7 @@ class _createAutopayState extends State<createAutopay> {
               Tooltip(
                 textStyle: TextStyle(color: Colors.white),
                 decoration: BoxDecoration(
-                    color: CLR_BLUE_LITE,
+                    color: AppColors.CLR_BLUE_LITE,
                     borderRadius: BorderRadius.circular(8.0.r)),
                 triggerMode: TooltipTriggerMode.tap,
                 showDuration: Duration(milliseconds: 20000),
@@ -231,7 +231,8 @@ class _createAutopayState extends State<createAutopay> {
                                                 0.9
                                               ],
                                               colors: [
-                                                CLR_BLUE_LITE.withOpacity(.16),
+                                                AppColors.CLR_BLUE_LITE
+                                                    .withOpacity(.16),
                                                 Colors.transparent
                                               ])),
                                       width: 45.w,
@@ -1167,7 +1168,18 @@ class _createAutopayState extends State<createAutopay> {
                               }
                             },
                             buttonText: "Create",
-                            buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
+                            buttonTxtColor: selectedAcc != null &&
+                                    !isMaxAmountEmpty &&
+                                    !((double.parse(
+                                            maxAmountController.text.length > 0
+                                                ? maxAmountController.text
+                                                : "0".toString()) >
+                                        double.parse(
+                                            maximumAmount.toString()))) &&
+                                    !(selectedDate == todayDate &&
+                                        activatesFrom == "Immediately")
+                                ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                                : AppColors.BTN_CLR_DISABLE_TEXT,
                             buttonBorderColor: Colors.transparent,
                             buttonColor: selectedAcc != null &&
                                     !isMaxAmountEmpty &&

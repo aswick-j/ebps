@@ -38,7 +38,7 @@ Future<Uint8List> generatePdf(
   Uint8List equitasFooterList = equitasFooterbytes.buffer.asUint8List();
 
   final PdfColor primaryColor = PdfColor.fromHex('#a9bbdb');
-  final PdfColor BackgroundColor = PdfColor.fromHex(AppColors.CLR_PDF_BG);
+  // final PdfColor BackgroundColor = PdfColor.fromHex(AppColors.CLR_PDF_BG);
   pdf.addPage(pw.Page(
       pageFormat: PdfPageFormat.a4,
       build: (pw.Context context) {

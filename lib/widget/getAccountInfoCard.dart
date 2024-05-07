@@ -40,7 +40,7 @@ class AccountInfoCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(6.0),
               border: Border.all(
                 color: isSelected == index && AccErr == true
-                    ? CLR_ERROR
+                    ? AppColors.CLR_ERROR
                     : isSelected == index
                         ? AppColors.CLR_GREEN
                         : AppColors.CLR_CON_BORDER,

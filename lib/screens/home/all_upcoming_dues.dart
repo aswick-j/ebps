@@ -138,12 +138,12 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                             });
                           },
                           buttonText: "Okay",
-                          buttonTxtColor: BTN_CLR_ACTIVE,
+                          buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                           buttonBorderColor: Colors.transparent,
-                          buttonColor: CLR_PRIMARY,
-                          buttonSizeX: 10,
-                          buttonSizeY: 40,
-                          buttonTextSize: 14,
+                          buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
+                          buttonSizeX: 10.h,
+                          buttonSizeY: 40.w,
+                          buttonTextSize: 14.sp,
                           buttonTextWeight: FontWeight.w500),
                     ),
                   ],
@@ -162,7 +162,9 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                         color: Colors.white,
                       ),
                       showSub: false,
-                      shapeColor: success ? CLR_GREEN : CLR_ERROR)));
+                      shapeColor: success
+                          ? AppColors.CLR_GREEN
+                          : AppColors.CLR_ERROR)));
         },
       );
     }

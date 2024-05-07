@@ -182,6 +182,7 @@ class HomeCubit extends Cubit<HomeState> {
     String? adHocBillValidationRefKey,
     bool? validateBill,
     Map<String, dynamic>? billerParams,
+    dynamic customerBillId,
     String? billName,
     dynamic forChannel,
     String? planId,
@@ -201,6 +202,7 @@ class HomeCubit extends Cubit<HomeState> {
         quickPayAmount,
         adHocBillValidationRefKey,
         billName,
+        customerBillId,
       );
 
       // value = {

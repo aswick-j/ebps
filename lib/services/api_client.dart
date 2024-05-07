@@ -117,8 +117,15 @@ class ApiClient implements Repository {
   //FETCH BILL
 
   @override
-  Future fetchBill(validateBill, billerID, billerParams, quickPay,
-      quickPayAmount, adHocBillValidationRefKey, billName) async {
+  Future fetchBill(
+      validateBill,
+      billerID,
+      billerParams,
+      quickPay,
+      quickPayAmount,
+      adHocBillValidationRefKey,
+      billName,
+      customerBillId) async {
     Map<String, dynamic> body = {
       "validateBill": validateBill,
       "billerID": billerID,
@@ -126,7 +133,8 @@ class ApiClient implements Repository {
       "quickPay": quickPay,
       "quickPayAmount": quickPayAmount,
       "adHocBillValidationRefKey": adHocBillValidationRefKey,
-      "billName": billName
+      "billName": billName,
+      "customerBillId": customerBillId
     };
     try {
       var response = await api(

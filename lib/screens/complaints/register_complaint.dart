@@ -99,7 +99,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w700,
-                            color: CLR_PRIMARY,
+                            color: AppColors.CLR_PRIMARY,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -120,7 +120,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                     style: TextStyle(
                                       fontSize: 10.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: TXT_CLR_PRIMARY,
+                                      color: AppColors.TXT_CLR_PRIMARY,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -172,9 +172,10 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                 goBack(ctx);
                               },
                               buttonText: "Okay",
-                              buttonTxtColor: BTN_CLR_ACTIVE,
+                              buttonTxtColor:
+                                  AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                               buttonBorderColor: Colors.transparent,
-                              buttonColor: CLR_PRIMARY,
+                              buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                               buttonSizeX: 10.h,
                               buttonSizeY: 40.w,
                               buttonTextSize: 14.sp,
@@ -469,7 +470,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                     },
                                     maxLines: 3,
                                     controller: txtDescController,
-                                    cursorColor: CLR_BLUE_LITE,
+                                    cursorColor: AppColors.CLR_BLUE_LITE,
                                     maxLength: 200,
                                     decoration: InputDecoration(
                                         labelText: "Description",
@@ -480,13 +481,13 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                           ),
                                         ),
                                         fillColor: AppColors.CLR_INPUT_FILL,
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: CLR_GREY),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: AppColors.CLR_GREY),
                                         ),
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: CLR_GREY),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: AppColors.CLR_GREY),
                                         ),
                                         counterStyle: TextStyle(
                                             color: AppColors.TXT_CLR_DEFAULT),

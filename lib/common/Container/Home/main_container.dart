@@ -157,9 +157,10 @@ class _MainContainerState extends State<MainContainer> {
                         //         decoration: BoxDecoration(
                         //             // color: Colors.red.shade100,
                         //             border: Border.all(
-                        //               color: Colors.red.shade400,
+                        //               color:
+                        //                   AppColors.CLR_ERROR.withOpacity(0.5),
                         //             ),
-                        //             borderRadius: BorderRadius.circular(20)),
+                        //             borderRadius: BorderRadius.circular(5.r)),
                         //         child: Padding(
                         //             padding: EdgeInsets.all(4.0.r),
                         //             child: Text(
@@ -290,6 +291,30 @@ class _MainContainerState extends State<MainContainer> {
                   ],
                 ),
               ),
+              if (widget.dueDate != "-")
+                if (widget.dueStatus != 0)
+                  if (checkDateExpiry(widget.dueDate.toString()))
+                    Container(
+                        width: double.infinity,
+                        height: 15.h,
+                        decoration: BoxDecoration(
+                          // color: AppColors.CLR_ERROR,
+                          gradient: LinearGradient(colors: [
+                            AppColors.CLR_ERROR.withOpacity(.8),
+                            AppColors.CLR_ORANGE.withOpacity(.8)
+                          ]),
+                          // border: Border.all(
+                          //   color: AppColors.CLR_ERROR.withOpacity(0.5),
+                          // ),
+                        ),
+                        child: Center(
+                          child: Text(
+                              "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
+                              style: TextStyle(
+                                  fontSize: 7.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
+                        )),
             ])),
         // if (buttonText != "Upcoming Auto Payment")
         Positioned(
@@ -338,9 +363,12 @@ class _MainContainerState extends State<MainContainer> {
                                               goBack(context);
                                             },
                                             buttonText: "Cancel",
-                                            buttonTxtColor: CLR_PRIMARY,
-                                            buttonBorderColor: CLR_PRIMARY,
-                                            buttonColor: BTN_CLR_ACTIVE,
+                                            buttonTxtColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                                            buttonBorderColor:
+                                                AppColors.BTN_CLR_ACTIVE_BORDER,
+                                            buttonColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_C,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 40.w,
                                             buttonTextSize: 14.sp,
@@ -426,9 +454,9 @@ class _MainContainerState extends State<MainContainer> {
                                                                               goBack(context);
                                                                             },
                                                                             buttonText: "Okay",
-                                                                            buttonTxtColor: BTN_CLR_ACTIVE,
+                                                                            buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                                                                             buttonBorderColor: Colors.transparent,
-                                                                            buttonColor: CLR_PRIMARY,
+                                                                            buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                                                                             buttonSizeX: 10.h,
                                                                             buttonSizeY: 40.w,
                                                                             buttonTextSize: 14.sp,
@@ -467,10 +495,12 @@ class _MainContainerState extends State<MainContainer> {
                                               }
                                             },
                                             buttonText: "Delete",
-                                            buttonTxtColor: BTN_CLR_ACTIVE,
+                                            buttonTxtColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_TEXT,
                                             buttonBorderColor:
                                                 Colors.transparent,
-                                            buttonColor: CLR_PRIMARY,
+                                            buttonColor:
+                                                AppColors.BTN_CLR_ACTIVE_ALTER,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 40.w,
                                             buttonTextSize: 14.sp,
@@ -491,6 +521,7 @@ class _MainContainerState extends State<MainContainer> {
                     context: context,
                     builder: (BuildContext context) {
                       return Dialog(
+                        backgroundColor: AppColors.CLR_BACKGROUND,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0.r)),
                         child: Container(
@@ -511,7 +542,7 @@ class _MainContainerState extends State<MainContainer> {
                                     style: TextStyle(
                                       fontSize: 13.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: Color(0xff000000),
+                                      color: AppColors.TXT_CLR_BLACK_W,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -529,9 +560,12 @@ class _MainContainerState extends State<MainContainer> {
                                               goBack(context);
                                             },
                                             buttonText: "Cancel",
-                                            buttonTxtColor: CLR_PRIMARY,
-                                            buttonBorderColor: CLR_PRIMARY,
-                                            buttonColor: BTN_CLR_ACTIVE,
+                                            buttonTxtColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                                            buttonBorderColor:
+                                                AppColors.BTN_CLR_ACTIVE_BORDER,
+                                            buttonColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_C,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 35.w,
                                             buttonTextSize: 14.sp,
@@ -547,10 +581,12 @@ class _MainContainerState extends State<MainContainer> {
                                               goBack(context);
                                             },
                                             buttonText: "Delete",
-                                            buttonTxtColor: BTN_CLR_ACTIVE,
+                                            buttonTxtColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_TEXT,
                                             buttonBorderColor:
                                                 Colors.transparent,
-                                            buttonColor: CLR_PRIMARY,
+                                            buttonColor:
+                                                AppColors.BTN_CLR_ACTIVE_ALTER,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 35.w,
                                             buttonTextSize: 14.sp,

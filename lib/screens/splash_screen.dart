@@ -79,8 +79,8 @@ class _splashScreenState extends State<splashScreen> {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: const [
-                  CLR_BLUESHADE,
+                colors: [
+                  AppColors.CLR_BLUESHADE,
                   Colors.white,
                 ],
                 stops: const [
@@ -133,14 +133,14 @@ class _splashScreenState extends State<splashScreen> {
                       MyAppText(
                         data: 'Failed to Login BBPS.',
                         size: 13.0.sp,
-                        color: CLR_PRIMARY,
+                        color: AppColors.CLR_PRIMARY,
                         weight: FontWeight.bold,
                       ),
                       SizedBox(height: 10.h),
                       MyAppText(
                         data: 'Please Contact Bank for more information.',
                         size: 13.0.sp,
-                        color: CLR_PRIMARY,
+                        color: AppColors.CLR_PRIMARY,
                         weight: FontWeight.bold,
                       ),
                       SizedBox(height: 40.h),
@@ -149,9 +149,9 @@ class _splashScreenState extends State<splashScreen> {
                             AppTrigger.instance.goBackCallback!.call();
                           },
                           buttonText: "Go Back",
-                          buttonTxtColor: BTN_CLR_ACTIVE,
+                          buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                           buttonBorderColor: Colors.transparent,
-                          buttonColor: CLR_PRIMARY,
+                          buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                           buttonSizeX: 10.h,
                           buttonSizeY: 40.w,
                           buttonTextSize: 14.sp,

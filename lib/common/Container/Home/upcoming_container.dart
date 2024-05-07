@@ -74,6 +74,8 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
           // width: double.infinity,
           elevation: 0.0,
           color: AppColors.CLR_BACKGROUND,
+          clipBehavior: Clip.hardEdge,
+
           margin: EdgeInsets.only(
               left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
 
@@ -373,25 +375,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                             SizedBox(
                               width: 10.w,
                             ),
-                          // if (widget.dueDate != "-")
-                          //   if (checkDateExpiry(widget.dueDate.toString()))
-                          //     Container(
-                          //         decoration: BoxDecoration(
-                          //             // color: Colors.red.shade100,
-                          //             border: Border.all(
-                          //               color: Colors.red.shade400,
-                          //             ),
-                          //             borderRadius: BorderRadius.circular(20)),
-                          //         child: Padding(
-                          //           padding: EdgeInsets.all(4.0.r),
-                          //           child: Text(
-                          //             "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
-                          //             style: TextStyle(
-                          //                 fontSize: 7.sp,
-                          //                 fontWeight: FontWeight.w600,
-                          //                 color: AppColors.CLR_ERROR),
-                          //           ),
-                          //         )),
+
                           GestureDetector(
                             onTap: () {
                               widget.onPressed();
@@ -443,6 +427,31 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                         ],
                       ),
                     ),
+                    if (widget.dueStatus != 0)
+                      if (widget.dueDate != "-")
+                        if (checkDateExpiry(widget.dueDate.toString()))
+                          Container(
+                              width: double.infinity,
+                              height: 15.h,
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                // color: AppColors.CLR_ERROR,
+                                gradient: LinearGradient(colors: [
+                                  AppColors.CLR_ERROR.withOpacity(.8),
+                                  AppColors.CLR_ORANGE.withOpacity(.8)
+                                ]),
+                                // border: Border.all(
+                                //   color: AppColors.CLR_ERROR.withOpacity(0.5),
+                                // ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                    "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
+                                    style: TextStyle(
+                                        fontSize: 7.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)),
+                              )),
                   ],
                 )
               : null,

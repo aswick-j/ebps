@@ -75,7 +75,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                     style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
-                        color: TXT_CLR_DEFAULT,
+                        color: AppColors.TXT_CLR_DEFAULT,
                         overflow: TextOverflow.fade),
                     textAlign: TextAlign.left,
                     maxLines: 1,
@@ -99,7 +99,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                     style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
-                        color: TXT_CLR_DEFAULT,
+                        color: AppColors.TXT_CLR_DEFAULT,
                         overflow: TextOverflow.fade),
                     textAlign: TextAlign.left,
                     maxLines: 1,
@@ -126,7 +126,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
             child: DashLine(
               fillRate: 0.8,
               dashHeight: 0.7.h,
-              dashColor: CLR_GREY,
+              dashColor: AppColors.CLR_GREY,
             ),
           ),
           Padding(
@@ -150,7 +150,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                         style: TextStyle(
                           fontSize: 10.sp,
                           fontWeight: FontWeight.w400,
-                          color: CLR_SECONDARY,
+                          color: AppColors.CLR_SECONDARY,
                         ),
                         maxLines: isShowMore ? 10 : 2,
                         textAlign: TextAlign.justify,
@@ -174,7 +174,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                           child: Text(
                             isShowMore ? "Show less" : "Show more",
                             style: TextStyle(
-                                color: TXT_CLR_DEFAULT,
+                                color: AppColors.TXT_CLR_DEFAULT,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 10.sp),
                           ),
@@ -187,9 +187,9 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                       widget.onPressed();
                     },
                     buttonText: "Pay",
-                    buttonTxtColor: BTN_CLR_ACTIVE,
+                    buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                     buttonBorderColor: Colors.transparent,
-                    buttonColor: CLR_PRIMARY,
+                    buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                     buttonSizeX: 10.h,
                     buttonSizeY: 30.w,
                     buttonTextSize: 14.sp,

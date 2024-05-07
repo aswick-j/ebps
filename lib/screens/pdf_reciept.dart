@@ -41,7 +41,7 @@ class _pdfRecieptState extends State<pdfReciept> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(8.0.r),
             border: Border.all(
-              color: CLR_GREY,
+              color: AppColors.CLR_GREY,
               width: 2.0,
             ),
           ),
@@ -75,9 +75,9 @@ class _pdfRecieptState extends State<pdfReciept> {
                       }
                     },
                     buttonText: "Share",
-                    buttonTxtColor: CLR_PRIMARY,
+                    buttonTxtColor: AppColors.CLR_PRIMARY,
                     buttonBorderColor: Colors.transparent,
-                    buttonColor: BTN_CLR_ACTIVE,
+                    buttonColor: AppColors.BTN_CLR_ACTIVE,
                     buttonSizeX: 10.h,
                     buttonSizeY: 40.w,
                     buttonTextSize: 14.sp,
@@ -96,9 +96,9 @@ class _pdfRecieptState extends State<pdfReciept> {
                       );
                     },
                     buttonText: "Download",
-                    buttonTxtColor: BTN_CLR_ACTIVE,
+                    buttonTxtColor: AppColors.BTN_CLR_ACTIVE,
                     buttonBorderColor: Colors.transparent,
-                    buttonColor: CLR_PRIMARY,
+                    buttonColor: AppColors.CLR_PRIMARY,
                     buttonSizeX: 10.h,
                     buttonSizeY: 40.w,
                     buttonTextSize: 14.sp,

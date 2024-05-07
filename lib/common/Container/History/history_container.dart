@@ -33,23 +33,23 @@ class HistoryContainer extends StatelessWidget {
       required this.containerBorderColor,
       required this.historyData,
       required this.handleStatus});
-  static const colorizeColors = [
-    CLR_GREEN,
+  var colorizeColors = [
+    AppColors.CLR_GREEN,
     Colors.lightGreen,
     Colors.lightGreen,
-    CLR_GREEN
+    AppColors.CLR_GREEN
   ];
-  static const colorizeColors2 = [
-    CLR_ERROR,
-    CLR_ORANGE,
-    CLR_ORANGE,
-    CLR_ERROR,
+  var colorizeColors2 = [
+    AppColors.CLR_ERROR,
+    AppColors.CLR_ORANGE,
+    AppColors.CLR_ORANGE,
+    AppColors.CLR_ERROR,
   ];
-  static const colorizeColors3 = [
-    CLR_ORANGE,
-    CLR_ERROR,
-    CLR_ERROR,
-    CLR_ORANGE,
+  var colorizeColors3 = [
+    AppColors.CLR_ORANGE,
+    AppColors.CLR_ERROR,
+    AppColors.CLR_ERROR,
+    AppColors.CLR_ORANGE,
   ];
   @override
   Widget build(BuildContext context) {
@@ -307,7 +307,7 @@ class HistoryContainer extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 10.sp,
                               fontWeight: FontWeight.bold,
-                              color: CLR_BLUE_LITE,
+                              color: AppColors.CLR_BLUE_LITE,
                             ),
                             textAlign: TextAlign.left,
                           ),
@@ -442,7 +442,7 @@ class HistoryContainer extends StatelessWidget {
                     Icon(
                       size: 18.r,
                       Icons.arrow_forward_rounded,
-                      color: CLR_BLUE_LITE,
+                      color: AppColors.CLR_BLUE_LITE,
                     )
                     // IconButton(
                     //   onPressed: () {

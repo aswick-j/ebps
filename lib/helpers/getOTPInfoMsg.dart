@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 final TextStyle normalStyle = TextStyle(
     decoration: TextDecoration.none,
-    color: CLR_BLUE_LITE,
+    color: AppColors.CLR_BLUE_LITE,
     fontSize: 10.sp,
     fontWeight: FontWeight.w500);
 final TextStyle boldStyle = TextStyle(

@@ -179,7 +179,7 @@ class _ComplaintContainerState extends State<ComplaintContainer> {
                         Icon(
                           Icons.arrow_forward,
                           size: 18.r,
-                          color: CLR_BLUE_LITE,
+                          color: AppColors.CLR_BLUE_LITE,
                         )
                       ]))
                 ],

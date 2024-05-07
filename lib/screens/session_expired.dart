@@ -76,9 +76,9 @@ class _SessionExpiredState extends State<SessionExpired> {
                     AppTrigger.instance.goBackCallback!.call();
                   },
                   buttonText: "Go Back",
-                  buttonTxtColor: BTN_CLR_ACTIVE,
+                  buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                   buttonBorderColor: Colors.transparent,
-                  buttonColor: CLR_PRIMARY,
+                  buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                   buttonSizeX: 10.h,
                   buttonSizeY: 40.w,
                   buttonTextSize: 12.sp,

@@ -72,7 +72,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
           Tooltip(
             textStyle: TextStyle(color: Colors.white, fontSize: 10.sp),
             decoration: BoxDecoration(
-                color: CLR_BLUE_LITE,
+                color: AppColors.CLR_BLUE_LITE,
                 borderRadius: BorderRadius.circular(8.0.r)),
             triggerMode: TooltipTriggerMode.longPress,
             showDuration: Duration(milliseconds: 20000),

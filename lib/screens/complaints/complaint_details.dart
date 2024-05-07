@@ -132,7 +132,7 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                 style: TextStyle(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.bold,
-                  color: TXT_CLR_DEFAULT,
+                  color: AppColors.TXT_CLR_DEFAULT,
                 ),
                 textAlign: TextAlign.left,
                 maxLines: 2,

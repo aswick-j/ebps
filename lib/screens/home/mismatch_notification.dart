@@ -150,7 +150,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.bold,
-                                      color: CLR_BLUE_LITE,
+                                      color: AppColors.CLR_BLUE_LITE,
                                     ),
                                     textAlign: TextAlign.left,
                                     maxLines: 1,
@@ -214,7 +214,8 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                 0.9
                                               ],
                                               colors: [
-                                                CLR_BLUE_LITE.withOpacity(.16),
+                                                AppColors.CLR_BLUE_LITE
+                                                    .withOpacity(.16),
                                                 Colors.transparent
                                               ])),
                                       child: Padding(
@@ -225,7 +226,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                     1
                                                 ? Icons.receipt_long
                                                 : Icons.currency_rupee,
-                                            color: CLR_BLUE_LITE,
+                                            color: AppColors.CLR_BLUE_LITE,
                                           )),
                                     ),
                                     Text(
@@ -312,7 +313,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                 widget.allautoPayData![index]
                                                             .rESETDATE ==
                                                         1
-                                                    ? CLR_BLUE_LITE
+                                                    ? AppColors.CLR_BLUE_LITE
                                                         .withOpacity(.16)
                                                     : Color.fromARGB(
                                                             255, 255, 123, 123)
@@ -330,7 +331,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                             color: widget.allautoPayData![index]
                                                         .rESETDATE ==
                                                     1
-                                                ? CLR_BLUE_LITE
+                                                ? AppColors.CLR_BLUE_LITE
                                                 : AppColors.CLR_ERROR,
                                           )),
                                     ),
@@ -425,7 +426,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                         .rESETDATE ==
                                                     1
                                                 ? AppColors.CLR_ERROR
-                                                : CLR_BLUE_LITE,
+                                                : AppColors.CLR_BLUE_LITE,
                                           )),
                                     ),
                                     Text(
@@ -517,15 +518,15 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                           },
                                                           buttonText: "Okay",
                                                           buttonTxtColor: AppColors
-                                                              .BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                                                              .BTN_CLR_ACTIVE_ALTER_TEXT,
                                                           buttonBorderColor:
-                                                              AppColors
-                                                                  .BTN_CLR_ACTIVE_BORDER,
+                                                              Colors
+                                                                  .transparent,
                                                           buttonColor: AppColors
-                                                              .BTN_CLR_ACTIVE_ALTER_C,
-                                                          buttonSizeX: 10,
-                                                          buttonSizeY: 40,
-                                                          buttonTextSize: 14,
+                                                              .BTN_CLR_ACTIVE_ALTER,
+                                                          buttonSizeX: 10.h,
+                                                          buttonSizeY: 40.w,
+                                                          buttonTextSize: 14.sp,
                                                           buttonTextWeight:
                                                               FontWeight.w500),
                                                     ),
@@ -547,7 +548,8 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                         color: Colors.white,
                                                       ),
                                                       showSub: false,
-                                                      shapeColor: CLR_ERROR),
+                                                      shapeColor:
+                                                          AppColors.CLR_ERROR),
                                                 ));
                                           },
                                         );

@@ -110,9 +110,13 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                             }
                           : () {},
                       buttonText: "Okay",
-                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonTxtColor: reachEnd
+                          ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                          : AppColors.BTN_CLR_DISABLE_TEXT,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: reachEnd ? CLR_PRIMARY : Colors.grey,
+                      buttonColor: reachEnd
+                          ? AppColors.BTN_CLR_ACTIVE_ALTER
+                          : AppColors.BTN_CLR_DISABLE_TEXT,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,
                       buttonTextSize: 14.sp,

@@ -157,7 +157,7 @@ class _AnimatedDialogState extends State<AnimatedDialog>
                         style: TextStyle(
                           fontSize: 10.sp,
                           fontWeight: FontWeight.bold,
-                          color: CLR_BLUE_LITE,
+                          color: AppColors.CLR_BLUE_LITE,
                         ),
                       ),
                   ],

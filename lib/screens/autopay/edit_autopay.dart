@@ -208,7 +208,7 @@ class _editAutopayState extends State<editAutopay> {
               Tooltip(
                 textStyle: TextStyle(color: Colors.white),
                 decoration: BoxDecoration(
-                    color: CLR_BLUE_LITE,
+                    color: AppColors.CLR_BLUE_LITE,
                     borderRadius: BorderRadius.circular(8.0.r)),
                 triggerMode: TooltipTriggerMode.tap,
                 showDuration: Duration(milliseconds: 20000),
@@ -415,8 +415,8 @@ class _editAutopayState extends State<editAutopay> {
                                       color: AppColors.CLR_DIVIDER_LITE,
                                       height: 10.h,
                                       thickness: 1,
-                                      indent: 10.w,
-                                      endIndent: 10.w,
+                                      // indent: 10.w,
+                                      // endIndent: 10.w,
                                     ),
                                     billerdetail(
                                         widget.savedBillerData.pARAMETERS![0]
@@ -1284,9 +1284,11 @@ class _editAutopayState extends State<editAutopay> {
         ),
         bottomSheet: !isEditAutoPayPageError
             ? Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
+                    color: AppColors.CLR_BACKGROUND,
                     border: Border(
-                        top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+                        top: BorderSide(
+                            color: AppColors.CLR_CON_BORDER_LITE, width: 1))),
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
@@ -1299,9 +1301,10 @@ class _editAutopayState extends State<editAutopay> {
                               goBack(context);
                             },
                             buttonText: "Cancel",
-                            buttonTxtColor: CLR_PRIMARY,
-                            buttonBorderColor: Colors.transparent,
-                            buttonColor: BTN_CLR_ACTIVE,
+                            buttonTxtColor:
+                                AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                            buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
+                            buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER_C,
                             buttonSizeX: 10.h,
                             buttonSizeY: 40.w,
                             buttonTextSize: 14.sp,
@@ -1316,10 +1319,13 @@ class _editAutopayState extends State<editAutopay> {
                               handleAutopayUpdate();
                             },
                             buttonText: "Update",
-                            buttonTxtColor: BTN_CLR_ACTIVE,
+                            buttonTxtColor: handleButton()
+                                ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                                : AppColors.BTN_CLR_DISABLE_TEXT,
                             buttonBorderColor: Colors.transparent,
-                            buttonColor:
-                                handleButton() ? CLR_PRIMARY : Colors.grey,
+                            buttonColor: handleButton()
+                                ? AppColors.BTN_CLR_ACTIVE_ALTER
+                                : AppColors.BTN_CLR_DISABLE,
                             buttonSizeX: 10.h,
                             buttonSizeY: 40.w,
                             buttonTextSize: 14.sp,

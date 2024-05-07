@@ -30,7 +30,10 @@ class ImageTileContainer extends StatelessWidget {
             : LinearGradient(
                 begin: Alignment.bottomRight,
                 stops: const [0.1, 0.9],
-                colors: [CLR_BLUE_LITE.withOpacity(.16), Colors.transparent],
+                colors: [
+                  AppColors.CLR_BLUE_LITE.withOpacity(.16),
+                  Colors.transparent
+                ],
               ),
       ),
       width: width ?? 45.w,

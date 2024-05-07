@@ -109,7 +109,8 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
         adHocBillValidationRefKey: widget.adHocBillValidationRefKey,
         validateBill: widget.validateBill,
         billerParams: widget.billerParams,
-        billName: widget.billName);
+        billName: widget.billName,
+        customerBillId: widget.customerBillID);
     super.initState();
   }
 
@@ -333,9 +334,10 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                               goBack(context);
                             },
                             buttonText: "Close",
-                            buttonTxtColor: CLR_PRIMARY,
-                            buttonBorderColor: Color(0xff768EB9),
-                            buttonColor: Colors.white,
+                            buttonTxtColor:
+                                AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                            buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
+                            buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER_C,
                             buttonSizeX: 10.h,
                             buttonSizeY: 37.w,
                             buttonTextSize: 14.sp,
@@ -402,9 +404,9 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                             }
                           },
                           buttonText: "Close",
-                          buttonTxtColor: CLR_PRIMARY,
-                          buttonBorderColor: Color(0xff768EB9),
-                          buttonColor: Colors.white,
+                          buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                          buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
+                          buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER_C,
                           buttonSizeX: 10.h,
                           buttonSizeY: 37.w,
                           buttonTextSize: 14.sp,

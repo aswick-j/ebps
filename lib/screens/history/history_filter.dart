@@ -154,7 +154,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                 onChanged: (val) {},
                 onTap: () {
                   showModalBottomSheet(
-                      backgroundColor: Colors.white,
+                      backgroundColor: AppColors.CLR_BACKGROUND,
                       elevation: 10,
                       useRootNavigator: true,
                       isScrollControlled: true,
@@ -190,15 +190,18 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                           child: Row(
                                             children: [
                                               SvgPicture.asset(
+                                                  colorFilter: ColorFilter.mode(
+                                                      AppColors.CLR_ICON,
+                                                      BlendMode.srcIn),
                                                   ICON_SELECT_CATEGORY),
                                               SizedBox(width: 20.w),
                                               Text(
                                                 "Select Category",
                                                 style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Color(0xff1b438b),
-                                                ),
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: AppColors
+                                                        .TXT_CLR_PRIMARY),
                                                 textAlign: TextAlign.left,
                                               )
                                             ],
@@ -287,6 +290,12 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                                     13.r),
                                                             child: SvgPicture
                                                                 .asset(
+                                                              colorFilter:
+                                                                  ColorFilter.mode(
+                                                                      AppColors
+                                                                          .CLR_ICON,
+                                                                      BlendMode
+                                                                          .srcIn),
                                                               CATEGORY_ICON(
                                                                 widget
                                                                     .categoriesData![
@@ -294,12 +303,6 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                                     .cATEGORYNAME
                                                                     .toString(),
                                                               ),
-                                                              colorFilter:
-                                                                  ColorFilter.mode(
-                                                                      Colors
-                                                                          .transparent,
-                                                                      BlendMode
-                                                                          .hue),
                                                             ),
                                                           ),
                                                         ),
@@ -313,8 +316,8 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                             fontSize: 14.sp,
                                                             fontWeight:
                                                                 FontWeight.w400,
-                                                            color: Color(
-                                                                0xff000000),
+                                                            color: AppColors
+                                                                .TXT_CLR_BLACK_W,
                                                             height: 23 / 14,
                                                           ),
                                                           textAlign:
@@ -340,10 +343,12 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                       goBack(context);
                                                     },
                                                     buttonText: "Cancel",
-                                                    buttonTxtColor: CLR_PRIMARY,
-                                                    buttonBorderColor:
-                                                        Colors.transparent,
-                                                    buttonColor: BTN_CLR_ACTIVE,
+                                                    buttonTxtColor: AppColors
+                                                        .BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                                                    buttonBorderColor: AppColors
+                                                        .BTN_CLR_ACTIVE_BORDER,
+                                                    buttonColor: AppColors
+                                                        .BTN_CLR_ACTIVE_ALTER_C,
                                                     buttonSizeX: 10.h,
                                                     buttonSizeY: 40.w,
                                                     buttonTextSize: 14.sp,
@@ -365,17 +370,18 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                 validator: (inputValue) {
                   return null;
                 },
+                style: TextStyle(color: AppColors.TXT_CLR_BLACK),
+                // validator: (inputValue) {},
                 decoration: InputDecoration(
-                    fillColor: const Color(0xffD1D9E8).withOpacity(0.2),
+                    fillColor: AppColors.CLR_INPUT_FILL,
                     filled: true,
-                    labelStyle: const TextStyle(color: Color(0xff1b438b)),
-                    enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xff1B438B)),
+                    labelStyle: TextStyle(color: AppColors.TXT_CLR_PRIMARY),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.TXT_CLR_PRIMARY),
                     ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xff1B438B)),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.TXT_CLR_PRIMARY),
                     ),
-                    border: const UnderlineInputBorder(),
                     labelText: 'Select Category',
                     hintText: "Select Category"),
               ),
@@ -395,7 +401,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                   onChanged: (val) {},
                   onTap: () {
                     showModalBottomSheet(
-                        backgroundColor: Colors.white,
+                        backgroundColor: AppColors.CLR_BACKGROUND,
                         elevation: 10,
                         useRootNavigator: true,
                         isScrollControlled: true,
@@ -431,6 +437,10 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                             child: Row(
                                               children: [
                                                 SvgPicture.asset(
+                                                    colorFilter:
+                                                        ColorFilter.mode(
+                                                            AppColors.CLR_ICON,
+                                                            BlendMode.srcIn),
                                                     ICON_SELECT_BILLER),
                                                 SizedBox(width: 20.w),
                                                 Text(
@@ -438,7 +448,8 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                   style: TextStyle(
                                                     fontSize: 16.sp,
                                                     fontWeight: FontWeight.w600,
-                                                    color: Color(0xff1b438b),
+                                                    color: AppColors
+                                                        .TXT_CLR_BLACK_W,
                                                   ),
                                                   textAlign: TextAlign.left,
                                                 )
@@ -537,11 +548,13 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                                   EdgeInsets
                                                                       .all(
                                                                           13.r),
-                                                              child: SvgPicture.asset(BILLER_LOGO(
-                                                                  billerFilterData![
-                                                                          index]
-                                                                      .bILLERNAME
-                                                                      .toString())),
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                BILLER_LOGO(billerFilterData![
+                                                                        index]
+                                                                    .bILLERNAME
+                                                                    .toString()),
+                                                              ),
                                                             ),
                                                           ),
                                                           title: Text(
@@ -554,8 +567,8 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w400,
-                                                              color: Color(
-                                                                  0xff000000),
+                                                              color: AppColors
+                                                                  .TXT_CLR_BLACK_W,
                                                               height: 23 / 14,
                                                             ),
                                                             textAlign:
@@ -580,13 +593,12 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                       onPressed: () {
                                                         goBack(context);
                                                       },
-                                                      buttonText: "Cancel",
-                                                      buttonTxtColor:
-                                                          CLR_PRIMARY,
-                                                      buttonBorderColor:
-                                                          Colors.transparent,
-                                                      buttonColor:
-                                                          BTN_CLR_ACTIVE,
+                                                      buttonTxtColor: AppColors
+                                                          .BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                                                      buttonBorderColor: AppColors
+                                                          .BTN_CLR_ACTIVE_BORDER,
+                                                      buttonColor: AppColors
+                                                          .BTN_CLR_ACTIVE_ALTER_C,
                                                       buttonSizeX: 10.h,
                                                       buttonSizeY: 40.w,
                                                       buttonTextSize: 14.sp,
@@ -608,17 +620,20 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                   validator: (inputValue) {
                     return null;
                   },
+                  style: TextStyle(color: AppColors.TXT_CLR_BLACK),
+                  // validator: (inputValue) {},
                   decoration: InputDecoration(
-                      fillColor: const Color(0xffD1D9E8).withOpacity(0.2),
+                      fillColor: AppColors.CLR_INPUT_FILL,
                       filled: true,
-                      labelStyle: const TextStyle(color: Color(0xff1b438b)),
-                      enabledBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff1B438B)),
+                      labelStyle: TextStyle(color: AppColors.TXT_CLR_PRIMARY),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.TXT_CLR_PRIMARY),
                       ),
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff1B438B)),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.TXT_CLR_PRIMARY),
                       ),
-                      border: const UnderlineInputBorder(),
                       labelText: 'Select Billers',
                       hintText: "Select Billers"),
                 ),

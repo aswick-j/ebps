@@ -261,7 +261,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                 Tooltip(
                   textStyle: TextStyle(color: Colors.white),
                   decoration: BoxDecoration(
-                      color: CLR_BLUE_LITE,
+                      color: AppColors.CLR_BLUE_LITE,
                       borderRadius: BorderRadius.circular(8.0.r)),
                   triggerMode: TooltipTriggerMode.tap,
                   showDuration: Duration(milliseconds: 20000),
@@ -431,7 +431,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                                             upcomingTXT_CLR_DEFAULT: getupcomingAutoPaymentList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ''
                                                 ? Color(0xff00AB44)
                                                 : getUpcmoingDueData(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ""
-                                                    ? CLR_ASTRIX
+                                                    ? AppColors.CLR_ASTRIX
                                                     : Colors.black,
                                             showButton: showAutopayBtn(getBillerDataWithUpcomingFirst(savedBillerData)![index]),
                                             containerBorderColor: Color(0xffD1D9E8),
@@ -444,7 +444,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                                                         index],
                                                   )
                                                     ? Color.fromARGB(255, 16, 113, 55)
-                                                    : CLR_PRIMARY,
+                                                    : AppColors.CLR_PRIMARY,
                                             buttonTextWeight: FontWeight.bold,
                                             buttonBorderColor: showAutopayButtonContent(
                                               getBillerDataWithUpcomingFirst(

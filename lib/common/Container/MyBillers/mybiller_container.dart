@@ -253,7 +253,6 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                     showModalBottomSheet(
                         context: context,
                         elevation: 20,
-                      
                         backgroundColor: AppColors.CLR_BACKGROUND,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.vertical(
@@ -335,7 +334,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                 style: TextStyle(
                                                   fontSize: 10.sp,
                                                   fontWeight: FontWeight.w400,
-                                                  color: Color(0xff808080),
+                                                  color: AppColors.TXT_CLR_LITE,
                                                 ),
                                               ),
                                             ),
@@ -486,9 +485,9 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                             context);
                                                                       },
                                                                       buttonText: "Cancel",
-                                                                      buttonTxtColor: CLR_PRIMARY,
-                                                                      buttonBorderColor: Colors.transparent,
-                                                                      buttonColor: BTN_CLR_ACTIVE,
+                                                                      buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                                                                      buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
+                                                                      buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER_C,
                                                                       buttonSizeX: 10.h,
                                                                       buttonSizeY: 40.w,
                                                                       buttonTextSize: 14.sp,
@@ -518,9 +517,9 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                             });
                                                                       },
                                                                       buttonText: getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID).iSACTIVE == 1 ? "Pause" : "Resume",
-                                                                      buttonTxtColor: BTN_CLR_ACTIVE,
+                                                                      buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                                                                       buttonBorderColor: Colors.transparent,
-                                                                      buttonColor: CLR_PRIMARY,
+                                                                      buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                                                                       buttonSizeX: 10.h,
                                                                       buttonSizeY: 40.w,
                                                                       buttonTextSize: 14.sp,
@@ -661,6 +660,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                         onPressed: () {
                                           showModalBottomSheet(
                                               context: context,
+                                              backgroundColor:
+                                                  AppColors.CLR_BACKGROUND,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.vertical(
@@ -685,8 +686,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                           Icon(
                                                             Icons
                                                                 .delete_sweep_outlined,
-                                                            color: Color(
-                                                                0xff1b438b),
+                                                            color: AppColors
+                                                                .CLR_ICON,
                                                           ),
                                                           SizedBox(width: 20.w),
                                                           Text(
@@ -696,8 +697,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
-                                                              color: Color(
-                                                                  0xff1b438b),
+                                                              color: AppColors
+                                                                  .CLR_PRIMARY,
                                                             ),
                                                             textAlign:
                                                                 TextAlign.left,
@@ -741,8 +742,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                             fontSize: 14.sp,
                                                             fontWeight:
                                                                 FontWeight.w400,
-                                                            color: Color(
-                                                                0xff000000),
+                                                            color: AppColors
+                                                                .TXT_CLR_BLACK_W,
                                                           ),
                                                           textAlign:
                                                               TextAlign.center,
@@ -769,12 +770,14 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                 buttonText:
                                                                     "Cancel",
                                                                 buttonTxtColor:
-                                                                    CLR_PRIMARY,
+                                                                    AppColors
+                                                                        .BTN_CLR_ACTIVE_ALTER_TEXT_C,
                                                                 buttonBorderColor:
                                                                     AppColors
                                                                         .BTN_CLR_ACTIVE_BORDER,
                                                                 buttonColor:
-                                                                    BTN_CLR_ACTIVE,
+                                                                    AppColors
+                                                                        .BTN_CLR_ACTIVE_ALTER_C,
                                                                 buttonSizeX:
                                                                     10.h,
                                                                 buttonSizeY:
@@ -799,6 +802,9 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                     showModalBottomSheet(
                                                                         context:
                                                                             context,
+                                                                        backgroundColor:
+                                                                            AppColors
+                                                                                .CLR_BACKGROUND,
                                                                         shape:
                                                                             RoundedRectangleBorder(
                                                                           borderRadius:
@@ -821,7 +827,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                                   children: [
                                                                                     Icon(
                                                                                       Icons.warning_rounded,
-                                                                                      color: Color(0xff1b438b),
+                                                                                      color: AppColors.CLR_ICON,
                                                                                     ),
                                                                                     SizedBox(width: 20.w),
                                                                                     Text(
@@ -829,7 +835,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                                       style: TextStyle(
                                                                                         fontSize: 16.sp,
                                                                                         fontWeight: FontWeight.w600,
-                                                                                        color: Color(0xff1b438b),
+                                                                                        color: AppColors.CLR_PRIMARY,
                                                                                       ),
                                                                                       textAlign: TextAlign.left,
                                                                                     )
@@ -859,7 +865,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                                     style: TextStyle(
                                                                                       fontSize: 14.sp,
                                                                                       fontWeight: FontWeight.w400,
-                                                                                      color: Color(0xff000000),
+                                                                                      color: AppColors.TXT_CLR_BLACK_W,
                                                                                     ),
                                                                                     textAlign: TextAlign.center,
                                                                                   ),
@@ -876,9 +882,9 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                                             goBack(context);
                                                                                           },
                                                                                           buttonText: "Okay",
-                                                                                          buttonTxtColor: BTN_CLR_ACTIVE,
+                                                                                          buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                                                                                           buttonBorderColor: Colors.transparent,
-                                                                                          buttonColor: CLR_PRIMARY,
+                                                                                          buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                                                                                           buttonSizeX: 10.h,
                                                                                           buttonSizeY: 40.w,
                                                                                           buttonTextSize: 14.sp,
@@ -927,12 +933,14 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                 buttonText:
                                                                     "Delete",
                                                                 buttonTxtColor:
-                                                                    BTN_CLR_ACTIVE,
+                                                                    AppColors
+                                                                        .BTN_CLR_ACTIVE_ALTER_TEXT,
                                                                 buttonBorderColor:
                                                                     Colors
                                                                         .transparent,
                                                                 buttonColor:
-                                                                    CLR_PRIMARY,
+                                                                    AppColors
+                                                                        .BTN_CLR_ACTIVE_ALTER,
                                                                 buttonSizeX:
                                                                     10.h,
                                                                 buttonSizeY:
@@ -1223,12 +1231,12 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                           goBack(context);
                                         },
                                         buttonText: "Cancel",
-                                        buttonTxtColor:
-                                            AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
+                                        buttonTxtColor: AppColors
+                                            .BTN_CLR_ACTIVE_ALTER_TEXT_C,
                                         buttonBorderColor:
                                             AppColors.BTN_CLR_ACTIVE_BORDER,
                                         buttonColor:
-                                            AppColors.BTN_CLR_ACTIVE_ALTER,
+                                            AppColors.BTN_CLR_ACTIVE_ALTER_C,
                                         buttonSizeX: 10.h,
                                         buttonSizeY: 37.w,
                                         buttonTextSize: 14.sp,
@@ -1335,15 +1343,15 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                           goBack(ctx);
                                                         },
                                                         buttonText: "Okay",
-                                                        buttonTxtColor:
-                                                            BTN_CLR_ACTIVE,
+                                                        buttonTxtColor: AppColors
+                                                            .BTN_CLR_ACTIVE_ALTER_TEXT,
                                                         buttonBorderColor:
                                                             Colors.transparent,
-                                                        buttonColor:
-                                                            CLR_PRIMARY,
-                                                        buttonSizeX: 10,
-                                                        buttonSizeY: 40,
-                                                        buttonTextSize: 14,
+                                                        buttonColor: AppColors
+                                                            .BTN_CLR_ACTIVE_ALTER,
+                                                        buttonSizeX: 10.h,
+                                                        buttonSizeY: 40.w,
+                                                        buttonTextSize: 14.sp,
                                                         buttonTextWeight:
                                                             FontWeight.w500),
                                                   ),
@@ -1703,11 +1711,15 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                 (BuildContext
                                                                     ctx) {
                                                               return WillPopScope(
-                                                                onWillPop:
-                                                                    () async =>
-                                                                        false,
-                                                                child:
-    CustomDialog(showActions: true,actions: [   Align(
+                                                                  onWillPop:
+                                                                      () async =>
+                                                                          false,
+                                                                  child:
+                                                                      CustomDialog(
+                                                                    showActions:
+                                                                        true,
+                                                                    actions: [
+                                                                      Align(
                                                                         alignment:
                                                                             Alignment.center,
                                                                         child: MyAppButton(
@@ -1722,7 +1734,9 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                             buttonSizeY: 40,
                                                                             buttonTextSize: 14,
                                                                             buttonTextWeight: FontWeight.w500),
-                                                                      ),],child:  AnimatedDialog(
+                                                                      ),
+                                                                    ],
+                                                                    child: AnimatedDialog(
                                                                         showImgIcon: false,
                                                                         title: getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.pAYMENTDATE == DateTime.now().day.toString() ? " We are unable to edit your autopay as the autopay is scheduled for today" : "We can't edit your Autopay because it's currently paused.",
                                                                         subTitle: "",
@@ -1733,11 +1747,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                               Colors.white,
                                                                         ),
                                                                         showSub: false,
-                                                                        shapeColor: CLR_ERROR),)
-
-
-                                                                 
-                                                              );
+                                                                        shapeColor: AppColors.CLR_ERROR),
+                                                                  ));
                                                             },
                                                           );
                                                         } else {
@@ -1984,7 +1995,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.CLR_ICON,
+                      color: AppColors.TXT_CLR_PRIMARY,
                       height: 26 / 16,
                     ),
                     textAlign: TextAlign.left,
