@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
@@ -11,6 +13,7 @@ import 'package:ebps/helpers/getPopupMsg.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/animated_dialog.dart';
+import 'package:ebps/widget/custom_dialog.dart';
 import 'package:ebps/widget/loader_overlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -114,56 +117,52 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
         context: context,
         builder: (BuildContext ctx) {
           return WillPopScope(
-            onWillPop: () async => false,
-            child: AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              content: AnimatedDialog(
-                  showImgIcon: success ? true : false,
-                  showRichText: true,
-                  RichTextContent: success
-                      ? getPopupSuccessMsg(
-                          6, billerName.toString(), billName.toString())
-                      : getPopupFailedMsg(
-                          6, billerName.toString(), billName.toString()),
-                  subTitle: "",
-                  child: Icon(
-                    Icons.close,
-                    color: Colors.white,
-                  ),
-                  showSub: false,
-                  shapeColor: success ? CLR_GREEN : CLR_ERROR),
-              actions: <Widget>[
-                Align(
-                  alignment: Alignment.center,
-                  child: MyAppButton(
-                      onPressed: () {
-                        goBack(ctx);
+              onWillPop: () async => false,
+              child: CustomDialog(
+                  actions: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: MyAppButton(
+                          onPressed: () {
+                            goBack(ctx);
 
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          Navigator.of(context).pushAndRemoveUntil(
-                            CupertinoPageRoute(
-                                fullscreenDialog: true,
-                                builder: (context) => BottomNavBar(
-                                      SelectedIndex: 0,
-                                    )),
-                            (Route<dynamic> route) => false,
-                          );
-                        });
-                      },
-                      buttonText: "Okay",
-                      buttonTxtColor: BTN_CLR_ACTIVE,
-                      buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
-                      buttonSizeX: 10,
-                      buttonSizeY: 40,
-                      buttonTextSize: 14,
-                      buttonTextWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-          );
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                CupertinoPageRoute(
+                                    fullscreenDialog: true,
+                                    builder: (context) => BottomNavBar(
+                                          SelectedIndex: 0,
+                                        )),
+                                (Route<dynamic> route) => false,
+                              );
+                            });
+                          },
+                          buttonText: "Okay",
+                          buttonTxtColor: BTN_CLR_ACTIVE,
+                          buttonBorderColor: Colors.transparent,
+                          buttonColor: CLR_PRIMARY,
+                          buttonSizeX: 10,
+                          buttonSizeY: 40,
+                          buttonTextSize: 14,
+                          buttonTextWeight: FontWeight.w500),
+                    ),
+                  ],
+                  showActions: true,
+                  child: AnimatedDialog(
+                      showImgIcon: success ? true : false,
+                      showRichText: true,
+                      RichTextContent: success
+                          ? getPopupSuccessMsg(
+                              6, billerName.toString(), billName.toString())
+                          : getPopupFailedMsg(
+                              6, billerName.toString(), billName.toString()),
+                      subTitle: "",
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      showSub: false,
+                      shapeColor: success ? CLR_GREEN : CLR_ERROR)));
         },
       );
     }

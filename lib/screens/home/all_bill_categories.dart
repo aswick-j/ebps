@@ -119,6 +119,8 @@ class _AllBillCategoriesState extends State<AllBillCategories> {
               type: BottomNavigationBarType.fixed,
               selectedItemColor: AppColors.CLR_PRIMARY,
               unselectedItemColor: Color(0xffa4b4d1),
+              selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+              unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
               currentIndex: selectedIndex,
               items: [
                 BottomNavigationBarItem(

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
@@ -8,6 +10,7 @@ import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/services/api.dart';
 import 'package:ebps/widget/animated_dialog.dart';
+import 'package:ebps/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -501,54 +504,51 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                           context: context,
                                           builder: (BuildContext ctx) {
                                             return WillPopScope(
-                                              onWillPop: () async => false,
-                                              child: AlertDialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12.r),
-                                                ),
-                                                content: AnimatedDialog(
-                                                    showImgIcon: false,
-                                                    title: widget
-                                                                .allautoPayData![
-                                                                    index]
-                                                                .pAYMENTDATE ==
-                                                            DateTime.now()
-                                                                .day
-                                                                .toString()
-                                                        ? " We are unable to edit your autopay as the autopay is scheduled for today"
-                                                        : "We can't edit your Autopay because it's currently paused.",
-                                                    subTitle: "",
-                                                    child: Icon(
-                                                      Icons.close,
-                                                      color: Colors.white,
+                                                onWillPop: () async => false,
+                                                child: CustomDialog(
+                                                  showActions: true,
+                                                  actions: [
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: MyAppButton(
+                                                          onPressed: () {
+                                                            goBack(ctx);
+                                                          },
+                                                          buttonText: "Okay",
+                                                          buttonTxtColor: AppColors
+                                                              .BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                                                          buttonBorderColor:
+                                                              AppColors
+                                                                  .BTN_CLR_ACTIVE_BORDER,
+                                                          buttonColor: AppColors
+                                                              .BTN_CLR_ACTIVE_ALTER_C,
+                                                          buttonSizeX: 10,
+                                                          buttonSizeY: 40,
+                                                          buttonTextSize: 14,
+                                                          buttonTextWeight:
+                                                              FontWeight.w500),
                                                     ),
-                                                    showSub: false,
-                                                    shapeColor: CLR_ERROR),
-                                                actions: <Widget>[
-                                                  Align(
-                                                    alignment: Alignment.center,
-                                                    child: MyAppButton(
-                                                        onPressed: () {
-                                                          goBack(ctx);
-                                                        },
-                                                        buttonText: "Okay",
-                                                        buttonTxtColor: AppColors
-                                                            .BTN_CLR_ACTIVE_ALTER_TEXT_C,
-                                                        buttonBorderColor: AppColors
-                                                            .BTN_CLR_ACTIVE_BORDER,
-                                                        buttonColor: AppColors
-                                                            .BTN_CLR_ACTIVE_ALTER_C,
-                                                        buttonSizeX: 10,
-                                                        buttonSizeY: 40,
-                                                        buttonTextSize: 14,
-                                                        buttonTextWeight:
-                                                            FontWeight.w500),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
+                                                  ],
+                                                  child: AnimatedDialog(
+                                                      showImgIcon: false,
+                                                      title: widget
+                                                                  .allautoPayData![
+                                                                      index]
+                                                                  .pAYMENTDATE ==
+                                                              DateTime.now()
+                                                                  .day
+                                                                  .toString()
+                                                          ? " We are unable to edit your autopay as the autopay is scheduled for today"
+                                                          : "We can't edit your Autopay because it's currently paused.",
+                                                      subTitle: "",
+                                                      child: Icon(
+                                                        Icons.close,
+                                                        color: Colors.white,
+                                                      ),
+                                                      showSub: false,
+                                                      shapeColor: CLR_ERROR),
+                                                ));
                                           },
                                         );
                                       } else {

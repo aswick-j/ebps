@@ -1,46 +1,32 @@
-// import 'package:ebps/constants/routes.dart';
-// import 'package:ebps/constants/sizes.dart';
-// import 'package:ebps/helpers/getNavigators.dart';
-// import 'package:flutter/material.dart';
+import 'dart:ui';
 
-// final GlobalKey _dialogKey = GlobalKey();
+import 'package:ebps/constants/colors.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// customDialog({
-//   context,
-//   message,
-//   title,
-// }) {
-//   return showDialog(
-//     barrierDismissible: false,
-//     context: context,
-//     builder: (context) {
-//       return Dialog(
-//         key: _dialogKey,
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(16),
-//         ),
-//         elevation: 16,
-//         child: Container(
-//           alignment: Alignment.center,
-//           decoration: BoxDecoration(
-//             borderRadius: BorderRadius.circular(16),
-//           ),
-//           height: height(context) / 2,
-//           child: Container(
-//             alignment: Alignment.center,
-//             margin: EdgeInsets.symmetric(
-//                 horizontal: width(context) * 0.04,
-//                 vertical: width(context) * 0.04),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.center,
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Navigator.of(context).pop();
-//                 goTo(context, hOMEROUTE)],
-//             ),
-//           ),
-//         ),
-//       );
-//     },
-//   );
-// }
+class CustomDialog extends StatelessWidget {
+  final Widget child;
+  final List<Widget>? actions;
+  final bool showActions;
+
+  const CustomDialog(
+      {Key? key, required this.child, required this.showActions, this.actions})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+      child: AlertDialog(
+        backgroundColor: AppColors.CLR_BACKGROUND,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+          side: BorderSide(
+              color: AppColors.BTN_CLR_ACTIVE_BORDER.withOpacity(0.1)),
+        ),
+        content: child,
+        actions: showActions ? actions : null,
+      ),
+    );
+  }
+}

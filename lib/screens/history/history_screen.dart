@@ -395,6 +395,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                         elevation: 10,
                         isScrollControlled: true,
                         context: context,
+                        backgroundColor: AppColors.CLR_BACKGROUND,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.vertical(
                             top: Radius.circular(16.0.r),

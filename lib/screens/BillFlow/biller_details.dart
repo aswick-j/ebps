@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
@@ -20,6 +22,7 @@ import 'package:ebps/models/paymentInformationModel.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/centralized_grid_view.dart';
+import 'package:ebps/widget/custom_dialog.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/get_biller_detail.dart';
 import 'package:ebps/widget/no_result.dart';
@@ -169,39 +172,36 @@ class _BillerDetailsState extends State<BillerDetails> {
         barrierDismissible: true,
         context: context,
         builder: (BuildContext ctx) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            content: AnimatedDialog(
-                showImgIcon: false,
-                title: "Your daily bill payment limit has been exceeded.",
-                subTitle:
-                    " For additional information, please contact the bank.",
-                showSub: true,
-                shapeColor: Colors.orange,
-                child: Icon(
-                  Icons.error_outline,
-                  color: Colors.white,
-                )),
-            actions: <Widget>[
-              Align(
-                alignment: Alignment.center,
-                child: MyAppButton(
-                    onPressed: () {
-                      goBack(ctx);
-                    },
-                    buttonText: "Okay",
-                    buttonTxtColor: BTN_CLR_ACTIVE,
-                    buttonBorderColor: Colors.transparent,
-                    buttonColor: CLR_PRIMARY,
-                    buttonSizeX: 10,
-                    buttonSizeY: 40,
-                    buttonTextSize: 14,
-                    buttonTextWeight: FontWeight.w500),
-              ),
-            ],
-          );
+          return CustomDialog(
+              showActions: true,
+              actions: [
+                Align(
+                  alignment: Alignment.center,
+                  child: MyAppButton(
+                      onPressed: () {
+                        goBack(ctx);
+                      },
+                      buttonText: "Okay",
+                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonBorderColor: Colors.transparent,
+                      buttonColor: CLR_PRIMARY,
+                      buttonSizeX: 10,
+                      buttonSizeY: 40,
+                      buttonTextSize: 14,
+                      buttonTextWeight: FontWeight.w500),
+                ),
+              ],
+              child: AnimatedDialog(
+                  showImgIcon: false,
+                  title: "Your daily bill payment limit has been exceeded.",
+                  subTitle:
+                      " For additional information, please contact the bank.",
+                  showSub: true,
+                  shapeColor: AppColors.CLR_ORANGE,
+                  child: Icon(
+                    Icons.error_outline,
+                    color: Colors.white,
+                  )));
         },
       );
     }

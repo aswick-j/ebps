@@ -16,6 +16,7 @@ import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/models/upcoming_dues_model.dart';
 import 'package:ebps/widget/animated_dialog.dart';
+import 'package:ebps/widget/custom_dialog.dart';
 import 'package:ebps/widget/custom_switch.dart';
 import 'package:ebps/widget/marquee_widget.dart';
 import 'package:flutter/material.dart';
@@ -105,75 +106,75 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
 
   @override
   Widget build(BuildContext context) {
-    handleDialog() {
-      showDialog(
-          barrierDismissible: true,
-          context: context,
-          builder: (context) {
-            return WillPopScope(
-              onWillPop: () async => false,
-              child: AlertDialog(
-                  actions: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: MyAppButton(
-                          onPressed: () {
-                            goBack(context);
-                          },
-                          buttonText: "Cancel",
-                          buttonTxtColor: BTN_CLR_ACTIVE,
-                          buttonBorderColor: Colors.transparent,
-                          buttonColor: CLR_PRIMARY,
-                          buttonSizeX: 10.h,
-                          buttonSizeY: 40.w,
-                          buttonTextSize: 14.sp,
-                          buttonTextWeight: FontWeight.w500),
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: MyAppButton(
-                          onPressed: () {
-                            goBack(context);
-                          },
-                          buttonText: "Delete",
-                          buttonTxtColor: BTN_CLR_ACTIVE,
-                          buttonBorderColor: Colors.transparent,
-                          buttonColor: CLR_PRIMARY,
-                          buttonSizeX: 10.h,
-                          buttonSizeY: 40.w,
-                          buttonTextSize: 14.sp,
-                          buttonTextWeight: FontWeight.w500),
-                    ),
-                  ],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                  elevation: 3,
-                  content: SingleChildScrollView(
-                    padding: EdgeInsets.all(20.r),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                            height: 50.h,
-                            width: 50.w,
-                            child: SvgPicture.asset(ICON_SUCCESS)),
-                        Text(
-                          "Are You Sure You Want To Delete",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xff000000),
-                          ),
-                          textAlign: TextAlign.center,
-                        )
-                      ],
-                    ),
-                  )),
-            );
-          });
-    }
+    // handleDialog() {
+    //   showDialog(
+    //       barrierDismissible: true,
+    //       context: context,
+    //       builder: (context) {
+    //         return WillPopScope(
+    //           onWillPop: () async => false,
+    //           child: AlertDialog(
+    //               actions: [
+    //                 Align(
+    //                   alignment: Alignment.center,
+    //                   child: MyAppButton(
+    //                       onPressed: () {
+    //                         goBack(context);
+    //                       },
+    //                       buttonText: "Cancel",
+    //                       buttonTxtColor: BTN_CLR_ACTIVE,
+    //                       buttonBorderColor: Colors.transparent,
+    //                       buttonColor: CLR_PRIMARY,
+    //                       buttonSizeX: 10.h,
+    //                       buttonSizeY: 40.w,
+    //                       buttonTextSize: 14.sp,
+    //                       buttonTextWeight: FontWeight.w500),
+    //                 ),
+    //                 Align(
+    //                   alignment: Alignment.center,
+    //                   child: MyAppButton(
+    //                       onPressed: () {
+    //                         goBack(context);
+    //                       },
+    //                       buttonText: "Delete",
+    //                       buttonTxtColor: BTN_CLR_ACTIVE,
+    //                       buttonBorderColor: Colors.transparent,
+    //                       buttonColor: CLR_PRIMARY,
+    //                       buttonSizeX: 10.h,
+    //                       buttonSizeY: 40.w,
+    //                       buttonTextSize: 14.sp,
+    //                       buttonTextWeight: FontWeight.w500),
+    //                 ),
+    //               ],
+    //               shape: RoundedRectangleBorder(
+    //                 borderRadius: BorderRadius.circular(12.r),
+    //               ),
+    //               elevation: 3,
+    //               content: SingleChildScrollView(
+    //                 padding: EdgeInsets.all(20.r),
+    //                 child: Column(
+    //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                   crossAxisAlignment: CrossAxisAlignment.center,
+    //                   children: [
+    //                     Container(
+    //                         height: 50.h,
+    //                         width: 50.w,
+    //                         child: SvgPicture.asset(ICON_SUCCESS)),
+    //                     Text(
+    //                       "Are You Sure You Want To Delete",
+    //                       style: TextStyle(
+    //                         fontSize: 14.sp,
+    //                         fontWeight: FontWeight.w400,
+    //                         color: Color(0xff000000),
+    //                       ),
+    //                       textAlign: TextAlign.center,
+    //                     )
+    //                   ],
+    //                 ),
+    //               )),
+    //         );
+    //       });
+    // }
 
     return GestureDetector(
       onTap: () {
@@ -252,6 +253,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                     showModalBottomSheet(
                         context: context,
                         elevation: 20,
+                      
                         backgroundColor: AppColors.CLR_BACKGROUND,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.vertical(
@@ -1322,42 +1324,10 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                         context: context,
                                         builder: (BuildContext ctx) {
                                           return WillPopScope(
-                                            onWillPop: () async => false,
-                                            child: BackdropFilter(
-                                              filter: ImageFilter.blur(
-                                                  sigmaX: 2, sigmaY: 2),
-                                              child: AlertDialog(
-                                                backgroundColor:
-                                                    AppColors.CLR_BACKGROUND,
-                                                shape: RoundedRectangleBorder(
-                                                  side: BorderSide(
-                                                      color: AppColors
-                                                          .BTN_CLR_ACTIVE_BORDER
-                                                          .withOpacity(0.1)),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12.r),
-                                                ),
-                                                content: AnimatedDialog(
-                                                    showImgIcon: false,
-                                                    title: getAllAutopayList(widget
-                                                                    .savedBillersData
-                                                                    .cUSTOMERBILLID)!
-                                                                .pAYMENTDATE ==
-                                                            DateTime.now()
-                                                                .day
-                                                                .toString()
-                                                        ? " We are unable to edit your autopay as the autopay is scheduled for today"
-                                                        : "We can't edit your Autopay because it's currently paused.",
-                                                    subTitle: "",
-                                                    child: Icon(
-                                                      Icons.close,
-                                                      color: Colors.white,
-                                                    ),
-                                                    showSub: false,
-                                                    shapeColor:
-                                                        AppColors.CLR_ERROR),
-                                                actions: <Widget>[
+                                              onWillPop: () async => false,
+                                              child: CustomDialog(
+                                                showActions: true,
+                                                actions: [
                                                   Align(
                                                     alignment: Alignment.center,
                                                     child: MyAppButton(
@@ -1378,9 +1348,26 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                             FontWeight.w500),
                                                   ),
                                                 ],
-                                              ),
-                                            ),
-                                          );
+                                                child: AnimatedDialog(
+                                                    showImgIcon: false,
+                                                    title: getAllAutopayList(widget
+                                                                    .savedBillersData
+                                                                    .cUSTOMERBILLID)!
+                                                                .pAYMENTDATE ==
+                                                            DateTime.now()
+                                                                .day
+                                                                .toString()
+                                                        ? " We are unable to edit your autopay as the autopay is scheduled for today"
+                                                        : "We can't edit your Autopay because it's currently paused.",
+                                                    subTitle: "",
+                                                    showSub: false,
+                                                    shapeColor:
+                                                        AppColors.CLR_ERROR,
+                                                    child: Icon(
+                                                      Icons.close,
+                                                      color: Colors.white,
+                                                    )),
+                                              ));
                                         },
                                       );
                                     } else {
@@ -1720,52 +1707,36 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                     () async =>
                                                                         false,
                                                                 child:
-                                                                    AlertDialog(
-                                                                  shape:
-                                                                      RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            12.r),
-                                                                  ),
-                                                                  content:
-                                                                      AnimatedDialog(
-                                                                          showImgIcon:
-                                                                              false,
-                                                                          title: getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.pAYMENTDATE == DateTime.now().day.toString()
-                                                                              ? " We are unable to edit your autopay as the autopay is scheduled for today"
-                                                                              : "We can't edit your Autopay because it's currently paused.",
-                                                                          subTitle:
-                                                                              "",
-                                                                          child:
-                                                                              Icon(
-                                                                            Icons.close,
-                                                                            color:
-                                                                                Colors.white,
-                                                                          ),
-                                                                          showSub:
-                                                                              false,
-                                                                          shapeColor:
-                                                                              CLR_ERROR),
-                                                                  actions: <Widget>[
-                                                                    Align(
-                                                                      alignment:
-                                                                          Alignment
-                                                                              .center,
-                                                                      child: MyAppButton(
-                                                                          onPressed: () {
-                                                                            goBack(ctx);
-                                                                          },
-                                                                          buttonText: "Okay",
-                                                                          buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
-                                                                          buttonBorderColor: Colors.transparent,
-                                                                          buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
-                                                                          buttonSizeX: 10,
-                                                                          buttonSizeY: 40,
-                                                                          buttonTextSize: 14,
-                                                                          buttonTextWeight: FontWeight.w500),
-                                                                    ),
-                                                                  ],
-                                                                ),
+    CustomDialog(showActions: true,actions: [   Align(
+                                                                        alignment:
+                                                                            Alignment.center,
+                                                                        child: MyAppButton(
+                                                                            onPressed: () {
+                                                                              goBack(ctx);
+                                                                            },
+                                                                            buttonText: "Okay",
+                                                                            buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
+                                                                            buttonBorderColor: Colors.transparent,
+                                                                            buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
+                                                                            buttonSizeX: 10,
+                                                                            buttonSizeY: 40,
+                                                                            buttonTextSize: 14,
+                                                                            buttonTextWeight: FontWeight.w500),
+                                                                      ),],child:  AnimatedDialog(
+                                                                        showImgIcon: false,
+                                                                        title: getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.pAYMENTDATE == DateTime.now().day.toString() ? " We are unable to edit your autopay as the autopay is scheduled for today" : "We can't edit your Autopay because it's currently paused.",
+                                                                        subTitle: "",
+                                                                        child: Icon(
+                                                                          Icons
+                                                                              .close,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                        showSub: false,
+                                                                        shapeColor: CLR_ERROR),)
+
+
+                                                                 
                                                               );
                                                             },
                                                           );
