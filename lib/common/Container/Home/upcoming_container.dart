@@ -435,15 +435,19 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                               height: 15.h,
                               clipBehavior: Clip.hardEdge,
                               decoration: BoxDecoration(
-                                // color: AppColors.CLR_ERROR,
-                                gradient: LinearGradient(colors: [
-                                  AppColors.CLR_ERROR.withOpacity(.8),
-                                  AppColors.CLR_ORANGE.withOpacity(.8)
-                                ]),
+                                  // color: AppColors.CLR_ERROR,
+                                  gradient: LinearGradient(
+                                colors: [
+                                  AppColors.CLR_ERROR.withOpacity(0.5),
+                                  // Color(0xff0373c4),
+                                  Color.fromARGB(255, 231, 212, 212)
+                                ],
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
                                 // border: Border.all(
                                 //   color: AppColors.CLR_ERROR.withOpacity(0.5),
                                 // ),
-                              ),
+                              )),
                               child: Center(
                                 child: Text(
                                     "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
