@@ -715,39 +715,102 @@ class _BillerDetailsState extends State<BillerDetails> {
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 20.w, bottom: 20.h, right: 20.w),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'Payment Amount has to be between ₹ ${NumberFormat('#,##,##0.00').format(double.parse(paymentInform!.mINLIMIT.toString()))} and ₹ ${NumberFormat('#,##,##0.00').format(double.parse(paymentInform!.mAXLIMIT.toString()))}',
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.normal,
-                                        color: isInsufficient
-                                            ? AppColors.CLR_ERROR
-                                            : AppColors.TXT_CLR_PRIMARY,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                if (PaymentExactErrMsg.isNotEmpty)
+                                if (isInsufficient)
                                   Padding(
                                     padding: EdgeInsets.only(
                                         left: 20.w, bottom: 20.h, right: 20.w),
                                     child: Align(
                                       alignment: Alignment.center,
                                       child: Text(
-                                        PaymentExactErrMsg,
-                                        textAlign: TextAlign.left,
+                                        'Payment Amount has to be between ₹ ${NumberFormat('#,##,##0.00').format(double.parse(paymentInform!.mINLIMIT.toString()))} and ₹ ${NumberFormat('#,##,##0.00').format(double.parse(paymentInform!.mAXLIMIT.toString()))}',
+                                        textAlign: TextAlign.start,
                                         style: TextStyle(
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.normal,
-                                          color: AppColors.CLR_ERROR,
+                                          color: isInsufficient
+                                              ? AppColors.CLR_ERROR
+                                              : AppColors.TXT_CLR_PRIMARY,
                                         ),
                                       ),
+                                    ),
+                                  ),
+                                if (PaymentExactErrMsg.isNotEmpty)
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(
+                                  //       left: 20.w, bottom: 20.h, right: 20.w),
+                                  //   child: Align(
+                                  //     alignment: Alignment.center,
+                                  //     child: Text(
+                                  //       PaymentExactErrMsg,
+                                  //       textAlign: TextAlign.left,
+                                  //       style: TextStyle(
+                                  //         fontSize: 12.sp,
+                                  //         fontWeight: FontWeight.normal,
+                                  //         color: AppColors.CLR_ERROR,
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  Container(
+                                    clipBehavior: Clip.hardEdge,
+                                    width: double.infinity,
+                                    margin: EdgeInsets.only(
+                                        left: 18.0.w,
+                                        right: 18.w,
+                                        top: 0.h,
+                                        bottom: 10.h),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          AppColors.CLR_ERROR.withOpacity(0.1),
+                                      borderRadius:
+                                          BorderRadius.circular(6.0.r + 2.r),
+                                      border: Border.all(
+                                        color: AppColors.CLR_ERROR,
+                                        width: 0.50,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 10.h,
+                                                left: 14.w,
+                                                bottom: 0.h),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.info_outline_rounded,
+                                                  color: AppColors.CLR_ERROR,
+                                                  size: 15.r,
+                                                ),
+                                                Text(
+                                                  "  Message from Biller",
+                                                  style: TextStyle(
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: AppColors.CLR_ERROR,
+                                                  ),
+                                                  textAlign: TextAlign.left,
+                                                ),
+                                              ],
+                                            )),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 5.h,
+                                              left: 34.w,
+                                              right: 2.w,
+                                              bottom: 10.h),
+                                          child: Text(
+                                            PaymentExactErrMsg,
+                                            style: TextStyle(
+                                              fontSize: 10.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.CLR_ERROR,
+                                            ),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
                                 Padding(
