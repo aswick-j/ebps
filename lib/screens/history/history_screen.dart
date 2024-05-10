@@ -559,8 +559,14 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                         color: AppColors.TXT_CLR_BLACK),
                                     // validator: (inputValue) {},
                                     decoration: InputDecoration(
-                                      fillColor: AppColors.CLR_INPUT_FILL,
+                                      fillColor:
+                                          fromdateController.text.isNotEmpty
+                                              ? AppColors.CLR_INPUT_FILL
+                                              : AppColors.TXT_CLR_GREY
+                                                  .withOpacity(0.2),
                                       filled: true,
+                                      hintStyle: TextStyle(
+                                          color: AppColors.TXT_CLR_LITE),
                                       labelStyle: TextStyle(
                                           color: AppColors.TXT_CLR_PRIMARY),
                                       enabledBorder: UnderlineInputBorder(

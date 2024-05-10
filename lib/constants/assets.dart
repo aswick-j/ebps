@@ -19,6 +19,7 @@ const JSON_BILLPAY = "packages/ebps/assets/icon/billPay.json";
 const JSON_NOTI = "packages/ebps/assets/icon/billNoti.json";
 const ANIM_NODATA = "packages/ebps/assets/icon/ANIM_NODATA.json";
 const ANIM_NOSEARCH = "packages/ebps/assets/icon/ANIM_NOSEARCH.json";
+const COIN_LOADER = "packages/ebps/assets/icon/LOADER_COIN2.json";
 
 //ICON
 

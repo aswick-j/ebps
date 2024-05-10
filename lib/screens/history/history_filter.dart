@@ -375,6 +375,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                 decoration: InputDecoration(
                     fillColor: AppColors.CLR_INPUT_FILL,
                     filled: true,
+                    hintStyle: TextStyle(color: AppColors.TXT_CLR_LITE),
                     labelStyle: TextStyle(color: AppColors.TXT_CLR_PRIMARY),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: AppColors.TXT_CLR_PRIMARY),
@@ -593,6 +594,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                       onPressed: () {
                                                         goBack(context);
                                                       },
+                                                      buttonText: "Cancel",
                                                       buttonTxtColor: AppColors
                                                           .BTN_CLR_ACTIVE_ALTER_TEXT_C,
                                                       buttonBorderColor: AppColors
@@ -625,6 +627,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                   decoration: InputDecoration(
                       fillColor: AppColors.CLR_INPUT_FILL,
                       filled: true,
+                      hintStyle: TextStyle(color: AppColors.TXT_CLR_LITE),
                       labelStyle: TextStyle(color: AppColors.TXT_CLR_PRIMARY),
                       enabledBorder: UnderlineInputBorder(
                         borderSide:

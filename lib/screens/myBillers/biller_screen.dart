@@ -461,11 +461,9 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                       if (isUpcomingDuesLoading ||
                           isUpcomingAutopaymentLoading ||
                           isSavedBillerLoading)
-                        Center(
-                          child: Container(
-                            height: 500.h,
-                            child: FlickrLoader(),
-                          ),
+                        Container(
+                          height:  MediaQuery.of(context).size.height * 0.7,
+                          child: Center(child: FlickrLoader()),
                         ),
                     ],
                   )

@@ -704,7 +704,7 @@ class HomeCubit extends Cubit<HomeState> {
     String billName,
     String acNo,
     String billAmount,
-    int customerBillID,
+    int? customerBillID,
     String tnxRefKey,
     bool quickPay,
     dynamic inputSignature,

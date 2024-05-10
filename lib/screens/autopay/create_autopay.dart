@@ -514,7 +514,10 @@ class _createAutopayState extends State<createAutopay> {
                                         }
                                       },
                                       decoration: InputDecoration(
-                                          fillColor: AppColors.CLR_INPUT_FILL,
+                                          fillColor: limitGroupRadio == 0
+                                              ? AppColors.CLR_INPUT_FILL
+                                              : AppColors.TXT_CLR_GREY
+                                                  .withOpacity(0.2),
                                           filled: true,
                                           prefixStyle: TextStyle(
                                               color: AppColors.TXT_CLR_DEFAULT),

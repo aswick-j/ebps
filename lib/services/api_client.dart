@@ -314,7 +314,7 @@ class ApiClient implements Repository {
       String billerID,
       String acNo,
       String billAmount,
-      int customerBillID,
+      int? customerBillID,
       String tnxRefKey,
       bool quickPay,
       dynamic inputSignature,
