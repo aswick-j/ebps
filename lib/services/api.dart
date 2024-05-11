@@ -65,6 +65,7 @@ validateJWT() async {
     if (hasExpired != true) {
       var decodedToken = JwtToken.payload(token);
       DecodedModel? model = DecodedModel.fromJson(decodedToken);
+      IsCustomerElite.isCustomerElite = model.eliteFlag == "Y" ? true : false;
 
       return model;
     } else {

@@ -176,30 +176,30 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
           //             height: 30.h,
           //             child: Icon(Icons.bar_chart_rounded),
           //           ))),
-          InkWell(
-              onTap: () => {
-                    setState(() {
-                      IsCustomerElite.isCustomerElite =
-                          !IsCustomerElite.isCustomerElite;
-                    }),
-                    print(IsCustomerElite.isCustomerElite)
-                  },
-              child: Container(
-                  margin: EdgeInsets.only(right: 15.w),
-                  // width: 40.w,
-                  // height: 40.h,
-                  decoration: ShapeDecoration(
-                    color: AppColors.CLR_SECONDARY,
-                    shape: CircleBorder(),
-                  ),
-                  child: Container(
-                    width: 30.w,
-                    height: 30.h,
-                    child: Icon(
-                      Icons.change_circle_outlined,
-                      color: Colors.white,
-                    ),
-                  ))),
+          // InkWell(
+          //     onTap: () => {
+          //           setState(() {
+          //             IsCustomerElite.isCustomerElite =
+          //                 !IsCustomerElite.isCustomerElite;
+          //           }),
+          //           print(IsCustomerElite.isCustomerElite)
+          //         },
+          //     child: Container(
+          //         margin: EdgeInsets.only(right: 15.w),
+          //         // width: 40.w,
+          //         // height: 40.h,
+          //         decoration: ShapeDecoration(
+          //           color: AppColors.CLR_SECONDARY,
+          //           shape: CircleBorder(),
+          //         ),
+          //         child: Container(
+          //           width: 30.w,
+          //           height: 30.h,
+          //           child: Icon(
+          //             Icons.change_circle_outlined,
+          //             color: Colors.white,
+          //           ),
+          //         ))),
           InkWell(
               onTap: () => {goTo(context, cOMPLAINTLISTROUTE)},
               child: Container(

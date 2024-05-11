@@ -166,7 +166,8 @@ var p5 = {
           "mblNb": "919626772779",
           "dob": "1999-02-24",
           "custId": "8010346",
-          "emailId": "ASWICKJOTHI27@GMAIL.COM"
+          "emailId": "ASWICKJOTHI27@GMAIL.COM",
+          "eliteFlag": "Y"
         }
       },
       "service": "bbps",
@@ -239,7 +240,8 @@ var p7 = {
           "mblNb": "919626772779",
           "dob": "1999-02-24",
           "custId": "8010346",
-          "emailId": "aswick.j@fasoftwares.com"
+          "emailId": "aswick.j@fasoftwares.com",
+          "eliteFlag": "Y"
         }
       }
     },
@@ -270,7 +272,8 @@ var p8 = {
           "dob": "1987-07-16",
           "emailId": "balaji.daruka@gmail.com",
           "gndr": "M",
-          "mblNb": "919841248843"
+          "mblNb": "919841248843",
+          "eliteFlag": "Y"
         },
         "otpPreference": "SMS"
       },

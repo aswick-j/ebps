@@ -52,7 +52,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   final String API_URL =
-      'https://digiservicesuat.equitasbank.com/api/auth/redirect';
+      'https://digiservices.equitasbank.com/api/auth/redirect';
 
   String API_DATA = '';
   bool isLoading = false;
@@ -126,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   //   // "https://cdn.iconscout.com/icon/free/png-512/free-avatar-378-456330.png?f=webp&w=512",
   //   "https://cdn.iconscout.com/icon/free/png-512/free-avatar-369-456321.png?f=webp&w=512"
   // ];
-  List value = [p3, p7, p19, p21];
+  List value = [p3, p5, p19, p21];
   List Name = ["Balaji", "Aswick", "Nithiya", "Divya"];
   List Img = [
     "https://cdn.iconscout.com/icon/free/png-512/free-avatar-366-456318.png?f=webp&w=512",

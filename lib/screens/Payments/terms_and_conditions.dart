@@ -95,8 +95,10 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
         ),
         bottomSheet: Container(
           decoration: BoxDecoration(
-              border:
-                  Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+              color: AppColors.CLR_BACKGROUND,
+              border: Border(
+                  top: BorderSide(
+                      color: AppColors.CLR_CON_BORDER_LITE, width: 1))),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
             child: Row(
@@ -116,7 +118,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                       buttonBorderColor: Colors.transparent,
                       buttonColor: reachEnd
                           ? AppColors.BTN_CLR_ACTIVE_ALTER
-                          : AppColors.BTN_CLR_DISABLE_TEXT,
+                          : AppColors.BTN_CLR_DISABLE,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,
                       buttonTextSize: 14.sp,

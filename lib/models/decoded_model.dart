@@ -10,6 +10,7 @@ class DecodedModel {
   List<Accounts>? accounts;
   int? iat;
   int? exp;
+  String? eliteFlag;
 
   DecodedModel(
       {this.platform,
@@ -22,6 +23,7 @@ class DecodedModel {
       this.accounts,
       this.customerName,
       this.iat,
+      this.eliteFlag,
       this.exp});
 
   DecodedModel.fromJson(Map<String, dynamic> json) {
@@ -31,6 +33,7 @@ class DecodedModel {
     gender = json['gender'];
     mobileNumber = json['mobileNumber'];
     dob = json['dob'];
+    eliteFlag = json['eliteFlag'];
     otpPreference = json['otp_preference'];
     emailID = json['emailID'];
     if (json['accounts'] != null) {
@@ -51,6 +54,7 @@ class DecodedModel {
     data['gender'] = this.gender;
     data['mobileNumber'] = this.mobileNumber;
     data['dob'] = this.dob;
+    data['eliteFlag'] = this.eliteFlag;
     data['otp_preference'] = this.otpPreference;
     data['emailID'] = this.emailID;
     if (this.accounts != null) {

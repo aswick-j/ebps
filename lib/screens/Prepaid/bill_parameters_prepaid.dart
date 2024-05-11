@@ -63,6 +63,7 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
           context: context,
           title: widget.billerData!.bILLERNAME.toString(),
