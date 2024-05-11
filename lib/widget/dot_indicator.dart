@@ -2,13 +2,8 @@ import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class DotIndicator extends Decoration {
-  const DotIndicator({
-    this.color = CLR_PRIMARY,
-    this.radius = 4.0,
-  });
-
-  final Color color;
-  final double radius;
+  final Color color = AppColors.CLR_PRIMARY;
+  final double radius = 4.0;
 
   @override
   BoxPainter createBoxPainter([VoidCallback? onChanged]) {

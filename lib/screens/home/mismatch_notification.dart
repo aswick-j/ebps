@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
@@ -8,6 +10,7 @@ import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/services/api.dart';
 import 'package:ebps/widget/animated_dialog.dart';
+import 'package:ebps/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -65,7 +68,11 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                   margin: EdgeInsets.symmetric(horizontal: 5.w),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.0.r),
-                    color: Colors.white,
+                    color: AppColors.CLR_BACKGROUND,
+                    border: Border.all(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      width: 1.0,
+                    ),
                   ),
                   child: Container(
                     width: double.infinity,
@@ -76,12 +83,12 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                           children: [
                             Container(
                               height: 60.h,
-                              width: 330.w,
+                              width: 328.w,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(12.r),
-                                    topLeft: Radius.circular(12.r)),
-                                color: CLR_ERROR,
+                                    topRight: Radius.circular(10.5.r),
+                                    topLeft: Radius.circular(10.5.r)),
+                                color: AppColors.CLR_ERROR,
                                 border: Border.all(
                                   color: Color.fromARGB(255, 255, 255, 255),
                                   width: 1.0,
@@ -143,7 +150,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.bold,
-                                      color: CLR_BLUE_LITE,
+                                      color: AppColors.CLR_BLUE_LITE,
                                     ),
                                     textAlign: TextAlign.left,
                                     maxLines: 1,
@@ -155,7 +162,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.bold,
-                                        color: CLR_PRIMARY,
+                                        color: AppColors.CLR_PRIMARY,
                                       ),
                                       textAlign: TextAlign.left,
                                       maxLines: 3,
@@ -181,7 +188,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.0.r),
                               border: Border.all(
-                                color: Color(0xFFD1D9E8),
+                                color: AppColors.CLR_CONTAINER_BG,
                                 width: 1.0,
                               ),
                             ),
@@ -207,7 +214,8 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                 0.9
                                               ],
                                               colors: [
-                                                CLR_BLUE_LITE.withOpacity(.16),
+                                                AppColors.CLR_BLUE_LITE
+                                                    .withOpacity(.16),
                                                 Colors.transparent
                                               ])),
                                       child: Padding(
@@ -218,7 +226,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                     1
                                                 ? Icons.receipt_long
                                                 : Icons.currency_rupee,
-                                            color: CLR_BLUE_LITE,
+                                            color: AppColors.CLR_BLUE_LITE,
                                           )),
                                     ),
                                     Text(
@@ -229,7 +237,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: Color(0xff808080),
+                                        color: AppColors.TXT_CLR_LITE,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
@@ -256,7 +264,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: TXT_CLR_PRIMARY,
+                                      color: AppColors.TXT_CLR_PRIMARY,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -278,7 +286,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                 color:
                                     widget.allautoPayData![index].rESETDATE == 1
                                         ? Color(0xFFD1D9E8)
-                                        : CLR_ERROR,
+                                        : AppColors.CLR_ERROR,
                                 width: 1.0,
                               ),
                             ),
@@ -305,7 +313,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                 widget.allautoPayData![index]
                                                             .rESETDATE ==
                                                         1
-                                                    ? CLR_BLUE_LITE
+                                                    ? AppColors.CLR_BLUE_LITE
                                                         .withOpacity(.16)
                                                     : Color.fromARGB(
                                                             255, 255, 123, 123)
@@ -323,8 +331,8 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                             color: widget.allautoPayData![index]
                                                         .rESETDATE ==
                                                     1
-                                                ? CLR_BLUE_LITE
-                                                : CLR_ERROR,
+                                                ? AppColors.CLR_BLUE_LITE
+                                                : AppColors.CLR_ERROR,
                                           )),
                                     ),
                                     Text(
@@ -335,7 +343,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: Color(0xff808080),
+                                        color: AppColors.TXT_CLR_LITE,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
@@ -355,7 +363,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: TXT_CLR_PRIMARY,
+                                      color: AppColors.TXT_CLR_PRIMARY,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -375,7 +383,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                               border: Border.all(
                                 color:
                                     widget.allautoPayData![index].rESETDATE == 1
-                                        ? CLR_ERROR
+                                        ? AppColors.CLR_ERROR
                                         : Color(0xFFD1D9E8),
                                 width: 1.0,
                               ),
@@ -406,7 +414,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                     ? Color.fromARGB(
                                                             255, 255, 123, 123)
                                                         .withOpacity(.16)
-                                                    : CLR_PRIMARY
+                                                    : AppColors.CLR_PRIMARY
                                                         .withOpacity(.16),
                                                 Colors.transparent
                                               ])),
@@ -417,8 +425,8 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                             color: widget.allautoPayData![index]
                                                         .rESETDATE ==
                                                     1
-                                                ? CLR_ERROR
-                                                : CLR_BLUE_LITE,
+                                                ? AppColors.CLR_ERROR
+                                                : AppColors.CLR_BLUE_LITE,
                                           )),
                                     ),
                                     Text(
@@ -426,7 +434,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: Color(0xff808080),
+                                        color: AppColors.TXT_CLR_LITE,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
@@ -442,7 +450,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                         style: TextStyle(
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w400,
-                                          color: TXT_CLR_PRIMARY,
+                                          color: AppColors.TXT_CLR_PRIMARY,
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
@@ -467,9 +475,12 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       goBack(context);
                                     },
                                     buttonText: "Skip",
-                                    buttonTxtColor: CLR_PRIMARY,
-                                    buttonBorderColor: CLR_PRIMARY,
-                                    buttonColor: BTN_CLR_ACTIVE,
+                                    buttonTxtColor:
+                                        AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                                    buttonBorderColor:
+                                        AppColors.BTN_CLR_ACTIVE_BORDER,
+                                    buttonColor:
+                                        AppColors.BTN_CLR_ACTIVE_ALTER_C,
                                     buttonSizeX: 10.h,
                                     buttonSizeY: 40.w,
                                     buttonTextSize: 14.sp,
@@ -494,54 +505,52 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                           context: context,
                                           builder: (BuildContext ctx) {
                                             return WillPopScope(
-                                              onWillPop: () async => false,
-                                              child: AlertDialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12.r),
-                                                ),
-                                                content: AnimatedDialog(
-                                                    showImgIcon: false,
-                                                    title: widget
-                                                                .allautoPayData![
-                                                                    index]
-                                                                .pAYMENTDATE ==
-                                                            DateTime.now()
-                                                                .day
-                                                                .toString()
-                                                        ? " We are unable to edit your autopay as the autopay is scheduled for today"
-                                                        : "We can't edit your Autopay because it's currently paused.",
-                                                    subTitle: "",
-                                                    child: Icon(
-                                                      Icons.close,
-                                                      color: Colors.white,
+                                                onWillPop: () async => false,
+                                                child: CustomDialog(
+                                                  showActions: true,
+                                                  actions: [
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: MyAppButton(
+                                                          onPressed: () {
+                                                            goBack(ctx);
+                                                          },
+                                                          buttonText: "Okay",
+                                                          buttonTxtColor: AppColors
+                                                              .BTN_CLR_ACTIVE_ALTER_TEXT,
+                                                          buttonBorderColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          buttonColor: AppColors
+                                                              .BTN_CLR_ACTIVE_ALTER,
+                                                          buttonSizeX: 10.h,
+                                                          buttonSizeY: 40.w,
+                                                          buttonTextSize: 14.sp,
+                                                          buttonTextWeight:
+                                                              FontWeight.w500),
                                                     ),
-                                                    showSub: false,
-                                                    shapeColor: CLR_ERROR),
-                                                actions: <Widget>[
-                                                  Align(
-                                                    alignment: Alignment.center,
-                                                    child: MyAppButton(
-                                                        onPressed: () {
-                                                          goBack(ctx);
-                                                        },
-                                                        buttonText: "Okay",
-                                                        buttonTxtColor:
-                                                            BTN_CLR_ACTIVE,
-                                                        buttonBorderColor:
-                                                            Colors.transparent,
-                                                        buttonColor:
-                                                            CLR_PRIMARY,
-                                                        buttonSizeX: 10,
-                                                        buttonSizeY: 40,
-                                                        buttonTextSize: 14,
-                                                        buttonTextWeight:
-                                                            FontWeight.w500),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
+                                                  ],
+                                                  child: AnimatedDialog(
+                                                      showImgIcon: false,
+                                                      title: widget
+                                                                  .allautoPayData![
+                                                                      index]
+                                                                  .pAYMENTDATE ==
+                                                              DateTime.now()
+                                                                  .day
+                                                                  .toString()
+                                                          ? " We are unable to edit your autopay as the autopay is scheduled for today"
+                                                          : "We can't edit your Autopay because it's currently paused.",
+                                                      subTitle: "",
+                                                      child: Icon(
+                                                        Icons.close,
+                                                        color: Colors.white,
+                                                      ),
+                                                      showSub: false,
+                                                      shapeColor:
+                                                          AppColors.CLR_ERROR),
+                                                ));
                                           },
                                         );
                                       } else {
@@ -568,9 +577,10 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       }
                                     },
                                     buttonText: "Modify",
-                                    buttonTxtColor: BTN_CLR_ACTIVE,
+                                    buttonTxtColor:
+                                        AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                                     buttonBorderColor: Colors.transparent,
-                                    buttonColor: CLR_PRIMARY,
+                                    buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                                     buttonSizeX: 10.h,
                                     buttonSizeY: 40.w,
                                     buttonTextSize: 14.sp,

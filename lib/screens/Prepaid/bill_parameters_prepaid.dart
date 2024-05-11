@@ -212,7 +212,8 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 16.w, vertical: 16.h),
                                 child: TextFormField(
-                                  style: TextStyle(color: TXT_CLR_LITE),
+                                  style:
+                                      TextStyle(color: AppColors.TXT_CLR_LITE),
                                   readOnly: true,
                                   controller: operatorController,
                                   key: _OperatorKey,
@@ -334,7 +335,7 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                               decoration: InputDecoration(
                                 counterStyle: TextStyle(
                                     color: billNameController.text.length <= 3
-                                        ? CLR_ERROR
+                                        ? AppColors.CLR_ERROR
                                         : null),
                                 fillColor:
                                     const Color(0xffD1D9E8).withOpacity(0.2),
@@ -387,9 +388,9 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                         goBack(context);
                       },
                       buttonText: "Cancel",
-                      buttonTxtColor: CLR_PRIMARY,
-                      buttonBorderColor: Colors.transparent,
-                      buttonColor: BTN_CLR_ACTIVE,
+                      buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                      buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
+                      buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER_C,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,
                       buttonTextSize: 14.sp,
@@ -480,14 +481,19 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                         }
                       },
                       buttonText: "Confirm",
-                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonTxtColor: !isBillNameNotValid &&
+                              CircleValue != null &&
+                              billNameController.text.length > 3 &&
+                              !isMobileNumberNotValid
+                          ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                          : AppColors.BTN_CLR_DISABLE_TEXT,
                       buttonBorderColor: Colors.transparent,
                       buttonColor: !isBillNameNotValid &&
                               CircleValue != null &&
                               billNameController.text.length > 3 &&
                               !isMobileNumberNotValid
-                          ? CLR_PRIMARY
-                          : Colors.grey,
+                          ? AppColors.BTN_CLR_ACTIVE_ALTER
+                          : AppColors.BTN_CLR_DISABLE,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,
                       buttonTextSize: 14.sp,

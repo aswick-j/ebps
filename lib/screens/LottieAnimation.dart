@@ -75,14 +75,14 @@ class _LottieAnimationState extends State<LottieAnimation>
                         MyAppText(
                           data: TitleText[widget.titleIndex],
                           size: 18.0.sp,
-                          color: CLR_PRIMARY,
+                          color: AppColors.CLR_PRIMARY,
                           weight: FontWeight.bold,
                         ),
                       SizedBox(height: 20.h),
                       MyAppText(
                           data: SecondaryText[widget.secondaryIndex],
                           size: 13.0.sp,
-                          color: CLR_PRIMARY,
+                          color: AppColors.CLR_PRIMARY,
                           weight: FontWeight.bold,
                           textAlign: TextAlign.justify),
                       // SizedBox(height: 80.h),

@@ -147,6 +147,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.CLR_BACKGROUND,
       appBar: MyAppBar(
         context: context,
         title: 'History',
@@ -175,12 +176,36 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
           //             height: 30.h,
           //             child: Icon(Icons.bar_chart_rounded),
           //           ))),
+          // InkWell(
+          //     onTap: () => {
+          //           setState(() {
+          //             IsCustomerElite.isCustomerElite =
+          //                 !IsCustomerElite.isCustomerElite;
+          //           }),
+          //           print(IsCustomerElite.isCustomerElite)
+          //         },
+          //     child: Container(
+          //         margin: EdgeInsets.only(right: 15.w),
+          //         // width: 40.w,
+          //         // height: 40.h,
+          //         decoration: ShapeDecoration(
+          //           color: AppColors.CLR_SECONDARY,
+          //           shape: CircleBorder(),
+          //         ),
+          //         child: Container(
+          //           width: 30.w,
+          //           height: 30.h,
+          //           child: Icon(
+          //             Icons.change_circle_outlined,
+          //             color: Colors.white,
+          //           ),
+          //         ))),
           InkWell(
               onTap: () => {goTo(context, cOMPLAINTLISTROUTE)},
               child: Container(
                   margin: EdgeInsets.only(right: 15.w),
                   decoration: ShapeDecoration(
-                    color: Color(0xff4969A2),
+                    color: AppColors.CLR_SECONDARY,
                     shape: CircleBorder(),
                   ),
                   child: Container(
@@ -274,7 +299,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                           child: MyAppText(
                             data: "Clear Filters",
                             size: 14.0.sp,
-                            color: CLR_PRIMARY,
+                            color: AppColors.CLR_PRIMARY,
                             weight: FontWeight.bold,
                           ),
                         ),
@@ -308,7 +333,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                     subtitleText: historyData![index]
                                         .billerName
                                         .toString(),
-                                    dateText: DateFormat('dd/MM/yyyy').format(
+                                    dateText: DateFormat('MMM dd, yyyy').format(
                                         DateTime.parse(historyData![index]
                                                 .completionDate
                                                 .toString())
@@ -323,7 +348,8 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                     iconPath: BILLER_LOGO(historyData![index]
                                         .billerName
                                         .toString()),
-                                    containerBorderColor: Color(0xffD1D9E8),
+                                    containerBorderColor:
+                                        AppColors.CLR_CON_BORDER,
                                   );
                                 } else {
                                   Timer(Duration(milliseconds: 30), () {
@@ -369,6 +395,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                         elevation: 10,
                         isScrollControlled: true,
                         context: context,
+                        backgroundColor: AppColors.CLR_BACKGROUND,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.vertical(
                             top: Radius.circular(16.0.r),
@@ -401,14 +428,14 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                     children: [
                                       Icon(
                                         Icons.filter_alt_outlined,
-                                        color: Color(0xff1b438b),
+                                        color: AppColors.CLR_PRIMARY,
                                       ),
                                       Text(
                                         "Filters",
                                         style: TextStyle(
                                           fontSize: 16.sp,
                                           fontWeight: FontWeight.w600,
-                                          color: Color(0xff1b438b),
+                                          color: AppColors.CLR_PRIMARY,
                                         ),
                                         textAlign: TextAlign.left,
                                       )
@@ -463,20 +490,21 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                         });
                                       }
                                     },
+                                    style: TextStyle(
+                                        color: AppColors.TXT_CLR_BLACK),
                                     // validator: (inputValue) {},
                                     decoration: InputDecoration(
-                                      fillColor: const Color(0xffD1D9E8)
-                                          .withOpacity(0.2),
+                                      fillColor: AppColors.CLR_INPUT_FILL,
                                       filled: true,
-                                      labelStyle: const TextStyle(
-                                          color: Color(0xff1b438b)),
-                                      enabledBorder: const UnderlineInputBorder(
+                                      labelStyle: TextStyle(
+                                          color: AppColors.TXT_CLR_PRIMARY),
+                                      enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Color(0xff1B438B)),
+                                            color: AppColors.TXT_CLR_PRIMARY),
                                       ),
-                                      focusedBorder: const UnderlineInputBorder(
+                                      focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Color(0xff1B438B)),
+                                            color: AppColors.TXT_CLR_PRIMARY),
                                       ),
                                       border: const UnderlineInputBorder(),
                                       labelText: 'From Date',
@@ -527,25 +555,28 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                       }
                                       return null;
                                     },
+                                    style: TextStyle(
+                                        color: AppColors.TXT_CLR_BLACK),
+                                    // validator: (inputValue) {},
                                     decoration: InputDecoration(
-                                      fillColor: const Color(0xffD1D9E8)
-                                          .withOpacity(0.2),
+                                      fillColor:
+                                          fromdateController.text.isNotEmpty
+                                              ? AppColors.CLR_INPUT_FILL
+                                              : AppColors.TXT_CLR_GREY
+                                                  .withOpacity(0.2),
                                       filled: true,
-                                      errorText: showToDateErr
-                                          ? "Please select From Date first."
-                                          : null,
-                                      // errorStyle: TextStyle(color: Colors.green),
-                                      labelStyle: const TextStyle(
-                                          color: Color(0xff1b438b)),
-                                      enabledBorder: const UnderlineInputBorder(
+                                      hintStyle: TextStyle(
+                                          color: AppColors.TXT_CLR_LITE),
+                                      labelStyle: TextStyle(
+                                          color: AppColors.TXT_CLR_PRIMARY),
+                                      enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Color(0xff1B438B)),
+                                            color: AppColors.TXT_CLR_PRIMARY),
                                       ),
-                                      focusedBorder: const UnderlineInputBorder(
+                                      focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Color(0xff1B438B)),
+                                            color: AppColors.TXT_CLR_PRIMARY),
                                       ),
-                                      border: const UnderlineInputBorder(),
                                       labelText: 'To Date',
                                       hintText: "To Date",
                                     ),
@@ -573,10 +604,12 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                               goBack(context);
                                             },
                                             buttonText: "Cancel",
-                                            buttonTxtColor: CLR_PRIMARY,
+                                            buttonTxtColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_TEXT_C,
                                             buttonBorderColor:
-                                                Colors.transparent,
-                                            buttonColor: BTN_CLR_ACTIVE,
+                                                AppColors.BTN_CLR_ACTIVE_BORDER,
+                                            buttonColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_C,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 40.w,
                                             buttonTextSize: 14.sp,
@@ -598,14 +631,21 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                               }
                                             },
                                             buttonText: "Apply",
-                                            buttonTxtColor: BTN_CLR_ACTIVE,
+                                            buttonTxtColor: ((fromDate !=
+                                                            null &&
+                                                        toDate != null) ||
+                                                    categoryID != null)
+                                                ? AppColors
+                                                    .BTN_CLR_ACTIVE_ALTER_TEXT
+                                                : AppColors
+                                                    .BTN_CLR_DISABLE_TEXT,
                                             buttonBorderColor:
                                                 Colors.transparent,
                                             buttonColor: ((fromDate != null &&
                                                         toDate != null) ||
                                                     categoryID != null)
-                                                ? CLR_PRIMARY
-                                                : Colors.grey,
+                                                ? AppColors.BTN_CLR_ACTIVE_ALTER
+                                                : AppColors.BTN_CLR_DISABLE,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 40.w,
                                             buttonTextSize: 14.sp,
@@ -622,7 +662,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                           });
                         });
                   },
-                  backgroundColor: CLR_PRIMARY,
+                  backgroundColor: AppColors.CLR_PRIMARY_NC,
                   child: Padding(
                     padding: EdgeInsets.only(top: 5.0.h),
                     child: SvgPicture.asset(

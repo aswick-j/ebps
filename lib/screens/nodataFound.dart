@@ -61,13 +61,13 @@ class _NoDataFoundState extends State<NoDataFound> {
                       text: TextSpan(
                         style: TextStyle(
                           fontSize: 14.0.sp,
-                          color: Colors.black,
+                          color: AppColors.TXT_CLR_DEFAULT,
                         ),
                         children: <TextSpan>[
                           TextSpan(
                               style: TextStyle(
                                   fontSize: 13.sp,
-                                  color: TXT_CLR_PRIMARY,
+                                  color: AppColors.TXT_CLR_PRIMARY,
                                   fontWeight: FontWeight.w500),
                               text: widget.message),
                           TextSpan(
@@ -75,14 +75,14 @@ class _NoDataFoundState extends State<NoDataFound> {
                             recognizer: TapGestureRecognizer()..onTap = () {},
                             style: TextStyle(
                                 decoration: TextDecoration.none,
-                                color: TXT_CLR_DEFAULT,
+                                color: AppColors.TXT_CLR_DEFAULT,
                                 fontSize: 13.sp,
                                 fontWeight: FontWeight.bold),
                           ),
                           TextSpan(
                               style: TextStyle(
                                   fontSize: 13.sp,
-                                  color: TXT_CLR_PRIMARY,
+                                  color: AppColors.TXT_CLR_PRIMARY,
                                   fontWeight: FontWeight.w500),
                               text: widget.message2),
                         ],
@@ -93,7 +93,7 @@ class _NoDataFoundState extends State<NoDataFound> {
                   MyAppText(
                     data: widget.message,
                     size: 14.0,
-                    color: CLR_PRIMARY,
+                    color: AppColors.CLR_PRIMARY,
                     weight: FontWeight.bold,
                   ),
                 SizedBox(height: 80),

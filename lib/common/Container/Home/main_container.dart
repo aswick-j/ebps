@@ -1,7 +1,11 @@
 import 'package:ebps/common/Button/MyAppButton.dart';
+import 'package:ebps/common/Container/ImageTile.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
+import 'package:ebps/helpers/checkDateExpiry.dart';
+import 'package:ebps/helpers/getDateBetweenTwoDates.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/widget/marquee_widget.dart';
@@ -28,9 +32,11 @@ class MainContainer extends StatefulWidget {
   final String customerBillID;
   final BuildContext ctx;
   final List<AllConfigurations>? autopayData;
+  final dynamic dueDate;
 
   const MainContainer({
     super.key,
+    required this.dueDate,
     required this.titleText,
     required this.autopayData,
     required this.subtitleText,
@@ -77,27 +83,14 @@ class _MainContainerState extends State<MainContainer> {
 
     return Stack(
       children: [
-        Container(
-            width: double.infinity,
-            margin: EdgeInsets.only(
-                left: 18.0.w, right: 18.w, top: 10.h, bottom: 10.h),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0.r),
-              border: Border.all(
-                color: Color(0xFFD1D9E8),
-                width: 2.0,
-              ),
-            ),
+        ReusableContainer(
+            bottomMargin: 10.h,
             child: Column(children: [
               ListTile(
                 contentPadding: EdgeInsets.only(
                     left: 8.w, right: 15.w, top: 4.h, bottom: 3.h),
-                leading: Container(
-                  width: 45.w,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.w),
-                    child: SvgPicture.asset(widget.iconPath),
-                  ),
+                leading: ImageTileContainer(
+                  iconPath: widget.iconPath,
                 ),
                 title: Padding(
                   padding: EdgeInsets.only(bottom: 5.h),
@@ -111,13 +104,14 @@ class _MainContainerState extends State<MainContainer> {
                           style: TextStyle(
                             fontSize: 13.sp,
                             fontWeight: FontWeight.bold,
-                            color: TXT_CLR_PRIMARY,
+                            color: AppColors.TXT_CLR_PRIMARY,
                           ),
                           textAlign: TextAlign.left,
                         ),
                         SizedBox(
                           width: 5.w,
                         ),
+
                         // Text(
                         //   "( ${widget.titleText} )",
                         //   style: TextStyle(
@@ -139,20 +133,43 @@ class _MainContainerState extends State<MainContainer> {
                       style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
-                          color: TXT_CLR_DEFAULT,
+                          color: AppColors.TXT_CLR_DEFAULT,
                           overflow: TextOverflow.ellipsis),
                       maxLines: 1,
                     ),
                     SizedBox(
                       height: 5.h,
                     ),
-                    Text(
-                      widget.subtitleText2,
-                      style: TextStyle(
-                        fontSize: 11.sp,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xff808080),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          widget.subtitleText2,
+                          style: TextStyle(
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.TXT_CLR_LITE,
+                          ),
+                        ),
+                        // if (widget.dueDate != "-")
+                        //   if (checkDateExpiry(widget.dueDate.toString()))
+                        //     Container(
+                        //         decoration: BoxDecoration(
+                        //             // color: Colors.red.shade100,
+                        //             border: Border.all(
+                        //               color:
+                        //                   AppColors.CLR_ERROR.withOpacity(0.5),
+                        //             ),
+                        //             borderRadius: BorderRadius.circular(5.r)),
+                        //         child: Padding(
+                        //             padding: EdgeInsets.all(4.0.r),
+                        //             child: Text(
+                        //                 "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
+                        //                 style: TextStyle(
+                        //                     fontSize: 7.sp,
+                        //                     fontWeight: FontWeight.w600,
+                        //                     color: AppColors.CLR_ERROR)))),
+                      ],
                     ),
                   ],
                 ),
@@ -165,11 +182,7 @@ class _MainContainerState extends State<MainContainer> {
                 // ),
               ),
               Divider(
-                height: 0.h,
-                thickness: 1,
-                indent: 10,
-                endIndent: 10,
-              ),
+                  height: 0.h, thickness: 0.5, color: AppColors.CLR_CON_BORDER),
               Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 3.0.h),
@@ -185,14 +198,19 @@ class _MainContainerState extends State<MainContainer> {
                             style: TextStyle(
                               fontSize: 13.sp,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xff1b438b),
+                              color: AppColors.TXT_CLR_PRIMARY,
                             ),
                             textAlign: TextAlign.left,
                           ),
                           if (widget.dateText != "-")
                             Row(
                               children: [
-                                SvgPicture.asset(ICON_CALENDAR),
+                                SvgPicture.asset(
+                                  ICON_CALENDAR,
+                                  colorFilter: ColorFilter.mode(
+                                      AppColors.CLR_PRIMARY_LITE,
+                                      BlendMode.srcIn),
+                                ),
                                 SizedBox(
                                   width: 5,
                                 ),
@@ -201,11 +219,15 @@ class _MainContainerState extends State<MainContainer> {
                                   style: TextStyle(
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w400,
-                                    color: Color(0xff808080),
+                                    color: AppColors.CLR_PRIMARY_LITE,
                                     height: 20 / 12,
                                   ),
                                 ),
                               ],
+                            )
+                          else
+                            SizedBox(
+                              width: 10.w,
                             ),
                         ],
                       )
@@ -215,23 +237,88 @@ class _MainContainerState extends State<MainContainer> {
                       ),
                     Row(
                       children: [
-                        MyAppButton(
-                            onPressed: () {
-                              widget.onPressed();
-                            },
-                            buttonText: widget.buttonText,
-                            buttonTxtColor: widget.buttonTxtColor,
-                            buttonBorderColor: widget.buttonBorderColor,
-                            buttonColor: widget.buttonColor,
-                            buttonSizeX: 10.h,
-                            buttonSizeY: 27.w,
-                            buttonTextSize: 10.sp,
-                            buttonTextWeight: FontWeight.w500),
+                        GestureDetector(
+                          onTap: () {
+                            widget.onPressed();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.0.w, vertical: 4.w),
+                            margin: EdgeInsets.symmetric(vertical: 4.h),
+                            decoration: BoxDecoration(
+                                // border: Border.all(
+                                //     color: widget.buttonTxtColor
+                                //         .withOpacity(0.5)),
+                                borderRadius: BorderRadius.circular(10.r),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    widget.buttonTxtColor.withOpacity(0.5),
+                                    // Color(0xff0373c4),
+                                    Color.fromARGB(255, 212, 223, 231)
+                                  ],
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                )),
+                            // decoration: BoxDecoration(
+                            //   border:
+                            //       Border.all(color: widget.buttonTxtColor),
+                            //   borderRadius: BorderRadius.circular(12.0.r),
+                            // ),
+                            child: Text(
+                              widget.buttonText.toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 9.0.sp,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+
+                        // MyAppButton(
+                        //     onPressed: () {
+                        //       widget.onPressed();
+                        //     },
+                        //     buttonText: widget.buttonText,
+                        //     buttonTxtColor: widget.buttonTxtColor,
+                        //     buttonBorderColor: widget.buttonBorderColor,
+                        //     buttonColor: widget.buttonColor,
+                        //     buttonSizeX: 10.h,
+                        //     buttonSizeY: 25.w,
+                        //     buttonTextSize: 8.sp,
+                        //     buttonTextWeight: FontWeight.w500),
                       ],
                     ),
                   ],
                 ),
               ),
+              if (widget.dueDate != "-")
+                if (widget.dueStatus != 0)
+                  if (checkDateExpiry(widget.dueDate.toString()))
+                    Container(
+                        width: double.infinity,
+                        height: 15.h,
+                        decoration: BoxDecoration(
+                            // color: AppColors.CLR_ERROR,
+                            gradient: LinearGradient(
+                          colors: [
+                            AppColors.CLR_ERROR.withOpacity(0.5),
+                            // Color(0xff0373c4),
+                            Color.fromARGB(255, 231, 212, 212)
+                          ],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          // border: Border.all(
+                          //   color: AppColors.CLR_ERROR.withOpacity(0.5),
+                          // ),
+                        )),
+                        child: Center(
+                          child: Text(
+                              "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
+                              style: TextStyle(
+                                  fontSize: 7.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
+                        )),
             ])),
         // if (buttonText != "Upcoming Auto Payment")
         Positioned(
@@ -245,6 +332,7 @@ class _MainContainerState extends State<MainContainer> {
                     barrierDismissible: false,
                     builder: (BuildContext context) {
                       return Dialog(
+                        backgroundColor: AppColors.CLR_BACKGROUND,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0.r)),
                         child: Container(
@@ -262,7 +350,7 @@ class _MainContainerState extends State<MainContainer> {
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
-                                    color: Color(0xff000000),
+                                    color: AppColors.TXT_CLR_BLACK,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -279,9 +367,12 @@ class _MainContainerState extends State<MainContainer> {
                                               goBack(context);
                                             },
                                             buttonText: "Cancel",
-                                            buttonTxtColor: CLR_PRIMARY,
-                                            buttonBorderColor: CLR_PRIMARY,
-                                            buttonColor: BTN_CLR_ACTIVE,
+                                            buttonTxtColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                                            buttonBorderColor:
+                                                AppColors.BTN_CLR_ACTIVE_BORDER,
+                                            buttonColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_C,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 40.w,
                                             buttonTextSize: 14.sp,
@@ -367,9 +458,9 @@ class _MainContainerState extends State<MainContainer> {
                                                                               goBack(context);
                                                                             },
                                                                             buttonText: "Okay",
-                                                                            buttonTxtColor: BTN_CLR_ACTIVE,
+                                                                            buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                                                                             buttonBorderColor: Colors.transparent,
-                                                                            buttonColor: CLR_PRIMARY,
+                                                                            buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                                                                             buttonSizeX: 10.h,
                                                                             buttonSizeY: 40.w,
                                                                             buttonTextSize: 14.sp,
@@ -408,10 +499,12 @@ class _MainContainerState extends State<MainContainer> {
                                               }
                                             },
                                             buttonText: "Delete",
-                                            buttonTxtColor: BTN_CLR_ACTIVE,
+                                            buttonTxtColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_TEXT,
                                             buttonBorderColor:
                                                 Colors.transparent,
-                                            buttonColor: CLR_PRIMARY,
+                                            buttonColor:
+                                                AppColors.BTN_CLR_ACTIVE_ALTER,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 40.w,
                                             buttonTextSize: 14.sp,
@@ -432,6 +525,7 @@ class _MainContainerState extends State<MainContainer> {
                     context: context,
                     builder: (BuildContext context) {
                       return Dialog(
+                        backgroundColor: AppColors.CLR_BACKGROUND,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0.r)),
                         child: Container(
@@ -452,7 +546,7 @@ class _MainContainerState extends State<MainContainer> {
                                     style: TextStyle(
                                       fontSize: 13.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: Color(0xff000000),
+                                      color: AppColors.TXT_CLR_BLACK_W,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -470,9 +564,12 @@ class _MainContainerState extends State<MainContainer> {
                                               goBack(context);
                                             },
                                             buttonText: "Cancel",
-                                            buttonTxtColor: CLR_PRIMARY,
-                                            buttonBorderColor: CLR_PRIMARY,
-                                            buttonColor: BTN_CLR_ACTIVE,
+                                            buttonTxtColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                                            buttonBorderColor:
+                                                AppColors.BTN_CLR_ACTIVE_BORDER,
+                                            buttonColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_C,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 35.w,
                                             buttonTextSize: 14.sp,
@@ -488,10 +585,12 @@ class _MainContainerState extends State<MainContainer> {
                                               goBack(context);
                                             },
                                             buttonText: "Delete",
-                                            buttonTxtColor: BTN_CLR_ACTIVE,
+                                            buttonTxtColor: AppColors
+                                                .BTN_CLR_ACTIVE_ALTER_TEXT,
                                             buttonBorderColor:
                                                 Colors.transparent,
-                                            buttonColor: CLR_PRIMARY,
+                                            buttonColor:
+                                                AppColors.BTN_CLR_ACTIVE_ALTER,
                                             buttonSizeX: 10.h,
                                             buttonSizeY: 35.w,
                                             buttonTextSize: 14.sp,
@@ -509,12 +608,18 @@ class _MainContainerState extends State<MainContainer> {
               }
             },
             child: CircleAvatar(
-              backgroundColor: Color(0xFFD1D9E8),
-              radius: 13.5.r,
+              backgroundColor: AppColors.CLR_CON_BORDER,
+              radius: 12.5.r,
               child: CircleAvatar(
-                backgroundColor: Colors.white,
+                backgroundColor: AppColors.CLR_BACKGROUND,
                 radius: 12.r,
-                child: SvgPicture.asset(ICON_DELETE, height: 12.h, width: 12.w),
+                child: SvgPicture.asset(
+                  ICON_DELETE,
+                  height: 12.h,
+                  width: 12.w,
+                  colorFilter:
+                      ColorFilter.mode(AppColors.TXT_CLR_LITE, BlendMode.srcIn),
+                ),
               ),
             ),
           ),

@@ -54,17 +54,17 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.CLR_BACKGROUND,
           elevation: 0.4,
           toolbarHeight: 42.0.h,
           title: Row(
             children: [
-              Icon(Icons.gavel_sharp, color: CLR_PRIMARY),
+              Icon(Icons.gavel_sharp, color: AppColors.CLR_PRIMARY),
               SizedBox(width: 10.w),
               Text(
                 'Terms and Conditions',
-                style:
-                    TextStyle(color: CLR_PRIMARY, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: AppColors.CLR_PRIMARY, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -75,22 +75,23 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                 },
                 icon: Icon(
                   Icons.close_rounded,
-                  color: Colors.grey.withOpacity(0.4),
+                  color: AppColors.CLR_ICON,
                 ))
           ],
           automaticallyImplyLeading: false,
         ),
-        body: Padding(
+        body: Container(
+          height: 1000.h,
+          // color: AppColors.CLR_BACKGROUND,
           padding: EdgeInsets.only(
               left: 16.0.w, top: 8.h, right: 16.w, bottom: 60.h),
-          child: Container(
-            height: 1000.h,
-            child: SingleChildScrollView(
-                controller: _controller,
-                child: HtmlWidget(
-                    textStyle: TextStyle(fontSize: 14.sp),
-                    widget.BbpsSettingInfo!.tERMSANDCONDITIONS.toString())),
-          ),
+          child: SingleChildScrollView(
+              controller: _controller,
+              child: HtmlWidget(
+                  textStyle: TextStyle(
+                    fontSize: 14.sp,
+                  ),
+                  widget.BbpsSettingInfo!.tERMSANDCONDITIONS.toString())),
         ),
         bottomSheet: Container(
           decoration: BoxDecoration(
@@ -109,9 +110,13 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                             }
                           : () {},
                       buttonText: "Okay",
-                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonTxtColor: reachEnd
+                          ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                          : AppColors.BTN_CLR_DISABLE_TEXT,
                       buttonBorderColor: Colors.transparent,
-                      buttonColor: reachEnd ? CLR_PRIMARY : Colors.grey,
+                      buttonColor: reachEnd
+                          ? AppColors.BTN_CLR_ACTIVE_ALTER
+                          : AppColors.BTN_CLR_DISABLE_TEXT,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,
                       buttonTextSize: 14.sp,

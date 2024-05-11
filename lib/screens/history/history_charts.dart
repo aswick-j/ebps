@@ -54,9 +54,9 @@ class _HistoryChartsState extends State<HistoryCharts> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
-              primary: CLR_PRIMARY,
+              primary: AppColors.CLR_PRIMARY,
               onPrimary: Colors.white,
-              onSurface: CLR_SECONDARY,
+              onSurface: AppColors.CLR_SECONDARY,
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
@@ -179,7 +179,7 @@ class _HistoryChartsState extends State<HistoryCharts> {
                                           (_ChartDataFilter data, _) =>
                                               data.billAmount,
                                       name: 'Spends',
-                                      color: CLR_PRIMARY)
+                                      color: AppColors.CLR_PRIMARY)
                                 ])
                           : SfCircularChart(
                               tooltipBehavior: TooltipBehavior(
@@ -190,7 +190,7 @@ class _HistoryChartsState extends State<HistoryCharts> {
                                 title: LegendTitle(
                                     text: 'Categories',
                                     textStyle: TextStyle(
-                                        color: CLR_PRIMARY,
+                                        color: AppColors.CLR_PRIMARY,
                                         fontSize: 15.sp,
                                         fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.w900)),
@@ -252,7 +252,7 @@ class _HistoryChartsState extends State<HistoryCharts> {
           FloatingActionButton(
             heroTag: "calDate",
             onPressed: pickDateRange,
-            backgroundColor: CLR_PRIMARY,
+            backgroundColor: AppColors.CLR_PRIMARY,
             child: Icon(Icons.calendar_month_outlined),
           ),
           SizedBox(
@@ -264,7 +264,7 @@ class _HistoryChartsState extends State<HistoryCharts> {
                 isColumnchart = !isColumnchart;
               });
             },
-            backgroundColor: CLR_PRIMARY,
+            backgroundColor: AppColors.CLR_PRIMARY,
             child: Icon(isColumnchart ? Icons.pie_chart : Icons.bar_chart),
           ),
         ],

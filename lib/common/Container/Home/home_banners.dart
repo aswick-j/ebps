@@ -1,3 +1,4 @@
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
@@ -31,17 +32,7 @@ class _HomeBannersState extends State<HomeBanners>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin:
-          EdgeInsets.only(left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0.r),
-        border: Border.all(
-          color: Color(0xffD1D9E8),
-          width: 2.0,
-        ),
-      ),
+    return ReusableContainer(
       child: Container(
         margin:
             EdgeInsets.only(left: 18.0.w, right: 18.w, top: 0.h, bottom: 0.h),
@@ -60,7 +51,7 @@ class _HomeBannersState extends State<HomeBanners>
                 MyAppText(
                   data: "Recharge and Pay bills\nsafely from home !",
                   size: 12.0.sp,
-                  color: CLR_PRIMARY,
+                  color: AppColors.CLR_PRIMARY,
                   weight: FontWeight.bold,
                 ),
                 SizedBox(
@@ -70,7 +61,7 @@ class _HomeBannersState extends State<HomeBanners>
                     data:
                         "Help your family and friends make\nsafe payments with Equitas Bharat Bill Pay",
                     size: 7.0.sp,
-                    color: CLR_PRIMARY,
+                    color: AppColors.CLR_PRIMARY,
                     weight: FontWeight.w500,
                     maxline: 3),
               ],

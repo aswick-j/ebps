@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/Home/biller_details_container.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
@@ -19,6 +22,7 @@ import 'package:ebps/models/paymentInformationModel.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/centralized_grid_view.dart';
+import 'package:ebps/widget/custom_dialog.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/get_biller_detail.dart';
 import 'package:ebps/widget/no_result.dart';
@@ -129,7 +133,10 @@ class _BillerDetailsState extends State<BillerDetails> {
           adHocBillValidationRefKey: null,
           validateBill: validateBill!["validateBill"],
           billerParams: billerInputSign,
-          billName: widget.billName);
+          billName: widget.billName,
+          customerBillId: widget.isSavedBill
+              ? widget.savedBillersData!.cUSTOMERBILLID
+              : null);
     } else {
       isFetchbillLoading = false;
       isUnableToFetchBill = false;
@@ -168,44 +175,42 @@ class _BillerDetailsState extends State<BillerDetails> {
         barrierDismissible: true,
         context: context,
         builder: (BuildContext ctx) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            content: AnimatedDialog(
-                showImgIcon: false,
-                title: "Your daily bill payment limit has been exceeded.",
-                subTitle:
-                    " For additional information, please contact the bank.",
-                showSub: true,
-                shapeColor: Colors.orange,
-                child: Icon(
-                  Icons.error_outline,
-                  color: Colors.white,
-                )),
-            actions: <Widget>[
-              Align(
-                alignment: Alignment.center,
-                child: MyAppButton(
-                    onPressed: () {
-                      goBack(ctx);
-                    },
-                    buttonText: "Okay",
-                    buttonTxtColor: BTN_CLR_ACTIVE,
-                    buttonBorderColor: Colors.transparent,
-                    buttonColor: CLR_PRIMARY,
-                    buttonSizeX: 10,
-                    buttonSizeY: 40,
-                    buttonTextSize: 14,
-                    buttonTextWeight: FontWeight.w500),
-              ),
-            ],
-          );
+          return CustomDialog(
+              showActions: true,
+              actions: [
+                Align(
+                  alignment: Alignment.center,
+                  child: MyAppButton(
+                      onPressed: () {
+                        goBack(ctx);
+                      },
+                      buttonText: "Okay",
+                      buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
+                      buttonBorderColor: Colors.transparent,
+                      buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
+                      buttonSizeX: 10.h,
+                      buttonSizeY: 40.w,
+                      buttonTextSize: 14.sp,
+                      buttonTextWeight: FontWeight.w500),
+                ),
+              ],
+              child: AnimatedDialog(
+                  showImgIcon: false,
+                  title: "Your daily bill payment limit has been exceeded.",
+                  subTitle:
+                      " For additional information, please contact the bank.",
+                  showSub: true,
+                  shapeColor: AppColors.CLR_ORANGE,
+                  child: Icon(
+                    Icons.error_outline,
+                    color: Colors.white,
+                  )));
         },
       );
     }
 
     return Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
           context: context,
           title: widget.billerName,
@@ -363,18 +368,8 @@ class _BillerDetailsState extends State<BillerDetails> {
           return SingleChildScrollView(
               child: Column(
             children: [
-              Container(
-                clipBehavior: Clip.hardEdge,
-                width: double.infinity,
-                margin: EdgeInsets.only(
-                    left: 18.0.w, right: 18.w, top: 10.h, bottom: 80.h),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                  border: Border.all(
-                    color: Color(0xffD1D9E8),
-                    width: 1.0,
-                  ),
-                ),
+              ReusableContainer(
+                bottomMargin: 80.h,
                 child: !isBillerDetailsPageError
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -418,83 +413,75 @@ class _BillerDetailsState extends State<BillerDetails> {
                                   //   minHeight: 100.h,
                                   //   maxHeight: 300.h,
                                   // ),
-                                  color: const Color.fromRGBO(255, 255, 255, 1),
                                   child: ListView(
-                                    shrinkWrap: true,
-                                    // primary: false,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    // crossAxisSpacing: 10.w,
-                                    // mainAxisSpacing: 0,
-                                    // crossAxisCount: 2,
-                                    // childAspectRatio: 4 / 2,
-                                    children: <Widget>[
-                                      if (_billerResponseData != null &&
-                                          _billerResponseData!.billDate != null)
-                                        billerdetail(
-                                            "Bill Date",
-                                            _billerResponseData!.billDate
-                                                .toString(),
-                                            context),
-                                      if (_billerResponseData != null &&
-                                          _billerResponseData!.dueDate != null)
-                                        billerdetail(
-                                            "Due Date",
-                                            _billerResponseData!.dueDate
-                                                .toString(),
-                                            context),
-                                      if (_billerResponseData != null &&
-                                          _billerResponseData!.billNumber !=
-                                              null)
-                                        billerdetail(
-                                            "Bill Number",
-                                            _billerResponseData!.billNumber
-                                                .toString(),
-                                            context),
-                                      if (_billerResponseData != null &&
-                                          _billerResponseData!.billPeriod !=
-                                              null)
-                                        billerdetail(
-                                            "Bill Period",
-                                            _billerResponseData!.billPeriod
-                                                .toString(),
-                                            context),
-                                      if (_billerResponseData != null &&
-                                          _billerResponseData!.customerName !=
-                                              null)
-                                        billerdetail(
-                                            "Consumer Name",
-                                            _billerResponseData!.customerName
-                                                .toString(),
-                                            context),
-                                      if (widget.billName != null)
-                                        billerdetail(
-                                            "Bill Name",
-                                            widget.billName.toString(),
-                                            context),
-                                      if ((!(_billerResponseData == null ||
-                                          _billerResponseData!.tag!.isEmpty)))
-                                        ListView.builder(
-                                            itemCount: _billerResponseData!
-                                                .tag!.length,
-                                            shrinkWrap: true,
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            itemBuilder: (context, index) =>
-                                                Column(
-                                                  children: [
-                                                    billerdetail(
-                                                      _billerResponseData!
-                                                          .tag![index].name
-                                                          .toString(),
-                                                      _billerResponseData!
-                                                          .tag![index].value
-                                                          .toString(),
-                                                      context,
-                                                    ),
-                                                  ],
-                                                )),
-                                    ],
-                                  )),
+                                shrinkWrap: true,
+                                // primary: false,
+                                physics: NeverScrollableScrollPhysics(),
+                                // crossAxisSpacing: 10.w,
+                                // mainAxisSpacing: 0,
+                                // crossAxisCount: 2,
+                                // childAspectRatio: 4 / 2,
+                                children: <Widget>[
+                                  if (_billerResponseData != null &&
+                                      _billerResponseData!.billDate != null)
+                                    billerdetail(
+                                        "Bill Date",
+                                        _billerResponseData!.billDate
+                                            .toString(),
+                                        context),
+                                  if (_billerResponseData != null &&
+                                      _billerResponseData!.dueDate != null)
+                                    billerdetail(
+                                        "Due Date",
+                                        _billerResponseData!.dueDate.toString(),
+                                        context),
+                                  if (_billerResponseData != null &&
+                                      _billerResponseData!.billNumber != null)
+                                    billerdetail(
+                                        "Bill Number",
+                                        _billerResponseData!.billNumber
+                                            .toString(),
+                                        context),
+                                  if (_billerResponseData != null &&
+                                      _billerResponseData!.billPeriod != null)
+                                    billerdetail(
+                                        "Bill Period",
+                                        _billerResponseData!.billPeriod
+                                            .toString(),
+                                        context),
+                                  if (_billerResponseData != null &&
+                                      _billerResponseData!.customerName != null)
+                                    billerdetail(
+                                        "Consumer Name",
+                                        _billerResponseData!.customerName
+                                            .toString(),
+                                        context),
+                                  if (widget.billName != null)
+                                    billerdetail("Bill Name",
+                                        widget.billName.toString(), context),
+                                  if ((!(_billerResponseData == null ||
+                                      _billerResponseData!.tag!.isEmpty)))
+                                    ListView.builder(
+                                        itemCount:
+                                            _billerResponseData!.tag!.length,
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) => Column(
+                                              children: [
+                                                billerdetail(
+                                                  _billerResponseData!
+                                                      .tag![index].name
+                                                      .toString(),
+                                                  _billerResponseData!
+                                                      .tag![index].value
+                                                      .toString(),
+                                                  context,
+                                                ),
+                                              ],
+                                            )),
+                                ],
+                              )),
                           if (!isFetchbillLoading &&
                               !isUnableToFetchBill &&
                               !isBbpsSettingsLoading &&
@@ -506,7 +493,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                 width: double.infinity,
                                 // height: 300,
 
-                                color: Colors.white,
+                                // color: Colors.white,
                                 child: Column(
                                   children: [
                                     Padding(
@@ -517,7 +504,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                         style: TextStyle(
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.bold,
-                                          color: Color(0xff1b438b),
+                                          color: AppColors.CLR_PRIMARY,
                                         ),
                                         textAlign: TextAlign.left,
                                       ),
@@ -566,8 +553,8 @@ class _BillerDetailsState extends State<BillerDetails> {
                                                             fontSize: 12.sp,
                                                             fontWeight:
                                                                 FontWeight.w400,
-                                                            color: Color(
-                                                                0xff808080),
+                                                            color: AppColors
+                                                                .TXT_CLR_LITE,
                                                           ),
                                                           maxLines: 3,
                                                           textAlign:
@@ -591,8 +578,8 @@ class _BillerDetailsState extends State<BillerDetails> {
                                                             fontSize: 13.sp,
                                                             fontWeight:
                                                                 FontWeight.w500,
-                                                            color: Color(
-                                                                0xff1b438b),
+                                                            color: AppColors
+                                                                .TXT_CLR_PRIMARY,
                                                           ),
                                                           maxLines: 3,
                                                           textAlign:
@@ -621,9 +608,11 @@ class _BillerDetailsState extends State<BillerDetails> {
                                   child: TextFormField(
                                     controller: txtAmountController,
                                     enabled: validateBill!["amountEditable"],
-                                    // style: !validateBill!["amountEditable"]
-                                    //     ? null
-                                    //     : TextStyle(color: TXT_CLR_LITE),
+                                    style: !validateBill!["amountEditable"]
+                                        ? TextStyle(
+                                            color: AppColors.TXT_CLR_LITE)
+                                        : TextStyle(
+                                            color: AppColors.TXT_CLR_DEFAULT),
                                     onFieldSubmitted: (_) {},
                                     onChanged: (val) {
                                       if (val.isNotEmpty &&
@@ -698,24 +687,27 @@ class _BillerDetailsState extends State<BillerDetails> {
                                     autocorrect: false,
                                     enableSuggestions: false,
                                     decoration: InputDecoration(
+                                      prefixStyle: TextStyle(
+                                          color: AppColors.TXT_CLR_DEFAULT),
                                       hintStyle: TextStyle(
                                           fontSize: 16.sp,
                                           fontWeight: FontWeight.bold),
                                       fillColor: validateBill!["amountEditable"]
-                                          ? Color(0xffD1D9E8).withOpacity(0.2)
-                                          : Color(0xffD1D9E8).withOpacity(0.5),
+                                          ? AppColors.CLR_INPUT_FILL
+                                          : AppColors.TXT_CLR_GREY
+                                              .withOpacity(0.2),
                                       filled: true,
                                       labelStyle: TextStyle(
                                           color: validateBill!["amountEditable"]
-                                              ? Color(0xff1b438b)
-                                              : TXT_CLR_LITE),
+                                              ? AppColors.CLR_PRIMARY
+                                              : AppColors.TXT_CLR_LITE),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Color(0xff1B438B)),
+                                            color: AppColors.TXT_CLR_PRIMARY),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Color(0xff1B438B)),
+                                            color: AppColors.TXT_CLR_PRIMARY),
                                       ),
                                       border: UnderlineInputBorder(),
                                       labelText: 'Amount',
@@ -723,39 +715,102 @@ class _BillerDetailsState extends State<BillerDetails> {
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 20.w, bottom: 20.h, right: 20.w),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'Payment Amount has to be between ₹ ${NumberFormat('#,##,##0.00').format(double.parse(paymentInform!.mINLIMIT.toString()))} and ₹ ${NumberFormat('#,##,##0.00').format(double.parse(paymentInform!.mAXLIMIT.toString()))}',
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.normal,
-                                        color: isInsufficient
-                                            ? CLR_ERROR
-                                            : TXT_CLR_PRIMARY,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                if (PaymentExactErrMsg.isNotEmpty)
+                                if (isInsufficient)
                                   Padding(
                                     padding: EdgeInsets.only(
                                         left: 20.w, bottom: 20.h, right: 20.w),
                                     child: Align(
                                       alignment: Alignment.center,
                                       child: Text(
-                                        PaymentExactErrMsg,
-                                        textAlign: TextAlign.left,
+                                        'Payment Amount has to be between ₹ ${NumberFormat('#,##,##0.00').format(double.parse(paymentInform!.mINLIMIT.toString()))} and ₹ ${NumberFormat('#,##,##0.00').format(double.parse(paymentInform!.mAXLIMIT.toString()))}',
+                                        textAlign: TextAlign.start,
                                         style: TextStyle(
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.normal,
-                                          color: CLR_ERROR,
+                                          color: isInsufficient
+                                              ? AppColors.CLR_ERROR
+                                              : AppColors.TXT_CLR_PRIMARY,
                                         ),
                                       ),
+                                    ),
+                                  ),
+                                if (PaymentExactErrMsg.isNotEmpty)
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(
+                                  //       left: 20.w, bottom: 20.h, right: 20.w),
+                                  //   child: Align(
+                                  //     alignment: Alignment.center,
+                                  //     child: Text(
+                                  //       PaymentExactErrMsg,
+                                  //       textAlign: TextAlign.left,
+                                  //       style: TextStyle(
+                                  //         fontSize: 12.sp,
+                                  //         fontWeight: FontWeight.normal,
+                                  //         color: AppColors.CLR_ERROR,
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  Container(
+                                    clipBehavior: Clip.hardEdge,
+                                    width: double.infinity,
+                                    margin: EdgeInsets.only(
+                                        left: 18.0.w,
+                                        right: 18.w,
+                                        top: 0.h,
+                                        bottom: 10.h),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          AppColors.CLR_ERROR.withOpacity(0.1),
+                                      borderRadius:
+                                          BorderRadius.circular(6.0.r + 2.r),
+                                      border: Border.all(
+                                        color: AppColors.CLR_ERROR,
+                                        width: 0.50,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 10.h,
+                                                left: 14.w,
+                                                bottom: 0.h),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.info_outline_rounded,
+                                                  color: AppColors.CLR_ERROR,
+                                                  size: 15.r,
+                                                ),
+                                                Text(
+                                                  "  Message from Biller",
+                                                  style: TextStyle(
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: AppColors.CLR_ERROR,
+                                                  ),
+                                                  textAlign: TextAlign.left,
+                                                ),
+                                              ],
+                                            )),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 5.h,
+                                              left: 34.w,
+                                              right: 2.w,
+                                              bottom: 10.h),
+                                          child: Text(
+                                            PaymentExactErrMsg,
+                                            style: TextStyle(
+                                              fontSize: 10.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.CLR_ERROR,
+                                            ),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
                                 Padding(
@@ -776,7 +831,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                           style: TextStyle(
                                             fontSize: 10.sp,
                                             fontWeight: FontWeight.normal,
-                                            color: TXT_CLR_LITE,
+                                            color: AppColors.TXT_CLR_LITE,
                                           ),
                                         ),
                                       ],
@@ -817,8 +872,11 @@ class _BillerDetailsState extends State<BillerDetails> {
                 !isBbpsSettingsLoading
             ? Container(
                 decoration: BoxDecoration(
+                    color: AppColors.CLR_BACKGROUND,
                     border: Border(
-                        top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+                        top: BorderSide(
+                            color: AppColors.CLR_CON_BORDER_LITE,
+                            width: 0.50))),
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
@@ -831,9 +889,10 @@ class _BillerDetailsState extends State<BillerDetails> {
                               goBack(context);
                             },
                             buttonText: "Cancel",
-                            buttonTxtColor: CLR_PRIMARY,
-                            buttonBorderColor: Colors.transparent,
-                            buttonColor: BTN_CLR_ACTIVE,
+                            buttonTxtColor:
+                                AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                            buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
+                            buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER_C,
                             buttonSizeX: 10.h,
                             buttonSizeY: 40.w,
                             buttonTextSize: 14.sp,
@@ -889,12 +948,15 @@ class _BillerDetailsState extends State<BillerDetails> {
                               }
                             },
                             buttonText: "Pay Now",
-                            buttonTxtColor: BTN_CLR_ACTIVE,
+                            buttonTxtColor:
+                                isInsufficient || PaymentExactErrMsg.isNotEmpty
+                                    ? AppColors.BTN_CLR_DISABLE_TEXT
+                                    : AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                             buttonBorderColor: Colors.transparent,
                             buttonColor:
                                 isInsufficient || PaymentExactErrMsg.isNotEmpty
-                                    ? Colors.grey
-                                    : CLR_PRIMARY,
+                                    ? AppColors.BTN_CLR_DISABLE
+                                    : AppColors.BTN_CLR_ACTIVE_ALTER,
                             buttonSizeX: 10.h,
                             buttonSizeY: 40.w,
                             buttonTextSize: 14.sp,
@@ -906,8 +968,11 @@ class _BillerDetailsState extends State<BillerDetails> {
               )
             : Container(
                 decoration: BoxDecoration(
+                    color: AppColors.CLR_BACKGROUND,
                     border: Border(
-                        top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+                        top: BorderSide(
+                            color: AppColors.CLR_CON_BORDER_LITE,
+                            width: 0.50))),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
@@ -920,9 +985,9 @@ class _BillerDetailsState extends State<BillerDetails> {
                               goBack(context);
                             },
                             buttonText: "Go Back",
-                            buttonTxtColor: BTN_CLR_ACTIVE,
+                            buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
                             buttonBorderColor: Colors.transparent,
-                            buttonColor: CLR_PRIMARY,
+                            buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
                             buttonSizeX: 10,
                             buttonSizeY: 40,
                             buttonTextSize: 14,

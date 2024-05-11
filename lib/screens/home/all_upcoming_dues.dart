@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
@@ -11,6 +13,7 @@ import 'package:ebps/helpers/getPopupMsg.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/animated_dialog.dart';
+import 'package:ebps/widget/custom_dialog.dart';
 import 'package:ebps/widget/loader_overlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -114,62 +117,60 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
         context: context,
         builder: (BuildContext ctx) {
           return WillPopScope(
-            onWillPop: () async => false,
-            child: AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              content: AnimatedDialog(
-                  showImgIcon: success ? true : false,
-                  showRichText: true,
-                  RichTextContent: success
-                      ? getPopupSuccessMsg(
-                          6, billerName.toString(), billName.toString())
-                      : getPopupFailedMsg(
-                          6, billerName.toString(), billName.toString()),
-                  subTitle: "",
-                  child: Icon(
-                    Icons.close,
-                    color: Colors.white,
-                  ),
-                  showSub: false,
-                  shapeColor: success ? CLR_GREEN : CLR_ERROR),
-              actions: <Widget>[
-                Align(
-                  alignment: Alignment.center,
-                  child: MyAppButton(
-                      onPressed: () {
-                        goBack(ctx);
+              onWillPop: () async => false,
+              child: CustomDialog(
+                  actions: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: MyAppButton(
+                          onPressed: () {
+                            goBack(ctx);
 
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          Navigator.of(context).pushAndRemoveUntil(
-                            CupertinoPageRoute(
-                                fullscreenDialog: true,
-                                builder: (context) => BottomNavBar(
-                                      SelectedIndex: 0,
-                                    )),
-                            (Route<dynamic> route) => false,
-                          );
-                        });
-                      },
-                      buttonText: "Okay",
-                      buttonTxtColor: BTN_CLR_ACTIVE,
-                      buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
-                      buttonSizeX: 10,
-                      buttonSizeY: 40,
-                      buttonTextSize: 14,
-                      buttonTextWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-          );
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                CupertinoPageRoute(
+                                    fullscreenDialog: true,
+                                    builder: (context) => BottomNavBar(
+                                          SelectedIndex: 0,
+                                        )),
+                                (Route<dynamic> route) => false,
+                              );
+                            });
+                          },
+                          buttonText: "Okay",
+                          buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
+                          buttonBorderColor: Colors.transparent,
+                          buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
+                          buttonSizeX: 10.h,
+                          buttonSizeY: 40.w,
+                          buttonTextSize: 14.sp,
+                          buttonTextWeight: FontWeight.w500),
+                    ),
+                  ],
+                  showActions: true,
+                  child: AnimatedDialog(
+                      showImgIcon: success ? true : false,
+                      showRichText: true,
+                      RichTextContent: success
+                          ? getPopupSuccessMsg(
+                              6, billerName.toString(), billName.toString())
+                          : getPopupFailedMsg(
+                              6, billerName.toString(), billName.toString()),
+                      subTitle: "",
+                      showSub: false,
+                      shapeColor:
+                          success ? AppColors.CLR_GREEN : AppColors.CLR_ERROR,
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ))));
         },
       );
     }
 
     return LoaderOverlay(
       child: Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
           context: context,
           title: 'Upcoming Dues',
@@ -194,29 +195,43 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
             child: Theme(
               data: ThemeData(splashColor: Colors.white),
               child: BottomNavigationBar(
-                backgroundColor: Colors.white,
+                backgroundColor: AppColors.CLR_BACKGROUND,
                 showUnselectedLabels: true,
                 onTap: _onItemTapped,
                 elevation: 0,
                 type: BottomNavigationBarType.fixed,
-                selectedItemColor: Color(0xff1b438b),
+                selectedItemColor: AppColors.CLR_PRIMARY,
                 unselectedItemColor: Color(0xffa4b4d1),
                 currentIndex: selectedIndex,
                 items: [
                   BottomNavigationBarItem(
                     icon: SvgPicture.asset(ICON_HOME_INACTIVE),
                     label: "Home",
-                    activeIcon: SvgPicture.asset(ICON_HOME),
+                    activeIcon: SvgPicture.asset(
+                      ICON_HOME,
+                      colorFilter: ColorFilter.mode(
+                          AppColors.CLR_PRIMARY, BlendMode.srcIn),
+                    ),
                   ),
                   BottomNavigationBarItem(
-                    icon: SvgPicture.asset(ICON_BILLERS_INACTIVE),
+                    icon: SvgPicture.asset(
+                      ICON_BILLERS_INACTIVE,
+                    ),
                     label: "Billers",
-                    activeIcon: SvgPicture.asset(ICON_BILLERS),
+                    activeIcon: SvgPicture.asset(
+                      ICON_BILLERS,
+                      colorFilter: ColorFilter.mode(
+                          AppColors.CLR_PRIMARY, BlendMode.srcIn),
+                    ),
                   ),
                   BottomNavigationBarItem(
                     icon: SvgPicture.asset(ICON_HISTORY_INACTIVE),
                     label: "History",
-                    activeIcon: SvgPicture.asset(ICON_HISTORY),
+                    activeIcon: SvgPicture.asset(
+                      ICON_HISTORY,
+                      colorFilter: ColorFilter.mode(
+                          AppColors.CLR_PRIMARY, BlendMode.srcIn),
+                    ),
                   ),
                 ],
               ),
@@ -280,6 +295,11 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                                 .toLocal()
                                 .add(const Duration(days: 1)))
                             : "-",
+                        dueDate: widget.allUpcomingDues[index]["dueDate"] != ""
+                            ? DateTime.parse(widget.allUpcomingDues[index]
+                                    ["dueDate"]!
+                                .toString())
+                            : "-",
                         buttonText: widget.allUpcomingDues[index]["itemType"] ==
                                 'upcomingDue'
                             ? 'Pay Now'
@@ -318,20 +338,20 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                             : "-",
                         iconPath: BILLER_LOGO(
                             widget.allUpcomingDues[index]["billerName"]),
-                        containerBorderColor: Color(0xffD1D9E8),
+                        containerBorderColor: AppColors.CLR_CON_BORDER,
                         buttonColor: widget.allUpcomingDues[index]
                                     ["itemType"] ==
                                 'upcomingDue'
-                            ? Color(0xFF1B438B)
-                            : Color.fromARGB(255, 255, 255, 255),
+                            ? AppColors.BTN_CLR_ACTIVE_BG
+                            : AppColors.CLR_GREEN,
                         buttonTxtColor: widget.allUpcomingDues[index]
                                     ["itemType"] ==
                                 'upcomingDue'
-                            ? Color.fromARGB(255, 255, 255, 255)
+                            ? AppColors.CLR_PRIMARY
                             : widget.allUpcomingDues[index]["itemType"] ==
                                     'upcomingAutopaused'
-                                ? Colors.red
-                                : Color(0xff00AB44),
+                                ? AppColors.CLR_ERROR
+                                : AppColors.CLR_GREEN,
                         buttonTextWeight: FontWeight.normal,
                         buttonBorderColor: widget.allUpcomingDues[index]
                                     ["itemType"] ==

@@ -2,6 +2,7 @@ import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
@@ -197,6 +198,7 @@ class _editAutopayState extends State<editAutopay> {
   Widget build(BuildContext context) {
     return LoaderOverlay(
       child: Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
             context: context,
             title: "Edit Autopay",
@@ -206,7 +208,7 @@ class _editAutopayState extends State<editAutopay> {
               Tooltip(
                 textStyle: TextStyle(color: Colors.white),
                 decoration: BoxDecoration(
-                    color: CLR_BLUE_LITE,
+                    color: AppColors.CLR_BLUE_LITE,
                     borderRadius: BorderRadius.circular(8.0.r)),
                 triggerMode: TooltipTriggerMode.tap,
                 showDuration: Duration(milliseconds: 20000),
@@ -218,7 +220,7 @@ class _editAutopayState extends State<editAutopay> {
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(
                     Icons.info_outline,
-                    color: CLR_PRIMARY,
+                    color: AppColors.CLR_ICON,
                   ),
                 ),
               ),
@@ -323,7 +325,7 @@ class _editAutopayState extends State<editAutopay> {
                                   decoration: BoxDecoration(
                                       borderRadius:
                                           BorderRadius.circular(6.0.r + 2.r),
-                                      color: CLR_ERROR
+                                      color: AppColors.CLR_ERROR
                                       // border: Border.all(
                                       //   color: Color(0xffD1D9E8),
                                       //   width: 1.0,
@@ -353,7 +355,7 @@ class _editAutopayState extends State<editAutopay> {
                                   decoration: BoxDecoration(
                                       borderRadius:
                                           BorderRadius.circular(6.0.r + 2.r),
-                                      color: CLR_ERROR
+                                      color: AppColors.CLR_ERROR
                                       // border: Border.all(
                                       //   color: Color(0xffD1D9E8),
                                       //   width: 1.0,
@@ -371,22 +373,9 @@ class _editAutopayState extends State<editAutopay> {
                                       textAlign: TextAlign.center,
                                     ),
                                   )),
-                            Container(
-                                clipBehavior: Clip.hardEdge,
-                                width: double.infinity,
-                                margin: EdgeInsets.only(
-                                    left: 18.0.w,
-                                    right: 18.w,
-                                    top: 5.h,
-                                    bottom: 15.h),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(6.0.r + 2.r),
-                                  border: Border.all(
-                                    color: Color(0xffD1D9E8),
-                                    width: 1.0,
-                                  ),
-                                ),
+                            ReusableContainer(
+                                topMargin: 5.h,
+                                bottomMargin: 15.h,
                                 child: Column(
                                   children: [
                                     ListTile(
@@ -405,7 +394,7 @@ class _editAutopayState extends State<editAutopay> {
                                         style: TextStyle(
                                           fontSize: 13.sp,
                                           fontWeight: FontWeight.w500,
-                                          color: Color(0xff191919),
+                                          color: AppColors.TXT_CLR_BLACK_W,
                                         ),
                                         textAlign: TextAlign.left,
                                         maxLines: 1,
@@ -417,16 +406,17 @@ class _editAutopayState extends State<editAutopay> {
                                         style: TextStyle(
                                           fontSize: 13.sp,
                                           fontWeight: FontWeight.w400,
-                                          color: Color(0xff808080),
+                                          color: AppColors.TXT_CLR_LITE,
                                         ),
                                         textAlign: TextAlign.left,
                                       ),
                                     ),
                                     Divider(
+                                      color: AppColors.CLR_DIVIDER_LITE,
                                       height: 10.h,
                                       thickness: 1,
-                                      indent: 10.w,
-                                      endIndent: 10.w,
+                                      // indent: 10.w,
+                                      // endIndent: 10.w,
                                     ),
                                     billerdetail(
                                         widget.savedBillerData.pARAMETERS![0]
@@ -523,179 +513,107 @@ class _editAutopayState extends State<editAutopay> {
                                       "Maximum Limit for Auto Payment: ",
                                       style: TextStyle(
                                           fontSize: 11.sp,
-                                          color: TXT_CLR_DEFAULT,
+                                          color: AppColors.TXT_CLR_DEFAULT,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
                                       "₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}",
                                       style: TextStyle(
                                           fontSize: 11.sp,
-                                          color: CLR_GREEN,
+                                          color: AppColors.CLR_GREEN,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],
                                 )),
-                            Container(
-                                clipBehavior: Clip.hardEdge,
-                                width: double.infinity,
-                                margin: EdgeInsets.only(
-                                    left: 18.0.w,
-                                    right: 18.w,
-                                    top: 5.h,
-                                    bottom: 10.h),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(6.0.r + 2.r),
-                                  border: Border.all(
-                                    color: Color(0xffD1D9E8),
-                                    width: 1.0,
-                                  ),
-                                ),
+                            ReusableContainer(
                                 child: Column(
+                              children: [
+                                Row(
                                   children: [
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                          child: RadioListTile(
-                                            value: 1,
-                                            groupValue: limitGroupRadio,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                maxAmountController.text =
-                                                    maximumAmount;
-                                                limitGroupRadio = 1;
-                                                maxAmountError = false;
-                                              });
-                                            },
-                                            activeColor: TXT_CLR_PRIMARY,
-                                            controlAffinity:
-                                                ListTileControlAffinity
-                                                    .trailing,
-                                            title: Text(
-                                              "Default Limit",
-                                              style: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w500,
-                                                color: Color(0xff313131),
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                        ),
-                                        Flexible(
-                                          child: RadioListTile(
-                                            value: 0,
-                                            groupValue: limitGroupRadio,
-                                            activeColor: TXT_CLR_PRIMARY,
-                                            onChanged: (val) {
-                                              MaxiFocusNode.requestFocus();
-
-                                              setState(() {
-                                                limitGroupRadio = 0;
-                                                if (widget.autopayData!
-                                                        .aMOUNTLIMIT ==
-                                                    0) {
-                                                  maxAmountController.text =
-                                                      widget.autopayData!
-                                                          .mAXIMUMAMOUNT
-                                                          .toStringAsFixed(0);
-                                                } else {
-                                                  maxAmountController
-                                                      .text = (double.parse(
-                                                          lastPaidAmount
-                                                                      .toString() !=
-                                                                  "null"
-                                                              ? lastPaidAmount
-                                                                  .toString()
-                                                              : "10000")
-                                                      .toStringAsFixed(0));
-                                                }
-                                              });
-                                              if (widget.autopayData!
-                                                      .mAXIMUMAMOUNT !=
-                                                  null) {
-                                                if (double.parse(
-                                                            maxAmountController
-                                                                .text
-                                                                .toString()) >
-                                                        double.parse(
-                                                            maximumAmount
-                                                                .toString()) ||
-                                                    double.parse(
-                                                            maxAmountController
-                                                                .text
-                                                                .toString()) <
-                                                        double.parse(
-                                                            lastPaidAmount
-                                                                .toString())) {
-                                                  setState(() {
-                                                    maxAmountError = true;
-                                                  });
-                                                } else {
-                                                  setState(() {
-                                                    maxAmountError = false;
-                                                  });
-                                                }
-                                              }
-                                            },
-                                            controlAffinity:
-                                                ListTileControlAffinity
-                                                    .trailing,
-                                            title: Text(
-                                              "Your Custom Limit",
-                                              style: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w500,
-                                                color: Color(0xff313131),
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 16.w, vertical: 16.h),
-                                      child: TextFormField(
-                                        // maxLength: 20,
-                                        focusNode: MaxiFocusNode,
-                                        controller: maxAmountController,
-                                        // key: _billnameKey,
-                                        autocorrect: false,
-                                        readOnly:
-                                            limitGroupRadio == 1 ? true : false,
-                                        enableSuggestions: false,
-                                        keyboardType: TextInputType.number,
-                                        style: TextStyle(
-                                            color: limitGroupRadio == 1
-                                                ? TXT_CLR_LITE
-                                                : null),
-
-                                        inputFormatters: [
-                                          // getInputAmountFormatter(),
-                                          LengthLimitingTextInputFormatter(6),
-                                          // DecimalTextInputFormatter(
-                                          //     decimalRange: 2),
-                                          // getInputAmountFormatter(),
-                                          FilteringTextInputFormatter.allow(
-                                              RegExp(r'^[0-9]*'))
-                                        ],
+                                    Flexible(
+                                      child: RadioListTile(
+                                        value: 1,
+                                        groupValue: limitGroupRadio,
                                         onChanged: (val) {
-                                          if (val.isNotEmpty) {
-                                            if (double.parse(val.toString()) >
-                                                double.parse(
-                                                    "0.00".toString())) {
-                                              setState(() {
-                                                isMaxAmountEmpty = false;
-                                              });
-                                            } else {
-                                              isMaxAmountEmpty = true;
+                                          setState(() {
+                                            maxAmountController.text =
+                                                maximumAmount;
+                                            limitGroupRadio = 1;
+                                            maxAmountError = false;
+                                          });
+                                        },
+                                        activeColor: AppColors.TXT_CLR_PRIMARY,
+                                        controlAffinity:
+                                            ListTileControlAffinity.trailing,
+                                        fillColor:
+                                            MaterialStateProperty.resolveWith(
+                                          (states) {
+                                            if (states.contains(
+                                                MaterialState.selected)) {
+                                              return AppColors.TXT_CLR_PRIMARY;
                                             }
-                                            if (double.parse(val.toString()) >
+                                            return AppColors.TXT_CLR_LITE;
+                                          },
+                                        ),
+                                        title: Text(
+                                          "Default Limit",
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.TXT_CLR_SECONDARY,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: RadioListTile(
+                                        value: 0,
+                                        groupValue: limitGroupRadio,
+                                        activeColor: AppColors.TXT_CLR_PRIMARY,
+                                        fillColor:
+                                            MaterialStateProperty.resolveWith(
+                                          (states) {
+                                            if (states.contains(
+                                                MaterialState.selected)) {
+                                              return AppColors.TXT_CLR_PRIMARY;
+                                            }
+                                            return AppColors.TXT_CLR_LITE;
+                                          },
+                                        ),
+                                        onChanged: (val) {
+                                          MaxiFocusNode.requestFocus();
+
+                                          setState(() {
+                                            limitGroupRadio = 0;
+                                            if (widget
+                                                    .autopayData!.aMOUNTLIMIT ==
+                                                0) {
+                                              maxAmountController.text = widget
+                                                  .autopayData!.mAXIMUMAMOUNT
+                                                  .toStringAsFixed(0);
+                                            } else {
+                                              maxAmountController.text =
+                                                  (double.parse(lastPaidAmount
+                                                                  .toString() !=
+                                                              "null"
+                                                          ? lastPaidAmount
+                                                              .toString()
+                                                          : "10000")
+                                                      .toStringAsFixed(0));
+                                            }
+                                          });
+                                          if (widget
+                                                  .autopayData!.mAXIMUMAMOUNT !=
+                                              null) {
+                                            if (double.parse(maxAmountController
+                                                        .text
+                                                        .toString()) >
                                                     double.parse(maximumAmount
                                                         .toString()) ||
-                                                double.parse(val.toString()) <
+                                                double.parse(maxAmountController
+                                                        .text
+                                                        .toString()) <
                                                     double.parse(lastPaidAmount
                                                         .toString())) {
                                               setState(() {
@@ -706,371 +624,451 @@ class _editAutopayState extends State<editAutopay> {
                                                 maxAmountError = false;
                                               });
                                             }
-                                          } else {
-                                            setState(() {
-                                              isMaxAmountEmpty = true;
-
-                                              maxAmountError = true;
-                                            });
                                           }
                                         },
-                                        validator: (inputValue) {
-                                          if (inputValue!.isEmpty) {
-                                            return "Bill Name Should Not be Empty";
-                                          }
-                                        },
-                                        decoration: InputDecoration(
-                                            fillColor: const Color(0xffD1D9E8)
-                                                .withOpacity(0.2),
-                                            filled: true,
-                                            labelStyle: TextStyle(
-                                                color: limitGroupRadio == 1
-                                                    ? TXT_CLR_LITE
-                                                    : TXT_CLR_PRIMARY),
-                                            enabledBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: limitGroupRadio == 1
-                                                      ? TXT_CLR_LITE
-                                                      : Color(0xff1B438B)),
-                                            ),
-                                            focusedBorder:
-                                                const UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Color(0xff1B438B)),
-                                            ),
-                                            border:
-                                                const UnderlineInputBorder(),
-                                            labelText: limitGroupRadio == 1
-                                                ? 'Maximum Amount'
-                                                : "Enter amount to be set as Limit",
-                                            prefixText: '₹  ',
-                                            hintText: "Maximum amount"),
-                                      ),
-                                    ),
-                                    if (maxAmountError)
-                                      if (isMaxAmountEmpty)
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 20.w,
-                                              top: 0.h,
-                                              right: 20.w),
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              'Maximum Amount Can\'t be Empty or Zero.',
-                                              style: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w600,
-                                                color: CLR_ERROR,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      else if (double.parse(
-                                              maxAmountController.text.length >
-                                                      0
-                                                  ? maxAmountController.text
-                                                  : "0".toString()) >
-                                          double.parse(
-                                              maximumAmount.toString()))
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 20.w,
-                                              top: 0.h,
-                                              right: 20.w),
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              'Entered Amount Should be not More than of ₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}',
-                                              style: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w600,
-                                                color: CLR_ERROR,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      else
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 20.w,
-                                              top: 0.h,
-                                              right: 20.w),
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              'Entered Amount is less than Latest or Last Bill Amount of ₹ ${NumberFormat('#,##,##0.00').format(double.parse(lastPaidAmount.toString()))}',
-                                              style: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w600,
-                                                color: CLR_ORANGE,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                    // Padding(
-                                    //   padding: EdgeInsets.only(
-                                    //       left: 20.w, top: 0.h, right: 20.w),
-                                    //   child: Align(
-                                    //     alignment: Alignment.centerLeft,
-                                    //     child: Text(
-                                    //       'Amount Should be Between  ₹ ${NumberFormat('#,##,##0.00').format(double.parse(lastPaidAmount.toString()))} to ₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}',
-                                    //       style: TextStyle(
-                                    //         fontSize: 12.sp,
-                                    //         fontWeight: FontWeight.w600,
-                                    //         color: CLR_ERROR,
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 16.w, vertical: 16.h),
-                                      child: TextFormField(
-                                        // maxLength: 20,
-                                        controller: dateController,
-                                        readOnly: true,
-                                        // key: _billnameKey,
-                                        autocorrect: false,
-                                        enableSuggestions: false,
-                                        keyboardType: TextInputType.text,
-                                        // inputFormatters: [
-                                        //   FilteringTextInputFormatter.allow(
-                                        //       RegExp(r'^[a-z0-9A-Z ]*'))
-                                        // ],
-                                        style: TextStyle(fontSize: 13.sp),
-
-                                        onChanged: (val) {},
-                                        onTap: () {
-                                          showDialog(
-                                            barrierDismissible: false,
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return DateDialog(
-                                                defaultDate: selectedDate,
-                                                onDateSelected: (Date) {
-                                                  setState(() {
-                                                    selectedDate = Date;
-                                                    dateController.text =
-                                                        '$selectedDate${getDaySuffix(Date)}';
-                                                  });
-                                                },
-                                              );
-                                            },
-                                          );
-                                        },
-                                        validator: (inputValue) {},
-                                        decoration: InputDecoration(
-                                            fillColor: const Color(0xffD1D9E8)
-                                                .withOpacity(0.2),
-                                            filled: true,
-                                            labelStyle: TextStyle(
-                                                fontSize: 15.sp,
-                                                color: Color(0xff1b438b)),
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Color(0xff1B438B)),
-                                            ),
-                                            focusedBorder:
-                                                const UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Color(0xff1B438B)),
-                                            ),
-                                            border:
-                                                const UnderlineInputBorder(),
-                                            labelText: 'Date of Payment',
-                                            hintText: "Date of Payment"),
-                                      ),
-                                    ),
-                                    if (selectedDate == "30")
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 18.0.w,
-                                            right: 18.w,
-                                            bottom: 10.h),
-                                        child: Text(
-                                          "In the month of February, payment will be done on 1st of March",
+                                        controlAffinity:
+                                            ListTileControlAffinity.trailing,
+                                        title: Text(
+                                          "Your Custom Limit",
                                           style: TextStyle(
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0xff808080),
-                                          ),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ),
-                                    if ((widget.autopayData!.pAYMENTDATE ==
-                                                todayDate ||
-                                            selectedDate == todayDate) &&
-                                        activatesFrom == "Immediately")
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 18.0.w, right: 18.w),
-                                        child: Text(
-                                          "Cannot edit auto payment if selected/set date is today's date",
-                                          style: TextStyle(
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: CLR_ERROR,
-                                          ),
-                                        ),
-                                      ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 16.w, vertical: 16.h),
-                                      child: DropdownButtonFormField<String>(
-                                        isExpanded: true,
-                                        isDense: true,
-                                        value: activatesFrom,
-                                        decoration: InputDecoration(
-                                          border: const UnderlineInputBorder(),
-                                          filled: true,
-                                          fillColor: Color(0xffD1D9E8)
-                                              .withOpacity(0.2),
-                                          enabledBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xff1B438B)),
-                                          ),
-                                          focusedBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xff1B438B)),
-                                          ),
-                                          contentPadding: EdgeInsets.symmetric(
-                                              vertical: 10.0.h,
-                                              horizontal: 10.w),
-                                          labelText:
-                                              'Changes To Be Reflected From',
-                                          labelStyle: const TextStyle(
-                                              color: Color(0xff1b438b)),
-                                          hintText:
-                                              'Changes To Be Reflected From',
-                                          hintStyle: const TextStyle(
-                                              color: Color(0xff1b438b)),
-                                        ),
-                                        // hint: Text('Changes To Be Reflected From'),
-                                        onChanged: (String? newValue) {},
-                                        icon: const Icon(
-                                          Icons.keyboard_arrow_down,
-                                          color: Colors.grey,
-                                        ),
-                                        items: EffectiveFrom.map<
-                                            DropdownMenuItem<String>>((value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(
-                                              value,
-                                            ),
-                                            onTap: () {
-                                              setState(() {
-                                                activatesFrom = value;
-                                              });
-
-                                              if (activatesFrom ==
-                                                  "Immediately") {
-                                                setState(() {
-                                                  isActive = 1;
-                                                });
-                                              } else {
-                                                setState(() {
-                                                  isActive = 0;
-                                                });
-                                              }
-                                            },
-                                          );
-                                        }).toList(),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 18.0.w, right: 18.w),
-                                        child: Text(
-                                          "We Pay Your Bills Once ",
-                                          style: TextStyle(
-                                            fontSize: 13.sp,
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0xff808080),
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.TXT_CLR_SECONDARY,
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
                                       ),
                                     ),
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                          child: RadioListTile(
-                                            value: 0,
-                                            groupValue: billPayGroupRadio,
-                                            activeColor: TXT_CLR_PRIMARY,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                billPayGroupRadio = 0;
-                                                activatesFrom = "Immediately";
-                                              });
-                                            },
-                                            controlAffinity:
-                                                ListTileControlAffinity
-                                                    .trailing,
-                                            title: Text(
-                                              "Every Month",
-                                              style: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w500,
-                                                color: Color(0xff313131),
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.w, vertical: 16.h),
+                                  child: TextFormField(
+                                    // maxLength: 20,
+                                    focusNode: MaxiFocusNode,
+                                    controller: maxAmountController,
+                                    // key: _billnameKey,
+                                    autocorrect: false,
+                                    readOnly:
+                                        limitGroupRadio == 1 ? true : false,
+                                    enableSuggestions: false,
+                                    keyboardType: TextInputType.number,
+                                    style: TextStyle(
+                                        color: limitGroupRadio == 1
+                                            ? AppColors.TXT_CLR_LITE
+                                            : AppColors.TXT_CLR_BLACK),
+
+                                    inputFormatters: [
+                                      // getInputAmountFormatter(),
+                                      LengthLimitingTextInputFormatter(6),
+                                      // DecimalTextInputFormatter(
+                                      //     decimalRange: 2),
+                                      // getInputAmountFormatter(),
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'^[0-9]*'))
+                                    ],
+                                    onChanged: (val) {
+                                      if (val.isNotEmpty) {
+                                        if (double.parse(val.toString()) >
+                                            double.parse("0.00".toString())) {
+                                          setState(() {
+                                            isMaxAmountEmpty = false;
+                                          });
+                                        } else {
+                                          isMaxAmountEmpty = true;
+                                        }
+                                        if (double.parse(val.toString()) >
+                                                double.parse(
+                                                    maximumAmount.toString()) ||
+                                            double.parse(val.toString()) <
+                                                double.parse(lastPaidAmount
+                                                    .toString())) {
+                                          setState(() {
+                                            maxAmountError = true;
+                                          });
+                                        } else {
+                                          setState(() {
+                                            maxAmountError = false;
+                                          });
+                                        }
+                                      } else {
+                                        setState(() {
+                                          isMaxAmountEmpty = true;
+
+                                          maxAmountError = true;
+                                        });
+                                      }
+                                    },
+                                    validator: (inputValue) {
+                                      if (inputValue!.isEmpty) {
+                                        return "Bill Name Should Not be Empty";
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                        fillColor: limitGroupRadio == 0
+                                            ? AppColors.CLR_INPUT_FILL
+                                            : AppColors.TXT_CLR_GREY
+                                                .withOpacity(0.2),
+                                        filled: true,
+                                        prefixStyle: TextStyle(
+                                            color: AppColors.TXT_CLR_DEFAULT),
+                                        labelStyle: TextStyle(
+                                            color: limitGroupRadio == 1
+                                                ? AppColors.TXT_CLR_LITE
+                                                : AppColors.TXT_CLR_PRIMARY),
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: limitGroupRadio == 1
+                                                  ? AppColors.TXT_CLR_LITE
+                                                  : AppColors.TXT_CLR_PRIMARY),
                                         ),
-                                        Flexible(
-                                          child: RadioListTile(
-                                            value: 1,
-                                            groupValue: billPayGroupRadio,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                billPayGroupRadio = 1;
-                                                activatesFrom = "Immediately";
-                                              });
-                                            },
-                                            activeColor: TXT_CLR_PRIMARY,
-                                            controlAffinity:
-                                                ListTileControlAffinity
-                                                    .trailing,
-                                            title: Text(
-                                              "Every Two Month",
-                                              style: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w500,
-                                                color: Color(0xff313131),
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: limitGroupRadio == 1
+                                                  ? AppColors.TXT_CLR_LITE
+                                                  : AppColors.TXT_CLR_PRIMARY),
                                         ),
-                                      ],
-                                    ),
-                                    if (activatesFrom == getMonthName(0)[0]!)
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 18.0.w, right: 18.w),
+                                        border: const UnderlineInputBorder(),
+                                        labelText: limitGroupRadio == 1
+                                            ? 'Maximum Amount'
+                                            : "Enter amount to be set as Limit",
+                                        prefixText: '₹  ',
+                                        hintText: "Maximum amount"),
+                                  ),
+                                ),
+                                if (maxAmountError)
+                                  if (isMaxAmountEmpty)
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 20.w, top: 0.h, right: 20.w),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
                                         child: Text(
-                                          "Your auto pay will stay inactive and we will resume paying your bills only from ${numberPrefixSetter(selectedDate!)}, ${getMonthName(0)[0]!}. If you want us to pay your bills on the  ${numberPrefixSetter(selectedDate!)} of this (current) month, please select Immediately from the dropdown.",
+                                          'Maximum Amount Can\'t be Empty or Zero.',
                                           style: TextStyle(
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0xff808080),
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.CLR_ERROR,
                                           ),
-                                          textAlign: TextAlign.left,
                                         ),
                                       ),
-                                    SizedBox(
-                                      height: 10.h,
                                     )
+                                  else if (double.parse(
+                                          maxAmountController.text.length > 0
+                                              ? maxAmountController.text
+                                              : "0".toString()) >
+                                      double.parse(maximumAmount.toString()))
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 20.w, top: 0.h, right: 20.w),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          'Entered Amount Should be not More than of ₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}',
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.CLR_ERROR,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 20.w, top: 0.h, right: 20.w),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          'Entered Amount is less than Latest or Last Bill Amount of ₹ ${NumberFormat('#,##,##0.00').format(double.parse(lastPaidAmount.toString()))}',
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.CLR_ORANGE,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                // Padding(
+                                //   padding: EdgeInsets.only(
+                                //       left: 20.w, top: 0.h, right: 20.w),
+                                //   child: Align(
+                                //     alignment: Alignment.centerLeft,
+                                //     child: Text(
+                                //       'Amount Should be Between  ₹ ${NumberFormat('#,##,##0.00').format(double.parse(lastPaidAmount.toString()))} to ₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}',
+                                //       style: TextStyle(
+                                //         fontSize: 12.sp,
+                                //         fontWeight: FontWeight.w600,
+                                //         color: CLR_ERROR,
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.w, vertical: 16.h),
+                                  child: TextFormField(
+                                    // maxLength: 20,
+                                    controller: dateController,
+                                    readOnly: true,
+                                    // key: _billnameKey,
+                                    autocorrect: false,
+                                    enableSuggestions: false,
+                                    keyboardType: TextInputType.text,
+                                    // inputFormatters: [
+                                    //   FilteringTextInputFormatter.allow(
+                                    //       RegExp(r'^[a-z0-9A-Z ]*'))
+                                    // ],
+                                    style: TextStyle(
+                                        fontSize: 13.sp,
+                                        color: AppColors.TXT_CLR_BLACK),
+
+                                    onChanged: (val) {},
+                                    onTap: () {
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return DateDialog(
+                                            defaultDate: selectedDate,
+                                            onDateSelected: (Date) {
+                                              setState(() {
+                                                selectedDate = Date;
+                                                dateController.text =
+                                                    '$selectedDate${getDaySuffix(Date)}';
+                                              });
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                    validator: (inputValue) {},
+                                    decoration: InputDecoration(
+                                        fillColor: AppColors.CLR_INPUT_FILL,
+                                        filled: true,
+                                        labelStyle: TextStyle(
+                                            fontSize: 15.sp,
+                                            color: AppColors.TXT_CLR_PRIMARY),
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: AppColors.TXT_CLR_PRIMARY),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: AppColors.TXT_CLR_PRIMARY),
+                                        ),
+                                        border: const UnderlineInputBorder(),
+                                        labelText: 'Date of Payment',
+                                        hintText: "Date of Payment"),
+                                  ),
+                                ),
+                                if (selectedDate == "30")
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 18.0.w,
+                                        right: 18.w,
+                                        bottom: 10.h),
+                                    child: Text(
+                                      "In the month of February, payment will be done on 1st of March",
+                                      style: TextStyle(
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.TXT_CLR_LITE,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                if ((widget.autopayData!.pAYMENTDATE ==
+                                            todayDate ||
+                                        selectedDate == todayDate) &&
+                                    activatesFrom == "Immediately")
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 18.0.w, right: 18.w),
+                                    child: Text(
+                                      "Cannot edit auto payment if selected/set date is today's date",
+                                      style: TextStyle(
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.CLR_ERROR,
+                                      ),
+                                    ),
+                                  ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.w, vertical: 16.h),
+                                  child: DropdownButtonFormField<String>(
+                                    dropdownColor:
+                                        AppColors.BTN_CLR_ACTIVE_TEXT,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0.r)),
+                                    isExpanded: true,
+                                    isDense: true,
+                                    value: activatesFrom,
+                                    decoration: InputDecoration(
+                                      border: const UnderlineInputBorder(),
+                                      filled: true,
+                                      fillColor: AppColors.CLR_INPUT_FILL,
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: AppColors.TXT_CLR_PRIMARY),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: AppColors.TXT_CLR_PRIMARY),
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 10.0.h, horizontal: 10.w),
+                                      labelText: 'Changes To Be Reflected From',
+                                      labelStyle: TextStyle(
+                                          color: AppColors.TXT_CLR_PRIMARY),
+                                      hintText: 'Changes To Be Reflected From',
+                                      hintStyle: TextStyle(
+                                          color: AppColors.TXT_CLR_PRIMARY),
+                                    ),
+                                    // hint: Text('Changes To Be Reflected From'),
+                                    onChanged: (String? newValue) {},
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_down,
+                                      color: AppColors.CLR_GREY,
+                                    ),
+                                    items: EffectiveFrom.map<
+                                        DropdownMenuItem<String>>((value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(
+                                              fontSize: 12.sp,
+                                              color: AppColors.TXT_CLR_DEFAULT),
+                                        ),
+                                        onTap: () {
+                                          setState(() {
+                                            activatesFrom = value;
+                                          });
+
+                                          if (activatesFrom == "Immediately") {
+                                            setState(() {
+                                              isActive = 1;
+                                            });
+                                          } else {
+                                            setState(() {
+                                              isActive = 0;
+                                            });
+                                          }
+                                        },
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 18.0.w, right: 18.w),
+                                    child: Text(
+                                      "We Pay Your Bills Once ",
+                                      style: TextStyle(
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.TXT_CLR_LITE,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Flexible(
+                                      child: RadioListTile(
+                                        value: 0,
+                                        groupValue: billPayGroupRadio,
+                                        activeColor: AppColors.TXT_CLR_PRIMARY,
+                                        fillColor:
+                                            MaterialStateProperty.resolveWith(
+                                          (states) {
+                                            if (states.contains(
+                                                MaterialState.selected)) {
+                                              return AppColors.TXT_CLR_PRIMARY;
+                                            }
+                                            return AppColors.TXT_CLR_LITE;
+                                          },
+                                        ),
+                                        onChanged: (val) {
+                                          setState(() {
+                                            billPayGroupRadio = 0;
+                                            activatesFrom = "Immediately";
+                                          });
+                                        },
+                                        controlAffinity:
+                                            ListTileControlAffinity.trailing,
+                                        title: Text(
+                                          "Every Month",
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.TXT_CLR_SECONDARY,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: RadioListTile(
+                                        value: 1,
+                                        activeColor: AppColors.TXT_CLR_PRIMARY,
+                                        fillColor:
+                                            MaterialStateProperty.resolveWith(
+                                          (states) {
+                                            if (states.contains(
+                                                MaterialState.selected)) {
+                                              return AppColors.TXT_CLR_PRIMARY;
+                                            }
+                                            return AppColors.TXT_CLR_LITE;
+                                          },
+                                        ),
+                                        groupValue: billPayGroupRadio,
+                                        onChanged: (val) {
+                                          setState(() {
+                                            billPayGroupRadio = 1;
+                                            activatesFrom = "Immediately";
+                                          });
+                                        },
+                                        controlAffinity:
+                                            ListTileControlAffinity.trailing,
+                                        title: Text(
+                                          "Every Two Month",
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.TXT_CLR_SECONDARY,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
                                   ],
-                                )),
+                                ),
+                                if (activatesFrom == getMonthName(0)[0]!)
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 18.0.w, right: 18.w),
+                                    child: Text(
+                                      "Your auto pay will stay inactive and we will resume paying your bills only from ${numberPrefixSetter(selectedDate!)}, ${getMonthName(0)[0]!}. If you want us to pay your bills on the  ${numberPrefixSetter(selectedDate!)} of this (current) month, please select Immediately from the dropdown.",
+                                      style: TextStyle(
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.TXT_CLR_LITE,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                SizedBox(
+                                  height: 10.h,
+                                )
+                              ],
+                            )),
                             Container(
                                 clipBehavior: Clip.hardEdge,
                                 width: double.infinity,
@@ -1083,8 +1081,8 @@ class _editAutopayState extends State<editAutopay> {
                                   borderRadius:
                                       BorderRadius.circular(6.0.r + 2.r),
                                   border: Border.all(
-                                    color: Color(0xffD1D9E8),
-                                    width: 1.0,
+                                    color: AppColors.CLR_CON_BORDER,
+                                    width: 0.50,
                                   ),
                                 ),
                                 child: Column(
@@ -1104,7 +1102,7 @@ class _editAutopayState extends State<editAutopay> {
                                             style: TextStyle(
                                               fontSize: 14.sp,
                                               fontWeight: FontWeight.w600,
-                                              color: Color(0xff1b438b),
+                                              color: AppColors.TXT_CLR_PRIMARY,
                                             ),
                                             textAlign: TextAlign.center,
                                           ),
@@ -1134,7 +1132,7 @@ class _editAutopayState extends State<editAutopay> {
                                     if (!isAccLoading)
                                       Container(
                                         width: double.infinity,
-                                        color: Colors.white,
+                                        // color: Colors.white,
                                         child: myAccounts!.isNotEmpty
                                             ? GridView.builder(
                                                 shrinkWrap: true,
@@ -1187,7 +1185,7 @@ class _editAutopayState extends State<editAutopay> {
                                                       fontSize: 12.sp,
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      color: CLR_GREY,
+                                                      color: AppColors.CLR_GREY,
                                                     ),
                                                     textAlign: TextAlign.center,
                                                   ),
@@ -1223,13 +1221,13 @@ class _editAutopayState extends State<editAutopay> {
                                 text: TextSpan(
                                   style: TextStyle(
                                     fontSize: 14.0.sp,
-                                    color: Colors.black,
+                                    color: AppColors.TXT_CLR_DEFAULT,
                                   ),
                                   children: <TextSpan>[
                                     TextSpan(
                                         style: TextStyle(
                                             fontSize: 11.sp,
-                                            color: TXT_CLR_DEFAULT,
+                                            color: AppColors.TXT_CLR_DEFAULT,
                                             fontWeight: FontWeight.w500),
                                         text:
                                             "By continuing, you agree to accept our "),
@@ -1244,7 +1242,7 @@ class _editAutopayState extends State<editAutopay> {
                                         },
                                       style: TextStyle(
                                           decoration: TextDecoration.underline,
-                                          color: TXT_CLR_PRIMARY,
+                                          color: AppColors.TXT_CLR_PRIMARY,
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w700),
                                     ),
@@ -1289,9 +1287,11 @@ class _editAutopayState extends State<editAutopay> {
         ),
         bottomSheet: !isEditAutoPayPageError
             ? Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
+                    color: AppColors.CLR_BACKGROUND,
                     border: Border(
-                        top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+                        top: BorderSide(
+                            color: AppColors.CLR_CON_BORDER_LITE, width: 1))),
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
@@ -1304,9 +1304,10 @@ class _editAutopayState extends State<editAutopay> {
                               goBack(context);
                             },
                             buttonText: "Cancel",
-                            buttonTxtColor: CLR_PRIMARY,
-                            buttonBorderColor: Colors.transparent,
-                            buttonColor: BTN_CLR_ACTIVE,
+                            buttonTxtColor:
+                                AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                            buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
+                            buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER_C,
                             buttonSizeX: 10.h,
                             buttonSizeY: 40.w,
                             buttonTextSize: 14.sp,
@@ -1321,10 +1322,13 @@ class _editAutopayState extends State<editAutopay> {
                               handleAutopayUpdate();
                             },
                             buttonText: "Update",
-                            buttonTxtColor: BTN_CLR_ACTIVE,
+                            buttonTxtColor: handleButton()
+                                ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                                : AppColors.BTN_CLR_DISABLE_TEXT,
                             buttonBorderColor: Colors.transparent,
-                            buttonColor:
-                                handleButton() ? CLR_PRIMARY : Colors.grey,
+                            buttonColor: handleButton()
+                                ? AppColors.BTN_CLR_ACTIVE_ALTER
+                                : AppColors.BTN_CLR_DISABLE,
                             buttonSizeX: 10.h,
                             buttonSizeY: 40.w,
                             buttonTextSize: 14.sp,

@@ -3,6 +3,8 @@
 // ignore_for_file: constant_identifier_names
 
 const LOGO_EQUITAS = "packages/ebps/assets/logo/logo_equitas_normal.png";
+const LOGO_EQUITAS_PNG =
+    "packages/ebps/assets/logo/logo_equitas_transparent.png";
 const LOGO_BBPS = "packages/ebps/assets/icon/logo_bbps.svg";
 const LOGO_BBPS_FULL = "packages/ebps/assets/logo/logo_bbps_full.svg";
 const LOGO_BBPS_FULL_PNG = "packages/ebps/assets/logo/logo_bbps_full_png.png";
@@ -17,6 +19,7 @@ const JSON_BILLPAY = "packages/ebps/assets/icon/billPay.json";
 const JSON_NOTI = "packages/ebps/assets/icon/billNoti.json";
 const ANIM_NODATA = "packages/ebps/assets/icon/ANIM_NODATA.json";
 const ANIM_NOSEARCH = "packages/ebps/assets/icon/ANIM_NOSEARCH.json";
+const COIN_LOADER = "packages/ebps/assets/icon/LOADER_COIN2.json";
 
 //ICON
 

@@ -3,6 +3,7 @@
 import 'dart:ui' as ui show BoxHeightStyle, BoxWidthStyle;
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:ebps/constants/colors.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -595,7 +596,11 @@ class AnimatedTextFieldState extends State<AnimatedTextField> {
                               : Row(
                                   children: [
                                     if (widget.hintLabelText != null)
-                                      Text(widget.hintLabelText.toString()),
+                                      Text(
+                                        widget.hintLabelText.toString(),
+                                        style: TextStyle(
+                                            color: AppColors.TXT_CLR_LITE),
+                                      ),
                                     AnimatedTextKit(
                                       repeatForever: true,
                                       animatedTexts: _buildAnimatedTexts(),

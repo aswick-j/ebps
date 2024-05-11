@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/Home/biller_details_container.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
@@ -17,6 +20,7 @@ import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/bbps_logo.dart';
+import 'package:ebps/widget/custom_dialog.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/getAccountInfoCard.dart';
 import 'package:ebps/widget/get_biller_detail.dart';
@@ -129,16 +133,18 @@ class _PaymentDetailsState extends State<PaymentDetails> {
     } else if (widget.validateBill!["billerType"] == "instant" ||
         widget.validateBill!["billerType"] == "adhoc") {
       BlocProvider.of<HomeCubit>(context).fetchBill(
-        billerID: widget.isSavedBill
-            ? widget.savedBillersData!.bILLERID
-            : widget.billerData!.bILLERID,
-        quickPay: widget.validateBill!["quickPay"],
-        quickPayAmount: widget.amount.toString(),
-        adHocBillValidationRefKey: "",
-        validateBill: widget.validateBill!["validateBill"],
-        billerParams: widget.billerInputSign,
-        billName: widget.billName,
-      );
+          billerID: widget.isSavedBill
+              ? widget.savedBillersData!.bILLERID
+              : widget.billerData!.bILLERID,
+          quickPay: widget.validateBill!["quickPay"],
+          quickPayAmount: widget.amount.toString(),
+          adHocBillValidationRefKey: "",
+          validateBill: widget.validateBill!["validateBill"],
+          billerParams: widget.billerInputSign,
+          billName: widget.billName,
+          customerBillId: widget.isSavedBill
+              ? widget.savedBillersData!.cUSTOMERBILLID
+              : null);
     } else {
       goToData(context, oTPPAGEROUTE, {
         "from": pAYMENTCONFIRMROUTE,
@@ -178,47 +184,45 @@ class _PaymentDetailsState extends State<PaymentDetails> {
         context: context,
         builder: (BuildContext context) {
           return WillPopScope(
-            onWillPop: () async => false,
-            child: AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              content: AnimatedDialog(
-                  showImgIcon: false,
-                  title: "Unable to Process Payment",
-                  subTitle:
-                      "We're sorry.We were unable to process your payment.Please try again later",
-                  showSub: true,
-                  shapeColor: CLR_ERROR,
-                  child: Icon(
-                    Icons.close_rounded,
-                    color: Colors.white,
-                  )),
-              actions: <Widget>[
-                Align(
-                  alignment: Alignment.center,
-                  child: MyAppButton(
-                      onPressed: () {
-                        goBack(context);
-                      },
-                      buttonText: "Okay",
-                      buttonTxtColor: BTN_CLR_ACTIVE,
-                      buttonBorderColor: Colors.transparent,
-                      buttonColor: CLR_PRIMARY,
-                      buttonSizeX: 10,
-                      buttonSizeY: 40,
-                      buttonTextSize: 14,
-                      buttonTextWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-          );
+              onWillPop: () async => false,
+              child: CustomDialog(
+                actions: <Widget>[
+                  Align(
+                    alignment: Alignment.center,
+                    child: MyAppButton(
+                        onPressed: () {
+                          goBack(context);
+                        },
+                        buttonText: "Okay",
+                        buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
+                        buttonBorderColor: Colors.transparent,
+                        buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
+                        buttonSizeX: 10.h,
+                        buttonSizeY: 40.w,
+                        buttonTextSize: 14.sp,
+                        buttonTextWeight: FontWeight.w500),
+                  ),
+                ],
+                showActions: true,
+                child: AnimatedDialog(
+                    showImgIcon: false,
+                    title: "Unable to Process Payment",
+                    subTitle:
+                        "We're sorry.We were unable to process your payment.Please try again later",
+                    showSub: true,
+                    shapeColor: AppColors.CLR_ERROR,
+                    child: Icon(
+                      Icons.close_rounded,
+                      color: Colors.white,
+                    )),
+              ));
         },
       );
     }
 
     return LoaderOverlay(
       child: Scaffold(
+          backgroundColor: AppColors.CLR_BACKGROUND,
           appBar: MyAppBar(
             context: context,
             title: widget.billerName.toString(),
@@ -326,6 +330,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 validateBill: widget.validateBill!["validateBill"],
                 billerParams: widget.billerInputSign,
                 billName: widget.billName,
+                customerBillId: widget.isSavedBill
+                    ? widget.savedBillersData!.cUSTOMERBILLID
+                    : null,
                 forChannel: (widget.isSavedBill
                         ? widget.savedBillersData!.cATEGORYNAME!
                                 .toLowerCase() ==
@@ -363,159 +370,144 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                      clipBehavior: Clip.hardEdge,
-                      width: double.infinity,
-                      margin: EdgeInsets.only(
-                          left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                        border: Border.all(
-                          color: Color(0xffD1D9E8),
-                          width: 1.0,
+                  ReusableContainer(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        height: 33.0.h,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topRight,
+                            stops: const [0.001, 19],
+                            colors: [
+                              AppColors.CLR_GRD_1.withOpacity(.7),
+                              AppColors.CLR_GRD_2.withOpacity(.7),
+                            ],
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Payment Details",
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xffffffff),
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
+                      BillerDetailsContainer(
+                        icon: BILLER_LOGO(widget.billerName.toString()),
+                        billerName: widget.billerName.toString(),
+                        categoryName: widget.categoryName.toString(),
+                      ),
+                      if (widget.SavedinputParameters != null ||
+                          widget.inputParameters != null)
+                        Container(
                             width: double.infinity,
-                            alignment: Alignment.center,
-                            height: 33.0.h,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topRight,
-                                stops: const [0.001, 19],
-                                colors: [
-                                  Color(0xff768EB9).withOpacity(.7),
-                                  Color(0xff463A8D).withOpacity(.7),
-                                ],
+                            constraints: BoxConstraints(
+                              minHeight: 80.h,
+                              maxHeight: 300.h,
+                            ),
+                            height: 0.h,
+                            // color: Colors.white,
+                            child: ListView(
+                              primary: false,
+                              physics: NeverScrollableScrollPhysics(),
+                              // crossAxisSpacing: 10.h,
+                              // crossAxisCount: 2,
+                              // childAspectRatio: 4 / 2,
+                              // mainAxisSpacing: 10.h,
+                              children: [
+                                billerdetail(
+                                    widget.isSavedBill
+                                        ? widget.categoryName.toString().toLowerCase() ==
+                                                "mobile prepaid"
+                                            ? "Mobile Number"
+                                            : widget.SavedinputParameters![0]
+                                                .pARAMETERNAME
+                                        : widget.categoryName.toString().toLowerCase() ==
+                                                "mobile prepaid"
+                                            ? "Mobile Number"
+                                            : widget.inputParameters![0]
+                                                .pARAMETERNAME,
+                                    widget.isSavedBill
+                                        ? widget.categoryName.toString().toLowerCase() ==
+                                                "mobile prepaid"
+                                            ? widget.SavedinputParameters!
+                                                .firstWhere((params) => params.pARAMETERNAME == null
+                                                    ? params.pARAMETERNAME ==
+                                                        null
+                                                    : params.pARAMETERNAME.toString().toLowerCase() ==
+                                                            "mobile number" ||
+                                                        params.pARAMETERNAME
+                                                                .toString()
+                                                                .toLowerCase() ==
+                                                            "customer mobile number")
+                                                .pARAMETERVALUE
+                                                .toString()
+                                            : widget.SavedinputParameters![0]
+                                                .pARAMETERVALUE
+                                        : widget.categoryName.toString().toLowerCase() ==
+                                                "mobile prepaid"
+                                            ? widget.inputParameters!
+                                                .firstWhere((params) => params.pARAMETERNAME == null
+                                                    ? params.pARAMETERNAME == null
+                                                    : params.pARAMETERNAME.toString().toLowerCase() == "mobile number" || params.pARAMETERNAME.toString().toLowerCase() == "customer mobile number")
+                                                .pARAMETERVALUE
+                                                .toString()
+                                            : widget.inputParameters![0].pARAMETERVALUE.toString(),
+                                    context),
+                                billerdetail("Bill Name",
+                                    widget.billName.toString(), context),
+                              ],
+                            )),
+                      Padding(
+                        padding: EdgeInsets.only(top: 8.0.h),
+                        child: Divider(
+                          color: AppColors.CLR_CON_BORDER,
+                          height: 0.1.h,
+                          thickness: 0.50,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.0.w, vertical: 10.h),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Amount",
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.CLR_PRIMARY_LITE,
                               ),
+                              textAlign: TextAlign.left,
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Payment Details",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xffffffff),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                          BillerDetailsContainer(
-                            icon: BILLER_LOGO(widget.billerName.toString()),
-                            billerName: widget.billerName.toString(),
-                            categoryName: widget.categoryName.toString(),
-                          ),
-                          if (widget.SavedinputParameters != null ||
-                              widget.inputParameters != null)
-                            Container(
-                                width: double.infinity,
-                                constraints: BoxConstraints(
-                                  minHeight: 80.h,
-                                  maxHeight: 300.h,
-                                ),
-                                height: 0.h,
-                                color: Colors.white,
-                                child: ListView(
-                                  primary: false,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  // crossAxisSpacing: 10.h,
-                                  // crossAxisCount: 2,
-                                  // childAspectRatio: 4 / 2,
-                                  // mainAxisSpacing: 10.h,
-                                  children: [
-                                    billerdetail(
-                                        widget.isSavedBill
-                                            ? widget.categoryName.toString().toLowerCase() ==
-                                                    "mobile prepaid"
-                                                ? "Mobile Number"
-                                                : widget
-                                                    .SavedinputParameters![0]
-                                                    .pARAMETERNAME
-                                            : widget.categoryName.toString().toLowerCase() ==
-                                                    "mobile prepaid"
-                                                ? "Mobile Number"
-                                                : widget.inputParameters![0]
-                                                    .pARAMETERNAME,
-                                        widget.isSavedBill
-                                            ? widget.categoryName.toString().toLowerCase() ==
-                                                    "mobile prepaid"
-                                                ? widget.SavedinputParameters!
-                                                    .firstWhere((params) => params.pARAMETERNAME == null
-                                                        ? params.pARAMETERNAME ==
-                                                            null
-                                                        : params.pARAMETERNAME.toString().toLowerCase() ==
-                                                                "mobile number" ||
-                                                            params.pARAMETERNAME
-                                                                    .toString()
-                                                                    .toLowerCase() ==
-                                                                "customer mobile number")
-                                                    .pARAMETERVALUE
-                                                    .toString()
-                                                : widget
-                                                    .SavedinputParameters![0]
-                                                    .pARAMETERVALUE
-                                            : widget.categoryName.toString().toLowerCase() ==
-                                                    "mobile prepaid"
-                                                ? widget.inputParameters!
-                                                    .firstWhere((params) =>
-                                                        params.pARAMETERNAME == null
-                                                            ? params.pARAMETERNAME == null
-                                                            : params.pARAMETERNAME.toString().toLowerCase() == "mobile number" || params.pARAMETERNAME.toString().toLowerCase() == "customer mobile number")
-                                                    .pARAMETERVALUE
-                                                    .toString()
-                                                : widget.inputParameters![0].pARAMETERVALUE.toString(),
-                                        context),
-                                    billerdetail("Bill Name",
-                                        widget.billName.toString(), context),
-                                  ],
-                                )),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8.0.h),
-                            child: Divider(
-                              height: 1.h,
-                              thickness: 1,
-                              indent: 10.w,
-                              endIndent: 10.w,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.0.w, vertical: 15.h),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Amount",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xff808080),
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                                Text(
-                                  "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.amount.toString()))}",
-                                  // "₹ ${widget.amount}",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xff1b438b),
-                                  ),
-                                  textAlign: TextAlign.left,
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      )),
+                            Text(
+                              "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.amount.toString()))}",
+                              // "₹ ${widget.amount}",
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.TXT_CLR_PRIMARY,
+                              ),
+                              textAlign: TextAlign.left,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
                   Padding(
                     padding: EdgeInsets.only(
                         left: 18.0.w, right: 18.w, top: 18.w, bottom: 5.w),
@@ -527,7 +519,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xff1b438b),
+                            color: AppColors.TXT_CLR_PRIMARY,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -555,7 +547,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                   if (!isAccLoading)
                     Container(
                       width: double.infinity,
-                      color: Colors.white,
+                      // color: Colors.white,
                       child: myAccounts!.isNotEmpty
                           ? Column(
                               children: [
@@ -613,7 +605,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                   style: TextStyle(
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
-                                    color: CLR_GREY,
+                                    color: AppColors.CLR_GREY,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -626,11 +618,11 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     margin: EdgeInsets.only(
                         left: 18.0.w, right: 18.w, top: 20.h, bottom: 0.h),
                     decoration: BoxDecoration(
-                      color: CLR_GREY.withOpacity(0.1),
+                      color: AppColors.CLR_GREY.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(6.0.r + 2.r),
                       border: Border.all(
-                        color: Color(0xffD1D9E8),
-                        width: 1.0,
+                        color: AppColors.CLR_CON_BORDER,
+                        width: 0.50,
                       ),
                     ),
                     child: Column(
@@ -642,7 +634,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                               children: [
                                 Icon(
                                   Icons.info_outline_rounded,
-                                  color: TXT_CLR_PRIMARY,
+                                  color: AppColors.TXT_CLR_PRIMARY,
                                   size: 15.r,
                                 ),
                                 Text(
@@ -650,7 +642,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                   style: TextStyle(
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
-                                    color: TXT_CLR_PRIMARY,
+                                    color: AppColors.TXT_CLR_PRIMARY,
                                   ),
                                   textAlign: TextAlign.left,
                                 ),
@@ -664,7 +656,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                             style: TextStyle(
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w500,
-                              color: CLR_BLUE_LITE,
+                              color: AppColors.CLR_BLUE_LITE,
                             ),
                             textAlign: TextAlign.left,
                           ),
@@ -679,13 +671,13 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       text: TextSpan(
                         style: TextStyle(
                           fontSize: 14.0.sp,
-                          color: Colors.black,
+                          color: AppColors.TXT_CLR_DEFAULT,
                         ),
                         children: <TextSpan>[
                           TextSpan(
                               style: TextStyle(
                                   fontSize: 11.sp,
-                                  color: TXT_CLR_DEFAULT,
+                                  color: AppColors.TXT_CLR_DEFAULT,
                                   fontWeight: FontWeight.w500),
                               text: "By continuing, you agree to accept our "),
                           TextSpan(
@@ -698,7 +690,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                               },
                             style: TextStyle(
                                 decoration: TextDecoration.underline,
-                                color: TXT_CLR_PRIMARY,
+                                color: AppColors.TXT_CLR_PRIMARY,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w700),
                           ),
@@ -718,8 +710,10 @@ class _PaymentDetailsState extends State<PaymentDetails> {
           }),
           bottomSheet: Container(
             decoration: BoxDecoration(
+                color: AppColors.CLR_BACKGROUND,
                 border: Border(
-                    top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+                    top: BorderSide(
+                        color: AppColors.CLR_CON_BORDER_LITE, width: 1))),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
               child: Row(
@@ -733,11 +727,13 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                           }
                         },
                         buttonText: "Proceed to Pay",
-                        buttonTxtColor: BTN_CLR_ACTIVE,
+                        buttonTxtColor: selectedAcc != null && !accError
+                            ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                            : AppColors.BTN_CLR_DISABLE_TEXT,
                         buttonBorderColor: Colors.transparent,
                         buttonColor: selectedAcc != null && !accError
-                            ? CLR_PRIMARY
-                            : Colors.grey,
+                            ? AppColors.BTN_CLR_ACTIVE_ALTER
+                            : AppColors.BTN_CLR_DISABLE,
                         buttonSizeX: 10.h,
                         buttonSizeY: 40.w,
                         buttonTextSize: 14.sp,

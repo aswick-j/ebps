@@ -109,7 +109,8 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
         adHocBillValidationRefKey: widget.adHocBillValidationRefKey,
         validateBill: widget.validateBill,
         billerParams: widget.billerParams,
-        billName: widget.billName);
+        billName: widget.billName,
+        customerBillId: widget.customerBillID);
     super.initState();
   }
 
@@ -311,7 +312,7 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
-                            color: Color(0xff808080),
+                            color: AppColors.TXT_CLR_LITE,
                           ),
                           textAlign: TextAlign.left,
                         ),
@@ -323,7 +324,7 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                           style: TextStyle(
                             fontSize: 24.sp,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xff1b438b),
+                            color: AppColors.TXT_CLR_PRIMARY,
                           ),
                           textAlign: TextAlign.left,
                         ),
@@ -333,9 +334,10 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                               goBack(context);
                             },
                             buttonText: "Close",
-                            buttonTxtColor: CLR_PRIMARY,
-                            buttonBorderColor: Color(0xff768EB9),
-                            buttonColor: Colors.white,
+                            buttonTxtColor:
+                                AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                            buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
+                            buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER_C,
                             buttonSizeX: 10.h,
                             buttonSizeY: 37.w,
                             buttonTextSize: 14.sp,
@@ -376,7 +378,7 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xff1b438b),
+                                color: AppColors.TXT_CLR_PRIMARY,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -402,9 +404,9 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                             }
                           },
                           buttonText: "Close",
-                          buttonTxtColor: CLR_PRIMARY,
-                          buttonBorderColor: Color(0xff768EB9),
-                          buttonColor: Colors.white,
+                          buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                          buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
+                          buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER_C,
                           buttonSizeX: 10.h,
                           buttonSizeY: 37.w,
                           buttonTextSize: 14.sp,

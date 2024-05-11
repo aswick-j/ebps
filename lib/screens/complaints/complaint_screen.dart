@@ -64,6 +64,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.CLR_BACKGROUND,
       appBar: MyAppBar(
         context: context,
         title: 'Raised Complaints',
@@ -71,7 +72,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
           Tooltip(
             textStyle: TextStyle(color: Colors.white, fontSize: 10.sp),
             decoration: BoxDecoration(
-                color: CLR_BLUE_LITE,
+                color: AppColors.CLR_BLUE_LITE,
                 borderRadius: BorderRadius.circular(8.0.r)),
             triggerMode: TooltipTriggerMode.longPress,
             showDuration: Duration(milliseconds: 20000),
@@ -110,29 +111,45 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
           child: Theme(
             data: ThemeData(splashColor: Colors.white),
             child: BottomNavigationBar(
-              backgroundColor: Colors.white,
+              backgroundColor: AppColors.CLR_BACKGROUND,
               showUnselectedLabels: true,
               onTap: _onItemTapped,
               elevation: 0,
               type: BottomNavigationBarType.fixed,
-              selectedItemColor: Color(0xffa4b4d1),
+              selectedItemColor: AppColors.CLR_PRIMARY,
               unselectedItemColor: Color(0xffa4b4d1),
               currentIndex: selectedIndex,
+              selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+              unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
               items: [
                 BottomNavigationBarItem(
                   icon: SvgPicture.asset(ICON_HOME_INACTIVE),
                   label: "Home",
-                  activeIcon: SvgPicture.asset(ICON_HOME),
+                  activeIcon: SvgPicture.asset(
+                    ICON_HOME,
+                    colorFilter: ColorFilter.mode(
+                        AppColors.CLR_PRIMARY, BlendMode.srcIn),
+                  ),
                 ),
                 BottomNavigationBarItem(
-                  icon: SvgPicture.asset(ICON_BILLERS_INACTIVE),
+                  icon: SvgPicture.asset(
+                    ICON_BILLERS_INACTIVE,
+                  ),
                   label: "Billers",
-                  activeIcon: SvgPicture.asset(ICON_BILLERS),
+                  activeIcon: SvgPicture.asset(
+                    ICON_BILLERS,
+                    colorFilter: ColorFilter.mode(
+                        AppColors.CLR_PRIMARY, BlendMode.srcIn),
+                  ),
                 ),
                 BottomNavigationBarItem(
                   icon: SvgPicture.asset(ICON_HISTORY_INACTIVE),
                   label: "History",
-                  activeIcon: SvgPicture.asset(ICON_HISTORY),
+                  activeIcon: SvgPicture.asset(
+                    ICON_HISTORY,
+                    colorFilter: ColorFilter.mode(
+                        AppColors.CLR_PRIMARY, BlendMode.srcIn),
+                  ),
                 ),
               ],
             ),
@@ -204,7 +221,7 @@ class _ComplaintListState extends State<ComplaintList> {
                                 ComplaintList[index].bILLERNAME.toString(),
                             subtitleText:
                                 ComplaintList[index].cOMPLAINTID.toString(),
-                            dateText: DateFormat('dd/MM/yyyy').format(
+                            dateText: DateFormat('MMM dd, yyyy').format(
                                 DateTime.parse(ComplaintList[index]
                                         .cREATEDON
                                         .toString())

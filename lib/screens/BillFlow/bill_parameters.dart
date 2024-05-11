@@ -2,6 +2,7 @@ import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/Home/biller_details_container.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
@@ -112,6 +113,7 @@ class _BillParametersState extends State<BillParameters> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.CLR_BACKGROUND,
       appBar: MyAppBar(
         context: context,
         title: widget.billerData!.bILLERNAME,
@@ -138,196 +140,185 @@ class _BillParametersState extends State<BillParameters> {
         return SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                  clipBehavior: Clip.hardEdge,
-                  width: double.infinity,
-                  margin: EdgeInsets.only(
-                      left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                    border: Border.all(
-                      color: const Color(0xffD1D9E8),
-                      width: 1.0,
+              ReusableContainer(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  BillerDetailsContainer(
+                    icon: BILLER_LOGO(widget.billerData!.bILLERNAME.toString()),
+                    billerName: widget.billerData!.bILLERNAME.toString(),
+                    categoryName: widget.billerData!.cATEGORYNAME.toString(),
+                  ),
+                  if (isInpuSignLoading)
+                    Center(
+                      child: Container(
+                        height: 200,
+                        width: 200,
+                        child: FlickrLoader(),
+                      ),
+                    ),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                    child: Form(
+                        key: _formKey,
+                        child: Container(
+                          child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: inputSignatureItems!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: EdgeInsets.only(top: 8.0.h),
+                                child: TextFormField(
+                                  style: TextStyle(
+                                      color: AppColors.TXT_CLR_DEFAULT),
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  enabled: true,
+                                  controller: inputSignatureControllers[index],
+                                  autocorrect: false,
+                                  enableSuggestions: false,
+                                  keyboardType: getInputType(
+                                      inputSignatureItems![index]
+                                          .pARAMETERTYPE),
+                                  onChanged: (s) {
+                                    FormValidation(index, false);
+                                  },
+                                  key: _fieldKey[index],
+                                  validator: (inputValue) {
+                                    final regex =
+                                        "${inputSignatureItems![index].rEGEX}";
+                                    final fieldRegExp = RegExp(
+                                        "${inputSignatureItems![index].rEGEX}");
+
+                                    if (inputValue!.length <
+                                        inputSignatureItems![index]
+                                            .mINLENGTH!
+                                            .toInt()) {
+                                      if (inputSignatureItems![index]
+                                              .mINLENGTH ==
+                                          inputSignatureItems![index]
+                                              .mAXLENGTH) {
+                                        return ("${inputSignatureItems![index].pARAMETERNAME} should be of ${inputSignatureItems![index].mAXLENGTH} ${inputSignatureItems![index].pARAMETERTYPE!.toLowerCase() == 'numeric' ? 'digits' : 'characters'}");
+                                      } else {
+                                        return "${inputSignatureItems![index].pARAMETERNAME} should have at least ${inputSignatureItems![index].mINLENGTH} ${inputSignatureItems![index].pARAMETERTYPE!.toLowerCase() == 'numeric' ? 'digits' : 'characters'}";
+                                      }
+                                    } else if (inputValue.length >
+                                        inputSignatureItems![index]
+                                            .mAXLENGTH!
+                                            .toInt()) {
+                                      if (inputSignatureItems![index]
+                                              .mINLENGTH ==
+                                          inputSignatureItems![index]
+                                              .mAXLENGTH) {
+                                        return ("${inputSignatureItems![index].pARAMETERNAME} should be of ${inputSignatureItems![index].mAXLENGTH} ${inputSignatureItems![index].pARAMETERTYPE!.toLowerCase() == 'numeric' ? 'digits' : 'characters'}");
+                                      } else {
+                                        return "${inputSignatureItems![index].pARAMETERNAME} should have no more than ${inputSignatureItems![index].mAXLENGTH} ${inputSignatureItems![index].pARAMETERTYPE!.toLowerCase() == 'numeric' ? 'digits' : 'characters'}";
+                                      }
+                                    } else if (!fieldRegExp
+                                            .hasMatch(inputValue!) &&
+                                        inputSignatureItems![index].rEGEX !=
+                                            null) {
+                                      return "${inputSignatureItems![index].pARAMETERNAME} Must be Valid";
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                      errorStyle:
+                                          TextStyle(color: AppColors.CLR_ERROR),
+                                      labelStyle: TextStyle(
+                                          color: AppColors.CLR_PRIMARY),
+                                      fillColor: AppColors.CLR_INPUT_FILL,
+                                      filled: true,
+                                      errorMaxLines: 5,
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: AppColors.TXT_CLR_PRIMARY),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: AppColors.TXT_CLR_PRIMARY),
+                                      ),
+                                      border: const UnderlineInputBorder(),
+                                      labelText: inputSignatureItems![index]
+                                          .pARAMETERNAME
+                                          .toString()),
+                                ),
+                              );
+                            },
+                          ),
+                        )),
+                  ),
+                  // Padding(
+                  //   padding:
+                  //       EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  //   child: Text(
+                  //     "Enter your registered Mobile no. With Tata Sky or a valid Subscriber ID which starts with 1 nd 10 digits long. To locate your subscriber ID, Press the home button on remote.",
+                  //     style: TextStyle(
+                  //       fontSize: 10,
+                  //       fontWeight: FontWeight.w400,
+                  //       color: Color(0xff808080),
+                  //     ),
+                  //     textAlign: TextAlign.left,
+                  //   ),
+                  // ),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                    child: TextFormField(
+                      style: TextStyle(color: AppColors.TXT_CLR_DEFAULT),
+                      maxLength: 20,
+                      controller: billNameController,
+                      key: _billnameKey,
+                      autocorrect: false,
+                      enableSuggestions: false,
+                      keyboardType: TextInputType.text,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^[a-z0-9A-Z ]*'))
+                      ],
+                      onChanged: (s) {
+                        if (billNameController.text.isNotEmpty) {
+                          setState(() {
+                            isValidBillName = true;
+                          });
+                        } else {
+                          setState(() {
+                            isValidBillName = false;
+                          });
+                        }
+                      },
+                      validator: (inputValue) {
+                        if (inputValue!.isEmpty) {
+                          return "Bill Name Should Not be Empty";
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        counterStyle: TextStyle(
+                            color: billNameController.text.length <= 3
+                                ? AppColors.CLR_ERROR
+                                : null),
+                        fillColor: AppColors.CLR_INPUT_FILL,
+                        filled: true,
+                        labelStyle: TextStyle(color: AppColors.CLR_PRIMARY),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.TXT_CLR_PRIMARY),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.TXT_CLR_PRIMARY),
+                        ),
+                        border: const UnderlineInputBorder(),
+                        labelText: 'Bill Name (Nick Name)',
+                      ),
                     ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      BillerDetailsContainer(
-                        icon: BILLER_LOGO(
-                            widget.billerData!.bILLERNAME.toString()),
-                        billerName: widget.billerData!.bILLERNAME.toString(),
-                        categoryName:
-                            widget.billerData!.cATEGORYNAME.toString(),
-                      ),
-                      if (isInpuSignLoading)
-                        Center(
-                          child: Container(
-                            height: 200,
-                            width: 200,
-                            child: FlickrLoader(),
-                          ),
-                        ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 16.h),
-                        child: Form(
-                            key: _formKey,
-                            child: Container(
-                              child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                physics: const BouncingScrollPhysics(),
-                                itemCount: inputSignatureItems!.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Padding(
-                                    padding: EdgeInsets.only(top: 8.0.h),
-                                    child: TextFormField(
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      enabled: true,
-                                      controller:
-                                          inputSignatureControllers[index],
-                                      autocorrect: false,
-                                      enableSuggestions: false,
-                                      keyboardType: getInputType(
-                                          inputSignatureItems![index]
-                                              .pARAMETERTYPE),
-                                      onChanged: (s) {
-                                        FormValidation(index, false);
-                                      },
-                                      key: _fieldKey[index],
-                                      validator: (inputValue) {
-                                        final regex =
-                                            "${inputSignatureItems![index].rEGEX}";
-                                        final fieldRegExp = RegExp(
-                                            "${inputSignatureItems![index].rEGEX}");
-
-                                        if (inputValue!.length <
-                                            inputSignatureItems![index]
-                                                .mINLENGTH!
-                                                .toInt()) {
-                                          if (inputSignatureItems![index]
-                                                  .mINLENGTH ==
-                                              inputSignatureItems![index]
-                                                  .mAXLENGTH) {
-                                            return ("${inputSignatureItems![index].pARAMETERNAME} should be of ${inputSignatureItems![index].mAXLENGTH} ${inputSignatureItems![index].pARAMETERTYPE!.toLowerCase() == 'numeric' ? 'digits' : 'characters'}");
-                                          } else {
-                                            return "${inputSignatureItems![index].pARAMETERNAME} should have at least ${inputSignatureItems![index].mINLENGTH} ${inputSignatureItems![index].pARAMETERTYPE!.toLowerCase() == 'numeric' ? 'digits' : 'characters'}";
-                                          }
-                                        } else if (inputValue.length >
-                                            inputSignatureItems![index]
-                                                .mAXLENGTH!
-                                                .toInt()) {
-                                          if (inputSignatureItems![index]
-                                                  .mINLENGTH ==
-                                              inputSignatureItems![index]
-                                                  .mAXLENGTH) {
-                                            return ("${inputSignatureItems![index].pARAMETERNAME} should be of ${inputSignatureItems![index].mAXLENGTH} ${inputSignatureItems![index].pARAMETERTYPE!.toLowerCase() == 'numeric' ? 'digits' : 'characters'}");
-                                          } else {
-                                            return "${inputSignatureItems![index].pARAMETERNAME} should have no more than ${inputSignatureItems![index].mAXLENGTH} ${inputSignatureItems![index].pARAMETERTYPE!.toLowerCase() == 'numeric' ? 'digits' : 'characters'}";
-                                          }
-                                        } else if (!fieldRegExp
-                                                .hasMatch(inputValue!) &&
-                                            inputSignatureItems![index].rEGEX !=
-                                                null) {
-                                          return "${inputSignatureItems![index].pARAMETERNAME} Must be Valid";
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                          labelStyle: const TextStyle(
-                                              color: Color(0xff1b438b)),
-                                          fillColor: const Color(0xffD1D9E8)
-                                              .withOpacity(0.2),
-                                          filled: true,
-                                          errorMaxLines: 5,
-                                          enabledBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xff1B438B)),
-                                          ),
-                                          focusedBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xff1B438B)),
-                                          ),
-                                          border: const UnderlineInputBorder(),
-                                          labelText: inputSignatureItems![index]
-                                              .pARAMETERNAME
-                                              .toString()),
-                                    ),
-                                  );
-                                },
-                              ),
-                            )),
-                      ),
-                      // Padding(
-                      //   padding:
-                      //       EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      //   child: Text(
-                      //     "Enter your registered Mobile no. With Tata Sky or a valid Subscriber ID which starts with 1 nd 10 digits long. To locate your subscriber ID, Press the home button on remote.",
-                      //     style: TextStyle(
-                      //       fontSize: 10,
-                      //       fontWeight: FontWeight.w400,
-                      //       color: Color(0xff808080),
-                      //     ),
-                      //     textAlign: TextAlign.left,
-                      //   ),
-                      // ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 16.h),
-                        child: TextFormField(
-                          maxLength: 20,
-                          controller: billNameController,
-                          key: _billnameKey,
-                          autocorrect: false,
-                          enableSuggestions: false,
-                          keyboardType: TextInputType.text,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'^[a-z0-9A-Z ]*'))
-                          ],
-                          onChanged: (s) {
-                            if (billNameController.text.isNotEmpty) {
-                              setState(() {
-                                isValidBillName = true;
-                              });
-                            } else {
-                              setState(() {
-                                isValidBillName = false;
-                              });
-                            }
-                          },
-                          validator: (inputValue) {
-                            if (inputValue!.isEmpty) {
-                              return "Bill Name Should Not be Empty";
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            counterStyle: TextStyle(
-                                color: billNameController.text.length <= 3
-                                    ? CLR_ERROR
-                                    : null),
-                            fillColor: const Color(0xffD1D9E8).withOpacity(0.2),
-                            filled: true,
-                            labelStyle:
-                                const TextStyle(color: Color(0xff1b438b)),
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xff1B438B)),
-                            ),
-                            focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xff1B438B)),
-                            ),
-                            border: const UnderlineInputBorder(),
-                            labelText: 'Bill Name (Nick Name)',
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
+                ],
+              )),
               SizedBox(
                 height: 80.h,
               )
@@ -336,7 +327,8 @@ class _BillParametersState extends State<BillParameters> {
         );
       }),
       bottomSheet: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
+            color: AppColors.CLR_BACKGROUND,
             border:
                 Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
         child: Padding(
@@ -350,9 +342,9 @@ class _BillParametersState extends State<BillParameters> {
                       goBack(context);
                     },
                     buttonText: "Cancel",
-                    buttonTxtColor: CLR_PRIMARY,
-                    buttonBorderColor: Colors.transparent,
-                    buttonColor: BTN_CLR_ACTIVE,
+                    buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                    buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
+                    buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER_C,
                     buttonSizeX: 10.h,
                     buttonSizeY: 40.w,
                     buttonTextSize: 14.sp,
@@ -373,13 +365,17 @@ class _BillParametersState extends State<BillParameters> {
                       //     builder: (context) => const BillerDetails()));
                     },
                     buttonText: "Confirm",
-                    buttonTxtColor: BTN_CLR_ACTIVE,
+                    buttonTxtColor: isButtonActive &&
+                            isValidBillName &&
+                            billNameController.text.length > 3
+                        ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                        : AppColors.BTN_CLR_DISABLE_TEXT,
                     buttonBorderColor: Colors.transparent,
                     buttonColor: isButtonActive &&
                             isValidBillName &&
                             billNameController.text.length > 3
-                        ? CLR_PRIMARY
-                        : Colors.grey,
+                        ? AppColors.BTN_CLR_ACTIVE_ALTER
+                        : AppColors.BTN_CLR_DISABLE,
                     buttonSizeX: 10.h,
                     buttonSizeY: 40.w,
                     buttonTextSize: 14.sp,

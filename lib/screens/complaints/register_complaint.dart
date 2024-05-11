@@ -1,12 +1,16 @@
+import 'dart:ui';
+
 import 'package:ebps/bloc/complaint/complaint_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/Home/biller_details_container.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/complaints_config_model.dart';
 import 'package:ebps/widget/bbps_logo.dart';
+import 'package:ebps/widget/custom_dialog.dart';
 import 'package:ebps/widget/get_biller_detail.dart';
 import 'package:ebps/widget/loader_overlay.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +24,7 @@ class RegisterComplaint extends StatefulWidget {
   String txnRefID;
   String BillerName;
   String CategoryName;
-  String Date;
+  dynamic Date;
   RegisterComplaint({
     super.key,
     required this.txnRefID,
@@ -71,132 +75,115 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
         context: context,
         builder: (context) {
           return WillPopScope(
-            onWillPop: () async => false,
-            child: AlertDialog(
-                // actions: [
-                //   Align(
-                //     alignment: Alignment.center,
-                //     child: MyAppButton(
-                //         onPressed: () {
-                //           goBack(context);
-                //         },
-                //         buttonText: "Okay",
-                //         buttonTxtColor: BTN_CLR_ACTIVE,
-                //         buttonBorderColor: Colors.transparent,
-                //         buttonColor: CLR_PRIMARY,
-                //         buttonSizeX: 10.h,
-                //         buttonSizeY: 40.w,
-                //         buttonTextSize: 14.sp,
-                //         buttonTextWeight: FontWeight.w500),
-                //   ),
-                // ],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                elevation: 3,
-                content: SingleChildScrollView(
-                  padding: EdgeInsets.all(0.r),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                          height: 50.h,
-                          width: 50.w,
-                          child: SvgPicture.asset(
-                              success ? ICON_SUCCESS : ICON_FAILED)),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Text(
-                        success
-                            ? "Your Complaint Has Been Registered Successfully"
-                            : ComplaintMSG.toString(),
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w700,
-                          color: CLR_PRIMARY,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      if (success)
+              onWillPop: () async => false,
+              child: CustomDialog(
+                  showActions: false,
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.all(0.r),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
                         Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 0.w, vertical: 16.h),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                              color: Color(0xffE8ECF3),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(16.0.r),
-                              child: Column(children: [
-                                Text(
-                                  "For future detail track complaint ID",
-                                  style: TextStyle(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: TXT_CLR_PRIMARY,
+                            height: 50.h,
+                            width: 50.w,
+                            child: SvgPicture.asset(
+                                success ? ICON_SUCCESS : ICON_FAILED)),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Text(
+                          success
+                              ? "Your Complaint Has Been Registered Successfully"
+                              : ComplaintMSG.toString(),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.CLR_PRIMARY,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        if (success)
+                          Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 0.w, vertical: 16.h),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(6.0.r + 2.r),
+                                color: Color(0xffE8ECF3),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(16.0.r),
+                                child: Column(children: [
+                                  Text(
+                                    "For future detail track complaint ID",
+                                    style: TextStyle(
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.TXT_CLR_PRIMARY,
+                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(
-                                  height: 10.h,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      REG_CMP_ID.toString(),
-                                      style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xff1b438b),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        REG_CMP_ID.toString(),
+                                        style: TextStyle(
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xff1b438b),
+                                        ),
+                                        textAlign: TextAlign.center,
                                       ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(
-                                      width: 5.w,
-                                    ),
-                                    GestureDetector(
-                                        onTap: () {
-                                          Clipboard.setData(ClipboardData(
-                                                  text: REG_CMP_ID.toString()))
-                                              .then((_) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                                    content: Text(
-                                                        'Complaint ID copied to clipboard')));
-                                          });
-                                        },
-                                        child: Icon(Icons.copy,
-                                            color: Color(0xff1b438b), size: 20))
-                                  ],
-                                )
-                              ]),
-                            )),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: MyAppButton(
-                            onPressed: () {
-                              goBack(context);
-                              goBack(ctx);
-                            },
-                            buttonText: "Okay",
-                            buttonTxtColor: BTN_CLR_ACTIVE,
-                            buttonBorderColor: Colors.transparent,
-                            buttonColor: CLR_PRIMARY,
-                            buttonSizeX: 10.h,
-                            buttonSizeY: 40.w,
-                            buttonTextSize: 14.sp,
-                            buttonTextWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                )),
-          );
+                                      SizedBox(
+                                        width: 5.w,
+                                      ),
+                                      GestureDetector(
+                                          onTap: () {
+                                            Clipboard.setData(ClipboardData(
+                                                    text:
+                                                        REG_CMP_ID.toString()))
+                                                .then((_) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                      content: Text(
+                                                          'Complaint ID copied to clipboard')));
+                                            });
+                                          },
+                                          child: Icon(Icons.copy,
+                                              color: Color(0xff1b438b),
+                                              size: 20))
+                                    ],
+                                  )
+                                ]),
+                              )),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: MyAppButton(
+                              onPressed: () {
+                                goBack(context);
+                                goBack(ctx);
+                              },
+                              buttonText: "Okay",
+                              buttonTxtColor:
+                                  AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
+                              buttonBorderColor: Colors.transparent,
+                              buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER,
+                              buttonSizeX: 10.h,
+                              buttonSizeY: 40.w,
+                              buttonTextSize: 14.sp,
+                              buttonTextWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  )));
         });
   }
 
@@ -204,6 +191,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
   Widget build(BuildContext context) {
     return LoaderOverlay(
       child: Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
           context: context,
           title: 'Raise a Complaint',
@@ -251,18 +239,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                      clipBehavior: Clip.hardEdge,
-                      width: double.infinity,
-                      margin: EdgeInsets.only(
-                          left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                        border: Border.all(
-                          color: Color(0xffD1D9E8),
-                          width: 1.0,
-                        ),
-                      ),
+                  ReusableContainer(
                       child: isComplaintConfigLoading
                           ? const Text("Loading")
                           : Column(
@@ -274,7 +251,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                 Container(
                                     width: double.infinity,
                                     height: 80.h,
-                                    color: Colors.white,
+                                    // color: Colors.white,
                                     child: ListView(
                                       primary: false,
                                       physics: NeverScrollableScrollPhysics(),
@@ -311,8 +288,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                                           fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.w400,
-                                                          color:
-                                                              Color(0xff808080),
+                                                          color: AppColors
+                                                              .TXT_CLR_LITE,
                                                         ),
                                                         maxLines: 3,
                                                         textAlign:
@@ -337,8 +314,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                                           fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.w500,
-                                                          color:
-                                                              Color(0xff1b438b),
+                                                          color: AppColors
+                                                              .TXT_CLR_PRIMARY,
                                                         ),
                                                         maxLines: 3,
                                                         textAlign:
@@ -375,8 +352,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                                           fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.w400,
-                                                          color:
-                                                              Color(0xff808080),
+                                                          color: AppColors
+                                                              .TXT_CLR_LITE,
                                                         ),
                                                         maxLines: 3,
                                                         textAlign:
@@ -397,8 +374,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                                             fontSize: 11.sp,
                                                             fontWeight:
                                                                 FontWeight.w500,
-                                                            color: Color(
-                                                                0xff1b438b),
+                                                            color: AppColors
+                                                                .TXT_CLR_PRIMARY,
                                                           ),
                                                           maxLines: 3,
                                                           textAlign:
@@ -414,6 +391,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 24.0.w, vertical: 16.w),
                                   child: DropdownButtonFormField<String>(
+                                    dropdownColor:
+                                        AppColors.BTN_CLR_ACTIVE_TEXT,
                                     isExpanded: true,
                                     isDense: true,
                                     decoration: InputDecoration(
@@ -422,22 +401,29 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                           Radius.circular(12.0.r),
                                         ),
                                       ),
-                                      fillColor:
-                                          Color(0xffD1D9E8).withOpacity(0.2),
-                                      enabledBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(color: CLR_GREY),
+                                      fillColor: AppColors.CLR_INPUT_FILL,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: AppColors.CLR_GREY),
                                       ),
-                                      focusedBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(color: CLR_GREY),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: AppColors.CLR_GREY),
                                       ),
                                       contentPadding: EdgeInsets.symmetric(
                                           vertical: 10.0.h, horizontal: 10.w),
                                     ),
-                                    hint: const Text('Reason'),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0.r)),
+                                    hint: Text(
+                                      'Reason',
+                                      style: TextStyle(
+                                          color: AppColors.TXT_CLR_DEFAULT),
+                                    ),
                                     onChanged: (String? newValue) {},
-                                    icon: const Icon(
+                                    icon: Icon(
                                       Icons.keyboard_arrow_down,
-                                      color: Colors.grey,
+                                      color: AppColors.CLR_GREY,
                                     ),
                                     items: complaint_reasons!.map<
                                             DropdownMenuItem<String>>(
@@ -447,7 +433,9 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                             value.cOMPLAINTREASONSID.toString(),
                                         child: Text(
                                           value.cOMPLAINTREASON.toString(),
-                                          style: TextStyle(fontSize: 12.sp),
+                                          style: TextStyle(
+                                              fontSize: 12.sp,
+                                              color: AppColors.TXT_CLR_DEFAULT),
                                         ),
                                         onTap: () {
                                           setState(() {
@@ -482,7 +470,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                     },
                                     maxLines: 3,
                                     controller: txtDescController,
-                                    cursorColor: CLR_BLUE_LITE,
+                                    cursorColor: AppColors.CLR_BLUE_LITE,
                                     maxLength: 200,
                                     decoration: InputDecoration(
                                         labelText: "Description",
@@ -492,31 +480,32 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                             Radius.circular(12.0.r),
                                           ),
                                         ),
-                                        fillColor:
-                                            Color(0xffD1D9E8).withOpacity(0.2),
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: CLR_GREY),
+                                        fillColor: AppColors.CLR_INPUT_FILL,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: AppColors.CLR_GREY),
                                         ),
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: CLR_GREY),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: AppColors.CLR_GREY),
                                         ),
+                                        counterStyle: TextStyle(
+                                            color: AppColors.TXT_CLR_DEFAULT),
                                         hintStyle: TextStyle(
                                           fontSize: 12.sp,
-                                          color: TXT_CLR_PRIMARY,
+                                          color: AppColors.TXT_CLR_PRIMARY,
                                         ),
                                         alignLabelWithHint: true,
                                         floatingLabelBehavior:
                                             FloatingLabelBehavior.always,
                                         labelStyle: TextStyle(
-                                            color: const Color(0xFF424242))),
+                                            color: AppColors.TXT_CLR_GREY)),
                                   ),
                                 ),
                               ],
                             )),
                   SizedBox(
-                    height: 50.h,
+                    height: 10.h,
                   ),
                   BbpsLogoContainer(showEquitasLogo: false),
                   SizedBox(
@@ -527,8 +516,10 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
             })),
         bottomSheet: Container(
           decoration: BoxDecoration(
-              border:
-                  Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+              color: AppColors.CLR_BACKGROUND,
+              border: Border(
+                  top: BorderSide(
+                      color: AppColors.CLR_CON_BORDER_LITE, width: 1))),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
             child: Row(
@@ -545,13 +536,17 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                         }
                       },
                       buttonText: "Submit",
-                      buttonTxtColor: BTN_CLR_ACTIVE,
+                      buttonTxtColor: cmp_reason != null &&
+                              cmp_reasonID != null &&
+                              !cmpNotValid
+                          ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                          : AppColors.BTN_CLR_DISABLE_TEXT,
                       buttonBorderColor: Colors.transparent,
                       buttonColor: cmp_reason != null &&
                               cmp_reasonID != null &&
                               !cmpNotValid
-                          ? CLR_PRIMARY
-                          : Colors.grey,
+                          ? AppColors.BTN_CLR_ACTIVE_ALTER
+                          : AppColors.BTN_CLR_DISABLE,
                       buttonSizeX: 10.h,
                       buttonSizeY: 40.w,
                       buttonTextSize: 14.sp,

@@ -14,16 +14,16 @@ Future<DateTime?> DatePicker(
       return Theme(
         data: ThemeData.light().copyWith(
           colorScheme: ColorScheme.light(
-            primary: TXT_CLR_PRIMARY,
-            onPrimary: Colors.white,
-            onSurface: TXT_CLR_PRIMARY,
+            primary: AppColors.TXT_CLR_PRIMARY,
+            onPrimary: AppColors.CLR_BACKGROUND,
+            onSurface: AppColors.TXT_CLR_PRIMARY,
           ),
           textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(
-              foregroundColor: TXT_CLR_PRIMARY,
+              foregroundColor: AppColors.TXT_CLR_PRIMARY,
             ),
           ),
-          dialogBackgroundColor: Colors.white,
+          dialogBackgroundColor: AppColors.CLR_BACKGROUND,
         ),
         child: child!,
       );

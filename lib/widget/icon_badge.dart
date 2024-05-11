@@ -1,4 +1,5 @@
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,6 +27,8 @@ class IconBadge extends StatelessWidget {
             SvgPicture.asset(
               ICON_NOTI,
               fit: BoxFit.contain,
+              colorFilter:
+                  ColorFilter.mode(AppColors.CLR_ICON, BlendMode.srcIn),
             ),
             Positioned(
               top: 20.h,

@@ -15,8 +15,15 @@ abstract class Repository {
   Future getInputSignature(id) async {}
 
   //Fetch Bill
-  Future fetchBill(validateBill, billerID, billerParams, quickPay,
-      quickPayAmount, adHocBillValidationRefKey, billName) async {}
+  Future fetchBill(
+      validateBill,
+      billerID,
+      billerParams,
+      quickPay,
+      quickPayAmount,
+      adHocBillValidationRefKey,
+      billName,
+      customerBillId) async {}
 
   //Account-info
   Future getAccountInfo(account) async {}
@@ -38,7 +45,7 @@ abstract class Repository {
       String billerID,
       String acNo,
       String billAmount,
-      int customerBillID,
+      int? customerBillID,
       String tnxRefKey,
       bool quickPay,
       dynamic inputSignature,

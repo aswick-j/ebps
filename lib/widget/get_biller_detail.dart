@@ -1,3 +1,4 @@
+import 'package:ebps/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -69,7 +70,7 @@ billerdetail(pARAMETERNAME, pARAMETERVALUE, context) {
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
-                        color: Color(0xff808080),
+                        color: AppColors.TXT_CLR_LITE,
                       ),
                       maxLines: 3,
                       textAlign: TextAlign.left,
@@ -84,7 +85,7 @@ billerdetail(pARAMETERNAME, pARAMETERVALUE, context) {
                       style: TextStyle(
                         fontSize: 13.sp,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xff1b438b),
+                        color: AppColors.TXT_CLR_PRIMARY,
                       ),
                       maxLines: 3,
                       textAlign: TextAlign.right,

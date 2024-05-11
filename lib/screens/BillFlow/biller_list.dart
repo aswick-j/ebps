@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
@@ -82,6 +83,7 @@ class _BillerListState extends State<BillerList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
           context: context,
           title: widget.name,
@@ -167,16 +169,18 @@ class _BillerListState extends State<BillerList> {
                   keyboardType: TextInputType.text,
                   textAlign: TextAlign.left,
                   controller: _searchController,
+                  style: TextStyle(color: AppColors.TXT_CLR_LITE),
                   decoration: InputDecoration(
-                    fillColor: CLR_PRIMARY_LITE.withOpacity(0.2),
+                    fillColor: AppColors.CLR_INPUT_FILL,
                     filled: true,
                     isDense: true,
+                    hintStyle: TextStyle(color: AppColors.TXT_CLR_LITE),
                     contentPadding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 0.h),
                     hintText: 'Search by Biller',
                     suffixIcon: IconButton(
                       icon: Icon(Icons.search),
                       iconSize: 25.r,
-                      color: CLR_BLUE_LITE,
+                      color: AppColors.CLR_BLUE_LITE,
                       onPressed: () => (),
                     ),
                     border: OutlineInputBorder(
@@ -201,182 +205,164 @@ class _BillerListState extends State<BillerList> {
             //   ),
             // ),
             // child:Text("")),
-            Container(
-                clipBehavior: Clip.hardEdge,
-                width: double.infinity,
-                // height: height(context) * 0.,
-                margin: EdgeInsets.only(
-                    left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                  border: Border.all(
-                    color: Color(0xffD1D9E8),
-                    width: 1.0,
-                  ),
-                ),
+            ReusableContainer(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(6.0.r),
-                          topLeft: Radius.circular(6.0.r)),
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        height: 33.0.h,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topRight,
-                            stops: const [0.001, 19],
-                            colors: [
-                              Color(0xff768EB9).withOpacity(.7),
-                              Color(0xff463A8D).withOpacity(.7),
-                            ],
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10.0.w),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(ICON_ALL_BILLER),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Text(
-                                "All Billers",
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xffffffff),
-                                ),
-                                textAlign: TextAlign.left,
-                              )
-                            ],
-                          ),
-                        ),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(6.0.r),
+                      topLeft: Radius.circular(6.0.r)),
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    height: 33.0.h,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        stops: const [0.001, 19],
+                        colors: [
+                          AppColors.CLR_GRD_1.withOpacity(.7),
+                          AppColors.CLR_GRD_2.withOpacity(.7),
+                        ],
                       ),
                     ),
-                    SizedBox(height: 10.h),
-                    if (isBillSerachLoading || isAllBiller)
-                      Center(
-                        child: Container(
-                          height: 500.h,
-                          child: FlickrLoader(),
-                        ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0.w),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(ICON_ALL_BILLER),
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          Text(
+                            "All Billers",
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xffffffff),
+                            ),
+                            textAlign: TextAlign.left,
+                          )
+                        ],
                       ),
-                    if (_searchController.text.isEmpty && Allbiller!.isEmpty)
-                      Container(
-                        height: 500.h,
-                        child: NoDataFound(
-                          message: "No Billers Found",
-                        ),
-                      ),
-                    if (_searchController.text.isNotEmpty &&
-                        BillerSearchResults!.isEmpty)
-                      Container(
-                        height: 500.h,
-                        child: NoDataFound(
-                          showRichText: true,
-                          message1: _searchController.text,
-                          message2:
-                              "Try checking for typos or using complete words.",
-                          message: "No Billers Found for ",
-                        ),
-                      ),
-                    if ((!isAllBiller && Allbiller!.isNotEmpty) ||
-                        (!isBillSerachLoading &&
-                            BillerSearchResults!.isNotEmpty))
-                      Container(
-                        height: 480.h,
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: _searchController.text.isEmpty
-                              ? Allbiller!.length + (MoreLoading ? 1 : 0)
-                              : BillerSearchResults!.length +
-                                  (MoreLoading ? 1 : 0),
-                          physics: const PageScrollPhysics(),
-                          controller: infiniteScrollController,
-                          itemBuilder: (context, index) {
-                            if (_searchController.text.isEmpty
-                                ? index < Allbiller!.length
-                                : index < BillerSearchResults!.length) {
-                              return GestureDetector(
-                                onTap: () {
-                                  if (_searchController.text.isEmpty
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10.h),
+                if (isBillSerachLoading || isAllBiller)
+                  Center(
+                    child: Container(
+                      height: 500.h,
+                      child: FlickrLoader(),
+                    ),
+                  ),
+                if (_searchController.text.isEmpty && Allbiller!.isEmpty)
+                  Container(
+                    height: 500.h,
+                    child: NoDataFound(
+                      message: "No Billers Found",
+                    ),
+                  ),
+                if (_searchController.text.isNotEmpty &&
+                    BillerSearchResults!.isEmpty)
+                  Container(
+                    height: 500.h,
+                    child: NoDataFound(
+                      showRichText: true,
+                      message1: _searchController.text,
+                      message2:
+                          "Try checking for typos or using complete words.",
+                      message: "No Billers Found for ",
+                    ),
+                  ),
+                if ((!isAllBiller && Allbiller!.isNotEmpty) ||
+                    (!isBillSerachLoading && BillerSearchResults!.isNotEmpty))
+                  Container(
+                    height: 480.h,
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: _searchController.text.isEmpty
+                          ? Allbiller!.length + (MoreLoading ? 1 : 0)
+                          : BillerSearchResults!.length + (MoreLoading ? 1 : 0),
+                      physics: const PageScrollPhysics(),
+                      controller: infiniteScrollController,
+                      itemBuilder: (context, index) {
+                        if (_searchController.text.isEmpty
+                            ? index < Allbiller!.length
+                            : index < BillerSearchResults!.length) {
+                          return GestureDetector(
+                            onTap: () {
+                              if (_searchController.text.isEmpty
+                                  ? Allbiller![index]
+                                          .cATEGORYNAME!
+                                          .toLowerCase() ==
+                                      "mobile prepaid"
+                                  : BillerSearchResults![index]
+                                          .cATEGORYNAME!
+                                          .toLowerCase() ==
+                                      "mobile prepaid") {
+                                goToData(context, pREPAIDBILLERPARAMROUTE, {
+                                  "BILLER_DATA": _searchController.text.isEmpty
                                       ? Allbiller![index]
-                                              .cATEGORYNAME!
-                                              .toLowerCase() ==
-                                          "mobile prepaid"
+                                      : BillerSearchResults![index],
+                                  "BILLER_INPUT_SIGN": []
+                                });
+                              } else {
+                                goToData(context, bILLERPARAMROUTE, {
+                                  "BILLER_DATA": _searchController.text.isEmpty
+                                      ? Allbiller![index]
+                                      : BillerSearchResults![index],
+                                  "BILLER_INPUT_SIGN": []
+                                });
+                              }
+                            },
+                            child: ListTile(
+                                contentPadding: EdgeInsets.only(
+                                    left: 6.w, right: 6.w, top: 0),
+                                leading: Container(
+                                  width: 45.w,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(13.r),
+                                    child: SvgPicture.asset(BILLER_LOGO(
+                                        _searchController.text.isEmpty
+                                            ? Allbiller![index]
+                                                .bILLERNAME
+                                                .toString()
+                                            : BillerSearchResults![index]
+                                                .bILLERNAME
+                                                .toString())),
+                                  ),
+                                ),
+                                title: Text(
+                                  _searchController.text.isEmpty
+                                      ? Allbiller![index].bILLERNAME.toString()
                                       : BillerSearchResults![index]
-                                              .cATEGORYNAME!
-                                              .toLowerCase() ==
-                                          "mobile prepaid") {
-                                    goToData(context, pREPAIDBILLERPARAMROUTE, {
-                                      "BILLER_DATA":
-                                          _searchController.text.isEmpty
-                                              ? Allbiller![index]
-                                              : BillerSearchResults![index],
-                                      "BILLER_INPUT_SIGN": []
-                                    });
-                                  } else {
-                                    goToData(context, bILLERPARAMROUTE, {
-                                      "BILLER_DATA":
-                                          _searchController.text.isEmpty
-                                              ? Allbiller![index]
-                                              : BillerSearchResults![index],
-                                      "BILLER_INPUT_SIGN": []
-                                    });
-                                  }
-                                },
-                                child: ListTile(
-                                    contentPadding: EdgeInsets.only(
-                                        left: 6.w, right: 6.w, top: 0),
-                                    leading: Container(
-                                      width: 45.w,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(13.r),
-                                        child: SvgPicture.asset(BILLER_LOGO(
-                                            _searchController.text.isEmpty
-                                                ? Allbiller![index]
-                                                    .bILLERNAME
-                                                    .toString()
-                                                : BillerSearchResults![index]
-                                                    .bILLERNAME
-                                                    .toString())),
-                                      ),
-                                    ),
-                                    title: Text(
-                                      _searchController.text.isEmpty
-                                          ? Allbiller![index]
-                                              .bILLERNAME
-                                              .toString()
-                                          : BillerSearchResults![index]
-                                              .bILLERNAME
-                                              .toString(),
-                                      // "Airtel Digital TV",
-                                      style: TextStyle(
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff4c4c4c),
-                                      ),
-                                      textAlign: TextAlign.left,
-                                    )),
-                              );
-                            } else {
-                              Timer(Duration(milliseconds: 30), () {
-                                infiniteScrollController.jumpTo(
-                                    infiniteScrollController
-                                        .position.maxScrollExtent);
-                              });
+                                          .bILLERNAME
+                                          .toString(),
+                                  // "Airtel Digital TV",
+                                  style: TextStyle(
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.TXT_CLR_GREY,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                )),
+                          );
+                        } else {
+                          Timer(Duration(milliseconds: 30), () {
+                            infiniteScrollController.jumpTo(
+                                infiniteScrollController
+                                    .position.maxScrollExtent);
+                          });
 
-                              return FlickrLoader();
-                            }
-                          },
-                        ),
-                      ),
-                  ],
-                ))
+                          return FlickrLoader();
+                        }
+                      },
+                    ),
+                  ),
+              ],
+            ))
           ]);
         }));
   }

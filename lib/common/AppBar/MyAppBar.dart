@@ -18,18 +18,19 @@ MyAppBar(
         ? title
         : MyAppText(
             data: title,
-            color: CLR_PRIMARY,
+            color: AppColors.CLR_PRIMARY,
             weight: FontWeight.bold,
-            maxline: 1),
+            maxline: 1,
+            size: null),
     toolbarHeight: 62.0.h,
-    backgroundColor: Colors.white,
+    backgroundColor: AppColors.CLR_BACKGROUND,
     elevation: 0.0,
     leading: IconButton(
       onPressed: onLeadingTap ?? () => Navigator.pop(context),
       icon: Icon(
         Icons.arrow_back,
         size: 30.46.r,
-        color: CLR_GREY,
+        color: AppColors.CLR_GREY,
       ),
     ),
     actions: showActions ? actions : null,

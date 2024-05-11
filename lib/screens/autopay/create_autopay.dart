@@ -2,6 +2,7 @@ import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
@@ -104,6 +105,7 @@ class _createAutopayState extends State<createAutopay> {
   Widget build(BuildContext context) {
     return LoaderOverlay(
       child: Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
             context: context,
             title: "Setup Autopay",
@@ -113,7 +115,7 @@ class _createAutopayState extends State<createAutopay> {
               Tooltip(
                 textStyle: TextStyle(color: Colors.white),
                 decoration: BoxDecoration(
-                    color: CLR_BLUE_LITE,
+                    color: AppColors.CLR_BLUE_LITE,
                     borderRadius: BorderRadius.circular(8.0.r)),
                 triggerMode: TooltipTriggerMode.tap,
                 showDuration: Duration(milliseconds: 20000),
@@ -125,7 +127,7 @@ class _createAutopayState extends State<createAutopay> {
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(
                     Icons.info_outline,
-                    color: CLR_PRIMARY,
+                    color: AppColors.CLR_ICON,
                   ),
                 ),
               ),
@@ -211,39 +213,38 @@ class _createAutopayState extends State<createAutopay> {
                           ),
                         )
                       : Column(children: [
-                          Container(
-                              clipBehavior: Clip.hardEdge,
-                              width: double.infinity,
-                              margin: EdgeInsets.only(
-                                  left: 18.0.w,
-                                  right: 18.w,
-                                  top: 10.h,
-                                  bottom: 15.h),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(6.0.r + 2.r),
-                                border: Border.all(
-                                  color: Color(0xffD1D9E8),
-                                  width: 1.0,
-                                ),
-                              ),
+                          ReusableContainer(
+                              bottomMargin: 15.h,
                               child: Column(
                                 children: [
                                   ListTile(
                                     leading: Container(
-                                      width: 50.w,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0.r),
-                                        child: SvgPicture.asset(BILLER_LOGO(
-                                            widget.billerName.toString())),
-                                      ),
+                                      height: 40.h,
+                                      padding: EdgeInsets.all(9.r),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(80.r),
+                                          gradient: LinearGradient(
+                                              begin: Alignment.bottomRight,
+                                              stops: [
+                                                0.1,
+                                                0.9
+                                              ],
+                                              colors: [
+                                                AppColors.CLR_BLUE_LITE
+                                                    .withOpacity(.16),
+                                                Colors.transparent
+                                              ])),
+                                      width: 45.w,
+                                      child: SvgPicture.asset(BILLER_LOGO(
+                                          widget.billerName.toString())),
                                     ),
                                     title: Text(
                                       widget.billerName,
                                       style: TextStyle(
                                         fontSize: 13.sp,
                                         fontWeight: FontWeight.w500,
-                                        color: Color(0xff191919),
+                                        color: AppColors.TXT_CLR_BLACK_W,
                                       ),
                                       textAlign: TextAlign.left,
                                       maxLines: 1,
@@ -254,16 +255,15 @@ class _createAutopayState extends State<createAutopay> {
                                       style: TextStyle(
                                         fontSize: 13.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: Color(0xff808080),
+                                        color: AppColors.TXT_CLR_LITE,
                                       ),
                                       textAlign: TextAlign.left,
                                     ),
                                   ),
                                   Divider(
+                                    color: AppColors.CLR_CON_BORDER,
                                     height: 10.h,
-                                    thickness: 1,
-                                    indent: 10.w,
-                                    endIndent: 10.w,
+                                    thickness: 0.5,
                                   ),
                                   billerdetail(
                                       widget.savedBillersdata!.pARAMETERS![0]
@@ -310,14 +310,14 @@ class _createAutopayState extends State<createAutopay> {
                                     "Maximum Limit for Auto Payment: ",
                                     style: TextStyle(
                                         fontSize: 11.sp,
-                                        color: TXT_CLR_DEFAULT,
+                                        color: AppColors.TXT_CLR_DEFAULT,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
                                     "₹ ${NumberFormat('#,##,##0.00').format(double.parse(maximumAmount.toString()))}",
                                     style: TextStyle(
                                         fontSize: 11.sp,
-                                        color: CLR_GREEN,
+                                        color: AppColors.CLR_GREEN,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ],
@@ -339,22 +339,8 @@ class _createAutopayState extends State<createAutopay> {
                           //     ),
                           //   ),
                           // ),
-                          Container(
-                              clipBehavior: Clip.hardEdge,
-                              width: double.infinity,
-                              margin: EdgeInsets.only(
-                                  left: 18.0.w,
-                                  right: 18.w,
-                                  top: 5.h,
-                                  bottom: 10.h),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(6.0.r + 2.r),
-                                border: Border.all(
-                                  color: Color(0xffD1D9E8),
-                                  width: 1.0,
-                                ),
-                              ),
+                          ReusableContainer(
+                              topMargin: 5.h,
                               child: Column(
                                 children: [
                                   Row(
@@ -371,15 +357,28 @@ class _createAutopayState extends State<createAutopay> {
                                               maxAmountError = false;
                                             });
                                           },
-                                          activeColor: TXT_CLR_PRIMARY,
+                                          activeColor:
+                                              AppColors.TXT_CLR_PRIMARY,
                                           controlAffinity:
                                               ListTileControlAffinity.trailing,
+                                          fillColor:
+                                              MaterialStateProperty.resolveWith(
+                                            (states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return AppColors
+                                                    .TXT_CLR_PRIMARY;
+                                              }
+                                              return AppColors.TXT_CLR_LITE;
+                                            },
+                                          ),
                                           title: Text(
                                             "Default Limit",
                                             style: TextStyle(
                                               fontSize: 12.sp,
                                               fontWeight: FontWeight.w500,
-                                              color: Color(0xff313131),
+                                              color:
+                                                  AppColors.TXT_CLR_SECONDARY,
                                             ),
                                             textAlign: TextAlign.center,
                                           ),
@@ -389,7 +388,19 @@ class _createAutopayState extends State<createAutopay> {
                                         child: RadioListTile(
                                           value: 0,
                                           groupValue: limitGroupRadio,
-                                          activeColor: TXT_CLR_PRIMARY,
+                                          activeColor:
+                                              AppColors.TXT_CLR_PRIMARY,
+                                          fillColor:
+                                              MaterialStateProperty.resolveWith(
+                                            (states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return AppColors
+                                                    .TXT_CLR_PRIMARY;
+                                              }
+                                              return AppColors.TXT_CLR_LITE;
+                                            },
+                                          ),
                                           onChanged: (val) {
                                             MaxiFocusNode.requestFocus();
 
@@ -426,7 +437,8 @@ class _createAutopayState extends State<createAutopay> {
                                             style: TextStyle(
                                               fontSize: 12.sp,
                                               fontWeight: FontWeight.w500,
-                                              color: Color(0xff313131),
+                                              color:
+                                                  AppColors.TXT_CLR_SECONDARY,
                                             ),
                                             textAlign: TextAlign.center,
                                           ),
@@ -448,8 +460,8 @@ class _createAutopayState extends State<createAutopay> {
                                       enableSuggestions: false,
                                       style: TextStyle(
                                           color: limitGroupRadio == 1
-                                              ? TXT_CLR_LITE
-                                              : null),
+                                              ? AppColors.TXT_CLR_LITE
+                                              : AppColors.TXT_CLR_BLACK),
                                       keyboardType: TextInputType.number,
                                       inputFormatters: [
                                         LengthLimitingTextInputFormatter(6),
@@ -502,23 +514,30 @@ class _createAutopayState extends State<createAutopay> {
                                         }
                                       },
                                       decoration: InputDecoration(
-                                          fillColor: const Color(0xffD1D9E8)
-                                              .withOpacity(0.2),
+                                          fillColor: limitGroupRadio == 0
+                                              ? AppColors.CLR_INPUT_FILL
+                                              : AppColors.TXT_CLR_GREY
+                                                  .withOpacity(0.2),
                                           filled: true,
+                                          prefixStyle: TextStyle(
+                                              color: AppColors.TXT_CLR_DEFAULT),
                                           labelStyle: TextStyle(
                                               color: limitGroupRadio == 1
-                                                  ? TXT_CLR_LITE
-                                                  : TXT_CLR_PRIMARY),
+                                                  ? AppColors.TXT_CLR_LITE
+                                                  : AppColors.TXT_CLR_PRIMARY),
                                           enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
                                                 color: limitGroupRadio == 1
-                                                    ? TXT_CLR_LITE
-                                                    : TXT_CLR_PRIMARY),
+                                                    ? AppColors.TXT_CLR_LITE
+                                                    : AppColors
+                                                        .TXT_CLR_PRIMARY),
                                           ),
-                                          focusedBorder:
-                                              const UnderlineInputBorder(
+                                          focusedBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Color(0xff1B438B)),
+                                                color: limitGroupRadio == 1
+                                                    ? AppColors.TXT_CLR_LITE
+                                                    : AppColors
+                                                        .TXT_CLR_PRIMARY),
                                           ),
                                           border: const UnderlineInputBorder(),
                                           labelText: limitGroupRadio == 1
@@ -540,7 +559,7 @@ class _createAutopayState extends State<createAutopay> {
                                             style: TextStyle(
                                               fontSize: 12.sp,
                                               fontWeight: FontWeight.w600,
-                                              color: CLR_ERROR,
+                                              color: AppColors.CLR_ERROR,
                                             ),
                                           ),
                                         ),
@@ -560,7 +579,7 @@ class _createAutopayState extends State<createAutopay> {
                                             style: TextStyle(
                                               fontSize: 12.sp,
                                               fontWeight: FontWeight.w600,
-                                              color: CLR_ERROR,
+                                              color: AppColors.CLR_ERROR,
                                             ),
                                           ),
                                         ),
@@ -576,7 +595,7 @@ class _createAutopayState extends State<createAutopay> {
                                             style: TextStyle(
                                               fontSize: 12.sp,
                                               fontWeight: FontWeight.w600,
-                                              color: CLR_ORANGE,
+                                              color: AppColors.CLR_ORANGE,
                                             ),
                                           ),
                                         ),
@@ -611,7 +630,9 @@ class _createAutopayState extends State<createAutopay> {
                                       //   FilteringTextInputFormatter.allow(
                                       //       RegExp(r'^[a-z0-9A-Z ]*'))
                                       // ],
-                                      style: TextStyle(fontSize: 13.sp),
+                                      style: TextStyle(
+                                          fontSize: 13.sp,
+                                          color: AppColors.TXT_CLR_BLACK),
 
                                       onChanged: (val) {},
                                       onTap: () {
@@ -634,21 +655,20 @@ class _createAutopayState extends State<createAutopay> {
                                       },
                                       validator: (inputValue) {},
                                       decoration: InputDecoration(
-                                          fillColor: const Color(0xffD1D9E8)
-                                              .withOpacity(0.2),
+                                          fillColor: AppColors.CLR_INPUT_FILL,
                                           filled: true,
                                           labelStyle: TextStyle(
                                               fontSize: 15.sp,
-                                              color: Color(0xff1b438b)),
-                                          enabledBorder:
-                                              const UnderlineInputBorder(
+                                              color: AppColors.TXT_CLR_PRIMARY),
+                                          enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Color(0xff1B438B)),
+                                                color:
+                                                    AppColors.TXT_CLR_PRIMARY),
                                           ),
-                                          focusedBorder:
-                                              const UnderlineInputBorder(
+                                          focusedBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Color(0xff1B438B)),
+                                                color:
+                                                    AppColors.TXT_CLR_PRIMARY),
                                           ),
                                           border: const UnderlineInputBorder(),
                                           labelText: 'Date of Payment',
@@ -666,7 +686,7 @@ class _createAutopayState extends State<createAutopay> {
                                         style: TextStyle(
                                           fontSize: 10.sp,
                                           fontWeight: FontWeight.w400,
-                                          color: Color(0xff808080),
+                                          color: AppColors.TXT_CLR_LITE,
                                         ),
                                         textAlign: TextAlign.left,
                                       ),
@@ -681,7 +701,7 @@ class _createAutopayState extends State<createAutopay> {
                                         style: TextStyle(
                                           fontSize: 10.sp,
                                           fontWeight: FontWeight.w600,
-                                          color: CLR_ERROR,
+                                          color: AppColors.CLR_ERROR,
                                         ),
                                       ),
                                     ),
@@ -689,41 +709,45 @@ class _createAutopayState extends State<createAutopay> {
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 16.w, vertical: 16.h),
                                     child: DropdownButtonFormField<String>(
+                                      dropdownColor:
+                                          AppColors.BTN_CLR_ACTIVE_TEXT,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0.r)),
+
                                       isExpanded: true,
                                       isDense: true,
                                       value: activatesFrom,
                                       decoration: InputDecoration(
                                         border: const UnderlineInputBorder(),
                                         filled: true,
-                                        fillColor:
-                                            Color(0xffD1D9E8).withOpacity(0.2),
-                                        enabledBorder:
-                                            const UnderlineInputBorder(
+                                        fillColor: AppColors.CLR_INPUT_FILL,
+                                        enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
-                                              color: Color(0xff1B438B)),
+                                              color: AppColors.TXT_CLR_PRIMARY),
                                         ),
-                                        focusedBorder:
-                                            const UnderlineInputBorder(
+                                        focusedBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
-                                              color: Color(0xff1B438B)),
+                                              color: AppColors.TXT_CLR_PRIMARY),
                                         ),
                                         contentPadding: EdgeInsets.symmetric(
                                             vertical: 10.0.h, horizontal: 10.w),
                                         labelText:
                                             'Changes To Be Reflected From',
-                                        labelStyle: const TextStyle(
-                                            color: Color(0xff1b438b)),
+                                        labelStyle: TextStyle(
+                                            color: AppColors.TXT_CLR_PRIMARY),
                                         hintText:
                                             'Changes To Be Reflected From',
-                                        hintStyle: const TextStyle(
-                                            color: Color(0xff1b438b)),
+                                        hintStyle: TextStyle(
+                                            color: AppColors.TXT_CLR_PRIMARY),
                                       ),
                                       // hint: Text('Changes To Be Reflected From'),
                                       onChanged: (String? newValue) {},
-                                      icon: const Icon(
+                                      icon: Icon(
                                         Icons.keyboard_arrow_down,
-                                        color: Colors.grey,
+                                        color: AppColors.CLR_GREY,
                                       ),
+                                      // style: TextStyle(
+                                      //     color: AppColors.TXT_CLR_DEFAULT),
                                       items: [
                                         'Immediately',
                                         getMonthName(billPayGroupRadio)[0]!,
@@ -733,6 +757,10 @@ class _createAutopayState extends State<createAutopay> {
                                           value: value,
                                           child: Text(
                                             value,
+                                            style: TextStyle(
+                                                fontSize: 12.sp,
+                                                color:
+                                                    AppColors.TXT_CLR_DEFAULT),
                                           ),
                                           onTap: () {
                                             setState(() {
@@ -753,7 +781,7 @@ class _createAutopayState extends State<createAutopay> {
                                         style: TextStyle(
                                           fontSize: 13.sp,
                                           fontWeight: FontWeight.w400,
-                                          color: Color(0xff808080),
+                                          color: AppColors.TXT_CLR_LITE,
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
@@ -765,7 +793,19 @@ class _createAutopayState extends State<createAutopay> {
                                         child: RadioListTile(
                                           value: 0,
                                           groupValue: billPayGroupRadio,
-                                          activeColor: TXT_CLR_PRIMARY,
+                                          activeColor:
+                                              AppColors.TXT_CLR_PRIMARY,
+                                          fillColor:
+                                              MaterialStateProperty.resolveWith(
+                                            (states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return AppColors
+                                                    .TXT_CLR_PRIMARY;
+                                              }
+                                              return AppColors.TXT_CLR_LITE;
+                                            },
+                                          ),
                                           onChanged: (val) {
                                             setState(() {
                                               billPayGroupRadio = 0;
@@ -779,7 +819,8 @@ class _createAutopayState extends State<createAutopay> {
                                             style: TextStyle(
                                               fontSize: 12.sp,
                                               fontWeight: FontWeight.w500,
-                                              color: Color(0xff313131),
+                                              color:
+                                                  AppColors.TXT_CLR_SECONDARY,
                                             ),
                                             textAlign: TextAlign.center,
                                           ),
@@ -795,7 +836,19 @@ class _createAutopayState extends State<createAutopay> {
                                               activatesFrom = "Immediately";
                                             });
                                           },
-                                          activeColor: TXT_CLR_PRIMARY,
+                                          activeColor:
+                                              AppColors.TXT_CLR_PRIMARY,
+                                          fillColor:
+                                              MaterialStateProperty.resolveWith(
+                                            (states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return AppColors
+                                                    .TXT_CLR_PRIMARY;
+                                              }
+                                              return AppColors.TXT_CLR_LITE;
+                                            },
+                                          ),
                                           controlAffinity:
                                               ListTileControlAffinity.trailing,
                                           title: Text(
@@ -803,7 +856,8 @@ class _createAutopayState extends State<createAutopay> {
                                             style: TextStyle(
                                               fontSize: 12.sp,
                                               fontWeight: FontWeight.w500,
-                                              color: Color(0xff313131),
+                                              color:
+                                                  AppColors.TXT_CLR_SECONDARY,
                                             ),
                                             textAlign: TextAlign.center,
                                           ),
@@ -819,7 +873,7 @@ class _createAutopayState extends State<createAutopay> {
                                       style: TextStyle(
                                         fontSize: 10.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: Color(0xff808080),
+                                        color: AppColors.TXT_CLR_LITE,
                                       ),
                                       textAlign: TextAlign.left,
                                     ),
@@ -829,147 +883,131 @@ class _createAutopayState extends State<createAutopay> {
                                   )
                                 ],
                               )),
-                          Container(
-                              clipBehavior: Clip.hardEdge,
-                              width: double.infinity,
-                              margin: EdgeInsets.only(
-                                  left: 18.0.w,
-                                  right: 18.w,
-                                  top: 5.h,
-                                  bottom: 10.h),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(6.0.r + 2.r),
-                                border: Border.all(
-                                  color: Color(0xffD1D9E8),
-                                  width: 1.0,
+                          ReusableContainer(
+                              child: Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 18.0.w,
+                                    right: 18.w,
+                                    top: 18.h,
+                                    bottom: 0.h),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Select Account Number",
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.TXT_CLR_PRIMARY,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    GestureDetector(
+                                      child: SvgPicture.asset(ICON_REFRESH),
+                                      onTap: () {
+                                        setState(() {
+                                          selectedAcc = null;
+                                          accError = false;
+                                        });
+                                        BlocProvider.of<HomeCubit>(context)
+                                            .getAccountInfo(myAccounts);
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 18.0.w,
-                                        right: 18.w,
-                                        top: 18.h,
-                                        bottom: 0.h),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Select Account Number",
-                                          style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: Color(0xff1b438b),
+                              if (isAccLoading)
+                                Center(
+                                  child: Container(
+                                    height: 100.h,
+                                    child: FlickrLoader(),
+                                  ),
+                                ),
+                              if (!isAccLoading)
+                                Container(
+                                  width: double.infinity,
+                                  // color: Colors.white,
+                                  child: myAccounts!.isNotEmpty
+                                      ? GridView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: accountInfo!.length,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            // itemCount: accountInfo!.length,
+                                            childAspectRatio: 5 / 3.1,
+                                            mainAxisSpacing: 10.0,
                                           ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        GestureDetector(
-                                          child: SvgPicture.asset(ICON_REFRESH),
-                                          onTap: () {
-                                            setState(() {
-                                              selectedAcc = null;
-                                              accError = false;
-                                            });
-                                            BlocProvider.of<HomeCubit>(context)
-                                                .getAccountInfo(myAccounts);
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  if (isAccLoading)
-                                    Center(
-                                      child: Container(
-                                        height: 100.h,
-                                        child: FlickrLoader(),
-                                      ),
-                                    ),
-                                  if (!isAccLoading)
-                                    Container(
-                                      width: double.infinity,
-                                      color: Colors.white,
-                                      child: myAccounts!.isNotEmpty
-                                          ? GridView.builder(
-                                              shrinkWrap: true,
-                                              itemCount: accountInfo!.length,
-                                              physics:
-                                                  NeverScrollableScrollPhysics(),
-                                              gridDelegate:
-                                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2,
-                                                // itemCount: accountInfo!.length,
-                                                childAspectRatio: 5 / 3.1,
-                                                mainAxisSpacing: 10.0,
-                                              ),
-                                              itemBuilder: (context, index) {
-                                                return AccountInfoCard(
-                                                  showAccDetails: true,
-                                                  accountNumber:
-                                                      accountInfo![index]
-                                                          .accountNumber
-                                                          .toString(),
-                                                  balance: accountInfo![index]
-                                                      .balance,
-                                                  onAccSelected: (Date) {
-                                                    setState(() {
-                                                      selectedAcc = index;
-                                                    });
-                                                    // if (accountInfo![index].balance ==
-                                                    //     "Unable to fetch balance") {
-                                                    //   setState(() {
-                                                    //     accError = true;
-                                                    //   });
-                                                    // } else {
-                                                    //   setState(() {
-                                                    //     accError = false;
-                                                    //   });
-                                                    // }
-                                                  },
-                                                  index: index,
-                                                  AccErr: accError,
-                                                  isSelected: selectedAcc,
-                                                );
+                                          itemBuilder: (context, index) {
+                                            return AccountInfoCard(
+                                              showAccDetails: true,
+                                              accountNumber: accountInfo![index]
+                                                  .accountNumber
+                                                  .toString(),
+                                              balance:
+                                                  accountInfo![index].balance,
+                                              onAccSelected: (Date) {
+                                                setState(() {
+                                                  selectedAcc = index;
+                                                });
+                                                // if (accountInfo![index].balance ==
+                                                //     "Unable to fetch balance") {
+                                                //   setState(() {
+                                                //     accError = true;
+                                                //   });
+                                                // } else {
+                                                //   setState(() {
+                                                //     accError = false;
+                                                //   });
+                                                // }
                                               },
-                                            )
-                                          : SizedBox(
-                                              height: 60.h,
-                                              child: Center(
-                                                child: Text(
-                                                  "No Accounts Available",
-                                                  style: TextStyle(
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: CLR_GREY,
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
+                                              index: index,
+                                              AccErr: accError,
+                                              isSelected: selectedAcc,
+                                            );
+                                          },
+                                        )
+                                      : SizedBox(
+                                          height: 60.h,
+                                          child: Center(
+                                            child: Text(
+                                              "No Accounts Available",
+                                              style: TextStyle(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.CLR_GREY,
                                               ),
+                                              textAlign: TextAlign.center,
                                             ),
-                                    ),
-                                  // if (accError)
-                                  //   Padding(
-                                  //     padding: EdgeInsets.only(
-                                  //         left: 20.w, top: 10.h, right: 20.w),
-                                  //     child: Align(
-                                  //       alignment: Alignment.centerLeft,
-                                  //       child: Text(
-                                  //         'Insufficient balance in the account',
-                                  //         style: TextStyle(
-                                  //           fontSize: 12.sp,
-                                  //           fontWeight: FontWeight.w600,
-                                  //           color: CLR_ERROR,
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                ],
-                              )),
+                                          ),
+                                        ),
+                                ),
+                              // if (accError)
+                              //   Padding(
+                              //     padding: EdgeInsets.only(
+                              //         left: 20.w, top: 10.h, right: 20.w),
+                              //     child: Align(
+                              //       alignment: Alignment.centerLeft,
+                              //       child: Text(
+                              //         'Insufficient balance in the account',
+                              //         style: TextStyle(
+                              //           fontSize: 12.sp,
+                              //           fontWeight: FontWeight.w600,
+                              //           color: CLR_ERROR,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                            ],
+                          )),
                           Padding(
                             padding: EdgeInsets.only(
                                 left: 20.w, top: 10.h, right: 20.w),
@@ -977,13 +1015,13 @@ class _createAutopayState extends State<createAutopay> {
                               text: TextSpan(
                                 style: TextStyle(
                                   fontSize: 14.0.sp,
-                                  color: Colors.black,
+                                  color: AppColors.TXT_CLR_DEFAULT,
                                 ),
                                 children: <TextSpan>[
                                   TextSpan(
                                       style: TextStyle(
                                           fontSize: 11.sp,
-                                          color: TXT_CLR_DEFAULT,
+                                          color: AppColors.TXT_CLR_DEFAULT,
                                           fontWeight: FontWeight.w500),
                                       text:
                                           "By continuing, you agree to accept our "),
@@ -998,7 +1036,7 @@ class _createAutopayState extends State<createAutopay> {
                                       },
                                     style: TextStyle(
                                         decoration: TextDecoration.underline,
-                                        color: TXT_CLR_PRIMARY,
+                                        color: AppColors.TXT_CLR_PRIMARY,
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w700),
                                   ),
@@ -1034,8 +1072,8 @@ class _createAutopayState extends State<createAutopay> {
                         // ),
                         borderRadius: BorderRadius.circular(6.0.r + 2.r),
                         border: Border.all(
-                          color: Color(0xffD1D9E8),
-                          width: 1.0,
+                          color: AppColors.CLR_CON_BORDER,
+                          width: 0.50,
                         ),
                       ),
                       child: Center(
@@ -1053,9 +1091,11 @@ class _createAutopayState extends State<createAutopay> {
         ),
         bottomSheet: !isCreateAutopayPageError
             ? Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
+                    color: AppColors.CLR_BACKGROUND,
                     border: Border(
-                        top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+                        top: BorderSide(
+                            color: AppColors.CLR_CON_BORDER_LITE, width: 1))),
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
@@ -1068,9 +1108,10 @@ class _createAutopayState extends State<createAutopay> {
                               goBack(context);
                             },
                             buttonText: "Cancel",
-                            buttonTxtColor: CLR_PRIMARY,
-                            buttonBorderColor: Colors.transparent,
-                            buttonColor: BTN_CLR_ACTIVE,
+                            buttonTxtColor:
+                                AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
+                            buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
+                            buttonColor: AppColors.BTN_CLR_ACTIVE_ALTER_C,
                             buttonSizeX: 10.h,
                             buttonSizeY: 40.w,
                             buttonTextSize: 14.sp,
@@ -1130,7 +1171,18 @@ class _createAutopayState extends State<createAutopay> {
                               }
                             },
                             buttonText: "Create",
-                            buttonTxtColor: BTN_CLR_ACTIVE,
+                            buttonTxtColor: selectedAcc != null &&
+                                    !isMaxAmountEmpty &&
+                                    !((double.parse(
+                                            maxAmountController.text.length > 0
+                                                ? maxAmountController.text
+                                                : "0".toString()) >
+                                        double.parse(
+                                            maximumAmount.toString()))) &&
+                                    !(selectedDate == todayDate &&
+                                        activatesFrom == "Immediately")
+                                ? AppColors.BTN_CLR_ACTIVE_ALTER_TEXT
+                                : AppColors.BTN_CLR_DISABLE_TEXT,
                             buttonBorderColor: Colors.transparent,
                             buttonColor: selectedAcc != null &&
                                     !isMaxAmountEmpty &&
@@ -1142,8 +1194,8 @@ class _createAutopayState extends State<createAutopay> {
                                             maximumAmount.toString()))) &&
                                     !(selectedDate == todayDate &&
                                         activatesFrom == "Immediately")
-                                ? CLR_PRIMARY
-                                : Colors.grey,
+                                ? AppColors.BTN_CLR_ACTIVE_ALTER
+                                : AppColors.BTN_CLR_DISABLE,
                             buttonSizeX: 10.h,
                             buttonSizeY: 40.w,
                             buttonTextSize: 14.sp,

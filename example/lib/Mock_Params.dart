@@ -961,3 +961,38 @@ var p21 = {
         "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
   }
 };
+
+//VIGNESH UAT BRO YETHI
+var p22 = {
+  "redirectionRequest": {
+    "msgBdy": {
+      "data": {
+        "accounts": [
+          {
+            "avlBal": "84533",
+            "entityType": "I",
+            "acctTp": "SA",
+            "crntSts": "8",
+            "acctId": "100048432818",
+            "custRltnsp": "SOW",
+            "prdNm": "1005-RegularSavings",
+            "crntStsDesc": "ACCOUNTOPENREGULAR"
+          },
+        ],
+        "otpPreference": "SMS",
+        "customer": {
+          "gndr": "M",
+          "mblNb": "918870664918",
+          "dob": "1981-08-08",
+          "custId": "13978233",
+          "emailId": "a_srirenganathan@equitasbank.com"
+        }
+      },
+      "service": "bbps",
+      "IPAddress": "1.1.1.1",
+      "platform": "MB"
+    },
+    "checkSum":
+        "d518c432676ff2c8d660b638a15b55521233639104713e79ed78af3cd5b1acba51ee5926d8a1472bf5bdd8334d0a5cbcdafa0956444cd2167667a628cefaa9f3"
+  }
+};

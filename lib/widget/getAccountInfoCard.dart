@@ -40,11 +40,11 @@ class AccountInfoCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(6.0),
               border: Border.all(
                 color: isSelected == index && AccErr == true
-                    ? CLR_ERROR
+                    ? AppColors.CLR_ERROR
                     : isSelected == index
-                        ? Colors.green
-                        : Color(0xffD1D9E8),
-                width: 1.0,
+                        ? AppColors.CLR_GREEN
+                        : AppColors.CLR_CON_BORDER,
+                width: 0.50,
               ),
             ),
             child: Column(
@@ -58,10 +58,10 @@ class AccountInfoCard extends StatelessWidget {
                       fontSize: 12.0.sp,
                       fontWeight: FontWeight.w600,
                       color: isSelected == index && AccErr == true
-                          ? CLR_ERROR
+                          ? AppColors.CLR_ERROR
                           : isSelected == index
-                              ? Colors.green
-                              : Color(0xff808080),
+                              ? AppColors.CLR_GREEN
+                              : AppColors.TXT_CLR_GREY,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -74,7 +74,7 @@ class AccountInfoCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 10.0.sp,
                         fontWeight: FontWeight.w400,
-                        color: Color(0xff808080),
+                        color: AppColors.CLR_PRIMARY_LITE,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -95,8 +95,8 @@ class AccountInfoCard extends StatelessWidget {
                                   isSelected == index &&
                                   (balance.runtimeType != double ||
                                       balance.runtimeType == int)
-                              ? CLR_ERROR
-                              : const Color(0xff0e2146),
+                              ? AppColors.CLR_ERROR
+                              : AppColors.TXT_CLR_PRIMARY,
                         ),
                         textAlign: TextAlign.left,
                       ),
@@ -124,7 +124,7 @@ class AccountInfoCard extends StatelessWidget {
                       'Insufficient balance in the account',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: CLR_ERROR,
+                        color: AppColors.CLR_ERROR,
                       ),
                     ),
                   ),
@@ -137,7 +137,7 @@ class AccountInfoCard extends StatelessWidget {
               right: 17.w,
               child: CircleAvatar(
                 backgroundColor: isSelected == index && AccErr == true
-                    ? CLR_ERROR
+                    ? AppColors.CLR_ERROR
                     : Colors.green,
                 radius: 10.r,
                 child: IconButton(

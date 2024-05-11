@@ -3,6 +3,7 @@ import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/Container/Home/home_banners.dart';
 import 'package:ebps/common/Container/Home/upcoming_container.dart';
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
@@ -53,7 +54,7 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                       style: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xff1b438b),
+                        color: AppColors.CLR_PRIMARY,
                       ),
                     ),
                     if (widget.allUpcomingDues.length > 2)
@@ -73,14 +74,15 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xff1b438b),
+                                color: AppColors.CLR_PRIMARY_LITE,
                               ),
                               textHeightBehavior: TextHeightBehavior(
                                   applyHeightToFirstAscent: false),
                               textAlign: TextAlign.center,
                               softWrap: false,
                             ),
-                            Icon(Icons.arrow_forward, color: Color(0xff1b438b)),
+                            Icon(Icons.arrow_forward,
+                                color: AppColors.CLR_PRIMARY_LITE),
                           ],
                         ),
                       ),
@@ -108,12 +110,17 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                                   .toLowerCase())
                           .toList()[0],
                       dateText: widget.allUpcomingDues[index]["dueDate"] != ""
-                          ? DateFormat('dd/MM/yyyy').format(DateTime.parse(
+                          ? DateFormat('MMM dd, yyyy').format(DateTime.parse(
                                   widget.allUpcomingDues[index]["dueDate"]!
                                       .toString()
                                       .substring(0, 10))
                               .toLocal()
                               .add(const Duration(days: 1)))
+                          : "-",
+                      dueDate: widget.allUpcomingDues[index]["dueDate"] != ""
+                          ? DateTime.parse(widget.allUpcomingDues[index]
+                                  ["dueDate"]!
+                              .toString())
                           : "-",
                       dueStatus:
                           widget.allUpcomingDues[index]["dueStatus"] != ""
@@ -156,19 +163,19 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                           "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allUpcomingDues[index]["dueAmount"]!.toString()))}",
                       iconPath: BILLER_LOGO(
                           widget.allUpcomingDues[index]["billerName"]),
-                      containerBorderColor: Color(0xffD1D9E8),
+                      containerBorderColor: AppColors.CLR_CON_BORDER,
                       buttonColor: widget.allUpcomingDues[index]["itemType"] ==
                               'upcomingDue'
-                          ? Color(0xFF1B438B)
-                          : Color.fromARGB(255, 255, 255, 255),
+                          ? AppColors.CLR_PRIMARY
+                          : AppColors.CLR_GREEN,
                       buttonTxtColor: widget.allUpcomingDues[index]
                                   ["itemType"] ==
                               'upcomingDue'
-                          ? Color.fromARGB(255, 255, 255, 255)
+                          ? AppColors.CLR_PRIMARY
                           : widget.allUpcomingDues[index]["itemType"] ==
                                   'upcomingAutopaused'
-                              ? Colors.red
-                              : Color(0xff00AB44),
+                              ? AppColors.CLR_ERROR
+                              : AppColors.CLR_GREEN,
                       buttonTextWeight: FontWeight.normal,
                       buttonBorderColor: widget.allUpcomingDues[index]
                                   ["itemType"] ==
@@ -176,8 +183,8 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                           ? null
                           : widget.allUpcomingDues[index]["itemType"] ==
                                   'upcomingAutopaused'
-                              ? Colors.red
-                              : Color(0xff00AB44),
+                              ? AppColors.CLR_ERROR
+                              : AppColors.CLR_GREEN,
                     );
                   }),
             // if (isUpcomingAutopaymentLoading ||
