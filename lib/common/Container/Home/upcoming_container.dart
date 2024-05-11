@@ -375,7 +375,6 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                             SizedBox(
                               width: 10.w,
                             ),
-<<<<<<< HEAD
 
                           GestureDetector(
                             onTap: () {
@@ -425,30 +424,6 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                           //     buttonSizeY: 25.w,
                           //     buttonTextSize: 8.sp,
                           //     buttonTextWeight: FontWeight.w500),
-=======
-                          if (widget.dueDate != "-")
-                            if (checkDateExpiry(widget.dueDate.toString()))
-                              Text(
-                                "Overdue by ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.dueDate!.toString()).add(Duration(days: 1))), DateTime.now()) == 1 ? "Day" : "Days"}",
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: CLR_ERROR,
-                                ),
-                              ),
-                          MyAppButton(
-                              onPressed: () {
-                                widget.onPressed();
-                              },
-                              buttonText: widget.buttonText,
-                              buttonTxtColor: widget.buttonTxtColor,
-                              buttonBorderColor: widget.buttonBorderColor,
-                              buttonColor: widget.buttonColor,
-                              buttonSizeX: 10.h,
-                              buttonSizeY: 25.w,
-                              buttonTextSize: 10.sp,
-                              buttonTextWeight: FontWeight.w500),
->>>>>>> d12fc2fb59afbe76173dceb07a01aa8ac44013ad
                         ],
                       ),
                     ),

@@ -157,13 +157,14 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                           : getPopupFailedMsg(
                               6, billerName.toString(), billName.toString()),
                       subTitle: "",
-                      showSub: false,
-                      shapeColor:
-                          success ? AppColors.CLR_GREEN : AppColors.CLR_ERROR,
                       child: Icon(
                         Icons.close,
                         color: Colors.white,
-                      ))));
+                      ),
+                      showSub: false,
+                      shapeColor: success
+                          ? AppColors.CLR_GREEN
+                          : AppColors.CLR_ERROR)));
         },
       );
     }
