@@ -596,6 +596,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                     if (getAllAutopayList(widget
                                             .savedBillersData.cUSTOMERBILLID) !=
                                         null)
+<<<<<<< HEAD
                                       if ((getAllAutopayList(widget
                                                           .savedBillersData
                                                           .cUSTOMERBILLID) !=
@@ -615,6 +616,59 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                             context: context,
                                             iconPath: ICON_EDIT,
                                             title: "Edit Autopay",
+=======
+                                      if (getAllAutopayList(widget
+                                                  .savedBillersData
+                                                  .cUSTOMERBILLID)!
+                                              .iSACTIVE ==
+                                          0)
+                                        Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 24.0.w,
+                                                vertical: 8.h),
+                                            child: Center(
+                                              child: Text(
+                                                "Autopay Edit Disabled Till Autopay enables",
+                                                style: TextStyle(
+                                                  fontSize: 10.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color(0xff808080),
+                                                ),
+                                              ),
+                                            )),
+                                  // else if (getAllAutopayList(widget
+                                  //                 .savedBillersData
+                                  //                 .cUSTOMERBILLID)!
+                                  //             .iSACTIVE ==
+                                  //         1 &&
+                                  //     getAllAutopayList(widget
+                                  //                 .savedBillersData
+                                  //                 .cUSTOMERBILLID)!
+                                  //             .pAYMENTDATE ==
+                                  //         todayDate)
+                                  //   Padding(
+                                  //       padding: EdgeInsets.symmetric(
+                                  //           horizontal: 24.0.w,
+                                  //           vertical: 8.h),
+                                  //       child: Center(
+                                  //         child: Text(
+                                  //           "Autopay Edit Disabled as autopay scheduled for today",
+                                  //           style: TextStyle(
+                                  //             fontSize: 10.sp,
+                                  //             fontWeight: FontWeight.w400,
+                                  //             color: Color(0xff808080),
+                                  //           ),
+                                  //         ),
+                                  //       )),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 48.0.h, bottom: 16.h),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        MyAppButton(
+>>>>>>> d12fc2fb59afbe76173dceb07a01aa8ac44013ad
                                             onPressed: () {
                                               goToData(
                                                   context, eDITAUTOPAYROUTE, {
@@ -1857,6 +1911,55 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                   fontSize: 9.0.sp,
                                   fontWeight: FontWeight.bold),
                             ),
+<<<<<<< HEAD
+=======
+                          ],
+                        )
+                      else if (widget.upcomingText == "Upcoming Autopay")
+                        Row(
+                          children: [
+                            Icon(Icons.published_with_changes,
+                                color: Colors.grey, size: 13.r),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              '${numberPrefixSetter(getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.pAYMENTDATE)}${" of"}${getAllAutopayList(widget.savedBillersData.cUSTOMERBILLID)!.iSBIMONTHLY == 0 ? " every" : " every two"}${" month"}',
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xff808080),
+                                height: 20 / 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      if (widget.upcomingText != "")
+                        Text(
+                          widget.upcomingText!.toLowerCase() ==
+                                      "upcoming due" &&
+                                  (widget.upcomingDueData != null &&
+                                      widget.upcomingDueData!.dueDate !=
+                                          null) &&
+                                  checkDateExpiry(widget  
+                                      .upcomingDueData!.dueDate!
+                                      .toString())
+                              ? "Overdue by ${daysBetween((DateTime.parse(widget.upcomingDueData!.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())} ${daysBetween((DateTime.parse(widget.upcomingDueData!.dueDate!.toString()).add(Duration(days: 1))), DateTime.now())== 1?"Day":"Days"}"
+                              : widget.upcomingText!,
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w600,
+                            color: widget.upcomingText!.toLowerCase() ==
+                                        "upcoming due" &&
+                                    (widget.upcomingDueData != null &&
+                                        widget.upcomingDueData!.dueDate !=
+                                            null) &&
+                                    checkDateExpiry(widget
+                                        .upcomingDueData!.dueDate!
+                                        .toString())
+                                ? CLR_ERROR
+                                : widget.upcomingTXT_CLR_DEFAULT,
+>>>>>>> d12fc2fb59afbe76173dceb07a01aa8ac44013ad
                           ),
                         ),
 
