@@ -76,6 +76,7 @@ const ICON_MUNICIPAL_SERVICES =
 
 const ICON_MUNICIPAL_TAXES =
     "packages/ebps/assets/icon/icon_municipal-taxes.svg";
+const ICON_NCMC = "packages/ebps/assets/icon/icon_ncmc-card-dark-icon.svg";
 const ICON_RECDEBOSIT = "packages/ebps/assets/icon/icon_recurring-deposit.svg";
 const ICON_RENTAL = "packages/ebps/assets/icon/icon_rental.svg";
 
@@ -204,6 +205,8 @@ String CATEGORY_ICON(String? CATEGORY_NAME) {
 
     case "municipal taxes":
       return ICON_MUNICIPAL_TAXES;
+    case "ncmc recharge":
+      return ICON_NCMC;
     case "recurring deposit":
       return ICON_RECDEBOSIT;
     case "rental":

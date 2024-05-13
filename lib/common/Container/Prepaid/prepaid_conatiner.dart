@@ -1,4 +1,5 @@
 import 'package:ebps/common/Button/MyAppButton.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
@@ -32,17 +33,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin:
-          EdgeInsets.only(left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0.r),
-        border: Border.all(
-          color: Color(0xFFD1D9E8),
-          width: 2.0,
-        ),
-      ),
+    return ReusableContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -62,7 +53,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                     style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w400,
-                      color: Color(0xff808080),
+                      color: AppColors.TXT_CLR_LITE,
                     ),
                   ),
                   Text(
@@ -75,7 +66,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                     style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.TXT_CLR_DEFAULT,
+                        color: AppColors.TXT_CLR_BLACK_W,
                         overflow: TextOverflow.fade),
                     textAlign: TextAlign.left,
                     maxLines: 1,
@@ -90,7 +81,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                     style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w400,
-                      color: Color(0xff808080),
+                      color: AppColors.TXT_CLR_LITE,
                     ),
                   ),
                   Text(
@@ -99,7 +90,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                     style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.TXT_CLR_DEFAULT,
+                        color: AppColors.TXT_CLR_BLACK_W,
                         overflow: TextOverflow.fade),
                     textAlign: TextAlign.left,
                     maxLines: 1,
@@ -114,7 +105,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                   style: TextStyle(
                     fontSize: 21.sp,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xff1b438b),
+                    color: AppColors.CLR_PRIMARY,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -150,7 +141,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                         style: TextStyle(
                           fontSize: 10.sp,
                           fontWeight: FontWeight.w400,
-                          color: AppColors.CLR_SECONDARY,
+                          color: AppColors.CLR_BLUE_LITE,
                         ),
                         maxLines: isShowMore ? 10 : 2,
                         textAlign: TextAlign.justify,
@@ -174,7 +165,7 @@ class _PrepaidPlansContainerState extends State<PrepaidPlansContainer> {
                           child: Text(
                             isShowMore ? "Show less" : "Show more",
                             style: TextStyle(
-                                color: AppColors.TXT_CLR_DEFAULT,
+                                color: AppColors.TXT_CLR_BLACK_W,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 10.sp),
                           ),

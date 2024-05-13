@@ -2,6 +2,7 @@ import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/Home/biller_details_container.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
@@ -121,194 +122,93 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
           builder: (context, state) {
             return Column(
               children: [
-                Container(
-                    clipBehavior: Clip.hardEdge,
-                    width: double.infinity,
-                    margin: EdgeInsets.only(
-                        left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                      border: Border.all(
-                        color: const Color(0xffD1D9E8),
-                        width: 1.0,
-                      ),
-                    ),
+                ReusableContainer(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        BillerDetailsContainer(
-                          icon: BILLER_LOGO(
-                              widget.billerData!.bILLERNAME.toString()),
-                          billerName: widget.billerData!.bILLERNAME.toString(),
-                          categoryName:
-                              widget.billerData!.cATEGORYNAME.toString(),
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    BillerDetailsContainer(
+                      icon:
+                          BILLER_LOGO(widget.billerData!.bILLERNAME.toString()),
+                      billerName: widget.billerData!.bILLERNAME.toString(),
+                      categoryName: widget.billerData!.cATEGORYNAME.toString(),
+                    ),
+                    if (isPrepaidPlansLoading)
+                      Center(
+                        child: Container(
+                          height: 200,
+                          width: 200,
+                          child: FlickrLoader(),
                         ),
-                        if (isPrepaidPlansLoading)
-                          Center(
-                            child: Container(
-                              height: 200,
-                              width: 200,
-                              child: FlickrLoader(),
-                            ),
-                          ),
-                        if (!isPrepaidPlansLoading &&
-                            prepaidPlansData!.length > 0)
-                          Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w, vertical: 16.h),
-                                child: TextFormField(
-                                  // maxLength: 10,
-                                  controller: mobileNumberController,
-                                  key: _MobileNumberKey,
-                                  autocorrect: false,
-                                  enableSuggestions: false,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    LengthLimitingTextInputFormatter(10),
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp(r'^[0-9]*'))
-                                  ],
-                                  onChanged: (s) {
-                                    if (mobileNumberController
-                                            .text.isNotEmpty &&
-                                        mobileNumberController.text.length ==
-                                            10) {
-                                      setState(() {
-                                        isMobileNumberNotValid = false;
-                                      });
-                                    } else {
-                                      setState(() {
-                                        isMobileNumberNotValid = true;
-                                      });
-                                    }
-                                  },
-                                  validator: (inputValue) {
-                                    if (inputValue!.isEmpty) {
-                                      return "Mobile Number Should Not be Empty";
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                      fillColor: const Color(0xffD1D9E8)
-                                          .withOpacity(0.2),
-                                      filled: true,
-                                      labelStyle: const TextStyle(
-                                          color: Color(0xff1b438b)),
-                                      enabledBorder: const UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xff1B438B)),
-                                      ),
-                                      focusedBorder: const UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xff1B438B)),
-                                      ),
-                                      border: const UnderlineInputBorder(),
-                                      labelText: 'Mobile Number',
-                                      prefixText: '+91 '),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w, vertical: 16.h),
-                                child: TextFormField(
-                                  style:
-                                      TextStyle(color: AppColors.TXT_CLR_LITE),
-                                  readOnly: true,
-                                  controller: operatorController,
-                                  key: _OperatorKey,
-                                  autocorrect: false,
-                                  enableSuggestions: false,
-                                  keyboardType: TextInputType.text,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp(r'^[a-z0-9A-Z ]*'))
-                                  ],
-                                  onChanged: (s) {},
-                                  validator: (inputValue) {},
-                                  decoration: InputDecoration(
-                                    labelStyle: const TextStyle(
-                                        color: Color(0xffa2a2a2)),
-                                    fillColor: const Color(0xffD1D9E8)
-                                        .withOpacity(0.2),
-                                    filled: true,
-                                    hintStyle: const TextStyle(
-                                        color: Color(0xffa2a2a2)),
-                                    enabledBorder: const UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xffa2a2a2)),
-                                    ),
-                                    focusedBorder: const UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xffa2a2a2)),
-                                    ),
-                                    border: const UnderlineInputBorder(),
-                                    labelText: 'Operator',
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w, vertical: 16.h),
-                                child: DropdownButtonFormField<String>(
-                                  isExpanded: true,
-                                  isDense: true,
-                                  value: CircleValue,
-                                  decoration: InputDecoration(
-                                    border: const UnderlineInputBorder(),
-                                    filled: true,
-                                    fillColor:
-                                        Color(0xffD1D9E8).withOpacity(0.2),
-                                    enabledBorder: const UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xff1B438B)),
-                                    ),
-                                    focusedBorder: const UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xff1B438B)),
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 10.0.h, horizontal: 10.w),
-                                    labelText: 'Select a Circle',
-                                    labelStyle: const TextStyle(
-                                        color: Color(0xff1b438b)),
-                                    hintText: 'Select a Circle',
-                                    hintStyle: const TextStyle(
-                                        color: Color(0xff1b438b)),
-                                  ),
-                                  onChanged: (String? newValue) {},
-                                  icon: const Icon(
-                                    Icons.keyboard_arrow_down,
-                                    color: Colors.grey,
-                                  ),
-                                  items:
-                                      CircleData.map<DropdownMenuItem<String>>(
-                                          (value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(
-                                        value ?? "No Circles Found",
-                                      ),
-                                      onTap: () {
-                                        setState(() {
-                                          CircleValue = value;
-                                        });
-                                      },
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                            ],
-                          ),
-                        if (prepaidPlansData!.length > 0)
+                      ),
+                    if (!isPrepaidPlansLoading && prepaidPlansData!.length > 0)
+                      Column(
+                        children: [
                           Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 16.w, vertical: 16.h),
                             child: TextFormField(
-                              maxLength: 20,
-                              controller: billNameController,
-                              key: _billnameParamKey,
+                              // maxLength: 10,
+                              controller: mobileNumberController,
+                              key: _MobileNumberKey,
+                              autocorrect: false,
+                              enableSuggestions: false,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(10),
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'^[0-9]*'))
+                              ],
+                              onChanged: (s) {
+                                if (mobileNumberController.text.isNotEmpty &&
+                                    mobileNumberController.text.length == 10) {
+                                  setState(() {
+                                    isMobileNumberNotValid = false;
+                                  });
+                                } else {
+                                  setState(() {
+                                    isMobileNumberNotValid = true;
+                                  });
+                                }
+                              },
+                              validator: (inputValue) {
+                                if (inputValue!.isEmpty) {
+                                  return "Mobile Number Should Not be Empty";
+                                }
+                                return null;
+                              },
+                              style:
+                                  TextStyle(color: AppColors.TXT_CLR_DEFAULT),
+                              decoration: InputDecoration(
+                                  prefixStyle: TextStyle(
+                                      color: AppColors.TXT_CLR_DEFAULT),
+                                  hintStyle: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.bold),
+                                  fillColor: AppColors.CLR_INPUT_FILL,
+                                  filled: true,
+                                  labelStyle:
+                                      TextStyle(color: AppColors.CLR_PRIMARY),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: AppColors.TXT_CLR_PRIMARY),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: AppColors.TXT_CLR_PRIMARY),
+                                  ),
+                                  border: UnderlineInputBorder(),
+                                  labelText: 'Mobile Number',
+                                  prefixText: '+91 '),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.w, vertical: 16.h),
+                            child: TextFormField(
+                              style: TextStyle(color: AppColors.TXT_CLR_LITE),
+                              readOnly: true,
+                              controller: operatorController,
+                              key: _OperatorKey,
                               autocorrect: false,
                               enableSuggestions: false,
                               keyboardType: TextInputType.text,
@@ -316,57 +216,151 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                                 FilteringTextInputFormatter.allow(
                                     RegExp(r'^[a-z0-9A-Z ]*'))
                               ],
-                              onChanged: (s) {
-                                if (billNameController.text.isNotEmpty) {
-                                  setState(() {
-                                    isBillNameNotValid = false;
-                                  });
-                                } else {
-                                  setState(() {
-                                    isBillNameNotValid = true;
-                                  });
-                                }
-                              },
-                              validator: (inputValue) {
-                                if (inputValue!.isEmpty) {
-                                  return "Bill Name Should Not be Empty";
-                                }
-                                return null;
-                              },
+                              onChanged: (s) {},
+                              validator: (inputValue) {},
                               decoration: InputDecoration(
-                                counterStyle: TextStyle(
-                                    color: billNameController.text.length <= 3
-                                        ? AppColors.CLR_ERROR
-                                        : null),
-                                fillColor:
-                                    const Color(0xffD1D9E8).withOpacity(0.2),
-                                filled: true,
                                 labelStyle:
-                                    const TextStyle(color: Color(0xff1b438b)),
-                                enabledBorder: const UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0xff1B438B)),
+                                    TextStyle(color: AppColors.CLR_PRIMARY),
+                                fillColor: AppColors.CLR_INPUT_FILL,
+                                filled: true,
+                                hintStyle:
+                                    const TextStyle(color: Color(0xffa2a2a2)),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppColors.TXT_CLR_PRIMARY),
                                 ),
-                                focusedBorder: const UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0xff1B438B)),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppColors.TXT_CLR_PRIMARY),
                                 ),
-                                border: const UnderlineInputBorder(),
-                                labelText: 'Bill Name (Nick Name)',
+                                border: UnderlineInputBorder(),
+                                labelText: 'Operator',
                               ),
                             ),
                           ),
-                        if (!isPrepaidPlansLoading &&
-                            prepaidPlansData!.length == 0)
-                          Center(
-                            child: Container(
-                                width: double.infinity,
-                                height: 350.h,
-                                child: noResult(
-                                    showTitle: true, ErrIndex: 3, ImgIndex: 3)),
-                          )
-                      ],
-                    )),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.w, vertical: 16.h),
+                            child: DropdownButtonFormField<String>(
+                              isExpanded: true,
+                              isDense: true,
+                              value: CircleValue,
+                              dropdownColor: AppColors.BTN_CLR_ACTIVE_TEXT,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0.r)),
+                              style:
+                                  TextStyle(color: AppColors.TXT_CLR_DEFAULT),
+                              decoration: InputDecoration(
+                                border: const UnderlineInputBorder(),
+                                filled: true,
+                                fillColor: AppColors.CLR_INPUT_FILL,
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppColors.TXT_CLR_PRIMARY),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppColors.TXT_CLR_PRIMARY),
+                                ),
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 10.0.h, horizontal: 10.w),
+                                labelText: 'Select a Circle',
+                                labelStyle:
+                                    TextStyle(color: AppColors.CLR_PRIMARY),
+                                hintText: 'Select a Circle',
+                                hintStyle:
+                                    TextStyle(color: AppColors.TXT_CLR_DEFAULT),
+                              ),
+                              onChanged: (String? newValue) {},
+                              icon: Icon(
+                                Icons.keyboard_arrow_down,
+                                color: AppColors.CLR_GREY,
+                              ),
+                              items: CircleData.map<DropdownMenuItem<String>>(
+                                  (value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value ?? "No Circles Found",
+                                    style: TextStyle(
+                                        fontSize: 12.sp,
+                                        color: AppColors.TXT_CLR_DEFAULT),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      CircleValue = value;
+                                    });
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    if (prepaidPlansData!.length > 0)
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 16.h),
+                        child: TextFormField(
+                          maxLength: 20,
+                          controller: billNameController,
+                          key: _billnameParamKey,
+                          autocorrect: false,
+                          enableSuggestions: false,
+                          keyboardType: TextInputType.text,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^[a-z0-9A-Z ]*'))
+                          ],
+                          onChanged: (s) {
+                            if (billNameController.text.isNotEmpty) {
+                              setState(() {
+                                isBillNameNotValid = false;
+                              });
+                            } else {
+                              setState(() {
+                                isBillNameNotValid = true;
+                              });
+                            }
+                          },
+                          validator: (inputValue) {
+                            if (inputValue!.isEmpty) {
+                              return "Bill Name Should Not be Empty";
+                            }
+                            return null;
+                          },
+                          style: TextStyle(color: AppColors.TXT_CLR_DEFAULT),
+                          decoration: InputDecoration(
+                            counterStyle: TextStyle(
+                                color: billNameController.text.length <= 3
+                                    ? AppColors.CLR_ERROR
+                                    : AppColors.TXT_CLR_BLACK_W),
+                            fillColor: AppColors.CLR_INPUT_FILL,
+                            filled: true,
+                            labelStyle: TextStyle(color: AppColors.CLR_PRIMARY),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: AppColors.TXT_CLR_PRIMARY),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: AppColors.TXT_CLR_PRIMARY),
+                            ),
+                            border: UnderlineInputBorder(),
+                            labelText: 'Bill Name (Nick Name)',
+                          ),
+                        ),
+                      ),
+                    if (!isPrepaidPlansLoading && prepaidPlansData!.length == 0)
+                      Center(
+                        child: Container(
+                            width: double.infinity,
+                            height: 350.h,
+                            child: noResult(
+                                showTitle: true, ErrIndex: 3, ImgIndex: 3)),
+                      )
+                  ],
+                )),
                 SizedBox(
                   height: 80.h,
                 )
@@ -375,9 +369,11 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
           },
         )),
         bottomSheet: Container(
-          decoration: const BoxDecoration(
-              border:
-                  Border(top: BorderSide(color: Color(0xffE8ECF3), width: 1))),
+          decoration: BoxDecoration(
+              color: AppColors.CLR_BACKGROUND,
+              border: Border(
+                  top: BorderSide(
+                      color: AppColors.CLR_CON_BORDER_LITE, width: 1))),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
             child: Row(

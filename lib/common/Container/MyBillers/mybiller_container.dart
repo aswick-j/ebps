@@ -341,6 +341,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                             GestureDetector(
                                               onTap: () {
                                                 showModalBottomSheet(
+                                                    backgroundColor: AppColors
+                                                        .CLR_BACKGROUND,
                                                     context: context,
                                                     shape:
                                                         RoundedRectangleBorder(
@@ -377,8 +379,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                           .pause_circle
                                                                       : Icons
                                                                           .play_circle,
-                                                                  color: Color(
-                                                                      0xff1b438b),
+                                                                  color: AppColors
+                                                                      .CLR_ICON,
                                                                 ),
                                                                 SizedBox(
                                                                     width:
@@ -396,8 +398,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w600,
-                                                                    color: Color(
-                                                                        0xff1b438b),
+                                                                    color: AppColors
+                                                                        .CLR_PRIMARY,
                                                                   ),
                                                                   textAlign:
                                                                       TextAlign
@@ -432,7 +434,22 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                   .withOpacity(
                                                                       0.1),
                                                             ),
-                                                          ),
+                                                          ),     Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        spreadRadius: 0.2,
+                                        blurRadius: 2,
+                                        offset: Offset(0, 2)),
+                                  ],
+                                ),
+                                child: Divider(
+                                  height: 0.4.h,
+                                  thickness: 1,
+                                  color: Colors.grey.withOpacity(0.1),
+                                ),
+                              ),
                                                           SizedBox(
                                                             height: 10.h,
                                                           ),
@@ -455,8 +472,8 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w400,
-                                                                  color: Color(
-                                                                      0xff000000),
+                                                                  color: AppColors
+                                                                      .TXT_CLR_DEFAULT,
                                                                 ),
                                                                 textAlign:
                                                                     TextAlign

@@ -52,7 +52,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   final String API_URL =
-      'https://digiservices.equitasbank.com/api/auth/redirect';
+      'https://digiservicesuat.equitasbank.com/bbps/api/auth/redirect';
 
   String API_DATA = '';
   bool isLoading = false;

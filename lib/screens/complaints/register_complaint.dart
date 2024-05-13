@@ -490,7 +490,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                               color: AppColors.CLR_GREY),
                                         ),
                                         counterStyle: TextStyle(
-                                            color: AppColors.TXT_CLR_DEFAULT),
+                                            color: AppColors.TXT_CLR_BLACK_W),
                                         hintStyle: TextStyle(
                                           fontSize: 12.sp,
                                           color: AppColors.TXT_CLR_PRIMARY,

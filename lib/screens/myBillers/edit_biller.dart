@@ -395,7 +395,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
                                               billNameController.text.length <=
                                                       3
                                                   ? AppColors.CLR_ERROR
-                                                  : AppColors.TXT_CLR_DEFAULT),
+                                                  : AppColors.TXT_CLR_BLACK_W),
                                       fillColor: AppColors.CLR_INPUT_FILL,
                                       filled: true,
                                       labelStyle: TextStyle(

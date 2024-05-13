@@ -18,7 +18,7 @@ class _PluginScreenState extends State<PluginScreen> {
           onWillPop: () async => false,
           child: Center(
               child:
-                  EbpsScreen(apiData: apiData, ctx: context, flavor: "prd"))),
+                  EbpsScreen(apiData: apiData, ctx: context, flavor: "uat"))),
     );
   }
 }

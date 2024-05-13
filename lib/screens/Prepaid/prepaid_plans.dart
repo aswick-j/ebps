@@ -1,6 +1,7 @@
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Container/Prepaid/prepaid_conatiner.dart';
+import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getBillerType.dart';
@@ -270,6 +271,7 @@ class _PrepaidPlansState extends State<PrepaidPlans>
     }
 
     return Scaffold(
+        backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
           context: context,
           title: "Select Plan",
@@ -319,19 +321,8 @@ class _PrepaidPlansState extends State<PrepaidPlans>
           builder: (context, state) {
             return !isPrepaidPlansLoading
                 ? isPrepaidPlansError
-                    ? Container(
-                        height: MediaQuery.of(context).size.height * 0.9,
-                        width: double.infinity,
-                        clipBehavior: Clip.hardEdge,
-                        margin: EdgeInsets.only(
-                            left: 18.0.w, right: 18.w, top: 10.h, bottom: 80.h),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6.0.r + 2.r),
-                          border: Border.all(
-                            color: Color(0xffD1D9E8),
-                            width: 1.0,
-                          ),
-                        ),
+                    ? ReusableContainer(
+                        bottomMargin: 80.h,
                         child: Center(
                           child: Container(
                               width: double.infinity,
@@ -422,8 +413,8 @@ class _PrepaidPlansState extends State<PrepaidPlans>
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6.0.r + 2.r),
                               border: Border.all(
-                                color: Color(0xffD1D9E8),
-                                width: 1.0,
+                                color: AppColors.CLR_CON_BORDER,
+                                width: 0.50,
                               ),
                             ),
                             child: Center(
