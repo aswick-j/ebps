@@ -146,8 +146,8 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                         ));
                       });
                     },
-                    child:
-                        Icon(Icons.copy, color: AppColors.CLR_ICON, size: 20))
+                    child: Icon(Icons.copy,
+                        color: AppColors.CLR_PRIMARY, size: 20))
             ],
           )
         ],
@@ -166,6 +166,44 @@ class _HistoryDetailsState extends State<HistoryDetails> {
 
   @override
   Widget build(BuildContext context) {
+    void showToast() {
+      return DelightToastBar(
+        autoDismiss: true,
+        animationDuration: Duration(milliseconds: 300),
+        builder: (context) => ToastCard(
+          color: AppColors.CLR_BACKGROUND,
+          shadowColor: Colors.grey.withOpacity(0.2),
+          leading: Icon(Icons.cancel_outlined,
+              size: 28.r, color: AppColors.CLR_ERROR),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Oops !",
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.TXT_CLR_DEFAULT,
+                ),
+                textAlign: TextAlign.left,
+                maxLines: 2,
+              ),
+              Text(
+                "Unable to Refresh the Transaction Status. Please try again.",
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.CLR_PRIMARY,
+                ),
+                textAlign: TextAlign.left,
+                maxLines: 2,
+              ),
+            ],
+          ),
+        ),
+      ).show(context);
+    }
+
     return Scaffold(
         backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
@@ -265,7 +303,8 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                 autoDismiss: true,
                 animationDuration: Duration(milliseconds: 300),
                 builder: (context) => ToastCard(
-                  shadowColor: Colors.grey.withOpacity(0.4),
+                  color: AppColors.CLR_BACKGROUND,
+                  shadowColor: Colors.grey.withOpacity(0.2),
                   leading: Icon(
                     updateTxnStatus == "success"
                         ? Icons.check_circle_outline
@@ -276,12 +315,12 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                 : Icons.info_outline,
                     size: 28.r,
                     color: updateTxnStatus == "success"
-                        ? Colors.green
+                        ? AppColors.CLR_GREEN
                         : updateTxnStatus == "failure"
-                            ? Colors.red
+                            ? AppColors.CLR_ERROR
                             : updateTxnStatus == "in_prog"
-                                ? Colors.orange
-                                : Colors.orange,
+                                ? AppColors.CLR_ORANGE
+                                : AppColors.CLR_ORANGE,
                   ),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -313,7 +352,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xff1b438b),
+                          color: AppColors.CLR_PRIMARY,
                         ),
                         textAlign: TextAlign.left,
                         maxLines: 2,
@@ -323,8 +362,10 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                 ),
               ).show(context);
             } else if (state is TxnStatusUpdateFailed) {
+              showToast();
               isTxnUpdateLoading = false;
             } else if (state is TxnStatusUpdateError) {
+              showToast();
               isTxnUpdateLoading = false;
             }
           },
@@ -656,7 +697,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
-                                    color: Color(0xff808080),
+                                    color: AppColors.TXT_CLR_LITE,
                                     height: 23 / 14,
                                   ),
                                   textAlign: TextAlign.left,
@@ -695,7 +736,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                 textStyle: TextStyle(
                                                   fontSize: 14.sp,
                                                   fontWeight: FontWeight.w500,
-                                                  color: Colors.orange,
+                                                  color: AppColors.CLR_ORANGE,
                                                 ),
                                                 speed: Duration(
                                                     milliseconds: 100)),

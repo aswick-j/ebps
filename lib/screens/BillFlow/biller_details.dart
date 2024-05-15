@@ -385,8 +385,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                               isPaymentInfoLoading)
                             Container(
                               height: 200.h,
-                              width: 200.w,
-                              child: FlickrLoader(),
+                              child: Center(child: Loader()),
                             ),
                           if ((!isFetchbillLoading &&
                                   !isAmountByDateLoading &&

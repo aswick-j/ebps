@@ -408,6 +408,26 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                               ],
                                                             ),
                                                           ),
+                                                                                                            Container(
+                                                      decoration: BoxDecoration(
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                              color: Colors.grey
+                                                                  .withOpacity(
+                                                                      0.2),
+                                                              spreadRadius: 0.2,
+                                                              blurRadius: 2,
+                                                              offset:
+                                                                  Offset(0, 2)),
+                                                        ],
+                                                      ),
+                                                      child: Divider(
+                                                        height: 0.4.h,
+                                                        thickness: 1,
+                                                        color: Colors.grey
+                                                            .withOpacity(0.1),
+                                                      ),
+                                                    ),
                                                           Container(
                                                             decoration:
                                                                 BoxDecoration(
@@ -416,11 +436,11 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                     color: Colors
                                                                         .grey
                                                                         .withOpacity(
-                                                                            0.5),
+                                                                            0.2),
                                                                     spreadRadius:
-                                                                        0.6,
+                                                                        0.2,
                                                                     blurRadius:
-                                                                        4,
+                                                                        2,
                                                                     offset:
                                                                         Offset(
                                                                             0,
@@ -428,28 +448,13 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                               ],
                                                             ),
                                                             child: Divider(
-                                                              height: 1.h,
+                                                              height: 0.4.h,
                                                               thickness: 1,
                                                               color: Colors.grey
                                                                   .withOpacity(
                                                                       0.1),
                                                             ),
-                                                          ),     Container(
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        spreadRadius: 0.2,
-                                        blurRadius: 2,
-                                        offset: Offset(0, 2)),
-                                  ],
-                                ),
-                                child: Divider(
-                                  height: 0.4.h,
-                                  thickness: 1,
-                                  color: Colors.grey.withOpacity(0.1),
-                                ),
-                              ),
+                                                          ),
                                                           SizedBox(
                                                             height: 10.h,
                                                           ),
@@ -1325,7 +1330,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                   1)
                             AvatarGlow(
                               animate: true,
-                              glowColor: Colors.red,
+                              glowColor: AppColors.CLR_ERROR,
                               glowRadiusFactor: 0.4,
                               child: GestureDetector(
                                   onTap: () {
@@ -1428,7 +1433,13 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                       });
                                     }
                                   },
-                                  child: SvgPicture.asset(ICON_ERROR)),
+                                  child: CircleAvatar(
+                                                  radius: 11.5.r,
+
+                                    backgroundColor: AppColors.CLR_BACKGROUND,
+                                    child: SvgPicture.asset(ICON_ERROR,      colorFilter: ColorFilter.mode(
+                                                            AppColors.CLR_ERROR, BlendMode.srcIn),),
+                                  )),
                             ),
                         SizedBox(width: 5.w),
                         GestureDetector(

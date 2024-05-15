@@ -241,7 +241,7 @@ class _ComplaintListState extends State<ComplaintList> {
                 : Container(
                     height: 500.h,
                     width: double.infinity,
-                    child: Center(child: FlickrLoader())),
+                    child: Center(child: Loader())),
           ],
         ),
       );

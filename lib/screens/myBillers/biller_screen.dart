@@ -186,7 +186,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
             ? 'My Billers'
             : TextFormField(
                 autofocus: true,
-                style:TextStyle(color:AppColors.TXT_CLR_LITE),
+                style: TextStyle(color: AppColors.TXT_CLR_LITE),
                 controller: searchController,
                 onChanged: (searchTxt) {
                   List<SavedBillersData>? searchData = [];
@@ -462,8 +462,8 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                           isUpcomingAutopaymentLoading ||
                           isSavedBillerLoading)
                         Container(
-                          height:  MediaQuery.of(context).size.height * 0.7,
-                          child: Center(child: FlickrLoader()),
+                          height: MediaQuery.of(context).size.height * 0.7,
+                          child: Center(child: Loader()),
                         ),
                     ],
                   )

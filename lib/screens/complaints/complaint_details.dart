@@ -87,10 +87,16 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                           onTap: () {
                             Clipboard.setData(ClipboardData(text: subTitle))
                                 .then((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content:
-                                          Text('$title copied to clipboard')));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(
+                                  '$title copied to clipboard',
+                                  style: TextStyle(
+                                      color: AppColors.CLR_BACKGROUND,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                backgroundColor: AppColors.CLR_PRIMARY,
+                              ));
                             });
                           },
                           child: Icon(Icons.copy,
@@ -122,8 +128,10 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
         autoDismiss: true,
         animationDuration: Duration(milliseconds: 300),
         builder: (context) => ToastCard(
-          shadowColor: Colors.grey.withOpacity(0.4),
-          leading: Icon(Icons.cancel_outlined, size: 28.r, color: Colors.red),
+          color: AppColors.CLR_BACKGROUND,
+          shadowColor: Colors.grey.withOpacity(0.2),
+          leading: Icon(Icons.cancel_outlined,
+              size: 28.r, color: AppColors.CLR_ERROR),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -142,7 +150,7 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                 style: TextStyle(
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xff1b438b),
+                  color: AppColors.CLR_PRIMARY,
                 ),
                 textAlign: TextAlign.left,
                 maxLines: 2,
@@ -366,7 +374,7 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                     ));
                 // : Container(
                 //     height: 560.h,
-                //     child: FlickrLoader(),
+                //     child: Loader(),
                 //   ));
               },
             )));

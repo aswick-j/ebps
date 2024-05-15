@@ -133,11 +133,18 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       Clipboard.setData(ClipboardData(text: subTitle))
                           .then((_) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('$title copied to clipboard')));
+                          content: Text(
+                            '$title copied to clipboard',
+                            style: TextStyle(
+                                color: AppColors.CLR_BACKGROUND,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          backgroundColor: AppColors.CLR_PRIMARY,
+                        ));
                       });
                     },
-                    child:
-                        Icon(Icons.copy, color: AppColors.CLR_ICON, size: 20))
+                    child: Icon(Icons.copy,
+                        color: AppColors.CLR_PRIMARY, size: 20))
             ],
           )
         ],

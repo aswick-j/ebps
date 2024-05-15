@@ -166,12 +166,12 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                       containerBorderColor: AppColors.CLR_CON_BORDER,
                       buttonColor: widget.allUpcomingDues[index]["itemType"] ==
                               'upcomingDue'
-                          ? AppColors.CLR_PRIMARY
+                          ? AppColors.CLR_PRIMARY_NC
                           : AppColors.CLR_GREEN,
                       buttonTxtColor: widget.allUpcomingDues[index]
                                   ["itemType"] ==
                               'upcomingDue'
-                          ? AppColors.CLR_PRIMARY
+                          ? AppColors.CLR_PRIMARY_NC
                           : widget.allUpcomingDues[index]["itemType"] ==
                                   'upcomingAutopaused'
                               ? AppColors.CLR_ERROR
@@ -194,7 +194,7 @@ class _UpcomingDuesState extends State<UpcomingDues> {
             //     child: Container(
             //       height: 200.h,
             //       width: 200.w,
-            //       child: FlickrLoader(),
+            //       child: Loader(),
             //     ),
             //   ),
           ],

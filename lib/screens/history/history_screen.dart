@@ -358,7 +358,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                             .position.maxScrollExtent);
                                   });
 
-                                  return FlickrLoader();
+                                  return Loader();
                                 }
                               })
                           : NoDataFound(
@@ -369,12 +369,12 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                   //   Container(
                   //       height: 50.h,
                   //       width: double.infinity,
-                  //       child: Center(child: FlickrLoader())),
+                  //       child: Center(child: Loader())),
                   if (isHistoryLoading || isCategoryLoading)
                     Container(
                         height: 500.h,
                         width: double.infinity,
-                        child: Center(child: FlickrLoader())),
+                        child: Center(child: Loader())),
 
                   SizedBox(
                     height: 100.h,

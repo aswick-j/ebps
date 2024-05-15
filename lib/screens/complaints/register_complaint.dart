@@ -150,12 +150,21 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                                 .then((_) {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(SnackBar(
-                                                      content: Text(
-                                                          'Complaint ID copied to clipboard')));
+                                                content: Text(
+                                                  'Complaint ID copied to clipboard',
+                                                  style: TextStyle(
+                                                      color: AppColors
+                                                          .CLR_BACKGROUND,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                backgroundColor:
+                                                    AppColors.CLR_PRIMARY,
+                                              ));
                                             });
                                           },
                                           child: Icon(Icons.copy,
-                                              color: Color(0xff1b438b),
+                                              color: AppColors.CLR_PRIMARY,
                                               size: 20))
                                     ],
                                   )

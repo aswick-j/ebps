@@ -3,28 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
-class FlickrLoader extends StatefulWidget {
-  const FlickrLoader({super.key});
+class Loader extends StatefulWidget {
+  const Loader({super.key});
 
   @override
-  State<FlickrLoader> createState() => _FlickrLoaderState();
+  State<Loader> createState() => _LoaderState();
 }
 
-class _FlickrLoaderState extends State<FlickrLoader>
-    with TickerProviderStateMixin {
-  late final AnimationController _controller;
+class _LoaderState extends State<Loader> with TickerProviderStateMixin {
+  // late final AnimationController _controller;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(vsync: this);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _controller = AnimationController(vsync: this);
+  // }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _controller.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

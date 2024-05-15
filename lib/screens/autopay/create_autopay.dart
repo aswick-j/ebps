@@ -209,7 +209,7 @@ class _createAutopayState extends State<createAutopay> {
                       ? Center(
                           child: Container(
                             height: 500.h,
-                            child: FlickrLoader(),
+                            child: Loader(),
                           ),
                         )
                       : Column(children: [
@@ -923,7 +923,7 @@ class _createAutopayState extends State<createAutopay> {
                                 Center(
                                   child: Container(
                                     height: 100.h,
-                                    child: FlickrLoader(),
+                                    child: Loader(),
                                   ),
                                 ),
                               if (!isAccLoading)

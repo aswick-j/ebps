@@ -208,7 +208,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       Center(
                         child: Container(
                           height: 500.h,
-                          child: FlickrLoader(),
+                          child: Loader(),
                         ),
                       ),
                     if (!isBillSerachLoading &&
@@ -308,7 +308,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                         .position.maxScrollExtent);
                               });
 
-                              return FlickrLoader();
+                              return Loader();
                             }
                           },
                         ),

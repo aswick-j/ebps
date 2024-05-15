@@ -420,7 +420,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
                               child: Container(
                                 height: 200,
                                 width: 200,
-                                child: FlickrLoader(),
+                                child: Loader(),
                               ),
                             ),
                         ],

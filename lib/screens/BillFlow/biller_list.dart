@@ -253,7 +253,7 @@ class _BillerListState extends State<BillerList> {
                   Center(
                     child: Container(
                       height: 500.h,
-                      child: FlickrLoader(),
+                      child: Loader(),
                     ),
                   ),
                 if (_searchController.text.isEmpty && Allbiller!.isEmpty)
@@ -356,7 +356,7 @@ class _BillerListState extends State<BillerList> {
                                     .position.maxScrollExtent);
                           });
 
-                          return FlickrLoader();
+                          return Loader();
                         }
                       },
                     ),

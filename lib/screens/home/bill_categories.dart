@@ -9,7 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BillCategories extends StatefulWidget {
-  const BillCategories({super.key});
+  final void Function(bool) isCategoryLoading;
+  const BillCategories({super.key, required this.isCategoryLoading});
 
   @override
   State<BillCategories> createState() => _BillCategoriesState();
@@ -22,13 +23,18 @@ class _BillCategoriesState extends State<BillCategories> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => HomeCubit(repository: apiClient),
-      child: const BillerCategoriesUI(),
+      child: BillerCategoriesUI(
+        isCategoryLoading: (bool) {
+          widget.isCategoryLoading(bool);
+        },
+      ),
     );
   }
 }
 
 class BillerCategoriesUI extends StatefulWidget {
-  const BillerCategoriesUI({super.key});
+  final void Function(bool) isCategoryLoading;
+  const BillerCategoriesUI({super.key, required this.isCategoryLoading});
 
   @override
   State<BillerCategoriesUI> createState() => _BillerCategoriesUIState();
@@ -58,6 +64,7 @@ class _BillerCategoriesUIState extends State<BillerCategoriesUI>
       listener: (context, state) {
         if (state is CategoriesLoading) {
           isCategoryLoading = true;
+          widget.isCategoryLoading(true);
         } else if (state is CategoriesSuccess) {
           categoriesData = state.CategoriesList;
           if (categoriesData != null) {
@@ -67,10 +74,13 @@ class _BillerCategoriesUIState extends State<BillerCategoriesUI>
                 .toList();
           }
           isCategoryLoading = false;
+          widget.isCategoryLoading(false);
         } else if (state is CategoriesFailed) {
           isCategoryLoading = false;
+          widget.isCategoryLoading(false);
         } else if (state is CategoriesError) {
           isCategoryLoading = false;
+          widget.isCategoryLoading(false);
         }
       },
       builder: (context, state) {
@@ -92,9 +102,7 @@ class _BillerCategoriesUIState extends State<BillerCategoriesUI>
                     ],
                   )
                 : Container()
-            : Center(
-                child: Container(height: 500.h, child: FlickrLoader()),
-              );
+            : Container(height: 200.h, child: Center(child: Loader()));
       },
     );
   }

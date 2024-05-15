@@ -51,7 +51,7 @@ Color getComplaintStatusColors(String statusID) {
   switch (statusID) {
     case "ASSIGNED":
       {
-        return AppColors.CLR_PRIMARY_LITE;
+        return AppColors.CLR_PRIMARY_NC;
       }
     case "ESCALATED":
       {

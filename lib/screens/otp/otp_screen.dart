@@ -1158,7 +1158,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             Center(
                               child: Container(
                                 height: 220.h,
-                                child: FlickrLoader(),
+                                child: Loader(),
                               ),
                             )
                         ],

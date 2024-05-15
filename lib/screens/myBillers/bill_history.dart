@@ -181,7 +181,7 @@ class _BillHistoryState extends State<BillHistory> {
                                           .position.maxScrollExtent);
                                 });
 
-                                return FlickrLoader();
+                                return Loader();
                               }
                             }))
                     : NoDataFound(
@@ -191,7 +191,7 @@ class _BillHistoryState extends State<BillHistory> {
                 Container(
                     height: 500.h,
                     width: double.infinity,
-                    child: Center(child: FlickrLoader())),
+                    child: Center(child: Loader())),
             ],
           ),
         ),

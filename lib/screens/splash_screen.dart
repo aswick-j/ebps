@@ -81,7 +81,7 @@ class _splashScreenState extends State<splashScreen> {
                 end: Alignment.bottomCenter,
                 colors: [
                   AppColors.CLR_BLUESHADE,
-                  Colors.white,
+                  AppColors.CLR_BODYSHADE,
                 ],
                 stops: const [
                   0,

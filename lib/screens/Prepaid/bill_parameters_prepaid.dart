@@ -137,7 +137,7 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                         child: Container(
                           height: 200,
                           width: 200,
-                          child: FlickrLoader(),
+                          child: Loader(),
                         ),
                       ),
                     if (!isPrepaidPlansLoading && prepaidPlansData!.length > 0)

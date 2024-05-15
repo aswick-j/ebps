@@ -388,7 +388,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
               ),
             ),
             if (isHistoryFilterLoading)
-              Container(height: 100.h, child: FlickrLoader()),
+              Container(height: 100.h, child: Loader()),
             if (billerFilterData!.isEmpty) SizedBox(height: 85.h),
             if (billerFilterData!.isNotEmpty)
               Padding(

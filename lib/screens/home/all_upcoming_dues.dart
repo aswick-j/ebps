@@ -343,12 +343,12 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                         buttonColor: widget.allUpcomingDues[index]
                                     ["itemType"] ==
                                 'upcomingDue'
-                            ? AppColors.BTN_CLR_ACTIVE_BG
+                            ? AppColors.CLR_PRIMARY_NC
                             : AppColors.CLR_GREEN,
                         buttonTxtColor: widget.allUpcomingDues[index]
                                     ["itemType"] ==
                                 'upcomingDue'
-                            ? AppColors.CLR_PRIMARY
+                            ? AppColors.CLR_PRIMARY_NC
                             : widget.allUpcomingDues[index]["itemType"] ==
                                     'upcomingAutopaused'
                                 ? AppColors.CLR_ERROR

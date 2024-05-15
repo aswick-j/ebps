@@ -1,3 +1,4 @@
+import 'package:ebps/constants/colors.dart';
 import 'package:ebps/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 
@@ -35,13 +36,14 @@ class _LoaderOverlayState extends State<LoaderOverlay> {
       children: [
         widget.child,
         if (_isLoading)
-          const Opacity(
+          Opacity(
             opacity: 0.8,
-            child: ModalBarrier(dismissible: false, color: Colors.black),
+            child: ModalBarrier(
+                dismissible: false, color: AppColors.TXT_CLR_DEFAULT_LOADER),
           ),
         if (_isLoading)
           Center(
-            child: Container(height: 200, width: 200, child: FlickrLoader()),
+            child: Container(height: 200, width: 200, child: Loader()),
           ),
       ],
     );

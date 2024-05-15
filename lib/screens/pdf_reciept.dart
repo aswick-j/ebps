@@ -50,7 +50,7 @@ class _pdfRecieptState extends State<pdfReciept> {
           canChangePageFormat: false,
           canDebug: false,
           initialPageFormat: PdfPageFormat.a4,
-          loadingWidget: FlickrLoader(),
+          loadingWidget: Loader(),
           build: (format) => _generatePdf(format, "title"),
         ),
       ),

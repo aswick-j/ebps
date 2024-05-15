@@ -430,7 +430,7 @@ class _PrepaidPlansState extends State<PrepaidPlans>
                     child: Container(
                       height: 450.h,
                       width: 200.w,
-                      child: FlickrLoader(),
+                      child: Loader(),
                     ),
                   );
           },

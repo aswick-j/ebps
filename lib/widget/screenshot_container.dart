@@ -1,7 +1,7 @@
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getGradientColors.dart';
 import 'package:ebps/helpers/getTransactionStatusReason.dart';
-import 'package:ebps/helpers/getTransactionStatusText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -54,7 +54,7 @@ class ScreenshotContainer extends StatelessWidget {
             style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
-              color: Color(0xff808080),
+              color: AppColors.TXT_CLR_LITE,
               height: 23 / 14,
             ),
             textAlign: TextAlign.left,
@@ -63,14 +63,14 @@ class ScreenshotContainer extends StatelessWidget {
           Row(
             children: [
               if (showLogo)
-                Image.asset(LOGO_EQUITAS_E, height: 40.h, width: 40.w),
+                Image.asset(LOGO_EQUITAS_PNG, height: 40.h, width: 40.w),
               if (showLogo) SizedBox(width: 10.w),
               Text(
                 subTitle,
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xff1b438b),
+                  color: AppColors.TXT_CLR_PRIMARY,
                 ),
                 textAlign: TextAlign.left,
               ),
@@ -85,7 +85,7 @@ class ScreenshotContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: AppColors.CLR_BACKGROUND,
       height: double.infinity,
       child: Container(
         clipBehavior: Clip.hardEdge,
@@ -97,14 +97,12 @@ class ScreenshotContainer extends StatelessWidget {
           image: DecorationImage(
             image: AssetImage(LOGO_BBPS_ASSURED),
             fit: BoxFit.contain,
-            colorFilter: ColorFilter.mode(
-              Colors.white.withOpacity(0.9),
-              BlendMode.screen,
-            ),
+            opacity: 0.1,
+            colorFilter: ColorFilter.mode(AppColors.CLR_ICON, BlendMode.srcIn),
           ),
           border: Border.all(
-            color: Color(0xffD1D9E8),
-            width: 1.0,
+            color: AppColors.CLR_CON_BORDER,
+            width: 0.5,
           ),
         ),
         child: Column(
@@ -165,7 +163,7 @@ class ScreenshotContainer extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 20.sp,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xff1b438b),
+                              color: AppColors.CLR_PRIMARY,
                               height: 33 / 20,
                             ),
                             textAlign: TextAlign.left,
@@ -182,7 +180,7 @@ class ScreenshotContainer extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
-                        color: Color(0xff808080),
+                        color: AppColors.TXT_CLR_LITE,
                       ),
                       textAlign: TextAlign.left,
                     ),
@@ -222,7 +220,7 @@ class ScreenshotContainer extends StatelessWidget {
                 subTitle: ParamValue,
                 clipBoard: false,
               ),
-            if (TransactionID != "")
+            if (TransactionID != "" && TransactionID != "null")
               txnDetails(
                 title: "Transaction ID",
                 subTitle: TransactionID,

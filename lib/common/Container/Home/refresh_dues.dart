@@ -207,11 +207,12 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
             autoDismiss: true,
             animationDuration: Duration(milliseconds: 300),
             builder: (context) => ToastCard(
-              shadowColor: Colors.grey.withOpacity(0.4),
+              color: AppColors.CLR_BACKGROUND,
+              shadowColor: Colors.grey.withOpacity(0.2),
               leading: Icon(
                 Icons.check_circle_outline,
                 size: 28.r,
-                color: Colors.green,
+                color: AppColors.CLR_GREEN,
               ),
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,7 +222,7 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                     style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xff1b438b),
+                      color: AppColors.CLR_PRIMARY,
                     ),
                     textAlign: TextAlign.left,
                     maxLines: 2,
@@ -235,11 +236,12 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
             autoDismiss: true,
             animationDuration: Duration(milliseconds: 300),
             builder: (context) => ToastCard(
-              shadowColor: Colors.grey.withOpacity(0.4),
+              color: AppColors.CLR_BACKGROUND,
+              shadowColor: Colors.grey.withOpacity(0.2),
               leading: Icon(
                 Icons.cancel_outlined,
                 size: 28.r,
-                color: Colors.red,
+                color: AppColors.CLR_ERROR,
               ),
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,7 +251,7 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                     style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xff1b438b),
+                      color: AppColors.CLR_PRIMARY,
                     ),
                     textAlign: TextAlign.left,
                     maxLines: 2,
@@ -263,11 +265,12 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
             autoDismiss: true,
             animationDuration: Duration(milliseconds: 300),
             builder: (context) => ToastCard(
-              shadowColor: Colors.grey.withOpacity(0.4),
+              color: AppColors.CLR_BACKGROUND,
+              shadowColor: Colors.grey.withOpacity(0.2),
               leading: Icon(
                 Icons.cancel_outlined,
                 size: 28.r,
-                color: Colors.red,
+                color: AppColors.CLR_ERROR,
               ),
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,7 +280,7 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                     style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xff1b438b),
+                      color: AppColors.CLR_PRIMARY,
                     ),
                     textAlign: TextAlign.left,
                     maxLines: 2,
@@ -421,7 +424,7 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                 child: Container(
                   height: 250.h,
                   width: 200.w,
-                  child: FlickrLoader(),
+                  child: Loader(),
                 ),
               ),
           ],

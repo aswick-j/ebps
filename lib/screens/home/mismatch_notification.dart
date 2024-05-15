@@ -70,8 +70,9 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                     borderRadius: BorderRadius.circular(12.0.r),
                     color: AppColors.CLR_BACKGROUND,
                     border: Border.all(
-                      color: Color.fromARGB(255, 255, 255, 255),
-                      width: 1.0,
+                      color:
+                          Color.fromARGB(255, 255, 255, 255).withOpacity(0.2),
+                      width: 0.5,
                     ),
                   ),
                   child: Container(
@@ -90,8 +91,9 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                     topLeft: Radius.circular(10.5.r)),
                                 color: AppColors.CLR_ERROR,
                                 border: Border.all(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  width: 1.0,
+                                  color: Color.fromARGB(255, 255, 255, 255)
+                                      .withOpacity(0.4),
+                                  width: 0.5,
                                 ),
                               ),
                               child: SizedBox(
@@ -189,7 +191,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                               borderRadius: BorderRadius.circular(8.0.r),
                               border: Border.all(
                                 color: AppColors.CLR_CONTAINER_BG,
-                                width: 1.0,
+                                width: 0.5,
                               ),
                             ),
                             child: Row(
@@ -287,7 +289,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                     widget.allautoPayData![index].rESETDATE == 1
                                         ? Color(0xFFD1D9E8)
                                         : AppColors.CLR_ERROR,
-                                width: 1.0,
+                                width: 0.5,
                               ),
                             ),
                             child: Row(
@@ -385,7 +387,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                     widget.allautoPayData![index].rESETDATE == 1
                                         ? AppColors.CLR_ERROR
                                         : Color(0xFFD1D9E8),
-                                width: 1.0,
+                                width: 0.5,
                               ),
                             ),
                             child: Row(

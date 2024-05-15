@@ -309,7 +309,7 @@ class _editAutopayState extends State<editAutopay> {
                         ? Center(
                             child: Container(
                               height: 500.h,
-                              child: FlickrLoader(),
+                              child: Loader(),
                             ),
                           )
                         : Column(children: [
@@ -1126,7 +1126,7 @@ class _editAutopayState extends State<editAutopay> {
                                       Center(
                                         child: Container(
                                           height: 100.h,
-                                          child: FlickrLoader(),
+                                          child: Loader(),
                                         ),
                                       ),
                                     if (!isAccLoading)

@@ -32,7 +32,9 @@ class AppColors {
       isElite ? Color(0xffE27882) : Color(0xff982F67);
 
   static Color get CLR_BLUESHADE =>
-      isElite ? Color(0xff1B438B) : Color(0xCCACC9FF);
+      isElite ? Color(0xFF0E2146).withOpacity(0.7) : Color(0xCCACC9FF);
+
+  static Color get CLR_BODYSHADE => isElite ? Color(0xFF0E2146) : Colors.white;
 
   static Color get CLR_GREENSHADE =>
       isElite ? Color(0xffD1D9E8) : Color(0xff99DDB4);
@@ -71,6 +73,8 @@ class AppColors {
 
   static Color get TXT_CLR_DEFAULT =>
       isElite ? Color(0xff94afd8) : Color(0xff191919);
+  static Color get TXT_CLR_DEFAULT_LOADER =>
+      isElite ? Color(0xFF0E2146) : Color(0xff191919);
 
   static Color get TXT_CLR_BLACK =>
       isElite ? Color(0xCCACC9FF) : Color(0xff191919);
