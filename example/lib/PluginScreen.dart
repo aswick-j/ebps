@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 class PluginScreen extends StatefulWidget {
   String apiData;
-  PluginScreen({Key? key, required this.apiData}) : super(key: key);
+  String flavor;
+  PluginScreen({Key? key, required this.apiData, required this.flavor})
+      : super(key: key);
 
   @override
   State<PluginScreen> createState() => _PluginScreenState();
@@ -17,8 +19,8 @@ class _PluginScreenState extends State<PluginScreen> {
       body: WillPopScope(
           onWillPop: () async => false,
           child: Center(
-              child:
-                  EbpsScreen(apiData: apiData, ctx: context, flavor: "uat"))),
+              child: EbpsScreen(
+                  apiData: apiData, ctx: context, flavor: widget.flavor))),
     );
   }
 }

@@ -4,8 +4,7 @@ import 'package:ebps/ebps.dart';
 
 const String ACCOUNT_INFO_URL = "/payment/account-info";
 const String AUTOPAY_DELETE_URL = "/auto-pay/delete/";
-
-String BASE_URL = ApiConstants.BASE_URL;
+String get BASE_URL => ApiConstants.BASE_URL;
 
 const String BILLER_URL = "/billers/billers-by-category/";
 const String CATEGORIES_URL = "/categories/";

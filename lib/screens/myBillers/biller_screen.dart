@@ -429,7 +429,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                                                     ? "Upcoming Due"
                                                     : "",
                                             upcomingTXT_CLR_DEFAULT: getupcomingAutoPaymentList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ''
-                                                ? Color(0xff00AB44)
+                                                ? AppColors.CLR_GREEN
                                                 : getUpcmoingDueData(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) != ""
                                                     ? AppColors.CLR_ASTRIX
                                                     : Colors.black,
@@ -437,14 +437,14 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                                             containerBorderColor: Color(0xffD1D9E8),
                                             buttonColor: Color.fromARGB(255, 255, 255, 255),
                                             buttonTxtColor: getAllAutopayList(getBillerDataWithUpcomingFirst(savedBillerData)![index].cUSTOMERBILLID) == 0
-                                                ? Color.fromARGB(255, 171, 39, 30)
+                                                ? AppColors.CLR_ERROR
                                                 : showAutopayButtonContent(
                                                     getBillerDataWithUpcomingFirst(
                                                             savedBillerData)![
                                                         index],
                                                   )
-                                                    ? Color.fromARGB(255, 16, 113, 55)
-                                                    : AppColors.CLR_PRIMARY,
+                                                    ? AppColors.CLR_GREEN
+                                                    : AppColors.CLR_PRIMARY_NC,
                                             buttonTextWeight: FontWeight.bold,
                                             buttonBorderColor: showAutopayButtonContent(
                                               getBillerDataWithUpcomingFirst(
