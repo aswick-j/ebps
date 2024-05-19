@@ -7,7 +7,6 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getDaySuffix.dart';
-import 'package:ebps/helpers/getDecimalInputs.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
 import 'package:ebps/helpers/getMonthName.dart';
 import 'package:ebps/helpers/getNavigators.dart';
@@ -19,9 +18,9 @@ import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/services/api.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/date_picker_dialog.dart';
-import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/getAccountInfoCard.dart';
 import 'package:ebps/widget/get_biller_detail.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:ebps/widget/loader_overlay.dart';
 import 'package:ebps/widget/no_result.dart';
 import 'package:flutter/gestures.dart';
@@ -306,11 +305,9 @@ class _editAutopayState extends State<editAutopay> {
             child: !isEditAutoPayPageError
                 ? SizedBox(
                     child: isAutoPayMaxLoading || isBbpsSettingsLoading
-                        ? Center(
-                            child: Container(
-                              height: 500.h,
-                              child: Loader(),
-                            ),
+                        ? Container(
+                            height: 500.h,
+                            child: Center(child: Loader()),
                           )
                         : Column(children: [
                             if (widget.AutoDateMisMatch)
@@ -709,7 +706,7 @@ class _editAutopayState extends State<editAutopay> {
                                         fillColor: limitGroupRadio == 0
                                             ? AppColors.CLR_INPUT_FILL
                                             : AppColors.TXT_CLR_GREY
-                                                .withOpacity(0.2),
+                                                .withOpacity(0.1),
                                         filled: true,
                                         prefixStyle: TextStyle(
                                             color: AppColors.TXT_CLR_DEFAULT),
@@ -1123,11 +1120,9 @@ class _editAutopayState extends State<editAutopay> {
                                       ),
                                     ),
                                     if (isAccLoading)
-                                      Center(
-                                        child: Container(
-                                          height: 100.h,
-                                          child: Loader(),
-                                        ),
+                                      Container(
+                                        height: 100.h,
+                                        child: Center(child: Loader()),
                                       ),
                                     if (!isAccLoading)
                                       Container(

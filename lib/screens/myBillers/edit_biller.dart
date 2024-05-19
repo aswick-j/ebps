@@ -1,14 +1,10 @@
-import 'dart:ui';
-
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
-import 'package:ebps/common/Container/MyBillers/bill_details_container.dart';
 import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
-import 'package:ebps/helpers/NavigationService.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getPopupMsg.dart';
 import 'package:ebps/models/edit_bill_modal.dart';
@@ -18,7 +14,7 @@ import 'package:ebps/services/api_client.dart';
 import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/custom_dialog.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:ebps/widget/loader_overlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -416,12 +412,10 @@ class _EditBillerUIState extends State<EditBillerUI> {
                               ],
                             )
                           else
-                            Center(
-                              child: Container(
-                                height: 200,
-                                width: 200,
-                                child: Loader(),
-                              ),
+                            Container(
+                              height: 200,
+                              width: 200,
+                              child: Center(child: Loader()),
                             ),
                         ],
                       )),

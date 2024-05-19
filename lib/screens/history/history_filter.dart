@@ -7,7 +7,7 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/categories_model.dart';
 import 'package:ebps/models/category_biller_filter_history._model.dart';
 import 'package:ebps/services/api_client.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -388,7 +388,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
               ),
             ),
             if (isHistoryFilterLoading)
-              Container(height: 100.h, child: Loader()),
+              Container(height: 100.h, child: Center(child: Loader())),
             if (billerFilterData!.isEmpty) SizedBox(height: 85.h),
             if (billerFilterData!.isNotEmpty)
               Padding(
@@ -447,11 +447,11 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                 Text(
                                                   "Select Billers",
                                                   style: TextStyle(
-                                                    fontSize: 16.sp,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: AppColors
-                                                        .TXT_CLR_BLACK_W,
-                                                  ),
+                                                      fontSize: 16.sp,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: AppColors
+                                                          .TXT_CLR_PRIMARY),
                                                   textAlign: TextAlign.left,
                                                 )
                                               ],

@@ -31,7 +31,7 @@ class _noResultState extends State<noResult> {
   List ErrorMessage = [
     "It seems there is a problem fetching the\nbill at the moment. Kindly try again later.",
     "It seems there is a problem fetching the\nplans at the moment. Kindly try again later.",
-    "The bank is experiencing some issues right now. Kindly try again later.",
+    "The bank is experiencing some issues right now.\nKindly try again later.",
     "No Plans Found for this Operator.\nPlease Choose a different Operator.",
     "You have no pending bill.\nPlease contact biller for more information.",
     "No bill data available at the moment.\nPlease contact biller for more information.",

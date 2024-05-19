@@ -74,7 +74,7 @@ class AccountInfoCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 10.0.sp,
                         fontWeight: FontWeight.w400,
-                        color: AppColors.CLR_PRIMARY_LITE,
+                        color: AppColors.CLR_BLUE_LITE,
                       ),
                       textAlign: TextAlign.center,
                     ),

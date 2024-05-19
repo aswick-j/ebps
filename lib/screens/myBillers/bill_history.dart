@@ -9,7 +9,7 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getTransactionStatus.dart';
 import 'package:ebps/models/history_model.dart';
 import 'package:ebps/screens/nodataFound.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -181,7 +181,14 @@ class _BillHistoryState extends State<BillHistory> {
                                           .position.maxScrollExtent);
                                 });
 
-                                return Loader();
+                                return Container(
+                                    height: 70.h,
+                                    width: 70.w,
+                                    child: Center(
+                                        child: CircularProgressIndicator(
+                                      backgroundColor: AppColors.CLR_BACKGROUND,
+                                      color: AppColors.CLR_PRIMARY,
+                                    )));
                               }
                             }))
                     : NoDataFound(

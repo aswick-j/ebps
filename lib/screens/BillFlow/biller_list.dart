@@ -9,7 +9,7 @@ import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/screens/nodataFound.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -250,11 +250,9 @@ class _BillerListState extends State<BillerList> {
                 ),
                 SizedBox(height: 10.h),
                 if (isBillSerachLoading || isAllBiller)
-                  Center(
-                    child: Container(
-                      height: 500.h,
-                      child: Loader(),
-                    ),
+                  Container(
+                    height: 500.h,
+                    child: Center(child: Loader()),
                   ),
                 if (_searchController.text.isEmpty && Allbiller!.isEmpty)
                   Container(
@@ -347,6 +345,22 @@ class _BillerListState extends State<BillerList> {
                                     color: AppColors.TXT_CLR_GREY,
                                   ),
                                   textAlign: TextAlign.left,
+                                ),
+                                subtitle: Text(
+                                  _searchController.text.isEmpty
+                                      ? Allbiller![index]
+                                          .bILLERCOVERAGE
+                                          .toString()
+                                      : BillerSearchResults![index]
+                                          .bILLERCOVERAGE
+                                          .toString(),
+                                  // "Airtel Digital TV",
+                                  style: TextStyle(
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.CLR_BLUE_LITE,
+                                  ),
+                                  textAlign: TextAlign.left,
                                 )),
                           );
                         } else {
@@ -356,7 +370,15 @@ class _BillerListState extends State<BillerList> {
                                     .position.maxScrollExtent);
                           });
 
-                          return Loader();
+                          return Container(
+                              height: 70.h,
+                              width: 70.w,
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                backgroundColor: AppColors.CLR_BACKGROUND,
+                                color: AppColors.CLR_PRIMARY,
+                              )));
+                          ;
                         }
                       },
                     ),

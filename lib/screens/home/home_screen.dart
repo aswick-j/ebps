@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
@@ -14,7 +16,7 @@ import 'package:ebps/screens/home/mismatch_notification.dart';
 import 'package:ebps/screens/home/upcoming_dues.dart';
 import 'package:ebps/services/api.dart';
 import 'package:ebps/services/api_client.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:ebps/widget/icon_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -147,10 +149,13 @@ class _HomeScreenUIState extends State<HomeScreenUI>
         context: dialogContext,
         barrierDismissible: false,
         builder: (BuildContext ctx) {
-          return MismatchNotification(
-              allautoPayData: allautoPayData,
-              context: dialogContext,
-              savedBiller: SavedBiller!);
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 0.5, sigmaY: 0.5),
+            child: MismatchNotification(
+                allautoPayData: allautoPayData,
+                context: dialogContext,
+                savedBiller: SavedBiller!),
+          );
         },
       );
     }

@@ -9,7 +9,7 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/complaints_model.dart';
 import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/services/api_client.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

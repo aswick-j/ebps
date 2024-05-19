@@ -255,8 +255,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                               children: [
                                 BillerDetailsContainer(
                                     icon: BILLER_LOGO(widget.BillerName),
-                                    billerName: widget.BillerName,
-                                    categoryName: widget.CategoryName),
+                                    title: widget.BillerName,
+                                    subTitle: widget.CategoryName),
                                 Container(
                                     width: double.infinity,
                                     height: 80.h,

@@ -68,6 +68,28 @@ var PRD = [
     "eliteFlag": "N"
   },
   {
+    "name": "Kirubesh",
+    "accounts": [
+      {
+        "avlBal": "20",
+        "entityType": "I",
+        "acctTp": "SA",
+        "crntSts": "8",
+        "acctId": "100053231724",
+        "custRltnsp": "SOW",
+        "prdNm": "1027-SelfE Half KYC",
+        "crntStsDesc": "ACCOUNT OPEN REGULAR"
+      }
+    ],
+    "otpPreference": "SMS",
+    "gndr": "M",
+    "mblNb": "919092931667",
+    "dob": "2002-09-18",
+    "custId": "15195807",
+    "emailId": "kirubeshsuresh02@gmail.com",
+    "eliteFlag": "N"
+  },
+  {
     "name": "Nithiya",
     "accounts": [
       {

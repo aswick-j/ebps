@@ -5,13 +5,13 @@ import 'package:flutter_svg/svg.dart';
 
 class BillerDetailsContainer extends StatelessWidget {
   String icon;
-  String billerName;
-  String categoryName;
+  String title;
+  String subTitle;
   BillerDetailsContainer(
       {super.key,
       required this.icon,
-      required this.billerName,
-      required this.categoryName});
+      required this.title,
+      required this.subTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class BillerDetailsContainer extends StatelessWidget {
           height: 10.h,
         ),
         Text(
-          billerName,
+          title,
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.bold,
@@ -42,7 +42,7 @@ class BillerDetailsContainer extends StatelessWidget {
           height: 10.h,
         ),
         Text(
-          categoryName,
+          subTitle,
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.w500,

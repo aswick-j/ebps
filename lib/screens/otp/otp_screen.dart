@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
@@ -16,17 +15,15 @@ import 'package:ebps/services/api.dart';
 import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/custom_dialog.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:ebps/widget/loader_overlay.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -1155,11 +1152,9 @@ class _OtpScreenState extends State<OtpScreen> {
                               ),
                             )
                           else
-                            Center(
-                              child: Container(
-                                height: 220.h,
-                                child: Loader(),
-                              ),
+                            Container(
+                              height: 220.h,
+                              child: Center(child: Loader()),
                             )
                         ],
                       )),

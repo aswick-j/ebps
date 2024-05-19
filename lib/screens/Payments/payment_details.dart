@@ -21,7 +21,7 @@ import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/custom_dialog.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:ebps/widget/getAccountInfoCard.dart';
 import 'package:ebps/widget/get_biller_detail.dart';
 import 'package:ebps/widget/loader_overlay.dart';
@@ -49,6 +49,7 @@ class PaymentDetails extends StatefulWidget {
   PrepaidPlansData? planDetails;
   bool otherAmount;
   billerResponseData? fetchBillerResponse;
+  String? consumerName;
 
   PaymentDetails(
       {Key? key,
@@ -63,6 +64,7 @@ class PaymentDetails extends StatefulWidget {
       required this.SavedinputParameters,
       required this.BbpsSettingInfo,
       this.categoryName,
+      this.consumerName,
       this.amount,
       this.validateBill,
       this.billerInputSign,
@@ -225,7 +227,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
           backgroundColor: AppColors.CLR_BACKGROUND,
           appBar: MyAppBar(
             context: context,
-            title: widget.billerName.toString(),
+            title: widget.categoryName.toString(),
             onLeadingTap: () => Navigator.pop(context),
             showActions: false,
           ),
@@ -406,22 +408,22 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       ),
                       BillerDetailsContainer(
                         icon: BILLER_LOGO(widget.billerName.toString()),
-                        billerName: widget.billerName.toString(),
-                        categoryName: widget.categoryName.toString(),
+                        title: widget.billerName.toString(),
+                        subTitle: widget.isSavedBill
+                            ? widget.savedBillersData!.bILLERCOVERAGE.toString()
+                            : widget.billerData!.bILLERCOVERAGE.toString(),
                       ),
                       if (widget.SavedinputParameters != null ||
                           widget.inputParameters != null)
                         Container(
                             width: double.infinity,
-                            constraints: BoxConstraints(
-                              minHeight: 80.h,
-                              maxHeight: 300.h,
-                            ),
-                            height: 0.h,
+                            // constraints: BoxConstraints(
+                            //   minHeight: 80.h,
+                            //   maxHeight: 300.h,
+                            // ),
+                            // height: 0.h,
                             // color: Colors.white,
-                            child: ListView(
-                              primary: false,
-                              physics: NeverScrollableScrollPhysics(),
+                            child: Column(
                               // crossAxisSpacing: 10.h,
                               // crossAxisCount: 2,
                               // childAspectRatio: 4 / 2,
@@ -468,6 +470,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                     context),
                                 billerdetail("Bill Name",
                                     widget.billName.toString(), context),
+                                if (widget.consumerName != null)
+                                  billerdetail("Consumer Name",
+                                      widget.consumerName.toString(), context),
                               ],
                             )),
                       Padding(
@@ -538,11 +543,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     ),
                   ),
                   if (isAccLoading)
-                    Center(
-                      child: Container(
-                        height: 100.h,
-                        child: Loader(),
-                      ),
+                    Container(
+                      height: 100.h,
+                      child: Center(child: Loader()),
                     ),
                   if (!isAccLoading)
                     Container(

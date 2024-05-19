@@ -28,7 +28,7 @@ TextTheme myTextTheme = TextTheme(
 );
 
 ThemeData ebpsTheme = ThemeData(
-    // useMaterial3: true,
+    useMaterial3: false,
     fontFamily: GoogleFonts.poppins().fontFamily,
     scaffoldBackgroundColor: AppColors.CLR_BACKGROUND,
     unselectedWidgetColor: AppColors.TXT_CLR_GREY,

@@ -18,7 +18,7 @@ import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/services/api.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/date_picker_dialog.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:ebps/widget/getAccountInfoCard.dart';
 import 'package:ebps/widget/get_biller_detail.dart';
 import 'package:ebps/widget/loader_overlay.dart';
@@ -206,11 +206,9 @@ class _createAutopayState extends State<createAutopay> {
               ],
               child: !isCreateAutopayPageError
                   ? isMaxAmountLoading || isBbpsSettingsLoading
-                      ? Center(
-                          child: Container(
-                            height: 500.h,
-                            child: Loader(),
-                          ),
+                      ? Container(
+                          height: 500.h,
+                          child: Center(child: Loader()),
                         )
                       : Column(children: [
                           ReusableContainer(
@@ -517,7 +515,7 @@ class _createAutopayState extends State<createAutopay> {
                                           fillColor: limitGroupRadio == 0
                                               ? AppColors.CLR_INPUT_FILL
                                               : AppColors.TXT_CLR_GREY
-                                                  .withOpacity(0.2),
+                                                  .withOpacity(0.1),
                                           filled: true,
                                           prefixStyle: TextStyle(
                                               color: AppColors.TXT_CLR_DEFAULT),
@@ -920,11 +918,9 @@ class _createAutopayState extends State<createAutopay> {
                                 ),
                               ),
                               if (isAccLoading)
-                                Center(
-                                  child: Container(
-                                    height: 100.h,
-                                    child: Loader(),
-                                  ),
+                                Container(
+                                  height: 100.h,
+                                  child: Center(child: Loader()),
                                 ),
                               if (!isAccLoading)
                                 Container(

@@ -12,7 +12,7 @@ import 'package:ebps/models/fetch_bill_model.dart';
 
 import 'package:ebps/services/api_client.dart';
 
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -336,7 +336,7 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                             onPressed: () {
                               goBack(context);
                             },
-                            buttonText: "Close",
+                            buttonText: "Okay",
                             buttonTxtColor:
                                 AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
                             buttonBorderColor: AppColors.BTN_CLR_ACTIVE_BORDER,
@@ -424,7 +424,7 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                 child: Container(
                   height: 250.h,
                   width: 200.w,
-                  child: Loader(),
+                  child: Center(child: Loader()),
                 ),
               ),
           ],

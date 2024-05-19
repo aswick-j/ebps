@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
-import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getNavigators.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

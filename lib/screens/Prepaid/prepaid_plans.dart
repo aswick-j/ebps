@@ -12,7 +12,7 @@ import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/dot_indicator.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:ebps/widget/no_result.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -430,7 +430,7 @@ class _PrepaidPlansState extends State<PrepaidPlans>
                     child: Container(
                       height: 450.h,
                       width: 200.w,
-                      child: Loader(),
+                      child: Center(child: Loader()),
                     ),
                   );
           },

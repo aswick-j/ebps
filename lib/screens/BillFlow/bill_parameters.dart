@@ -12,7 +12,7 @@ import 'package:ebps/models/add_biller_model.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/input_signatures_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -146,16 +146,14 @@ class _BillParametersState extends State<BillParameters> {
                 children: [
                   BillerDetailsContainer(
                     icon: BILLER_LOGO(widget.billerData!.bILLERNAME.toString()),
-                    billerName: widget.billerData!.bILLERNAME.toString(),
-                    categoryName: widget.billerData!.cATEGORYNAME.toString(),
+                    title: widget.billerData!.bILLERNAME.toString(),
+                    subTitle: widget.billerData!.cATEGORYNAME.toString(),
                   ),
                   if (isInpuSignLoading)
-                    Center(
-                      child: Container(
-                        height: 200,
-                        width: 200,
-                        child: Loader(),
-                      ),
+                    Container(
+                      height: 200,
+                      width: 200,
+                      child: Center(child: Loader()),
                     ),
                   Padding(
                     padding:

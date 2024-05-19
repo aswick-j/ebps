@@ -10,7 +10,7 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/widget/animated_text_field.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -150,53 +150,79 @@ class _SearchScreenState extends State<SearchScreen> {
               children: [
                 Padding(
                   padding: EdgeInsets.all(8.0.r),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-                    child: AnimatedTextField(
-                      hintTextStyle: TextStyle(color: AppColors.TXT_CLR_LITE),
-                      onChanged: (value) => {
-                        _pageNumber = 1,
-                        // _searchController.text = value,
-                        _searchController.addListener(() {
-                          if (_debounce?.isActive ?? false) _debounce?.cancel();
-                          _debounce = Timer(
-                              const Duration(milliseconds: 500), handleSearch);
-                        })
-                      },
-                      animationType: Animationtype.slide,
-                      hintLabelText: "Search for ",
-                      hintTexts: const [
-                        'Credit Card',
-                        'DTH',
-                        'Electricity',
-                        'Fastag',
-                        'LPG Gas',
-                        'Mobile Postpaid',
-                        'Water'
-                      ],
-                      keyboardType: TextInputType.text,
-                      controller: _searchController,
-                      style: TextStyle(color: AppColors.TXT_CLR_LITE),
-                      decoration: InputDecoration(
-                        fillColor: AppColors.CLR_INPUT_FILL,
-                        filled: true,
-                        isDense: true,
-                        contentPadding:
-                            EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 0),
-                        hintStyle: TextStyle(color: AppColors.TXT_CLR_LITE),
-                        hintText: 'Search by Biller',
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.search),
-                          iconSize: 25.r,
-                          color: AppColors.CLR_BLUE_LITE,
-                          onPressed: () => (),
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(50.0.r),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 299.w,
+                        padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+                        child: AnimatedTextField(
+                          hintTextStyle:
+                              TextStyle(color: AppColors.TXT_CLR_LITE),
+                          onChanged: (value) => {
+                            _pageNumber = 1,
+                            // _searchController.text = value,
+                            _searchController.addListener(() {
+                              if (_debounce?.isActive ?? false)
+                                _debounce?.cancel();
+                              _debounce = Timer(
+                                  const Duration(milliseconds: 500),
+                                  handleSearch);
+                            })
+                          },
+                          animationType: Animationtype.slide,
+                          hintLabelText: "Search for ",
+                          hintTexts: const [
+                            'Credit Card',
+                            'DTH',
+                            'Electricity',
+                            'Fastag',
+                            'LPG Gas',
+                            'Mobile Postpaid',
+                            'Water'
+                          ],
+                          keyboardType: TextInputType.text,
+                          controller: _searchController,
+                          style: TextStyle(color: AppColors.TXT_CLR_LITE),
+                          decoration: InputDecoration(
+                            fillColor: AppColors.CLR_INPUT_FILL,
+                            filled: true,
+                            isDense: true,
+                            contentPadding:
+                                EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 0),
+                            hintStyle: TextStyle(color: AppColors.TXT_CLR_LITE),
+                            hintText: 'Search by Biller',
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.search),
+                              iconSize: 25.r,
+                              color: AppColors.CLR_BLUE_LITE,
+                              onPressed: () => (),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(50.0.r),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      InkWell(
+                          onTap: () => {goTo(context, sEARCHROUTE)},
+                          child: Container(
+                              margin: EdgeInsets.only(right: 15.w),
+                              // width: 40.w,
+                              // height: 40.h,
+                              decoration: ShapeDecoration(
+                                color: AppColors.CLR_SECONDARY,
+                                shape: CircleBorder(),
+                              ),
+                              child: Container(
+                                width: 30.w,
+                                height: 30.h,
+                                child: Icon(
+                                  Icons.filter_alt,
+                                  color: Colors.white,
+                                ),
+                              )))
+                    ],
                   ),
                 ),
                 ReusableContainer(
@@ -208,7 +234,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       Center(
                         child: Container(
                           height: 500.h,
-                          child: Loader(),
+                          child: Center(child: Loader()),
                         ),
                       ),
                     if (!isBillSerachLoading &&
@@ -299,6 +325,18 @@ class _SearchScreenState extends State<SearchScreen> {
                                         color: AppColors.TXT_CLR_GREY,
                                       ),
                                       textAlign: TextAlign.left,
+                                    ),
+                                    subtitle: Text(
+                                      BillerSearchResults![index]
+                                          .bILLERCOVERAGE
+                                          .toString(),
+                                      // "Airtel Digital TV",
+                                      style: TextStyle(
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.CLR_BLUE_LITE,
+                                      ),
+                                      textAlign: TextAlign.left,
                                     )),
                               );
                             } else {
@@ -308,7 +346,14 @@ class _SearchScreenState extends State<SearchScreen> {
                                         .position.maxScrollExtent);
                               });
 
-                              return Loader();
+                              return Container(
+                                  height: 70.h,
+                                  width: 70.w,
+                                  child: Center(
+                                      child: CircularProgressIndicator(
+                                    backgroundColor: AppColors.CLR_BACKGROUND,
+                                    color: AppColors.CLR_PRIMARY,
+                                  )));
                             }
                           },
                         ),

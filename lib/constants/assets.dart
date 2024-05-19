@@ -6,6 +6,8 @@ const LOGO_EQUITAS = "packages/ebps/assets/logo/logo_equitas_normal.png";
 const LOGO_EQUITAS_PNG =
     "packages/ebps/assets/logo/logo_equitas_transparent.png";
 const LOGO_BBPS = "packages/ebps/assets/icon/logo_bbps.svg";
+const LOGO_BBPS_X = "packages/ebps/assets/icon/logo_bbps_x.svg";
+
 const LOGO_BBPS_FULL = "packages/ebps/assets/logo/logo_bbps_full.svg";
 const LOGO_BBPS_FULL_PNG = "packages/ebps/assets/logo/logo_bbps_full_png.png";
 const LOGO_EQUITAS_E = "packages/ebps/assets/logo/logo_equitas_e.jpeg";
@@ -220,7 +222,7 @@ String CATEGORY_ICON(String? CATEGORY_NAME) {
       return ICON_WATER;
 
     default:
-      return LOGO_BBPS;
+      return LOGO_BBPS_X;
   }
 }
 

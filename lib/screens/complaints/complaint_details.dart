@@ -9,7 +9,6 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getComplaintStatus.dart';
 import 'package:ebps/models/complaints_model.dart';
-import 'package:ebps/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -207,9 +206,8 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                         BillerDetailsContainer(
                             icon: BILLER_LOGO(
                                 widget.complaintData.bILLERNAME.toString()),
-                            billerName:
-                                widget.complaintData.bILLERNAME.toString(),
-                            categoryName:
+                            title: widget.complaintData.bILLERNAME.toString(),
+                            subTitle:
                                 widget.complaintData.cATEGORYNAME.toString()),
 
                         // CmpDetails(

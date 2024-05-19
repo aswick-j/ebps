@@ -22,7 +22,6 @@ final TextStyle italicNormalStyle = TextStyle(
 
 TextSpan getOTPInfoMsg(
     String otpFor, String Amount, String BillerName, String BillName) {
-  print(otpFor);
   switch (otpFor) {
     case "confirm-payment":
       return TextSpan(

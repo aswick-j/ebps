@@ -1,6 +1,7 @@
 import 'package:ebps/constants/colors.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoaderOverlay extends StatefulWidget {
   const LoaderOverlay({Key? key, required this.child}) : super(key: key);
@@ -43,7 +44,8 @@ class _LoaderOverlayState extends State<LoaderOverlay> {
           ),
         if (_isLoading)
           Center(
-            child: Container(height: 200, width: 200, child: Loader()),
+            child: Container(
+                height: 200.h, width: 200.w, child: Center(child: Loader())),
           ),
       ],
     );

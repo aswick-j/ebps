@@ -243,6 +243,7 @@ class MyRouter {
                       billName: args['billName'],
                       fetchBillerResponse: args['fetchBillerResponse'],
                       categoryName: args['categoryName'],
+                      consumerName: args['consumerName'],
                       isSavedBill: args["isSavedBill"],
                       billerData: args['billerData'],
                       BbpsSettingInfo: args['BbpsSettingInfo'],

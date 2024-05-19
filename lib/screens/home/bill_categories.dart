@@ -3,7 +3,7 @@ import 'package:ebps/common/Container/Home/categories_container.dart';
 import 'package:ebps/helpers/getBillerCategory.dart';
 import 'package:ebps/models/categories_model.dart';
 import 'package:ebps/services/api_client.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -88,6 +88,9 @@ class _BillerCategoriesUIState extends State<BillerCategoriesUI>
             ? categoriesData!.isNotEmpty
                 ? Column(
                     children: [
+                      SizedBox(
+                        height: 5.h,
+                      ),
                       CategoriesContainer(
                         headerName: "Bill Categories",
                         categoriesCount: 8,

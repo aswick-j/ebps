@@ -1,9 +1,7 @@
-import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/bbps_settings_model.dart';
-import 'package:ebps/widget/flickr_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
@@ -82,15 +80,15 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
         ),
         body: Container(
           height: 1000.h,
-          // color: AppColors.CLR_BACKGROUND,
+          width: double.infinity,
+          color: AppColors.CLR_BACKGROUND,
           padding: EdgeInsets.only(
               left: 16.0.w, top: 8.h, right: 16.w, bottom: 60.h),
           child: SingleChildScrollView(
               controller: _controller,
               child: HtmlWidget(
-                  textStyle: TextStyle(
-                    fontSize: 14.sp,
-                  ),
+                  textStyle:
+                      TextStyle(fontSize: 14.sp, color: AppColors.CLR_PRIMARY),
                   widget.BbpsSettingInfo!.tERMSANDCONDITIONS.toString())),
         ),
         bottomSheet: Container(

@@ -10,7 +10,7 @@ import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/models/upcoming_dues_model.dart';
 import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/services/api_client.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:ebps/widget/no_result.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -462,7 +462,7 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                           isUpcomingAutopaymentLoading ||
                           isSavedBillerLoading)
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.7,
+                          height: 500.h,
                           child: Center(child: Loader()),
                         ),
                     ],

@@ -12,7 +12,7 @@ import 'package:ebps/models/billers_model.dart';
 import 'package:ebps/models/input_signatures_model.dart';
 import 'package:ebps/models/prepaid_fetch_plans_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:ebps/widget/no_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -129,16 +129,14 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                     BillerDetailsContainer(
                       icon:
                           BILLER_LOGO(widget.billerData!.bILLERNAME.toString()),
-                      billerName: widget.billerData!.bILLERNAME.toString(),
-                      categoryName: widget.billerData!.cATEGORYNAME.toString(),
+                      title: widget.billerData!.bILLERNAME.toString(),
+                      subTitle: widget.billerData!.cATEGORYNAME.toString(),
                     ),
                     if (isPrepaidPlansLoading)
-                      Center(
-                        child: Container(
-                          height: 200,
-                          width: 200,
-                          child: Loader(),
-                        ),
+                      Container(
+                        height: 200,
+                        width: 200,
+                        child: Center(child: Loader()),
                       ),
                     if (!isPrepaidPlansLoading && prepaidPlansData!.length > 0)
                       Column(

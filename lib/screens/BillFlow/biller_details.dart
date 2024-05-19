@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
@@ -21,10 +19,9 @@ import 'package:ebps/models/fetch_bill_model.dart';
 import 'package:ebps/models/paymentInformationModel.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/animated_dialog.dart';
-import 'package:ebps/widget/centralized_grid_view.dart';
 import 'package:ebps/widget/custom_dialog.dart';
-import 'package:ebps/widget/flickr_loader.dart';
 import 'package:ebps/widget/get_biller_detail.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:ebps/widget/no_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -213,7 +210,7 @@ class _BillerDetailsState extends State<BillerDetails> {
         backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
           context: context,
-          title: widget.billerName,
+          title: widget.categoryName,
           onLeadingTap: () => goBack(context),
           showActions: false,
         ),
@@ -376,8 +373,12 @@ class _BillerDetailsState extends State<BillerDetails> {
                         children: [
                           BillerDetailsContainer(
                             icon: BILLER_LOGO(widget.billerName.toString()),
-                            billerName: widget.billerName.toString(),
-                            categoryName: widget.categoryName.toString(),
+                            title: widget.billerName.toString(),
+                            // categoryName: widget.categoryName.toString(),
+                            subTitle: widget.isSavedBill
+                                ? widget.savedBillersData!.bILLERCOVERAGE!
+                                    .toString()
+                                : widget.billerData!.bILLERCOVERAGE.toString(),
                           ),
                           if (isFetchbillLoading ||
                               isAmountByDateLoading ||
@@ -694,7 +695,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                       fillColor: validateBill!["amountEditable"]
                                           ? AppColors.CLR_INPUT_FILL
                                           : AppColors.TXT_CLR_GREY
-                                              .withOpacity(0.2),
+                                              .withOpacity(0.1),
                                       filled: true,
                                       labelStyle: TextStyle(
                                           color: validateBill!["amountEditable"]
@@ -845,8 +846,12 @@ class _BillerDetailsState extends State<BillerDetails> {
                         children: [
                           BillerDetailsContainer(
                             icon: BILLER_LOGO(widget.billerName.toString()),
-                            billerName: widget.billerName.toString(),
-                            categoryName: widget.categoryName.toString(),
+                            title: widget.billerName.toString(),
+                            // categoryName: widget.categoryName.toString(),
+                            subTitle: widget.isSavedBill
+                                ? widget.savedBillersData!.bILLERCOVERAGE!
+                                    .toString()
+                                : widget.billerData!.bILLERCOVERAGE.toString(),
                           ),
                           Container(
                               width: double.infinity,
@@ -919,6 +924,12 @@ class _BillerDetailsState extends State<BillerDetails> {
                                         ? widget.savedBillersData!.bILLERNAME
                                         : widget.billerData!.bILLERNAME,
                                     "billName": widget.billName,
+                                    "consumerName": _billerResponseData !=
+                                                null &&
+                                            _billerResponseData!.customerName !=
+                                                null
+                                        ? _billerResponseData!.customerName
+                                        : null,
                                     "billerData": widget.billerData,
                                     "fetchBillerResponse":
                                         fetchBillerResponseData,

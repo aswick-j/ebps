@@ -19,7 +19,7 @@ import 'package:ebps/screens/history/history_filter.dart';
 import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/services/api_client.dart';
 import 'package:ebps/widget/date_picker.dart';
-import 'package:ebps/widget/flickr_loader.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -358,7 +358,15 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                             .position.maxScrollExtent);
                                   });
 
-                                  return Loader();
+                                  return Container(
+                                      height: 70.h,
+                                      width: 70.w,
+                                      child: Center(
+                                          child: CircularProgressIndicator(
+                                        backgroundColor:
+                                            AppColors.CLR_BACKGROUND,
+                                        color: AppColors.CLR_PRIMARY,
+                                      )));
                                 }
                               })
                           : NoDataFound(
@@ -563,7 +571,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                           fromdateController.text.isNotEmpty
                                               ? AppColors.CLR_INPUT_FILL
                                               : AppColors.TXT_CLR_GREY
-                                                  .withOpacity(0.2),
+                                                  .withOpacity(0.1),
                                       filled: true,
                                       hintStyle: TextStyle(
                                           color: AppColors.TXT_CLR_LITE),
