@@ -34,6 +34,7 @@ class SavedBillersData {
   String? bILLERCOVERAGE;
   String? bILLERICON;
   String? bILLEREFFECTIVEFROM;
+  String? cUSTOMERNAME;
   String? bILLEREFFECTIVETO;
   String? pAYMENTEXACTNESS;
   String? bILLERACCEPTSADHOC;
@@ -81,6 +82,7 @@ class SavedBillersData {
       this.pAYMENTDATE,
       this.aUTOPAYID,
       this.pARAMETERNAME,
+      this.cUSTOMERNAME,
       this.pARAMETERVALUE,
       this.tRANSACTIONSTATUS,
       this.cOMPLETIONDATE,
@@ -101,6 +103,7 @@ class SavedBillersData {
     bILLERID = json['BILLER_ID'];
     cUSTOMERBILLID = json['CUSTOMER_BILL_ID'];
     bILLERNAME = json['BILLER_NAME'];
+    cUSTOMERNAME = json['CUSTOMER_NAME'];
     bILLERCOVERAGE = json['BILLER_COVERAGE'];
     bILLERICON = json['BILLER_ICON'];
     bILLEREFFECTIVEFROM = json['BILLER_EFFECTIVE_FROM'];
@@ -157,6 +160,7 @@ class SavedBillersData {
     data['QUICK_PAY_ALLOWED'] = this.qUICKPAYALLOWED;
     data['PAYMENT_DATE'] = this.pAYMENTDATE;
     data['AUTOPAY_ID'] = this.aUTOPAYID;
+    data['CUSTOMER_NAME'] = this.cUSTOMERNAME;
     data['PARAMETER_NAME'] = this.pARAMETERNAME;
     data['PARAMETER_VALUE'] = this.pARAMETERVALUE;
     data['TRANSACTION_STATUS'] = this.tRANSACTIONSTATUS;

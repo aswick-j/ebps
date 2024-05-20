@@ -233,18 +233,51 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                       SizedBox(
                         height: 5.h,
                       ),
-                      Text(
-                        widget.savedBillersData.bILLERNAME.toString(),
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.TXT_CLR_DEFAULT,
-                          overflow: TextOverflow.ellipsis,
+                      MarqueeWidget(
+                        direction: Axis.horizontal,
+                        // reverse: true,
+                        child: Row(
+                          children: [
+                            Text(
+                              widget.savedBillersData.bILLNAME == null
+                                  ? "NA"
+                                  : widget.savedBillersData.bILLNAME.toString(),
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.normal,
+                                color: AppColors.TXT_CLR_SECONDARY,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            if (widget.savedBillersData.cUSTOMERNAME != null &&
+                                widget.savedBillersData.cUSTOMERNAME != "NA")
+                              Text(
+                                "( ${widget.savedBillersData.cUSTOMERNAME.toString()} )",
+                                style: TextStyle(
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.CLR_BLUE_LITE,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                          ],
                         ),
-                        textAlign: TextAlign.left,
-                        maxLines: 1,
-                        softWrap: false,
                       ),
+                      // Text(
+                      //   widget.savedBillersData.bILLERNAME.toString(),
+                      //   style: TextStyle(
+                      //     fontSize: 12.sp,
+                      //     fontWeight: FontWeight.w500,
+                      //     color: AppColors.TXT_CLR_DEFAULT,
+                      //     overflow: TextOverflow.ellipsis,
+                      //   ),
+                      //   textAlign: TextAlign.left,
+                      //   maxLines: 1,
+                      //   softWrap: false,
+                      // ),
                     ],
                   ),
                 ),
@@ -408,26 +441,33 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                               ],
                                                             ),
                                                           ),
-                                                                                                            Container(
-                                                      decoration: BoxDecoration(
-                                                        boxShadow: [
-                                                          BoxShadow(
+                                                          Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .withOpacity(
+                                                                            0.2),
+                                                                    spreadRadius:
+                                                                        0.2,
+                                                                    blurRadius:
+                                                                        2,
+                                                                    offset:
+                                                                        Offset(
+                                                                            0,
+                                                                            2)),
+                                                              ],
+                                                            ),
+                                                            child: Divider(
+                                                              height: 0.4.h,
+                                                              thickness: 1,
                                                               color: Colors.grey
                                                                   .withOpacity(
-                                                                      0.2),
-                                                              spreadRadius: 0.2,
-                                                              blurRadius: 2,
-                                                              offset:
-                                                                  Offset(0, 2)),
-                                                        ],
-                                                      ),
-                                                      child: Divider(
-                                                        height: 0.4.h,
-                                                        thickness: 1,
-                                                        color: Colors.grey
-                                                            .withOpacity(0.1),
-                                                      ),
-                                                    ),
+                                                                      0.1),
+                                                            ),
+                                                          ),
                                                           Container(
                                                             decoration:
                                                                 BoxDecoration(
@@ -1434,11 +1474,13 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                     }
                                   },
                                   child: CircleAvatar(
-                                                  radius: 11.5.r,
-
+                                    radius: 11.5.r,
                                     backgroundColor: AppColors.CLR_BACKGROUND,
-                                    child: SvgPicture.asset(ICON_ERROR,      colorFilter: ColorFilter.mode(
-                                                            AppColors.CLR_ERROR, BlendMode.srcIn),),
+                                    child: SvgPicture.asset(
+                                      ICON_ERROR,
+                                      colorFilter: ColorFilter.mode(
+                                          AppColors.CLR_ERROR, BlendMode.srcIn),
+                                    ),
                                   )),
                             ),
                         SizedBox(width: 5.w),
