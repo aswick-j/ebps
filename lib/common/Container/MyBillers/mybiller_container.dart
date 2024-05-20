@@ -218,21 +218,18 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        widget.savedBillersData.bILLNAME.toString(),
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.TXT_CLR_PRIMARY,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        textAlign: TextAlign.left,
-                        maxLines: 1,
-                        softWrap: false,
-                      ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
+                      // Text(
+                      //   widget.savedBillersData.bILLNAME.toString(),
+                      //   style: TextStyle(
+                      //     fontSize: 13.sp,
+                      //     fontWeight: FontWeight.bold,
+                      //     color: AppColors.TXT_CLR_PRIMARY,
+                      //     overflow: TextOverflow.ellipsis,
+                      //   ),
+                      //   textAlign: TextAlign.left,
+                      //   maxLines: 1,
+                      //   softWrap: false,
+                      // ),
                       MarqueeWidget(
                         direction: Axis.horizontal,
                         // reverse: true,
@@ -241,11 +238,12 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                             Text(
                               widget.savedBillersData.bILLNAME == null
                                   ? "NA"
-                                  : widget.savedBillersData.bILLNAME.toString(),
+                                  : widget.savedBillersData.bILLNAME
+                                      .toString(),
                               style: TextStyle(
                                 fontSize: 12.sp,
-                                fontWeight: FontWeight.normal,
-                                color: AppColors.TXT_CLR_SECONDARY,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.CLR_PRIMARY,
                               ),
                               textAlign: TextAlign.left,
                             ),
@@ -259,25 +257,28 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                 style: TextStyle(
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.CLR_BLUE_LITE,
+                                  color: AppColors.TXT_CLR_DEFAULT,
                                 ),
                                 textAlign: TextAlign.left,
                               ),
                           ],
                         ),
                       ),
-                      // Text(
-                      //   widget.savedBillersData.bILLERNAME.toString(),
-                      //   style: TextStyle(
-                      //     fontSize: 12.sp,
-                      //     fontWeight: FontWeight.w500,
-                      //     color: AppColors.TXT_CLR_DEFAULT,
-                      //     overflow: TextOverflow.ellipsis,
-                      //   ),
-                      //   textAlign: TextAlign.left,
-                      //   maxLines: 1,
-                      //   softWrap: false,
-                      // ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      Text(
+                        widget.savedBillersData.bILLERNAME.toString(),
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.TXT_CLR_DEFAULT,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        textAlign: TextAlign.left,
+                        maxLines: 1,
+                        softWrap: false,
+                      ),
                     ],
                   ),
                 ),
