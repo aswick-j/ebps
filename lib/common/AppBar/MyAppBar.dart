@@ -24,6 +24,7 @@ MyAppBar(
     toolbarHeight: 62.0.h,
     backgroundColor: AppColors.CLR_BACKGROUND,
     elevation: 0.0,
+    centerTitle: true,
     leading: IconButton(
       onPressed: onLeadingTap ?? () => Navigator.pop(context),
       icon: Icon(
