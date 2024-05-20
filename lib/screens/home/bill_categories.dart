@@ -88,9 +88,6 @@ class _BillerCategoriesUIState extends State<BillerCategoriesUI>
             ? categoriesData!.isNotEmpty
                 ? Column(
                     children: [
-                      SizedBox(
-                        height: 5.h,
-                      ),
                       CategoriesContainer(
                         headerName: "Bill Categories",
                         categoriesCount: 8,

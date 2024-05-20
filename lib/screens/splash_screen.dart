@@ -111,7 +111,9 @@ class _splashScreenState extends State<splashScreen> {
                         height: 100.h,
                         width: 100.w,
                         child: Image.asset(
-                          LOGO_BBPS_FULL_PNG,
+                          IsCustomerElite.isCustomerElite
+                              ? LOGO_BBPS_FULL_WHITE_PNG
+                              : LOGO_BBPS_FULL_PNG,
                         ),
                       ),
                     ],

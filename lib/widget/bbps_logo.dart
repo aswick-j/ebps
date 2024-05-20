@@ -1,4 +1,5 @@
 import 'package:ebps/constants/assets.dart';
+import 'package:ebps/ebps.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,7 +17,9 @@ class BbpsLogoContainer extends StatelessWidget {
             height: 80.h,
             width: 80.w,
             child: Image.asset(
-              LOGO_BBPS_FULL_PNG,
+              IsCustomerElite.isCustomerElite
+                  ? LOGO_BBPS_FULL_WHITE_PNG
+                  : LOGO_BBPS_FULL_PNG,
             ),
           ),
           if (showEquitasLogo)

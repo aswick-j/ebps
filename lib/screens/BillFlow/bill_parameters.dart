@@ -116,7 +116,7 @@ class _BillParametersState extends State<BillParameters> {
       backgroundColor: AppColors.CLR_BACKGROUND,
       appBar: MyAppBar(
         context: context,
-        title: widget.billerData!.bILLERNAME,
+        title: widget.billerData!.cATEGORYNAME,
         onLeadingTap: () => Navigator.pop(context),
         showActions: false,
       ),
@@ -147,7 +147,7 @@ class _BillParametersState extends State<BillParameters> {
                   BillerDetailsContainer(
                     icon: BILLER_LOGO(widget.billerData!.bILLERNAME.toString()),
                     title: widget.billerData!.bILLERNAME.toString(),
-                    subTitle: widget.billerData!.cATEGORYNAME.toString(),
+                    subTitle: widget.billerData!.bILLERCOVERAGE.toString(),
                   ),
                   if (isInpuSignLoading)
                     Container(

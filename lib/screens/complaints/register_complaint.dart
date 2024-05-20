@@ -120,7 +120,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                     style: TextStyle(
                                       fontSize: 10.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: AppColors.TXT_CLR_PRIMARY,
+                                      color: AppColors.CLR_PRIMARY_NC,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -164,7 +164,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                             });
                                           },
                                           child: Icon(Icons.copy,
-                                              color: AppColors.CLR_PRIMARY,
+                                              color: AppColors.CLR_PRIMARY_NC,
                                               size: 20))
                                     ],
                                   )
@@ -481,6 +481,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                     controller: txtDescController,
                                     cursorColor: AppColors.CLR_BLUE_LITE,
                                     maxLength: 200,
+                                    style: TextStyle(
+                                        color: AppColors.TXT_CLR_BLACK),
                                     decoration: InputDecoration(
                                         labelText: "Description",
                                         hintText: "Type here...",

@@ -486,16 +486,15 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                                                                     .historyData
                                                                     .billerId
                                                                     .toString(),
+                                                                billNumber: widget
+                                                                    .historyData
+                                                                    .billNumber
+                                                                    .toString(),
                                                                 BillName: widget
                                                                     .historyData
                                                                     .billName
                                                                     .toString(),
-                                                                ParamName: widget
-                                                                        .historyData
-                                                                        .categoryName
-                                                                        .toString()
-                                                                        .toLowerCase()
-                                                                        .contains("mobile prepaid")
+                                                                ParamName: widget.historyData.categoryName.toString().toLowerCase().contains("mobile prepaid")
                                                                     ? widget.historyData.parameters!.firstWhere((params) => params.parameterName == null ? params.parameterValue == null : params.parameterName.toString().toLowerCase() == "mobile number").parameterName.toString()
                                                                     : widget.historyData.parameters![0].parameterName.toString(),
                                                                 ParamValue: widget.historyData.categoryName.toString().toLowerCase().contains("mobile prepaid") ? widget.historyData.parameters!.firstWhere((params) => params.parameterName == null ? params.parameterName == null : params.parameterName.toString().toLowerCase() == "mobile number" || params.parameterName.toString().toLowerCase() == "customer mobile number").parameterName.toString() : widget.historyData.parameters![0].parameterValue.toString(),
@@ -643,11 +642,15 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                           height: 10.h,
                           thickness: 0.50,
                         ),
-                        // TxnDetails(
-                        //     title: "From Account",
-                        //     subTitle:
-                        //         widget.historyData.aCCOUNTNUMBER.toString(),
-                        //     clipBoard: false),
+                        if (widget.historyData.billNumber != null &&
+                            (widget.historyData.billNumber !=
+                                widget
+                                    .historyData.parameters![0].parameterValue))
+                          TxnDetails(
+                              title: "Bill Number",
+                              subTitle:
+                                  widget.historyData.billNumber.toString(),
+                              clipBoard: false),
                         // TxnDetails(
                         //     title: "Bank Reference Number ",
                         //     subTitle:

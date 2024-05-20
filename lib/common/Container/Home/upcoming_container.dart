@@ -77,7 +77,7 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
           clipBehavior: Clip.hardEdge,
 
           margin: EdgeInsets.only(
-              left: 18.0.w, right: 18.w, top: 10.h, bottom: 0.h),
+              left: 18.0.w, right: 18.w, top: 10.h, bottom: 5.h),
 
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0.r),

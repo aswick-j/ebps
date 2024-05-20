@@ -150,79 +150,49 @@ class _SearchScreenState extends State<SearchScreen> {
               children: [
                 Padding(
                   padding: EdgeInsets.all(8.0.r),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 299.w,
-                        padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-                        child: AnimatedTextField(
-                          hintTextStyle:
-                              TextStyle(color: AppColors.TXT_CLR_LITE),
-                          onChanged: (value) => {
-                            _pageNumber = 1,
-                            // _searchController.text = value,
-                            _searchController.addListener(() {
-                              if (_debounce?.isActive ?? false)
-                                _debounce?.cancel();
-                              _debounce = Timer(
-                                  const Duration(milliseconds: 500),
-                                  handleSearch);
-                            })
-                          },
-                          animationType: Animationtype.slide,
-                          hintLabelText: "Search for ",
-                          hintTexts: const [
-                            'Credit Card',
-                            'DTH',
-                            'Electricity',
-                            'Fastag',
-                            'LPG Gas',
-                            'Mobile Postpaid',
-                            'Water'
-                          ],
-                          keyboardType: TextInputType.text,
-                          controller: _searchController,
-                          style: TextStyle(color: AppColors.TXT_CLR_LITE),
-                          decoration: InputDecoration(
-                            fillColor: AppColors.CLR_INPUT_FILL,
-                            filled: true,
-                            isDense: true,
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 0),
-                            hintStyle: TextStyle(color: AppColors.TXT_CLR_LITE),
-                            hintText: 'Search by Biller',
-                            suffixIcon: IconButton(
-                              icon: Icon(Icons.search),
-                              iconSize: 25.r,
-                              color: AppColors.CLR_BLUE_LITE,
-                              onPressed: () => (),
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(50.0.r),
-                            ),
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                          onTap: () => {goTo(context, sEARCHROUTE)},
-                          child: Container(
-                              margin: EdgeInsets.only(right: 15.w),
-                              // width: 40.w,
-                              // height: 40.h,
-                              decoration: ShapeDecoration(
-                                color: AppColors.CLR_SECONDARY,
-                                shape: CircleBorder(),
-                              ),
-                              child: Container(
-                                width: 30.w,
-                                height: 30.h,
-                                child: Icon(
-                                  Icons.filter_alt,
-                                  color: Colors.white,
-                                ),
-                              )))
+                  child: AnimatedTextField(
+                    hintTextStyle: TextStyle(color: AppColors.TXT_CLR_LITE),
+                    onChanged: (value) => {
+                      _pageNumber = 1,
+                      // _searchController.text = value,
+                      _searchController.addListener(() {
+                        if (_debounce?.isActive ?? false) _debounce?.cancel();
+                        _debounce = Timer(
+                            const Duration(milliseconds: 500), handleSearch);
+                      })
+                    },
+                    animationType: Animationtype.slide,
+                    hintLabelText: "Search for ",
+                    hintTexts: const [
+                      'Credit Card',
+                      'DTH',
+                      'Electricity',
+                      'Fastag',
+                      'LPG Gas',
+                      'Mobile Postpaid',
+                      'Water'
                     ],
+                    keyboardType: TextInputType.text,
+                    controller: _searchController,
+                    style: TextStyle(color: AppColors.TXT_CLR_LITE),
+                    decoration: InputDecoration(
+                      fillColor: AppColors.CLR_INPUT_FILL,
+                      filled: true,
+                      isDense: true,
+                      contentPadding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 0),
+                      hintStyle: TextStyle(color: AppColors.TXT_CLR_LITE),
+                      hintText: 'Search by Biller',
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.search),
+                        iconSize: 25.r,
+                        color: AppColors.CLR_BLUE_LITE,
+                        onPressed: () => (),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(50.0.r),
+                      ),
+                    ),
                   ),
                 ),
                 ReusableContainer(

@@ -21,6 +21,7 @@ class ScreenshotContainer extends StatelessWidget {
   final String TransactionDate;
   final String channel;
   final String ConsumerName;
+  final String billNumber;
 
   const ScreenshotContainer({
     required this.BillerName,
@@ -36,6 +37,7 @@ class ScreenshotContainer extends StatelessWidget {
     required this.trasactionStatus,
     required this.TransactionDate,
     required this.ConsumerName,
+    required this.billNumber,
   });
 
   Widget txnDetails({
@@ -189,6 +191,7 @@ class ScreenshotContainer extends StatelessWidget {
               ),
             ),
             Divider(
+              color: AppColors.CLR_CON_BORDER,
               height: 10.h,
               thickness: 1,
             ),
@@ -211,9 +214,18 @@ class ScreenshotContainer extends StatelessWidget {
               clipBoard: false,
             ),
             Divider(
+              color: AppColors.CLR_CON_BORDER,
               height: 10.h,
               thickness: 1,
             ),
+            if (billNumber != "NA" &&
+                billNumber != "null" &&
+                billNumber != ParamValue)
+              txnDetails(
+                title: "Bill Number",
+                subTitle: billNumber,
+                clipBoard: false,
+              ),
             if (ParamName != "null" || ParamValue != "null")
               txnDetails(
                 title: ParamName,

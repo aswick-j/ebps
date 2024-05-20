@@ -279,6 +279,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                           fromAccount: widget.billerData!['acNo'].toString(),
                                                           billAmount: "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.billerData!['billAmount']))}",
                                                           trasactionStatus: tnxResponse!.reason.toString(),
+                                                          billNumber: tnxResponse!.paymentDetails!.bbpsResponse != null
+                                                              ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse != null
+                                                                  ? tnxResponse!.paymentDetails!.bbpsResponse!.data!.billerResponse!.billNumber.toString()
+                                                                  : "NA"
+                                                              : "NA",
                                                           status: tnxResponse!.paymentDetails!.success == true
                                                               ? "success"
                                                               : tnxResponse!.paymentDetails!.failed == true || tnxResponse!.paymentDetails!.success == false
@@ -439,13 +444,30 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     color: AppColors.CLR_CON_BORDER,
                     thickness: 0.50,
                   ),
-
+                  if (tnxResponse!.paymentDetails!.bbpsResponse != null &&
+                      tnxResponse!.paymentDetails!.bbpsResponse!.data!
+                              .billerResponse !=
+                          null)
+                    TxnDetails(
+                        title: "Bill Number",
+                        subTitle:
+                            tnxResponse!.paymentDetails!.bbpsResponse != null
+                                ? tnxResponse!.paymentDetails!.bbpsResponse!
+                                            .data!.billerResponse !=
+                                        null
+                                    ? tnxResponse!.paymentDetails!.bbpsResponse!
+                                        .data!.billerResponse!.billNumber
+                                        .toString()
+                                    : "NA"
+                                : "NA",
+                        clipBoard: false),
                   TxnDetails(
                       title:
                           widget.billerData!["inputSignature"][0].pARAMETERNAME,
                       subTitle: widget
                           .billerData!["inputSignature"][0].pARAMETERVALUE,
                       clipBoard: false),
+
                   // if (widget.historyData.tRANSACTIONSTATUS == 'success')
                   if (tnxResponse!.paymentDetails!.success == true)
                     TxnDetails(

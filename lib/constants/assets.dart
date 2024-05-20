@@ -10,6 +10,8 @@ const LOGO_BBPS_X = "packages/ebps/assets/icon/logo_bbps_x.svg";
 
 const LOGO_BBPS_FULL = "packages/ebps/assets/logo/logo_bbps_full.svg";
 const LOGO_BBPS_FULL_PNG = "packages/ebps/assets/logo/logo_bbps_full_png.png";
+const LOGO_BBPS_FULL_WHITE_PNG =
+    "packages/ebps/assets/logo/logo_bbps_full_png_white.png";
 const LOGO_EQUITAS_E = "packages/ebps/assets/logo/logo_equitas_e.jpeg";
 const LOGO_BBPS_ASSURED = "packages/ebps/assets/logo/logo_bbps_assured.png";
 const LOGO_BBPS_ASSURED_BW =
