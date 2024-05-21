@@ -317,15 +317,16 @@ class _UpcomingDuesContainerState extends State<UpcomingDuesContainer> {
                                   ),
                                 ],
                               ),
-                              Text(
-                                widget.amount,
-                                style: TextStyle(
-                                  fontSize: 13.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.TXT_CLR_PRIMARY,
+                              if (widget.amount != "-")
+                                Text(
+                                  widget.amount,
+                                  style: TextStyle(
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.TXT_CLR_PRIMARY,
+                                  ),
+                                  textAlign: TextAlign.left,
                                 ),
-                                textAlign: TextAlign.left,
-                              ),
                             ],
                           ),
                         ],

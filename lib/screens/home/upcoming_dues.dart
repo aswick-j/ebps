@@ -159,8 +159,9 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                           });
                         }
                       },
-                      amount:
-                          "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allUpcomingDues[index]["dueAmount"]!.toString()))}",
+                      amount: widget.allUpcomingDues[index]["dueAmount"] != ""
+                          ? "₹ ${NumberFormat('#,##,##0.00').format(double.parse(widget.allUpcomingDues[index]["dueAmount"]!.toString()))}"
+                          : "-",
                       iconPath: BILLER_LOGO(
                           widget.allUpcomingDues[index]["billerName"]),
                       containerBorderColor: AppColors.CLR_CON_BORDER,

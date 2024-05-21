@@ -193,15 +193,16 @@ class _MainContainerState extends State<MainContainer> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            widget.amount,
-                            style: TextStyle(
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.TXT_CLR_PRIMARY,
+                          if (widget.amount != "-")
+                            Text(
+                              widget.amount,
+                              style: TextStyle(
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.TXT_CLR_PRIMARY,
+                              ),
+                              textAlign: TextAlign.left,
                             ),
-                            textAlign: TextAlign.left,
-                          ),
                           if (widget.dateText != "-")
                             Row(
                               children: [
