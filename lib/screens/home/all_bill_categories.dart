@@ -6,6 +6,7 @@ import 'package:ebps/constants/colors.dart';
 import 'package:ebps/helpers/getBillerCategory.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/categories_model.dart';
+import 'package:ebps/models/saved_biller_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,8 +14,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class AllBillCategories extends StatefulWidget {
   List<CategorieData>? categoriesData;
+  final List<SavedBillersData>? SavedBiller;
 
-  AllBillCategories({Key? key, required this.categoriesData}) : super(key: key);
+  AllBillCategories({Key? key, required this.categoriesData, this.SavedBiller})
+      : super(key: key);
 
   @override
   State<AllBillCategories> createState() => _AllBillCategoriesState();
@@ -165,21 +168,25 @@ class _AllBillCategoriesState extends State<AllBillCategories> {
               headerName: "Recharge",
               categoriesCount: RechargeCategories.length,
               categoriesData: RechargeCategories,
+              SavedBiller: widget.SavedBiller,
             ),
             CategoriesContainer(
               headerName: "Utilities",
               categoriesCount: UtilitiesCategories.length,
               categoriesData: UtilitiesCategories,
+              SavedBiller: widget.SavedBiller,
             ),
             CategoriesContainer(
               headerName: "Financial Services",
               categoriesCount: FinancialCategories.length,
               categoriesData: FinancialCategories,
+              SavedBiller: widget.SavedBiller,
             ),
             CategoriesContainer(
               headerName: "More Services",
               categoriesCount: MoreCategories.length,
               categoriesData: MoreCategories,
+              SavedBiller: widget.SavedBiller,
             ),
             SizedBox(
               height: 10.h,

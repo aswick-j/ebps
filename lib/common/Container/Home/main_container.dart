@@ -337,7 +337,7 @@ class _MainContainerState extends State<MainContainer> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0.r)),
                         child: Container(
-                          height: 200.h,
+                          height: 300.h,
                           child: Padding(
                             padding: EdgeInsets.all(12.0.r),
                             child: Column(
@@ -351,7 +351,16 @@ class _MainContainerState extends State<MainContainer> {
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
-                                    color: AppColors.TXT_CLR_BLACK,
+                                    color: AppColors.CLR_PRIMARY,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "This action is irreversible and will require manual payment for future bills",
+                                  style: TextStyle(
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.CLR_ERROR,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),

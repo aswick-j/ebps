@@ -703,6 +703,8 @@ class _editAutopayState extends State<editAutopay> {
                                       }
                                     },
                                     decoration: InputDecoration(
+                                        hintStyle: TextStyle(
+                                            color: AppColors.TXT_CLR_LITE),
                                         fillColor: limitGroupRadio == 0
                                             ? AppColors.CLR_INPUT_FILL
                                             : AppColors.TXT_CLR_GREY

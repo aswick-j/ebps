@@ -204,12 +204,20 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                     child: Column(
                       children: [
                         BillerDetailsContainer(
-                            icon: BILLER_LOGO(
-                                widget.complaintData.bILLERNAME.toString()),
-                            title: widget.complaintData.bILLERNAME.toString(),
-                            subTitle:
-                                widget.complaintData.cATEGORYNAME.toString()),
-
+                          icon: BILLER_LOGO(
+                              widget.complaintData.bILLERNAME.toString()),
+                          title: widget.complaintData.bILLERNAME.toString(),
+                          subTitle:
+                              widget.complaintData.cATEGORYNAME.toString(),
+                          subTitle2: "",
+                        ),
+                        Divider(
+                          color: AppColors.CLR_DIVIDER_LITE,
+                          height: 1.h,
+                          thickness: 0.50,
+                          // indent: 10.w,
+                          // endIndent: 10.w,
+                        ),
                         // CmpDetails(
                         //     title: "Status",
                         //     subTitle:

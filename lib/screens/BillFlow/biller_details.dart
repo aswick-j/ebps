@@ -206,11 +206,20 @@ class _BillerDetailsState extends State<BillerDetails> {
       );
     }
 
+    bool isValidDate(String input) {
+      try {
+        final date = DateTime.parse(input);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
     return Scaffold(
         backgroundColor: AppColors.CLR_BACKGROUND,
         appBar: MyAppBar(
           context: context,
-          title: widget.categoryName,
+          title: "Billing Summary",
           onLeadingTap: () => goBack(context),
           showActions: false,
         ),
@@ -297,16 +306,16 @@ class _BillerDetailsState extends State<BillerDetails> {
               isFetchbillLoading = false;
               isUnableToFetchBill = false;
             });
-            BlocProvider.of<MybillersCubit>(context).getAddUpdateUpcomingDue(
-                customerBillID: widget.isSavedBill
-                    ? widget.savedBillersData!.cUSTOMERBILLID
-                    : _customerBIllID,
-                dueAmount: _billerResponseData!.amount,
-                dueDate: _billerResponseData!.dueDate,
-                billDate: _billerResponseData!.billDate,
-                billPeriod: _billerResponseData!.billPeriod);
+            // BlocProvider.of<MybillersCubit>(context).getAddUpdateUpcomingDue(
+            //     customerBillID: widget.isSavedBill
+            //         ? widget.savedBillersData!.cUSTOMERBILLID
+            //         : _customerBIllID,
+            //     dueAmount: _billerResponseData!.amount,
+            //     dueDate: _billerResponseData!.dueDate,
+            //     billDate: _billerResponseData!.billDate,
+            //     billPeriod: _billerResponseData!.billPeriod);
           } else if (state is FetchBillFailed) {
-            BlocProvider.of<MybillersCubit>(context).getAddUpdateUpcomingDue();
+            // BlocProvider.of<MybillersCubit>(context).getAddUpdateUpcomingDue();
             if (state.message.toString().contains("Unable to fetch")) {
               setState(() {
                 ErrIndex = 0;
@@ -376,9 +385,20 @@ class _BillerDetailsState extends State<BillerDetails> {
                             title: widget.billerName.toString(),
                             // categoryName: widget.categoryName.toString(),
                             subTitle: widget.isSavedBill
+                                ? widget.savedBillersData!.cATEGORYNAME!
+                                    .toString()
+                                : widget.billerData!.cATEGORYNAME.toString(),
+                            subTitle2: widget.isSavedBill
                                 ? widget.savedBillersData!.bILLERCOVERAGE!
                                     .toString()
                                 : widget.billerData!.bILLERCOVERAGE.toString(),
+                          ),
+                          Divider(
+                            color: AppColors.CLR_DIVIDER_LITE,
+                            height: 1.h,
+                            thickness: 0.50,
+                            // indent: 10.w,
+                            // endIndent: 10.w,
                           ),
                           if (isFetchbillLoading ||
                               isAmountByDateLoading ||
@@ -407,81 +427,124 @@ class _BillerDetailsState extends State<BillerDetails> {
                               !isBbpsSettingsLoading &&
                               !isPaymentInfoLoading)
                             if (((_billerResponseData != null)))
-                              Container(
-                                  // width: double.infinity,
-                                  // constraints: BoxConstraints(
-                                  //   minHeight: 100.h,
-                                  //   maxHeight: 300.h,
-                                  // ),
-                                  child: ListView(
-                                shrinkWrap: true,
-                                // primary: false,
-                                physics: NeverScrollableScrollPhysics(),
-                                // crossAxisSpacing: 10.w,
-                                // mainAxisSpacing: 0,
-                                // crossAxisCount: 2,
-                                // childAspectRatio: 4 / 2,
-                                children: <Widget>[
-                                  if (_billerResponseData != null &&
-                                      _billerResponseData!.billDate != null)
-                                    billerdetail(
-                                        "Bill Date",
-                                        _billerResponseData!.billDate
-                                            .toString(),
-                                        context),
-                                  if (_billerResponseData != null &&
-                                      _billerResponseData!.dueDate != null)
-                                    billerdetail(
-                                        "Due Date",
-                                        _billerResponseData!.dueDate.toString(),
-                                        context),
-                                  if (_billerResponseData != null &&
-                                      _billerResponseData!.billNumber != null)
-                                    billerdetail(
-                                        "Bill Number",
-                                        _billerResponseData!.billNumber
-                                            .toString(),
-                                        context),
-                                  if (_billerResponseData != null &&
-                                      _billerResponseData!.billPeriod != null)
-                                    billerdetail(
-                                        "Bill Period",
-                                        _billerResponseData!.billPeriod
-                                            .toString(),
-                                        context),
-                                  if (_billerResponseData != null &&
-                                      _billerResponseData!.customerName != null)
-                                    billerdetail(
-                                        "Consumer Name",
-                                        _billerResponseData!.customerName
-                                            .toString(),
-                                        context),
-                                  if (widget.billName != null)
-                                    billerdetail("Bill Name",
-                                        widget.billName.toString(), context),
-                                  if ((!(_billerResponseData == null ||
-                                      _billerResponseData!.tag!.isEmpty)))
-                                    ListView.builder(
-                                        itemCount:
-                                            _billerResponseData!.tag!.length,
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemBuilder: (context, index) => Column(
-                                              children: [
-                                                billerdetail(
-                                                  _billerResponseData!
-                                                      .tag![index].name
-                                                      .toString(),
-                                                  _billerResponseData!
-                                                      .tag![index].value
-                                                      .toString(),
-                                                  context,
-                                                ),
-                                              ],
-                                            )),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 24.w, top: 20.0.h, bottom: 10.h),
+                                    child: Text(
+                                      "Bill Details",
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.CLR_PRIMARY,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                  Container(
+                                      // width: double.infinity,
+                                      // constraints: BoxConstraints(
+                                      //   minHeight: 100.h,
+                                      //   maxHeight: 300.h,
+                                      // ),
+                                      child: ListView(
+                                    shrinkWrap: true,
+                                    // primary: false,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    // crossAxisSpacing: 10.w,
+                                    // mainAxisSpacing: 0,
+                                    // crossAxisCount: 2,
+                                    // childAspectRatio: 4 / 2,
+                                    children: <Widget>[
+                                      if (_billerResponseData != null &&
+                                          _billerResponseData!.billDate != null)
+                                        billerdetail(
+                                            "Bill Date",
+                                            isValidDate(_billerResponseData!
+                                                    .billDate
+                                                    .toString())
+                                                ? DateFormat.yMMMMd('en_US')
+                                                    .format(DateTime.parse(
+                                                            _billerResponseData!
+                                                                .billDate
+                                                                .toString())
+                                                        .toLocal())
+                                                : _billerResponseData!.billDate
+                                                    .toString(),
+                                            context),
+                                      if (_billerResponseData != null &&
+                                          _billerResponseData!.dueDate != null)
+                                        billerdetail(
+                                            "Due Date",
+                                            isValidDate(_billerResponseData!
+                                                    .dueDate
+                                                    .toString())
+                                                ? DateFormat.yMMMMd('en_US')
+                                                    .format(DateTime.parse(
+                                                            _billerResponseData!
+                                                                .dueDate
+                                                                .toString())
+                                                        .toLocal())
+                                                : _billerResponseData!.dueDate
+                                                    .toString(),
+                                            context),
+                                      if (_billerResponseData != null &&
+                                          _billerResponseData!.billNumber !=
+                                              null)
+                                        billerdetail(
+                                            "Bill Number",
+                                            _billerResponseData!.billNumber
+                                                .toString(),
+                                            context),
+                                      if (_billerResponseData != null &&
+                                          _billerResponseData!.billPeriod !=
+                                              null)
+                                        billerdetail(
+                                            "Bill Period",
+                                            _billerResponseData!.billPeriod
+                                                .toString(),
+                                            context),
+                                      if (_billerResponseData != null &&
+                                          _billerResponseData!.customerName !=
+                                              null)
+                                        billerdetail(
+                                            "Consumer Name",
+                                            _billerResponseData!.customerName
+                                                .toString(),
+                                            context),
+                                      if (widget.billName != null)
+                                        billerdetail(
+                                            "Bill Name",
+                                            widget.billName.toString(),
+                                            context),
+                                      if ((!(_billerResponseData == null ||
+                                          _billerResponseData!.tag!.isEmpty)))
+                                        ListView.builder(
+                                            itemCount: _billerResponseData!
+                                                .tag!.length,
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemBuilder: (context, index) =>
+                                                Column(
+                                                  children: [
+                                                    billerdetail(
+                                                      _billerResponseData!
+                                                          .tag![index].name
+                                                          .toString(),
+                                                      _billerResponseData!
+                                                          .tag![index].value
+                                                          .toString(),
+                                                      context,
+                                                    ),
+                                                  ],
+                                                )),
+                                    ],
+                                  )),
                                 ],
-                              )),
+                              ),
                           if (!isFetchbillLoading &&
                               !isUnableToFetchBill &&
                               !isBbpsSettingsLoading &&
@@ -495,10 +558,13 @@ class _BillerDetailsState extends State<BillerDetails> {
 
                                 // color: Colors.white,
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          top: 20.0.h, bottom: 10.h),
+                                          left: 24.w,
+                                          top: 20.0.h,
+                                          bottom: 10.h),
                                       child: Text(
                                         "Additional Info",
                                         style: TextStyle(
@@ -849,9 +915,20 @@ class _BillerDetailsState extends State<BillerDetails> {
                             title: widget.billerName.toString(),
                             // categoryName: widget.categoryName.toString(),
                             subTitle: widget.isSavedBill
+                                ? widget.savedBillersData!.cATEGORYNAME!
+                                    .toString()
+                                : widget.billerData!.cATEGORYNAME.toString(),
+                            subTitle2: widget.isSavedBill
                                 ? widget.savedBillersData!.bILLERCOVERAGE!
                                     .toString()
                                 : widget.billerData!.bILLERCOVERAGE.toString(),
+                          ),
+                          Divider(
+                            color: AppColors.CLR_DIVIDER_LITE,
+                            height: 1.h,
+                            thickness: 0.50,
+                            // indent: 10.w,
+                            // endIndent: 10.w,
                           ),
                           Container(
                               width: double.infinity,

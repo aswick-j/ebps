@@ -2,6 +2,7 @@ import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
+import 'package:ebps/common/Container/Home/biller_details_container.dart';
 import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
@@ -256,34 +257,15 @@ class _EditBillerUIState extends State<EditBillerUI> {
                       bottomMargin: 15.h,
                       child: Column(
                         children: [
-                          ListTile(
-                            leading: Container(
-                              width: 50.w,
-                              child: Padding(
-                                padding: EdgeInsets.all(8.0.r),
-                                child: SvgPicture.asset(BILLER_LOGO(widget
-                                    .savedbillersData.bILLERNAME
-                                    .toString())),
-                              ),
-                            ),
-                            title: Text(
-                              widget.savedbillersData.bILLERNAME.toString(),
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.TXT_CLR_BLACK_W,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                            subtitle: Text(
-                              widget.savedbillersData.cATEGORYNAME.toString(),
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.TXT_CLR_LITE,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
+                          BillerDetailsContainer(
+                            icon: BILLER_LOGO(
+                                widget.savedbillersData.bILLERNAME.toString()),
+                            title:
+                                widget.savedbillersData.bILLERNAME.toString(),
+                            subTitle:
+                                widget.savedbillersData.cATEGORYNAME.toString(),
+                            subTitle2: widget.savedbillersData.bILLERCOVERAGE
+                                .toString(),
                           ),
                           Divider(
                             color: AppColors.CLR_CON_BORDER,

@@ -87,7 +87,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
       BlocProvider.of<MybillersCubit>(context)
           .deleteUpcomingDue(widget.billerData!["customerBillID"]);
     } else {
-      BlocProvider.of<MybillersCubit>(context).getAddUpdateUpcomingDue();
+      // BlocProvider.of<MybillersCubit>(context).getAddUpdateUpcomingDue();
     }
   }
 
@@ -447,6 +447,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   if (tnxResponse!.paymentDetails!.bbpsResponse != null &&
                       tnxResponse!.paymentDetails!.bbpsResponse!.data!
                               .billerResponse !=
+                          null &&
+                      tnxResponse!.paymentDetails!.bbpsResponse!.data!
+                              .billerResponse!.billNumber !=
                           null)
                     TxnDetails(
                         title: "Bill Number",

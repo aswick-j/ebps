@@ -388,6 +388,7 @@ class _HomeScreenUIState extends State<HomeScreenUI>
                       ),
 
                     BillCategories(
+                      SavedBiller: SavedBiller,
                       isCategoryLoading: (bool) {
                         setState(() {
                           isBillCategoryLoading = bool;

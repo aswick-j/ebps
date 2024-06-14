@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
+import 'package:ebps/common/Container/Home/biller_list_saved.dart';
 import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/billers_model.dart';
+import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/widget/loader.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,10 @@ import 'package:flutter_svg/svg.dart';
 class BillerList extends StatefulWidget {
   dynamic id;
   String name;
-  BillerList({super.key, required this.id, required this.name});
+  final List<SavedBillersData>? SavedBiller;
+
+  BillerList(
+      {super.key, required this.id, required this.name, this.SavedBiller});
 
   @override
   State<BillerList> createState() => _BillerListState();
@@ -34,15 +39,22 @@ class _BillerListState extends State<BillerList> {
   final _searchController = TextEditingController();
   Timer? _debounce;
   bool MoreLoading = true;
+  bool isSavedBillPresent = false;
   late int _pageNumber;
   late int _totalPages;
   @override
   void initState() {
+    if (widget.SavedBiller!.isNotEmpty) {
+      isSavedBillPresent = true;
+    } else {
+      isSavedBillPresent = false;
+    }
     _pageNumber = 1;
     _totalPages = 1;
     BlocProvider.of<HomeCubit>(context).getAllBiller(widget.id, 1);
 
     initScrollController(context);
+
     super.initState();
   }
 
@@ -152,6 +164,8 @@ class _BillerListState extends State<BillerList> {
             isBillSerachLoading = false;
           }
           return Column(children: [
+            if (isSavedBillPresent)
+              BillerListSaved(SavedBiller: widget.SavedBiller),
             Padding(
               padding: EdgeInsets.all(8.0.r),
               child: Container(
@@ -251,12 +265,12 @@ class _BillerListState extends State<BillerList> {
                 SizedBox(height: 10.h),
                 if (isBillSerachLoading || isAllBiller)
                   Container(
-                    height: 500.h,
+                    height: isSavedBillPresent ? 350.h : 500.h,
                     child: Center(child: Loader()),
                   ),
                 if (_searchController.text.isEmpty && Allbiller!.isEmpty)
                   Container(
-                    height: 500.h,
+                    height: isSavedBillPresent ? 430.h : 500.h,
                     child: NoDataFound(
                       message: "No Billers Found",
                     ),
@@ -264,7 +278,7 @@ class _BillerListState extends State<BillerList> {
                 if (_searchController.text.isNotEmpty &&
                     BillerSearchResults!.isEmpty)
                   Container(
-                    height: 500.h,
+                    height: isSavedBillPresent ? 430.h : 500.h,
                     child: NoDataFound(
                       showRichText: true,
                       message1: _searchController.text,
@@ -276,7 +290,7 @@ class _BillerListState extends State<BillerList> {
                 if ((!isAllBiller && Allbiller!.isNotEmpty) ||
                     (!isBillSerachLoading && BillerSearchResults!.isNotEmpty))
                   Container(
-                    height: 480.h,
+                    height: isSavedBillPresent ? 370.h : 480.h,
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,

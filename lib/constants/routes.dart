@@ -129,7 +129,10 @@ class MyRouter {
             fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => HomeCubit(repository: apiClient),
-                  child: AllBillCategories(categoriesData: catData),
+                  child: AllBillCategories(
+                    categoriesData: catData,
+                    SavedBiller: args["sAVEDBILLERS"],
+                  ),
                 ));
 
       //BILLER LIST PAGE ROUTE
@@ -138,12 +141,14 @@ class MyRouter {
         final args = settings.arguments as Map<String, dynamic>;
         final cAT_ID = args["cATEGORY_ID"];
         final cAT_NAME = args["cATEGORY_NAME"];
+        final SavedBillers = args["sAVEDBILLERS"];
 
         return CupertinoPageRoute(
             fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => HomeCubit(repository: apiClient),
-                  child: BillerList(id: cAT_ID, name: cAT_NAME),
+                  child: BillerList(
+                      id: cAT_ID, name: cAT_NAME, SavedBiller: SavedBillers),
                 ));
 
       //BILLER INPUT SIGN

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:ebps/bloc/complaint/complaint_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
@@ -11,7 +9,7 @@ import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/complaints_config_model.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/custom_dialog.dart';
-import 'package:ebps/widget/get_biller_detail.dart';
+import 'package:ebps/widget/loader.dart';
 import 'package:ebps/widget/loader_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,7 +46,7 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
 
   String? REG_CMP_ID;
 
-  bool isComplaintConfigLoading = false;
+  bool isComplaintConfigLoading = true;
 
   final txtDescController = TextEditingController();
 
@@ -250,13 +248,28 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                 children: [
                   ReusableContainer(
                       child: isComplaintConfigLoading
-                          ? const Text("Loading")
+                          ? Container(
+                              height: 500.h,
+                              child: Center(child: Loader()),
+                            )
                           : Column(
                               children: [
                                 BillerDetailsContainer(
-                                    icon: BILLER_LOGO(widget.BillerName),
-                                    title: widget.BillerName,
-                                    subTitle: widget.CategoryName),
+                                  icon: BILLER_LOGO(widget.BillerName),
+                                  title: widget.BillerName,
+                                  subTitle: widget.CategoryName,
+                                  subTitle2: "",
+                                ),
+                                Divider(
+                                  color: AppColors.CLR_DIVIDER_LITE,
+                                  height: 1.h,
+                                  thickness: 0.50,
+                                  // indent: 10.w,
+                                  // endIndent: 10.w,
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
                                 Container(
                                     width: double.infinity,
                                     height: 80.h,

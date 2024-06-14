@@ -62,7 +62,7 @@ billerdetail(pARAMETERNAME, pARAMETERVALUE, context) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                  padding: EdgeInsets.fromLTRB(24.w, 10.h, 8.w, 10.h),
+                  padding: EdgeInsets.fromLTRB(24.w, 5.h, 8.w, 5.h),
                   child: SizedBox(
                     width: 110.w,
                     child: Text(
@@ -83,7 +83,7 @@ billerdetail(pARAMETERNAME, pARAMETERVALUE, context) {
                     child: Text(
                       pARAMETERVALUE,
                       style: TextStyle(
-                        fontSize: 13.sp,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
                         color: AppColors.TXT_CLR_PRIMARY,
                       ),

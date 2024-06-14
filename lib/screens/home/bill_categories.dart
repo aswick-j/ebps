@@ -2,6 +2,7 @@ import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/Container/Home/categories_container.dart';
 import 'package:ebps/helpers/getBillerCategory.dart';
 import 'package:ebps/models/categories_model.dart';
+import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/services/api_client.dart';
 import 'package:ebps/widget/loader.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BillCategories extends StatefulWidget {
   final void Function(bool) isCategoryLoading;
-  const BillCategories({super.key, required this.isCategoryLoading});
+  final List<SavedBillersData>? SavedBiller;
+
+  const BillCategories(
+      {super.key, required this.isCategoryLoading, this.SavedBiller});
 
   @override
   State<BillCategories> createState() => _BillCategoriesState();
@@ -24,6 +28,7 @@ class _BillCategoriesState extends State<BillCategories> {
     return BlocProvider(
       create: (context) => HomeCubit(repository: apiClient),
       child: BillerCategoriesUI(
+        SavedBiller: widget.SavedBiller,
         isCategoryLoading: (bool) {
           widget.isCategoryLoading(bool);
         },
@@ -34,7 +39,10 @@ class _BillCategoriesState extends State<BillCategories> {
 
 class BillerCategoriesUI extends StatefulWidget {
   final void Function(bool) isCategoryLoading;
-  const BillerCategoriesUI({super.key, required this.isCategoryLoading});
+  final List<SavedBillersData>? SavedBiller;
+
+  const BillerCategoriesUI(
+      {super.key, required this.isCategoryLoading, this.SavedBiller});
 
   @override
   State<BillerCategoriesUI> createState() => _BillerCategoriesUIState();
@@ -92,12 +100,14 @@ class _BillerCategoriesUIState extends State<BillerCategoriesUI>
                         headerName: "Bill Categories",
                         categoriesCount: 8,
                         categoriesData: categoriesData,
+                        SavedBiller: widget.SavedBiller,
                         viewall: true,
                       ),
                       CategoriesContainer(
                         headerName: "More Services",
                         categoriesCount: MoreCategories.length,
                         categoriesData: MoreCategories,
+                        SavedBiller: widget.SavedBiller,
                       ),
                     ],
                   )

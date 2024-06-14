@@ -8,6 +8,8 @@ class ReusableContainer extends StatelessWidget {
   final double? rightMargin;
   final double? topMargin;
   final double? bottomMargin;
+  final double? width;
+  final double? height;
 
   const ReusableContainer({
     super.key,
@@ -16,13 +18,16 @@ class ReusableContainer extends StatelessWidget {
     this.rightMargin,
     this.topMargin,
     this.bottomMargin,
+    this.width,
+    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.hardEdge,
-      width: double.infinity,
+      width: width ?? double.infinity,
+      height: height,
       margin: EdgeInsets.only(
         left: leftMargin ?? 18.0.w,
         right: rightMargin ?? 18.w,

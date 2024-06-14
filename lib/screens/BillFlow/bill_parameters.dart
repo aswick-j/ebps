@@ -147,7 +147,15 @@ class _BillParametersState extends State<BillParameters> {
                   BillerDetailsContainer(
                     icon: BILLER_LOGO(widget.billerData!.bILLERNAME.toString()),
                     title: widget.billerData!.bILLERNAME.toString(),
-                    subTitle: widget.billerData!.bILLERCOVERAGE.toString(),
+                    subTitle: widget.billerData!.cATEGORYNAME.toString(),
+                    subTitle2: widget.billerData!.bILLERCOVERAGE.toString(),
+                  ),
+                  Divider(
+                    color: AppColors.CLR_DIVIDER_LITE,
+                    height: 1.h,
+                    thickness: 0.50,
+                    // indent: 10.w,
+                    // endIndent: 10.w,
                   ),
                   if (isInpuSignLoading)
                     Container(
@@ -262,59 +270,60 @@ class _BillParametersState extends State<BillParameters> {
                   //     textAlign: TextAlign.left,
                   //   ),
                   // ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                    child: TextFormField(
-                      style: TextStyle(color: AppColors.TXT_CLR_DEFAULT),
-                      maxLength: 20,
-                      controller: billNameController,
-                      key: _billnameKey,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.text,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r'^[a-z0-9A-Z ]*'))
-                      ],
-                      onChanged: (s) {
-                        if (billNameController.text.isNotEmpty) {
-                          setState(() {
-                            isValidBillName = true;
-                          });
-                        } else {
-                          setState(() {
-                            isValidBillName = false;
-                          });
-                        }
-                      },
-                      validator: (inputValue) {
-                        if (inputValue!.isEmpty) {
-                          return "Bill Name Should Not be Empty";
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        counterStyle: TextStyle(
-                            color: billNameController.text.length <= 3
-                                ? AppColors.CLR_ERROR
-                                : AppColors.TXT_CLR_BLACK_W),
-                        fillColor: AppColors.CLR_INPUT_FILL,
-                        filled: true,
-                        labelStyle: TextStyle(color: AppColors.CLR_PRIMARY),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: AppColors.TXT_CLR_PRIMARY),
+                  if (!isInpuSignLoading)
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.w, vertical: 16.h),
+                      child: TextFormField(
+                        style: TextStyle(color: AppColors.TXT_CLR_DEFAULT),
+                        maxLength: 20,
+                        controller: billNameController,
+                        key: _billnameKey,
+                        autocorrect: false,
+                        enableSuggestions: false,
+                        keyboardType: TextInputType.text,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'^[a-z0-9A-Z ]*'))
+                        ],
+                        onChanged: (s) {
+                          if (billNameController.text.isNotEmpty) {
+                            setState(() {
+                              isValidBillName = true;
+                            });
+                          } else {
+                            setState(() {
+                              isValidBillName = false;
+                            });
+                          }
+                        },
+                        validator: (inputValue) {
+                          if (inputValue!.isEmpty) {
+                            return "Bill Name Should Not be Empty";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          counterStyle: TextStyle(
+                              color: billNameController.text.length <= 3
+                                  ? AppColors.CLR_ERROR
+                                  : AppColors.TXT_CLR_BLACK_W),
+                          fillColor: AppColors.CLR_INPUT_FILL,
+                          filled: true,
+                          labelStyle: TextStyle(color: AppColors.CLR_PRIMARY),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppColors.TXT_CLR_PRIMARY),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppColors.TXT_CLR_PRIMARY),
+                          ),
+                          border: const UnderlineInputBorder(),
+                          labelText: 'Bill Name (Nick Name)',
                         ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: AppColors.TXT_CLR_PRIMARY),
-                        ),
-                        border: const UnderlineInputBorder(),
-                        labelText: 'Bill Name (Nick Name)',
                       ),
                     ),
-                  ),
                 ],
               )),
               SizedBox(

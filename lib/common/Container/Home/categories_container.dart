@@ -3,7 +3,9 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
+import 'package:ebps/helpers/getSavedBillersByCategory.dart';
 import 'package:ebps/models/categories_model.dart';
+import 'package:ebps/models/saved_biller_model.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,12 +16,15 @@ class CategoriesContainer extends StatelessWidget {
   final bool? viewall;
   final int categoriesCount;
   List<CategorieData>? categoriesData;
+  final List<SavedBillersData>? SavedBiller;
+
   CategoriesContainer(
       {super.key,
       required this.headerName,
       required this.categoriesCount,
       required this.categoriesData,
-      this.viewall});
+      this.viewall,
+      this.SavedBiller});
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +60,10 @@ class CategoriesContainer extends StatelessWidget {
                   return viewall == true && index == 7
                       ? InkWell(
                           onTap: () => {
-                                goToData(context, allCATROUTE,
-                                    {"categoriesData": categoriesData})
+                                goToData(context, allCATROUTE, {
+                                  "categoriesData": categoriesData,
+                                  "sAVEDBILLERS": SavedBiller
+                                })
                                 // Navigator.of(context).push(MaterialPageRoute(
                                 //     builder: (context) => AllBillCategories()))
                               },
@@ -90,6 +97,11 @@ class CategoriesContainer extends StatelessWidget {
                               "cATEGORY_ID": categoriesData![index].iD,
                               "cATEGORY_NAME":
                                   categoriesData![index].cATEGORYNAME,
+                              "sAVEDBILLERS": getSavedBillersByCategory(
+                                  categoriesData![index]
+                                      .cATEGORYNAME
+                                      .toString(),
+                                  SavedBiller)
                             });
                           },
                           child: Column(

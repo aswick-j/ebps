@@ -427,6 +427,29 @@ class _createAutopayState extends State<createAutopay> {
                                                       double.parse(dataAmount))
                                                   .toStringAsFixed(0);
                                             });
+                                            if (maximumAmount != null) {
+                                              if (double.parse(
+                                                          maxAmountController
+                                                              .text
+                                                              .toString()) >
+                                                      double.parse(maximumAmount
+                                                          .toString()) ||
+                                                  double.parse(
+                                                          maxAmountController
+                                                              .text
+                                                              .toString()) <
+                                                      double.parse(widget
+                                                          .lastPaidAmount
+                                                          .toString())) {
+                                                setState(() {
+                                                  maxAmountError = true;
+                                                });
+                                              } else {
+                                                setState(() {
+                                                  maxAmountError = false;
+                                                });
+                                              }
+                                            }
                                           },
                                           controlAffinity:
                                               ListTileControlAffinity.trailing,
@@ -519,6 +542,8 @@ class _createAutopayState extends State<createAutopay> {
                                           filled: true,
                                           prefixStyle: TextStyle(
                                               color: AppColors.TXT_CLR_DEFAULT),
+                                          hintStyle: TextStyle(
+                                              color: AppColors.TXT_CLR_LITE),
                                           labelStyle: TextStyle(
                                               color: limitGroupRadio == 1
                                                   ? AppColors.TXT_CLR_LITE

@@ -238,8 +238,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                             Text(
                               widget.savedBillersData.bILLNAME == null
                                   ? "NA"
-                                  : widget.savedBillersData.bILLNAME
-                                      .toString(),
+                                  : widget.savedBillersData.bILLNAME.toString(),
                               style: TextStyle(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w600,
@@ -257,7 +256,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                 style: TextStyle(
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.TXT_CLR_DEFAULT,
+                                  color: AppColors.CLR_BLUE_LITE,
                                 ),
                                 textAlign: TextAlign.left,
                               ),
@@ -799,17 +798,39 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                           left: 16.w,
                                                           right: 16.w),
                                                       child: Center(
-                                                        child: Text(
-                                                          "Are You Sure You Want To Delete the Autopay?",
-                                                          style: TextStyle(
-                                                            fontSize: 14.sp,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color: AppColors
-                                                                .TXT_CLR_BLACK_W,
-                                                          ),
-                                                          textAlign:
-                                                              TextAlign.center,
+                                                        child: Column(
+                                                          children: [
+                                                            Text(
+                                                              "Are You Sure You Want To Delete the Autopay?",
+                                                              style: TextStyle(
+                                                                fontSize: 14.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: AppColors
+                                                                    .TXT_CLR_DEFAULT,
+                                                              ),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            ),
+                                                            SizedBox(
+                                                                height: 10.h),
+                                                            Text(
+                                                              "This action is irreversible and will require manual payment for future bills",
+                                                              style: TextStyle(
+                                                                fontSize: 10.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: AppColors
+                                                                    .CLR_ERROR,
+                                                              ),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            ),
+                                                          ],
                                                         ),
                                                       ),
                                                     ),

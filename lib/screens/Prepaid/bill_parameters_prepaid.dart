@@ -131,6 +131,7 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                           BILLER_LOGO(widget.billerData!.bILLERNAME.toString()),
                       title: widget.billerData!.bILLERNAME.toString(),
                       subTitle: widget.billerData!.cATEGORYNAME.toString(),
+                      subTitle2: widget.billerData!.bILLERCOVERAGE.toString(),
                     ),
                     if (isPrepaidPlansLoading)
                       Container(

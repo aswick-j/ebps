@@ -227,7 +227,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
           backgroundColor: AppColors.CLR_BACKGROUND,
           appBar: MyAppBar(
             context: context,
-            title: widget.categoryName.toString(),
+            title: "Confirm Payment",
             onLeadingTap: () => Navigator.pop(context),
             showActions: false,
           ),
@@ -410,8 +410,16 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                         icon: BILLER_LOGO(widget.billerName.toString()),
                         title: widget.billerName.toString(),
                         subTitle: widget.isSavedBill
+                            ? widget.savedBillersData!.cATEGORYNAME.toString()
+                            : widget.billerData!.cATEGORYNAME.toString(),
+                        subTitle2: widget.isSavedBill
                             ? widget.savedBillersData!.bILLERCOVERAGE.toString()
                             : widget.billerData!.bILLERCOVERAGE.toString(),
+                      ),
+                      Divider(
+                        color: AppColors.CLR_CON_BORDER,
+                        height: 0.1.h,
+                        thickness: 0.50,
                       ),
                       if (widget.SavedinputParameters != null ||
                           widget.inputParameters != null)
@@ -424,11 +432,26 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                             // height: 0.h,
                             // color: Colors.white,
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               // crossAxisSpacing: 10.h,
                               // crossAxisCount: 2,
                               // childAspectRatio: 4 / 2,
                               // mainAxisSpacing: 10.h,
                               children: [
+                                SizedBox(height: 10.h),
+                                // Padding(
+                                //   padding: EdgeInsets.only(
+                                //       left: 24.w, top: 10.0.h, bottom: 10.h),
+                                //   child: Text(
+                                //     "Details",
+                                //     style: TextStyle(
+                                //       fontSize: 14.sp,
+                                //       fontWeight: FontWeight.bold,
+                                //       color: AppColors.CLR_PRIMARY,
+                                //     ),
+                                //     textAlign: TextAlign.left,
+                                //   ),
+                                // ),
                                 billerdetail(
                                     widget.isSavedBill
                                         ? widget.categoryName.toString().toLowerCase() ==

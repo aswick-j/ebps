@@ -6,7 +6,6 @@ import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/ebps.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
-import 'package:ebps/helpers/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -110,11 +109,11 @@ class _splashScreenState extends State<splashScreen> {
                       Container(
                         height: 100.h,
                         width: 100.w,
-                        child: Image.asset(
-                          IsCustomerElite.isCustomerElite
-                              ? LOGO_BBPS_FULL_WHITE_PNG
-                              : LOGO_BBPS_FULL_PNG,
-                        ),
+                        child: Image.asset(LOGO_BBPS_FULL_PNG
+                            // IsCustomerElite.isCustomerElite
+                            //     ? LOGO_BBPS_FULL_WHITE_PNG
+                            //     : LOGO_BBPS_FULL_PNG,
+                            ),
                       ),
                     ],
                   ),
