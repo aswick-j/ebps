@@ -198,10 +198,6 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
         }
         if (state is DeleteUpcomingDueLoading) {
         } else if (state is DeleteUpcomingDueSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Due Deleted'),
-            behavior: SnackBarBehavior.floating,
-          ));
           DelightToastBar(
             position: DelightSnackbarPosition.top,
             autoDismiss: true,

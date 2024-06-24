@@ -14,6 +14,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+class AppExit {
+  AppExit._privateConstructor();
+
+  static final AppExit instance = AppExit._privateConstructor();
+
+  Function? mainAppExit;
+
+  void setMainAppExit(final Function? Trigger) {
+    mainAppExit = Trigger;
+  }
+}
+
 class AppTrigger {
   AppTrigger._privateConstructor();
 
@@ -57,20 +69,32 @@ class InternetCheck {
   static var isConnected = true;
 }
 
+class AppLoginFrom {
+  AppLoginFrom._();
+  static var IsFromSuperApp = true;
+}
+
 class EbpsScreen extends StatelessWidget {
   String apiData;
   BuildContext ctx;
   String flavor;
+  final VoidCallback? triggerAppExit;
+  bool fromSuperApp;
+
   EbpsScreen(
       {Key? key,
       required this.apiData,
       required this.ctx,
+      this.triggerAppExit,
+      required this.fromSuperApp,
       required this.flavor})
       : super(key: key) {
     ApiConstants.BASE_URL = getBaseUrl(flavor);
+    AppLoginFrom.IsFromSuperApp = fromSuperApp;
     AppTrigger.instance.setGoBackCallback(() {
       Navigator.of(ctx).pop();
     });
+    AppExit.instance.setMainAppExit(triggerAppExit);
   }
 
   @override

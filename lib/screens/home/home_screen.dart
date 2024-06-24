@@ -208,8 +208,12 @@ class _HomeScreenUIState extends State<HomeScreenUI>
                   )))
         ],
         onLeadingTap: () {
-          //
-          AppTrigger.instance.goBack();
+          if (AppLoginFrom.IsFromSuperApp) {
+            AppTrigger.instance.goBackCallback!.call();
+          } else {
+            AppExit.instance.mainAppExit!.call();
+          }
+          // AppTrigger.instance.goBack();
         },
         showActions: true,
         onSearchTap: () => Navigator.pop(context),

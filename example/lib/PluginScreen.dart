@@ -15,12 +15,26 @@ class _PluginScreenState extends State<PluginScreen> {
   @override
   Widget build(BuildContext context) {
     String? apiData = widget.apiData;
+
+    Future<void> triggerAppExit() async {
+      try {
+        print("Exit Called");
+      } catch (e) {
+        print("Error: $e");
+      }
+    }
+
     return Scaffold(
       body: WillPopScope(
           onWillPop: () async => false,
           child: Center(
               child: EbpsScreen(
-                  apiData: apiData, ctx: context, flavor: widget.flavor))),
+            apiData: apiData,
+            ctx: context,
+            flavor: widget.flavor,
+            fromSuperApp: true,
+            triggerAppExit: triggerAppExit,
+          ))),
     );
   }
 }

@@ -73,7 +73,11 @@ class _SessionExpiredState extends State<SessionExpired> {
               SizedBox(height: 40.h),
               MyAppButton(
                   onPressed: () {
-                    AppTrigger.instance.goBackCallback!.call();
+                    if (AppLoginFrom.IsFromSuperApp) {
+                      AppTrigger.instance.goBackCallback!.call();
+                    } else {
+                      AppExit.instance.mainAppExit!.call();
+                    }
                   },
                   buttonText: "Go Back",
                   buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
