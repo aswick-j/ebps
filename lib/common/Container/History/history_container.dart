@@ -33,6 +33,12 @@ class HistoryContainer extends StatelessWidget {
       required this.containerBorderColor,
       required this.historyData,
       required this.handleStatus});
+  var colorizeColors4 = [
+    AppColors.TXT_CLR_PRIMARY,
+    AppColors.TXT_CLR_PRIMARY,
+    AppColors.TXT_CLR_PRIMARY,
+    AppColors.TXT_CLR_PRIMARY,
+  ];
   var colorizeColors = [
     AppColors.CLR_GREEN,
     Colors.lightGreen,
@@ -235,6 +241,11 @@ class HistoryContainer extends StatelessWidget {
                     if (titleText == "Auto Payment")
                       AnimatedTextKit(
                         animatedTexts: [
+                          ColorizeAnimatedText(
+                            "Paid to",
+                            textStyle: colorizeTextStyle,
+                            colors: colorizeColors4,
+                          ),
                           ColorizeAnimatedText(
                             titleText,
                             textStyle: colorizeTextStyle,

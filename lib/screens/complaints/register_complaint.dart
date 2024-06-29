@@ -388,21 +388,18 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                                                             10.h, 24.w, 10.h),
                                                     child: SizedBox(
                                                       width: 130.w,
-                                                      child: FittedBox(
-                                                        fit: BoxFit.contain,
-                                                        child: Text(
-                                                          widget.txnRefID,
-                                                          style: TextStyle(
-                                                            fontSize: 11.sp,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: AppColors
-                                                                .TXT_CLR_PRIMARY,
-                                                          ),
-                                                          maxLines: 3,
-                                                          textAlign:
-                                                              TextAlign.right,
+                                                      child: Text(
+                                                        widget.txnRefID,
+                                                        style: TextStyle(
+                                                          fontSize: 11.sp,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: AppColors
+                                                              .TXT_CLR_PRIMARY,
                                                         ),
+                                                        maxLines: 3,
+                                                        textAlign:
+                                                            TextAlign.right,
                                                       ),
                                                     ))
                                               ],
