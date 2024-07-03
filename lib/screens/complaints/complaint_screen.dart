@@ -78,8 +78,8 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
             showDuration: Duration(milliseconds: 20000),
             margin: EdgeInsets.symmetric(horizontal: 10.w),
             message: ApiConstants.BASE_URL.contains("digiservices.")
-                ? "V 1.1.4"
-                : "UAT - V 0.1.4",
+                ? "V 1.1.5"
+                : "UAT - V 0.1.5",
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Icon(
