@@ -952,7 +952,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                       focusNode: focusNode,
                                       androidSmsAutofillMethod:
                                           AndroidSmsAutofillMethod
-                                              .smsUserConsentApi,
+                                              .none,
                                       listenForMultipleSmsOnAndroid: false,
                                       defaultPinTheme: defaultPinTheme,
                                       onChanged: (s) {
