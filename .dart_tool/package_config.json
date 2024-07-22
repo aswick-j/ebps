@@ -381,7 +381,7 @@
     },
     {
       "name": "pinput",
-      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/pinput-3.0.1",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/pinput-4.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
@@ -477,7 +477,7 @@
     },
     {
       "name": "smart_auth",
-      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/smart_auth-1.1.1",
+      "rootUri": "file:///C:/Users/Fasoftwares/AppData/Local/Pub/Cache/hosted/pub.dev/smart_auth-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.16"
     },
@@ -596,7 +596,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-04-12T07:29:13.503002Z",
+  "generated": "2024-07-22T11:37:08.113859Z",
   "generator": "pub",
   "generatorVersion": "3.0.6"
 }

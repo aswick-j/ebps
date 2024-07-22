@@ -109,16 +109,41 @@ const ICON_SEARCH = "packages/ebps/assets/icon/icon_search.svg";
 
 //LOGO
 
-const LOGO_AIRTEL = "packages/ebps/assets/logo/logo_airtel.svg";
-const LOGO_BOB = "packages/ebps/assets/logo/logo_bob.svg";
-const LOGO_BSNL = "packages/ebps/assets/logo/logo_bsnl.svg";
-const LOGO_HDBLOAN = "packages/ebps/assets/logo/logo_hdb_loan.svg";
-const LOGO_JIO = "packages/ebps/assets/logo/logo_jio.svg";
-const LOGO_MEERUTEDU = "packages/ebps/assets/logo/logo_meerut_education.svg";
-const LOGO_MTNL = "packages/ebps/assets/logo/logo_mtnl.svg";
-const LOGO_SUNDIRECT = "packages/ebps/assets/logo/logo_sunDirect.svg";
-const LOGO_TNEB = "packages/ebps/assets/logo/logo_tneb.svg";
-const LOGO_VI = "packages/ebps/assets/logo/logo_vi.svg";
+const LOGO_AIRTEL_PAYMENTS =
+    "packages/ebps/assets/Blogos/logo_airtel_payments_bank.svg";
+const LOGO_AIRTEL = "packages/ebps/assets/Blogos/logo_airtel.svg";
+const LOGO_AMERICAN_EXPRESS =
+    "packages/ebps/assets/Blogos/logo_american_express.svg";
+const LOGO_AU = "packages/ebps/assets/Blogos/logo_au_small_finance_bank.svg";
+const LOGO_AXIS = "packages/ebps/assets/Blogos/logo_axis_bank.svg";
+const LOGO_BOB = "packages/ebps/assets/Blogos/logo_bob.svg";
+const LOGO_BSNL = "packages/ebps/assets/Blogos/logo_bsnl.svg";
+const LOGO_CANARA = "packages/ebps/assets/Blogos/logo_canara_bank.svg";
+const LOGO_FEDERAL = "packages/ebps/assets/Blogos/logo_federal.svg";
+const LOGO_HDBLOAN = "packages/ebps/assets/Blogos/logo_hdb_loan.svg";
+const LOGO_HSBC = "packages/ebps/assets/Blogos/logo_hsbc_bank.svg";
+const LOGO_ICICI = "packages/ebps/assets/Blogos/logo_icici_bank.svg";
+const LOGO_IDBI = "packages/ebps/assets/Blogos/logo_idbi_bank.svg";
+const LOGO_IDFC = "packages/ebps/assets/Blogos/logo_idfc.svg";
+const LOGO_IOB = "packages/ebps/assets/Blogos/logo_iob.svg";
+const LOGO_INDIAN_BANK = "packages/ebps/assets/Blogos/logo_indian_bank.svg";
+const LOGO_INDUSIND_BANK = "packages/ebps/assets/Blogos/logo_indusind_bank.svg";
+const LOGO_JIO = "packages/ebps/assets/Blogos/logo_jio.svg";
+const LOGO_KARNATAKA = "packages/ebps/assets/Blogos/logo_karnataka_bank.svg";
+const LOGO_KOTAK = "packages/ebps/assets/Blogos/logo_kotak_mahindra.svg";
+const LOGO_MEERUTEDU = "packages/ebps/assets/Blogos/logo_meerut_education.svg";
+const LOGO_MTNL = "packages/ebps/assets/Blogos/logo_mtnl.svg";
+const LOGO_PAYTM = "packages/ebps/assets/Blogos/logo_paytm_payments_bank.svg";
+const LOGO_PNB = "packages/ebps/assets/Blogos/logo_punjab_national_bank.svg";
+const LOGO_SBI = "packages/ebps/assets/Blogos/logo_sbi.svg";
+const LOGO_SOUTH_INDIAN_BANK =
+    "packages/ebps/assets/Blogos/logo_south_indian_bank.svg";
+const LOGO_SUNDIRECT = "packages/ebps/assets/Blogos/logo_sun_direct.svg";
+const LOGO_TNEB = "packages/ebps/assets/Blogos/logo_tneb.svg";
+const LOGO_UJJIVAN = "packages/ebps/assets/Blogos/logo_ujjivan_bank.svg";
+const LOGO_UNION_BANK = "packages/ebps/assets/Blogos/logo_union_bank.svg";
+const LOGO_VI = "packages/ebps/assets/Blogos/logo_vi.svg";
+const LOGO_YES_BANK = "packages/ebps/assets/Blogos/logo_yes_bank.svg";
 
 //IMAGE
 
@@ -237,24 +262,65 @@ bool containsAny(String text, List<String> substrings) {
 
 String BILLER_LOGO(String BillerName) {
   String BillerNameLow = BillerName.toLowerCase();
-  if (containsAny(BillerNameLow, ["airtel"])) {
+  if (containsAny(BillerNameLow, ["airtel payments"])) {
+    return LOGO_AIRTEL_PAYMENTS;
+  } else if (containsAny(BillerNameLow, ["airtel"])) {
     return LOGO_AIRTEL;
-  } else if (containsAny(BillerNameLow, ["hdfc ", "hdb "])) {
-    return LOGO_HDBLOAN;
+  } else if (containsAny(BillerNameLow, ["american express"])) {
+    return LOGO_AMERICAN_EXPRESS;
+  } else if (containsAny(BillerNameLow, ["au bank "])) {
+    return LOGO_AU;
+  } else if (containsAny(BillerNameLow, ["axis"])) {
+    return LOGO_AXIS;
+  } else if (containsAny(BillerNameLow, ["bank of baroda", "bob credit"])) {
+    return LOGO_BOB;
   } else if (containsAny(BillerNameLow, ["bsnl"])) {
     return LOGO_BSNL;
-  } else if (containsAny(BillerNameLow, ["vi post", "vi pre"])) {
-    return LOGO_VI;
+  } else if (containsAny(BillerNameLow, ["canara bank", "canara credit"])) {
+    return LOGO_CANARA;
+  } else if (containsAny(BillerNameLow, ["hdfc ", "hdb "])) {
+    return LOGO_HDBLOAN;
+  } else if (containsAny(BillerNameLow, ["hsbc"])) {
+    return LOGO_HSBC;
+  } else if (containsAny(BillerNameLow, ["icici"])) {
+    return LOGO_ICICI;
+  } else if (containsAny(BillerNameLow, ["idbi"])) {
+    return LOGO_IDBI;
+  } else if (containsAny(BillerNameLow, ["idfc"])) {
+    return LOGO_IDFC;
+  } else if (containsAny(BillerNameLow,
+      ["indian bank fastag rech", "indian bank loan", "indian bank credit"])) {
+    return LOGO_INDIAN_BANK;
+  } else if (containsAny(BillerNameLow, ["indusind"])) {
+    return LOGO_INDUSIND_BANK;
   } else if (containsAny(BillerNameLow, ["jio"])) {
     return LOGO_JIO;
+  } else if (containsAny(BillerNameLow, ["karnataka bank"])) {
+    return LOGO_KARNATAKA;
+  } else if (containsAny(BillerNameLow, ["kotak mahindra"])) {
+    return LOGO_KOTAK;
   } else if (containsAny(BillerNameLow, ["mtnl"])) {
     return LOGO_MTNL;
   } else if (containsAny(BillerNameLow, ["meerut institute"])) {
     return LOGO_MEERUTEDU;
+  } else if (containsAny(BillerNameLow, ["paytm"])) {
+    return LOGO_PAYTM;
+  } else if (containsAny(BillerNameLow, ["punjab national"])) {
+    return LOGO_PNB;
+  } else if (containsAny(BillerNameLow, ["state bank of", "sbi "])) {
+    return LOGO_SBI;
+  } else if (containsAny(BillerNameLow, ["south indian bank"])) {
+    return LOGO_SOUTH_INDIAN_BANK;
   } else if (containsAny(BillerNameLow, ["tamil nadu electricity", "ofmedn"])) {
     return LOGO_TNEB;
-  } else if (containsAny(BillerNameLow, ["bank of baroda"])) {
-    return LOGO_BOB;
+  } else if (containsAny(BillerNameLow, ["ujjivan"])) {
+    return LOGO_UJJIVAN;
+  } else if (containsAny(BillerNameLow, ["union bank"])) {
+    return LOGO_UNION_BANK;
+  } else if (containsAny(BillerNameLow, ["vi post", "vi pre"])) {
+    return LOGO_VI;
+  } else if (containsAny(BillerNameLow, ["yes bank"])) {
+    return LOGO_YES_BANK;
   } else {
     return LOGO_BBPS;
   }

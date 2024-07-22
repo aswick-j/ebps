@@ -21,7 +21,7 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
-  pinput: ^3.0.1
+  pinput: ^4.0.0
   intl: ^0.18.1
   # loading_animation_widget: ^1.2.0+4
   flutter_screenutil: ^5.9.0
@@ -55,6 +55,7 @@ flutter:
     - assets/images/
     - assets/icon/
     - assets/logo/
+    - assets/Blogos/
     # - assets/lottie
 
   # This section identifies this Flutter project as a plugin project.
