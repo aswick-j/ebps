@@ -7,6 +7,7 @@ import 'package:ebps/widget/centralized_grid_view.dart';
 import 'package:ebps_example/GenerateRequestBody.dart';
 import 'package:ebps_example/MockDatas.dart';
 import 'package:ebps_example/PluginScreen.dart';
+import 'package:ebps_example/aes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -62,6 +63,9 @@ class _RedirectScreenState extends State<RedirectScreen>
               : eliteTheme == true
                   ? "Y"
                   : "N");
+
+      dynamic datas = await encryptingData(json.encode(RequestData), isPrd);
+      var encRequestBody = EncRequestBody(datas);
       String jsonString = json.encode(RequestData);
 
       isLoading = true;
@@ -76,7 +80,7 @@ class _RedirectScreenState extends State<RedirectScreen>
         Uri.parse(isPrd
             ? 'https://digiservices.equitasbank.com/bbps/api/auth/redirect'
             : 'https://digiservicesuat.equitasbank.com/bbps/api/auth/redirect'),
-        body: json.encode(RequestData),
+        body: json.encode(encRequestBody),
         headers: {
           "Access-Control-Allow-Origin": "*",
           'Content-Type': 'application/json',
@@ -86,7 +90,10 @@ class _RedirectScreenState extends State<RedirectScreen>
       );
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        API_DATA = data["data"].toString();
+        String EN_API_DATA =
+            await dencryptingData(data["response"].toString(), isPrd);
+        var DC_API_DATA = jsonDecode(jsonDecode(EN_API_DATA));
+        API_DATA = DC_API_DATA["data"];
         isLoading = false;
         if (API_DATA.isNotEmpty) {
           await Future.delayed(Duration.zero);

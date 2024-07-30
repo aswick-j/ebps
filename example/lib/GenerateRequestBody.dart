@@ -25,3 +25,7 @@ Map<String, Object> RequestBody(
     }
   };
 }
+
+Map<String, Object> EncRequestBody(String EncryptedData) {
+  return {"request": EncryptedData};
+}
