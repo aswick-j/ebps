@@ -68,7 +68,7 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
         appBar: MyAppBar(
           context: context,
           title: widget.billerData!.bILLERNAME.toString(),
-          onLeadingTap: () => goBack(context),
+          onLeadingTap: () => GoBack(context),
           showActions: false,
         ),
         body: SingleChildScrollView(
@@ -381,7 +381,7 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () {
-                        goBack(context);
+                        GoBack(context);
                       },
                       buttonText: "Cancel",
                       buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,
@@ -463,7 +463,7 @@ class _BillParametersPrepaidState extends State<BillParametersPrepaid> {
                             inputPayloadData.add(makeInput);
                           }
 
-                          goToData(context, pREPAIDPLANSROUTE, {
+                          GoToData(context, pREPAIDPLANSROUTE, {
                             "prepaidPlans": handlePlans(),
                             "isFetchPlans": false,
                             "billerData": widget.billerData,

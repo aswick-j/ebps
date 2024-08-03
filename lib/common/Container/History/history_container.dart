@@ -60,7 +60,7 @@ class HistoryContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     handleClick() {
-      goToData(context, hISTORYDETAILSROUTE, {
+      GoToData(context, hISTORYDETAILSROUTE, {
         "billName": historyData.billName ?? "-",
         "billerName": historyData.billerName,
         "categoryName": historyData.categoryName,

@@ -84,11 +84,11 @@ class _SearchScreenState extends State<SearchScreen> {
         appBar: MyAppBar(
             context: context,
             title: "Search",
-            onLeadingTap: () => goBack(context),
+            onLeadingTap: () => GoBack(context),
             showActions: true,
             actions: [
               // InkWell(
-              //     onTap: () => {goTo(context, cOMPLAINTLISTROUTE)},
+              //     onTap: () => {GoTo(context, cOMPLAINTLISTROUTE)},
               //     child: Container(
               //         margin: EdgeInsets.only(right: 15.w),
               //         decoration: ShapeDecoration(
@@ -253,19 +253,19 @@ class _SearchScreenState extends State<SearchScreen> {
                                           .cATEGORYNAME!
                                           .toLowerCase() ==
                                       "mobile prepaid") {
-                                    goToData(context, pREPAIDBILLERPARAMROUTE, {
+                                    GoToData(context, pREPAIDBILLERPARAMROUTE, {
                                       "BILLER_DATA":
                                           BillerSearchResults![index],
                                       "BILLER_INPUT_SIGN": []
                                     });
                                   } else {
-                                    goToData(context, bILLERPARAMROUTE, {
+                                    GoToData(context, bILLERPARAMROUTE, {
                                       "BILLER_DATA":
                                           BillerSearchResults![index],
                                       "BILLER_INPUT_SIGN": []
                                     });
                                   }
-                                  // goToData(context, bILLERPARAMROUTE, {
+                                  // GoToData(context, bILLERPARAMROUTE, {
                                   //   "BILLER_DATA":
                                   //       BillerSearchResults![index],
                                   //   "BILLER_INPUT_SIGN": []

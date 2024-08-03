@@ -254,8 +254,10 @@ class _RedirectScreenState extends State<RedirectScreen>
                               CircleAvatar(
                                   radius: 40,
                                   backgroundColor: Colors.transparent,
-                                  child: Image.network(
-                                      "https://api.multiavatar.com/${index + randomNumber}.png")),
+                                  child: Icon(Icons.star)
+                                  // child: Image.network(
+                                  //     "https://api.multiavatar.com/${index + randomNumber}.png")
+                                  ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(

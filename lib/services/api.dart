@@ -4,9 +4,10 @@ import 'dart:io';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:ebps/constants/api.dart';
+import 'package:ebps/constants/authRoutes.dart';
 import 'package:ebps/constants/routes.dart';
 import 'package:ebps/ebps.dart';
-import 'package:ebps/helpers/NavigationService.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/logger.dart';
 import 'package:ebps/models/decoded_model.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
@@ -65,6 +66,7 @@ validateJWT() async {
     if (hasExpired != true) {
       var decodedToken = JwtToken.payload(token);
       DecodedModel? model = DecodedModel.fromJson(decodedToken);
+      authRoutes(model.role);
       IsCustomerElite.isCustomerElite = model.elite == "Y" ? true : false;
 
       return model;

@@ -189,7 +189,7 @@ class _HomeScreenUIState extends State<HomeScreenUI>
               },
             ),
           InkWell(
-              onTap: () => {goTo(context, sEARCHROUTE)},
+              onTap: () => {GoTo(context, sEARCHROUTE)},
               child: Container(
                   margin: EdgeInsets.only(right: 15.w),
                   // width: 40.w,
@@ -213,7 +213,7 @@ class _HomeScreenUIState extends State<HomeScreenUI>
           } else {
             AppExit.instance.mainAppExit!.call();
           }
-          // AppTrigger.instance.goBack();
+          // AppTrigger.instance.GoBack();
         },
         showActions: true,
         onSearchTap: () => Navigator.pop(context),

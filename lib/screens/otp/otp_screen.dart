@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
-import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
@@ -17,7 +16,6 @@ import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/custom_dialog.dart';
 import 'package:ebps/widget/loader.dart';
 import 'package:ebps/widget/loader_overlay.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -269,17 +267,9 @@ class _OtpScreenState extends State<OtpScreen> {
                     alignment: Alignment.center,
                     child: MyAppButton(
                         onPressed: () {
-                          goBack(ctx);
-
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            Navigator.of(context).pushAndRemoveUntil(
-                              CupertinoPageRoute(
-                                  fullscreenDialog: true,
-                                  builder: (context) => BottomNavBar(
-                                        SelectedIndex: 1,
-                                      )),
-                              (Route<dynamic> route) => false,
-                            );
+                          GoBack(ctx);
+                          GoToReplaceData(context, hOMEROUTE, {
+                            "index": 1,
                           });
                         },
                         buttonText: "Okay",
@@ -345,17 +335,10 @@ class _OtpScreenState extends State<OtpScreen> {
                     alignment: Alignment.center,
                     child: MyAppButton(
                         onPressed: () {
-                          goBack(ctx);
+                          GoBack(ctx);
 
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            Navigator.of(context).pushAndRemoveUntil(
-                              CupertinoPageRoute(
-                                  fullscreenDialog: true,
-                                  builder: (context) => BottomNavBar(
-                                        SelectedIndex: 0,
-                                      )),
-                              (Route<dynamic> route) => false,
-                            );
+                          GoToReplaceData(context, hOMEROUTE, {
+                            "index": 0,
                           });
                         },
                         buttonText: "Okay",
@@ -446,17 +429,10 @@ class _OtpScreenState extends State<OtpScreen> {
                     alignment: Alignment.center,
                     child: MyAppButton(
                         onPressed: () {
-                          goBack(ctx);
+                          GoBack(ctx);
 
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            Navigator.of(context).pushAndRemoveUntil(
-                              CupertinoPageRoute(
-                                  fullscreenDialog: true,
-                                  builder: (context) => BottomNavBar(
-                                        SelectedIndex: 2,
-                                      )),
-                              (Route<dynamic> route) => false,
-                            );
+                          GoToReplaceData(context, hOMEROUTE, {
+                            "index": 2,
                           });
                         },
                         buttonText: "Okay",
@@ -491,7 +467,7 @@ class _OtpScreenState extends State<OtpScreen> {
         appBar: MyAppBar(
           context: context,
           title: widget.data!['billerName'],
-          onLeadingTap: () => goBack(context),
+          onLeadingTap: () => GoBack(context),
           showActions: false,
         ),
         body: BlocConsumer<HomeCubit, HomeState>(
@@ -566,17 +542,9 @@ class _OtpScreenState extends State<OtpScreen> {
                               alignment: Alignment.center,
                               child: MyAppButton(
                                   onPressed: () {
-                                    goBack(ctx);
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((_) {
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                        CupertinoPageRoute(
-                                            fullscreenDialog: true,
-                                            builder: (context) => BottomNavBar(
-                                                  SelectedIndex: 0,
-                                                )),
-                                        (Route<dynamic> route) => false,
-                                      );
+                                    GoBack(ctx);
+                                    GoToReplaceData(context, hOMEROUTE, {
+                                      "index": 0,
                                     });
                                   },
                                   buttonText: "Okay",
@@ -615,7 +583,7 @@ class _OtpScreenState extends State<OtpScreen> {
               LoaderOverlay.of(context).hide();
 
               handleRedirect() {
-                goToData(context, tRANSROUTE, {
+                GoToData(context, tRANSROUTE, {
                   "billName": widget.data!["billName"],
                   "billerName": widget.data!['billerName'],
                   "categoryName": widget.data!["categoryName"],
@@ -639,7 +607,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             alignment: Alignment.center,
                             child: MyAppButton(
                                 onPressed: () {
-                                  goBack(context);
+                                  GoBack(context);
 
                                   handleRedirect();
                                 },
@@ -670,7 +638,7 @@ class _OtpScreenState extends State<OtpScreen> {
               LoaderOverlay.of(context).hide();
 
               handleRedirect() {
-                goToData(context, tRANSROUTE, {
+                GoToData(context, tRANSROUTE, {
                   "billName": widget.data!["billName"],
                   "billerName": widget.data!['billerName'],
                   "categoryName": widget.data!["categoryName"],
@@ -702,7 +670,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                   alignment: Alignment.center,
                                   child: MyAppButton(
                                       onPressed: () {
-                                        goBack(context);
+                                        GoBack(context);
 
                                         handleRedirect();
                                       },
@@ -952,7 +920,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                       focusNode: focusNode,
                                       androidSmsAutofillMethod:
                                           AndroidSmsAutofillMethod
-                                              .none,
+                                              .smsUserConsentApi,
                                       listenForMultipleSmsOnAndroid: false,
                                       defaultPinTheme: defaultPinTheme,
                                       onChanged: (s) {

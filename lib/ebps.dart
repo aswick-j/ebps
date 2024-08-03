@@ -1,15 +1,7 @@
-// import 'ebps_platform_interface.dart';
-
-// class Ebps {
-//   Future<String?> getPlatformVersion() {
-//     return EbpsPlatform.instance.getPlatformVersion();
-//   }
-// }
-
 import 'package:ebps/constants/ebps_theme.dart';
 import 'package:ebps/constants/routes.dart';
-import 'package:ebps/helpers/NavigationService.dart';
 import 'package:ebps/helpers/getBaseurl.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,7 +25,7 @@ class AppTrigger {
 
   VoidCallback? goBackCallback;
 
-  void goBack() {
+  void GoBack() {
     if (goBackCallback != null) {
       goBackCallback!();
     }
@@ -57,6 +49,11 @@ class AppTrigger {
 class ApiConstants {
   ApiConstants._();
   static var BASE_URL = "";
+}
+
+class RouteConstants {
+  RouteConstants._();
+  static List ALLOWED_ROUTES = [];
 }
 
 class IsCustomerElite {
@@ -96,7 +93,6 @@ class EbpsScreen extends StatelessWidget {
     });
     AppExit.instance.setMainAppExit(triggerAppExit);
   }
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

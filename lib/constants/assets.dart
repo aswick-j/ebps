@@ -156,6 +156,11 @@ const IMG_SESSIONEXPIRED =
 const IMG_NOINTERNET = "packages/ebps/assets/images/image_no_internet.svg";
 const IMG_SMTWR = "packages/ebps/assets/images/image_something_went.svg";
 const IMG_NOTFOUND = "packages/ebps/assets/icon/icon_notFound.svg";
+const IMG_AD = "packages/ebps/assets/images/image_ad.svg";
+const IMG_BLOCKS = "packages/ebps/assets/images/image_blocks.svg";
+const IMG_RESTRICTED = "packages/ebps/assets/images/image_restricted.svg";
+const IMG_SECURITY = "packages/ebps/assets/images/image_security.svg";
+
 const SPLASH_BAG = "packages/ebps/assets/images/splash_background.png";
 const SCREEN_BAG = "packages/ebps/assets/images/screeshot_bg.png";
 const EQUITAS_FOOTER = "packages/ebps/assets/images/image_equitas_footer.png";

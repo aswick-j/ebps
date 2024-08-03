@@ -60,7 +60,7 @@ class CategoriesContainer extends StatelessWidget {
                   return viewall == true && index == 7
                       ? InkWell(
                           onTap: () => {
-                                goToData(context, allCATROUTE, {
+                                GoToData(context, allCATROUTE, {
                                   "categoriesData": categoriesData,
                                   "sAVEDBILLERS": SavedBiller
                                 })
@@ -93,7 +93,7 @@ class CategoriesContainer extends StatelessWidget {
                           ))
                       : InkWell(
                           onTap: () {
-                            goToData(context, bILLERLISTROUTE, {
+                            GoToData(context, bILLERLISTROUTE, {
                               "cATEGORY_ID": categoriesData![index].iD,
                               "cATEGORY_NAME":
                                   categoriesData![index].cATEGORYNAME,

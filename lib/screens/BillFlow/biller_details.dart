@@ -179,7 +179,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                   alignment: Alignment.center,
                   child: MyAppButton(
                       onPressed: () {
-                        goBack(ctx);
+                        GoBack(ctx);
                       },
                       buttonText: "Okay",
                       buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
@@ -220,7 +220,7 @@ class _BillerDetailsState extends State<BillerDetails> {
         appBar: MyAppBar(
           context: context,
           title: "Billing Summary",
-          onLeadingTap: () => goBack(context),
+          onLeadingTap: () => GoBack(context),
           showActions: false,
         ),
         body: BlocConsumer<HomeCubit, HomeState>(listener: (context, state) {
@@ -967,7 +967,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                       Expanded(
                         child: MyAppButton(
                             onPressed: () {
-                              goBack(context);
+                              GoBack(context);
                             },
                             buttonText: "Cancel",
                             buttonTxtColor:
@@ -996,7 +996,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                                     (bankLimit - dailyLimit))) {
                                   handleDialog();
                                 } else {
-                                  goToData(context, pAYMENTCONFIRMROUTE, {
+                                  GoToData(context, pAYMENTCONFIRMROUTE, {
                                     "name": widget.isSavedBill
                                         ? widget.savedBillersData!.bILLERNAME
                                         : widget.billerData!.bILLERNAME,
@@ -1069,7 +1069,7 @@ class _BillerDetailsState extends State<BillerDetails> {
                       Expanded(
                         child: MyAppButton(
                             onPressed: () {
-                              goBack(context);
+                              GoBack(context);
                             },
                             buttonText: "Go Back",
                             buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,

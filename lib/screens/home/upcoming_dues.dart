@@ -60,7 +60,7 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                     if (widget.allUpcomingDues.length > 2)
                       InkWell(
                         onTap: () {
-                          goToData(context, uPCOMINGDUESROUTE, {
+                          GoToData(context, uPCOMINGDUESROUTE, {
                             "allUpcomingDues": widget.allUpcomingDues,
                             "savedBiller": widget.SavedBiller,
                             "ctx": context,
@@ -148,7 +148,7 @@ class _UpcomingDuesState extends State<UpcomingDues> {
                             .toList();
                         if (billerDataTemp.isNotEmpty) {
                           savedBillersData = billerDataTemp[0];
-                          goToData(context, fETCHBILLERDETAILSROUTE, {
+                          GoToData(context, fETCHBILLERDETAILSROUTE, {
                             "name": widget.allUpcomingDues[index]["billerName"],
                             "billName": widget.allUpcomingDues[index]
                                 ["billName"],

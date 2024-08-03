@@ -474,7 +474,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                       await setSharedNotificationValue(
                                           "NOTIFICATION", false);
 
-                                      goBack(context);
+                                      GoBack(context);
                                     },
                                     buttonText: "Skip",
                                     buttonTxtColor:
@@ -516,7 +516,7 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                                           Alignment.center,
                                                       child: MyAppButton(
                                                           onPressed: () {
-                                                            goBack(ctx);
+                                                            GoBack(ctx);
                                                           },
                                                           buttonText: "Okay",
                                                           buttonTxtColor: AppColors
@@ -556,8 +556,8 @@ class _MismatchNotificationState extends State<MismatchNotification> {
                                           },
                                         );
                                       } else {
-                                        goBack(context);
-                                        goToData(
+                                        GoBack(context);
+                                        GoToData(
                                             widget.context, eDITAUTOPAYROUTE, {
                                           "savedBillerData":
                                               getSavedBiller(index),

@@ -3,7 +3,7 @@ import 'package:ebps/bloc/history/history_cubit.dart';
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/bloc/splash/splash_cubit.dart';
-
+import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/models/categories_model.dart';
 import 'package:ebps/screens/BillFlow/bill_parameters.dart';
 import 'package:ebps/screens/BillFlow/biller_details.dart';
@@ -18,7 +18,6 @@ import 'package:ebps/screens/autopay/edit_autopay.dart';
 import 'package:ebps/screens/complaints/complaint_details.dart';
 import 'package:ebps/screens/complaints/complaint_screen.dart';
 import 'package:ebps/screens/complaints/register_complaint.dart';
-import 'package:ebps/screens/history/history_charts.dart';
 import 'package:ebps/screens/history/history_details.dart';
 import 'package:ebps/screens/history/history_screen.dart';
 import 'package:ebps/screens/home/all_bill_categories.dart';
@@ -26,12 +25,12 @@ import 'package:ebps/screens/home/all_upcoming_dues.dart';
 import 'package:ebps/screens/home/search_screen.dart';
 import 'package:ebps/screens/myBillers/bill_history.dart';
 import 'package:ebps/screens/myBillers/edit_biller.dart';
+import 'package:ebps/screens/notPermitted_screen.dart';
 import 'package:ebps/screens/otp/otp_screen.dart';
 import 'package:ebps/screens/session_expired.dart';
 import 'package:ebps/screens/splash_screen.dart';
 import 'package:ebps/services/api_client.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 const sPLASHROUTE = "/";
@@ -61,6 +60,7 @@ const eDITAUTOPAYROUTE = '/editAutopayRoute';
 const eDITBILLERROUTE = '/editBillerRoute';
 const uPCOMINGDUESROUTE = '/upcomingDuesRoute';
 const tERMANDCONDITIONSROUTE = '/termsAndConditionsRoute';
+const nOTPERMITTEDROUTE = '/notPermittedRoute';
 
 /// The `MyRouter` class is responsible for generating routes and corresponding page widgets based on
 /// the provided route settings.
@@ -88,6 +88,8 @@ class MyRouter {
       //HOME_SCREEN
 
       case hOMEROUTE:
+        final args = settings.arguments as Map<String, dynamic>;
+
         return CupertinoPageRoute(
             fullscreenDialog: true,
             builder: (_) => MultiBlocProvider(
@@ -97,7 +99,7 @@ class MyRouter {
                     BlocProvider(
                         create: (_) => HomeCubit(repository: apiClient)),
                   ],
-                  child: BottomAppBar(),
+                  child: BottomNavBar(SelectedIndex: args["index"]),
                 ));
 
       //UPCOMING DUES
@@ -283,6 +285,14 @@ class MyRouter {
                   create: (context) => HomeCubit(repository: apiClient),
                   child: SessionExpired(),
                 ));
+      //NOT PERMITTED ROUTE
+      case nOTPERMITTEDROUTE:
+        return CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => BlocProvider(
+                  create: (context) => HomeCubit(repository: apiClient),
+                  child: NotPermittedScreen(),
+                ));
 //MPIN
       // case mPINROUTE:
       //   final args = settings.arguments as Map<String, dynamic>;
@@ -373,18 +383,18 @@ class MyRouter {
 
       //HISRTORY CHARTS
 
-      case hISTORYCHARTSROUTE:
-        return CupertinoPageRoute(
-            fullscreenDialog: true,
-            builder: (_) => MultiBlocProvider(
-                  providers: [
-                    BlocProvider(
-                        create: (_) => HistoryCubit(repository: apiClient)),
-                    BlocProvider(
-                        create: (_) => HomeCubit(repository: apiClient)),
-                  ],
-                  child: HistoryCharts(),
-                ));
+      // case hISTORYCHARTSROUTE:
+      //   return CupertinoPageRoute(
+      //       fullscreenDialog: true,
+      //       builder: (_) => MultiBlocProvider(
+      //             providers: [
+      //               BlocProvider(
+      //                   create: (_) => HistoryCubit(repository: apiClient)),
+      //               BlocProvider(
+      //                   create: (_) => HomeCubit(repository: apiClient)),
+      //             ],
+      //             child: HistoryCharts(),
+      //           ));
 
 //BILL HISTORY
 
@@ -525,7 +535,7 @@ class MyRouter {
             fullscreenDialog: true,
             builder: (_) => BlocProvider(
                   create: (context) => HomeCubit(repository: apiClient),
-                  child: BottomAppBar(),
+                  child: BottomNavBar(SelectedIndex: 0),
                 ));
     }
   }

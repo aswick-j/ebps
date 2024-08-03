@@ -1,11 +1,11 @@
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
-import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/Home/biller_details_container.dart';
 import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getPopupMsg.dart';
 import 'package:ebps/models/edit_bill_modal.dart';
@@ -17,12 +17,10 @@ import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/custom_dialog.dart';
 import 'package:ebps/widget/loader.dart';
 import 'package:ebps/widget/loader_overlay.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class EditBiller extends StatefulWidget {
   SavedBillersData savedbillersData;
@@ -95,17 +93,10 @@ class _EditBillerUIState extends State<EditBillerUI> {
                   alignment: Alignment.center,
                   child: MyAppButton(
                       onPressed: () {
-                        goBack(ctx);
+                        GoBack(ctx);
 
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          Navigator.of(context).pushAndRemoveUntil(
-                            CupertinoPageRoute(
-                                fullscreenDialog: true,
-                                builder: (context) => BottomNavBar(
-                                      SelectedIndex: 1,
-                                    )),
-                            (Route<dynamic> route) => false,
-                          );
+                        GoToReplaceData(context, hOMEROUTE, {
+                          "index": 1,
                         });
                       },
                       buttonText: "Okay",
@@ -150,7 +141,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
         appBar: MyAppBar(
           context: context,
           title: "Edit Biller",
-          onLeadingTap: () => goBack(context),
+          onLeadingTap: () => GoBack(context),
           showActions: false,
         ),
         body: SingleChildScrollView(
@@ -424,7 +415,7 @@ class _EditBillerUIState extends State<EditBillerUI> {
                 Expanded(
                   child: MyAppButton(
                       onPressed: () {
-                        goBack(context);
+                        GoBack(context);
                       },
                       buttonText: "Cancel",
                       buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,

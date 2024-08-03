@@ -65,7 +65,7 @@
 //         listener: (context, state) {
 //           if (state is PayBillLoading) {
 //           } else if (state is PayBillSuccess) {
-//             goToData(context, tRANSROUTE, {
+//             GoToData(context, tRANSROUTE, {
 //               "billName": widget.data!["billName"],
 //               "billerName": widget.data!['billerName'],
 //               "categoryName": widget.data!["categoryName"],
@@ -74,7 +74,7 @@
 //               "isSavedBill": state.data!['isSavedBill'],
 //             });
 //           } else if (state is PayBillFailed) {
-//             goToData(context, tRANSROUTE, {
+//             GoToData(context, tRANSROUTE, {
 //               "billName": widget.data!["billName"],
 //               "billerName": widget.data!['billerName'],
 //               "categoryName": widget.data!["categoryName"],

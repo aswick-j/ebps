@@ -74,7 +74,7 @@ class _BillHistoryState extends State<BillHistory> {
       appBar: MyAppBar(
         context: context,
         title: 'Bill History',
-        onLeadingTap: () => goBack(context),
+        onLeadingTap: () => GoBack(context),
         showActions: true,
         actions: [],
       ),

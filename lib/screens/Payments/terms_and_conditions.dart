@@ -69,7 +69,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
           actions: [
             IconButton(
                 onPressed: () {
-                  goBack(context);
+                  GoBack(context);
                 },
                 icon: Icon(
                   Icons.close_rounded,
@@ -106,7 +106,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                   child: MyAppButton(
                       onPressed: reachEnd
                           ? () {
-                              goBack(context);
+                              GoBack(context);
                             }
                           : () {},
                       buttonText: "Okay",

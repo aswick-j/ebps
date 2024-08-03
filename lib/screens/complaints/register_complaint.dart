@@ -175,8 +175,8 @@ class _RegisterComplaintState extends State<RegisterComplaint> {
                           alignment: Alignment.center,
                           child: MyAppButton(
                               onPressed: () {
-                                goBack(context);
-                                goBack(ctx);
+                                GoBack(context);
+                                GoBack(ctx);
                               },
                               buttonText: "Okay",
                               buttonTxtColor:

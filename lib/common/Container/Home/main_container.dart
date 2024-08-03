@@ -374,7 +374,7 @@ class _MainContainerState extends State<MainContainer> {
                                       Expanded(
                                         child: MyAppButton(
                                             onPressed: () async {
-                                              goBack(context);
+                                              GoBack(context);
                                             },
                                             buttonText: "Cancel",
                                             buttonTxtColor: AppColors
@@ -465,7 +465,7 @@ class _MainContainerState extends State<MainContainer> {
                                                                       Expanded(
                                                                         child: MyAppButton(
                                                                             onPressed: () {
-                                                                              goBack(context);
+                                                                              GoBack(context);
                                                                             },
                                                                             buttonText: "Okay",
                                                                             buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
@@ -486,8 +486,8 @@ class _MainContainerState extends State<MainContainer> {
                                                       );
                                                     });
                                               } else {
-                                                goBack(context);
-                                                goToData(
+                                                GoBack(context);
+                                                GoToData(
                                                     widget.ctx, oTPPAGEROUTE, {
                                                   "from": 'delete-auto-pay',
                                                   "templateName":
@@ -571,7 +571,7 @@ class _MainContainerState extends State<MainContainer> {
                                       Expanded(
                                         child: MyAppButton(
                                             onPressed: () async {
-                                              goBack(context);
+                                              GoBack(context);
                                             },
                                             buttonText: "Cancel",
                                             buttonTxtColor: AppColors
@@ -592,7 +592,7 @@ class _MainContainerState extends State<MainContainer> {
                                         child: MyAppButton(
                                             onPressed: () async {
                                               widget.onDeleteUpPressed();
-                                              goBack(context);
+                                              GoBack(context);
                                             },
                                             buttonText: "Delete",
                                             buttonTxtColor: AppColors

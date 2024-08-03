@@ -1,8 +1,6 @@
-import 'dart:ui';
-
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
-import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
+import 'package:ebps/common/BottomNavBar/BottomBarItem.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/Home/main_container.dart';
 import 'package:ebps/constants/assets.dart';
@@ -15,11 +13,9 @@ import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/animated_dialog.dart';
 import 'package:ebps/widget/custom_dialog.dart';
 import 'package:ebps/widget/loader_overlay.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class AllUpcomingDues extends StatefulWidget {
@@ -82,30 +78,18 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
     });
     switch (index) {
       case 0:
-        return goBack(context);
+        return GoBack(context);
       case 1:
-        return WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).pushReplacement(
-            CupertinoPageRoute(
-                fullscreenDialog: true,
-                builder: (context) => BottomNavBar(
-                      SelectedIndex: 1,
-                    )),
-          );
+        return GoToReplaceData(context, hOMEROUTE, {
+          "index": 1,
         });
       case 2:
-        return WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).pushReplacement(
-            CupertinoPageRoute(
-                fullscreenDialog: true,
-                builder: (context) => BottomNavBar(
-                      SelectedIndex: 2,
-                    )),
-          );
+        return GoToReplaceData(context, hOMEROUTE, {
+          "index": 0,
         });
 
       default:
-        return goBack(context);
+        return GoBack(context);
     }
   }
 
@@ -124,17 +108,10 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
                       alignment: Alignment.center,
                       child: MyAppButton(
                           onPressed: () {
-                            goBack(ctx);
+                            GoBack(ctx);
 
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              Navigator.of(context).pushAndRemoveUntil(
-                                CupertinoPageRoute(
-                                    fullscreenDialog: true,
-                                    builder: (context) => BottomNavBar(
-                                          SelectedIndex: 0,
-                                        )),
-                                (Route<dynamic> route) => false,
-                              );
+                            GoToReplaceData(context, hOMEROUTE, {
+                              "index": 0,
                             });
                           },
                           buttonText: "Okay",
@@ -178,67 +155,11 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
           onLeadingTap: () => Navigator.pop(context),
           showActions: false,
         ),
-        bottomNavigationBar: BottomAppBar(
-          height: 60.h,
-          elevation: 0,
-          notchMargin: 4,
-          shape: const CircularNotchedRectangle(),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(30.r),
-                  topLeft: Radius.circular(30.r)),
-              boxShadow: const [
-                BoxShadow(
-                    color: Colors.black38, spreadRadius: 0, blurRadius: 0),
-              ],
-            ),
-            child: Theme(
-              data: ThemeData(splashColor: Colors.white),
-              child: BottomNavigationBar(
-                backgroundColor: AppColors.CLR_BACKGROUND,
-                showUnselectedLabels: true,
-                onTap: _onItemTapped,
-                elevation: 0,
-                type: BottomNavigationBarType.fixed,
-                selectedItemColor: AppColors.CLR_PRIMARY,
-                unselectedItemColor: Color(0xffa4b4d1),
-                currentIndex: selectedIndex,
-                items: [
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset(ICON_HOME_INACTIVE),
-                    label: "Home",
-                    activeIcon: SvgPicture.asset(
-                      ICON_HOME,
-                      colorFilter: ColorFilter.mode(
-                          AppColors.CLR_PRIMARY, BlendMode.srcIn),
-                    ),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset(
-                      ICON_BILLERS_INACTIVE,
-                    ),
-                    label: "Billers",
-                    activeIcon: SvgPicture.asset(
-                      ICON_BILLERS,
-                      colorFilter: ColorFilter.mode(
-                          AppColors.CLR_PRIMARY, BlendMode.srcIn),
-                    ),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset(ICON_HISTORY_INACTIVE),
-                    label: "History",
-                    activeIcon: SvgPicture.asset(
-                      ICON_HISTORY,
-                      colorFilter: ColorFilter.mode(
-                          AppColors.CLR_PRIMARY, BlendMode.srcIn),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+        bottomNavigationBar: BottomBarItem(
+            Index: selectedIndex,
+            selectedIndex: (int Index) {
+              _onItemTapped(Index);
+            }),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           physics: BouncingScrollPhysics(),
@@ -320,7 +241,7 @@ class _AllUpcomingDuesState extends State<AllUpcomingDues> {
 
                           if (billerDataTemp.isNotEmpty) {
                             savedBillersData = billerDataTemp[0];
-                            goToData(context, fETCHBILLERDETAILSROUTE, {
+                            GoToData(context, fETCHBILLERDETAILSROUTE, {
                               "name": widget.allUpcomingDues[index]
                                   ["billerName"],
                               "billName": widget.allUpcomingDues[index]

@@ -163,7 +163,7 @@ class _editAutopayState extends State<editAutopay> {
           });
         }
       }
-      goToData(context, oTPPAGEROUTE, {
+      GoToData(context, oTPPAGEROUTE, {
         "from": "edit-auto-pay",
         "templateName": "edit-auto-pay",
         "context": context,
@@ -201,7 +201,7 @@ class _editAutopayState extends State<editAutopay> {
         appBar: MyAppBar(
             context: context,
             title: "Edit Autopay",
-            onLeadingTap: () => goBack(context),
+            onLeadingTap: () => GoBack(context),
             showActions: true,
             actions: [
               Tooltip(
@@ -1232,7 +1232,7 @@ class _editAutopayState extends State<editAutopay> {
                                       text: "Terms and Conditions.",
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
-                                          goToData(
+                                          GoToData(
                                               context, tERMANDCONDITIONSROUTE, {
                                             "BbpsSettingInfo": BbpsSettingInfo
                                           });
@@ -1298,7 +1298,7 @@ class _editAutopayState extends State<editAutopay> {
                       Expanded(
                         child: MyAppButton(
                             onPressed: () {
-                              goBack(context);
+                              GoBack(context);
                             },
                             buttonText: "Cancel",
                             buttonTxtColor:

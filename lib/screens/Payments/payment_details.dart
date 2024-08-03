@@ -148,7 +148,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               ? widget.savedBillersData!.cUSTOMERBILLID
               : null);
     } else {
-      goToData(context, oTPPAGEROUTE, {
+      GoToData(context, oTPPAGEROUTE, {
         "from": pAYMENTCONFIRMROUTE,
         "templateName": "confirm-payment",
         "context": context,
@@ -193,7 +193,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     alignment: Alignment.center,
                     child: MyAppButton(
                         onPressed: () {
-                          goBack(context);
+                          GoBack(context);
                         },
                         buttonText: "Okay",
                         buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
@@ -255,7 +255,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               //             userAmount == billAmount);
               LoaderOverlay.of(context).hide();
 
-              goToData(context, oTPPAGEROUTE, {
+              GoToData(context, oTPPAGEROUTE, {
                 "from": pAYMENTCONFIRMROUTE,
                 "templateName": "confirm-payment",
                 "context": context,
@@ -281,7 +281,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                   "savedBillersData": widget.savedBillersData,
                   "isSavedBill": widget.isSavedBill
                 }
-                // goToData(context, mPINROUTE, {
+                // GoToData(context, mPINROUTE, {
                 //   "data": {
                 //     "billerID": widget.billerData!.bILLERID,
                 //     "billerName": widget.billerData!.bILLERNAME,
@@ -710,7 +710,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                             text: "Terms and Conditions.",
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                goToData(context, tERMANDCONDITIONSROUTE, {
+                                GoToData(context, tERMANDCONDITIONSROUTE, {
                                   "BbpsSettingInfo": widget.BbpsSettingInfo
                                 });
                               },

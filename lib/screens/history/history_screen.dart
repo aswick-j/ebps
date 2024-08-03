@@ -3,14 +3,12 @@ import 'dart:async';
 import 'package:ebps/bloc/history/history_cubit.dart';
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
-import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Container/History/history_container.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
 import 'package:ebps/constants/routes.dart';
-import 'package:ebps/ebps.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getTransactionStatus.dart';
 import 'package:ebps/models/categories_model.dart';
@@ -20,7 +18,6 @@ import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/services/api_client.dart';
 import 'package:ebps/widget/date_picker.dart';
 import 'package:ebps/widget/loader.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -138,7 +135,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
           ? toDate!.toLocal().toIso8601String()
           : DateTime.now().toLocal().toIso8601String(),
     }, categoryID, billerID, _pageNumber, true);
-    goBack(context);
+    GoBack(context);
     setState(() {
       showClrFltr = true;
     });
@@ -151,57 +148,13 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
       appBar: MyAppBar(
         context: context,
         title: 'History',
-        onLeadingTap: () => WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).pushReplacement(
-            CupertinoPageRoute(
-                fullscreenDialog: true,
-                builder: (context) => BottomNavBar(
-                      SelectedIndex: 1,
-                    )),
-          );
+        onLeadingTap: () => GoToReplaceData(context, hOMEROUTE, {
+          "index": 1,
         }),
         showActions: true,
         actions: [
-          // if (ApiConstants.BASE_URL.toString().contains("digiservicesuat"))
-          //   InkWell(
-          //       onTap: () => {goTo(context, hISTORYCHARTSROUTE)},
-          //       child: Container(
-          //           margin: EdgeInsets.only(right: 15.w),
-          //           decoration: ShapeDecoration(
-          //             color: Color(0xff4969A2),
-          //             shape: CircleBorder(),
-          //           ),
-          //           child: Container(
-          //             width: 30.w,
-          //             height: 30.h,
-          //             child: Icon(Icons.bar_chart_rounded),
-          //           ))),
-          // InkWell(
-          //     onTap: () => {
-          //           setState(() {
-          //             IsCustomerElite.isCustomerElite =
-          //                 !IsCustomerElite.isCustomerElite;
-          //           }),
-          //           print(IsCustomerElite.isCustomerElite)
-          //         },
-          //     child: Container(
-          //         margin: EdgeInsets.only(right: 15.w),
-          //         // width: 40.w,
-          //         // height: 40.h,
-          //         decoration: ShapeDecoration(
-          //           color: AppColors.CLR_SECONDARY,
-          //           shape: CircleBorder(),
-          //         ),
-          //         child: Container(
-          //           width: 30.w,
-          //           height: 30.h,
-          //           child: Icon(
-          //             Icons.change_circle_outlined,
-          //             color: Colors.white,
-          //           ),
-          //         ))),
           InkWell(
-              onTap: () => {goTo(context, cOMPLAINTLISTROUTE)},
+              onTap: () => {GoTo(context, cOMPLAINTLISTROUTE)},
               child: Container(
                   margin: EdgeInsets.only(right: 15.w),
                   decoration: ShapeDecoration(
@@ -281,15 +234,8 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                 children: [
                   if (!isHistoryLoading && showClrFltr)
                     InkWell(
-                      onTap: () =>
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                        Navigator.of(context).pushReplacement(
-                          CupertinoPageRoute(
-                              fullscreenDialog: true,
-                              builder: (context) => BottomNavBar(
-                                    SelectedIndex: 2,
-                                  )),
-                        );
+                      onTap: () => GoToReplaceData(context, hOMEROUTE, {
+                        "index": 2,
                       }),
                       child: Container(
                         margin: EdgeInsets.only(
@@ -609,7 +555,7 @@ class _HistoryScreenUIState extends State<HistoryScreenUI> {
                                       Expanded(
                                         child: MyAppButton(
                                             onPressed: () {
-                                              goBack(context);
+                                              GoBack(context);
                                             },
                                             buttonText: "Cancel",
                                             buttonTxtColor: AppColors

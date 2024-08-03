@@ -1,10 +1,11 @@
 import 'package:ebps/bloc/history/history_cubit.dart';
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
-import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Container/MyBillers/mybiller_container.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/routes.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/auto_schedule_pay_model.dart';
 import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/models/upcoming_dues_model.dart';
@@ -12,7 +13,6 @@ import 'package:ebps/screens/nodataFound.dart';
 import 'package:ebps/services/api_client.dart';
 import 'package:ebps/widget/loader.dart';
 import 'package:ebps/widget/no_result.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -235,15 +235,8 @@ class _BillerScreenUIState extends State<BillerScreenUI> {
                   disabledBorder: InputBorder.none,
                 ),
               ),
-        onLeadingTap: () => WidgetsBinding.instance.addPostFrameCallback((_) {
-          // goToReplace(context, hOMEROUTE);
-          Navigator.of(context).pushReplacement(
-            CupertinoPageRoute(
-                fullscreenDialog: true,
-                builder: (context) => BottomNavBar(
-                      SelectedIndex: 0,
-                    )),
-          );
+        onLeadingTap: () => GoToReplaceData(context, hOMEROUTE, {
+          "index": 0,
         }),
         actions: showSearch
             ? null

@@ -27,7 +27,7 @@ class _pdfRecieptState extends State<pdfReciept> {
         context: context,
         title: 'Transaction Receipt',
         onLeadingTap: () => {
-          goBack(context),
+          GoBack(context),
         },
         showActions: false,
       ),

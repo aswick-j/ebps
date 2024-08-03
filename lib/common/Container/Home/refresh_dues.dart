@@ -3,17 +3,14 @@ import 'package:delightful_toast/toast/components/toast_card.dart';
 import 'package:delightful_toast/toast/utils/enums.dart';
 import 'package:ebps/bloc/home/home_cubit.dart';
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
-import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/models/fetch_bill_model.dart';
-
 import 'package:ebps/services/api_client.dart';
-
 import 'package:ebps/widget/loader.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -330,7 +327,7 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                         SizedBox(height: 30.h),
                         MyAppButton(
                             onPressed: () {
-                              goBack(context);
+                              GoBack(context);
                             },
                             buttonText: "Okay",
                             buttonTxtColor:
@@ -388,18 +385,11 @@ class _RefreshDuesUIState extends State<RefreshDuesUI> {
                       MyAppButton(
                           onPressed: () {
                             if (gotoHome) {
-                              WidgetsBinding.instance.addPostFrameCallback((_) {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                  CupertinoPageRoute(
-                                      fullscreenDialog: true,
-                                      builder: (context) => BottomNavBar(
-                                            SelectedIndex: 0,
-                                          )),
-                                  (Route<dynamic> route) => false,
-                                );
+                              GoToReplaceData(context, hOMEROUTE, {
+                                "index": 0,
                               });
                             } else {
-                              goBack(context);
+                              GoBack(context);
                             }
                           },
                           buttonText: "Close",

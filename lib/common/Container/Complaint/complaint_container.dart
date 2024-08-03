@@ -40,7 +40,7 @@ class ComplaintContainer extends StatefulWidget {
 
 class _ComplaintContainerState extends State<ComplaintContainer> {
   handleClick() {
-    goToData(context, cOMPLAINTDETAILSROUTE, {
+    GoToData(context, cOMPLAINTDETAILSROUTE, {
       "complaintData": widget.complaintData,
       "handleStatus": widget.handleStatus
     });

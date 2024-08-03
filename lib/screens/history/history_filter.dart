@@ -269,7 +269,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                                 index]
                                                             .cATEGORYNAME
                                                             .toString());
-                                                    goBack(context);
+                                                    GoBack(context);
                                                   },
                                                   child: Padding(
                                                     padding:
@@ -340,7 +340,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                               Expanded(
                                                 child: MyAppButton(
                                                     onPressed: () {
-                                                      goBack(context);
+                                                      GoBack(context);
                                                     },
                                                     buttonText: "Cancel",
                                                     buttonTxtColor: AppColors
@@ -529,7 +529,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                                   .categoryName
                                                               : CategoryName);
 
-                                                      goBack(context);
+                                                      GoBack(context);
                                                     },
                                                     child: Padding(
                                                       padding:
@@ -592,7 +592,7 @@ class _HistoryFilterUIState extends State<HistoryFilterUI> {
                                                 Expanded(
                                                   child: MyAppButton(
                                                       onPressed: () {
-                                                        goBack(context);
+                                                        GoBack(context);
                                                       },
                                                       buttonText: "Cancel",
                                                       buttonTxtColor: AppColors

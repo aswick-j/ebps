@@ -119,7 +119,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
     //                   alignment: Alignment.center,
     //                   child: MyAppButton(
     //                       onPressed: () {
-    //                         goBack(context);
+    //                         GoBack(context);
     //                       },
     //                       buttonText: "Cancel",
     //                       buttonTxtColor: BTN_CLR_ACTIVE,
@@ -134,7 +134,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
     //                   alignment: Alignment.center,
     //                   child: MyAppButton(
     //                       onPressed: () {
-    //                         goBack(context);
+    //                         GoBack(context);
     //                       },
     //                       buttonText: "Delete",
     //                       buttonTxtColor: BTN_CLR_ACTIVE,
@@ -180,7 +180,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
       onTap: () {
         if (widget.savedBillersData.cATEGORYNAME!.toLowerCase() ==
             "mobile prepaid") {
-          goToData(context, pREPAIDPLANSROUTE, {
+          GoToData(context, pREPAIDPLANSROUTE, {
             "prepaidPlans": PrepaidPlans,
             "isFetchPlans": true,
             "savedBillerData": widget.savedBillersData,
@@ -192,7 +192,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
             'isSavedBill': true
           });
         } else {
-          goToData(context, fETCHBILLERDETAILSROUTE, {
+          GoToData(context, fETCHBILLERDETAILSROUTE, {
             "name": widget.savedBillersData.bILLERNAME,
             "billName": widget.savedBillersData.bILLNAME,
             "savedBillersData": widget.savedBillersData,
@@ -543,7 +543,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                 Expanded(
                                                                   child: MyAppButton(
                                                                       onPressed: () {
-                                                                        goBack(
+                                                                        GoBack(
                                                                             context);
                                                                       },
                                                                       buttonText: "Cancel",
@@ -561,7 +561,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                 Expanded(
                                                                   child: MyAppButton(
                                                                       onPressed: () {
-                                                                        goToData(
+                                                                        GoToData(
                                                                             context,
                                                                             oTPPAGEROUTE,
                                                                             {
@@ -645,7 +645,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                       iconPath: ICON_BILLHISTORY,
                                       title: "View Payment History",
                                       onPressed: () {
-                                        goToData(context, bILLERHISTORYROUTE, {
+                                        GoToData(context, bILLERHISTORYROUTE, {
                                           "customerBillID": widget
                                               .savedBillersData.cUSTOMERBILLID,
                                           "categoryID": widget
@@ -678,7 +678,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                             iconPath: ICON_EDIT,
                                             title: "Edit Autopay",
                                             onPressed: () {
-                                              goToData(
+                                              GoToData(
                                                   context, eDITAUTOPAYROUTE, {
                                                 "savedBillerData":
                                                     widget.savedBillersData,
@@ -848,7 +848,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                           Expanded(
                                                             child: MyAppButton(
                                                                 onPressed: () {
-                                                                  goBack(
+                                                                  GoBack(
                                                                       context);
                                                                 },
                                                                 buttonText:
@@ -963,7 +963,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                                     Expanded(
                                                                                       child: MyAppButton(
                                                                                           onPressed: () {
-                                                                                            goBack(context);
+                                                                                            GoBack(context);
                                                                                           },
                                                                                           buttonText: "Okay",
                                                                                           buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
@@ -984,7 +984,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                           );
                                                                         });
                                                                   } else {
-                                                                    goToData(
+                                                                    GoToData(
                                                                         context,
                                                                         oTPPAGEROUTE,
                                                                         {
@@ -1012,7 +1012,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                           }
                                                                         });
                                                                   }
-                                                                  //                             goToData(context, otpRoute, {
+                                                                  //                             GoToData(context, otpRoute, {
                                                                 },
                                                                 buttonText:
                                                                     "Delete",
@@ -1051,7 +1051,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                         iconPath: ICON_EDIT,
                                         title: "Edit",
                                         onPressed: () {
-                                          goToData(context, eDITBILLERROUTE, {
+                                          GoToData(context, eDITBILLERROUTE, {
                                             "SavedBillersData":
                                                 widget.savedBillersData
                                           });
@@ -1168,7 +1168,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                           Expanded(
                                                             child: MyAppButton(
                                                                 onPressed: () {
-                                                                  goBack(
+                                                                  GoBack(
                                                                       context);
                                                                 },
                                                                 buttonText:
@@ -1198,7 +1198,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                           Expanded(
                                                             child: MyAppButton(
                                                                 onPressed: () {
-                                                                  goToData(
+                                                                  GoToData(
                                                                       context,
                                                                       oTPPAGEROUTE,
                                                                       {
@@ -1312,7 +1312,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                   children: [
                                     MyAppButton(
                                         onPressed: () {
-                                          goBack(context);
+                                          GoBack(context);
                                         },
                                         buttonText: "Cancel",
                                         buttonTxtColor: AppColors
@@ -1424,7 +1424,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                     alignment: Alignment.center,
                                                     child: MyAppButton(
                                                         onPressed: () {
-                                                          goBack(ctx);
+                                                          GoBack(ctx);
                                                         },
                                                         buttonText: "Okay",
                                                         buttonTxtColor: AppColors
@@ -1463,7 +1463,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                         },
                                       );
                                     } else {
-                                      goToData(context, eDITAUTOPAYROUTE, {
+                                      GoToData(context, eDITAUTOPAYROUTE, {
                                         "savedBillerData":
                                             widget.savedBillersData,
                                         "AutoDateMisMatch": getAllAutopayList(
@@ -1747,7 +1747,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                               Expanded(
                                                 child: MyAppButton(
                                                     onPressed: () {
-                                                      goBack(context);
+                                                      GoBack(context);
                                                     },
                                                     buttonText: "Cancel",
                                                     buttonTxtColor: AppColors
@@ -1816,7 +1816,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                                             Alignment.center,
                                                                         child: MyAppButton(
                                                                             onPressed: () {
-                                                                              goBack(ctx);
+                                                                              GoBack(ctx);
                                                                             },
                                                                             buttonText: "Okay",
                                                                             buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT,
@@ -1844,7 +1844,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                                             },
                                                           );
                                                         } else {
-                                                          goToData(
+                                                          GoToData(
                                                               context,
                                                               eDITAUTOPAYROUTE,
                                                               {
@@ -1897,7 +1897,7 @@ class _MyBillersContainerState extends State<MyBillersContainer> {
                                     );
                                   });
                             } else {
-                              goToData(context, cREATEAUTOPAYROUTE, {
+                              GoToData(context, cREATEAUTOPAYROUTE, {
                                 "billerName":
                                     widget.savedBillersData.bILLERNAME,
                                 "categoryName":

@@ -99,7 +99,7 @@ class _BillerListState extends State<BillerList> {
         appBar: MyAppBar(
           context: context,
           title: widget.name,
-          onLeadingTap: () => goBack(context),
+          onLeadingTap: () => GoBack(context),
           showActions: false,
         ),
         body: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
@@ -128,7 +128,7 @@ class _BillerListState extends State<BillerList> {
             isBillSerachLoading = false;
           } else if (state is AllbillerListError) {
             if (state.message!.contains('Invalid')) {
-              goTo(context, sESSIONEXPIREDROUTE);
+              GoTo(context, sESSIONEXPIREDROUTE);
             }
             isBillSerachLoading = false;
 
@@ -314,14 +314,14 @@ class _BillerListState extends State<BillerList> {
                                           .cATEGORYNAME!
                                           .toLowerCase() ==
                                       "mobile prepaid") {
-                                goToData(context, pREPAIDBILLERPARAMROUTE, {
+                                GoToData(context, pREPAIDBILLERPARAMROUTE, {
                                   "BILLER_DATA": _searchController.text.isEmpty
                                       ? Allbiller![index]
                                       : BillerSearchResults![index],
                                   "BILLER_INPUT_SIGN": []
                                 });
                               } else {
-                                goToData(context, bILLERPARAMROUTE, {
+                                GoToData(context, bILLERPARAMROUTE, {
                                   "BILLER_DATA": _searchController.text.isEmpty
                                       ? Allbiller![index]
                                       : BillerSearchResults![index],

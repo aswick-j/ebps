@@ -100,7 +100,7 @@ class _BillParametersState extends State<BillParameters> {
       inputPayloadData.add(makeInput);
     }
 
-    goToData(context, fETCHBILLERDETAILSROUTE, {
+    GoToData(context, fETCHBILLERDETAILSROUTE, {
       "name": widget.billerData!.bILLERNAME,
       "billName": billNameController.text,
       "billerData": widget.billerData,
@@ -346,7 +346,7 @@ class _BillParametersState extends State<BillParameters> {
               Expanded(
                 child: MyAppButton(
                     onPressed: () {
-                      goBack(context);
+                      GoBack(context);
                     },
                     buttonText: "Cancel",
                     buttonTxtColor: AppColors.BTN_CLR_ACTIVE_ALTER_TEXT_C,

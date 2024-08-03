@@ -1,12 +1,13 @@
 import 'package:ebps/bloc/myBillers/mybillers_cubit.dart';
 import 'package:ebps/common/AppBar/MyAppBar.dart';
-import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Container/ReusableContainer.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/routes.dart';
 import 'package:ebps/helpers/getBillPaymentDetails.dart';
 import 'package:ebps/helpers/getBillerType.dart';
 import 'package:ebps/helpers/getGradientColors.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:ebps/helpers/getTransactionStatusReason.dart';
 import 'package:ebps/helpers/getTransactionStatusText.dart';
 import 'package:ebps/models/add_biller_model.dart';
@@ -16,7 +17,6 @@ import 'package:ebps/models/saved_biller_model.dart';
 import 'package:ebps/widget/bbps_logo.dart';
 import 'package:ebps/widget/generate_pdf.dart';
 import 'package:ebps/widget/screenshot_container.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -160,16 +160,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
         context: context,
         title: 'Go to Home',
         onLeadingTap: () => {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.of(context).pushAndRemoveUntil(
-              CupertinoPageRoute(
-                  fullscreenDialog: true,
-                  builder: (context) => BottomNavBar(
-                        SelectedIndex: 0,
-                      )),
-              (Route<dynamic> route) => false,
-            );
-          }),
+          GoToReplaceData(context, hOMEROUTE, {
+            "index": 0,
+          })
         },
         showActions: false,
       ),
@@ -525,7 +518,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
       //               Expanded(
       //                 child: MyAppButton(
       //                     onPressed: () {
-      //                       goToData(context, cOMPLAINTREGISTERROUTE, {
+      //                       GoToData(context, cOMPLAINTREGISTERROUTE, {
       //                         "txnRefID": paymentDetails!['txnReferenceId']
       //                             .toString(),
       //                         "BillerName": widget.billerName.toString(),

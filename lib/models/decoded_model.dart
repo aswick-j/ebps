@@ -1,108 +1,96 @@
 class DecodedModel {
-  String? platform;
-  String? customerID;
-  String? gender;
-  String? mobileNumber;
-  String? dob;
-  String? otpPreference;
-  String? emailID;
-  String? customerName;
-  List<Accounts>? accounts;
-  int? iat;
-  int? exp;
-  String? elite;
+  String platform;
+  String customerId;
+  String mobileNumber;
+  String elite;
+  List<Accounts> accounts;
+  AuthRole role;
+  int iat;
+  int exp;
 
-  DecodedModel(
-      {this.platform,
-      this.customerID,
-      this.gender,
-      this.mobileNumber,
-      this.dob,
-      this.otpPreference,
-      this.emailID,
-      this.accounts,
-      this.customerName,
-      this.iat,
-      this.elite,
-      this.exp});
+  DecodedModel({
+    required this.platform,
+    required this.customerId,
+    required this.mobileNumber,
+    required this.elite,
+    required this.accounts,
+    required this.role,
+    required this.iat,
+    required this.exp,
+  });
 
-  DecodedModel.fromJson(Map<String, dynamic> json) {
-    platform = json['platform'];
-    customerID = json['customerID'];
-    customerName = json['customerName'];
-    gender = json['gender'];
-    mobileNumber = json['mobileNumber'];
-    dob = json['dob'];
-    elite = json['elite'];
-    otpPreference = json['otp_preference'];
-    emailID = json['emailID'];
-    if (json['accounts'] != null) {
-      accounts = <Accounts>[];
-      json['accounts'].forEach((v) {
-        accounts!.add(new Accounts.fromJson(v));
-      });
-    }
-    iat = json['iat'];
-    exp = json['exp'];
-  }
+  factory DecodedModel.fromJson(Map<String, dynamic> json) => DecodedModel(
+        platform: json["platform"],
+        customerId: json["customerID"],
+        mobileNumber: json["mobileNumber"],
+        elite: json["elite"],
+        accounts: List<Accounts>.from(
+            json["accounts"].map((x) => Accounts.fromJson(x))),
+        role: AuthRole.fromJson(json["role"]),
+        iat: json["iat"],
+        exp: json["exp"],
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['platform'] = this.platform;
-    data['customerID'] = this.customerID;
-    data['customerName'] = this.customerName;
-    data['gender'] = this.gender;
-    data['mobileNumber'] = this.mobileNumber;
-    data['dob'] = this.dob;
-    data['elite'] = this.elite;
-    data['otp_preference'] = this.otpPreference;
-    data['emailID'] = this.emailID;
-    if (this.accounts != null) {
-      data['accounts'] = this.accounts!.map((v) => v.toJson()).toList();
-    }
-    data['iat'] = this.iat;
-    data['exp'] = this.exp;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "platform": platform,
+        "customerID": customerId,
+        "mobileNumber": mobileNumber,
+        "elite": elite,
+        "accounts": List<dynamic>.from(accounts.map((x) => x.toJson())),
+        "role": role.toJson(),
+        "iat": iat,
+        "exp": exp,
+      };
 }
 
 class Accounts {
-  String? accountType;
-  String? accountID;
-  String? customerRelationship;
-  String? customerStatusDescription;
-  String? entityType;
-  String? currentStatus;
-  int? id;
+  String accountId;
+  int id;
 
-  Accounts(
-      {this.accountType,
-      this.accountID,
-      this.customerRelationship,
-      this.customerStatusDescription,
-      this.entityType,
-      this.currentStatus,
-      this.id});
+  Accounts({
+    required this.accountId,
+    required this.id,
+  });
 
-  Accounts.fromJson(Map<String, dynamic> json) {
-    accountType = json['accountType'];
-    accountID = json['accountID'];
-    customerRelationship = json['customerRelationship'];
-    customerStatusDescription = json['customerStatusDescription'];
-    entityType = json['entityType'];
-    currentStatus = json['currentStatus'];
-    id = json['id'];
-  }
+  factory Accounts.fromJson(Map<String, dynamic> json) => Accounts(
+        accountId: json["accountID"],
+        id: json["id"],
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['accountType'] = this.accountType;
-    data['accountID'] = this.accountID;
-    data['customerRelationship'] = this.customerRelationship;
-    data['customerStatusDescription'] = this.customerStatusDescription;
-    data['entityType'] = this.entityType;
-    data['currentStatus'] = this.currentStatus;
-    data['id'] = this.id;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "accountID": accountId,
+        "id": id,
+      };
+}
+
+class AuthRole {
+  bool viewBbps;
+  bool fetchBiller;
+  bool autoPayment;
+  bool modifyBiller;
+  bool payBill;
+
+  AuthRole({
+    required this.viewBbps,
+    required this.fetchBiller,
+    required this.autoPayment,
+    required this.modifyBiller,
+    required this.payBill,
+  });
+
+  factory AuthRole.fromJson(Map<String, dynamic> json) => AuthRole(
+        viewBbps: json["VIEW_BBPS"],
+        fetchBiller: json["FETCH_BILLER"],
+        autoPayment: json["AUTO_PAYMENT"],
+        modifyBiller: json["MODIFY_BILLER"],
+        payBill: json["PAY_BILL"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "VIEW_BBPS": viewBbps,
+        "FETCH_BILLER": fetchBiller,
+        "AUTO_PAYMENT": autoPayment,
+        "MODIFY_BILLER": modifyBiller,
+        "PAY_BILL": payBill,
+      };
 }

@@ -1,12 +1,12 @@
 import 'package:ebps/bloc/splash/splash_cubit.dart';
-import 'package:ebps/common/BottomNavBar/BotttomNavBar.dart';
 import 'package:ebps/common/Button/MyAppButton.dart';
 import 'package:ebps/common/Text/MyAppText.dart';
 import 'package:ebps/constants/assets.dart';
 import 'package:ebps/constants/colors.dart';
+import 'package:ebps/constants/routes.dart';
 import 'package:ebps/ebps.dart';
 import 'package:ebps/helpers/getDecodedAccount.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:ebps/helpers/getNavigators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,24 +45,11 @@ class _splashScreenState extends State<splashScreen> {
           } else if (state is SplashSuccess) {
             myAccounts = await getDecodedAccounts();
             isLoginError = false;
-
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              // goToReplace(context, hOMEROUTE);
-              Navigator.of(context).pushReplacement(
-                CupertinoPageRoute(
-                    fullscreenDialog: true,
-                    builder: (context) => BottomNavBar(
-                          SelectedIndex: 0,
-                        )),
-              );
+            GoToReplaceData(context, hOMEROUTE, {
+              "index": 0,
             });
           } else if (state is SplashError) {
             isLoginError = true;
-            // WidgetsBinding.instance?.addPostFrameCallback((_) {
-            //   Navigator.of(context).pushReplacement(
-            //     MaterialPageRoute(builder: (context) => BottomNavBar()),
-            //   );
-            // });
           }
         },
         builder: (context, state) {

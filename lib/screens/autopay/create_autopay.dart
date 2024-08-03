@@ -109,7 +109,7 @@ class _createAutopayState extends State<createAutopay> {
         appBar: MyAppBar(
             context: context,
             title: "Setup Autopay",
-            onLeadingTap: () => goBack(context),
+            onLeadingTap: () => GoBack(context),
             showActions: true,
             actions: [
               Tooltip(
@@ -1050,7 +1050,7 @@ class _createAutopayState extends State<createAutopay> {
                                     text: "Terms and Conditions.",
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
-                                        goToData(
+                                        GoToData(
                                             context, tERMANDCONDITIONSROUTE, {
                                           "BbpsSettingInfo": BbpsSettingInfo
                                         });
@@ -1126,7 +1126,7 @@ class _createAutopayState extends State<createAutopay> {
                       Expanded(
                         child: MyAppButton(
                             onPressed: () {
-                              goBack(context);
+                              GoBack(context);
                             },
                             buttonText: "Cancel",
                             buttonTxtColor:
@@ -1167,7 +1167,7 @@ class _createAutopayState extends State<createAutopay> {
                                     });
                                   }
                                 }
-                                goToData(context, oTPPAGEROUTE, {
+                                GoToData(context, oTPPAGEROUTE, {
                                   "from": "create-auto-pay",
                                   "templateName": "create-auto-pay",
                                   "context": context,

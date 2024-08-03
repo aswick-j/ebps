@@ -172,7 +172,7 @@ class _PrepaidPlansState extends State<PrepaidPlans>
     }
 
     if (widget.isSavedBill) {
-      goToData(context, pAYMENTCONFIRMROUTE, {
+      GoToData(context, pAYMENTCONFIRMROUTE, {
         "name": widget.isSavedBill
             ? widget.savedBillerData!.bILLERNAME
             : widget.billerData!.bILLERNAME,
@@ -215,7 +215,7 @@ class _PrepaidPlansState extends State<PrepaidPlans>
         inputPayloadData.add(makeInput);
       }
 
-      goToData(context, pAYMENTCONFIRMROUTE, {
+      GoToData(context, pAYMENTCONFIRMROUTE, {
         "name": widget.isSavedBill
             ? widget.savedBillerData!.bILLERNAME
             : widget.billerData!.bILLERNAME,
@@ -275,7 +275,7 @@ class _PrepaidPlansState extends State<PrepaidPlans>
         appBar: MyAppBar(
           context: context,
           title: "Select Plan",
-          onLeadingTap: () => goBack(context),
+          onLeadingTap: () => GoBack(context),
           showActions: false,
         ),
         body: BlocConsumer<HomeCubit, HomeState>(

@@ -210,7 +210,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
           context: context,
           title: 'Payment Details',
           onLeadingTap: () => {
-            goBack(context),
+            GoBack(context),
           },
           showActions: false,
         ),
@@ -847,7 +847,7 @@ class _HistoryDetailsState extends State<HistoryDetails> {
                       Expanded(
                         child: MyAppButton(
                             onPressed: () {
-                              goToData(context, cOMPLAINTREGISTERROUTE, {
+                              GoToData(context, cOMPLAINTREGISTERROUTE, {
                                 "Date": widget.historyData.completionDate,
                                 "txnRefID": widget
                                     .historyData.transactionReferenceId

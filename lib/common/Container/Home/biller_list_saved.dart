@@ -36,7 +36,7 @@ class _BillerListSavedState extends State<BillerListSaved> {
                 itemBuilder: (_, index) {
                   return InkWell(
                       onTap: () => {
-                            goToData(context, fETCHBILLERDETAILSROUTE, {
+                            GoToData(context, fETCHBILLERDETAILSROUTE, {
                               "name": widget.SavedBiller![index].bILLERNAME,
                               "billName": widget.SavedBiller![index].bILLNAME,
                               "savedBillersData": widget.SavedBiller![index],
